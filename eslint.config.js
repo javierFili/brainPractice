@@ -30,6 +30,8 @@ export default tseslint.config(
   },
   {
     files: PURE_LAYERS,
+    // Tests may measure real time (e.g. generation speed budgets); production code may not.
+    ignores: ['**/*.test.ts', '**/*.test.tsx', '**/__tests__/**'],
     rules: {
       'no-restricted-imports': [
         'error',

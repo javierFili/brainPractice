@@ -116,10 +116,8 @@ describe('Code Memory — generated content', () => {
 
   it('is fast enough to generate on demand', () => {
     // Measuring wall time is the point of this test; content code itself never reads a clock.
-    // eslint-disable-next-line no-restricted-properties
     const start = performance.now();
     for (let seed = 0; seed < 100; seed++) generate(10, seed);
-    // eslint-disable-next-line no-restricted-properties
     expect((performance.now() - start) / 100).toBeLessThan(20);
   });
 
