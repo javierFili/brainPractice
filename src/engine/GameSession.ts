@@ -15,20 +15,20 @@ import { err, ok, type Result } from '@/domain/shared';
 import type { Clock } from '@/domain/time/Clock';
 
 export interface GameSession<C extends Challenge = Challenge> {
-  getState(): SessionState<C>;
+  readonly getState: () => SessionState<C>;
   /** Call once the current challenge is visible (after paint) to start measuring. */
-  present(): Result<void, SessionError>;
-  endStudy(): Result<void, SessionError>;
-  submitAnswer(answer: Answer): Result<ChallengeRecord, SessionError>;
+  readonly present: () => Result<void, SessionError>;
+  readonly endStudy: () => Result<void, SessionError>;
+  readonly submitAnswer: (answer: Answer) => Result<ChallengeRecord, SessionError>;
   /** Asks the session to time out the current challenge; rejected with NOT_EXPIRED if too early. */
-  expire(): Result<ChallengeRecord, SessionError>;
-  advance(): Result<void, SessionError>;
+  readonly expire: () => Result<ChallengeRecord, SessionError>;
+  readonly advance: () => Result<void, SessionError>;
   /** Finishes (early if needed) and returns the result. Idempotent. */
-  finish(): GameResult;
+  readonly finish: () => GameResult;
   /** Available once the session has finished. */
-  getResult(): GameResult | null;
+  readonly getResult: () => GameResult | null;
   /** Compatible with React's useSyncExternalStore. */
-  subscribe(listener: () => void): () => void;
+  readonly subscribe: (listener: () => void) => () => void;
 }
 
 export interface GameSessionDependencies {

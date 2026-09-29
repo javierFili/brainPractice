@@ -1,13 +1,25 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/app/App';
+import { createServices } from '@/app/composition';
+import { GAME_MODULES } from '@/games/registry';
+import { cryptoSeedSource } from '@/infrastructure/CryptoSeedSource';
+import { LocalStorageProgressRepository } from '@/infrastructure/LocalStorageProgressRepository';
+import { systemClock } from '@/infrastructure/SystemClock';
 import './index.css';
+
+const services = createServices({
+  modules: GAME_MODULES,
+  clock: systemClock,
+  seeds: cryptoSeedSource,
+  progress: new LocalStorageProgressRepository(window.localStorage),
+});
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element #root not found');
 
 createRoot(root).render(
   <StrictMode>
-    <App />
+    <App services={services} />
   </StrictMode>,
 );
