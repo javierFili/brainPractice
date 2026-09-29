@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { DIFFICULTY_LEVELS } from '@/domain/shared';
+import { COGNITIVE_AREAS, DIFFICULTY_LEVELS } from '@/domain/shared';
+import { AREAS } from '@/features/shared/areas';
 import { isLevelCleared } from '@/domain/progress';
 import { useServices } from '@/app/providers/servicesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { formatMs, formatPercent, formatPoints } from '@/features/shared/format';
-import { useProgress } from '@/hooks/useProgress';
+import { useProgress } from '@/features/shared/useProgress';
 
 export function ProfilePage() {
   const { modules, progress, getModule } = useServices();
@@ -19,7 +20,8 @@ export function ProfilePage() {
         Progress could not be loaded.
       </p>
     );
-  const { games, recentSessions } = state.progress;
+  const { games, recentSessions, assessments = [] } = state.progress;
+  const latest = assessments[0];
 
   return (
     <>
@@ -62,6 +64,25 @@ export function ProfilePage() {
           )
         }
       />
+      {latest && (
+        <section
+          aria-labelledby="assessment-title"
+          className="mb-10 rounded-xl border border-slate-800 bg-slate-900/40 p-5"
+        >
+          <h2 id="assessment-title" className="text-lg font-semibold text-white">
+            Latest Programming Cognitive Index: <span className="font-mono">{latest.overall}</span>
+            <span className="text-slate-400">/100</span>
+          </h2>
+          <ul className="mt-3 flex flex-wrap gap-2 text-sm">
+            {COGNITIVE_AREAS.map((area) => (
+              <li key={area} className="rounded-md border border-slate-700 px-2 py-1">
+                <span className={AREAS[area].accent}>{AREAS[area].label}</span>{' '}
+                <span className="font-mono">{latest.areas[area] ?? '—'}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section aria-labelledby="levels-title" className="mb-10">
         <h2 id="levels-title" className="mb-3 text-lg font-semibold text-white">
           Levels

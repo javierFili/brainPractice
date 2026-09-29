@@ -1,5 +1,7 @@
 import { resultFixture } from '@/test/fixtures/results';
+import { scoreAssessment } from '../assessment/assessment';
 import {
+  applyAssessmentResult,
   applySessionResult,
   emptyProgress,
   isLevelCleared,
@@ -114,5 +116,47 @@ describe('isUserProgress', () => {
     ['bad seed', { ...valid, recentSessions: [{ ...valid.recentSessions[0], seed: -1 }] }],
   ])('rejects %s', (_, value) => {
     expect(isUserProgress(value)).toBe(false);
+  });
+});
+
+describe('applyAssessmentResult', () => {
+  const definition = {
+    id: 'pci',
+    name: 'PCI',
+    sections: [
+      { area: 'logic' as const, gameId: 'g', levels: [3 as const], challengesPerLevel: 2 },
+    ],
+  };
+  const step = {
+    index: 0,
+    area: 'logic' as const,
+    gameId: 'g',
+    level: 3 as const,
+    challengeCount: 2,
+  };
+  const result = scoreAssessment(
+    definition,
+    [{ step, result: resultFixture({ performanceIndex: 64 }) }],
+    0,
+    500,
+  );
+
+  it('stores a summary of measured areas without touching level records', () => {
+    const progress = applyAssessmentResult(emptyProgress(), result);
+    expect(progress.assessments).toEqual([
+      { assessmentId: 'pci', endedAt: 500, overall: 64, areas: { logic: 64 } },
+    ]);
+    expect(progress.games).toEqual({});
+    expect(isUserProgress(progress)).toBe(true);
+  });
+
+  it('accepts progress saved before assessments existed and rejects malformed summaries', () => {
+    expect(isUserProgress(emptyProgress())).toBe(true);
+    expect(
+      isUserProgress({
+        ...emptyProgress(),
+        assessments: [{ assessmentId: 'x', endedAt: 1, overall: 1, areas: { iq: 3 } }],
+      }),
+    ).toBe(false);
   });
 });

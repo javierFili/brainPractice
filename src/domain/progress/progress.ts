@@ -5,6 +5,8 @@ import {
   type DifficultyLevel,
 } from '../shared/difficultyLevel';
 import type { Seed } from '../random/seed';
+import type { AssessmentResult } from '../assessment/assessment';
+import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { GameResult } from '../session/gameResult';
 
 export const PROGRESS_SCHEMA_VERSION = 1;
@@ -35,6 +37,15 @@ export interface SessionSummary {
   readonly durationMs: number;
 }
 
+export interface AssessmentSummary {
+  readonly assessmentId: string;
+  readonly endedAt: number;
+  readonly overall: number;
+  readonly areas: Readonly<Partial<Record<CognitiveArea, number>>>;
+}
+
+export const MAX_ASSESSMENTS = 20;
+
 export type GameProgress = Readonly<Partial<Record<DifficultyLevel, LevelRecord>>>;
 
 export interface UserProgress {
@@ -42,6 +53,8 @@ export interface UserProgress {
   readonly games: Readonly<Record<string, GameProgress>>;
   /** Most recent first. */
   readonly recentSessions: readonly SessionSummary[];
+  /** Most recent first; absent in progress saved before the assessment existed. */
+  readonly assessments?: readonly AssessmentSummary[];
 }
 
 export const emptyProgress = (): UserProgress => ({
@@ -103,6 +116,27 @@ export function applySessionResult(progress: UserProgress, result: GameResult): 
     ...progress,
     recentSessions,
     games: { ...progress.games, [result.gameId]: { ...game, [result.level]: record } },
+  };
+}
+
+/** Adds an assessment summary (most recent first). Assessment steps never touch level records. */
+export function applyAssessmentResult(
+  progress: UserProgress,
+  result: AssessmentResult,
+): UserProgress {
+  const areas: Partial<Record<CognitiveArea, number>> = {};
+  for (const [area, score] of Object.entries(result.profile)) {
+    if (area !== 'overall' && score !== null) areas[area as CognitiveArea] = score.value;
+  }
+  const summary: AssessmentSummary = {
+    assessmentId: result.assessmentId,
+    endedAt: result.endedAt,
+    overall: result.profile.overall.value,
+    areas,
+  };
+  return {
+    ...progress,
+    assessments: [summary, ...(progress.assessments ?? [])].slice(0, MAX_ASSESSMENTS),
   };
 }
 

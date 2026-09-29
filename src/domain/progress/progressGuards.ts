@@ -1,7 +1,9 @@
+import { isCognitiveArea } from '../shared/cognitiveArea';
 import { isDifficultyLevel } from '../shared/difficultyLevel';
 import { parseSeed } from '../random/seed';
 import {
   PROGRESS_SCHEMA_VERSION,
+  type AssessmentSummary,
   type LevelRecord,
   type SessionSummary,
   type UserProgress,
@@ -39,12 +41,32 @@ function isSessionSummary(value: unknown): value is SessionSummary {
   );
 }
 
+function isAssessmentSummary(value: unknown): value is AssessmentSummary {
+  return (
+    isObject(value) &&
+    typeof value['assessmentId'] === 'string' &&
+    isFiniteNumber(value['endedAt']) &&
+    isFiniteNumber(value['overall']) &&
+    isObject(value['areas']) &&
+    Object.entries(value['areas']).every(
+      ([area, score]) => isCognitiveArea(area) && isFiniteNumber(score),
+    )
+  );
+}
+
 /** Validates untrusted persisted data (e.g. edited or stale localStorage) before it reaches the domain. */
 export function isUserProgress(value: unknown): value is UserProgress {
   if (!isObject(value) || value['schemaVersion'] !== PROGRESS_SCHEMA_VERSION) return false;
   const { games, recentSessions } = value;
   if (!Array.isArray(recentSessions) || !recentSessions.every(isSessionSummary) || !isObject(games))
     return false;
+  const { assessments } = value;
+  if (
+    assessments !== undefined &&
+    !(Array.isArray(assessments) && assessments.every(isAssessmentSummary))
+  ) {
+    return false;
+  }
   return Object.values(games).every(
     (game) =>
       isObject(game) &&
