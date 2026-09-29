@@ -11,8 +11,6 @@ export interface LevelRecommendation {
 export interface DifficultyContext {
   readonly currentLevel: DifficultyLevel;
   readonly performance: PerformanceMetrics;
-  /** The level's expected response time. */
-  readonly targetMs: number;
 }
 
 /** Decides the next level from observed performance. Swappable (rule-based today, staircase/Elo later). */

@@ -24,5 +24,7 @@ export interface ChallengeRecord {
   readonly answeredAt: number | null;
   /** answeredAt − respondStartedAt, only for answers given within the limit. */
   readonly responseTimeMs: number | null;
+  /** The challenge's expected response time, kept so pace can be judged per challenge. */
+  readonly targetMs: number;
   readonly points: ChallengePoints;
 }

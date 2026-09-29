@@ -30,6 +30,7 @@ function record(
     respondStartedAt: 0,
     answeredAt: responseTimeMs,
     responseTimeMs,
+    targetMs: 1000,
     points: noPoints,
     ...overrides,
   };
@@ -48,6 +49,7 @@ describe('computeMetrics', () => {
       averageResponseMs: null,
       medianResponseMs: null,
       fastestResponseMs: null,
+      medianPace: null,
       longestStreak: 0,
       byKind: {},
       bySkill: {},
@@ -65,6 +67,7 @@ describe('computeMetrics', () => {
       averageResponseMs: 2000,
       medianResponseMs: 2000,
       fastestResponseMs: 1000,
+      medianPace: 2,
       longestStreak: 3,
     });
   });
@@ -97,6 +100,15 @@ describe('computeMetrics', () => {
       record('correct', 9000),
     ]);
     expect(metrics.medianResponseMs).toBe(300);
+  });
+
+  it('judges pace against each challenge target', () => {
+    const metrics = computeMetrics([
+      record('correct', 500, { targetMs: 1000 }),
+      record('correct', 3000, { targetMs: 2000 }),
+      record('incorrect', 8000, { targetMs: 2000 }),
+    ]);
+    expect(metrics.medianPace).toBe(1.5);
   });
 
   it('accepts a zero response time', () => {

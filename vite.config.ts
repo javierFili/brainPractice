@@ -22,6 +22,7 @@ export default defineConfig({
       // Pure layers carry the business rules; UI is measured by covered flows instead (TESTING.md).
       thresholds: {
         'src/domain/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+        'src/engine/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
       },
     },
   },

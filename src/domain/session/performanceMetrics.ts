@@ -21,6 +21,11 @@ export interface PerformanceMetrics {
   /** Robust to outliers; the figure used by adaptive difficulty. */
   readonly medianResponseMs: number | null;
   readonly fastestResponseMs: number | null;
+  /**
+   * Median of responseTime / targetMs over answers given in time: 1 means "at the expected pace",
+   * 0.5 "twice as fast". Comparable across challenge kinds with different targets.
+   */
+  readonly medianPace: number | null;
   readonly longestStreak: number;
   readonly byKind: Readonly<Record<string, Tally>>;
   readonly bySkill: Readonly<Partial<Record<ProgrammingSkill, Tally>>>;
@@ -54,10 +59,11 @@ export function computeMetrics(records: readonly ChallengeRecord[]): Performance
   const skipped = count('skipped');
   const attempted = records.length - skipped;
 
-  const times = records
-    .map((r) => r.responseTimeMs)
-    .filter((t): t is number => t !== null)
-    .sort((a, b) => a - b);
+  const answered = records.filter(
+    (r): r is ChallengeRecord & { responseTimeMs: number } => r.responseTimeMs !== null,
+  );
+  const times = answered.map((r) => r.responseTimeMs).sort((a, b) => a - b);
+  const paces = answered.map((r) => r.responseTimeMs / r.targetMs).sort((a, b) => a - b);
 
   const byKind: Record<string, Tally> = {};
   const bySkill: Partial<Record<ProgrammingSkill, Tally>> = {};
@@ -81,6 +87,7 @@ export function computeMetrics(records: readonly ChallengeRecord[]): Performance
       times.length === 0 ? null : times.reduce((sum, t) => sum + t, 0) / times.length,
     medianResponseMs: median(times),
     fastestResponseMs: times[0] ?? null,
+    medianPace: median(paces),
     longestStreak: longestStreak(records),
     byKind,
     bySkill,
