@@ -19,6 +19,10 @@ export default defineConfig({
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['src/**/*.test.{ts,tsx}', 'src/test/**', 'src/main.tsx', 'src/vite-env.d.ts'],
       reporter: ['text', 'html'],
+      // Pure layers carry the business rules; UI is measured by covered flows instead (TESTING.md).
+      thresholds: {
+        'src/domain/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      },
     },
   },
 });

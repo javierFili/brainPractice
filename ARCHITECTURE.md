@@ -76,7 +76,7 @@ src/
 │   ├── shared/        # CognitiveArea, DifficultyLevel, ProgrammingSkill, ids con marca, Result<T,E>
 │   ├── random/        # RandomGenerator, mulberry32, deriveSeed, helpers (int, pick, shuffle, sample)
 │   ├── time/          # Clock (solo interfaz)
-│   ├── challenge/     # Challenge (union), ResponseFormat, Answer, evaluateAnswer
+│   ├── challenge/     # Challenge<Area, Content> genérico, ResponseFormat, Answer, evaluateAnswer, validateChallenge
 │   ├── difficulty/    # DifficultyProfile, tiers, DifficultyStrategy, RuleBasedDifficultyStrategy
 │   ├── scoring/       # ScoringStrategy, ScoringConfig, StandardScoringStrategy
 │   ├── session/       # SessionState, sessionReducer, PerformanceMetrics, computeMetrics
@@ -106,7 +106,7 @@ src/
 │   ├── ui/            # Button, Card, Badge, Kbd, ProgressBar…
 │   ├── layout/        # AppShell, PageHeader
 │   ├── feedback/      # AnswerFeedback, Timer, ScoreTicker
-│   └── response/      # inputs genéricos por ResponseFormat (choice, ordering, line-select, numeric)
+│   └── response/      # inputs genéricos por ResponseFormat (choice, ordering, locate, numeric)
 │
 ├── features/
 │   ├── home/  catalog/  game-intro/  play/  results/  profile/  assessment/
@@ -166,11 +166,11 @@ interface ResponseFormats {
     solution: { order: readonly string[] };
     answer: { order: readonly string[] };
   };
-  'line-select': {
-    // elegir una línea/elemento de un artefacto mostrado
-    question: { lineCount: number };
-    solution: { line: number };
-    answer: { line: number };
+  locate: {
+    // señalar una línea/registro/celda del contenido mostrado (índice 0-based)
+    question: { itemCount: number };
+    solution: { index: number };
+    answer: { index: number };
   };
   numeric: {
     question: { unit?: string };
@@ -194,7 +194,7 @@ type Answer = {
 }[ResponseFormat];
 
 function evaluateAnswer(response: Response, answer: Answer): Result<boolean, AnswerError>;
-// AnswerError: 'FORMAT_MISMATCH' | 'UNKNOWN_OPTION' | 'INCOMPLETE_ORDERING' | 'OUT_OF_RANGE' | 'NOT_A_NUMBER'
+// AnswerError: 'FORMAT_MISMATCH' | 'UNKNOWN_OPTION' | 'INVALID_ORDERING' | 'OUT_OF_RANGE' | 'NOT_A_NUMBER'
 ```
 
 `question` y `solution` están separados a propósito: cuando exista backend, el cliente recibirá solo
@@ -202,8 +202,12 @@ function evaluateAnswer(response: Response, answer: Answer): Result<boolean, Ans
 
 ### 4.3 Challenge
 
+Implementación: `src/domain/challenge/challenge.ts`. El dominio define un `Challenge<Area, Content>`
+**genérico**; el union concreto de los cinco juegos se arma en `games/` (cada juego exporta su tipo). Así el
+dominio nunca importa contenido de un juego y agregar uno no toca `domain/` (consecuencia de D3).
+
 ```ts
-interface ChallengeBase<A extends CognitiveArea, C extends { kind: string }> {
+interface Challenge<A extends CognitiveArea, C extends ChallengeContent /* { kind: string } */> {
   id: ChallengeId; // `${gameId}:${level}:${seed}` → reproducible y trazable
   gameId: GameId;
   area: A;
@@ -221,13 +225,12 @@ interface ChallengeBase<A extends CognitiveArea, C extends { kind: string }> {
   };
 }
 
-type LogicChallenge = ChallengeBase<'logic', LogicContent>;
-type MemoryChallenge = ChallengeBase<'memory', MemoryContent>;
-type SpeedChallenge = ChallengeBase<'speed', SpeedContent>;
-type AttentionChallenge = ChallengeBase<'attention', AttentionContent>;
-type PatternChallenge = ChallengeBase<'patterns', PatternContent>;
-
-type Challenge =
+// games/<id>/content/types.ts
+type LogicChallenge = Challenge<'logic', LogicContent>;
+type MemoryChallenge = Challenge<'memory', MemoryContent>;
+// …
+// games/types.ts
+type AnyGameChallenge =
   LogicChallenge | MemoryChallenge | SpeedChallenge | AttentionChallenge | PatternChallenge;
 
 // Ejemplo de contenido
@@ -259,15 +262,14 @@ interface GameDefinition<
   skills: readonly ProgrammingSkill[];
   instructions: readonly string[];
   levels: LevelTable<P>; // exactamente los niveles 1..10 (tipo Record<DifficultyLevel, P>)
-  generate(params: GenerationParams<P>): C;
+  generate(params: GenerationParams<C, P>): C;
   scoring?: Partial<ScoringConfig>; // override declarativo (p.ej. Speed pondera más el tiempo)
 }
 
-interface GenerationParams<P> {
-  level: DifficultyLevel;
+interface GenerationParams<C, P> {
+  identity: ChallengeIdentity<C['area']>; // id, gameId, area, level, seed ya calculados
   profile: P;
-  random: RandomGenerator; // ya sembrado con el seed del challenge
-  seed: Seed;
+  random: RandomGenerator; // ya sembrado con identity.seed
 }
 
 // Punto de entrada público y reproducible:
@@ -275,7 +277,8 @@ function generateChallenge<C, P>(
   game: GameDefinition<C, P>,
   opts: { level: DifficultyLevel; seed: number },
 ): C;
-// lanza InvalidSeedError si seed no es uint32 entero (error de programación, no silencioso)
+// lanza InvalidSeedError si seed no es uint32 entero, y ChallengeGenerationError si el generador
+// devuelve un challenge inválido (validateChallenge) o altera la identidad. Nada falla en silencio.
 ```
 
 El renderer de React vive aparte:
@@ -289,7 +292,8 @@ interface GameModule<C extends Challenge> {
 ```
 
 `games/registry.ts` es el único sitio donde se enumeran los juegos. El dominio conoce solo `GameDefinition`
-vía `GameRegistry` (`get(id): GameDefinition | undefined`, `list()`, `byArea()`).
+vía `GameRegistry` (`get(id): GameDefinition | undefined`, `list()`, `byArea()`). `createGameRegistry`
+valida cada tabla de niveles al arrancar: un juego mal definido falla al inicio, no a mitad de sesión.
 
 ---
 
@@ -399,26 +403,28 @@ interface ChallengeRecord {
   challengeId: ChallengeId;
   kind: string; // content.kind → breakdowns por tipo
   skills: readonly ProgrammingSkill[];
-  presentedAt: number;
-  respondStartedAt: number; // tras la fase de estudio
-  answeredAt: number | null;
-  responseTimeMs: number | null; // answeredAt - respondStartedAt
   outcome: 'correct' | 'incorrect' | 'timed-out' | 'skipped';
+  answer: Answer | null;
   attempts: number;
-  streakAfter: number;
+  presentedAt: number | null; // null si nunca se mostró (skipped)
+  respondStartedAt: number | null; // tras la fase de estudio
+  answeredAt: number | null;
+  responseTimeMs: number | null; // answeredAt - respondStartedAt, solo respuestas a tiempo
   points: ChallengePoints; // desglose del scoring (ver §7)
 }
 
 interface PerformanceMetrics {
   total: number;
+  attempted: number; // total − skipped
   correct: number;
   incorrect: number;
   timedOut: number;
   skipped: number;
-  accuracy: number; // correct / answeredOrExpired (skipped no cuenta si la sesión se abandonó)
+  accuracy: number; // correct / attempted (timed-out cuenta como fallo; skipped no cuenta); 0 si attempted = 0
   averageResponseMs: number | null;
   medianResponseMs: number | null; // la mediana es la usada por la dificultad adaptativa (robusta a outliers)
-  longestStreak: number;
+  fastestResponseMs: number | null;
+  longestStreak: number; // derivada de la secuencia de outcomes, no almacenada
   byKind: Record<string, { total: number; correct: number }>;
   bySkill: Partial<Record<ProgrammingSkill, { total: number; correct: number }>>;
 }
@@ -543,11 +549,11 @@ registros; en Patterns, composición de 3 transformaciones).
 
 ```ts
 interface DifficultyStrategy {
-  determineNextLevel(
-    current: DifficultyLevel,
-    performance: PerformanceMetrics,
-    targetMs: number,
-  ): LevelRecommendation;
+  determineNextLevel(context: {
+    currentLevel: DifficultyLevel;
+    performance: PerformanceMetrics;
+    targetMs: number;
+  }): LevelRecommendation;
 }
 interface LevelRecommendation {
   level: DifficultyLevel;
