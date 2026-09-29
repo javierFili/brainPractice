@@ -10,7 +10,7 @@ describe('mulberry32', () => {
   it('reproduces the same stream for the same seed (golden values)', () => {
     const random = seeded(12345);
     expect([random.next(), random.next(), random.next()]).toEqual([
-      0.9797282677609473, 0.3067522644996643, 0.484205421525985,
+      0.6931933513842523, 0.8536368538625538, 0.06626646220684052,
     ]);
   });
 
@@ -25,6 +25,17 @@ describe('mulberry32', () => {
     const mean = values.reduce((a, b) => a + b, 0) / values.length;
     expect(mean).toBeGreaterThan(0.49);
     expect(mean).toBeLessThan(0.51);
+  });
+
+  it('gives independent first outputs for nearby and evenly spaced seeds', () => {
+    // Guards the seed scrambling: without it, the first draw of consecutive seeds is correlated.
+    for (const seedOf of [(i: number) => i, (i: number) => i * 7919 + 1]) {
+      const below = Array.from({ length: 400 }, (_, i) => seeded(seedOf(i)).next()).filter(
+        (v) => v < 0.5,
+      ).length;
+      expect(below).toBeGreaterThan(160);
+      expect(below).toBeLessThan(240);
+    }
   });
 
   it('works with seed 0', () => {
