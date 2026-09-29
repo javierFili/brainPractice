@@ -1,5 +1,5 @@
 import type { Clock } from '@/domain/time/Clock';
-import { useNow } from '@/hooks/useNow';
+import { useNow } from '@/components/feedback/useNow';
 
 /** Visual + textual countdown. Announces only the last seconds to avoid screen reader noise. */
 export function Countdown({

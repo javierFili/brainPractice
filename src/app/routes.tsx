@@ -1,23 +1,46 @@
 import type { RouteObject } from 'react-router';
 import { AppShell } from '@/components/layout/AppShell';
-import { AssessmentPage } from '@/features/assessment/AssessmentPage';
-import { CatalogPage } from '@/features/catalog/CatalogPage';
-import { GameIntroPage } from '@/features/game-intro/GameIntroPage';
-import { HomePage } from '@/features/home/HomePage';
-import { PlayPage } from '@/features/play/PlayPage';
-import { ProfilePage } from '@/features/profile/ProfilePage';
 import { NotFound } from '@/features/shared/NotFound';
+import { PageLoading } from '@/features/shared/PageLoading';
 
+/** Screens are loaded on demand so the first paint only ships the shell and the current page. */
 export const routes: RouteObject[] = [
   {
     element: <AppShell />,
+    hydrateFallbackElement: <PageLoading />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'games', element: <CatalogPage /> },
-      { path: 'games/:gameId', element: <GameIntroPage /> },
-      { path: 'games/:gameId/play/:level', element: <PlayPage /> },
-      { path: 'assessment', element: <AssessmentPage /> },
-      { path: 'profile', element: <ProfilePage /> },
+      {
+        index: true,
+        lazy: async () => ({ Component: (await import('@/features/home/HomePage')).HomePage }),
+      },
+      {
+        path: 'games',
+        lazy: async () => ({
+          Component: (await import('@/features/catalog/CatalogPage')).CatalogPage,
+        }),
+      },
+      {
+        path: 'games/:gameId',
+        lazy: async () => ({
+          Component: (await import('@/features/game-intro/GameIntroPage')).GameIntroPage,
+        }),
+      },
+      {
+        path: 'games/:gameId/play/:level',
+        lazy: async () => ({ Component: (await import('@/features/play/PlayPage')).PlayPage }),
+      },
+      {
+        path: 'assessment',
+        lazy: async () => ({
+          Component: (await import('@/features/assessment/AssessmentPage')).AssessmentPage,
+        }),
+      },
+      {
+        path: 'profile',
+        lazy: async () => ({
+          Component: (await import('@/features/profile/ProfilePage')).ProfilePage,
+        }),
+      },
       { path: '*', element: <NotFound /> },
     ],
   },

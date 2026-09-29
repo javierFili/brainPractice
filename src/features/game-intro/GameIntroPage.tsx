@@ -9,7 +9,7 @@ import { StatTile } from '@/components/ui/StatTile';
 import { AREAS } from '@/features/shared/areas';
 import { formatMs, formatPercent, formatPoints, formatSeconds } from '@/features/shared/format';
 import { NotFound } from '@/features/shared/NotFound';
-import { useProgress } from '@/hooks/useProgress';
+import { useProgress } from '@/features/shared/useProgress';
 
 export function GameIntroPage() {
   const { gameId = '' } = useParams();
@@ -155,8 +155,8 @@ export function GameIntroPage() {
                 <li key={line}>{line}</li>
               ))}
               <li>
-                Choice answers: click or press 1–{4}. After each answer, read the explanation, then
-                press Enter to continue.
+                Answer with a click, or press the number shown next to an option. After each answer,
+                read the explanation, then press Enter to continue.
               </li>
             </ul>
           </section>

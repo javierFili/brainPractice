@@ -16,9 +16,15 @@ async function waitForChallenge() {
 
 const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** Option buttons are named by their label (the shortcut digit is aria-hidden). */
-const option = (label: string) => screen.getByRole('button', { name: new RegExp(`^${escape(label)}$`) });
+const option = (label: string) =>
+  screen.getByRole('button', { name: new RegExp(`^${escape(label)}$`) });
 
 describe('Play screen', () => {
+  // Load the lazy route module up front so fake-timer tests do not wait on a dynamic import.
+  beforeAll(async () => {
+    await import('./PlayPage');
+  });
+
   it('answers correctly, updates the score, advances, and saves the result when the session ends', async () => {
     const user = userEvent.setup();
     const clock = new FakeClock();
@@ -94,7 +100,9 @@ describe('Play screen', () => {
     try {
       const clock = { now: () => Date.now() };
       renderApp(`${PATH}/1?seed=${choiceSeed}`, { clock });
-      await vi.advanceTimersByTimeAsync(50);
+      // The lazy route resolves over a few event-loop turns; step until the countdown shows.
+      for (let i = 0; i < 50 && !screen.queryByText('90s'); i++)
+        await vi.advanceTimersByTimeAsync(1);
       expect(screen.getByText('90s')).toBeInTheDocument();
       await vi.advanceTimersByTimeAsync(90_000);
       expect(screen.getByText("Time's up")).toBeInTheDocument();

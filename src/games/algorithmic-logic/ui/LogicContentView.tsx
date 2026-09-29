@@ -28,7 +28,7 @@ function DependencyList({ graph, highlight }: { graph: TaskGraph; highlight?: st
       </div>
       <div>
         <h3 className="mb-2 text-xs font-semibold tracking-wide text-slate-400 uppercase">
-          Dependencies (runs before →)
+          Dependencies · <span className="normal-case">x → y means x runs before y</span>
         </h3>
         <ul className="grid gap-1.5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Dependencies">
           {graph.edges.map(([from, to]) => (
@@ -42,6 +42,24 @@ function DependencyList({ graph, highlight }: { graph: TaskGraph; highlight?: st
           ))}
         </ul>
       </div>
+      <details className="text-sm">
+        <summary className="cursor-pointer text-slate-400 hover:text-slate-200">
+          Same dependencies, grouped by module
+        </summary>
+        <dl className="mt-2 grid gap-1 font-mono sm:grid-cols-2">
+          {graph.nodes.map((node) => {
+            const needs = graph.edges.filter(([, to]) => to === node).map(([from]) => from);
+            return (
+              <div key={node} className="flex gap-2">
+                <dt className="text-slate-200">{node}</dt>
+                <dd className="text-slate-400">
+                  {needs.length === 0 ? 'no prerequisites' : `needs ${needs.join(', ')}`}
+                </dd>
+              </div>
+            );
+          })}
+        </dl>
+      </details>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { applySessionResult, emptyProgress } from '@/domain/progress';
 import { gameIdOf } from '@/domain/shared';
@@ -20,7 +20,8 @@ describe('navigation and pages', () => {
     const user = userEvent.setup();
     const { router } = renderApp('/');
     const list = within(
-      screen.getByRole('heading', { name: 'Five cognitive areas' }).parentElement as HTMLElement,
+      (await screen.findByRole('heading', { name: 'Five cognitive areas' }))
+        .parentElement as HTMLElement,
     ).getAllByRole('heading', { level: 3 });
     expect(list.map((h) => h.textContent)).toEqual([
       'Logic',
@@ -30,7 +31,9 @@ describe('navigation and pages', () => {
       'Patterns',
     ]);
     await user.click(screen.getByRole('link', { name: 'Start training' }));
-    expect(router.state.location.pathname).toBe('/games');
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/games');
+    });
   });
 
   it('shows cleared levels in the catalog', async () => {
@@ -52,7 +55,9 @@ describe('navigation and pages', () => {
     expect(screen.getByText('Not played yet.', { exact: false })).toBeInTheDocument();
     await user.click(screen.getByLabelText(/Relaxed timing/));
     await user.click(screen.getByRole('button', { name: 'Start level 7' }));
-    expect(router.state.location.pathname).toBe('/games/algorithmic-logic/play/7');
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/games/algorithmic-logic/play/7');
+    });
     expect(router.state.location.search).toBe('?assisted=1');
   });
 

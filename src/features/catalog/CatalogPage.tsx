@@ -5,7 +5,7 @@ import { useServices } from '@/app/providers/servicesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Badge } from '@/components/ui/Badge';
 import { AREAS } from '@/features/shared/areas';
-import { useProgress } from '@/hooks/useProgress';
+import { useProgress } from '@/features/shared/useProgress';
 
 export function CatalogPage() {
   const { modules, progress } = useServices();

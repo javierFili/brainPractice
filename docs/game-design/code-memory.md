@@ -22,6 +22,8 @@ texto: "← asked", "✓ answer", "(key)", "(link)"…) para que el jugador apre
 
 ## Habilidades de pensamiento de programación
 
+Habilidades principales declaradas en la definición del juego (las que muestra el catálogo): `working-memory`, `attention`, `algorithmic-thinking` y `logical-reasoning`. La tabla detalla también habilidades secundarias que se ejercitan en tipos concretos.
+
 | Habilidad              | Dónde se entrena                                                              |
 | ---------------------- | ----------------------------------------------------------------------------- |
 | `working-memory`       | Todos los tipos: retener datos exactos sin verlos.                            |

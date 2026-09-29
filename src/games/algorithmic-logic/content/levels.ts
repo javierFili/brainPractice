@@ -8,7 +8,7 @@ const seconds = (limit: number, target: number) => ({
 });
 
 /**
- * Level design for Algorithmic Logic (rationale per level in GAME_DESIGN.md).
+ * Level design for Algorithmic Logic (rationale per level in docs/game-design/algorithmic-logic.md).
  * Difficulty grows along several axes at once — graph size, program constructs, rule strength —
  * and new reasoning types appear instead of bigger numbers.
  */

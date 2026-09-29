@@ -67,56 +67,58 @@ Esto **ya está forzado por ESLint** (`eslint.config.js`): en las capas puras es
 ```text
 src/
 ├── app/
-│   ├── App.tsx
-│   ├── router.tsx
-│   ├── providers/ServicesProvider.tsx   # DI: engine, registry, clock, repository
-│   └── composition.ts                   # construye los servicios reales (único sitio con `new SystemClock()`)
+│   ├── App.tsx                 # router + ServicesProvider
+│   ├── routes.tsx              # tabla de rutas (compartida con los tests)
+│   ├── composition.ts          # createServices(): conecta dominio y adaptadores
+│   └── providers/              # ServicesProvider, useServices
 │
-├── domain/
-│   ├── shared/        # CognitiveArea, DifficultyLevel, ProgrammingSkill, ids con marca, Result<T,E>
-│   ├── random/        # RandomGenerator, mulberry32, deriveSeed, helpers (int, pick, shuffle, sample)
+├── domain/                     # TS puro
+│   ├── shared/        # CognitiveArea, DifficultyLevel (+tiers), ProgrammingSkill, ids con marca, Result, DomainError
+│   ├── random/        # RandomGenerator, SeedSource, Seed, mulberry32, deriveSeed, sampling, weightedPick
 │   ├── time/          # Clock (solo interfaz)
-│   ├── challenge/     # Challenge<Area, Content> genérico, ResponseFormat, Answer, evaluateAnswer, validateChallenge
-│   ├── difficulty/    # DifficultyProfile, tiers, DifficultyStrategy, RuleBasedDifficultyStrategy
-│   ├── scoring/       # ScoringStrategy, ScoringConfig, StandardScoringStrategy
-│   ├── session/       # SessionState, sessionReducer, PerformanceMetrics, computeMetrics
-│   ├── game/          # GameDefinition, GameRegistry
-│   ├── progress/      # UserProgress, applySessionResult, ProgressRepository (puerto)
-│   └── assessment/    # AssessmentDefinition, CognitiveScore, CognitiveProfile
+│   ├── challenge/     # Challenge<Area, Content>, formatos de respuesta, evaluateAnswer, validateChallenge, builders
+│   ├── difficulty/    # DifficultyProfile, LevelTable, DifficultyStrategy, createRuleBasedDifficulty
+│   ├── scoring/       # ScoringStrategy, ScoringConfig, createStandardScoring
+│   ├── session/       # SessionState, sessionReducer, selectors, ChallengeRecord, PerformanceMetrics, GameResult
+│   ├── game/          # GameDefinition, generateChallenge, retryGeneration, GameRegistry
+│   ├── progress/      # UserProgress, applySessionResult, applyAssessmentResult, guards, ProgressRepository (puerto)
+│   └── assessment/    # AssessmentDefinition, planAssessment, scoreAssessment, CognitiveProfile
 │
-├── engine/
-│   ├── GameEngine.ts      # resuelve juego → genera challenges → crea GameSession
-│   ├── GameSession.ts     # fachada con estado sobre sessionReducer + Clock + subscribe()
-│   └── AssessmentEngine.ts  (Fase 9)
+├── engine/                     # TS puro con estado
+│   ├── GameEngine.ts           # juego → seeds → challenges → GameSession
+│   ├── GameSession.ts          # fachada sobre sessionReducer + Clock + subscribe()
+│   └── AssessmentEngine.ts     # encadena GameSessions cortas y puntúa el perfil
 │
 ├── games/
-│   ├── registry.ts        # lista de GameModules
-│   ├── logic/
-│   │   ├── content/       # levels.ts, generators/*.ts, solvers/*.ts  (puro)
-│   │   ├── ui/            # renderers de cada content.kind
-│   │   └── index.ts       # export const logicModule: GameModule
-│   ├── memory/  speed/  attention/  patterns/   (misma forma)
+│   ├── types.ts                # GameModule, ContentViewProps, LocateBinding, defineGameModule
+│   ├── registry.ts             # única lista de juegos
+│   ├── assessment.ts           # batería del assessment (contenido, puro)
+│   └── <game-id>/
+│       ├── content/            # types, levels, generators/, solvers/, definition, __tests__/ (puro)
+│       ├── ui/                 # ContentView del juego (+ tests)
+│       └── index.ts            # export const xModule = defineGameModule(...)
 │
-├── infrastructure/
-│   ├── SystemClock.ts
-│   ├── CryptoSeedSource.ts
-│   └── LocalStorageProgressRepository.ts
-│
+├── infrastructure/             # systemClock, cryptoSeedSource, LocalStorageProgressRepository
 ├── components/
-│   ├── ui/            # Button, Card, Badge, Kbd, ProgressBar…
+│   ├── ui/            # Button, ButtonLink, Badge, StatTile, ProgressBar
 │   ├── layout/        # AppShell, PageHeader
-│   ├── feedback/      # AnswerFeedback, Timer, ScoreTicker
-│   └── response/      # inputs genéricos por ResponseFormat (choice, ordering, locate, numeric)
-│
+│   ├── feedback/      # Countdown, useNow
+│   └── response/      # ChoiceResponse, NumericResponse, OrderingResponse (locate lo pinta cada juego)
 ├── features/
-│   ├── home/  catalog/  game-intro/  play/  results/  profile/  assessment/
-│
+│   ├── home/  catalog/  game-intro/  profile/
+│   ├── play/          # PlayPage, PlaySession, SessionRunner, ChallengeStage, AnswerFeedback, hooks de ciclo de vida
+│   ├── results/       # ResultsView
+│   ├── assessment/    # AssessmentPage, AssessmentFlow, AssessmentResultView, disclaimer
+│   └── shared/        # areas, formato, NotFound, useProgress
 └── test/
     ├── setup.ts
-    └── fakes/         # FakeClock, SequenceRandom, InMemoryProgressRepository, renderWithServices
+    ├── fakes/         # FakeClock, FixedSeedSource, InMemoryProgressRepository
+    ├── fixtures/      # fixtureGame, results
+    ├── renderApp.tsx  # app real con adaptadores deterministas
+    └── challenges.ts  # challenge que mostrará una sesión con seed dado
 ```
 
-Los tests se colocan **junto al código** (`*.test.ts`). `src/test/` solo contiene setup y fakes compartidos.
+Los tests se colocan **junto al código** (`*.test.ts(x)`). `src/test/` solo contiene setup, fakes y helpers.
 
 ---
 
@@ -365,36 +367,37 @@ type SessionEvent =
 function sessionReducer(
   state: SessionState,
   event: SessionEvent,
+  deps: { scoring: ScoringStrategy },
 ): Result<SessionState, SessionError>;
-// SessionError: 'SESSION_FINISHED' | 'INVALID_TRANSITION' | 'INVALID_ANSWER' (con AnswerError)
+// SessionError: SESSION_FINISHED | INVALID_TRANSITION | INVALID_ANSWER (con AnswerError) | NOT_EXPIRED (remainingMs) | TIME_WENT_BACKWARDS
 
-// engine/GameSession — añade Clock, scoring y suscripción
+// engine/GameSession — añade Clock, construcción del resultado y suscripción.
+// Sintaxis de propiedad: las implementaciones son closures sin `this`, seguras de desestructurar.
 interface GameSession {
-  readonly state: SessionSnapshot; // inmutable
-  present(): Result<void, SessionError>;
-  endStudy(): Result<void, SessionError>;
-  submitAnswer(a: Answer): Result<AnswerOutcome, SessionError>;
-  expire(): Result<AnswerOutcome, SessionError>;
-  advance(): Result<void, SessionError>;
-  finish(): GameResult;
-  subscribe(listener: () => void): () => void; // para useSyncExternalStore
+  readonly getState: () => SessionState; // snapshot inmutable (useSyncExternalStore)
+  readonly present: () => Result<void, SessionError>;
+  readonly endStudy: () => Result<void, SessionError>;
+  readonly submitAnswer: (a: Answer) => Result<ChallengeRecord, SessionError>;
+  readonly expire: () => Result<ChallengeRecord, SessionError>;
+  readonly advance: () => Result<void, SessionError>;
+  readonly finish: () => GameResult; // idempotente
+  readonly getResult: () => GameResult | null;
+  readonly subscribe: (listener: () => void) => () => void;
 }
 
-interface GameEngine {
-  startSession(config: SessionConfig): GameSession;
-}
 interface SessionConfig {
-  gameId: GameId;
+  gameId: string;
   level: DifficultyLevel;
-  seed?: Seed; // si falta, SeedSource
-  challengeCount?: number; // default: profile.challengeCount
-  assisted?: boolean; // modo accesible: sin límite de tiempo (resultado marcado como assisted)
+  seed?: number; // si falta, SeedSource
+  challengeCount?: number; // default: profile.challengeCount (1–100)
+  assisted?: boolean; // modo accesible: sin límite de tiempo (resultado marcado)
 }
 ```
 
 **Errores**: los errores esperables (transición inválida, respuesta mal formada, sesión terminada) se
 devuelven como `Result` tipado — nunca se ignoran ni se tragan. Las violaciones de programación
-(juego inexistente, seed inválido, `challengeCount < 1`) lanzan excepciones específicas en `startSession`.
+(juego inexistente, seed inválido, `challengeCount` fuera de rango) lanzan excepciones específicas en
+`startSession`.
 
 ### 6.3 Registro por challenge y resultado
 
@@ -410,6 +413,7 @@ interface ChallengeRecord {
   respondStartedAt: number | null; // tras la fase de estudio
   answeredAt: number | null;
   responseTimeMs: number | null; // answeredAt - respondStartedAt, solo respuestas a tiempo
+  targetMs: number; // objetivo del challenge: permite medir el ritmo por challenge
   points: ChallengePoints; // desglose del scoring (ver §7)
 }
 
@@ -424,6 +428,7 @@ interface PerformanceMetrics {
   averageResponseMs: number | null;
   medianResponseMs: number | null; // la mediana es la usada por la dificultad adaptativa (robusta a outliers)
   fastestResponseMs: number | null;
+  medianPace: number | null; // mediana de responseTime / targetMs: 1 = al ritmo esperado
   longestStreak: number; // derivada de la secuencia de outcomes, no almacenada
   byKind: Record<string, { total: number; correct: number }>;
   bySkill: Partial<Record<ProgrammingSkill, { total: number; correct: number }>>;
@@ -537,9 +542,11 @@ interface LogicProfile extends DifficultyProfile {
 
 Las dimensiones del documento (`complexity`, `memoryLoad`, `sequenceLength`, `numberOfDistractors`,
 `timeLimit`, `numberOfElements`, `abstractionLevel`, `visualNoise`, `decisionCount`, `dependencyCount`) son el
-**vocabulario común**: cada juego usa las que tienen sentido con esos mismos nombres. Un test de propiedad
-verifica por juego que ninguna dimensión **decrece** al subir de nivel y que al menos una **crece** entre
-niveles consecutivos (salvo cambios de `kinds` documentados).
+**vocabulario común**: cada juego usa las que tienen sentido con esos mismos nombres. Los tests de cada juego
+verifican que sus dimensiones principales de carga no decrecen al subir de nivel. Hay dos excepciones
+deliberadas, cuando aparece un tipo de challenge nuevo que aporta la dificultad: en Logic, `dependencyCount`
+baja de 12 a 11 en L8 al introducir `critical-path`; en Pattern Architect, el tamaño de los árboles baja de 7
+a 6 en L9 cuando pasan a componerse dos transformaciones.
 
 Los niveles 9–10 no aumentan tamaño a secas: añaden **tipos de razonamiento** nuevos (p.ej. en Logic,
 "¿cuántas rondas mínimas con ejecución en paralelo?" → camino crítico; en Memory, preguntas cruzadas entre
@@ -551,8 +558,7 @@ registros; en Patterns, composición de 3 transformaciones).
 interface DifficultyStrategy {
   determineNextLevel(context: {
     currentLevel: DifficultyLevel;
-    performance: PerformanceMetrics;
-    targetMs: number;
+    performance: PerformanceMetrics; // incluye medianPace, así que no hace falta un targetMs global
   }): LevelRecommendation;
 }
 interface LevelRecommendation {
@@ -586,15 +592,22 @@ Cada generador tiene un **solver independiente** en `content/solvers/`:
   condición al revés), nunca aleatorios sin sentido, y **distintos** entre sí y de la solución.
 - Tests de propiedad por nivel sobre cientos de seeds: validez, unicidad, determinismo, rangos del perfil.
 
-Borradores de juegos (el diseño completo por nivel irá en `GAME_DESIGN.md`, fases 4–8):
+Tipos de challenge implementados (diseño completo por nivel en `GAME_DESIGN.md` y `docs/game-design/`):
 
-| Juego                 | Tipos de challenge                                                                                | Ejes de dificultad principales                                                     |
-| --------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| **Algorithmic Logic** | dependency-order, program-trace, constraint-arrangement, critical-path (9–10)                     | nodos, dependencias, anidación, variables, restricciones                           |
-| **Code Memory**       | record-recall, sequence-recall, variable-state (asignaciones encadenadas), cross-reference (9–10) | campos/registros, longitud, tiempo de estudio ↓, interferencia (valores similares) |
-| **Code Scan**         | same-or-different, find-the-diff-line (typo, operador, variable, condición, número)               | longitud del snippet, sutileza del cambio, límite de tiempo ↓                      |
-| **Bug Hunter**        | rule-violation (registros/listas/pseudocódigo con una anomalía respecto a una regla)              | tamaño, distractores near-miss, reglas simultáneas, ruido visual                   |
-| **Pattern Architect** | sequence-rule, transform-inference (ejemplos entrada→salida), structure-analogy (árboles/grafos)  | composición de reglas (1→3), abstracción, estructuras                              |
+| Juego                 | Tipos de challenge                                                                                             | Ejes de dificultad principales                                                    |
+| --------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Algorithmic Logic** | dependency-order, dependency-count (5–8, 10), program-trace, constraint-arrangement (3+), critical-path (8–10) | nodos, dependencias, construcciones del programa, variables, fuerza de las reglas |
+| **Code Memory**       | record-recall, sequence-recall, variable-state, position-recall, cross-reference (7+), foreign-key-join (9–10) | registros/campos, longitud, tiempo de estudio por ítem ↓, interferencia           |
+| **Code Scan**         | same-or-different, find-the-change, classify-the-change (7+)                                                   | longitud, líneas casi idénticas, sutileza del cambio, límite de tiempo ↓          |
+| **Bug Hunter**        | sequence-anomaly, schema-violation, code-rule, multi-rule (5+)                                                 | nº de ítems, reglas simultáneas, campos de ruido, señuelos legales                |
+| **Pattern Architect** | number-sequence (1–6), symbol-grid (1–6), transform-inference (4+), structure-match (7+), tree-analogy (7+)    | composición de reglas (1→3), abstracción, estructuras                             |
+
+--------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Algorithmic Logic** | dependency-order, program-trace, constraint-arrangement, critical-path (9–10) | nodos, dependencias, anidación, variables, restricciones |
+| **Code Memory** | record-recall, sequence-recall, variable-state (asignaciones encadenadas), cross-reference (9–10) | campos/registros, longitud, tiempo de estudio ↓, interferencia (valores similares) |
+| **Code Scan** | same-or-different, find-the-diff-line (typo, operador, variable, condición, número) | longitud del snippet, sutileza del cambio, límite de tiempo ↓ |
+| **Bug Hunter** | rule-violation (registros/listas/pseudocódigo con una anomalía respecto a una regla) | tamaño, distractores near-miss, reglas simultáneas, ruido visual |
+| **Pattern Architect** | sequence-rule, transform-inference (ejemplos entrada→salida), structure-analogy (árboles/grafos) | composición de reglas (1→3), abstracción, estructuras |
 
 ---
 
@@ -602,25 +615,33 @@ Borradores de juegos (el diseño completo por nivel irá en `GAME_DESIGN.md`, fa
 
 Sin librería de estado global:
 
-- **Servicios** (engine, registry, repository, clock) se inyectan con un `ServicesProvider` (contexto). Los
-  tests montan el árbol con fakes (`FakeClock`, `FixedSeedSource`, `InMemoryProgressRepository`).
-- **Sesión**: `useGameSession(config)` crea la `GameSession` y la expone con `useSyncExternalStore`. La UI lee
-  el snapshot y llama a comandos; no calcula nada.
-- **Timers** (`useChallengeTimer`): solo presentan el tiempo restante y disparan `expire()`/`endStudy()`.
+- **Servicios** (`engine`, `clock`, `modules`, `progress`, `getModule`) se crean en `createServices` y se
+  inyectan con `ServicesProvider`. Producción y tests solo difieren en los adaptadores que se pasan.
+- **Sesión**: `PlaySession` crea la `GameSession` una vez (se remonta con otro `key` para repetir) y
+  `SessionRunner` la lee con `useSyncExternalStore`. La UI lee el snapshot y llama a comandos; no calcula nada.
+  `SessionRunner` es el mismo bucle de juego para partidas normales y para el assessment.
+- **Timers** (`useSessionLifecycle`): `present()` tras el paint (`requestAnimationFrame`), y timers que solo
+  _solicitan_ `endStudy()`/`expire()`; si llegan antes de tiempo el dominio responde `NOT_EXPIRED` y se
+  reprograman. La cuenta atrás visual (`Countdown`) se re-renderiza sola, sin re-renderizar el challenge.
+- **Persistencia**: `usePersistResult` aplica `applySessionResult` y guarda una única vez por resultado.
 
 ### Rutas
 
 ```text
 /                               Home
 /games                          Catálogo (5 áreas)
-/games/:gameId                  Intro: objetivo, instrucciones, selector de nivel, récord, métricas
-/games/:gameId/play/:level      Juego (?seed=123 para reproducir); al terminar muestra resultados en la misma ruta
-/profile                        Progreso local
-/assessment                     (Fase 9)
+/games/:gameId                  Intro: objetivo del nivel, instrucciones, selector de nivel, récord
+/games/:gameId/play/:level      Juego (?seed=123 reproduce, ?assisted=1 sin límites); resultados en la misma ruta
+/assessment                     Programming Cognitive Assessment
+/profile                        Progreso local (niveles, sesiones recientes, último assessment)
 ```
 
+Cada pantalla se carga de forma diferida (`lazy` de React Router, con `PageLoading` como fallback): el
+bundle inicial solo incluye el shell, los servicios y los juegos.
+
 Mostrar los resultados en la ruta de juego evita pasar el resultado por el estado del router (se perdería al
-recargar). "Repetir" crea sesión con seed nuevo; "Siguiente nivel" navega a `level + 1`.
+recargar). "Repetir" crea sesión con seed nuevo; "Siguiente nivel" navega a `level + 1`; "Replay this seed"
+reproduce los mismos challenges.
 
 ---
 
@@ -629,18 +650,22 @@ recargar). "Repetir" crea sesión con seed nuevo; "Siguiente nivel" navega a `le
 ```ts
 interface UserProgress {
   schemaVersion: 1;
-  games: Record<string, { levels: Partial<Record<DifficultyLevel, LevelRecord>> }>;
-  recentSessions: readonly SessionSummary[]; // últimas 50
+  games: Record<string, Partial<Record<DifficultyLevel, LevelRecord>>>;
+  recentSessions: readonly SessionSummary[]; // últimas 50, más reciente primero
+  assessments?: readonly AssessmentSummary[]; // opcional: compatible con progreso guardado antes
 }
 interface LevelRecord {
   plays: number;
   bestScore: number;
   bestAccuracy: number;
   bestPerformanceIndex: number;
+  bestMedianResponseMs: number | null;
   lastPlayedAt: number;
 }
 
-function applySessionResult(progress: UserProgress, result: GameResult): UserProgress; // puro, en domain
+applySessionResult(progress, result); // puro: toda sesión va a recentSessions; solo las completas suman plays;
+//                                        solo las completas y no-assisted pueden fijar récords
+applyAssessmentResult(progress, result); // puro: nunca toca récords de nivel
 
 interface ProgressRepository {
   // asíncrono: decisión D1
@@ -650,44 +675,45 @@ interface ProgressRepository {
 }
 ```
 
-`LocalStorageProgressRepository` valida el JSON leído con type guards escritos a mano y un campo
-`schemaVersion` (datos corruptos → se descartan y se informa, no se rompe la app). Las sesiones `assisted`
-se guardan pero no cuentan como récord.
+`LocalStorageProgressRepository` valida el JSON leído con type guards escritos a mano (`isUserProgress`) y
+`schemaVersion`: datos corruptos → se descartan con un aviso en consola, no se rompe la app. Los fallos al
+guardar (cuota, modo privado) se propagan como Promise rechazada y la UI lo indica.
 
 ---
 
-## 12. Cognitive Assessment (preparado, Fase 9)
+## 12. Cognitive Assessment
 
 ```ts
-interface AssessmentDefinition {
-  id;
-  name;
-  sections: readonly AssessmentSection[];
-}
 interface AssessmentSection {
   area: CognitiveArea;
-  gameId: GameId;
-  plan: readonly DifficultyLevel[];
-} // p.ej. [2,4,6,8]
+  gameId: string;
+  levels: readonly DifficultyLevel[];
+  challengesPerLevel: number;
+}
+interface AssessmentDefinition {
+  id: string;
+  name: string;
+  sections: readonly AssessmentSection[];
+}
 interface CognitiveScore {
   value: number /* 0–100 */;
   band: 'developing' | 'solid' | 'strong' | 'exceptional';
   sampleSize: number;
 }
-interface CognitiveProfile {
-  logic;
-  memory;
-  speed;
-  attention;
-  patterns: CognitiveScore;
-  overall: CognitiveScore;
-}
+type CognitiveProfile = Record<CognitiveArea, CognitiveScore | null> & { overall: CognitiveScore };
 ```
 
-El `AssessmentEngine` **reutiliza `GameEngine`** (una sesión por sección) y agrega los `performanceIndex`
-ponderados por nivel. Se presenta como **Programming Cognitive Index / Performance Profile**, nunca como IQ:
-las puntuaciones son relativas a la dificultad de los ítems, **no a normas poblacionales**, y la UI incluye
-un aviso explícito de que es una herramienta recreativa de entrenamiento, no un diagnóstico psicométrico.
+- Batería por defecto (`games/assessment.ts`): 5 áreas × niveles 2, 5 y 8 × 2 challenges = 30 challenges.
+- `startAssessment(definition, engine, clock)` **reutiliza `GameEngine`**: cada (área, nivel) es una sesión
+  corta normal. No existe un segundo bucle de juego.
+- Puntuación por área = `Σ m(L)·PI(L) / Σ m(L)` (m(L) = 1 + 0.25·(L − 1)): la evidencia en niveles altos pesa
+  más. Un área sin respuestas es `null` ("no medida"), nunca 0. `overall` (Programming Cognitive Index) =
+  media de las áreas medidas. Bandas: < 40 developing, < 60 solid, < 80 strong, ≥ 80 exceptional.
+- Las rondas del assessment **no** se guardan como sesiones ni récords de nivel (2 challenges no deben
+  "superar" un nivel); se guarda un `AssessmentSummary`.
+- Se presenta como **Programming Cognitive Index / Performance Profile**, nunca como IQ: las puntuaciones
+  son relativas a la dificultad de los ítems, **no a normas poblacionales**, y la UI muestra un aviso
+  explícito de que es una herramienta recreativa, no un instrumento psicométrico ni un diagnóstico.
 
 ---
 

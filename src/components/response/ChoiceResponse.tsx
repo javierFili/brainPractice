@@ -13,6 +13,8 @@ interface Props {
 /** Options answer on click or with number keys 1–n. State is shown with text + icon, not only colour. */
 export function ChoiceResponse({ response, disabled, review, onSelect, monospace = false }: Props) {
   const { options } = response.question;
+  // Long options (e.g. whole execution orders) are easier to compare stacked in one column.
+  const stacked = options.some((option) => option.label.length > 36);
 
   useEffect(() => {
     if (disabled) return undefined;
@@ -36,7 +38,7 @@ export function ChoiceResponse({ response, disabled, review, onSelect, monospace
   return (
     <fieldset>
       <legend className="sr-only">Answer options</legend>
-      <ul className="grid gap-2 sm:grid-cols-2">
+      <ul className={`grid gap-2 ${stacked ? '' : 'sm:grid-cols-2'}`}>
         {options.map((option, i) => {
           const isSolution = review !== null && option.id === response.solution.optionId;
           const isWrongPick = review !== null && option.id === review.selectedId && !isSolution;

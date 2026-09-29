@@ -18,6 +18,8 @@ resistencia a los **near-misses**: valores inusuales pero legales colocados a pr
 
 ## Habilidades de pensamiento de programación
 
+Habilidades principales declaradas en la definición del juego (las que muestra el catálogo): `attention`, `debugging`, `abstraction` y `pattern-recognition`. La tabla detalla también habilidades secundarias que se ejercitan en tipos concretos.
+
 | Habilidad             | Dónde se entrena                                                                                             |
 | --------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `attention`           | Todos los tipos: recorrer cada elemento contra cada regla sin saltarse ninguno.                              |

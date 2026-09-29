@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router';
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
-  `rounded-md px-3 py-1.5 text-sm transition-colors ${isActive ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`;
+  `rounded-md px-2 py-1.5 text-sm transition-colors sm:px-3 ${isActive ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`;
 
 export function AppShell() {
   return (
@@ -13,10 +13,10 @@ export function AppShell() {
         Skip to content
       </a>
       <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3 sm:px-6">
           <NavLink
             to="/"
-            className="flex items-center gap-2 font-mono text-sm font-semibold tracking-tight text-white"
+            className="flex items-center gap-2 font-mono text-sm font-semibold tracking-tight whitespace-nowrap text-white"
           >
             <span aria-hidden="true" className="text-sky-400">
               {'{ }'}
@@ -24,7 +24,7 @@ export function AppShell() {
             brain<span className="text-sky-400">practice</span>
           </NavLink>
           <nav aria-label="Main">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-0.5 sm:gap-1">
               <li>
                 <NavLink to="/games" className={navClass}>
                   Games
