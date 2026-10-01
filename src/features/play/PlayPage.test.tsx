@@ -48,6 +48,11 @@ describe('Play screen', () => {
     await user.click(screen.getByRole('button', { name: 'End session' }));
     expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
     expect(screen.getByText(/Session ended early/)).toBeInTheDocument();
+    // TRAIN → LEARN: the results point to lessons that rely on this skill.
+    expect(screen.getByRole('link', { name: 'Lesson: Conditions' })).toHaveAttribute(
+      'href',
+      '/learn/conditions',
+    );
     await waitFor(() => {
       expect(repository.stored?.recentSessions).toHaveLength(1);
     });

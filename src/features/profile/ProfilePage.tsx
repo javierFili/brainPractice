@@ -1,3 +1,6 @@
+import { Link } from 'react-router';
+import { courseProgress, emptyLearningProgress } from '@/domain/learning';
+import { useStored } from '@/features/shared/useStored';
 import { useState } from 'react';
 import { COGNITIVE_AREAS, DIFFICULTY_LEVELS } from '@/domain/shared';
 import { AREAS } from '@/features/shared/areas';
@@ -9,9 +12,16 @@ import { formatMs, formatPercent, formatPoints } from '@/features/shared/format'
 import { useProgress } from '@/features/shared/useProgress';
 
 export function ProfilePage() {
-  const { modules, progress, getModule } = useServices();
+  const { modules, progress, getModule, course, learning, profile } = useServices();
   const { state, clear } = useProgress(progress);
+  const learn = useStored(learning, emptyLearningProgress);
   const [confirming, setConfirming] = useState(false);
+  const resetAll = async () => {
+    // One reset for everything this device stores: games, learning and the profile.
+    await Promise.all([learning.clear(), profile.clear()]);
+    await clear();
+    learn.reload();
+  };
 
   if (state.status === 'loading') return <p className="text-slate-400">Loading progress…</p>;
   if (state.status === 'error')
@@ -28,14 +38,14 @@ export function ProfilePage() {
       <PageHeader
         eyebrow="Progress"
         title="Your training"
-        description="Stored only in this browser. Best performance per level; a level is cleared at 70."
+        description="Stored only in this browser. Best performance per level; a level is cleared at 70. Reset clears games, lessons and your goal."
         actions={
           confirming ? (
             <>
               <Button
                 variant="danger"
                 onClick={() => {
-                  void clear().then(() => {
+                  void resetAll().then(() => {
                     setConfirming(false);
                   });
                 }}
@@ -57,13 +67,40 @@ export function ProfilePage() {
               onClick={() => {
                 setConfirming(true);
               }}
-              disabled={recentSessions.length === 0 && assessments.length === 0}
+              disabled={
+                recentSessions.length === 0 &&
+                assessments.length === 0 &&
+                (learn.state.status !== 'ready' ||
+                  Object.keys(learn.state.value.lessons).length === 0)
+              }
             >
               Reset progress
             </Button>
           )
         }
       />
+      {learn.state.status === 'ready' && Object.keys(learn.state.value.lessons).length > 0 && (
+        <section
+          aria-labelledby="learning-title"
+          className="mb-10 rounded-xl border border-slate-800 bg-slate-900/40 p-5"
+        >
+          <h2 id="learning-title" className="text-lg font-semibold text-white">
+            {course.title}
+          </h2>
+          {(() => {
+            const summary = courseProgress(course, learn.state.value);
+            return (
+              <p className="mt-1 text-sm text-slate-300">
+                {summary.completedLessons} / {summary.totalLessons} lessons completed ·{' '}
+                {summary.masteredConcepts} / {summary.totalConcepts} concepts mastered ·{' '}
+                <Link to="/learn" className="text-sky-300 underline-offset-2 hover:underline">
+                  learning path
+                </Link>
+              </p>
+            );
+          })()}
+        </section>
+      )}
       {latest && (
         <section
           aria-labelledby="assessment-title"

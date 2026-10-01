@@ -1,5 +1,6 @@
 import { createGameRegistry } from '@/domain/game';
 import type { Course, LearningProgressRepository } from '@/domain/learning';
+import type { ProfileRepository } from '@/domain/profile';
 import type { ProgressRepository } from '@/domain/progress';
 import type { SeedSource } from '@/domain/random';
 import type { Clock } from '@/domain/time/Clock';
@@ -14,6 +15,7 @@ export interface AppServices {
   readonly progress: ProgressRepository;
   readonly course: Course;
   readonly learning: LearningProgressRepository;
+  readonly profile: ProfileRepository;
   readonly getModule: (gameId: string) => GameModule | undefined;
   /** Where progress lives: on this device, or only until the tab closes (storage blocked). */
   readonly persistence: Persistence;
@@ -26,6 +28,7 @@ export interface ServiceInputs {
   readonly progress: ProgressRepository;
   readonly course: Course;
   readonly learning: LearningProgressRepository;
+  readonly profile: ProfileRepository;
   readonly persistence?: Persistence;
 }
 
@@ -37,6 +40,7 @@ export function createServices({
   progress,
   course,
   learning,
+  profile,
   persistence = 'device',
 }: ServiceInputs): AppServices {
   const registry = createGameRegistry(modules.map((m) => m.definition));
@@ -48,6 +52,7 @@ export function createServices({
     progress,
     course,
     learning,
+    profile,
     getModule: (gameId) => byId.get(gameId),
     persistence,
   };

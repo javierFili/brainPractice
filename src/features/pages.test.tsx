@@ -16,7 +16,7 @@ const logicProgress = applySessionResult(
 );
 
 describe('navigation and pages', () => {
-  it('presents the five cognitive areas on the home page and links to the games', async () => {
+  it('shows new visitors the landing with the five areas and a first step', async () => {
     const user = userEvent.setup();
     const { router } = renderApp('/');
     const list = within(
@@ -30,9 +30,9 @@ describe('navigation and pages', () => {
       'Attention',
       'Patterns',
     ]);
-    await user.click(screen.getByRole('link', { name: 'Start training' }));
+    await user.click(screen.getByRole('link', { name: 'Start with a 2-minute challenge' }));
     await waitFor(() => {
-      expect(router.state.location.pathname).toBe('/games');
+      expect(router.state.location.pathname).toBe('/start');
     });
   });
 

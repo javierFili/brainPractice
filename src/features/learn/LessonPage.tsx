@@ -14,6 +14,7 @@ import type { LessonSession } from '@/engine';
 import { useServices } from '@/app/providers/servicesContext';
 import { ButtonLink } from '@/components/ui/Button';
 import { NotFound } from '@/features/shared/NotFound';
+import { useRecordActivity } from '@/features/shared/useProfile';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { LessonPlayer } from './LessonPlayer';
 import { LessonSummary } from './LessonSummary';
@@ -23,6 +24,7 @@ export function LessonPage() {
   const { lessonId = '' } = useParams();
   const { course } = useServices();
   const { state, update } = useLearning();
+  const recordActivity = useRecordActivity();
   const [attempt, setAttempt] = useState(0);
   const [finished, setFinished] = useState<{
     result: LessonResult;
@@ -36,6 +38,7 @@ export function LessonPage() {
       const result = session.getResult();
       if (!result || !lesson) return;
       setFinished({ result, progress: null, failed: false });
+      recordActivity();
       update((current) => applyLessonResult(current, lesson, result))
         .then((progress) => {
           setFinished({ result, progress, failed: false });
@@ -45,7 +48,7 @@ export function LessonPage() {
           setFinished({ result, progress: null, failed: true });
         });
     },
-    [lesson, update],
+    [lesson, update, recordActivity],
   );
 
   if (!lesson) return <NotFound message="This lesson does not exist." />;

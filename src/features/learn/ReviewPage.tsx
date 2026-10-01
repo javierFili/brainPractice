@@ -14,6 +14,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { formatPercent } from '@/features/shared/format';
 import { PageLoading } from '@/features/shared/PageLoading';
+import { useRecordActivity } from '@/features/shared/useProfile';
 import { relativeDay } from './dates';
 import { LessonPlayer } from './LessonPlayer';
 import { useLearning } from './useLearning';
@@ -22,6 +23,7 @@ import { useLearning } from './useLearning';
 export function ReviewPage() {
   const { course, clock } = useServices();
   const { state, update } = useLearning();
+  const recordActivity = useRecordActivity();
   const [started] = useState(() => clock.now());
   const [done, setDone] = useState<{
     before: LearningProgress;
@@ -39,6 +41,7 @@ export function ReviewPage() {
           ? 0
           : outcomes.reduce((sum, o) => sum + o.effective, 0) / outcomes.length;
       setDone({ before, after: null, credit });
+      recordActivity();
       update((current) =>
         applyReviewResult(current, { outcomes, endedAt: final.endedAt ?? clock.now() }),
       )
@@ -49,7 +52,7 @@ export function ReviewPage() {
           console.error('[learn] Could not save the review', error);
         });
     },
-    [state, update, clock],
+    [state, update, clock, recordActivity],
   );
 
   if (state.status === 'loading') return <PageLoading />;
