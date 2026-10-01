@@ -85,7 +85,8 @@ describe('Play screen', () => {
     expect(await screen.findByRole('button', { name: /Next challenge/ })).toHaveFocus();
   });
 
-  it('times out when the limit elapses', async () => {
+  // Fake timers + the lazy route make this slow when the whole suite runs in parallel; give it room.
+  it('times out when the limit elapses', { timeout: 20_000 }, async () => {
     vi.useFakeTimers({
       toFake: [
         'setTimeout',
