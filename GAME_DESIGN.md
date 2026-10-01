@@ -5,6 +5,12 @@ comunes, la estructura de niveles y el diseño de cada juego y del Cognitive Ass
 cada juego (catálogos, garantías de unicidad, distractores, invariantes) está en
 [`docs/game-design/`](docs/game-design/).
 
+**Conexión con LEARN:** cada concepto de Programming Logic enlaza los juegos y niveles que practican la
+habilidad que exige (`cognitiveLinks`, ver [LEARNING_DESIGN.md](LEARNING_DESIGN.md)); los resultados de
+cada juego muestran a su vez las lecciones relacionadas. Los juegos de elección múltiple tienen
+**invariantes de medición** (`__tests__/measurement.test.ts`): la respuesta no puede adivinarse por la
+forma de las opciones ni por su posición.
+
 **Fuente de verdad:** los perfiles de nivel de `src/games/<id>/content/levels.ts`. Las tablas de este
 documento y de los documentos detallados los resumen; si alguna vez difieren, manda `levels.ts`.
 

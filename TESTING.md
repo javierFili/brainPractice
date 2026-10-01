@@ -17,6 +17,21 @@ npm run coverage    # tests + coverage report (text + coverage/index.html) with 
 | Infrastructure | `src/infrastructure/*.test.ts`   | Ida y vuelta por localStorage, recuperación parcial de datos dañados con copia de seguridad, storage bloqueado (fallback a memoria), fallos del almacenamiento.                                                                                                                                                                                                                          |
 | Application    | `src/features/**/*.test.tsx`     | Comportamiento a través de las rutas reales: responder actualiza el feedback y la puntuación, atajos de teclado, temporizadores que expiran (fake timers), validación de la entrada numérica, reproducción por seed, selección de nivel, reinicio del progreso, flujo del assessment.                                                                                                    |
 
+Además (Phases 2–6):
+
+| Capa              | Dónde                                                               | Qué protege                                                                                                                                                                                                                                |
+| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Pseudocódigo      | `src/domain/pseudocode/*.test.ts`                                   | Semántica (precedencia, ramas, bucles, funciones, recursión), errores para principiantes con línea, límites, traza, que nombres como `constructor` no lleguen al host.                                                                     |
+| Learning          | `src/domain/learning/*.test.ts`, `src/engine/LessonSession.test.ts` | Feedback por tipo (correcto/parcial/incorrecto/respuesta inválida), mastery, Leitner, desbloqueos, máquina de estados de la lección (reintentos, pistas, revelar, checkpoint, doble envío), validador de contenido, recuperación de datos. |
+| Curriculum        | `src/content/programming-logic/course.test.ts`                      | Cada lección cumple los invariantes pedagógicos y **cada respuesta se ejecuta** en el intérprete.                                                                                                                                          |
+| Perfil e insights | `src/domain/profile`, `src/domain/insights`                         | Hábitos (semana, racha sin castigo), daily determinista, perfil cognitivo, recomendaciones explicadas.                                                                                                                                     |
+| Integración Learn | `src/features/learn/learn.test.tsx`                                 | Lección completa con los 7 tipos → mastery → desbloqueo → persistencia; error con diagnóstico, pista y reintento; revelar; bloqueos; ruta y repaso.                                                                                        |
+| Plataforma        | `src/features/dashboard/dashboard.test.tsx`                         | Dashboard, onboarding, daily.                                                                                                                                                                                                              |
+| Accesibilidad     | `src/features/play/accessibility.test.tsx`                          | Flechas entre ítems, confirmación táctil, radiogroup de niveles, opciones descritas.                                                                                                                                                       |
+
+Los timeouts globales (`testTimeout` 15 s, `asyncUtilTimeout` 3 s) absorben la carga de ejecutar todos
+los archivos en paralelo; la única flakiness detectada venía de ahí.
+
 ## Principios
 
 - **Comportamiento antes que implementación.** Los tests de UI usan roles y texto visible (`getByRole`,
@@ -53,4 +68,6 @@ numérico; su cobertura se juzga por los flujos de usuario probados. Perseguir e
 | `test/fixtures/results`                 | Factoría de `GameResult`.                                                                                         |
 | `test/renderApp`                        | `renderApp(path)` renderiza la app real; `renderWithServices(element)` renderiza un elemento con los providers.   |
 | `test/guessability`                     | Heurísticas de adivinación (centroide, mediana, extremos) y distancias (`levenshtein`, `orderDistance`).          |
+| `test/fixtures/learningCourse`          | Curso de 2 lecciones válido para tests de dominio, engine y UI.                                                   |
+| `test/fakes/InMemoryRepository`         | `Repository<T>` en memoria para cualquier slice.                                                                  |
 | `test/challenges`                       | El challenge que mostrará una sesión con un seed dado; etiquetas de las opciones; seeds para un formato concreto. |

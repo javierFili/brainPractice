@@ -1,8 +1,10 @@
 # Learning Engine — Propuesta (Phase 0)
 
-> Estado: **propuesta**, pendiente de aprobación. No hay código de Learning todavía. Este documento
-> fija qué se construye en las fases 2–4, qué se reutiliza del sistema de juegos y qué decisiones
-> arquitectónicas implica.
+> Estado: **implementada** (Phases 2–4). Referencia actual: [LEARNING_ENGINE.md](../LEARNING_ENGINE.md).
+> Desviaciones respecto a esta propuesta: (1) el intérprete de Logic **no** se movió — se escribió uno
+> nuevo y más completo en `domain/pseudocode` (D8 en ARCHITECTURE.md); (2) una lección se supera por su
+> puntuación (≥ 60 %, checkpoint ×2) en lugar de por umbrales de mastery por dimensión, que se mantiene
+> como medida a largo plazo (D10); (3) el desbloqueo es secuencial, sin "test out" todavía.
 
 ## 1. Objetivo
 

@@ -107,14 +107,14 @@
 - **Proposed solution:** helper de test reutilizable `guessability` (centralidad, extremos, posición)
   aplicado a los juegos de elección múltiple.
 
-### P1-10 · No existe el pilar LEARN ⏳ (Phase 2–4)
+### P1-10 · No existe el pilar LEARN ✅ (Phases 2–4)
 
 - **Problem / Why:** es el diferenciador del producto y la principal razón para volver y pagar.
 - **Impact:** muy alto · **Effort:** XL
 - **Proposed solution:** [learning-engine-proposal.md](learning-engine-proposal.md).
 - **Dependencies:** P2-8 (persistencia por slices), P2-9 (intérprete compartido).
 
-### P1-11 · No hay motivo para volver ⏳ (Phase 5)
+### P1-11 · No hay motivo para volver ✅ (Phase 5)
 
 - **Problem:** sin daily challenge, objetivo, revisión ni evolución visible.
 - **Impact:** muy alto · **Effort:** L
@@ -167,6 +167,30 @@
   del 73–95 % a ≤ azar + 15 puntos; en Code Memory, del 40–65 % a ≤ azar + 15 puntos en todos los
   niveles.
 - Pendientes de Phase 1 que pasan a Phase 6: P2-1 (lazy load de juegos), P2-6, P2-7, P2-12.
+
+## Resultado de Phases 2–6 (2026-10-01)
+
+| Fase                       | Hecho                                                                                                                                                                                                                                                                                                                |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2 — Learning architecture  | Slices versionados con migraciones (P2-8 ✅), `Repository<T>` genérico, intérprete de pseudocódigo nuevo (P2-9 ✅ con desviación D8), dominio Learning, Feedback Engine, mastery, Leitner, `LessonSession`.                                                                                                          |
+| 3 — Curriculum             | Programming Logic Module 1: 10 lecciones, 89 ejercicios, todas las respuestas verificadas por el intérprete.                                                                                                                                                                                                         |
+| 4 — Interactive experience | `/learn`, reproductor de lecciones, playgrounds con traza, 7 vistas de ejercicio, feedback, mastery, desbloqueos, `/learn/review`.                                                                                                                                                                                   |
+| 5 — Integration            | Perfil/hábitos, daily challenge, perfil cognitivo, recomendaciones explicadas, dashboard "Your Mind", landing + onboarding, resultados → lecciones relacionadas, reset de todos los slices.                                                                                                                          |
+| 6 — Polish                 | Curso lazy (chunk principal 502 → 383 kB; P2-1 parcial), flechas en ítems (P2-6 ✅), confirmación táctil (P2-7 ✅), radiogroup accesible, opciones descritas (P2-12 ✅), primitivas `Card`/`CodeBlock` (P2-15 parcial), `saveSessionResult` compartido (P2-10 parcial), timeouts de test para ejecución en paralelo. |
+
+Verificación final: lint, typecheck, 57 archivos / 548 tests y build en verde, en tres ejecuciones
+seguidas.
+
+### Pendiente (priorizado)
+
+| Prioridad | Item                                                                                                                                   | Por qué sigue abierto                                                                                         |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| P2        | Juegos lazy (resto de P2-1)                                                                                                            | Requiere `startSession` asíncrono y metadatos de juego separados de los generadores.                          |
+| P2        | Traza paso a paso en el feedback de Logic (P2-2)                                                                                       | El intérprete numérico de Logic no produce traza; resolverlo junto con la migración al intérprete compartido. |
+| P2        | Migrar Algorithmic Logic al intérprete compartido                                                                                      | Deuda de D8: dos intérpretes.                                                                                 |
+| P2        | Ajustes de progresión (P2-3), exploit de velocidad en Code Scan (P2-4), sesgo de `code-rule` (P2-17)                                   | Diseño de juego; necesitan rediseñar tablas/generadores.                                                      |
+| P2        | Design tokens (`@theme`)                                                                                                               | Hoy la consistencia viene de primitivas y paleta compartida; tokens formales facilitarían temas.              |
+| P3        | "Test out" de lecciones, Module 2, i18n (UI en español), cuentas + sync, analítica de producto, playground de código libre con sandbox | Producto futuro (ver PRODUCT.md).                                                                             |
 
 ## Orden de ejecución
 

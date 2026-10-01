@@ -7,9 +7,10 @@
 
 ## 1. Resumen
 
-El producto no es una colección de minijuegos, sino un **motor cognitivo** (dominio + engine puros, sin React)
-sobre el que cada juego se declara como un **módulo de contenido** (niveles + generador + solver) más un
-**renderer** de React. La UI solo orquesta y presenta; toda regla de negocio (evaluación, tiempos, scoring,
+La plataforma tiene tres pilares — **TRAIN** (juegos cognitivos), **LEARN** (Programming Logic) y **ASSESS**
+(assessment) — sobre un mismo núcleo puro. Cada juego se declara como un **módulo de contenido** (niveles +
+generador + solver) más un **renderer** de React; cada curso, como **datos tipados** verificados por un
+intérprete de pseudocódigo. Detalle de LEARN en [LEARNING_ENGINE.md](LEARNING_ENGINE.md). La UI solo orquesta y presenta; toda regla de negocio (evaluación, tiempos, scoring,
 dificultad, progreso) vive en TypeScript puro ejecutable en Node.
 
 ```text
@@ -19,14 +20,18 @@ dificultad, progreso) vive en TypeScript puro ejecutable en Node.
  │ components/   UI primitives, layout, feedback                 │
  │ games/*/ui    renderers de contenido por juego                │
  ├──────────────────────────────────────────────────────────────┤
- │ engine/       GameEngine, GameSession, AssessmentEngine       │  ← TS puro, con estado
+ │ engine/       GameEngine, GameSession, AssessmentEngine,      │  ← TS puro, con estado
+ │               LessonSession                                   │
  ├──────────────────────────────────────────────────────────────┤
  │ games/*/content  niveles, generadores, solvers                │  ← TS puro, sin estado
- │ domain/       modelos, políticas (scoring, difficulty),       │
- │               métricas, puertos (Clock, Random, Repository)   │
+ │ content/      cursos (Programming Logic) como datos           │
+ │ domain/       modelos, políticas (scoring, difficulty,        │
+ │               mastery, review), pseudocode, insights,         │
+ │               puertos (Clock, Random, Repository<T>)          │
  ├──────────────────────────────────────────────────────────────┤
  │ infrastructure/  SystemClock, CryptoSeedSource,               │  ← implementa puertos
- │                  LocalStorageProgressRepository               │
+ │                  LocalStorageRepository<T> (progress,         │
+ │                  learning, profile), browserStorage           │
  └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -39,7 +44,7 @@ sus puertos), nunca al revés.
 | Capa                                      | Puede importar                          | No puede importar                |
 | ----------------------------------------- | --------------------------------------- | -------------------------------- |
 | `domain/`                                 | nada externo                            | React, DOM, engine, games, infra |
-| `games/*/content/`                        | `domain/`                               | React, DOM, engine, infra        |
+| `games/*/content/`, `content/`            | `domain/`                               | React, DOM, engine, infra        |
 | `engine/`                                 | `domain/`                               | React, DOM, infra                |
 | `infrastructure/`                         | `domain/` (puertos), APIs del navegador | React, features                  |
 | `games/*/ui/`, `components/`, `features/` | todo lo anterior salvo infra            | infra (se inyecta vía `app/`)    |
@@ -81,13 +86,20 @@ src/
 │   ├── scoring/       # ScoringStrategy, ScoringConfig, createStandardScoring
 │   ├── session/       # SessionState, sessionReducer, selectors, ChallengeRecord, PerformanceMetrics, GameResult
 │   ├── game/          # GameDefinition, generateChallenge, retryGeneration, GameRegistry
-│   ├── progress/      # UserProgress, applySessionResult, applyAssessmentResult, guards, ProgressRepository (puerto)
-│   └── assessment/    # AssessmentDefinition, planAssessment, scoreAssessment, CognitiveProfile
+│   ├── progress/      # UserProgress, applySessionResult, applyAssessmentResult, recoverUserProgress, ProgressRepository
+│   ├── assessment/    # AssessmentDefinition, planAssessment, scoreAssessment, CognitiveProfile
+│   ├── storage/       # Repository<T> (puerto), migrate + migraciones puras, recuperación parcial (Recovered<T>)
+│   ├── pseudocode/    # parser + intérprete seguro (traza, límites); verifica contenido y ejecuta playgrounds
+│   ├── learning/      # Course/Lesson/Exercise, evaluateExercise (Feedback Engine), mastery, review (Leitner),
+│   │                  # progress/unlocks, lessonReducer, planReview, validateCourse
+│   ├── profile/       # UserProfile: objetivo, objetivo semanal, días activos, daily
+│   └── insights/      # dailyChallenge, cognitiveProfile, recommend (Learn ↔ Train)
 │
 ├── engine/                     # TS puro con estado
 │   ├── GameEngine.ts           # juego → seeds → challenges → GameSession
 │   ├── GameSession.ts          # fachada sobre sessionReducer + Clock + subscribe()
-│   └── AssessmentEngine.ts     # encadena GameSessions cortas y puntúa el perfil
+│   ├── AssessmentEngine.ts     # encadena GameSessions cortas y puntúa el perfil
+│   └── LessonSession.ts        # fachada sobre lessonReducer + Clock + subscribe()
 │
 ├── games/
 │   ├── types.ts                # GameModule, ContentViewProps, LocateBinding, defineGameModule
@@ -98,9 +110,11 @@ src/
 │       ├── ui/                 # ContentView del juego (+ tests)
 │       └── index.ts            # export const xModule = defineGameModule(...)
 │
-├── infrastructure/             # systemClock, cryptoSeedSource, LocalStorageProgressRepository
+├── content/programming-logic/  # concepts.ts, course.ts, lessons/01…10 (+ course.test.ts)
+├── infrastructure/             # systemClock, cryptoSeedSource, LocalStorageRepository<T> y sus slices, browserStorage
 ├── components/
-│   ├── ui/            # Button, ButtonLink, Badge, StatTile, ProgressBar
+│   ├── ui/            # Button, ButtonLink, Badge, StatTile, ProgressBar, Card
+│   ├── code/          # CodeBlock (resaltado, líneas ejecutadas, selección de línea), highlight
 │   ├── layout/        # AppShell, PageHeader
 │   ├── feedback/      # Countdown, useNow
 │   └── response/      # ChoiceResponse, NumericResponse, OrderingResponse (locate lo pinta cada juego)
@@ -109,11 +123,15 @@ src/
 │   ├── play/          # PlayPage, PlaySession, SessionRunner, ChallengeStage, AnswerFeedback, hooks de ciclo de vida
 │   ├── results/       # ResultsView
 │   ├── assessment/    # AssessmentPage, AssessmentFlow, AssessmentResultView, disclaimer
-│   └── shared/        # areas, formato, NotFound, useProgress
+│   ├── learn/         # LearnPage, LessonPage, ReviewPage, LessonPlayer, PlaygroundView, FeedbackPanel, exercises/
+│   ├── dashboard/     # Dashboard ("Your Mind"), WeekStrip
+│   ├── onboarding/  daily/
+│   └── shared/        # areas, formato, días, NotFound, RouteError, useProgress, useStored, useProfile
 └── test/
     ├── setup.ts
-    ├── fakes/         # FakeClock, FixedSeedSource, InMemoryProgressRepository
-    ├── fixtures/      # fixtureGame, results
+    ├── fakes/         # FakeClock, FixedSeedSource, InMemoryProgressRepository, InMemoryRepository<T>
+    ├── fixtures/      # fixtureGame, results, learningCourse
+    ├── guessability.ts # invariantes de medición (centroide, mediana, extremos)
     ├── renderApp.tsx  # app real con adaptadores deterministas
     └── challenges.ts  # challenge que mostrará una sesión con seed dado
 ```
@@ -774,10 +792,18 @@ librerías de animación (CSS + `prefers-reduced-motion`), fuentes web (stack de
 
 ## 15. Decisiones aprobadas (2026-09-29)
 
-| ID  | Decisión                                                                                                                  |
-| --- | ------------------------------------------------------------------------------------------------------------------------- |
-| D1  | `ProgressRepository` **asíncrono** (`Promise`), para que un `ApiProgressRepository` no obligue a reescribir consumidores. |
-| D2  | **Todos los niveles abiertos**; insignia de "superado" (`performanceIndex ≥ 70`) y nivel recomendado destacado.           |
-| D3  | Estructura de carpetas según §2–§3.                                                                                       |
-| D4  | **Un intento por challenge** en el MVP (`maxAttempts = 1`); el modelo soporta varios.                                     |
-| D5  | Repositorio git propio en `brainPractice/`.                                                                               |
+| ID  | Decisión                                                                                                                                                                                                  |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1  | `ProgressRepository` **asíncrono** (`Promise`), para que un `ApiProgressRepository` no obligue a reescribir consumidores.                                                                                 |
+| D2  | **Todos los niveles abiertos**; insignia de "superado" (`performanceIndex ≥ 70`) y nivel recomendado destacado.                                                                                           |
+| D3  | Estructura de carpetas según §2–§3.                                                                                                                                                                       |
+| D4  | **Un intento por challenge** en el MVP (`maxAttempts = 1`); el modelo soporta varios.                                                                                                                     |
+| D5  | Repositorio git propio en `brainPractice/`.                                                                                                                                                               |
+| D6  | **Datos dañados nunca se pierden en silencio** (Phase 1): recuperación parcial + copia `<key>:backup`; storage bloqueado → `MemoryStorage` con aviso.                                                     |
+| D7  | **Slices de persistencia separados** (`progress`, `learning`, `profile`), cada uno con `schemaVersion` y migraciones puras (`migrate`). Un slice dañado no afecta a los demás.                            |
+| D8  | **Intérprete nuevo** en `domain/pseudocode` en lugar de mover el de Logic: Learning necesita texto, booleanos, listas y funciones; Logic conserva su intérprete numérico (migrarlo es deuda documentada). |
+| D9  | **LessonSession separada de GameSession**: comparten patrón (reducer puro + fachada + `useSyncExternalStore`) pero no estados ni scoring.                                                                 |
+| D10 | **Lección superada por puntuación** (≥ 60 %, checkpoint ×2); **mastery** a largo plazo por concepto y dimensión (media móvil); reintentos y soluciones reveladas valen menos o nada.                      |
+| D11 | **Desbloqueo secuencial** dentro del curso (pedagógico); las lecciones completadas siempre son re-jugables.                                                                                               |
+| D12 | **Curso cargado bajo demanda** (`loadCourse()` + `use()` con thenable con estado); los juegos siguen en el chunk principal (hacerlos lazy exige un engine asíncrono).                                     |
+| D13 | **Hábitos sin presión**: días practicados vs objetivo elegido por el usuario; la racha se muestra sin avisos ni penalizaciones.                                                                           |

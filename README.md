@@ -1,8 +1,9 @@
-# BrainPractice — Cognitive Programming Training
+# BrainPractice — Learn and Train Programming Thinking
 
-Entrena el pensamiento que hay detrás del código. Cinco áreas cognitivas, un juego por área, diez
-niveles diseñados por juego y un **Programming Cognitive Assessment** combinado que construye un perfil
-de rendimiento.
+Aprende lógica de programación desde cero y entrena el pensamiento que hay detrás del código. Tres
+pilares: **LEARN** (10 lecciones interactivas de Programming Logic), **TRAIN** (cinco juegos cognitivos
+con diez niveles) y **ASSESS** (un perfil de rendimiento en cinco áreas), unidos por un dashboard con
+recomendaciones explicadas, repaso espaciado y un daily challenge.
 
 | Área      | Juego             | Entrena                                                                              |
 | --------- | ----------------- | ------------------------------------------------------------------------------------ |
@@ -36,6 +37,24 @@ Requiere Node ≥ 20.19.
 
 ## Funcionalidades
 
+**Learn** (`/learn`)
+
+- Programming Logic, Module 1 _How Programs Think_: 10 lecciones, 89 ejercicios de 7 tipos (elección
+  múltiple, predicción, completar código, ordenar, Algorithm Builder, emparejar, depuración).
+- Playgrounds: cambia los valores de un programa y ve salida, variables, líneas ejecutadas y paso a paso.
+- Feedback que diagnostica tu respuesta antes de revelar la solución; pistas; reintentos; checkpoint.
+- Mastery por concepto (comprensión, aplicación, depuración), desbloqueo progresivo y repaso espaciado.
+- Todo el pseudocódigo se interpreta con un intérprete propio y seguro; nunca se ejecuta código del usuario.
+
+**Plataforma**
+
+- Onboarding sin cuenta (`/start`): reto de 2 minutos, objetivo y días por semana.
+- Dashboard "Your Mind": semana frente a tu objetivo, recomendaciones con su porqué, progreso de Learn,
+  niveles de Train y perfil de rendimiento.
+- Daily challenge (`/daily`): 5 problemas, el mismo para todos cada día, a tu nivel.
+
+**Train**
+
 - Elige un juego y cualquier nivel del 1 al 10 (todos abiertos; se marcan los niveles superados y un
   nivel sugerido).
 - Sesiones cronometradas con feedback inmediato y una explicación para cada respuesta.
@@ -68,12 +87,13 @@ Requiere Node ≥ 20.19.
 
 ```text
 src/
-├── domain/          pure model and rules (no React, no DOM)
-├── engine/          GameEngine, GameSession, AssessmentEngine
+├── domain/          pure model and rules (no React, no DOM): games, learning, pseudocode, profile, insights
+├── engine/          GameEngine, GameSession, AssessmentEngine, LessonSession
+├── content/         courses as data (Programming Logic)
 ├── games/<id>/      content/ (pure: levels, generators, solvers) + ui/ (React renderer)
-├── infrastructure/  clock, seed source, localStorage repository
+├── infrastructure/  clock, seed source, versioned localStorage repositories
 ├── components/      UI primitives, layout, feedback, response inputs
-├── features/        screens: home, catalog, game intro, play, results, profile, assessment
+├── features/        screens: home/dashboard, onboarding, learn, daily, catalog, play, results, profile, assessment
 ├── app/             composition root, providers, routes
 └── test/            fakes, fixtures, render helpers
 ```
