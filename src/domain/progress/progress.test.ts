@@ -165,7 +165,7 @@ describe('recoverUserProgress', () => {
   const intact = applySessionResult(emptyProgress(), resultFixture());
 
   it('returns intact progress unchanged with nothing discarded', () => {
-    expect(recoverUserProgress(intact)).toEqual({ progress: intact, discarded: 0 });
+    expect(recoverUserProgress(intact)).toEqual({ value: intact, discarded: 0 });
   });
 
   it('keeps every valid entry and counts the damaged ones', () => {
@@ -180,8 +180,8 @@ describe('recoverUserProgress', () => {
     };
     const recovered = recoverUserProgress(damaged);
     expect(recovered?.discarded).toBe(5);
-    expect(recovered?.progress).toEqual({ ...intact, assessments: [] });
-    expect(isUserProgress(recovered?.progress)).toBe(true);
+    expect(recovered?.value).toEqual({ ...intact, assessments: [] });
+    expect(isUserProgress(recovered?.value)).toBe(true);
   });
 
   it.each([null, 'text', [], { schemaVersion: 2, games: {}, recentSessions: [] }])(

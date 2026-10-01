@@ -2,6 +2,13 @@ import { isCognitiveArea } from '../shared/cognitiveArea';
 import { isDifficultyLevel } from '../shared/difficultyLevel';
 import { parseSeed } from '../random/seed';
 import {
+  keepValid,
+  keepValidEntries,
+  migrate,
+  type Migration,
+  type Recovered,
+} from '../storage/migrations';
+import {
   PROGRESS_SCHEMA_VERSION,
   type AssessmentSummary,
   type LevelRecord,
@@ -76,57 +83,43 @@ export function isUserProgress(value: unknown): value is UserProgress {
   );
 }
 
-export interface RecoveredProgress {
-  readonly progress: UserProgress;
-  /** Entries dropped because they were malformed; 0 means the data was intact. */
-  readonly discarded: number;
-}
+/** Upgrades from older schema versions; add `n: (v_n) => v_n+1` when the schema changes. */
+export const PROGRESS_MIGRATIONS: Readonly<Partial<Record<number, Migration>>> = {};
 
 /**
  * Salvages what can be trusted from persisted data instead of throwing everything away when one
- * entry is malformed. Returns null only when nothing is recoverable (not an object, or another
- * schema version, which needs a migration rather than a guess).
+ * entry is malformed. Older versions are migrated first. Returns null only when nothing is
+ * recoverable (not an object, unknown or newer schema version).
  */
-export function recoverUserProgress(value: unknown): RecoveredProgress | null {
-  if (!isObject(value) || value['schemaVersion'] !== PROGRESS_SCHEMA_VERSION) return null;
-  let discarded = 0;
-  const keep = <T>(items: unknown, guard: (item: unknown) => item is T): T[] => {
-    if (!Array.isArray(items)) {
-      if (items !== undefined) discarded++;
-      return [];
-    }
-    const valid = items.filter(guard);
-    discarded += items.length - valid.length;
-    return valid;
-  };
+export function recoverUserProgress(value: unknown): Recovered<UserProgress> | null {
+  const migrated = migrate(value, PROGRESS_SCHEMA_VERSION, PROGRESS_MIGRATIONS);
+  if (!migrated.ok) return null;
+  const document = migrated.value;
+  const tally = { discarded: 0 };
 
   const games: Record<string, Partial<Record<number, LevelRecord>>> = {};
-  const rawGames = value['games'];
+  const rawGames = document['games'];
   if (isObject(rawGames)) {
     for (const [gameId, game] of Object.entries(rawGames)) {
-      if (!isObject(game)) {
-        discarded++;
-        continue;
-      }
-      const levels = Object.entries(game).filter(([level, record]) => {
-        const valid = isDifficultyLevel(Number(level)) && isLevelRecord(record);
-        if (!valid) discarded++;
-        return valid;
-      });
-      if (levels.length > 0)
-        games[gameId] = Object.fromEntries(levels) as Record<number, LevelRecord>;
+      const levels = keepValidEntries(
+        game,
+        (level, record): record is LevelRecord =>
+          isDifficultyLevel(Number(level)) && isLevelRecord(record),
+        tally,
+      );
+      if (Object.keys(levels).length > 0) games[gameId] = levels;
     }
-  } else if (rawGames !== undefined) discarded++;
+  } else if (rawGames !== undefined) tally.discarded++;
 
   const assessments =
-    value['assessments'] === undefined
+    document['assessments'] === undefined
       ? undefined
-      : keep(value['assessments'], isAssessmentSummary);
+      : keepValid(document['assessments'], isAssessmentSummary, tally);
   const progress: UserProgress = {
     schemaVersion: PROGRESS_SCHEMA_VERSION,
     games,
-    recentSessions: keep(value['recentSessions'], isSessionSummary),
+    recentSessions: keepValid(document['recentSessions'], isSessionSummary, tally),
     ...(assessments === undefined ? {} : { assessments }),
   };
-  return { progress, discarded };
+  return { value: progress, discarded: tally.discarded };
 }

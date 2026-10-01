@@ -8,6 +8,7 @@ import type { Seed } from '../random/seed';
 import type { AssessmentResult } from '../assessment/assessment';
 import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { GameResult } from '../session/gameResult';
+import type { Repository } from '../storage/repository';
 
 export const PROGRESS_SCHEMA_VERSION = 1;
 /** A level counts as cleared at this performance index (decision D2). */
@@ -151,8 +152,4 @@ export function suggestedLevel(game: GameProgress | undefined): DifficultyLevel 
 }
 
 /** Port: the domain never knows where progress lives (localStorage today, an API later). */
-export interface ProgressRepository {
-  get(): Promise<UserProgress | null>;
-  save(progress: UserProgress): Promise<void>;
-  clear(): Promise<void>;
-}
+export type ProgressRepository = Repository<UserProgress>;
