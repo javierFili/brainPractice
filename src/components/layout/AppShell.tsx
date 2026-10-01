@@ -28,8 +28,13 @@ export function AppShell() {
           <nav aria-label="Main">
             <ul className="flex items-center gap-0.5 sm:gap-1">
               <li>
+                <NavLink to="/learn" className={navClass}>
+                  Learn
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/games" className={navClass}>
-                  Games
+                  Train
                 </NavLink>
               </li>
               <li>

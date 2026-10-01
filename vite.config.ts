@@ -14,6 +14,9 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
     restoreMocks: true,
+    // UI flows with many user events run slower when every file runs in parallel; these margins
+    // absorb scheduling noise without hiding real hangs.
+    testTimeout: 15_000,
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],

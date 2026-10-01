@@ -4,7 +4,9 @@ import { App } from '@/app/App';
 import { createServices } from '@/app/composition';
 import { GAME_MODULES } from '@/games/registry';
 import { cryptoSeedSource } from '@/infrastructure/CryptoSeedSource';
+import { PROGRAMMING_LOGIC } from '@/content/programming-logic/course';
 import { openBrowserStorage } from '@/infrastructure/browserStorage';
+import { LocalStorageLearningRepository } from '@/infrastructure/LocalStorageLearningRepository';
 import { LocalStorageProgressRepository } from '@/infrastructure/LocalStorageProgressRepository';
 import { systemClock } from '@/infrastructure/SystemClock';
 import './index.css';
@@ -15,6 +17,8 @@ const services = createServices({
   clock: systemClock,
   seeds: cryptoSeedSource,
   progress: new LocalStorageProgressRepository(storage),
+  course: PROGRAMMING_LOGIC,
+  learning: new LocalStorageLearningRepository(storage),
   persistence,
 });
 
