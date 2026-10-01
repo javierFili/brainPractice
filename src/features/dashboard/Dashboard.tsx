@@ -1,3 +1,4 @@
+import { useCourse } from '@/app/providers/useCourse';
 import { Link } from 'react-router';
 import {
   cognitiveProfile,
@@ -36,7 +37,8 @@ export function Dashboard({
   learning: LearningProgress;
   profile: UserProfile;
 }) {
-  const { course, modules, getModule, clock } = useServices();
+  const { modules, getModule, clock } = useServices();
+  const course = useCourse();
   const now = clock.now();
   const today = dayKeyOf(now);
   const gameOfArea: Partial<Record<CognitiveArea, string>> = Object.fromEntries(

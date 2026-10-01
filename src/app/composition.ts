@@ -13,7 +13,8 @@ export interface AppServices {
   readonly clock: Clock;
   readonly modules: readonly GameModule[];
   readonly progress: ProgressRepository;
-  readonly course: Course;
+  /** Loads the curriculum on first use (it is a separate chunk); always the same promise. */
+  readonly loadCourse: () => Promise<Course>;
   readonly learning: LearningProgressRepository;
   readonly profile: ProfileRepository;
   readonly getModule: (gameId: string) => GameModule | undefined;
@@ -26,10 +27,37 @@ export interface ServiceInputs {
   readonly clock: Clock;
   readonly seeds: SeedSource;
   readonly progress: ProgressRepository;
-  readonly course: Course;
+  readonly loadCourse: () => Promise<Course>;
   readonly learning: LearningProgressRepository;
   readonly profile: ProfileRepository;
   readonly persistence?: Persistence;
+}
+
+type Tracked<T> = Promise<T> & {
+  status?: 'pending' | 'fulfilled' | 'rejected';
+  value?: T;
+  reason?: unknown;
+};
+
+/**
+ * Records the outcome on the promise itself, the protocol React's `use()` reads: once loaded, the
+ * course is returned synchronously and components never suspend on it again.
+ */
+export function tracked<T>(promise: Promise<T>): Promise<T> {
+  const thenable = promise as Tracked<T>;
+  if (thenable.status !== undefined) return thenable;
+  thenable.status = 'pending';
+  thenable.then(
+    (value) => {
+      thenable.status = 'fulfilled';
+      thenable.value = value;
+    },
+    (reason: unknown) => {
+      thenable.status = 'rejected';
+      thenable.reason = reason;
+    },
+  );
+  return thenable;
 }
 
 /** Wires the domain to concrete adapters. Production and tests differ only in the inputs. */
@@ -38,11 +66,12 @@ export function createServices({
   clock,
   seeds,
   progress,
-  course,
+  loadCourse,
   learning,
   profile,
   persistence = 'device',
 }: ServiceInputs): AppServices {
+  let course: Promise<Course> | null = null;
   const registry = createGameRegistry(modules.map((m) => m.definition));
   const byId = new Map(modules.map((m) => [m.definition.id as string, m]));
   return {
@@ -50,7 +79,7 @@ export function createServices({
     clock,
     modules,
     progress,
-    course,
+    loadCourse: () => (course ??= tracked(loadCourse())),
     learning,
     profile,
     getModule: (gameId) => byId.get(gameId),

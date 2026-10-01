@@ -1,3 +1,4 @@
+import { useCourse } from '@/app/providers/useCourse';
 import { Link } from 'react-router';
 import { courseProgress, emptyLearningProgress } from '@/domain/learning';
 import { useStored } from '@/features/shared/useStored';
@@ -12,7 +13,8 @@ import { formatMs, formatPercent, formatPoints } from '@/features/shared/format'
 import { useProgress } from '@/features/shared/useProgress';
 
 export function ProfilePage() {
-  const { modules, progress, getModule, course, learning, profile } = useServices();
+  const { modules, progress, getModule, learning, profile } = useServices();
+  const course = useCourse();
   const { state, clear } = useProgress(progress);
   const learn = useStored(learning, emptyLearningProgress);
   const [confirming, setConfirming] = useState(false);

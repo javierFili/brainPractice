@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { useServices } from '@/app/providers/servicesContext';
 
@@ -60,7 +61,15 @@ export function AppShell() {
         </p>
       )}
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-        <Outlet />
+        <Suspense
+          fallback={
+            <p role="status" className="p-8 text-sm text-slate-400">
+              Loading…
+            </p>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       <footer className="border-t border-slate-800/80">
         <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 sm:px-6">

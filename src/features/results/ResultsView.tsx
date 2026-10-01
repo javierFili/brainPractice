@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { lessonsOf } from '@/domain/learning';
-import { useServices } from '@/app/providers/servicesContext';
-import { useEffect, useRef } from 'react';
+import { useCourse } from '@/app/providers/useCourse';
+import { Suspense, useEffect, useRef } from 'react';
 import type { Challenge } from '@/domain/challenge';
 import type { GameResult } from '@/domain/session';
 import { stepLevel, tierOf, type DifficultyLevel } from '@/domain/shared';
@@ -31,16 +31,42 @@ function performanceLabel(index: number, completed: boolean): string {
 
 const DIRECTION = { up: '↑ Level up', stay: '→ Stay', down: '↓ Step back' } as const;
 
-export function ResultsView({ module, result, challenges, saveStatus, onRestart }: Props) {
-  const { course } = useServices();
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  // TRAIN → LEARN: lessons whose concepts rely on the skill this game practises.
-  const linkedConcepts = course.concepts.filter((c) =>
-    c.cognitiveLinks.some((link) => link.gameId === module.definition.id),
+/** TRAIN → LEARN: lessons whose concepts rely on the skill this game practises. */
+function RelatedLessons({ gameId }: { gameId: string }) {
+  const course = useCourse();
+  const linked = course.concepts.filter((c) =>
+    c.cognitiveLinks.some((link) => link.gameId === gameId),
   );
   const relatedLessons = lessonsOf(course)
-    .filter((lesson) => lesson.concepts.some((id) => linkedConcepts.some((c) => c.id === id)))
+    .filter((lesson) => lesson.concepts.some((id) => linked.some((c) => c.id === id)))
     .slice(0, 3);
+  if (relatedLessons.length === 0) return null;
+  return (
+    <section
+      aria-labelledby="related-title"
+      className="rounded-xl border border-violet-400/30 bg-violet-400/5 p-5 text-sm"
+    >
+      <h2 id="related-title" className="font-semibold text-violet-200">
+        Where this skill shows up in programming
+      </h2>
+      <ul className="mt-2 flex flex-wrap gap-2">
+        {relatedLessons.map((lesson) => (
+          <li key={lesson.id}>
+            <Link
+              to={`/learn/${lesson.id}`}
+              className="inline-flex rounded-md border border-violet-400/40 px-2 py-1 text-violet-100 hover:bg-violet-400/10 focus-visible:outline-2 focus-visible:outline-sky-400"
+            >
+              Lesson: {lesson.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export function ResultsView({ module, result, challenges, saveStatus, onRestart }: Props) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const { metrics, score, recommendation, level } = result;
   const mistakes = result.records
     .map((record, i) => ({ record, challenge: challenges[i] }))
@@ -149,28 +175,9 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
         </div>
       </section>
 
-      {relatedLessons.length > 0 && (
-        <section
-          aria-labelledby="related-title"
-          className="rounded-xl border border-violet-400/30 bg-violet-400/5 p-5 text-sm"
-        >
-          <h2 id="related-title" className="font-semibold text-violet-200">
-            Where this skill shows up in programming
-          </h2>
-          <ul className="mt-2 flex flex-wrap gap-2">
-            {relatedLessons.map((lesson) => (
-              <li key={lesson.id}>
-                <Link
-                  to={`/learn/${lesson.id}`}
-                  className="inline-flex rounded-md border border-violet-400/40 px-2 py-1 text-violet-100 hover:bg-violet-400/10 focus-visible:outline-2 focus-visible:outline-sky-400"
-                >
-                  Lesson: {lesson.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <Suspense fallback={null}>
+        <RelatedLessons gameId={module.definition.id} />
+      </Suspense>
 
       {kinds.length > 0 && (
         <section aria-labelledby="breakdown-title">

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { highlightLine, type TokenKind } from './highlight';
 
 const TONE: Readonly<Record<TokenKind, string>> = {
@@ -19,7 +20,7 @@ export interface LineSelection {
 
 interface Props {
   readonly source: string;
-  readonly caption?: string;
+  readonly caption?: ReactNode;
   /** Lines worth looking at (1-based). */
   readonly highlight?: readonly number[];
   /** Lines the last run executed, to show the path taken. */

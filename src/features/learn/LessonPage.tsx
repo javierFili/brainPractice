@@ -1,3 +1,4 @@
+import { useCourse } from '@/app/providers/useCourse';
 import { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
 import {
@@ -11,7 +12,6 @@ import {
   type LessonSessionState,
 } from '@/domain/learning';
 import type { LessonSession } from '@/engine';
-import { useServices } from '@/app/providers/servicesContext';
 import { ButtonLink } from '@/components/ui/Button';
 import { NotFound } from '@/features/shared/NotFound';
 import { useRecordActivity } from '@/features/shared/useProfile';
@@ -22,7 +22,7 @@ import { useLearning } from './useLearning';
 
 export function LessonPage() {
   const { lessonId = '' } = useParams();
-  const { course } = useServices();
+  const course = useCourse();
   const { state, update } = useLearning();
   const recordActivity = useRecordActivity();
   const [attempt, setAttempt] = useState(0);

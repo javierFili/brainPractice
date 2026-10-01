@@ -8,10 +8,19 @@ interface Props {
   readonly review: { readonly selectedId: string | null } | null;
   readonly onSelect: (optionId: string) => void;
   readonly monospace?: boolean;
+  /** Spoken label for options whose text does not read well aloud. */
+  readonly describe?: (label: string) => string | undefined;
 }
 
 /** Options answer on click or with number keys 1–n. State is shown with text + icon, not only colour. */
-export function ChoiceResponse({ response, disabled, review, onSelect, monospace = false }: Props) {
+export function ChoiceResponse({
+  response,
+  disabled,
+  review,
+  onSelect,
+  monospace = false,
+  describe,
+}: Props) {
   const { options } = response.question;
   // Long options (e.g. whole execution orders) are easier to compare stacked in one column.
   const stacked = options.some((option) => option.label.length > 36);
@@ -47,10 +56,16 @@ export function ChoiceResponse({ response, disabled, review, onSelect, monospace
             : isWrongPick
               ? 'border-rose-400/70 bg-rose-400/10'
               : 'border-slate-700 bg-slate-900 hover:border-slate-500 hover:bg-slate-800';
+          const spoken = describe?.(option.label);
           return (
             <li key={option.id}>
               <button
                 type="button"
+                aria-label={
+                  spoken === undefined
+                    ? undefined
+                    : `${spoken}${isSolution ? ', correct answer' : ''}${isWrongPick ? ', your answer' : ''}`
+                }
                 disabled={disabled}
                 onClick={() => {
                   onSelect(option.id);

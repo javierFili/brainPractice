@@ -1,3 +1,4 @@
+import { useCourse } from '@/app/providers/useCourse';
 import { useId, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { lessonsOf } from '@/domain/learning';
@@ -36,7 +37,8 @@ type Step = 'welcome' | 'warm-up' | 'result' | 'goal';
 
 /** First visit: a 2-minute taste of training, then the learner chooses their own goal. No account needed. */
 export function OnboardingPage() {
-  const { getModule, progress, course, clock } = useServices();
+  const { getModule, progress, clock } = useServices();
+  const course = useCourse();
   const { update } = useProfile();
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>('welcome');

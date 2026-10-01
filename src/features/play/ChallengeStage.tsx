@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import type { Answer, Challenge } from '@/domain/challenge';
 import type { ChallengeRecord, SessionStatus } from '@/domain/session';
 import type { ChallengePhase, GameModule } from '@/games/types';
@@ -53,6 +53,16 @@ export function ChallengeStage({
   }, [challenge.id, showPrompt]);
 
   const { response } = challenge;
+  // On touch screens a tap selects and a second step confirms: a stray tap must not answer.
+  const [touch] = useState(
+    () => typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches,
+  );
+  // Tagged with its challenge, so a selection never carries over to the next one.
+  const [selection, setSelection] = useState<{ challengeId: string; index: number } | null>(null);
+  const pending = selection?.challengeId === challenge.id ? selection.index : null;
+  const setPending = (index: number | null) => {
+    setSelection(index === null ? null : { challengeId: challenge.id, index });
+  };
   const selectedIndex = record?.answer?.format === 'locate' ? record.answer.index : null;
   const locate =
     response.format === 'locate'
@@ -61,10 +71,33 @@ export function ChallengeStage({
           selectedIndex,
           solutionIndex: phase === 'review' ? response.solution.index : null,
           onLocate: (index: number) => {
-            onAnswer({ format: 'locate', index });
+            if (touch) setPending(index);
+            else onAnswer({ format: 'locate', index });
           },
         }
       : null;
+
+  /** Arrow keys move between the content's buttons (lines, records, cells), Home/End jump. */
+  const moveFocus = (event: KeyboardEvent<HTMLDivElement>) => {
+    const keys = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Home', 'End'];
+    if (!keys.includes(event.key) || !(event.target instanceof HTMLButtonElement)) return;
+    const buttons = [
+      ...event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'),
+    ];
+    const index = buttons.indexOf(event.target);
+    if (index === -1) return;
+    const next =
+      event.key === 'Home'
+        ? 0
+        : event.key === 'End'
+          ? buttons.length - 1
+          : index + (event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : -1);
+    const target = buttons[Math.min(buttons.length - 1, Math.max(0, next))];
+    if (target) {
+      event.preventDefault();
+      target.focus();
+    }
+  };
 
   return (
     <section aria-labelledby="challenge-prompt" className="flex flex-col gap-6">
@@ -88,9 +121,39 @@ export function ChallengeStage({
         </div>
       )}
 
-      <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:p-6">
+      {/* Keyboard navigation for the content's own controls; the buttons inside carry the semantics. */}
+      <div
+        className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:p-6"
+        onKeyDown={moveFocus}
+      >
         <ContentView challenge={challenge} phase={phase} locate={locate} />
       </div>
+
+      {touch && pending !== null && answering && (
+        <div
+          role="group"
+          aria-label="Confirm your answer"
+          className="flex flex-wrap items-center gap-3 rounded-lg border border-sky-400/40 bg-sky-400/5 p-3 text-sm"
+        >
+          <span className="text-sky-100">Selected item {pending + 1}</span>
+          <Button
+            onClick={() => {
+              onAnswer({ format: 'locate', index: pending });
+              setPending(null);
+            }}
+          >
+            Confirm
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setPending(null);
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
 
       {phase !== 'study' && response.format === 'single-choice' && (
         <ChoiceResponse
@@ -107,6 +170,7 @@ export function ChallengeStage({
           onSelect={(optionId) => {
             onAnswer({ format: 'single-choice', optionId });
           }}
+          {...(module.describeOption ? { describe: module.describeOption } : {})}
           monospace
         />
       )}

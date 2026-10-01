@@ -1,3 +1,4 @@
+import { useCourse } from '@/app/providers/useCourse';
 import { useCallback, useState } from 'react';
 import {
   applyReviewResult,
@@ -21,7 +22,8 @@ import { useLearning } from './useLearning';
 
 /** A few minutes of retrieval practice on concepts whose review is due (spaced repetition). */
 export function ReviewPage() {
-  const { course, clock } = useServices();
+  const { clock } = useServices();
+  const course = useCourse();
   const { state, update } = useLearning();
   const recordActivity = useRecordActivity();
   const [started] = useState(() => clock.now());

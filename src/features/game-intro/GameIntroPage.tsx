@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useId, useRef, useState, type KeyboardEvent } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { isLevelCleared, suggestedLevel } from '@/domain/progress';
 import { DIFFICULTY_LEVELS, type DifficultyLevel } from '@/domain/shared';
@@ -19,6 +19,7 @@ export function GameIntroPage() {
   const assistedId = useId();
   const [chosen, setChosen] = useState<DifficultyLevel | null>(null);
   const [assisted, setAssisted] = useState(false);
+  const levelButtons = useRef<(HTMLButtonElement | null)[]>([]);
 
   const module = getModule(gameId);
   if (!module) return <NotFound message="This game does not exist." />;
@@ -29,6 +30,23 @@ export function GameIntroPage() {
   const level = chosen ?? suggested;
   const profile = definition.levels[level];
   const record = game?.[level];
+
+  /** ARIA radio group: arrows move the selection (and focus), Home/End jump to the ends. */
+  const onLevelKey = (event: KeyboardEvent<HTMLDivElement>) => {
+    const delta = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+    const target =
+      event.key === 'Home'
+        ? 1
+        : event.key === 'End'
+          ? 10
+          : delta === undefined
+            ? null
+            : level + delta;
+    if (target === null || target < 1 || target > 10) return;
+    event.preventDefault();
+    setChosen(target as DifficultyLevel);
+    levelButtons.current[target - 1]?.focus();
+  };
 
   const start = () => {
     void navigate(`/games/${definition.id}/play/${level}${assisted ? '?assisted=1' : ''}`);
@@ -55,6 +73,7 @@ export function GameIntroPage() {
             <div
               role="radiogroup"
               aria-labelledby="levels-title"
+              onKeyDown={onLevelKey}
               className="grid grid-cols-5 gap-2 sm:grid-cols-10"
             >
               {DIFFICULTY_LEVELS.map((l) => {
@@ -66,6 +85,10 @@ export function GameIntroPage() {
                     type="button"
                     role="radio"
                     aria-checked={selected}
+                    tabIndex={selected ? 0 : -1}
+                    ref={(element) => {
+                      levelButtons.current[l - 1] = element;
+                    }}
                     aria-label={`Level ${l}${cleared ? ', cleared' : ''}${l === suggested ? ', suggested' : ''}`}
                     onClick={() => {
                       setChosen(l);

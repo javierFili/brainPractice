@@ -49,7 +49,7 @@ describe('Play screen', () => {
     expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
     expect(screen.getByText(/Session ended early/)).toBeInTheDocument();
     // TRAIN → LEARN: the results point to lessons that rely on this skill.
-    expect(screen.getByRole('link', { name: 'Lesson: Conditions' })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: 'Lesson: Conditions' })).toHaveAttribute(
       'href',
       '/learn/conditions',
     );

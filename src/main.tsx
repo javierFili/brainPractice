@@ -4,7 +4,6 @@ import { App } from '@/app/App';
 import { createServices } from '@/app/composition';
 import { GAME_MODULES } from '@/games/registry';
 import { cryptoSeedSource } from '@/infrastructure/CryptoSeedSource';
-import { PROGRAMMING_LOGIC } from '@/content/programming-logic/course';
 import { openBrowserStorage } from '@/infrastructure/browserStorage';
 import { LocalStorageLearningRepository } from '@/infrastructure/LocalStorageLearningRepository';
 import { LocalStorageProfileRepository } from '@/infrastructure/LocalStorageProfileRepository';
@@ -18,7 +17,7 @@ const services = createServices({
   clock: systemClock,
   seeds: cryptoSeedSource,
   progress: new LocalStorageProgressRepository(storage),
-  course: PROGRAMMING_LOGIC,
+  loadCourse: () => import('@/content/programming-logic/course').then((m) => m.PROGRAMMING_LOGIC),
   learning: new LocalStorageLearningRepository(storage),
   profile: new LocalStorageProfileRepository(storage),
   persistence,

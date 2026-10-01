@@ -28,6 +28,11 @@ interface Options {
   readonly profile?: UserProfile | null;
 }
 
+/** A promise React's `use()` reads synchronously: tests get the course without suspending. */
+function alreadyLoaded<T>(value: T): Promise<T> {
+  return Object.assign(Promise.resolve(value), { status: 'fulfilled' as const, value });
+}
+
 export function createTestServices({
   clock = new FakeClock(),
   seed = 1,
@@ -46,7 +51,7 @@ export function createTestServices({
     clock,
     seeds: new FixedSeedSource(seed),
     progress: repository ?? memory,
-    course,
+    loadCourse: () => alreadyLoaded(course),
     learning: learningRepository,
     profile: profileRepository,
     persistence,

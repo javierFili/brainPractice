@@ -65,7 +65,9 @@ function FlowChart({ nodes, caption }: { nodes: readonly FlowNode[]; caption?: s
         ))}
       </ol>
       {caption !== undefined && (
-        <figcaption className="text-xs text-slate-400">{caption}</figcaption>
+        <figcaption className="text-xs text-slate-400">
+          <InlineText text={caption} />
+        </figcaption>
       )}
     </figure>
   );
@@ -87,7 +89,9 @@ export function RichBlocks({ blocks }: { blocks: readonly RichBlock[] }) {
               <CodeBlock
                 key={i}
                 source={block.source}
-                {...(block.caption === undefined ? {} : { caption: block.caption })}
+                {...(block.caption === undefined
+                  ? {}
+                  : { caption: <InlineText text={block.caption} /> })}
               />
             );
           case 'callout': {

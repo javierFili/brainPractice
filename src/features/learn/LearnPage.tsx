@@ -1,3 +1,4 @@
+import { useCourse } from '@/app/providers/useCourse';
 import { Link } from 'react-router';
 import {
   courseProgress,
@@ -24,7 +25,8 @@ const STATUS: Readonly<Record<LessonStatus, { icon: string; label: string; tone:
 };
 
 export function LearnPage() {
-  const { course, clock } = useServices();
+  const { clock } = useServices();
+  const course = useCourse();
   const { state } = useLearning();
   if (state.status === 'loading') return <PageLoading />;
   if (state.status === 'error')

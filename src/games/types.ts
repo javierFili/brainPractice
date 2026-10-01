@@ -26,6 +26,8 @@ export interface GameModule<C extends Challenge = Challenge> {
   readonly ContentView: ComponentType<ContentViewProps<C>>;
   /** Human labels for each content kind (results breakdown). */
   readonly kindLabels: Readonly<Record<C['content']['kind'], string>>;
+  /** Words for option labels that are not readable aloud (e.g. symbol strings). */
+  readonly describeOption?: (label: string) => string | undefined;
 }
 
 /**
