@@ -8,7 +8,7 @@ import {
   MAX_RECENT_SESSIONS,
   suggestedLevel,
 } from './progress';
-import { isUserProgress } from './progressGuards';
+import { isUserProgress, recoverUserProgress } from './progressGuards';
 
 describe('applySessionResult', () => {
   it('records the first completed session of a level', () => {
@@ -159,4 +159,35 @@ describe('applyAssessmentResult', () => {
       }),
     ).toBe(false);
   });
+});
+
+describe('recoverUserProgress', () => {
+  const intact = applySessionResult(emptyProgress(), resultFixture());
+
+  it('returns intact progress unchanged with nothing discarded', () => {
+    expect(recoverUserProgress(intact)).toEqual({ progress: intact, discarded: 0 });
+  });
+
+  it('keeps every valid entry and counts the damaged ones', () => {
+    const damaged = {
+      ...intact,
+      recentSessions: [...intact.recentSessions, { gameId: 1 }, null],
+      games: {
+        ...intact.games,
+        other: { 2: { plays: 'x' }, 11: intact.games['fixture-max']?.[3] },
+      },
+      assessments: [{ assessmentId: 'a', endedAt: 1, overall: 50, areas: { iq: 3 } }],
+    };
+    const recovered = recoverUserProgress(damaged);
+    expect(recovered?.discarded).toBe(5);
+    expect(recovered?.progress).toEqual({ ...intact, assessments: [] });
+    expect(isUserProgress(recovered?.progress)).toBe(true);
+  });
+
+  it.each([null, 'text', [], { schemaVersion: 2, games: {}, recentSessions: [] }])(
+    'gives up on %j (not an object, or another schema version)',
+    (value) => {
+      expect(recoverUserProgress(value)).toBeNull();
+    },
+  );
 });

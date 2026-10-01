@@ -107,8 +107,34 @@ export function nearValues(domain: Domain, value: string): string[] {
 }
 
 /**
- * Up to `count` distinct wrong options: `preferred` first (interference from what the player
- * actually saw), then `fallback` (plausible near values), each group shuffled. Null if too few.
+ * Near values for the fallback distractors, built so the answer is *not* the hub of the options.
+ * Near values of the answer alone make it the one option every other option resembles (a player
+ * can pick it without remembering anything). So, except with probability 1 / optionCount, the
+ * near values are built around a decoy anchor instead, and the answer is just one of its
+ * neighbours. The anchor comes first so it is always among the options when fallback is used.
+ */
+export function anchoredNear<T>(
+  random: RandomGenerator,
+  correct: T,
+  nearOf: (value: T) => readonly T[],
+  optionCount: number,
+): T[] {
+  const near = nearOf(correct);
+  if (near.length === 0 || randomInt(random, 0, optionCount - 1) === 0)
+    return shuffle(random, near);
+  const anchor = pick(random, near);
+  return [
+    anchor,
+    ...shuffle(
+      random,
+      nearOf(anchor).filter((value) => value !== correct),
+    ),
+  ];
+}
+
+/**
+ * Up to `count` distinct wrong options: `preferred` first, shuffled (interference from what the
+ * player actually saw), then `fallback` in the given order (see `anchoredNear`). Null if too few.
  */
 export function pickDistractors(
   random: RandomGenerator,
@@ -117,7 +143,7 @@ export function pickDistractors(
   fallback: readonly string[],
   count: number,
 ): string[] | null {
-  const ordered = [...shuffle(random, preferred), ...shuffle(random, fallback)];
+  const ordered = [...shuffle(random, preferred), ...fallback];
   const distinct = [...new Set(ordered)].filter((value) => value !== correct);
   return distinct.length < count ? null : distinct.slice(0, count);
 }

@@ -675,9 +675,18 @@ interface ProgressRepository {
 }
 ```
 
-`LocalStorageProgressRepository` valida el JSON leído con type guards escritos a mano (`isUserProgress`) y
-`schemaVersion`: datos corruptos → se descartan con un aviso en consola, no se rompe la app. Los fallos al
-guardar (cuota, modo privado) se propagan como Promise rechazada y la UI lo indica.
+`LocalStorageProgressRepository` valida el JSON leído con type guards escritos a mano y `schemaVersion`.
+Los datos dañados **nunca se pierden en silencio** (revisado en Phase 1):
+
+- `recoverUserProgress` (dominio, puro) conserva cada entrada válida y descarta solo las dañadas.
+- Si algo se descarta, el texto original se copia a `brain-practice:progress:backup` antes de que
+  cualquier escritura lo sobrescriba.
+- Otra `schemaVersion` o JSON ilegible → progreso vacío (con copia de seguridad); las migraciones de
+  esquema están en el roadmap (P2-8).
+- Todos los accesos al storage devuelven Promises rechazadas en lugar de lanzar. `openBrowserStorage`
+  (infraestructura) prueba `localStorage` al arrancar; si está bloqueado, usa `MemoryStorage` y
+  `AppServices.persistence = 'session-only'` hace que el shell avise de que el progreso no se guardará.
+- Una ruta sin path con `errorElement` (`RouteError`) captura errores de pantalla dentro del shell.
 
 ---
 
@@ -698,7 +707,9 @@ interface AssessmentDefinition {
 interface CognitiveScore {
   value: number /* 0–100 */;
   band: 'developing' | 'solid' | 'strong' | 'exceptional';
-  sampleSize: number;
+  sampleSize: number; // challenges respondidos o agotados
+  items: number; // challenges que componen la puntuación, saltados incluidos
+  margin: number; // margen aproximado del 95 %: 98 / √items
 }
 type CognitiveProfile = Record<CognitiveArea, CognitiveScore | null> & { overall: CognitiveScore };
 ```
@@ -706,13 +717,15 @@ type CognitiveProfile = Record<CognitiveArea, CognitiveScore | null> & { overall
 - Batería por defecto (`games/assessment.ts`): 5 áreas × niveles 2, 5 y 8 × 2 challenges = 30 challenges.
 - `startAssessment(definition, engine, clock)` **reutiliza `GameEngine`**: cada (área, nivel) es una sesión
   corta normal. No existe un segundo bucle de juego.
-- Puntuación por área = `Σ m(L)·PI(L) / Σ m(L)` (m(L) = 1 + 0.25·(L − 1)): la evidencia en niveles altos pesa
-  más. Un área sin respuestas es `null` ("no medida"), nunca 0. `overall` (Programming Cognitive Index) =
-  media de las áreas medidas. Bandas: < 40 developing, < 60 solid, < 80 strong, ≥ 80 exceptional.
+- Puntuación por área = `Σ m(L)·PI'(L) / Σ m(L)` (m(L) = 1 + 0.25·(L − 1)), con `PI' = PI · attempted / total`:
+  los saltados cuentan como no resueltos, así que saltar nunca sube la nota. Un área saltada entera vale 0;
+  `null` = el área no está en la batería. `overall` (Programming Cognitive Index) = media de las áreas de la
+  batería. Bandas: < 40 developing, < 60 solid, < 80 strong, ≥ 80 exceptional.
 - Las rondas del assessment **no** se guardan como sesiones ni récords de nivel (2 challenges no deben
   "superar" un nivel); se guarda un `AssessmentSummary`.
 - Se presenta como **Programming Cognitive Index / Performance Profile**, nunca como IQ: las puntuaciones
-  son relativas a la dificultad de los ítems, **no a normas poblacionales**, y la UI muestra un aviso
+  describen precisión y ritmo en estos ejercicios con un margen amplio que la UI muestra, **no se comparan
+  con normas poblacionales**, y la UI muestra un aviso
   explícito de que es una herramienta recreativa, no un instrumento psicométrico ni un diagnóstico.
 
 ---

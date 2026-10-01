@@ -20,8 +20,12 @@ interface Props {
   readonly onNext: () => void;
 }
 
-const phaseOf = (status: SessionStatus): ChallengePhase =>
-  status === 'studying'
+/**
+ * `presenting` lasts one frame before the session starts measuring. For memory challenges it must
+ * already look like the study phase, or the question and options would flash before memorising.
+ */
+const phaseOf = (status: SessionStatus, challenge: Challenge): ChallengePhase =>
+  status === 'studying' || (status === 'presenting' && challenge.timing.studyMs !== null)
     ? 'study'
     : status === 'feedback' || status === 'finished'
       ? 'review'
@@ -37,7 +41,7 @@ export function ChallengeStage({
   onEndStudy,
   onNext,
 }: Props) {
-  const phase = phaseOf(status);
+  const phase = phaseOf(status, challenge);
   const { ContentView } = module;
   const answering = status === 'responding';
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -78,7 +82,7 @@ export function ChallengeStage({
           <h2 id="challenge-prompt" className="text-lg font-medium text-white sm:text-xl">
             Memorise this — it will be hidden.
           </h2>
-          <Button variant="secondary" onClick={onEndStudy}>
+          <Button variant="secondary" onClick={onEndStudy} disabled={status !== 'studying'}>
             I&apos;m ready
           </Button>
         </div>

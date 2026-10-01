@@ -6,6 +6,7 @@ import { trace, valueAt, type Slip } from '../solvers/state';
 import type { Assignment, CodeMemoryProfile, Expr, Operand } from '../types';
 import { VARIABLES } from '../vocabulary';
 import type { MemoryDraft } from './draft';
+import { anchoredNear } from './values';
 
 const MAX_ABS_VALUE = 99;
 /** From this length on, the answer must depend on a variable that was overwritten before the read. */
@@ -155,8 +156,13 @@ export function variableState(random: RandomGenerator, profile: CodeMemoryProfil
     if (state.answer === 'numeric') return { ...base, response: numericResponse(answer) };
 
     const slips = [...new Set(slipValues(lines, ask, vars))].filter((v) => v !== answer);
-    const near = [1, -1, 2, -2, 10, -10].map((d) => answer + d);
-    const wrong = [...new Set([...shuffle(random, slips), ...shuffle(random, near)])]
+    const near = anchoredNear(
+      random,
+      answer,
+      (v) => [1, -1, 2, -2, 10, -10].map((d) => v + d),
+      distractorCount + 1,
+    );
+    const wrong = [...new Set([...shuffle(random, slips), ...near])]
       .filter((v) => v !== answer)
       .slice(0, distractorCount);
     return {

@@ -87,7 +87,7 @@ function recordDraft<C extends RecordContent>(
   const count = profile.elementCount;
   const { content, violation } = retryGeneration(`${spec.prompt} artifact`, () => {
     const records = baseRecords(random, spec.fields, count);
-    const target = randomInt(random, 1, count - 1);
+    const target = randomInt(random, 0, count - 1);
     const { broken } = spec;
     const decoys = shuffle(
       random,

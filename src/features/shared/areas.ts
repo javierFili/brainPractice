@@ -8,6 +8,8 @@ export interface AreaMeta {
   readonly accent: string;
   readonly ring: string;
   readonly soft: string;
+  /** Hover border; a literal class so Tailwind can generate it. */
+  readonly hoverRing: string;
 }
 
 export const AREAS: Readonly<Record<CognitiveArea, AreaMeta>> = {
@@ -17,6 +19,7 @@ export const AREAS: Readonly<Record<CognitiveArea, AreaMeta>> = {
     glyph: '⋀',
     accent: 'text-violet-300',
     ring: 'border-violet-400/40',
+    hoverRing: 'hover:border-violet-400/40',
     soft: 'bg-violet-400/10',
   },
   memory: {
@@ -25,6 +28,7 @@ export const AREAS: Readonly<Record<CognitiveArea, AreaMeta>> = {
     glyph: '▦',
     accent: 'text-cyan-300',
     ring: 'border-cyan-400/40',
+    hoverRing: 'hover:border-cyan-400/40',
     soft: 'bg-cyan-400/10',
   },
   speed: {
@@ -33,6 +37,7 @@ export const AREAS: Readonly<Record<CognitiveArea, AreaMeta>> = {
     glyph: '»',
     accent: 'text-amber-300',
     ring: 'border-amber-400/40',
+    hoverRing: 'hover:border-amber-400/40',
     soft: 'bg-amber-400/10',
   },
   attention: {
@@ -41,6 +46,7 @@ export const AREAS: Readonly<Record<CognitiveArea, AreaMeta>> = {
     glyph: '◎',
     accent: 'text-rose-300',
     ring: 'border-rose-400/40',
+    hoverRing: 'hover:border-rose-400/40',
     soft: 'bg-rose-400/10',
   },
   patterns: {
@@ -49,6 +55,7 @@ export const AREAS: Readonly<Record<CognitiveArea, AreaMeta>> = {
     glyph: '◆',
     accent: 'text-emerald-300',
     ring: 'border-emerald-400/40',
+    hoverRing: 'hover:border-emerald-400/40',
     soft: 'bg-emerald-400/10',
   },
 };

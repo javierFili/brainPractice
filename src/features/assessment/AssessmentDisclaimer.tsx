@@ -9,8 +9,8 @@ export function AssessmentDisclaimer() {
       </h2>
       <p>
         This is a recreational training and self-evaluation tool. Scores describe how you performed
-        on these specific exercises, relative to their difficulty. They are not compared with
-        population norms.
+        on these specific exercises: accuracy and pace, with harder levels weighing more. They are
+        based on few challenges, carry a wide margin and are not compared with population norms.
       </p>
       <p className="mt-2">
         It is <strong>not</strong> an IQ test, a psychometric instrument or a clinical or

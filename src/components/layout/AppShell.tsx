@@ -1,9 +1,11 @@
 import { NavLink, Outlet } from 'react-router';
+import { useServices } from '@/app/providers/servicesContext';
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `rounded-md px-2 py-1.5 text-sm transition-colors sm:px-3 ${isActive ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-white'}`;
 
 export function AppShell() {
+  const { persistence } = useServices();
   return (
     <div className="flex min-h-screen flex-col bg-slate-950 text-slate-100">
       <a
@@ -44,6 +46,14 @@ export function AppShell() {
           </nav>
         </div>
       </header>
+      {persistence === 'session-only' && (
+        <p
+          role="status"
+          className="border-b border-amber-400/30 bg-amber-400/10 px-4 py-2 text-center text-sm text-amber-100"
+        >
+          This browser blocks local storage, so progress will be lost when you close the tab.
+        </p>
+      )}
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
         <Outlet />
       </main>

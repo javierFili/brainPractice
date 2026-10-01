@@ -1,6 +1,6 @@
 import { numericResponse, singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
-import { pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
+import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
 import {
   ExecutionLimitError,
   execute,
@@ -217,6 +217,15 @@ export function programTrace(random: RandomGenerator, profile: LogicProfile): Lo
       if (candidates.length === 0) return null;
       const ask = pick(random, candidates);
       const value = env[ask] as number;
+      // A value that ends where it started (e.g. after a double swap) makes the trace irrelevant.
+      if (execute(program.slice(0, vars.length)).env[ask] === value) return null;
+      // Every program with branches must have at least one condition that decides the answer.
+      const flips = Array.from({ length: ifsEvaluated }, (_, flipIf) => flipIf);
+      if (
+        ifsEvaluated > 0 &&
+        flips.every((flipIf) => execute(program, { flipIf }).env[ask] === value)
+      )
+        return null;
       const explanation = `Tracing the program line by line ends with ${formatState(env)}, so ${ask} = ${value}.`;
       const base = {
         content: { kind: 'program-trace' as const, program, ask },
@@ -234,9 +243,16 @@ export function programTrace(random: RandomGenerator, profile: LogicProfile): Lo
       const mistakes = [...new Set(mistakenValues(program, ask, ifsEvaluated))].filter(
         (v) => v !== value,
       );
-      const chosen = sample(random, mistakes, Math.min(3, mistakes.length));
-      const nearby = [1, -1, 2, -2, 3, -3].map((d) => value + d).filter((v) => !chosen.includes(v));
-      const distractors = [...chosen, ...nearby].slice(0, 3);
+      // The answer's rank among the options is drawn first (uniform), then each side is filled
+      // with plausible tracing mistakes on that side, topped up with nearby values. Otherwise
+      // symmetric mistakes (loop ±1) would always leave the answer in the middle.
+      const below = randomInt(random, 0, 3);
+      const side = (sign: -1 | 1, count: number) => {
+        const onSide = mistakes.filter((v) => Math.sign(v - value) === sign);
+        const filler = [1, 2, 3, 4, 5, 6].map((d) => value + sign * d);
+        return [...new Set([...shuffle(random, onSide), ...filler])].slice(0, count);
+      };
+      const distractors = [...side(-1, below), ...side(1, 3 - below)];
       return {
         ...base,
         prompt: `What is the value of ${ask} after the program runs?`,

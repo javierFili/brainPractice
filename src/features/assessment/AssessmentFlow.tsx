@@ -35,6 +35,8 @@ export function AssessmentFlow({
   useEffect(() => {
     if (!result || saved.current) return;
     saved.current = true;
+    // A run where nothing was answered carries no information; keep it out of the history.
+    if (result.profile.overall.sampleSize === 0) return;
     progress
       .get()
       .then((current) => progress.save(applyAssessmentResult(current ?? emptyProgress(), result)))
@@ -79,7 +81,7 @@ export function AssessmentFlow({
         module={module}
         session={session}
         onFinished={onStepFinished}
-        endLabel="Skip rest of round"
+        endLabel="Skip round (counts as unsolved)"
       />
     </div>
   );

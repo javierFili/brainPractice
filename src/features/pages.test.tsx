@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { applySessionResult, emptyProgress } from '@/domain/progress';
+import { applySessionResult, emptyProgress, type ProgressRepository } from '@/domain/progress';
 import { gameIdOf } from '@/domain/shared';
 import { resultFixture } from '@/test/fixtures/results';
 import { renderApp } from '@/test/renderApp';
@@ -74,5 +74,29 @@ describe('navigation and pages', () => {
   it('shows a not-found page for unknown routes', async () => {
     renderApp('/nope');
     expect(await screen.findByRole('heading', { name: 'Nothing here' })).toBeInTheDocument();
+  });
+
+  it('keeps the shell usable and explains the failure when a screen crashes', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const crashing: ProgressRepository = {
+      get: () => {
+        throw new Error('storage exploded');
+      },
+      save: () => Promise.resolve(),
+      clear: () => Promise.resolve(),
+    };
+    renderApp('/profile', { repository: crashing });
+    expect(
+      await screen.findByRole('heading', { name: 'Something went wrong' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/storage exploded/)).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument();
+  });
+
+  it('warns when progress can only live until the tab closes', async () => {
+    renderApp('/', { persistence: 'session-only' });
+    expect(
+      await screen.findByText(/progress will be lost when you close the tab/),
+    ).toBeInTheDocument();
   });
 });

@@ -17,7 +17,9 @@ interface Props {
   readonly onRestart: (options: { level: DifficultyLevel; seed?: number }) => void;
 }
 
-function performanceLabel(index: number): string {
+function performanceLabel(index: number, completed: boolean): string {
+  // An index over a handful of answers is not a verdict on the level.
+  if (!completed) return 'Session ended early';
   if (index >= 90) return 'Outstanding';
   if (index >= 70) return 'Level cleared';
   if (index >= 50) return 'Getting there';
@@ -55,12 +57,11 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
           tabIndex={-1}
           className="text-3xl font-semibold text-white outline-none"
         >
-          {performanceLabel(score.performanceIndex)}
+          {performanceLabel(score.performanceIndex, result.completed)}
         </h1>
         {!result.completed && (
           <p className="text-sm text-amber-300">
-            Session ended early — unanswered challenges were skipped and it does not count toward
-            records.
+            Unanswered challenges were skipped and it does not count toward records.
           </p>
         )}
         {result.assisted && (

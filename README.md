@@ -43,20 +43,26 @@ Requiere Node ≥ 20.19.
   racha, desglose por tipo de challenge, revisión de errores y recomendación de siguiente nivel.
 - Repetir, pasar al siguiente nivel o **volver a jugar exactamente los mismos challenges por seed**
   ("Replay this seed", `?seed=…`).
-- Modo "Relaxed timing" (sin límites; los resultados no cuentan para los récords).
-- Progreso local por nivel y sesiones recientes (localStorage).
+- Modo "Relaxed timing" (sin límite de respuesta y el doble de tiempo de estudio; los resultados no cuentan
+  para los récords).
+- Progreso local por nivel y sesiones recientes (localStorage, con recuperación de datos dañados y aviso si
+  el navegador bloquea el almacenamiento).
 - Juego con teclado (teclas numéricas para las opciones, Enter para continuar), gestión del foco,
   movimiento reducido.
 
 ## Documentación
 
-| Documento                          | Contenido                                                                              |
-| ---------------------------------- | -------------------------------------------------------------------------------------- |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Capas, modelo de dominio, decisiones                                                   |
-| [GAME_ENGINE.md](GAME_ENGINE.md)   | Ciclo de vida de la sesión, scoring, dificultad, reproducibilidad, puntos de extensión |
-| [GAME_DESIGN.md](GAME_DESIGN.md)   | Diseño de juegos y niveles de los cinco juegos y del assessment                        |
-| [TESTING.md](TESTING.md)           | Estrategia de testing, helpers, cobertura                                              |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Cómo añadir un juego, un nivel, un tipo de challenge o una estrategia                  |
+| Documento                                                            | Contenido                                                                              |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [ARCHITECTURE.md](ARCHITECTURE.md)                                   | Capas, modelo de dominio, decisiones                                                   |
+| [GAME_ENGINE.md](GAME_ENGINE.md)                                     | Ciclo de vida de la sesión, scoring, dificultad, reproducibilidad, puntos de extensión |
+| [GAME_DESIGN.md](GAME_DESIGN.md)                                     | Diseño de juegos y niveles de los cinco juegos y del assessment                        |
+| [TESTING.md](TESTING.md)                                             | Estrategia de testing, helpers, cobertura                                              |
+| [docs/product-audit.md](docs/product-audit.md)                       | Auditoría de producto y código (Phase 0)                                               |
+| [docs/improvement-roadmap.md](docs/improvement-roadmap.md)           | Prioridades P0–P3 y fases                                                              |
+| [docs/product-value.md](docs/product-value.md)                       | Test "I would pay for this"                                                            |
+| [docs/learning-engine-proposal.md](docs/learning-engine-proposal.md) | Propuesta del Learning Engine                                                          |
+| [CONTRIBUTING.md](CONTRIBUTING.md)                                   | Cómo añadir un juego, un nivel, un tipo de challenge o una estrategia                  |
 
 ## Estructura del proyecto
 

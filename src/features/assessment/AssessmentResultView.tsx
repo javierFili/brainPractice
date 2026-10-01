@@ -11,7 +11,7 @@ const BAND_LABEL: Record<CognitiveBand, string> = {
   developing: 'Developing',
   solid: 'Solid',
   strong: 'Strong',
-  exceptional: 'Exceptional',
+  exceptional: 'Very strong',
 };
 
 export function AssessmentResultView({
@@ -55,8 +55,14 @@ export function AssessmentResultView({
           <span className="text-slate-400">/100</span>
         </h1>
         <p className="mt-1 text-slate-300">
-          {BAND_LABEL[profile.overall.band]} overall · {profile.overall.sampleSize} challenges
-          answered · {formatMs(result.endedAt - result.startedAt)}
+          {BAND_LABEL[profile.overall.band]} overall · ±{profile.overall.margin} points ·{' '}
+          {profile.overall.sampleSize} of {profile.overall.items} challenges answered ·{' '}
+          {formatMs(result.endedAt - result.startedAt)}
+        </p>
+        <p className="mt-2 max-w-2xl text-sm text-slate-400">
+          With {profile.overall.items} challenges the margin is wide: read these numbers as a rough
+          starting point for choosing what to train, not as a precise measurement. Skipped
+          challenges count as unsolved.
         </p>
       </header>
 
@@ -71,6 +77,7 @@ export function AssessmentResultView({
               <th scope="col">Area</th>
               <th scope="col">Score</th>
               <th scope="col">Band</th>
+              <th scope="col">Evidence</th>
             </tr>
           </thead>
           <tbody>
@@ -86,6 +93,8 @@ export function AssessmentResultView({
                   <td className="py-3">
                     {score === null ? (
                       <span className="text-slate-500">Not measured</span>
+                    ) : score.sampleSize === 0 ? (
+                      <span className="text-amber-300">Skipped — counts as 0</span>
                     ) : (
                       <div className="flex items-center gap-3">
                         <div
@@ -103,8 +112,11 @@ export function AssessmentResultView({
                       </div>
                     )}
                   </td>
-                  <td className="w-32 py-3 pl-4 text-slate-300">
+                  <td className="w-28 py-3 pl-4 text-slate-300">
                     {score ? BAND_LABEL[score.band] : '—'}
+                  </td>
+                  <td className="hidden w-40 py-3 pl-4 text-xs text-slate-400 sm:table-cell">
+                    {score ? `±${score.margin} · ${score.sampleSize}/${score.items} answered` : ''}
                   </td>
                 </tr>
               );
@@ -113,30 +125,33 @@ export function AssessmentResultView({
         </table>
       </section>
 
-      {strongest && weakest && strongest !== weakest && (
-        <section
-          aria-labelledby="next-title"
-          className="rounded-xl border border-sky-400/30 bg-sky-400/5 p-5 text-sm"
-        >
-          <h2 id="next-title" className="font-semibold text-sky-200">
-            What to train next
-          </h2>
+      <section
+        aria-labelledby="next-title"
+        className="rounded-xl border border-sky-400/30 bg-sky-400/5 p-5 text-sm"
+      >
+        <h2 id="next-title" className="font-semibold text-sky-200">
+          What to train next
+        </h2>
+        {strongest && weakest && strongest !== weakest && (
           <p className="mt-1 text-slate-300">
             Your strongest area was <strong>{AREAS[strongest].label}</strong>. The biggest
             opportunity is <strong>{AREAS[weakest].label}</strong>.
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {weakestGame && (
-              <ButtonLink to={`/games/${weakestGame}`}>
-                Train {getModule(weakestGame)?.definition.name ?? AREAS[weakest].label}
-              </ButtonLink>
-            )}
-            <Button variant="secondary" onClick={onRestart}>
-              Retake assessment
-            </Button>
-          </div>
-        </section>
-      )}
+        )}
+        <div className="mt-4 flex flex-wrap gap-2">
+          {weakest && weakestGame && strongest !== weakest && (
+            <ButtonLink to={`/games/${weakestGame}`}>
+              Train {getModule(weakestGame)?.definition.name ?? AREAS[weakest].label}
+            </ButtonLink>
+          )}
+          <ButtonLink to="/games" variant={strongest !== weakest ? 'secondary' : 'primary'}>
+            Browse games
+          </ButtonLink>
+          <Button variant="secondary" onClick={onRestart}>
+            Retake assessment
+          </Button>
+        </div>
+      </section>
 
       <AssessmentDisclaimer />
     </article>

@@ -91,43 +91,44 @@ export function generateGraph(
 const formatOrder = (order: readonly string[]) => order.join(' → ');
 const formatEdge = ([from, to]: Edge) => `${from} → ${to}`;
 
-/** Wrong orders close to a valid one. `subtle` prefers orders that break a single dependency. */
-function invalidOrders(
+/**
+ * Four options that are all one swap away from the same hidden valid order, exactly one of which
+ * still respects every dependency. Because every option is a neighbour of the same base, none of
+ * them sits at the "centre" of the others: the player has to check the arrows. `subtle` uses
+ * adjacent swaps (each wrong option breaks a single dependency); otherwise any pair may swap.
+ */
+function orderOptions(
   random: RandomGenerator,
   graph: TaskGraph,
-  valid: readonly string[],
   subtle: boolean,
-): string[][] {
-  const candidates: string[][] = [];
-  for (let i = 0; i + 1 < valid.length; i++) {
-    const swapped = [...valid];
-    [swapped[i], swapped[i + 1]] = [swapped[i + 1] as string, swapped[i] as string];
-    candidates.push(swapped);
+): { valid: string[]; wrong: string[][] } | null {
+  const base = randomTopologicalOrder(graph, random);
+  const neighbours: string[][] = [];
+  for (let i = 0; i < base.length; i++) {
+    for (let j = i + 1; j < base.length; j++) {
+      if (subtle && j !== i + 1) continue;
+      const swapped = [...base];
+      [swapped[i], swapped[j]] = [swapped[j] as string, swapped[i] as string];
+      neighbours.push(swapped);
+    }
   }
-  for (let k = 0; k < 12; k++) {
-    const base = randomTopologicalOrder(graph, random);
-    const i = randomInt(random, 0, base.length - 1);
-    const j = randomInt(random, 0, base.length - 1);
-    [base[i], base[j]] = [base[j] as string, base[i] as string];
-    candidates.push(base);
-  }
-  const unique = [...new Map(candidates.map((order) => [order.join(), order])).values()].filter(
-    (order) => !isValidOrder(graph, order),
-  );
-  const ranked = shuffle(random, unique).sort((a, b) => {
+  const valid = neighbours.filter((order) => isValidOrder(graph, order));
+  const invalid = neighbours.filter((order) => !isValidOrder(graph, order));
+  if (valid.length === 0 || invalid.length < 3) return null;
+  const ranked = shuffle(random, invalid).sort((a, b) => {
     const diff = violatedEdges(graph, a).length - violatedEdges(graph, b).length;
     return subtle ? diff : -diff;
   });
-  return ranked.slice(0, 3);
+  return { valid: pick(random, valid), wrong: ranked.slice(0, 3) };
 }
 
 export function dependencyOrder(random: RandomGenerator, profile: LogicProfile): LogicDraft {
   const { nodeCount, dependencyCount, violation } = profile.graph;
   return retryGeneration('dependency order', () => {
     const graph = generateGraph(random, nodeCount, dependencyCount, false);
-    const valid = randomTopologicalOrder(graph, random);
-    const wrong = invalidOrders(random, graph, valid, violation === 'subtle');
-    if (wrong.length < 3) return null;
+    const options = orderOptions(random, graph, violation === 'subtle');
+    if (options === null) return null;
+    const { valid, wrong } = options;
     const broken = wrong.map(
       (order) =>
         `${formatOrder(order)} breaks ${violatedEdges(graph, order).map(formatEdge).join(', ')}`,
@@ -137,7 +138,7 @@ export function dependencyOrder(random: RandomGenerator, profile: LogicProfile):
         'Each arrow means the left module must run before the right one. Which execution order is valid?',
       content: { kind: 'dependency-order', graph },
       response: singleChoice(random, formatOrder(valid), wrong.map(formatOrder)),
-      explanation: `Only ${formatOrder(valid)} runs every module after all of its dependencies. ${broken.join('; ')}.`,
+      explanation: `${formatOrder(valid)} runs every module after all of its dependencies (other valid orders may exist, but none of them was offered). ${broken.join('; ')}.`,
       skills: ['algorithmic-thinking', 'logical-reasoning'],
     };
   });

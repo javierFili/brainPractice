@@ -15,7 +15,9 @@ export function NumericResponse({ response, disabled, onSubmit }: Props) {
 
   const submit: NonNullable<ComponentProps<'form'>['onSubmit']> = (event) => {
     event.preventDefault();
-    const value = raw.trim() === '' ? Number.NaN : Number(raw);
+    // Accept the typographic minus some keyboards insert.
+    const text = raw.trim().replace(/^[−–]/, '-');
+    const value = text === '' ? Number.NaN : Number(text);
     if (!Number.isFinite(value)) {
       setError('Enter a number.');
       return;
@@ -45,6 +47,19 @@ export function NumericResponse({ response, disabled, onSubmit }: Props) {
           className="w-40 rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 font-mono text-lg text-white focus-visible:border-sky-400 focus-visible:outline-none"
         />
       </div>
+      {/* Mobile numeric keypads (iOS) have no minus key. */}
+      <Button
+        variant="secondary"
+        disabled={disabled}
+        aria-label="Toggle negative sign"
+        onClick={() => {
+          setRaw((current) =>
+            current.trim().startsWith('-') ? current.trim().slice(1) : `-${current.trim()}`,
+          );
+        }}
+      >
+        ±
+      </Button>
       <Button type="submit" disabled={disabled}>
         Submit
       </Button>

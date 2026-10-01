@@ -57,7 +57,7 @@ export function ProfilePage() {
               onClick={() => {
                 setConfirming(true);
               }}
-              disabled={recentSessions.length === 0}
+              disabled={recentSessions.length === 0 && assessments.length === 0}
             >
               Reset progress
             </Button>

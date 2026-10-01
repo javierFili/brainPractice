@@ -27,7 +27,7 @@ export function CatalogPage() {
             <li key={definition.id}>
               <Link
                 to={`/games/${definition.id}`}
-                className={`group flex h-full flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition-colors hover:${meta.ring} hover:bg-slate-900 focus-visible:outline-2 focus-visible:outline-sky-400`}
+                className={`group flex h-full flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/40 p-5 transition-colors ${meta.hoverRing} hover:bg-slate-900 focus-visible:outline-2 focus-visible:outline-sky-400`}
               >
                 <div className="flex items-center justify-between">
                   <span

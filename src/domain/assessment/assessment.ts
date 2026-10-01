@@ -30,12 +30,22 @@ export interface AssessmentStep {
 
 export type CognitiveBand = 'developing' | 'solid' | 'strong' | 'exceptional';
 
-/** A 0–100 performance figure for one area. Relative to item difficulty, not to population norms. */
+/**
+ * A 0–100 performance figure for one area, on these exercises only (no population norms). Harder
+ * levels weigh more; unanswered challenges count as unsolved.
+ */
 export interface CognitiveScore {
   readonly value: number;
   readonly band: CognitiveBand;
-  /** Challenges actually attempted; small samples mean low confidence. */
+  /** Challenges actually faced (answered or timed out); skipped ones are excluded. */
   readonly sampleSize: number;
+  /** Challenges that make up the score, skipped ones included. */
+  readonly items: number;
+  /**
+   * Approximate 95 % margin of the value in points (worst case for a proportion: 98 / √items).
+   * Small batteries are imprecise and the UI must say so.
+   */
+  readonly margin: number;
 }
 
 export type CognitiveProfile = Readonly<Record<CognitiveArea, CognitiveScore | null>> & {
@@ -92,28 +102,41 @@ export function planAssessment(definition: AssessmentDefinition): AssessmentStep
 /** Same multiplier the scoring uses: m(L) = 1 + 0.25·(L − 1). Harder evidence weighs more. */
 const levelWeight = (level: DifficultyLevel) => 1 + 0.25 * (level - 1);
 
+export const marginFor = (items: number) =>
+  items === 0 ? 100 : Math.min(100, Math.round(98 / Math.sqrt(items)));
+
+/**
+ * The session performance index is computed over *attempted* challenges, which is right for
+ * training but would let an assessment be inflated by skipping hard items. Scaling by
+ * attempted / total is the same formula with every planned challenge in the denominator.
+ */
+const creditedIndex = ({ metrics, score }: GameResult) =>
+  metrics.total === 0 ? 0 : (score.performanceIndex * metrics.attempted) / metrics.total;
+
 function areaScore(
   entries: readonly { step: AssessmentStep; result: GameResult }[],
 ): CognitiveScore | null {
-  const measured = entries.filter((e) => e.result.metrics.attempted > 0);
-  if (measured.length === 0) return null;
-  const weight = measured.reduce((sum, e) => sum + levelWeight(e.step.level), 0);
+  if (entries.length === 0) return null;
+  const weight = entries.reduce((sum, e) => sum + levelWeight(e.step.level), 0);
   const value = Math.round(
-    measured.reduce(
-      (sum, e) => sum + levelWeight(e.step.level) * e.result.score.performanceIndex,
-      0,
-    ) / weight,
+    entries.reduce((sum, e) => sum + levelWeight(e.step.level) * creditedIndex(e.result), 0) /
+      weight,
   );
+  const items = entries.reduce((sum, e) => sum + e.result.metrics.total, 0);
   return {
     value,
     band: bandOf(value),
-    sampleSize: measured.reduce((sum, e) => sum + e.result.metrics.attempted, 0),
+    sampleSize: entries.reduce((sum, e) => sum + e.result.metrics.attempted, 0),
+    items,
+    margin: marginFor(items),
   };
 }
 
 /**
- * area value = Σ m(L)·PI(L) / Σ m(L) over the area's steps with at least one attempt
- * overall      = mean of measured areas (areas without evidence are reported as null, not 0)
+ * area value = Σ m(L)·PI'(L) / Σ m(L) over the area's steps, PI' = PI · attempted / total
+ * overall    = mean of the areas in the battery (an area skipped entirely scores 0, it is not
+ *              dropped: leaving out the weakest area must not raise the index)
+ * Areas the battery never reached are null.
  */
 export function scoreAssessment(
   definition: AssessmentDefinition,
@@ -131,10 +154,13 @@ export function scoreAssessment(
     measured.length === 0
       ? 0
       : Math.round(measured.reduce((sum, s) => sum + s.value, 0) / measured.length);
+  const items = measured.reduce((sum, s) => sum + s.items, 0);
   const overall: CognitiveScore = {
     value,
     band: bandOf(value),
     sampleSize: measured.reduce((sum, s) => sum + s.sampleSize, 0),
+    items,
+    margin: marginFor(items),
   };
   return {
     assessmentId: definition.id,

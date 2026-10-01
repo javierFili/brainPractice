@@ -4,6 +4,7 @@ import {
   LocalStorageProgressRepository,
   PROGRESS_STORAGE_KEY,
 } from './LocalStorageProgressRepository';
+import { MemoryStorage } from './browserStorage';
 
 describe('LocalStorageProgressRepository', () => {
   beforeEach(() => {
@@ -20,14 +21,40 @@ describe('LocalStorageProgressRepository', () => {
   });
 
   it.each(['{not json', JSON.stringify({ schemaVersion: 99 })])(
-    'discards unreadable data %j with a warning',
+    'treats unrecoverable data %j as empty, keeping a backup of the original',
     async (raw) => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
       localStorage.setItem(PROGRESS_STORAGE_KEY, raw);
-      await expect(new LocalStorageProgressRepository(localStorage).get()).resolves.toBeNull();
+      const repository = new LocalStorageProgressRepository(localStorage);
+      await expect(repository.get()).resolves.toBeNull();
+      expect(localStorage.getItem(repository.backupKey)).toBe(raw);
       expect(warn).toHaveBeenCalledOnce();
     },
   );
+
+  it('recovers the valid entries when only some are damaged, and backs up the original', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const progress = applySessionResult(emptyProgress(), resultFixture());
+    const damaged = {
+      ...progress,
+      recentSessions: [...progress.recentSessions, { gameId: 42 }],
+      games: { ...progress.games, broken: { 3: { plays: 'many' } } },
+    };
+    const raw = JSON.stringify(damaged);
+    localStorage.setItem(PROGRESS_STORAGE_KEY, raw);
+    const repository = new LocalStorageProgressRepository(localStorage);
+
+    await expect(repository.get()).resolves.toEqual(progress);
+    expect(localStorage.getItem(repository.backupKey)).toBe(raw);
+  });
+
+  it('rejects instead of throwing when storage access itself fails', async () => {
+    const blocked = new MemoryStorage();
+    blocked.getItem = () => {
+      throw new DOMException('denied', 'SecurityError');
+    };
+    await expect(new LocalStorageProgressRepository(blocked).get()).rejects.toThrow('denied');
+  });
 
   it('reports storage failures instead of hiding them', async () => {
     const failing: Storage = {

@@ -49,8 +49,11 @@ Reglas que conviene conocer:
   una sesión terminada devuelven errores `Result` (`INVALID_TRANSITION`, `INVALID_ANSWER`,
   `SESSION_FINISHED`, …); nunca se puntúan. Los errores de configuración (juego desconocido, seed inválido,
   número de challenges incorrecto) lanzan una excepción.
-- El **modo asistido** ("Relaxed timing" en la UI) elimina los límites de tiempo; el resultado queda marcado
-  y no establece récords.
+- El **modo asistido** ("Relaxed timing" en la UI) elimina el límite de respuesta y dobla el tiempo de
+  estudio (`ASSISTED_STUDY_FACTOR`, selector `effectiveStudyMs`); el resultado queda marcado y no establece
+  récords.
+- Mientras un challenge con fase de estudio está en `presenting` (un frame), la UI ya lo pinta como
+  estudio: la pregunta y las opciones nunca se ven antes de memorizar.
 
 ## Reproducibilidad
 

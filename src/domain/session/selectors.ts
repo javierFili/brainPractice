@@ -8,9 +8,19 @@ export const currentChallenge = <C extends Challenge>(state: SessionState<C>): C
 export const effectiveLimitMs = (state: SessionState): number | null =>
   state.settings.assisted ? null : currentChallenge(state).timing.limitMs;
 
+/** Relaxed (assisted) sessions double the memorisation time instead of removing it. */
+export const ASSISTED_STUDY_FACTOR = 2;
+
+/** Memorisation time in effect for the current challenge; null when it has no study phase. */
+export function effectiveStudyMs(state: SessionState): number | null {
+  const { studyMs } = currentChallenge(state).timing;
+  if (studyMs === null) return null;
+  return state.settings.assisted ? studyMs * ASSISTED_STUDY_FACTOR : studyMs;
+}
+
 /** Absolute time at which the study phase ends, when studying. */
 export function studyDeadline(state: SessionState): number | null {
-  const { studyMs } = currentChallenge(state).timing;
+  const studyMs = effectiveStudyMs(state);
   const { presentedAt } = state.current;
   return state.status === 'studying' && studyMs !== null && presentedAt !== null
     ? presentedAt + studyMs

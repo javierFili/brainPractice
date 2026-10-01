@@ -199,9 +199,11 @@ describe('Bug Hunter — generated content', () => {
       }
   });
 
-  it('generates a level-10 challenge in well under 20 ms', () => {
+  it('generates a level-10 challenge in a few milliseconds', () => {
     const start = performance.now();
     for (let seed = 0; seed < 50; seed++) generate(10, seed);
-    expect((performance.now() - start) / 50).toBeLessThan(20);
+    // Generous budget: the suite runs files in parallel, so wall-clock time is noisy. Real
+    // generation takes a few ms; this only catches order-of-magnitude regressions.
+    expect((performance.now() - start) / 50).toBeLessThan(50);
   });
 });

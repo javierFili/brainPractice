@@ -5,7 +5,7 @@ import { fieldValue, formatRecord } from '../format';
 import type { CodeMemoryProfile, DataRecord, Field } from '../types';
 import { RELATIONS, SCHEMAS, type EntitySchema, type FieldSpec } from '../vocabulary';
 import type { MemoryDraft } from './draft';
-import { column, nearValues, pickDistractors, type Similarity } from './values';
+import { anchoredNear, column, nearValues, pickDistractors, type Similarity } from './values';
 
 const ID_DOMAIN = { type: 'id' } as const;
 const NAME_DOMAIN = { type: 'name' } as const;
@@ -78,7 +78,7 @@ export function recordRecall(random: RandomGenerator, profile: CodeMemoryProfile
       random,
       asked.value,
       seenElsewhere,
-      nearValues(spec.domain, asked.value),
+      anchoredNear(random, asked.value, (v) => nearValues(spec.domain, v), profile.distractors + 1),
       profile.distractors,
     );
     if (distractors === null) return null;
@@ -118,7 +118,7 @@ export function crossReference(random: RandomGenerator, profile: CodeMemoryProfi
       random,
       answer,
       otherTargets,
-      nearValues(target.domain, answer),
+      anchoredNear(random, answer, (v) => nearValues(target.domain, v), profile.distractors + 1),
       profile.distractors,
     );
     if (distractors === null) return null;
@@ -203,7 +203,7 @@ export function foreignKeyJoin(random: RandomGenerator, profile: CodeMemoryProfi
       random,
       answer,
       lures,
-      nearValues(target.domain, answer),
+      anchoredNear(random, answer, (v) => nearValues(target.domain, v), profile.distractors + 1),
       profile.distractors,
     );
     if (distractors === null) return null;

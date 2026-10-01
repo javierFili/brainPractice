@@ -141,7 +141,7 @@ export function GameIntroPage() {
                   }}
                   className="h-4 w-4 accent-sky-400"
                 />
-                Relaxed timing (no limits, not counted in records)
+                Relaxed timing (no answer limit, double memorisation time, not counted in records)
               </label>
             </div>
           </section>

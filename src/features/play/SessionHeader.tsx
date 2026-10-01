@@ -1,5 +1,6 @@
 import {
   effectiveLimitMs,
+  effectiveStudyMs,
   progress,
   responseDeadline,
   runningScore,
@@ -21,10 +22,10 @@ export function SessionHeader({
   title: string;
 }) {
   const { completed, total } = progress(state);
-  const current = state.challenges[state.index];
   const study = studyDeadline(state);
   const response = responseDeadline(state);
   const limit = effectiveLimitMs(state);
+  const studyMs = effectiveStudyMs(state);
 
   return (
     <div className="mb-6 flex flex-col gap-3">
@@ -53,11 +54,11 @@ export function SessionHeader({
             <dd className="text-white">{state.streak}</dd>
           </div>
         </dl>
-        {study !== null && current?.timing.studyMs != null && (
+        {study !== null && studyMs !== null && (
           <Countdown
             clock={clock}
             deadline={study}
-            durationMs={current.timing.studyMs}
+            durationMs={studyMs}
             label="Memorisation time left"
           />
         )}

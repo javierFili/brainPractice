@@ -243,13 +243,20 @@ perfil de rendimiento (Programming Cognitive Index / Performance Profile).
 - **Puntuación ponderada por dificultad:** la puntuación de cada área es
   `Σ m(L)·PI(L) / Σ m(L)`, con `m(L) = 1 + 0.25·(L − 1)` (el mismo multiplicador del scoring: 1,25 en L2,
   2 en L5 y 2,75 en L8) y `PI` el índice de rendimiento de la sesión. La evidencia en niveles altos pesa
-  más. Un área sin respuestas es `null` ("no medida"), nunca 0. El índice global (`overall`) es la media
-  de las áreas medidas.
-- **Bandas** (escala 0–100): < 40 `developing`, 40–59 `solid`, 60–79 `strong`, ≥ 80 `exceptional`.
+  más. **Los challenges saltados cuentan como no resueltos** (`PI' = PI · attempted / total`): saltar
+  nunca sube la puntuación. Un área saltada entera vale 0 y sigue contando en el índice global
+  (`overall`), que es la media de las áreas de la batería; `null` solo significa que la batería no
+  incluye esa área. Un assessment sin ninguna respuesta no se guarda.
+- **Precisión:** cada puntuación lleva su número de ítems y un margen aproximado del 95 %
+  (`98 / √items`: ±40 con 6 ítems por área, ±18 en el global). La UI lo muestra y pide leer el
+  resultado como orientación, no como medida precisa.
+- **Bandas** (escala 0–100): < 40 `developing`, 40–59 `solid`, 60–79 `strong`, ≥ 80 `exceptional`
+  (mostrada como "Very strong").
 - **Las rondas no cuentan como récords:** dos challenges por nivel son muy poca evidencia para
   "superar" un nivel, así que las rondas del assessment no se guardan como sesiones ni récords de nivel;
   solo se guarda un `AssessmentSummary` con el perfil.
-- **Aviso:** las puntuaciones son relativas a la dificultad de los ítems, no a normas poblacionales. Es
+- **Aviso:** las puntuaciones describen precisión y ritmo en estos ejercicios (los niveles difíciles
+  pesan más), no se comparan con normas poblacionales. Es
   una herramienta recreativa: no es un test de IQ ni un instrumento psicométrico o clínico, y la UI lo
   indica explícitamente.
 

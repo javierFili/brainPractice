@@ -54,6 +54,12 @@ AUDITOR }` → _"What was the id of the Order record?"_ → `482`.
   valores del enum, nombres de la misma familia (`Mara/Maria/Marta`). Con similitud alta (L5+) los
   ids de todos los registros son **permutaciones de los mismos tres dígitos** y los nombres
   pertenecen a una misma familia.
+- **Anclaje de los valores cercanos** (Phase 1): si los valores cercanos se generaran siempre
+  alrededor de la respuesta, la respuesta sería el "centro" al que se parecen todas las demás
+  opciones y podría elegirse sin recordar nada (70–95 % de acierto medido en ids). `anchoredNear`
+  genera los valores cercanos alrededor de un **señuelo** con probabilidad `(n − 1) / n`; la
+  respuesta es entonces una vecina más. `__tests__/measurement.test.ts` comprueba que elegir el
+  centroide o la mediana no supera el azar.
 
 ### `sequence-recall` — Call sequences (L1–10)
 
@@ -83,7 +89,7 @@ AUDITOR }` → _"What was the id of the Order record?"_ → `482`.
   respuesta la comprueba un intérprete independiente escrito en el test.
 - **Distractores** (L2–3, choice): resultados de errores reales de traza — olvidar un update, leer
   el primer valor en lugar del actual, dar el valor de otra variable o un valor anterior — y luego
-  ±1/±2/±10. Desde L4 la respuesta es **numérica exacta** (no hay opciones en las que apoyarse).
+  ±1/±2/±10 anclados igual que arriba (`anchoredNear`). Desde L4 la respuesta es **numérica exacta** (no hay opciones en las que apoyarse).
 
 ### `position-recall` — Grid positions (L1–10)
 

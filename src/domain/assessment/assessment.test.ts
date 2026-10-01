@@ -48,29 +48,55 @@ describe('planAssessment', () => {
 
 describe('scoreAssessment', () => {
   const steps = planAssessment(definition);
-  const entry = (i: number, performanceIndex: number, attempted = 2) => ({
-    step: steps[i] as (typeof steps)[number],
-    result: resultFixture({ performanceIndex, metrics: { ...resultFixture().metrics, attempted } }),
-  });
+  const entry = (i: number, performanceIndex: number, attempted?: number) => {
+    const step = steps[i] as (typeof steps)[number];
+    const total = step.challengeCount;
+    const faced = attempted ?? total;
+    return {
+      step,
+      result: resultFixture({
+        performanceIndex,
+        metrics: { ...resultFixture().metrics, total, attempted: faced, skipped: total - faced },
+      }),
+    };
+  };
 
-  it('weights harder levels more within an area', () => {
+  it('weights harder levels more within an area and reports the precision', () => {
     // m(2) = 1.25, m(8) = 2.75 → (1.25·100 + 2.75·40) / 4 = 58.75
-    const result = scoreAssessment(
-      definition,
-      [entry(0, 100), entry(1, 40), entry(2, 90, 3)],
-      0,
-      10,
-    );
-    expect(result.profile.logic).toEqual({ value: 59, band: 'solid', sampleSize: 4 });
-    expect(result.profile.memory).toEqual({ value: 90, band: 'exceptional', sampleSize: 3 });
-    expect(result.profile.overall).toEqual({ value: 75, band: 'strong', sampleSize: 7 });
+    const result = scoreAssessment(definition, [entry(0, 100), entry(1, 40), entry(2, 90)], 0, 10);
+    expect(result.profile.logic).toEqual({
+      value: 59,
+      band: 'solid',
+      sampleSize: 4,
+      items: 4,
+      margin: 49,
+    });
+    expect(result.profile.memory).toMatchObject({ value: 90, sampleSize: 3, items: 3 });
+    expect(result.profile.overall).toMatchObject({ value: 75, sampleSize: 7, items: 7 });
+    expect(result.profile.overall.margin).toBe(37);
     expect(result.profile.speed).toBeNull();
   });
 
-  it('reports areas without attempts as unmeasured, not as zero', () => {
-    const result = scoreAssessment(definition, [entry(0, 80), entry(2, 0, 0)], 0, 10);
-    expect(result.profile.memory).toBeNull();
-    expect(result.profile.overall.value).toBe(80);
+  it('counts skipped challenges as unsolved, so skipping never raises the score', () => {
+    const answered = scoreAssessment(definition, [entry(0, 100), entry(1, 0), entry(2, 90)], 0, 1);
+    // Skipping the hard round instead of failing it: PI is computed over 0 attempts → credit 0.
+    const skipped = scoreAssessment(
+      definition,
+      [entry(0, 100), entry(1, 0, 0), entry(2, 90)],
+      0,
+      1,
+    );
+    // Skipping half of the hard round after answering one correctly: credit is halved.
+    const half = scoreAssessment(definition, [entry(0, 100), entry(1, 100, 1), entry(2, 90)], 0, 1);
+    expect(skipped.profile.logic?.value).toBe(answered.profile.logic?.value);
+    expect(skipped.profile.logic?.sampleSize).toBe(2);
+    expect(half.profile.logic?.value).toBe(Math.round((1.25 * 100 + 2.75 * 50) / 4));
+  });
+
+  it('scores an area skipped entirely as 0 instead of dropping it from the index', () => {
+    const result = scoreAssessment(definition, [entry(0, 80), entry(1, 80), entry(2, 0, 0)], 0, 10);
+    expect(result.profile.memory).toMatchObject({ value: 0, sampleSize: 0, items: 3 });
+    expect(result.profile.overall.value).toBe(40);
   });
 
   it('scores an empty assessment as 0 with no evidence', () => {
@@ -78,6 +104,8 @@ describe('scoreAssessment', () => {
       value: 0,
       band: 'developing',
       sampleSize: 0,
+      items: 0,
+      margin: 100,
     });
   });
 
