@@ -1,128 +1,378 @@
 import { Link } from 'react-router';
-import { emptyLearningProgress } from '@/domain/learning';
-import { COGNITIVE_AREAS } from '@/domain/shared';
+import { pathById, PATHS } from '@/content/paths';
+import {
+  continueTarget,
+  dailyChallenge,
+  recommendTraining,
+  type TrainingSuggestion,
+} from '@/domain/insights';
+import { weekSummary, type UserProfile } from '@/domain/profile';
+import { QUICK_SESSION_MINUTES } from '@/domain/preferences';
+import { unlockedLevels, type UserProgress } from '@/domain/progress';
 import { useServices } from '@/app/providers/servicesContext';
+import { usePreferences } from '@/app/providers/preferencesContext';
 import { ButtonLink } from '@/components/ui/Button';
-import { Dashboard } from '@/features/dashboard/Dashboard';
-import { AREAS } from '@/features/shared/areas';
+import { Icon, type IconName } from '@/components/ui/Icon';
+import { StatTile } from '@/components/ui/StatTile';
+import { WeekStrip } from '@/features/dashboard/WeekStrip';
+import { catalogEntries, categoriesFor, dailyPool } from '@/features/shared/catalog';
+import { CATEGORIES, GENERAL_CATEGORIES } from '@/features/shared/categories';
+import { dayKeyOf } from '@/features/shared/days';
+import { formatDuration, formatPercent, relativeDay } from '@/features/shared/format';
+import { LoadError } from '@/features/shared/LoadError';
 import { PageLoading } from '@/features/shared/PageLoading';
-import { useProfile } from '@/features/shared/useProfile';
-import { useProgress } from '@/features/shared/useProgress';
-import { useStored } from '@/features/shared/useStored';
+import { useAppData } from '@/features/shared/useAppData';
 
-const PILLARS = [
-  {
-    eyebrow: 'Learn',
-    title: 'Programming logic from zero',
-    text: 'Ten interactive lessons: values, decisions, loops, functions, algorithms and debugging — the thinking before any syntax.',
-    to: '/learn',
-  },
-  {
-    eyebrow: 'Train',
-    title: 'Five cognitive skills, on code',
-    text: 'Short exercises on tracing, remembering, scanning, spotting anomalies and finding patterns, levels 1–10.',
-    to: '/games',
-  },
-  {
-    eyebrow: 'Assess',
-    title: 'See where you stand',
-    text: 'A performance profile across the five areas, with honest margins. A practice tool, not a test of intelligence.',
-    to: '/assessment',
-  },
-] as const;
+const PATH_ICONS: Readonly<Record<string, IconName>> = {
+  kids: 'kids',
+  teens: 'teens',
+  adults: 'adults',
+  seniors: 'seniors',
+  programmers: 'code',
+};
 
-function Landing() {
+function Panel({
+  title,
+  id,
+  children,
+  action,
+}: {
+  title: string;
+  id: string;
+  children: React.ReactNode;
+  action?: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col gap-16">
-      <section className="flex flex-col gap-6 pt-6 sm:pt-12">
-        <p className="font-mono text-sm text-sky-300">
-          // learn and practise the thinking behind code
+    <section aria-labelledby={id} className="flex flex-col gap-3">
+      <div className="flex items-baseline justify-between gap-3">
+        <h2 id={id} className="text-lg font-semibold text-ink">
+          {title}
+        </h2>
+        {action}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Dashboard({ progress, profile }: { progress: UserProgress; profile: UserProfile }) {
+  const { modules, getModule, clock } = useServices();
+  const { preferences } = usePreferences();
+  const now = clock.now();
+  const today = dayKeyOf(now);
+  const path = pathById(preferences.path);
+  const name = (id: string) => getModule(id)?.definition.name ?? id;
+  const exists = (id: string) => getModule(id) !== undefined;
+
+  const resume = continueTarget(progress, exists, preferences.freePlay);
+  const pool = dailyPool(modules, path);
+  const daily = pool.length > 0 ? dailyChallenge(today, pool, progress.games) : null;
+  const dailyDone = profile.daily[today];
+  const suggestions = recommendTraining({
+    catalog: catalogEntries(modules),
+    progress,
+    featured: path?.featured ?? [],
+    categories: categoriesFor(path),
+    now,
+    freePlay: preferences.freePlay,
+  }).filter((s) => exists(s.gameId));
+
+  const played = new Set(progress.recentSessions.map((s) => s.gameId));
+  for (const id of Object.keys(progress.games)) played.add(id);
+  const openedLevels = [...played].reduce(
+    (sum, id) =>
+      sum + (exists(id) ? unlockedLevels(progress.games[id], preferences.freePlay).length : 0),
+    0,
+  );
+  const todayMs = progress.recentSessions
+    .filter((s) => dayKeyOf(s.endedAt) === today)
+    .reduce((sum, s) => sum + s.durationMs, 0);
+  const goal = preferences.dailyGoalMinutes;
+  const returning = progress.totals.sessions > 0;
+  const week = weekSummary(profile, today);
+
+  return (
+    <div className="flex flex-col gap-10">
+      <header className="flex flex-col gap-5 rounded-3xl border border-line bg-gradient-to-br from-surface via-surface to-brand/10 p-6 sm:p-8">
+        <p className="text-sm font-medium text-brand-strong">
+          {returning ? 'Welcome back' : 'Welcome'}
+          {path ? ` · ${path.name} route` : ''}
         </p>
-        <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-          Learn to think like a programmer.
+        <h1 className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Train your mind at your own pace.
         </h1>
-        <p className="max-w-2xl text-lg text-slate-400">
-          Interactive lessons teach programming logic from scratch; short training exercises let you
-          practise the reasoning, memory and attention that reading code takes. Track your progress
-          as you go.
+        <p className="max-w-2xl text-ink-soft">
+          Explore challenges of memory, logic, attention and reasoning. Short sessions, ten levels
+          per game, and results you can follow over time.
         </p>
         <div className="flex flex-wrap gap-3">
-          <ButtonLink to="/start">Start with a 2-minute challenge</ButtonLink>
-          <ButtonLink to="/learn" variant="secondary">
-            Go straight to the lessons
+          {resume ? (
+            <ButtonLink to={`/games/${resume.gameId}/play/${resume.level}`}>
+              <Icon name="play" /> Continue {name(resume.gameId)}
+            </ButtonLink>
+          ) : (
+            <ButtonLink to={suggestions[0] ? `/games/${suggestions[0].gameId}` : '/games'}>
+              <Icon name="play" /> Start your first activity
+            </ButtonLink>
+          )}
+          <ButtonLink to="/quick" variant="secondary">
+            <Icon name="timer" /> Quick session
           </ButtonLink>
+          {!path && (
+            <ButtonLink to="/start" variant="ghost">
+              Choose a route
+            </ButtonLink>
+          )}
         </div>
-      </section>
+      </header>
 
-      <section aria-labelledby="pillars-title">
-        <h2
-          id="pillars-title"
-          className="mb-4 text-sm font-semibold tracking-widest text-slate-400 uppercase"
+      <div className="grid gap-6 lg:grid-cols-3">
+        <section
+          aria-labelledby="continue-title"
+          className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-5"
         >
-          Three ways to use it
-        </h2>
-        <ul className="grid gap-3 md:grid-cols-3">
-          {PILLARS.map((pillar) => (
-            <li key={pillar.eyebrow}>
-              <Link
-                to={pillar.to}
-                className="flex h-full flex-col gap-2 rounded-xl border border-slate-800 bg-slate-900/40 p-5 hover:border-slate-600 focus-visible:outline-2 focus-visible:outline-sky-400"
-              >
-                <span className="text-xs font-semibold tracking-widest text-sky-300 uppercase">
-                  {pillar.eyebrow}
-                </span>
-                <span className="font-semibold text-white">{pillar.title}</span>
-                <span className="text-sm text-slate-400">{pillar.text}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+          <h2 id="continue-title" className="flex items-center gap-2 font-semibold text-ink">
+            <Icon name="play" className="h-5 w-5 text-brand" /> Continue training
+          </h2>
+          {resume ? (
+            <>
+              <p className="text-ink-soft">
+                <span className="font-semibold text-ink">{name(resume.gameId)}</span> · level{' '}
+                {resume.session.level}, {relativeDay(resume.session.endedAt, now)}
+              </p>
+              <p className="text-sm text-ink-muted">
+                Last result: {formatPercent(resume.session.accuracy)} accuracy ·{' '}
+                {resume.cleared
+                  ? `level cleared — level ${resume.level} is next`
+                  : 'repeat it to clear the level (performance 70)'}
+              </p>
+              <div className="mt-auto flex flex-wrap gap-2">
+                <ButtonLink to={`/games/${resume.gameId}/play/${resume.level}`}>
+                  Play level {resume.level}
+                </ButtonLink>
+                <ButtonLink to={`/games/${resume.gameId}`} variant="ghost">
+                  Details
+                </ButtonLink>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-ink-soft">
+              Nothing in progress yet. Pick any activity below — every game starts at level 1 and
+              explains its rules first.
+            </p>
+          )}
+        </section>
 
-      <section aria-labelledby="areas-title">
-        <h2
-          id="areas-title"
-          className="mb-4 text-sm font-semibold tracking-widest text-slate-400 uppercase"
+        <section
+          aria-labelledby="daily-title"
+          className="flex flex-col gap-3 rounded-2xl border border-glow/30 bg-glow/5 p-5"
         >
-          Five cognitive areas
-        </h2>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {COGNITIVE_AREAS.map((area) => {
-            const meta = AREAS[area];
-            return (
-              <li key={area} className={`rounded-xl border ${meta.ring} ${meta.soft} p-4`}>
-                <p className={`font-mono text-2xl ${meta.accent}`} aria-hidden="true">
-                  {meta.glyph}
+          <h2 id="daily-title" className="flex items-center gap-2 font-semibold text-ink">
+            <Icon name="calendar" className="h-5 w-5 text-glow" /> Daily challenge
+          </h2>
+          {daily ? (
+            <>
+              <p className="text-ink-soft">
+                Today: <span className="font-semibold text-ink">{name(daily.gameId)}</span> at level{' '}
+                {daily.level}. The same set all day.
+              </p>
+              <p className="text-sm text-ink-muted">
+                {dailyDone
+                  ? `Done today — performance ${dailyDone.performanceIndex}/100. Come back tomorrow for a new one.`
+                  : 'About three minutes. Missing a day costs nothing.'}
+              </p>
+              <div className="mt-auto">
+                <ButtonLink to="/daily" variant={dailyDone ? 'secondary' : 'primary'}>
+                  {dailyDone ? 'See today’s result' : 'Play today’s challenge'}
+                </ButtonLink>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-ink-muted">
+              No games are available for the daily challenge.
+            </p>
+          )}
+        </section>
+
+        <section
+          aria-labelledby="quick-title"
+          className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-5"
+        >
+          <h2 id="quick-title" className="flex items-center gap-2 font-semibold text-ink">
+            <Icon name="timer" className="h-5 w-5 text-cat-patterns" /> Quick session
+          </h2>
+          <p className="text-sm text-ink-soft">
+            A mix of short activities from different areas, at your level.
+          </p>
+          <ul className="mt-auto grid grid-cols-4 gap-2">
+            {QUICK_SESSION_MINUTES.map((minutes) => (
+              <li key={minutes}>
+                <Link
+                  to={`/quick?minutes=${minutes}`}
+                  className="flex flex-col items-center rounded-xl border border-line bg-raised py-2 hover:border-brand focus-visible:outline-2 focus-visible:outline-brand"
+                >
+                  <span className="text-lg font-semibold text-ink">{minutes}</span>
+                  <span className="text-xs text-ink-muted">min</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      {suggestions.length > 0 && (
+        <Panel id="recommended-title" title="Recommended for you">
+          <ul className="grid gap-3 md:grid-cols-3">
+            {suggestions.map((s) => (
+              <Suggestion key={s.gameId} suggestion={s} name={name(s.gameId)} />
+            ))}
+          </ul>
+        </Panel>
+      )}
+
+      <Panel
+        id="progress-title"
+        title="Your progress"
+        action={
+          <Link to="/progress" className="text-sm text-brand hover:underline">
+            See all
+          </Link>
+        }
+      >
+        {returning ? (
+          <>
+            <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              <StatTile label="Sessions" value={progress.totals.sessions} />
+              <StatTile label="Practice time" value={formatDuration(progress.totals.practiceMs)} />
+              <StatTile label="Games explored" value={`${played.size}/${modules.length}`} />
+              <StatTile
+                label="Levels open"
+                value={openedLevels}
+                hint="across the games you played"
+              />
+            </dl>
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-4">
+              <WeekStrip week={week} />
+              {goal !== null && (
+                <p className="text-sm text-ink-soft">
+                  Today: {Math.round(todayMs / 60_000)} of {goal} min{' '}
+                  {todayMs >= goal * 60_000 ? '· goal reached' : ''}
                 </p>
-                <h3 className="mt-2 font-semibold text-white">{meta.label}</h3>
-                <p className="mt-1 text-sm text-slate-400">{meta.summary}</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <p className="rounded-2xl border border-dashed border-line p-5 text-sm text-ink-muted">
+            Your sessions, practice time and records will appear here after your first activity.
+            Everything stays on this device.
+          </p>
+        )}
+      </Panel>
+
+      <Panel
+        id="areas-title"
+        title="Explore by area"
+        action={
+          <Link to="/games" className="text-sm text-brand hover:underline">
+            All activities
+          </Link>
+        }
+      >
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {GENERAL_CATEGORIES.map((category) => {
+            const meta = CATEGORIES[category];
+            const count = modules.filter((m) => m.definition.meta.category === category).length;
+            return (
+              <li key={category}>
+                <Link
+                  to={`/train/${category}`}
+                  className={`flex h-full flex-col gap-2 rounded-2xl border ${meta.ring} ${meta.soft} p-4 hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand`}
+                >
+                  <Icon name={meta.icon} className={`h-7 w-7 ${meta.text}`} />
+                  <span className="font-semibold text-ink">{meta.label}</span>
+                  <span className="text-sm text-ink-soft">{meta.summary}</span>
+                  <span className="mt-auto text-xs text-ink-muted">{count} games</span>
+                </Link>
               </li>
             );
           })}
         </ul>
-      </section>
+      </Panel>
+
+      <Panel id="routes-title" title="Routes for every age and interest">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {PATHS.map((p) => (
+            <li key={p.id}>
+              <Link
+                to={`/paths/${p.id}`}
+                aria-current={p.id === path?.id ? 'true' : undefined}
+                className={`flex h-full flex-col gap-2 rounded-2xl border p-4 hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand ${
+                  p.id === path?.id ? 'border-brand bg-brand/10' : 'border-line bg-surface'
+                }`}
+              >
+                <Icon name={PATH_ICONS[p.id] ?? 'adults'} className="h-6 w-6 text-brand" />
+                <span className="font-semibold text-ink">
+                  {p.name}
+                  {p.id === path?.id && (
+                    <span className="ml-2 text-xs text-brand">· your route</span>
+                  )}
+                </span>
+                <span className="text-sm text-ink-soft">{p.tagline}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Panel>
+
+      <Panel id="learn-title" title="Specialisation: programming">
+        <div className="flex flex-col gap-3 rounded-2xl border border-cat-programming/30 bg-cat-programming/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-2xl text-sm text-ink-soft">
+            Optional. A 10-lesson course on programming logic and ten coding games (tracing,
+            debugging, variables, loops). Everything else in the app works without any coding.
+          </p>
+          <div className="flex gap-2">
+            <ButtonLink to="/learn" variant="secondary">
+              Course
+            </ButtonLink>
+            <ButtonLink to="/train/programming" variant="ghost">
+              Coding games
+            </ButtonLink>
+          </div>
+        </div>
+      </Panel>
     </div>
   );
 }
 
-/** New visitors see the landing; anyone with progress sees their dashboard. */
-export function HomePage() {
-  const { progress, learning } = useServices();
-  const games = useProgress(progress).state;
-  const learn = useStored(learning, emptyLearningProgress).state;
-  const profile = useProfile().state;
+const SUGGESTION_LABEL: Readonly<Record<TrainingSuggestion['kind'], string>> = {
+  'level-up': 'Next level',
+  variety: 'For variety',
+  discover: 'Something new',
+  start: 'Good start',
+};
 
-  if (games.status === 'loading' || learn.status === 'loading' || profile.status === 'loading')
-    return <PageLoading />;
-  if (games.status !== 'ready' || learn.status !== 'ready' || profile.status !== 'ready')
-    return <Landing />;
-  const returning =
-    profile.value.onboardedAt !== null ||
-    games.progress.recentSessions.length > 0 ||
-    Object.keys(learn.value.lessons).length > 0;
-  return returning ? (
-    <Dashboard games={games.progress} learning={learn.value} profile={profile.value} />
-  ) : (
-    <Landing />
+function Suggestion({ suggestion, name }: { suggestion: TrainingSuggestion; name: string }) {
+  return (
+    <li>
+      <Link
+        to={`/games/${suggestion.gameId}`}
+        className="flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-line-strong hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand"
+      >
+        <span className="text-xs font-semibold tracking-wide text-brand-strong uppercase">
+          {SUGGESTION_LABEL[suggestion.kind]}
+        </span>
+        <span className="font-semibold text-ink">
+          {name} · level {suggestion.level}
+        </span>
+        <span className="text-sm text-ink-soft">{suggestion.reason}</span>
+      </Link>
+    </li>
   );
+}
+
+export function HomePage() {
+  const data = useAppData();
+  if (data.status === 'loading') return <PageLoading />;
+  if (data.status === 'error') return <LoadError onRetry={data.reload} />;
+  return <Dashboard progress={data.progress} profile={data.profile} />;
 }

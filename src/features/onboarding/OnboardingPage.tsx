@@ -1,206 +1,103 @@
-import { useCourse } from '@/app/providers/useCourse';
 import { useId, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { lessonsOf } from '@/domain/learning';
-import { completeOnboarding, DEFAULT_WEEKLY_TARGET, type Goal } from '@/domain/profile';
-import type { GameResult } from '@/domain/session';
+import { PATHS } from '@/content/paths';
+import type { Audience } from '@/domain/game';
+import { routeDefaults } from '@/domain/preferences';
+import { completeOnboarding, DEFAULT_WEEKLY_TARGET } from '@/domain/profile';
 import { useServices } from '@/app/providers/servicesContext';
+import { usePreferences } from '@/app/providers/preferencesContext';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
-import { PlaySession } from '@/features/play/PlaySession';
-import { saveSessionResult } from '@/features/play/usePersistResult';
 import { useProfile } from '@/features/shared/useProfile';
 
-const WARM_UP = { gameId: 'algorithmic-logic', level: 1, challenges: 3 } as const;
-
-const GOALS: readonly { goal: Goal; title: string; detail: string }[] = [
-  {
-    goal: 'learn',
-    title: 'Learn programming logic',
-    detail:
-      'Start from zero: values, decisions, loops, functions and algorithms, one interactive lesson at a time.',
-  },
-  {
-    goal: 'train',
-    title: 'Train how I think about code',
-    detail:
-      'Short cognitive exercises on reading, tracing and reasoning about code, with levels 1–10.',
-  },
-  {
-    goal: 'both',
-    title: 'Both',
-    detail: 'Lessons to learn the ideas, and training to practise the skills behind them.',
-  },
+const OPTIONS: readonly { id: Audience | null; name: string; tagline: string }[] = [
+  ...PATHS.map((p) => ({ id: p.id, name: p.name, tagline: p.tagline })),
+  { id: null, name: 'Just explore', tagline: 'No route: suggestions from every area.' },
 ];
 
-type Step = 'welcome' | 'warm-up' | 'result' | 'goal';
-
-/** First visit: a 2-minute taste of training, then the learner chooses their own goal. No account needed. */
+/**
+ * First steps, no account: pick a route (or none) and a weekly rhythm. Nothing personal is asked;
+ * the route is a choice of suggestions, not a statement about anyone's abilities.
+ */
 export function OnboardingPage() {
-  const { getModule, progress, clock } = useServices();
-  const course = useCourse();
-  const { update } = useProfile();
+  const { clock } = useServices();
+  const { update: updateProfile } = useProfile();
+  const { update: updatePreferences } = usePreferences();
   const navigate = useNavigate();
-  const [step, setStep] = useState<Step>('welcome');
-  const [warmUp, setWarmUp] = useState<GameResult | null>(null);
-  const [goal, setGoal] = useState<Goal>('both');
+  const [route, setRoute] = useState<Audience | null>(null);
   const [target, setTarget] = useState(DEFAULT_WEEKLY_TARGET);
   const targetId = useId();
-  const module = getModule(WARM_UP.gameId);
-  const firstLesson = lessonsOf(course)[0];
 
-  const finish = async (chosen: Goal) => {
-    await update((p) =>
-      completeOnboarding(p, { goal: chosen, weeklyTarget: target, at: clock.now() }),
+  const finish = async () => {
+    updatePreferences(route === null ? { path: null } : { path: route, ...routeDefaults(route) });
+    await updateProfile((p) =>
+      completeOnboarding(p, {
+        goal: route === 'programmers' ? 'both' : 'train',
+        weeklyTarget: target,
+        at: clock.now(),
+      }),
     ).catch((error: unknown) => {
       console.error('[onboarding] Could not save the profile', error);
     });
-    void navigate(chosen === 'train' || !firstLesson ? '/games' : `/learn/${firstLesson.id}`);
+    void navigate(route === null ? '/' : `/paths/${route}`);
   };
 
-  if (step === 'warm-up' && module) {
-    return (
-      <PlaySession
-        module={module}
-        level={WARM_UP.level}
-        seed={undefined}
-        assisted={false}
-        challengeCount={WARM_UP.challenges}
-        onRestart={() => undefined}
-        onResult={(result) => {
-          void saveSessionResult(progress, result).catch((error: unknown) => {
-            console.error('[onboarding] Could not save the warm-up', error);
-          });
-          setWarmUp(result);
-          setStep('result');
-        }}
-      />
-    );
-  }
-
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-6">
-      {step === 'welcome' && (
-        <>
-          <p className="font-mono text-sm text-sky-300">// step 1 of 3</p>
-          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            Start with a 2-minute challenge
-          </h1>
-          <p className="text-slate-300">
-            Three short logic problems: read a few lines of code or a set of dependencies and reason
-            about what happens. No account, nothing to install — your progress stays in this
-            browser.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Button
+    <>
+      <PageHeader
+        eyebrow="Get started"
+        title="What would you like to practise?"
+        description="Choose a route to get suggestions that fit you. It is optional, changes nothing about what you can play, and you can switch any time."
+      />
+      <fieldset className="mb-8">
+        <legend className="sr-only">Route</legend>
+        <div
+          role="radiogroup"
+          aria-label="Route"
+          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {OPTIONS.map((option) => (
+            <button
+              key={option.id ?? 'none'}
+              type="button"
+              role="radio"
+              aria-checked={route === option.id}
               onClick={() => {
-                setStep('warm-up');
+                setRoute(option.id);
               }}
+              className={`flex flex-col gap-1 rounded-2xl border p-4 text-left focus-visible:outline-2 focus-visible:outline-brand ${
+                route === option.id
+                  ? 'border-brand bg-brand/15'
+                  : 'border-line bg-surface hover:bg-raised'
+              }`}
             >
-              Start the challenge
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setStep('goal');
-              }}
-            >
-              Skip, choose my goal
-            </Button>
-          </div>
-        </>
-      )}
-
-      {step === 'result' && warmUp && (
-        <>
-          <p className="font-mono text-sm text-sky-300">// step 2 of 3</p>
-          <h1 className="text-3xl font-semibold text-white">
-            {warmUp.metrics.correct} of {warmUp.metrics.total} solved
-          </h1>
-          <p className="text-slate-300">
-            That was <strong>logic</strong>: predicting what a program does and in which order
-            things must happen. It is the thinking behind every line of code — and it is exactly
-            what the lessons teach and the games let you practise.{' '}
-            {warmUp.metrics.correct < warmUp.metrics.total &&
-              'Missing some at the start is normal; the explanations after each answer are where the learning happens.'}
-          </p>
-          <div>
-            <Button
-              onClick={() => {
-                setStep('goal');
-              }}
-            >
-              Continue
-            </Button>
-          </div>
-        </>
-      )}
-
-      {step === 'goal' && (
-        <>
-          <p className="font-mono text-sm text-sky-300">// step 3 of 3</p>
-          <h1 className="text-3xl font-semibold text-white">What do you want to do?</h1>
-          <fieldset className="flex flex-col gap-2">
-            <legend className="sr-only">Your goal</legend>
-            {GOALS.map((option) => (
-              <label
-                key={option.goal}
-                className={`flex cursor-pointer gap-3 rounded-xl border p-4 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-sky-400 ${
-                  goal === option.goal
-                    ? 'border-sky-400/70 bg-sky-400/10'
-                    : 'border-slate-700 bg-slate-900'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="goal"
-                  checked={goal === option.goal}
-                  onChange={() => {
-                    setGoal(option.goal);
-                  }}
-                  className="mt-1 accent-sky-400"
-                />
-                <span>
-                  <span className="block font-semibold text-white">{option.title}</span>
-                  <span className="block text-sm text-slate-400">{option.detail}</span>
-                </span>
-              </label>
-            ))}
-          </fieldset>
-          <Card>
-            <label htmlFor={targetId} className="text-sm font-medium text-white">
-              How many days a week do you want to practise?
-            </label>
-            <div className="mt-2 flex items-center gap-3">
-              <input
-                id={targetId}
-                type="range"
-                min={1}
-                max={7}
-                value={target}
-                onChange={(e) => {
-                  setTarget(Number(e.target.value));
-                }}
-                className="w-48 accent-sky-400"
-              />
-              <span className="font-mono text-white">{target} days</span>
-            </div>
-            <p className="mt-2 text-xs text-slate-400">
-              Your own target, shown on your dashboard. Missing a day costs nothing: there are no
-              penalties.
-            </p>
-          </Card>
-          <div>
-            <Button
-              onClick={() => {
-                void finish(goal);
-              }}
-            >
-              {goal === 'train' ? 'Go to training' : 'Start the first lesson'}
-            </Button>
-          </div>
-        </>
-      )}
-    </div>
+              <span className="font-semibold text-ink">{option.name}</span>
+              <span className="text-sm text-ink-soft">{option.tagline}</span>
+            </button>
+          ))}
+        </div>
+      </fieldset>
+      <div className="mb-8 flex flex-col gap-2">
+        <label htmlFor={targetId} className="font-semibold text-ink">
+          How many days a week would you like to practise?
+        </label>
+        <p className="text-sm text-ink-muted">Your own target. Missing a day costs nothing.</p>
+        <select
+          id={targetId}
+          value={target}
+          onChange={(e) => {
+            setTarget(Number(e.target.value));
+          }}
+          className="w-40 rounded-lg border border-line bg-raised px-3 py-2 text-ink"
+        >
+          {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+            <option key={n} value={n}>
+              {n} {n === 1 ? 'day' : 'days'}
+            </option>
+          ))}
+        </select>
+      </div>
+      <Button onClick={() => void finish()}>Continue</Button>
+    </>
   );
 }

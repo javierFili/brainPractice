@@ -1,9 +1,10 @@
+import { defaultPreferences } from '@/domain/preferences';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generateChallenge } from '@/domain/game';
-import { bugHunterModule } from '@/games/bug-hunter';
-import { bugHunterGame } from '@/games/bug-hunter/content/definition';
-import { describeLabel } from '@/games/pattern-architect/content/format';
+import { bugHunterModule } from '@/games/programming/bug-hunter';
+import { bugHunterGame } from '@/games/programming/bug-hunter/content/definition';
+import { describeLabel } from '@/games/programming/pattern-architect/content/format';
 import { renderApp } from '@/test/renderApp';
 import { ChallengeStage } from './ChallengeStage';
 
@@ -77,7 +78,7 @@ describe('game accessibility', () => {
   it('selects levels with the arrow keys like a radio group', async () => {
     const user = userEvent.setup();
     await import('@/features/game-intro/GameIntroPage');
-    renderApp('/games/code-scan');
+    renderApp('/games/code-scan', { preferences: { ...defaultPreferences(), freePlay: true } });
     const one = await screen.findByRole('radio', { name: /^Level 1(,|$)/ });
     expect(one).toHaveAttribute('tabindex', '0');
     one.focus();

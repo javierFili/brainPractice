@@ -1,5 +1,6 @@
 import { createGameRegistry } from '@/domain/game';
 import type { Course, LearningProgressRepository } from '@/domain/learning';
+import type { PreferencesRepository } from '@/domain/preferences';
 import type { ProfileRepository } from '@/domain/profile';
 import type { ProgressRepository } from '@/domain/progress';
 import type { SeedSource } from '@/domain/random';
@@ -11,12 +12,15 @@ import type { Persistence } from '@/infrastructure/browserStorage';
 export interface AppServices {
   readonly engine: GameEngine;
   readonly clock: Clock;
+  /** Fresh seeds for anything random outside a game session (e.g. planning a quick session). */
+  readonly seeds: SeedSource;
   readonly modules: readonly GameModule[];
   readonly progress: ProgressRepository;
   /** Loads the curriculum on first use (it is a separate chunk); always the same promise. */
   readonly loadCourse: () => Promise<Course>;
   readonly learning: LearningProgressRepository;
   readonly profile: ProfileRepository;
+  readonly preferences: PreferencesRepository;
   readonly getModule: (gameId: string) => GameModule | undefined;
   /** Where progress lives: on this device, or only until the tab closes (storage blocked). */
   readonly persistence: Persistence;
@@ -30,6 +34,7 @@ export interface ServiceInputs {
   readonly loadCourse: () => Promise<Course>;
   readonly learning: LearningProgressRepository;
   readonly profile: ProfileRepository;
+  readonly preferences: PreferencesRepository;
   readonly persistence?: Persistence;
 }
 
@@ -69,6 +74,7 @@ export function createServices({
   loadCourse,
   learning,
   profile,
+  preferences,
   persistence = 'device',
 }: ServiceInputs): AppServices {
   let course: Promise<Course> | null = null;
@@ -77,11 +83,13 @@ export function createServices({
   return {
     engine: createGameEngine({ registry, clock, seeds }),
     clock,
+    seeds,
     modules,
     progress,
     loadCourse: () => (course ??= tracked(loadCourse())),
     learning,
     profile,
+    preferences,
     getModule: (gameId) => byId.get(gameId),
     persistence,
   };

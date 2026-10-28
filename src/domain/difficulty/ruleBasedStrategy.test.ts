@@ -19,6 +19,7 @@ const metrics = (
   medianResponseMs: null,
   fastestResponseMs: null,
   medianPace,
+  medianReactionMs: null,
   longestStreak: 0,
   byKind: {},
   bySkill: {},

@@ -1,0 +1,111 @@
+import { defineLevels, untimed } from '@/games/kit/content';
+import type { SpatialTransformProfile } from './types';
+
+const ALL = ['cw', 'ccw', '180', 'flip-lr', 'flip-ud'] as const;
+
+/**
+ * One flip on a 3×3 pattern, then turns, then any move on bigger and coloured patterns, then two
+ * moves in a row, up to all eight turned and flipped versions offered at once.
+ */
+export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
+  {
+    objective: 'Flip a small pattern like a mirror.',
+    challengeCount: 5,
+    size: 3,
+    tiles: 1,
+    moves: ['flip-lr', 'flip-ud'],
+    stepCount: 1,
+    options: 3,
+    timing: untimed(12_000),
+  },
+  {
+    objective: 'Turn a small pattern.',
+    challengeCount: 5,
+    size: 3,
+    tiles: 1,
+    moves: ['cw', '180'],
+    stepCount: 1,
+    options: 3,
+    timing: untimed(14_000),
+  },
+  {
+    objective: 'Turn a bigger pattern either way.',
+    challengeCount: 6,
+    size: 4,
+    tiles: 1,
+    moves: ['cw', 'ccw', '180'],
+    stepCount: 1,
+    options: 4,
+    timing: untimed(16_000),
+  },
+  {
+    objective: 'Any turn or flip.',
+    challengeCount: 6,
+    size: 4,
+    tiles: 1,
+    moves: ALL,
+    stepCount: 1,
+    options: 4,
+    timing: untimed(18_000),
+  },
+  {
+    objective: 'Turns and flips with two kinds of tiles.',
+    challengeCount: 6,
+    size: 4,
+    tiles: 2,
+    moves: ALL,
+    stepCount: 1,
+    options: 4,
+    timing: untimed(20_000),
+  },
+  {
+    objective: 'A 5×5 pattern with three kinds of tiles, six options.',
+    challengeCount: 6,
+    size: 5,
+    tiles: 3,
+    moves: ALL,
+    stepCount: 1,
+    options: 6,
+    timing: untimed(24_000),
+  },
+  {
+    objective: 'Two moves in a row.',
+    challengeCount: 6,
+    size: 5,
+    tiles: 1,
+    moves: ALL,
+    stepCount: 2,
+    options: 6,
+    timing: untimed(28_000),
+  },
+  {
+    objective: 'Two moves in a row with two kinds of tiles.',
+    challengeCount: 6,
+    size: 5,
+    tiles: 2,
+    moves: ALL,
+    stepCount: 2,
+    options: 6,
+    timing: untimed(30_000),
+  },
+  {
+    objective: 'Two moves on a busy 5×5 pattern.',
+    challengeCount: 6,
+    size: 5,
+    tiles: 3,
+    moves: ALL,
+    stepCount: 2,
+    options: 6,
+    timing: untimed(32_000),
+  },
+  {
+    objective: 'Two moves; every turned and flipped version is an option.',
+    challengeCount: 6,
+    size: 5,
+    tiles: 4,
+    moves: ALL,
+    stepCount: 2,
+    options: 8,
+    timing: untimed(36_000),
+  },
+]);

@@ -1,6 +1,6 @@
 import type { ChallengePoints } from '../scoring/scoring';
 import type { ChallengeId } from '../shared/ids';
-import type { ProgrammingSkill } from '../shared/programmingSkill';
+import type { Skill } from '../shared/skill';
 import type { Answer } from '../challenge/responseFormats';
 
 /**
@@ -13,7 +13,7 @@ export type ChallengeOutcome = 'correct' | 'incorrect' | 'timed-out' | 'skipped'
 export interface ChallengeRecord {
   readonly challengeId: ChallengeId;
   readonly kind: string;
-  readonly skills: readonly ProgrammingSkill[];
+  readonly skills: readonly Skill[];
   readonly outcome: ChallengeOutcome;
   readonly answer: Answer | null;
   readonly attempts: number;

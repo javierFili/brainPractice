@@ -1,12 +1,20 @@
 import { useId, useRef, useState, type KeyboardEvent } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { isLevelCleared, suggestedLevel } from '@/domain/progress';
+import {
+  isLevelCleared,
+  isLevelUnlocked,
+  suggestedLevel,
+  UNLOCK_AFTER_PLAYS,
+  UNLOCK_PERFORMANCE_INDEX,
+} from '@/domain/progress';
 import { DIFFICULTY_LEVELS, type DifficultyLevel } from '@/domain/shared';
 import { useServices } from '@/app/providers/servicesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { StatTile } from '@/components/ui/StatTile';
-import { AREAS } from '@/features/shared/areas';
+import { usePreferences } from '@/app/providers/preferencesContext';
+import { Icon } from '@/components/ui/Icon';
+import { CATEGORIES } from '@/features/shared/categories';
 import { formatMs, formatPercent, formatPoints, formatSeconds } from '@/features/shared/format';
 import { NotFound } from '@/features/shared/NotFound';
 import { useProgress } from '@/features/shared/useProgress';
@@ -18,16 +26,19 @@ export function GameIntroPage() {
   const navigate = useNavigate();
   const assistedId = useId();
   const [chosen, setChosen] = useState<DifficultyLevel | null>(null);
-  const [assisted, setAssisted] = useState(false);
+  const { preferences } = usePreferences();
+  const [assistedChoice, setAssisted] = useState<boolean | null>(null);
+  const assisted = assistedChoice ?? preferences.relaxedByDefault;
   const levelButtons = useRef<(HTMLButtonElement | null)[]>([]);
 
   const module = getModule(gameId);
   if (!module) return <NotFound message="This game does not exist." />;
   const { definition } = module;
-  const meta = AREAS[definition.area];
+  const meta = CATEGORIES[definition.meta.category];
   const game = state.status === 'ready' ? state.progress.games[definition.id] : undefined;
+  const open = (l: DifficultyLevel) => isLevelUnlocked(game, l, preferences.freePlay);
   const suggested = suggestedLevel(game);
-  const level = chosen ?? suggested;
+  const level = chosen !== null && open(chosen) ? chosen : open(suggested) ? suggested : 1;
   const profile = definition.levels[level];
   const record = game?.[level];
 
@@ -42,22 +53,22 @@ export function GameIntroPage() {
           : delta === undefined
             ? null
             : level + delta;
-    if (target === null || target < 1 || target > 10) return;
+    if (target === null || target < 1 || target > 10 || !open(target as DifficultyLevel)) return;
     event.preventDefault();
     setChosen(target as DifficultyLevel);
     levelButtons.current[target - 1]?.focus();
   };
 
   const start = () => {
-    void navigate(`/games/${definition.id}/play/${level}${assisted ? '?assisted=1' : ''}`);
+    void navigate(`/games/${definition.id}/play/${level}?assisted=${assisted ? '1' : '0'}`);
   };
 
   return (
     <>
       <PageHeader
         eyebrow={
-          <span className={meta.accent}>
-            <span aria-hidden="true">{meta.glyph} </span>
+          <span className={`flex items-center gap-1.5 ${meta.text}`}>
+            <Icon name={meta.icon} className="h-4 w-4" />
             {meta.label}
           </span>
         }
@@ -79,6 +90,7 @@ export function GameIntroPage() {
               {DIFFICULTY_LEVELS.map((l) => {
                 const selected = l === level;
                 const cleared = isLevelCleared(game?.[l]);
+                const locked = !open(l);
                 return (
                   <button
                     key={l}
@@ -89,17 +101,20 @@ export function GameIntroPage() {
                     ref={(element) => {
                       levelButtons.current[l - 1] = element;
                     }}
-                    aria-label={`Level ${l}${cleared ? ', cleared' : ''}${l === suggested ? ', suggested' : ''}`}
+                    aria-label={`Level ${l}${cleared ? ', cleared' : ''}${locked ? ', locked' : ''}${l === suggested && !locked ? ', suggested' : ''}`}
+                    aria-disabled={locked}
                     onClick={() => {
-                      setChosen(l);
+                      if (!locked) setChosen(l);
                     }}
                     className={`relative flex aspect-square flex-col items-center justify-center rounded-lg border font-mono text-lg transition-colors focus-visible:outline-2 focus-visible:outline-sky-400 ${
                       selected
-                        ? 'border-sky-400 bg-sky-400/15 text-white'
-                        : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-500'
+                        ? 'border-brand bg-brand/15 text-ink'
+                        : locked
+                          ? 'cursor-not-allowed border-dashed border-line bg-surface text-ink-muted'
+                          : 'border-line bg-raised text-ink-soft hover:border-line-strong'
                     }`}
                   >
-                    {l}
+                    {locked ? <Icon name="lock" className="h-4 w-4" /> : l}
                     {cleared && (
                       <span
                         aria-hidden="true"
@@ -119,7 +134,9 @@ export function GameIntroPage() {
               })}
             </div>
             <p className="mt-2 text-xs text-slate-500">
-              ✓ cleared (performance ≥ 70) · dot = suggested next level. Every level is open.
+              {preferences.freePlay
+                ? '✓ cleared (performance ≥ 70) · dot = suggested level · free play: every level is open.'
+                : `✓ cleared (performance ≥ 70) · dot = suggested level. Level 1 is always open; the next level opens after a session with performance ≥ ${UNLOCK_PERFORMANCE_INDEX} or after ${UNLOCK_AFTER_PLAYS} completed sessions. Free play (Settings) opens all.`}
             </p>
           </section>
 
@@ -165,6 +182,8 @@ export function GameIntroPage() {
                   className="h-4 w-4 accent-sky-400"
                 />
                 Relaxed timing (no answer limit, double memorisation time, not counted in records)
+                {!definition.meta.relaxedFriendly &&
+                  ' — this game is about speed, so its signals stay quick'}
               </label>
             </div>
           </section>
@@ -178,10 +197,31 @@ export function GameIntroPage() {
                 <li key={line}>{line}</li>
               ))}
               <li>
-                Answer with a click, or press the number shown next to an option. After each answer,
-                read the explanation, then press Enter to continue.
+                {definition.meta.keyboard === 'full'
+                  ? 'Playable with mouse, touch or keyboard (Tab, arrows, Enter; number keys pick options).'
+                  : 'Some steps need a pointer or touch; options also have number keys.'}{' '}
+                You can reopen these instructions during the game.
               </li>
             </ul>
+          </section>
+
+          <section
+            aria-labelledby="scoring-title"
+            className="rounded-xl border border-line bg-surface p-5 text-sm text-ink-soft"
+          >
+            <h2 id="scoring-title" className="mb-2 text-lg font-semibold text-ink">
+              How your result is calculated
+            </h2>
+            <p>{definition.meta.scoringSummary}</p>
+            <p className="mt-2 text-ink-muted">
+              Practises: {definition.skills.map((sk) => sk.replaceAll('-', ' ')).join(', ')} · about{' '}
+              {definition.meta.estimatedMinutes} min · results are saved only on this device.
+            </p>
+            {definition.meta.accessibilityNotes !== undefined && (
+              <p className="mt-2 text-ink-muted">
+                Accessibility: {definition.meta.accessibilityNotes}
+              </p>
+            )}
           </section>
         </div>
 

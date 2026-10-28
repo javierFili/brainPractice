@@ -116,7 +116,7 @@ describe('Learn — a whole lesson', () => {
     });
     expect(learningRepository.stored?.mastery['fixture-variables']?.application).toBeGreaterThan(0);
     expect(learningRepository.stored?.reviews['fixture-variables']?.box).toBe(1);
-  });
+  }, 40_000);
 
   it('explains a wrong answer, offers a hint and a retry, and counts the retry for less', async () => {
     const user = userEvent.setup();

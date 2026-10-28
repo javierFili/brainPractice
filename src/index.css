@@ -1,5 +1,122 @@
 @import 'tailwindcss';
 
+/*
+ * Design tokens (docs/design-system.md). Semantic names are what components use; the slate scale
+ * is re-tinted towards a calm ink-blue so screens written with `slate-*` share the same palette.
+ */
+@theme {
+  --font-sans:
+    'Inter', 'Segoe UI', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --color-slate-50: #f5f7fc;
+  --color-slate-100: #e6eaf5;
+  --color-slate-200: #cdd4e8;
+  --color-slate-300: #a9b3d1;
+  --color-slate-400: #8590b3;
+  --color-slate-500: #646f94;
+  --color-slate-600: #485275;
+  --color-slate-700: #333c5c;
+  --color-slate-800: #222a46;
+  --color-slate-900: #161c33;
+  --color-slate-950: #0d1124;
+
+  /* Surfaces */
+  --color-canvas: #0d1124;
+  --color-surface: #141a31;
+  --color-raised: #1b2240;
+  --color-line: #2a3354;
+  --color-line-strong: #3d4770;
+
+  /* Text */
+  --color-ink: #f2f4fb;
+  --color-ink-soft: #c9cfe4;
+  --color-ink-muted: #939cbd;
+
+  /* Brand: a friendly violet-blue for actions, a warm amber for highlights. */
+  --color-brand: #8b9dff;
+  --color-brand-strong: #b3beff;
+  --color-brand-ink: #0d1124;
+  --color-glow: #ffc46b;
+
+  /* Feedback */
+  --color-success: #5ee0a0;
+  --color-danger: #ff8a9a;
+  --color-warning: #ffd166;
+
+  /* Categories (always paired with a label and an icon, never colour alone). */
+  --color-cat-memory: #67e0f0;
+  --color-cat-logic: #b69cff;
+  --color-cat-speed: #ffc46b;
+  --color-cat-attention: #ff9db0;
+  --color-cat-patterns: #6fe3b0;
+  --color-cat-programming: #7cc4ff;
+
+  /* Glyph palette, checked for ≥ 3:1 contrast against surfaces. */
+  --color-glyph-red: #ff6b6b;
+  --color-glyph-orange: #ffa94d;
+  --color-glyph-yellow: #ffe066;
+  --color-glyph-green: #69db7c;
+  --color-glyph-blue: #4dabf7;
+  --color-glyph-purple: #c084fc;
+
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px -12px rgb(0 0 0 / 0.5);
+
+  --animate-pop: pop 180ms ease-out;
+  --animate-fade-in: fade-in 200ms ease-out;
+  --animate-flip: flip 220ms ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes flip {
+  from {
+    transform: rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0);
+  }
+}
+
+html {
+  background-color: var(--color-canvas);
+  color-scheme: dark;
+}
+
+/* Text size preference (Settings → Accessibility). Everything is sized in rem, so it all scales. */
+html[data-text-size='large'] {
+  font-size: 112.5%;
+}
+html[data-text-size='x-large'] {
+  font-size: 125%;
+}
+
+/* Comfortable mode: bigger targets and calmer screens (seniors route, or chosen in Settings). */
+html[data-comfort='on'] button,
+html[data-comfort='on'] a {
+  min-height: 2.75rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -7,4 +124,11 @@
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+html[data-motion='reduce'] *,
+html[data-motion='reduce'] *::before,
+html[data-motion='reduce'] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
 }

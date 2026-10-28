@@ -10,7 +10,10 @@ import { Button, ButtonLink } from '@/components/ui/Button';
 import { StatTile } from '@/components/ui/StatTile';
 import { describeAnswer, describeSolution } from '@/features/play/describe';
 import type { PersistStatus } from '@/features/play/usePersistResult';
+import { compareWith } from '@/domain/insights';
+import { useServices } from '@/app/providers/servicesContext';
 import { formatMs, formatPercent, formatPoints } from '@/features/shared/format';
+import { useProgress } from '@/features/shared/useProgress';
 
 interface Props {
   readonly module: GameModule;
@@ -23,13 +26,46 @@ interface Props {
 function performanceLabel(index: number, completed: boolean): string {
   // An index over a handful of answers is not a verdict on the level.
   if (!completed) return 'Session ended early';
-  if (index >= 90) return 'Outstanding';
+  if (index >= 90) return 'Excellent session';
   if (index >= 70) return 'Level cleared';
   if (index >= 50) return 'Getting there';
-  return 'Keep practising';
+  return 'Good practice — keep going';
 }
 
 const DIRECTION = { up: '↑ Level up', stay: '→ Stay', down: '↓ Step back' } as const;
+
+/** "In this game, your accuracy was higher than in your last comparable session." */
+function Comparison({ result }: { result: GameResult }) {
+  const { progress } = useServices();
+  const { state } = useProgress(progress);
+  if (state.status !== 'ready' || !result.completed) return null;
+  const comparison = compareWith(state.progress.recentSessions, {
+    gameId: result.gameId,
+    level: result.level,
+    seed: result.seed,
+    score: result.score.total,
+    accuracy: result.metrics.accuracy,
+    performanceIndex: result.score.performanceIndex,
+    completed: result.completed,
+    assisted: result.assisted,
+    endedAt: result.endedAt,
+    durationMs: result.durationMs,
+  });
+  const text =
+    comparison === null
+      ? `This is your first completed session at level ${result.level} in this mode, so there is nothing comparable yet.`
+      : comparison.accuracyDelta > 0.001
+        ? `In this game, your accuracy was higher than in your last comparable session (level ${result.level}): ${formatPercent(comparison.previous.accuracy)} → ${formatPercent(result.metrics.accuracy)}.`
+        : comparison.accuracyDelta < -0.001
+          ? `Your accuracy was lower than in your last comparable session (${formatPercent(comparison.previous.accuracy)} → ${formatPercent(result.metrics.accuracy)}). Results vary from session to session; that is normal.`
+          : `Your accuracy matched your last comparable session (${formatPercent(result.metrics.accuracy)}); performance ${comparison.performanceDelta >= 0 ? '+' : ''}${comparison.performanceDelta}.`;
+  return (
+    <p className="rounded-xl border border-line bg-surface p-4 text-sm text-ink-soft">
+      <span className="font-semibold text-ink">Compared with last time: </span>
+      {text}
+    </p>
+  );
+}
 
 /** TRAIN → LEARN: lessons whose concepts rely on the skill this game practises. */
 function RelatedLessons({ gameId }: { gameId: string }) {
@@ -77,6 +113,14 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
     );
   const kinds = Object.entries(metrics.byKind);
   const labels = module.kindLabels;
+  const { meta, scoring } = module.definition;
+  const accuracyShare = Math.round((scoring?.accuracyWeight ?? 0.75) * 100);
+  const timed = meta.measures.includes('response-time');
+  const reaction = meta.measures.includes('reaction-time');
+  // The weakest challenge type, named as something to practise, never as a deficit.
+  const weakest = kinds
+    .filter(([, t]) => t.total > 0 && t.correct < t.total)
+    .sort((a, b) => a[1].correct / a[1].total - b[1].correct / b[1].total)[0];
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -112,7 +156,7 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
         <StatTile
           label="Performance"
           value={`${score.performanceIndex}/100`}
-          hint="75% accuracy · 25% speed"
+          hint={`${accuracyShare}% accuracy · ${100 - accuracyShare}% pace`}
         />
         <StatTile
           label="Score"
@@ -124,11 +168,23 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
           value={metrics.attempted === 0 ? '—' : formatPercent(metrics.accuracy)}
           hint={`${metrics.correct} of ${metrics.attempted} correct`}
         />
-        <StatTile
-          label="Median time"
-          value={formatMs(metrics.medianResponseMs)}
-          hint={`avg ${formatMs(metrics.averageResponseMs)} · best ${formatMs(metrics.fastestResponseMs)}`}
-        />
+        {reaction ? (
+          <StatTile
+            label="Median reaction"
+            value={formatMs(metrics.medianReactionMs)}
+            hint="signal to tap, correct taps only"
+          />
+        ) : (
+          <StatTile
+            label={timed ? 'Median time' : 'Median answer time'}
+            value={formatMs(metrics.medianResponseMs)}
+            hint={
+              timed
+                ? `avg ${formatMs(metrics.averageResponseMs)} · best ${formatMs(metrics.fastestResponseMs)}`
+                : 'untimed game: shown for information only'
+            }
+          />
+        )}
         <StatTile label="Longest streak" value={metrics.longestStreak} />
         <StatTile label="Time-outs" value={metrics.timedOut} />
         <StatTile label="Duration" value={formatMs(result.durationMs)} />
@@ -175,9 +231,20 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
         </div>
       </section>
 
-      <Suspense fallback={null}>
-        <RelatedLessons gameId={module.definition.id} />
-      </Suspense>
+      <Comparison result={result} />
+
+      {weakest && (
+        <p className="rounded-xl border border-line bg-surface p-4 text-sm text-ink-soft">
+          <span className="font-semibold text-ink">Something to practise: </span>
+          {labels[weakest[0]] ?? weakest[0]} ({weakest[1].correct}/{weakest[1].total} this session).
+        </p>
+      )}
+
+      {meta.category === 'programming' && (
+        <Suspense fallback={null}>
+          <RelatedLessons gameId={module.definition.id} />
+        </Suspense>
+      )}
 
       {kinds.length > 0 && (
         <section aria-labelledby="breakdown-title">

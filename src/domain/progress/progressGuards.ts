@@ -11,6 +11,7 @@ import {
 import {
   PROGRESS_SCHEMA_VERSION,
   type AssessmentSummary,
+  type PracticeTotals,
   type LevelRecord,
   type SessionSummary,
   type UserProgress,
@@ -64,6 +65,7 @@ function isAssessmentSummary(value: unknown): value is AssessmentSummary {
 /** Validates untrusted persisted data (e.g. edited or stale localStorage) before it reaches the domain. */
 export function isUserProgress(value: unknown): value is UserProgress {
   if (!isObject(value) || value['schemaVersion'] !== PROGRESS_SCHEMA_VERSION) return false;
+  if (!isTotals(value['totals'])) return false;
   const { games, recentSessions } = value;
   if (!Array.isArray(recentSessions) || !recentSessions.every(isSessionSummary) || !isObject(games))
     return false;
@@ -83,8 +85,29 @@ export function isUserProgress(value: unknown): value is UserProgress {
   );
 }
 
+const isTotals = (value: unknown): value is PracticeTotals =>
+  isObject(value) &&
+  isFiniteNumber(value['sessions']) &&
+  value['sessions'] >= 0 &&
+  isFiniteNumber(value['practiceMs']) &&
+  value['practiceMs'] >= 0;
+
+/**
+ * v1 → v2 adds lifetime totals. v1 only kept the last 50 sessions, so totals start from those
+ * (a lower bound, never an invented figure).
+ */
+function totalsFromSessions(sessions: unknown): PracticeTotals {
+  const valid = Array.isArray(sessions) ? sessions.filter(isSessionSummary) : [];
+  return {
+    sessions: valid.length,
+    practiceMs: valid.reduce((sum, s) => sum + Math.max(0, s.durationMs), 0),
+  };
+}
+
 /** Upgrades from older schema versions; add `n: (v_n) => v_n+1` when the schema changes. */
-export const PROGRESS_MIGRATIONS: Readonly<Partial<Record<number, Migration>>> = {};
+export const PROGRESS_MIGRATIONS: Readonly<Partial<Record<number, Migration>>> = {
+  1: (document) => ({ ...document, totals: totalsFromSessions(document['recentSessions']) }),
+};
 
 /**
  * Salvages what can be trusted from persisted data instead of throwing everything away when one
@@ -115,10 +138,14 @@ export function recoverUserProgress(value: unknown): Recovered<UserProgress> | n
     document['assessments'] === undefined
       ? undefined
       : keepValid(document['assessments'], isAssessmentSummary, tally);
+  const recentSessions = keepValid(document['recentSessions'], isSessionSummary, tally);
+  const rawTotals = document['totals'];
+  if (!isTotals(rawTotals)) tally.discarded++;
   const progress: UserProgress = {
     schemaVersion: PROGRESS_SCHEMA_VERSION,
+    totals: isTotals(rawTotals) ? rawTotals : totalsFromSessions(recentSessions),
     games,
-    recentSessions: keepValid(document['recentSessions'], isSessionSummary, tally),
+    recentSessions,
     ...(assessments === undefined ? {} : { assessments }),
   };
   return { value: progress, discarded: tally.discarded };

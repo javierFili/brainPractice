@@ -30,7 +30,7 @@ describe('AssessmentFlow', () => {
     await user.click(await skipRound());
 
     expect(
-      await screen.findByRole('heading', { name: /Programming Cognitive Index: 0/ }),
+      await screen.findByRole('heading', { name: /Performance index: 0/ }),
     ).toBeInTheDocument();
     expect(screen.getByText('Skipped — counts as 0')).toBeInTheDocument();
     expect(screen.getAllByText('Not measured')).toHaveLength(4);
@@ -54,9 +54,7 @@ describe('AssessmentFlow', () => {
     expect(await screen.findByText('Round 2 of 2')).toBeInTheDocument();
     await user.click(await skipRound());
 
-    expect(
-      await screen.findByRole('heading', { name: /Programming Cognitive Index/ }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /Performance index/ })).toBeInTheDocument();
     expect(screen.getByText(/1 of 2 challenges answered/)).toBeInTheDocument();
     await waitFor(() => {
       expect(repository.stored?.assessments).toHaveLength(1);
@@ -71,14 +69,15 @@ describe('AssessmentPage', () => {
     const user = userEvent.setup();
     renderApp('/assessment');
     expect(
-      await screen.findByRole('heading', { name: 'Programming Cognitive Assessment' }),
+      await screen.findByRole('heading', { name: 'Cognitive Assessment' }),
     ).toBeInTheDocument();
+    await user.click(screen.getByRole('radio', { name: /Programming/ }));
     expect(
       screen.getAllByRole('listitem').filter((li) => /levels 2, 5, 8/.test(li.textContent)),
     ).toHaveLength(5);
-    expect(screen.getByText(/30 challenges in total/)).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: /Programming/ })).toHaveTextContent('30 challenges');
     expect(screen.getByRole('heading', { name: 'What this is — and is not' })).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Start assessment' }));
+    await user.click(screen.getByRole('button', { name: 'Start programming assessment' }));
     expect(await screen.findByText('Round 1 of 15')).toBeInTheDocument();
   });
 });

@@ -10,10 +10,10 @@ import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { GameResult } from '../session/gameResult';
 import type { Repository } from '../storage/repository';
 
-export const PROGRESS_SCHEMA_VERSION = 1;
+export const PROGRESS_SCHEMA_VERSION = 2;
 /** A level counts as cleared at this performance index (decision D2). */
 export const CLEARED_PERFORMANCE_INDEX = 70;
-export const MAX_RECENT_SESSIONS = 50;
+export const MAX_RECENT_SESSIONS = 200;
 
 export interface LevelRecord {
   /** Completed sessions, assisted included. */
@@ -49,8 +49,18 @@ export const MAX_ASSESSMENTS = 20;
 
 export type GameProgress = Readonly<Partial<Record<DifficultyLevel, LevelRecord>>>;
 
+/**
+ * Lifetime counters, kept apart from the capped session list so totals never shrink. Sessions in
+ * which nothing was answered (opened and closed) are not practice and are not counted.
+ */
+export interface PracticeTotals {
+  readonly sessions: number;
+  readonly practiceMs: number;
+}
+
 export interface UserProgress {
   readonly schemaVersion: typeof PROGRESS_SCHEMA_VERSION;
+  readonly totals: PracticeTotals;
   readonly games: Readonly<Record<string, GameProgress>>;
   /** Most recent first. */
   readonly recentSessions: readonly SessionSummary[];
@@ -60,6 +70,7 @@ export interface UserProgress {
 
 export const emptyProgress = (): UserProgress => ({
   schemaVersion: PROGRESS_SCHEMA_VERSION,
+  totals: { sessions: 0, practiceMs: 0 },
   games: {},
   recentSessions: [],
 });
@@ -92,7 +103,14 @@ export function applySessionResult(progress: UserProgress, result: GameResult): 
     durationMs: result.durationMs,
   };
   const recentSessions = [summary, ...progress.recentSessions].slice(0, MAX_RECENT_SESSIONS);
-  if (!result.completed) return { ...progress, recentSessions };
+  const practised = result.metrics.attempted > 0;
+  const totals = practised
+    ? {
+        sessions: progress.totals.sessions + 1,
+        practiceMs: progress.totals.practiceMs + Math.max(0, result.durationMs),
+      }
+    : progress.totals;
+  if (!result.completed) return { ...progress, totals, recentSessions };
 
   const game = progress.games[result.gameId] ?? {};
   const previous = game[result.level];
@@ -115,6 +133,7 @@ export function applySessionResult(progress: UserProgress, result: GameResult): 
   };
   return {
     ...progress,
+    totals,
     recentSessions,
     games: { ...progress.games, [result.gameId]: { ...game, [result.level]: record } },
   };
@@ -149,6 +168,41 @@ export function suggestedLevel(game: GameProgress | undefined): DifficultyLevel 
   const cleared = DIFFICULTY_LEVELS.filter((level) => isLevelCleared(game?.[level]));
   const highest = cleared.at(-1);
   return highest === undefined ? MIN_LEVEL : stepLevel(highest, 1);
+}
+
+/** Level n + 1 opens when level n was completed with at least this performance index… */
+export const UNLOCK_PERFORMANCE_INDEX = 50;
+/** …or after this many completed sessions of level n, so a low score never blocks anyone. */
+export const UNLOCK_AFTER_PLAYS = 3;
+
+/**
+ * Transparent unlocking: level 1 is always open; every other level opens from the level below
+ * it (see the constants above). Free play opens everything.
+ */
+export function isLevelUnlocked(
+  game: GameProgress | undefined,
+  level: DifficultyLevel,
+  freePlay = false,
+): boolean {
+  if (freePlay || level === MIN_LEVEL) return true;
+  const below = game?.[stepLevel(level, -1)];
+  return (
+    below !== undefined &&
+    (below.bestPerformanceIndex >= UNLOCK_PERFORMANCE_INDEX || below.plays >= UNLOCK_AFTER_PLAYS)
+  );
+}
+
+/** Levels that are open; always a prefix 1…n because each level opens from the one below. */
+export function unlockedLevels(
+  game: GameProgress | undefined,
+  freePlay = false,
+): DifficultyLevel[] {
+  const open: DifficultyLevel[] = [];
+  for (const level of DIFFICULTY_LEVELS) {
+    if (!isLevelUnlocked(game, level, freePlay)) break;
+    open.push(level);
+  }
+  return open;
 }
 
 /** Port: the domain never knows where progress lives (localStorage today, an API later). */

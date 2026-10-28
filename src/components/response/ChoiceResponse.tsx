@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import type { ResponseOf } from '@/domain/challenge';
+import { useEffect, type ReactNode } from 'react';
+import type { ChoiceOption, ResponseOf } from '@/domain/challenge';
 
 interface Props {
   readonly response: ResponseOf<'single-choice'>;
@@ -10,6 +10,8 @@ interface Props {
   readonly monospace?: boolean;
   /** Spoken label for options whose text does not read well aloud. */
   readonly describe?: (label: string) => string | undefined;
+  /** Visual face of an option (e.g. a shape); the label stays its accessible name. */
+  readonly renderOption?: ((option: ChoiceOption) => ReactNode) | undefined;
 }
 
 /** Options answer on click or with number keys 1–n. State is shown with text + icon, not only colour. */
@@ -20,6 +22,7 @@ export function ChoiceResponse({
   onSelect,
   monospace = false,
   describe,
+  renderOption,
 }: Props) {
   const { options } = response.question;
   // Long options (e.g. whole execution orders) are easier to compare stacked in one column.
@@ -56,7 +59,9 @@ export function ChoiceResponse({
             : isWrongPick
               ? 'border-rose-400/70 bg-rose-400/10'
               : 'border-slate-700 bg-slate-900 hover:border-slate-500 hover:bg-slate-800';
-          const spoken = describe?.(option.label);
+          const face = renderOption?.(option);
+          const spoken =
+            describe?.(option.label) ?? (face === undefined ? undefined : option.label);
           return (
             <li key={option.id}>
               <button
@@ -79,7 +84,7 @@ export function ChoiceResponse({
                   {i + 1}
                 </kbd>
                 <span className={`flex-1 break-words ${monospace ? 'font-mono' : ''}`}>
-                  {option.label}
+                  {face ?? option.label}
                 </span>
                 {isSolution && (
                   <span className="text-xs font-semibold text-emerald-300">✓ Correct answer</span>

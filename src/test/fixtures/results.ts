@@ -32,6 +32,7 @@ export function resultFixture(
       medianResponseMs: 1800,
       fastestResponseMs: 900,
       medianPace: 0.6,
+      medianReactionMs: null,
       longestStreak: 3,
       byKind: {},
       bySkill: {},

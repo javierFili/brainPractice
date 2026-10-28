@@ -50,6 +50,7 @@ describe('computeMetrics', () => {
       medianResponseMs: null,
       fastestResponseMs: null,
       medianPace: null,
+      medianReactionMs: null,
       longestStreak: 0,
       byKind: {},
       bySkill: {},
@@ -161,5 +162,18 @@ describe('computeMetrics', () => {
       'working-memory': { total: 1, correct: 1 },
       'algorithmic-thinking': { total: 2, correct: 1 },
     });
+  });
+
+  it('reports the median reaction time of correct taps only', () => {
+    const tap = (reactionMs: number | null) =>
+      ({ format: 'tap', tapped: reactionMs !== null, reactionMs }) as const;
+    const metrics = computeMetrics([
+      record('correct', 900, { answer: tap(300) }),
+      record('correct', 700, { answer: tap(200) }),
+      record('incorrect', 100, { answer: tap(-50) }),
+      record('correct', 2000, { answer: tap(null) }),
+      record('correct', 2000, { answer: tap(400) }),
+    ]);
+    expect(metrics.medianReactionMs).toBe(300);
   });
 });

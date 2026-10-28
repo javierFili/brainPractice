@@ -5,6 +5,8 @@ import {
   applySessionResult,
   emptyProgress,
   isLevelCleared,
+  isLevelUnlocked,
+  unlockedLevels,
   MAX_RECENT_SESSIONS,
   suggestedLevel,
 } from './progress';
@@ -109,7 +111,7 @@ describe('isUserProgress', () => {
   it.each([
     ['null', null],
     ['array', []],
-    ['wrong version', { ...valid, schemaVersion: 2 }],
+    ['wrong version', { ...valid, schemaVersion: 3 }],
     ['bad sessions', { ...valid, recentSessions: [{ gameId: 1 }] }],
     ['bad level key', { ...valid, games: { g: { 11: valid.games['fixture-max']?.[3] } } }],
     ['bad record', { ...valid, games: { g: { 1: { plays: 'x' } } } }],
@@ -184,10 +186,88 @@ describe('recoverUserProgress', () => {
     expect(isUserProgress(recovered?.value)).toBe(true);
   });
 
-  it.each([null, 'text', [], { schemaVersion: 2, games: {}, recentSessions: [] }])(
+  it.each([null, 'text', [], { schemaVersion: 3, games: {}, recentSessions: [] }])(
     'gives up on %j (not an object, or another schema version)',
     (value) => {
       expect(recoverUserProgress(value)).toBeNull();
     },
   );
+});
+
+describe('progress schema v2', () => {
+  const v1Session = {
+    gameId: 'memory-cards',
+    level: 2,
+    seed: 7,
+    score: 120,
+    accuracy: 1,
+    performanceIndex: 90,
+    completed: true,
+    assisted: false,
+    endedAt: 5000,
+    durationMs: 60_000,
+  };
+
+  it('migrates v1 data, starting totals from the sessions it kept', () => {
+    const recovered = recoverUserProgress({
+      schemaVersion: 1,
+      games: {},
+      recentSessions: [v1Session, { ...v1Session, durationMs: 30_000 }],
+    });
+    expect(recovered?.discarded).toBe(0);
+    expect(recovered?.value.schemaVersion).toBe(2);
+    expect(recovered?.value.totals).toEqual({ sessions: 2, practiceMs: 90_000 });
+  });
+
+  it('rebuilds damaged totals instead of dropping the progress', () => {
+    const recovered = recoverUserProgress({
+      schemaVersion: 2,
+      totals: { sessions: -1, practiceMs: 'x' },
+      games: {},
+      recentSessions: [v1Session],
+    });
+    expect(recovered).toMatchObject({ discarded: 1, value: { totals: { sessions: 1 } } });
+  });
+
+  it('counts practice only for sessions where something was answered', () => {
+    const answered = applySessionResult(emptyProgress(), resultFixture({ durationMs: 40_000 }));
+    expect(answered.totals).toEqual({ sessions: 1, practiceMs: 40_000 });
+    const nothing = resultFixture({
+      completed: false,
+      metrics: { ...resultFixture().metrics, attempted: 0, skipped: 5 },
+    });
+    expect(applySessionResult(answered, nothing).totals).toEqual(answered.totals);
+  });
+});
+
+describe('level unlocking', () => {
+  const record = (bestPerformanceIndex: number, plays = 1) => ({
+    plays,
+    bestScore: 0,
+    bestAccuracy: 0,
+    bestPerformanceIndex,
+    bestMedianResponseMs: null,
+    lastPlayedAt: 0,
+  });
+
+  it('opens only level 1 for a new player', () => {
+    expect(unlockedLevels(undefined)).toEqual([1]);
+  });
+
+  it('opens the next level after a solid session', () => {
+    expect(unlockedLevels({ 1: record(55) })).toEqual([1, 2]);
+    expect(isLevelUnlocked({ 1: record(49) }, 2)).toBe(false);
+  });
+
+  it('never blocks permanently: three completed sessions also open the next level', () => {
+    expect(isLevelUnlocked({ 1: record(20, 3) }, 2)).toBe(true);
+  });
+
+  it('opens every level in free play', () => {
+    expect(unlockedLevels(undefined, true)).toHaveLength(10);
+  });
+
+  it('keeps the open levels contiguous', () => {
+    expect(unlockedLevels({ 1: record(80), 3: record(90) })).toEqual([1, 2]);
+  });
 });

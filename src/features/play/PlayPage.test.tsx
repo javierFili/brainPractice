@@ -1,8 +1,11 @@
+import { defaultPreferences } from '@/domain/preferences';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FakeClock } from '@/test/fakes/FakeClock';
 import { choiceLabels, seedWhereFirst, sessionChallenge } from '@/test/challenges';
 import { renderApp } from '@/test/renderApp';
+
+const FREE_PLAY = { ...defaultPreferences(), freePlay: true };
 
 const PATH = '/games/algorithmic-logic/play';
 const choiceSeed = seedWhereFirst(1, 'single-choice');
@@ -129,7 +132,7 @@ describe('Play screen', () => {
     const user = userEvent.setup();
     const seed = seedWhereFirst(4, 'numeric');
     const first = sessionChallenge(4, seed);
-    renderApp(`${PATH}/4?seed=${seed}`);
+    renderApp(`${PATH}/4?seed=${seed}`, { preferences: FREE_PLAY });
     const input = await screen.findByLabelText(/Your answer/);
     await waitFor(() => {
       expect(input).toBeEnabled();
@@ -143,7 +146,7 @@ describe('Play screen', () => {
 
   it('reproduces the same challenge for the same seed', async () => {
     const first = sessionChallenge(7, 1234);
-    renderApp(`${PATH}/7?seed=1234`);
+    renderApp(`${PATH}/7?seed=1234`, { preferences: FREE_PLAY });
     expect(await screen.findByRole('heading', { name: first.prompt })).toBeInTheDocument();
   });
 

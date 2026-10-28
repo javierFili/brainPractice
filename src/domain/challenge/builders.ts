@@ -1,5 +1,5 @@
 import { shuffle, type RandomGenerator } from '../random';
-import type { ResponseOf } from './responseFormats';
+import type { ChoiceOption, ResponseOf } from './responseFormats';
 
 const OPTION_IDS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const;
 
@@ -35,4 +35,43 @@ export const locateResponse = (itemCount: number, index: number): ResponseOf<'lo
   format: 'locate',
   question: { itemCount },
   solution: { index },
+});
+
+export const multiSelectResponse = (
+  itemCount: number,
+  indices: readonly number[],
+  { exact = true, maxErrors = 0 }: { exact?: boolean; maxErrors?: number } = {},
+): ResponseOf<'multi-select'> => ({
+  format: 'multi-select',
+  question: { itemCount, exactCount: exact ? indices.length : null, maxErrors },
+  solution: { indices: [...indices].sort((a, b) => a - b) },
+});
+
+/** Sequence response over a palette of `[id, label]` symbols. */
+export const sequenceResponse = (
+  symbols: readonly ChoiceOption[],
+  sequence: readonly string[],
+): ResponseOf<'sequence'> => ({
+  format: 'sequence',
+  question: { symbols, length: sequence.length },
+  solution: { sequence },
+});
+
+export const tapResponse = (
+  shouldTap: boolean,
+  signalDelayMs: number,
+  windowMs: number,
+): ResponseOf<'tap'> => ({
+  format: 'tap',
+  question: { signalDelayMs, windowMs },
+  solution: { shouldTap },
+});
+
+export const pairsResponse = (
+  pairs: readonly (readonly [number, number])[],
+  maxMisses: number,
+): ResponseOf<'pairs'> => ({
+  format: 'pairs',
+  question: { itemCount: pairs.length * 2, maxMisses },
+  solution: { pairs },
 });

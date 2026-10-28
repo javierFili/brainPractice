@@ -1,13 +1,16 @@
+import { defaultPreferences } from '@/domain/preferences';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generateChallenge } from '@/domain/game';
 import { deriveSeed, toSeed } from '@/domain/random';
 import { ASSISTED_STUDY_FACTOR } from '@/domain/session';
 import type { DifficultyLevel } from '@/domain/shared';
-import { codeMemoryModule } from '@/games/code-memory';
-import { codeMemoryGame } from '@/games/code-memory/content/definition';
+import { codeMemoryModule } from '@/games/programming/code-memory';
+import { codeMemoryGame } from '@/games/programming/code-memory/content/definition';
 import { renderApp } from '@/test/renderApp';
 import { ChallengeStage } from './ChallengeStage';
+
+const FREE_PLAY = { ...defaultPreferences(), freePlay: true };
 
 const LEVEL: DifficultyLevel = 2;
 const firstChallenge = (sessionSeed: number) =>
@@ -46,7 +49,7 @@ describe('Memory study phase', () => {
 
   it('hides the material and asks the question once the player is ready', async () => {
     const user = userEvent.setup();
-    renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}`);
+    renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}`, { preferences: FREE_PLAY });
     expect(await screen.findByRole('heading', { name: /Memorise this/ })).toBeInTheDocument();
     expect(screen.queryByText(challenge.prompt)).not.toBeInTheDocument();
 
@@ -63,10 +66,14 @@ describe('Memory study phase', () => {
 
   it('doubles the memorisation time in relaxed mode', async () => {
     const studyMs = challenge.timing.studyMs ?? 0;
-    const { unmount } = renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}`);
+    const { unmount } = renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}`, {
+      preferences: FREE_PLAY,
+    });
     expect(await screen.findByText(`${Math.ceil(studyMs / 1000)}s`)).toBeInTheDocument();
     unmount();
-    renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}&assisted=1`);
+    renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}&assisted=1`, {
+      preferences: FREE_PLAY,
+    });
     expect(
       await screen.findByText(`${Math.ceil((studyMs * ASSISTED_STUDY_FACTOR) / 1000)}s`),
     ).toBeInTheDocument();

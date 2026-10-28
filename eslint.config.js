@@ -7,7 +7,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 /** Layers that must stay framework-agnostic (see ARCHITECTURE.md §3). */
-const PURE_LAYERS = ['src/domain/**', 'src/engine/**', 'src/games/*/content/**'];
+const PURE_LAYERS = ['src/domain/**', 'src/engine/**', 'src/games/**/content/**'];
 
 export default tseslint.config(
   { ignores: ['dist', 'coverage'] },

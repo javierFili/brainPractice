@@ -12,6 +12,9 @@ import { dayKeyOf } from '@/features/shared/days';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { useProfile } from '@/features/shared/useProfile';
 import { useProgress } from '@/features/shared/useProgress';
+import { pathById } from '@/content/paths';
+import { usePreferences } from '@/app/providers/preferencesContext';
+import { dailyPool } from '@/features/shared/catalog';
 
 /** One short, shared challenge per day: a habit that takes three minutes. */
 export function DailyPage() {
@@ -20,6 +23,7 @@ export function DailyPage() {
   const { state: games } = useProgress(progressRepository);
   const { state: profile, update } = useProfile();
   const [today] = useState(() => dayKeyOf(clock.now()));
+  const { preferences } = usePreferences();
   const [challenge, setChallenge] = useState<DailyChallenge | null>(null);
 
   if (games.status === 'loading' || profile.status === 'loading') return <PageLoading />;
@@ -32,7 +36,7 @@ export function DailyPage() {
 
   const daily = dailyChallenge(
     today,
-    modules.map((m) => m.definition.id),
+    dailyPool(modules, pathById(preferences.path)),
     games.progress.games,
   );
   const module = getModule(daily.gameId);

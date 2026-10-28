@@ -1,0 +1,112 @@
+import { defineLevels, untimed } from '@/games/kit/content';
+import type { AssociationProfile } from './types';
+
+const look = (pairs: number, msPerPair: number) => untimed(9000, pairs * msPerPair + 1500);
+
+/**
+ * Pairs grow from 3 to 8. The pairings change kind (colours, then shapes with objects, then
+ * words with numbers), associates become look-alikes (one object family, near-identical shapes,
+ * numbers built from the same digits) and the cue direction is reversed, then mixed.
+ */
+export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
+  {
+    objective: 'Learn which colour goes with each of 3 objects.',
+    challengeCount: 5,
+    kinds: { 'object-color': 1 },
+    pairs: 3,
+    similar: false,
+    reversedShare: 0,
+    options: 3,
+    timing: look(3, 2500),
+  },
+  {
+    objective: 'Learn 4 object–colour pairs.',
+    challengeCount: 5,
+    kinds: { 'object-color': 1 },
+    pairs: 4,
+    similar: false,
+    reversedShare: 0,
+    options: 4,
+    timing: look(4, 2300),
+  },
+  {
+    objective: 'Learn which object goes with each of 4 shapes.',
+    challengeCount: 5,
+    kinds: { 'glyph-object': 1 },
+    pairs: 4,
+    similar: false,
+    reversedShare: 0,
+    options: 4,
+    timing: look(4, 2300),
+  },
+  {
+    objective: 'Learn 4 word–number pairs.',
+    challengeCount: 5,
+    kinds: { 'word-number': 1 },
+    pairs: 4,
+    similar: false,
+    reversedShare: 0,
+    options: 4,
+    timing: look(4, 2200),
+  },
+  {
+    objective: 'Learn colours for 5 objects of the same family.',
+    challengeCount: 5,
+    kinds: { 'object-color': 1 },
+    pairs: 5,
+    similar: true,
+    reversedShare: 0,
+    options: 4,
+    timing: look(5, 2100),
+  },
+  {
+    objective: 'Learn 5 word–number pairs, then recall the word from its number.',
+    challengeCount: 5,
+    kinds: { 'word-number': 1 },
+    pairs: 5,
+    similar: false,
+    reversedShare: 1,
+    options: 4,
+    timing: look(5, 2000),
+  },
+  {
+    objective: 'Learn 6 look-alike shapes with objects; you may be asked either way.',
+    challengeCount: 5,
+    kinds: { 'glyph-object': 1 },
+    pairs: 6,
+    similar: true,
+    reversedShare: 0.5,
+    options: 4,
+    timing: look(6, 2000),
+  },
+  {
+    objective: 'Learn 6 words with numbers made of the same digits, asked either way.',
+    challengeCount: 5,
+    kinds: { 'word-number': 1 },
+    pairs: 6,
+    similar: true,
+    reversedShare: 0.5,
+    options: 4,
+    timing: look(6, 1900),
+  },
+  {
+    objective: 'Learn 7 look-alike pairs of any kind, asked either way.',
+    challengeCount: 4,
+    kinds: { 'glyph-object': 1, 'word-number': 1 },
+    pairs: 7,
+    similar: true,
+    reversedShare: 0.5,
+    options: 5,
+    timing: look(7, 1800),
+  },
+  {
+    objective: 'Learn 8 look-alike pairs with a shorter look, asked either way.',
+    challengeCount: 4,
+    kinds: { 'glyph-object': 1, 'word-number': 1 },
+    pairs: 8,
+    similar: true,
+    reversedShare: 0.5,
+    options: 5,
+    timing: look(8, 1600),
+  },
+]);

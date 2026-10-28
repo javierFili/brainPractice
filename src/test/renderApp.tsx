@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import type { ReactElement } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import type { Course, LearningProgress } from '@/domain/learning';
+import type { Preferences } from '@/domain/preferences';
 import type { UserProfile } from '@/domain/profile';
 import type { ProgressRepository, UserProgress } from '@/domain/progress';
 import { PROGRAMMING_LOGIC } from '@/content/programming-logic/course';
@@ -26,6 +27,7 @@ interface Options {
   readonly course?: Course;
   readonly learning?: LearningProgress | null;
   readonly profile?: UserProfile | null;
+  readonly preferences?: Preferences | null;
 }
 
 /** A promise React's `use()` reads synchronously: tests get the course without suspending. */
@@ -42,10 +44,12 @@ export function createTestServices({
   course = PROGRAMMING_LOGIC,
   learning = null,
   profile = null,
+  preferences = null,
 }: Options = {}) {
   const memory = new InMemoryProgressRepository(progress);
   const learningRepository = new InMemoryRepository<LearningProgress>(learning);
   const profileRepository = new InMemoryRepository<UserProfile>(profile);
+  const preferencesRepository = new InMemoryRepository<Preferences>(preferences);
   const services = createServices({
     modules: GAME_MODULES,
     clock,
@@ -54,14 +58,21 @@ export function createTestServices({
     loadCourse: () => alreadyLoaded(course),
     learning: learningRepository,
     profile: profileRepository,
+    preferences: preferencesRepository,
     persistence,
   });
-  return { services, repository: memory, learningRepository, profileRepository };
+  return {
+    services,
+    repository: memory,
+    learningRepository,
+    profileRepository,
+    preferencesRepository,
+  };
 }
 
 /** Renders any element inside the app providers and a memory router. */
 export function renderWithServices(element: ReactElement, options: Options = {}) {
-  const { services, repository, learningRepository, profileRepository } =
+  const { services, repository, learningRepository, profileRepository, preferencesRepository } =
     createTestServices(options);
   const router = createMemoryRouter([{ path: '*', element }]);
   const view = render(
@@ -69,12 +80,19 @@ export function renderWithServices(element: ReactElement, options: Options = {})
       <RouterProvider router={router} />
     </ServicesProvider>,
   );
-  return { ...view, repository, learningRepository, profileRepository, services };
+  return {
+    ...view,
+    repository,
+    learningRepository,
+    profileRepository,
+    preferencesRepository,
+    services,
+  };
 }
 
 /** Renders the real app (routes, providers, games) with deterministic adapters. */
 export function renderApp(path: string, options: Options = {}) {
-  const { services, repository, learningRepository, profileRepository } =
+  const { services, repository, learningRepository, profileRepository, preferencesRepository } =
     createTestServices(options);
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   const view = render(
@@ -82,5 +100,13 @@ export function renderApp(path: string, options: Options = {}) {
       <RouterProvider router={router} />
     </ServicesProvider>,
   );
-  return { ...view, router, repository, learningRepository, profileRepository, services };
+  return {
+    ...view,
+    router,
+    repository,
+    learningRepository,
+    profileRepository,
+    preferencesRepository,
+    services,
+  };
 }

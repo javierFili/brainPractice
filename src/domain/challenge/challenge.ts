@@ -2,7 +2,7 @@ import type { Seed } from '../random/seed';
 import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { DifficultyLevel } from '../shared/difficultyLevel';
 import type { ChallengeId, GameId } from '../shared/ids';
-import type { ProgrammingSkill } from '../shared/programmingSkill';
+import type { Skill } from '../shared/skill';
 import type { Response } from './responseFormats';
 
 /** Game-specific content shown to the player, discriminated by `kind`. */
@@ -38,10 +38,12 @@ export interface Challenge<
   C extends ChallengeContent = ChallengeContent,
 > extends ChallengeIdentity<A> {
   readonly prompt: string;
+  /** Heading during the study phase; defaults to a generic "memorise this". */
+  readonly studyPrompt?: string;
   readonly content: C;
   readonly response: Response;
   /** Why the solution is correct; shown as feedback after answering. */
   readonly explanation: string;
-  readonly skills: readonly ProgrammingSkill[];
+  readonly skills: readonly Skill[];
   readonly timing: ChallengeTiming;
 }

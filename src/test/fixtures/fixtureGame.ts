@@ -35,6 +35,17 @@ export const fixtureGame: GameDefinition<FixtureChallenge, FixtureProfile> = {
   description: 'Test fixture.',
   area: 'logic',
   skills: ['logical-reasoning'],
+  meta: {
+    category: 'logic',
+    audiences: ['adults'],
+    interaction: 'choice',
+    estimatedMinutes: 2,
+    keyboard: 'full',
+    relaxedFriendly: true,
+    measures: ['accuracy'],
+    scoringSummary: 'Accuracy.',
+    feedback: 'explain',
+  },
   instructions: ['Pick the largest value.'],
   levels: buildLevelTable<FixtureProfile>((level) => ({ valueCount: level + 1 })),
   generate({ identity, profile, random }) {

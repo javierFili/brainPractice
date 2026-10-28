@@ -2,7 +2,7 @@ import type { Challenge } from '@/domain/challenge';
 import { generateChallenge } from '@/domain/game';
 import { deriveSeed, toSeed } from '@/domain/random';
 import type { DifficultyLevel } from '@/domain/shared';
-import { logicGame } from '@/games/algorithmic-logic/content/definition';
+import { logicGame } from '@/games/programming/algorithmic-logic/content/definition';
 
 /** The challenge a session with `sessionSeed` shows at `index`. */
 export const sessionChallenge = (

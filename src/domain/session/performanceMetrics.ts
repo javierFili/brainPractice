@@ -1,4 +1,4 @@
-import type { ProgrammingSkill } from '../shared/programmingSkill';
+import type { Skill } from '../shared/skill';
 import type { ChallengeRecord } from './challengeRecord';
 
 export interface Tally {
@@ -26,9 +26,14 @@ export interface PerformanceMetrics {
    * 0.5 "twice as fast". Comparable across challenge kinds with different targets.
    */
   readonly medianPace: number | null;
+  /**
+   * Reaction games only: median time from signal onset to a correct tap. Kept apart from the
+   * response time, which also includes the wait before the signal.
+   */
+  readonly medianReactionMs: number | null;
   readonly longestStreak: number;
   readonly byKind: Readonly<Record<string, Tally>>;
-  readonly bySkill: Readonly<Partial<Record<ProgrammingSkill, Tally>>>;
+  readonly bySkill: Readonly<Partial<Record<Skill, Tally>>>;
 }
 
 function median(sorted: readonly number[]): number | null {
@@ -65,8 +70,15 @@ export function computeMetrics(records: readonly ChallengeRecord[]): Performance
   const times = answered.map((r) => r.responseTimeMs).sort((a, b) => a - b);
   const paces = answered.map((r) => r.responseTimeMs / r.targetMs).sort((a, b) => a - b);
 
+  const reactions = records
+    .flatMap((r) =>
+      r.outcome === 'correct' && r.answer?.format === 'tap' && r.answer.reactionMs !== null
+        ? [r.answer.reactionMs]
+        : [],
+    )
+    .sort((a, b) => a - b);
   const byKind: Record<string, Tally> = {};
-  const bySkill: Partial<Record<ProgrammingSkill, Tally>> = {};
+  const bySkill: Partial<Record<Skill, Tally>> = {};
   for (const record of records) {
     if (record.outcome === 'skipped') continue;
     const isCorrect = record.outcome === 'correct';
@@ -88,6 +100,7 @@ export function computeMetrics(records: readonly ChallengeRecord[]): Performance
     medianResponseMs: median(times),
     fastestResponseMs: times[0] ?? null,
     medianPace: median(paces),
+    medianReactionMs: median(reactions),
     longestStreak: longestStreak(records),
     byKind,
     bySkill,

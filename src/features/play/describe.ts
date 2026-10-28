@@ -1,4 +1,4 @@
-import type { Answer, Challenge, Response } from '@/domain/challenge';
+import { pairsTally, type Answer, type Challenge, type Response } from '@/domain/challenge';
 
 const optionLabel = (response: Response, id: string) =>
   response.format === 'single-choice'
@@ -12,6 +12,19 @@ const itemLabels = (response: Response, ids: readonly string[]) =>
         .join(' → ')
     : ids.join(' → ');
 
+const symbolLabels = (response: Response, ids: readonly string[]) =>
+  response.format === 'sequence'
+    ? ids.map((id) => response.question.symbols.find((s) => s.id === id)?.label ?? id).join(' · ')
+    : ids.join(' · ');
+
+const positions = (indices: readonly number[]) =>
+  indices.length === 0
+    ? 'nothing marked'
+    : `${indices.length === 1 ? 'item' : 'items'} ${[...indices]
+        .sort((a, b) => a - b)
+        .map((i) => i + 1)
+        .join(', ')}`;
+
 /** Human-readable correct answer, for feedback and the results review. */
 export function describeSolution({ response }: Challenge): string {
   switch (response.format) {
@@ -23,6 +36,14 @@ export function describeSolution({ response }: Challenge): string {
       return `item ${response.solution.index + 1}`;
     case 'numeric':
       return String(response.solution.value);
+    case 'sequence':
+      return symbolLabels(response, response.solution.sequence);
+    case 'multi-select':
+      return positions(response.solution.indices);
+    case 'pairs':
+      return `all ${response.solution.pairs.length} pairs`;
+    case 'tap':
+      return response.solution.shouldTap ? 'tap while the signal is shown' : 'do not tap';
   }
 }
 
@@ -37,5 +58,19 @@ export function describeAnswer({ response }: Challenge, answer: Answer | null): 
       return `item ${answer.index + 1}`;
     case 'numeric':
       return String(answer.value);
+    case 'sequence':
+      return symbolLabels(response, answer.sequence);
+    case 'multi-select':
+      return positions(answer.indices);
+    case 'pairs': {
+      if (response.format !== 'pairs') return `${answer.attempts.length} attempts`;
+      const { found, misses } = pairsTally(response.solution.pairs, answer.attempts);
+      return `${found} of ${response.solution.pairs.length} pairs, ${misses} ${misses === 1 ? 'miss' : 'misses'}`;
+    }
+    case 'tap':
+      if (!answer.tapped || answer.reactionMs === null) return 'no tap';
+      return answer.reactionMs < 0
+        ? 'tapped before the signal'
+        : `tapped after ${Math.round(answer.reactionMs)} ms`;
   }
 }

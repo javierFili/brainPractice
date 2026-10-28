@@ -8,8 +8,8 @@ import { formatMs } from '@/features/shared/format';
 import { AssessmentDisclaimer } from './AssessmentDisclaimer';
 
 const BAND_LABEL: Record<CognitiveBand, string> = {
-  developing: 'Developing',
-  solid: 'Solid',
+  developing: 'Room to practise',
+  solid: 'Steady',
   strong: 'Strong',
   exceptional: 'Very strong',
 };
@@ -51,7 +51,7 @@ export function AssessmentResultView({
           tabIndex={-1}
           className="mt-2 text-3xl font-semibold text-white outline-none"
         >
-          Programming Cognitive Index: <span className="font-mono">{profile.overall.value}</span>
+          Performance index: <span className="font-mono">{profile.overall.value}</span>
           <span className="text-slate-400">/100</span>
         </h1>
         <p className="mt-1 text-slate-300">
@@ -62,7 +62,8 @@ export function AssessmentResultView({
         <p className="mt-2 max-w-2xl text-sm text-slate-400">
           With {profile.overall.items} challenges the margin is wide: read these numbers as a rough
           starting point for choosing what to train, not as a precise measurement. Skipped
-          challenges count as unsolved.
+          challenges count as unsolved. This is an internal index of this platform — not an IQ
+          score, not a clinical measure, and not compared with any population.
         </p>
       </header>
 

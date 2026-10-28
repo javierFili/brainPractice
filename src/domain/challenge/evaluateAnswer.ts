@@ -2,7 +2,15 @@ import { err, ok, type Result } from '../shared/result';
 import type { Answer, AnswerOf, Response, ResponseOf } from './responseFormats';
 
 export type AnswerErrorCode =
-  'FORMAT_MISMATCH' | 'UNKNOWN_OPTION' | 'INVALID_ORDERING' | 'OUT_OF_RANGE' | 'NOT_A_NUMBER';
+  | 'FORMAT_MISMATCH'
+  | 'UNKNOWN_OPTION'
+  | 'INVALID_ORDERING'
+  | 'OUT_OF_RANGE'
+  | 'NOT_A_NUMBER'
+  | 'WRONG_LENGTH'
+  | 'DUPLICATE_INDEX'
+  | 'INVALID_PAIR'
+  | 'INCONSISTENT_TAP';
 
 export interface AnswerError {
   readonly code: AnswerErrorCode;
@@ -50,6 +58,94 @@ function evaluateNumeric(response: ResponseOf<'numeric'>, answer: AnswerOf<'nume
   return ok(answer.value === response.solution.value);
 }
 
+function evaluateSequence(response: ResponseOf<'sequence'>, answer: AnswerOf<'sequence'>) {
+  const { symbols, length } = response.question;
+  if (answer.sequence.length !== length) {
+    return fail('WRONG_LENGTH', `The sequence must have ${length} entries`);
+  }
+  const known = new Set(symbols.map((s) => s.id));
+  const unknown = answer.sequence.find((id) => !known.has(id));
+  if (unknown !== undefined) return fail('UNKNOWN_OPTION', `Symbol "${unknown}" is not offered`);
+  return ok(answer.sequence.every((id, i) => id === response.solution.sequence[i]));
+}
+
+const inRange = (index: number, count: number) =>
+  Number.isInteger(index) && index >= 0 && index < count;
+
+/** Errors of a multi-select answer: targets left unmarked plus marks on non-targets. */
+export function multiSelectErrors(
+  solution: readonly number[],
+  marked: readonly number[],
+): { readonly missed: number; readonly wrong: number } {
+  const targets = new Set(solution);
+  const marks = new Set(marked);
+  return {
+    missed: [...targets].filter((i) => !marks.has(i)).length,
+    wrong: [...marks].filter((i) => !targets.has(i)).length,
+  };
+}
+
+function evaluateMultiSelect(
+  response: ResponseOf<'multi-select'>,
+  answer: AnswerOf<'multi-select'>,
+) {
+  const { itemCount, exactCount, maxErrors } = response.question;
+  const outside = answer.indices.find((i) => !inRange(i, itemCount));
+  if (outside !== undefined) {
+    return fail('OUT_OF_RANGE', `Index ${outside} is outside [0, ${itemCount - 1}]`);
+  }
+  if (new Set(answer.indices).size !== answer.indices.length) {
+    return fail('DUPLICATE_INDEX', 'Each element can be marked once');
+  }
+  if (exactCount !== null && answer.indices.length !== exactCount) {
+    return fail('WRONG_LENGTH', `Exactly ${exactCount} elements must be marked`);
+  }
+  const { missed, wrong } = multiSelectErrors(response.solution.indices, answer.indices);
+  return ok(missed + wrong <= maxErrors);
+}
+
+/** Mismatched attempts and pairs found, for a pairs answer already known to be valid. */
+export function pairsTally(
+  solution: readonly (readonly [number, number])[],
+  attempts: readonly (readonly [number, number])[],
+): { readonly found: number; readonly misses: number } {
+  const partner = new Map<number, number>();
+  for (const [a, b] of solution) {
+    partner.set(a, b);
+    partner.set(b, a);
+  }
+  const found = new Set<number>();
+  let misses = 0;
+  for (const [a, b] of attempts) {
+    if (partner.get(a) === b) found.add(Math.min(a, b));
+    else misses++;
+  }
+  return { found: found.size, misses };
+}
+
+function evaluatePairs(response: ResponseOf<'pairs'>, answer: AnswerOf<'pairs'>) {
+  const { itemCount, maxMisses } = response.question;
+  for (const attempt of answer.attempts) {
+    const [a, b] = attempt;
+    // Answers may come from untrusted input: the tuple type is not a runtime guarantee.
+    const cards: readonly number[] = attempt;
+    if (cards.length !== 2 || !inRange(a, itemCount) || !inRange(b, itemCount) || a === b) {
+      return fail('INVALID_PAIR', `Attempt [${attempt.join(', ')}] is not two distinct cards`);
+    }
+  }
+  const { found, misses } = pairsTally(response.solution.pairs, answer.attempts);
+  return ok(found === response.solution.pairs.length && misses <= maxMisses);
+}
+
+function evaluateTap(response: ResponseOf<'tap'>, answer: AnswerOf<'tap'>) {
+  const { reactionMs, tapped } = answer;
+  if (tapped !== (reactionMs !== null) || (reactionMs !== null && !Number.isFinite(reactionMs))) {
+    return fail('INCONSISTENT_TAP', 'A tap needs a finite reaction time and only a tap has one');
+  }
+  if (!response.solution.shouldTap) return ok(!tapped);
+  return ok(reactionMs !== null && reactionMs >= 0 && reactionMs <= response.question.windowMs);
+}
+
 /**
  * Returns whether a structurally valid answer is correct. Malformed answers are errors, not
  * "incorrect", so a UI bug can never be scored as a player mistake.
@@ -71,5 +167,13 @@ export function evaluateAnswer(response: Response, answer: Answer): Evaluation {
       return evaluateLocate(response, answer as AnswerOf<'locate'>);
     case 'numeric':
       return evaluateNumeric(response, answer as AnswerOf<'numeric'>);
+    case 'sequence':
+      return evaluateSequence(response, answer as AnswerOf<'sequence'>);
+    case 'multi-select':
+      return evaluateMultiSelect(response, answer as AnswerOf<'multi-select'>);
+    case 'pairs':
+      return evaluatePairs(response, answer as AnswerOf<'pairs'>);
+    case 'tap':
+      return evaluateTap(response, answer as AnswerOf<'tap'>);
   }
 }

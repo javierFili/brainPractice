@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import type { Answer } from '@/domain/challenge';
 import { currentChallenge, lastRecord, type GameResult } from '@/domain/session';
 import type { GameSession } from '@/engine';
@@ -23,6 +23,8 @@ export function SessionRunner({ module, session, onFinished, endLabel = 'End ses
   const state = useSyncExternalStore(session.subscribe, session.getState);
   useSessionLifecycle(session, state, clock);
   const reported = useRef<GameSession | null>(null);
+  const [showHelp, setShowHelp] = useState(false);
+  const helpId = useId();
 
   useEffect(() => {
     if (state.status !== 'finished' || reported.current === session) return;
@@ -46,12 +48,36 @@ export function SessionRunner({ module, session, onFinished, endLabel = 'End ses
   return (
     <div>
       <SessionHeader state={state} clock={clock} title={module.definition.name} />
+      <div className="mb-4 -mt-2">
+        <button
+          type="button"
+          aria-expanded={showHelp}
+          aria-controls={helpId}
+          onClick={() => {
+            setShowHelp((open) => !open);
+          }}
+          className="rounded-md text-sm text-ink-muted underline-offset-4 hover:text-ink hover:underline focus-visible:outline-2 focus-visible:outline-brand"
+        >
+          {showHelp ? 'Hide instructions' : 'How to play'}
+        </button>
+        {showHelp && (
+          <ul
+            id={helpId}
+            className="mt-2 list-disc space-y-1 rounded-xl border border-line bg-surface p-4 pl-8 text-sm text-ink-soft"
+          >
+            {module.definition.instructions.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        )}
+      </div>
       <ChallengeStage
         module={module}
         challenge={currentChallenge(state)}
         status={state.status}
         record={state.status === 'feedback' ? lastRecord(state) : null}
         isLast={state.index === state.challenges.length - 1}
+        assisted={state.settings.assisted}
         onAnswer={answer}
         onEndStudy={() => {
           session.endStudy();

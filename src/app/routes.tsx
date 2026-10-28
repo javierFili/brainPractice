@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router';
+import { Navigate, type RouteObject } from 'react-router';
 import { AppShell } from '@/components/layout/AppShell';
 import { NotFound } from '@/features/shared/NotFound';
 import { PageLoading } from '@/features/shared/PageLoading';
@@ -72,11 +72,81 @@ export const routes: RouteObject[] = [
             }),
           },
           {
-            path: 'profile',
+            path: 'continue',
             lazy: async () => ({
-              Component: (await import('@/features/profile/ProfilePage')).ProfilePage,
+              Component: (await import('@/features/home/ContinuePage')).ContinuePage,
             }),
           },
+          {
+            path: 'train/:collectionId',
+            lazy: async () => ({
+              Component: (await import('@/features/catalog/CollectionPage')).CollectionPage,
+            }),
+          },
+          {
+            path: 'quick',
+            lazy: async () => ({
+              Component: (await import('@/features/quick/QuickSessionPage')).QuickSessionPage,
+            }),
+          },
+          {
+            path: 'paths',
+            lazy: async () => ({
+              Component: (await import('@/features/paths/PathPage')).PathsIndexPage,
+            }),
+          },
+          {
+            path: 'paths/:pathId',
+            lazy: async () => ({
+              Component: (await import('@/features/paths/PathPage')).PathPage,
+            }),
+          },
+          {
+            path: 'progress',
+            lazy: async () => ({
+              Component: (await import('@/features/progress/ProgressPage')).ProgressPage,
+            }),
+          },
+          {
+            path: 'assessment/history',
+            lazy: async () => ({
+              Component: (await import('@/features/assessment/AssessmentHistoryPages'))
+                .AssessmentHistoryPage,
+            }),
+          },
+          {
+            path: 'assessment/profile',
+            lazy: async () => ({
+              Component: (await import('@/features/assessment/AssessmentHistoryPages'))
+                .AssessmentProfilePage,
+            }),
+          },
+          {
+            path: 'learn/thinking',
+            lazy: async () => ({
+              Component: (await import('@/features/learn/ThinkingPage')).ThinkingPage,
+            }),
+          },
+          {
+            path: 'settings',
+            lazy: async () => ({
+              Component: (await import('@/features/settings/SettingsPages')).PreferencesPage,
+            }),
+          },
+          {
+            path: 'settings/accessibility',
+            lazy: async () => ({
+              Component: (await import('@/features/settings/SettingsPages')).AccessibilityPage,
+            }),
+          },
+          {
+            path: 'settings/data',
+            lazy: async () => ({
+              Component: (await import('@/features/settings/SettingsPages')).DataPage,
+            }),
+          },
+          { path: 'train', element: <Navigate to="/games" replace /> },
+          { path: 'profile', element: <Navigate to="/progress" replace /> },
           { path: '*', element: <NotFound /> },
         ],
       },

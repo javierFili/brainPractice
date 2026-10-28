@@ -5,8 +5,10 @@ import type { ChallengePhase, GameModule } from '@/games/types';
 import { ChoiceResponse } from '@/components/response/ChoiceResponse';
 import { NumericResponse } from '@/components/response/NumericResponse';
 import { OrderingResponse } from '@/components/response/OrderingResponse';
+import { SequenceResponse } from '@/components/response/SequenceResponse';
 import { Button } from '@/components/ui/Button';
 import { AnswerFeedback } from './AnswerFeedback';
+import { BriefFeedback } from './BriefFeedback';
 
 interface Props {
   readonly module: GameModule;
@@ -15,6 +17,8 @@ interface Props {
   /** Record of the current challenge once answered. */
   readonly record: ChallengeRecord | null;
   readonly isLast: boolean;
+  /** Relaxed timing: views slow their own pacing and feedback waits for the player. */
+  readonly assisted?: boolean;
   readonly onAnswer: (answer: Answer) => void;
   readonly onEndStudy: () => void;
   readonly onNext: () => void;
@@ -37,10 +41,12 @@ export function ChallengeStage({
   status,
   record,
   isLast,
+  assisted = false,
   onAnswer,
   onEndStudy,
   onNext,
 }: Props) {
+  const { meta } = module.definition;
   const phase = phaseOf(status, challenge);
   const { ContentView } = module;
   const answering = status === 'responding';
@@ -113,7 +119,7 @@ export function ChallengeStage({
       ) : (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 id="challenge-prompt" className="text-lg font-medium text-white sm:text-xl">
-            Memorise this — it will be hidden.
+            {challenge.studyPrompt ?? 'Memorise this — it will be hidden.'}
           </h2>
           <Button variant="secondary" onClick={onEndStudy} disabled={status !== 'studying'}>
             I&apos;m ready
@@ -126,7 +132,15 @@ export function ChallengeStage({
         className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 sm:p-6"
         onKeyDown={moveFocus}
       >
-        <ContentView challenge={challenge} phase={phase} locate={locate} />
+        <ContentView
+          key={challenge.id}
+          challenge={challenge}
+          phase={phase}
+          locate={locate}
+          respond={answering ? onAnswer : null}
+          answer={record?.answer ?? null}
+          assisted={assisted}
+        />
       </div>
 
       {touch && pending !== null && answering && (
@@ -171,7 +185,8 @@ export function ChallengeStage({
             onAnswer({ format: 'single-choice', optionId });
           }}
           {...(module.describeOption ? { describe: module.describeOption } : {})}
-          monospace
+          renderOption={module.renderOption}
+          monospace={meta.category === 'programming'}
         />
       )}
       {phase === 'respond' && response.format === 'numeric' && (
@@ -195,9 +210,31 @@ export function ChallengeStage({
         />
       )}
 
-      {phase === 'review' && record !== null && (
-        <AnswerFeedback challenge={challenge} record={record} isLast={isLast} onNext={onNext} />
+      {phase === 'respond' && response.format === 'sequence' && (
+        <SequenceResponse
+          key={challenge.id}
+          response={response}
+          disabled={!answering}
+          renderOption={module.renderOption}
+          onSubmit={(sequence) => {
+            onAnswer({ format: 'sequence', sequence });
+          }}
+        />
       )}
+
+      {phase === 'review' &&
+        record !== null &&
+        (meta.feedback === 'brief' ? (
+          <BriefFeedback
+            challenge={challenge}
+            record={record}
+            isLast={isLast}
+            autoAdvance={!assisted}
+            onNext={onNext}
+          />
+        ) : (
+          <AnswerFeedback challenge={challenge} record={record} isLast={isLast} onNext={onNext} />
+        ))}
     </section>
   );
 }

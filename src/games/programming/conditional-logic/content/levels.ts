@@ -1,0 +1,100 @@
+import { defineLevels, untimed } from '@/games/kit/content';
+import type { ConditionalProfile } from './types';
+
+/**
+ * Starts with one comparison per branch over one input, then adds a second input, `and` / `or`,
+ * `not` and a true/false flag, then nested ifs, reverse questions (which input gives this output?)
+ * and finally short-circuit evaluation, where the order inside a condition prevents an error.
+ */
+export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
+  {
+    objective: 'One input, one comparison per branch: the first true condition wins.',
+    challengeCount: 5,
+    timing: untimed(25_000),
+    kinds: { branch: 1 },
+    outcomes: 3,
+    numberInputs: 1,
+    parts: ['compare'],
+  },
+  {
+    objective: 'Two inputs and four outcomes.',
+    challengeCount: 6,
+    timing: untimed(30_000),
+    kinds: { branch: 1 },
+    outcomes: 4,
+    numberInputs: 2,
+    parts: ['compare'],
+  },
+  {
+    objective: 'Combine comparisons with “and” and “or”.',
+    challengeCount: 6,
+    timing: untimed(35_000),
+    kinds: { branch: 2, 'find-input': 1 },
+    outcomes: 4,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or'],
+  },
+  {
+    objective: 'True/false flags and “not”.',
+    challengeCount: 6,
+    timing: untimed(40_000),
+    kinds: { branch: 2, 'find-input': 1 },
+    outcomes: 4,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag'],
+  },
+  {
+    objective: 'Ifs inside ifs: only one inner chain ever runs.',
+    challengeCount: 6,
+    timing: untimed(45_000),
+    kinds: { branch: 1, nested: 2, 'find-input': 1 },
+    outcomes: 4,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag'],
+  },
+  {
+    objective: 'Work backwards: which input produces this output?',
+    challengeCount: 6,
+    timing: untimed(50_000),
+    kinds: { branch: 1, nested: 1, 'find-input': 2 },
+    outcomes: 4,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
+  },
+  {
+    objective: 'Five outcomes and conditions that mix “and” with “or”.',
+    challengeCount: 7,
+    timing: untimed(60_000),
+    kinds: { branch: 1, nested: 2, 'find-input': 2 },
+    outcomes: 5,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
+  },
+  {
+    objective: 'Short-circuit: “and” stops at the first false, “or” at the first true.',
+    challengeCount: 7,
+    timing: untimed(60_000),
+    kinds: { branch: 1, nested: 1, 'find-input': 1, 'short-circuit': 2 },
+    outcomes: 5,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
+  },
+  {
+    objective: 'Guards in the wrong order: spot the condition that crashes.',
+    challengeCount: 7,
+    timing: untimed(70_000),
+    kinds: { nested: 1, 'find-input': 1, 'short-circuit': 3 },
+    outcomes: 5,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
+  },
+  {
+    objective: 'Everything at once: nested chains, mixed logic and short-circuits.',
+    challengeCount: 8,
+    timing: untimed(80_000),
+    kinds: { nested: 2, 'find-input': 2, 'short-circuit': 3 },
+    outcomes: 5,
+    numberInputs: 2,
+    parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
+  },
+]);

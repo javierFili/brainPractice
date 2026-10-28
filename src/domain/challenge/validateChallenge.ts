@@ -51,6 +51,53 @@ export function validateResponse(response: Response): string[] {
     }
     case 'numeric':
       return Number.isFinite(response.solution.value) ? [] : ['solution must be a finite number'];
+    case 'sequence': {
+      const { symbols, length } = response.question;
+      const issues = optionIssues(symbols, 'symbols');
+      const ids = new Set(symbols.map((s) => s.id));
+      const { sequence } = response.solution;
+      if (!Number.isInteger(length) || length < 1) issues.push('length must be a positive integer');
+      if (sequence.length !== length) issues.push('solution length differs from length');
+      if (!sequence.every((id) => ids.has(id))) issues.push('solution uses an unknown symbol');
+      return issues;
+    }
+    case 'multi-select': {
+      const { itemCount, exactCount, maxErrors } = response.question;
+      const { indices } = response.solution;
+      const issues: string[] = [];
+      if (!Number.isInteger(itemCount) || itemCount < 2) issues.push('itemCount must be >= 2');
+      if (indices.length === 0) issues.push('at least one target is required');
+      if (new Set(indices).size !== indices.length) issues.push('duplicate targets');
+      if (!indices.every((i) => Number.isInteger(i) && i >= 0 && i < itemCount))
+        issues.push('target index out of range');
+      if (exactCount !== null && exactCount !== indices.length)
+        issues.push('exactCount must equal the number of targets');
+      if (!Number.isInteger(maxErrors) || maxErrors < 0) issues.push('maxErrors must be >= 0');
+      else if (maxErrors >= indices.length)
+        issues.push('maxErrors must be smaller than the number of targets');
+      return issues;
+    }
+    case 'pairs': {
+      const { itemCount, maxMisses } = response.question;
+      const flat = response.solution.pairs.flat();
+      const issues: string[] = [];
+      if (!Number.isInteger(itemCount) || itemCount < 4 || itemCount % 2 !== 0)
+        issues.push('itemCount must be an even integer >= 4');
+      if (flat.length !== itemCount || new Set(flat).size !== itemCount)
+        issues.push('pairs must cover every card exactly once');
+      if (!flat.every((i) => Number.isInteger(i) && i >= 0 && i < itemCount))
+        issues.push('pair index out of range');
+      if (!Number.isInteger(maxMisses) || maxMisses < 0) issues.push('maxMisses must be >= 0');
+      return issues;
+    }
+    case 'tap': {
+      const { signalDelayMs, windowMs } = response.question;
+      const issues: string[] = [];
+      if (!(Number.isFinite(signalDelayMs) && signalDelayMs >= 0))
+        issues.push('signalDelayMs must be >= 0');
+      if (!(Number.isFinite(windowMs) && windowMs > 0)) issues.push('windowMs must be positive');
+      return issues;
+    }
   }
 }
 
