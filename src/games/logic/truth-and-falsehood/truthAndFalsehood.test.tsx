@@ -1,5 +1,6 @@
 import { generateChallenge } from '@/domain/game';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
+import { en } from '@/test/i18n';
 import { contractSeeds, describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import { truthAndFalsehoodGame } from './content/definition';
 import { TRUTH_LEVELS } from './content/levels';
@@ -33,12 +34,12 @@ describe('Truth and Falsehood', () => {
           const label = response.question.options.find(
             (o) => o.id === response.solution.optionId,
           )?.label;
-          expect(label).toBe(
+          expect(label && en(label)).toBe(
             kind === 'one'
               ? solution[target]
                 ? 'Truth-teller'
                 : 'Liar'
-              : describeGroup(solution, names),
+              : en(describeGroup(solution, names)),
           );
         }
       }

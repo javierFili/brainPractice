@@ -1,9 +1,9 @@
-import { locateResponse, singleChoice } from '@/domain/challenge';
+import { locateResponse } from '@/domain/challenge';
 import type { GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { OBJECT_CATEGORIES, objectsOf, sampleObjects } from '@/games/kit/content';
-import { cellName, objectById, ordinal } from '../../shared/content';
+import { cellName, objectById, ordinal, textChoice } from '../../shared/content';
 import { DUAL_MEMORY_LEVELS } from './levels';
 import type { DualMemoryChallenge, DualMemoryProfile, Placement } from './types';
 
@@ -13,10 +13,9 @@ export const DUAL_MEMORY_ID = gameIdOf('dual-memory-challenge');
 
 export const dualMemoryGame: GameDefinition<DualMemoryChallenge, DualMemoryProfile> = {
   id: DUAL_MEMORY_ID,
-  name: 'Dual Memory Challenge',
-  tagline: 'What, where and when — all at once.',
-  description:
-    'Objects appear one at a time, each in its own square. Keep both things in mind — where each object was and in which order they came — because the question may ask about either, or both together.',
+  name: msg('memory:dualMemoryChallenge.name'),
+  tagline: msg('memory:dualMemoryChallenge.tagline'),
+  description: msg('memory:dualMemoryChallenge.description'),
   area: 'memory',
   skills: ['working-memory', 'visual-memory', 'spatial-reasoning', 'sequential-thinking'],
   meta: {
@@ -27,17 +26,16 @@ export const dualMemoryGame: GameDefinition<DualMemoryChallenge, DualMemoryProfi
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'An answer counts when you point at the right square or pick the right object. Questions about place and about order are mixed at random, so the result reflects both. Answering is not timed.',
+    scoringSummary: msg('memory:dualMemoryChallenge.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Objects appear one by one, each in a square of the grid.',
-    'Remember where each one was and the order they came in.',
-    'You will be asked one question: where something was, which object came in a given turn, or which object was in a marked square.',
-    'Keyboard: arrow keys move between squares, Enter chooses; number keys pick an option.',
+    msg('memory:dualMemoryChallenge.instructions.watch'),
+    msg('memory:dualMemoryChallenge.instructions.remember'),
+    msg('memory:dualMemoryChallenge.instructions.question'),
+    msg('memory:dualMemoryChallenge.instructions.keyboard'),
   ],
-  simpleInstructions: 'Watch where each picture appears and in what order.',
+  simpleInstructions: msg('memory:dualMemoryChallenge.simpleInstructions'),
   levels: DUAL_MEMORY_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);
@@ -65,21 +63,24 @@ export const dualMemoryGame: GameDefinition<DualMemoryChallenge, DualMemoryProfi
     }));
     const ask = randomInt(random, 0, placements.length - 1);
     const target = placements[ask] as Placement;
-    const name = objectById(target.objectId).name;
+    const name = objectById(target.objectId).label;
     const where = cellName(target.cell, profile.size);
     const turn = ordinal(ask + 1);
     const content = { kind, size: profile.size, placements, ask, itemMs: profile.itemMs };
     const base = {
       ...identity,
-      studyPrompt: 'Remember where each object appears, and in what order.',
+      studyPrompt: msg('memory:dualMemoryChallenge.studyPrompt'),
       content,
       timing: profile.timing,
     };
-    const fact = `The ${name} came ${turn}, at ${where}.`;
+    const fact = msg('memory:dualMemoryChallenge.explanation', { name, turn, where });
     if (kind === 'where' || kind === 'where-nth') {
       return {
         ...base,
-        prompt: kind === 'where' ? `Where was the ${name}?` : `Where was the ${turn} object?`,
+        prompt:
+          kind === 'where'
+            ? msg('memory:dualMemoryChallenge.prompt.where', { name })
+            : msg('memory:dualMemoryChallenge.prompt.whereNth', { turn }),
         response: locateResponse(cells, target.cell),
         explanation: fact,
         skills:
@@ -89,14 +90,14 @@ export const dualMemoryGame: GameDefinition<DualMemoryChallenge, DualMemoryProfi
       };
     }
     // Distractors are other objects that were shown, so "I saw it" never gives the answer away.
-    const others = placements.filter((_, i) => i !== ask).map((p) => objectById(p.objectId).name);
+    const others = placements.filter((_, i) => i !== ask).map((p) => objectById(p.objectId).label);
     return {
       ...base,
       prompt:
         kind === 'which-nth'
-          ? `Which object came ${turn}?`
-          : 'Which object was in the marked square?',
-      response: singleChoice(
+          ? msg('memory:dualMemoryChallenge.prompt.whichNth', { turn })
+          : msg('memory:dualMemoryChallenge.prompt.whichHere'),
+      response: textChoice(
         random,
         name,
         sample(random, others, Math.min(OPTIONS - 1, others.length)),

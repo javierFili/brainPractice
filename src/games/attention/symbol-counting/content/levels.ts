@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SymbolCountingProfile } from './types';
 
@@ -9,7 +10,7 @@ const count = (cells: number) => untimed(5000 + cells * 400);
  */
 export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
   {
-    objective: 'Count one symbol among clearly different ones.',
+    objective: msg('attention:symbolCounting.levels.1'),
     challengeCount: 5,
     columns: 4,
     rows: 4,
@@ -21,7 +22,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(16),
   },
   {
-    objective: 'Same shape in other colours must not be counted.',
+    objective: msg('attention:symbolCounting.levels.2'),
     challengeCount: 5,
     columns: 4,
     rows: 4,
@@ -33,7 +34,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(16),
   },
   {
-    objective: 'Look-alikes in colour or shape, 25 items.',
+    objective: msg('attention:symbolCounting.levels.3'),
     challengeCount: 5,
     columns: 5,
     rows: 5,
@@ -45,7 +46,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(25),
   },
   {
-    objective: 'Close look-alikes: nearby colour, similar outline.',
+    objective: msg('attention:symbolCounting.levels.4'),
     challengeCount: 5,
     columns: 5,
     rows: 5,
@@ -57,7 +58,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(25),
   },
   {
-    objective: 'Count only the shapes pointing the right way.',
+    objective: msg('attention:symbolCounting.levels.5'),
     challengeCount: 5,
     columns: 5,
     rows: 6,
@@ -69,7 +70,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(30),
   },
   {
-    objective: 'A 6×6 field of close look-alikes.',
+    objective: msg('attention:symbolCounting.levels.6'),
     challengeCount: 5,
     columns: 6,
     rows: 6,
@@ -81,7 +82,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(36),
   },
   {
-    objective: 'Direction and nearby colours, 36 items.',
+    objective: msg('attention:symbolCounting.levels.7'),
     challengeCount: 5,
     columns: 6,
     rows: 6,
@@ -93,7 +94,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(36),
   },
   {
-    objective: 'Count one L among turned and mirrored Ls.',
+    objective: msg('attention:symbolCounting.levels.8'),
     challengeCount: 5,
     columns: 6,
     rows: 7,
@@ -105,7 +106,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(42),
   },
   {
-    objective: '48 items, every kind of look-alike.',
+    objective: msg('attention:symbolCounting.levels.9'),
     challengeCount: 5,
     columns: 6,
     rows: 8,
@@ -117,7 +118,7 @@ export const SYMBOL_COUNTING_LEVELS = defineLevels<SymbolCountingProfile>([
     timing: count(48),
   },
   {
-    objective: '48 items, all look-alikes, up to 15 targets.',
+    objective: msg('attention:symbolCounting.levels.10'),
     challengeCount: 5,
     columns: 6,
     rows: 8,

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { conditionalLogicGame } from './content/definition';
 import type { ConditionalChallenge } from './content/types';
@@ -7,9 +8,9 @@ export const conditionalLogicModule = defineGameModule<ConditionalChallenge>({
   definition: conditionalLogicGame,
   ContentView: ConditionalLogicView,
   kindLabels: {
-    branch: 'If / elif / else chains',
-    nested: 'Nested conditions',
-    'find-input': 'Input for an output',
-    'short-circuit': 'Short-circuit evaluation',
+    branch: msg('programming:conditionalLogic.kinds.branch'),
+    nested: msg('programming:conditionalLogic.kinds.nested'),
+    'find-input': msg('programming:conditionalLogic.kinds.findInput'),
+    'short-circuit': msg('programming:conditionalLogic.kinds.shortCircuit'),
   },
 });

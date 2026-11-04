@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Answer, ResponseOf } from '@/domain/challenge';
+import type { Text } from '@/domain/shared';
 import { Button } from '@/components/ui/Button';
+import { useText } from '@/i18n';
 import { CellGrid, type CellState, type GridCell } from './CellGrid';
 
 interface Props {
@@ -8,13 +11,13 @@ interface Props {
   /** One entry per element, in index order; `state` is ignored (the board owns it). */
   readonly cells: readonly Omit<GridCell, 'state'>[];
   readonly columns: number;
-  readonly label: string;
+  readonly label: Text;
   readonly respond: ((answer: Answer) => void) | null;
   /** The recorded answer, to show the review. */
   readonly answer: Answer | null;
   readonly size?: 'sm' | 'md' | 'lg';
   /** Verb on the submit button, e.g. "Check positions". */
-  readonly submitLabel?: string;
+  readonly submitLabel?: Text;
 }
 
 /**
@@ -30,8 +33,10 @@ export function MultiSelectBoard({
   respond,
   answer,
   size,
-  submitLabel = 'Check',
+  submitLabel,
 }: Props) {
+  const { t } = useTranslation('kit');
+  const tx = useText();
   const [marks, setMarks] = useState<readonly number[]>([]);
   const { exactCount } = response.question;
   const review = answer?.format === 'multi-select' ? answer.indices : null;
@@ -69,8 +74,8 @@ export function MultiSelectBoard({
         <div className="flex flex-wrap items-center justify-center gap-3">
           <p aria-live="polite" className="text-sm text-ink-muted">
             {exactCount === null
-              ? `${marks.length} marked`
-              : `${marks.length} of ${exactCount} marked`}
+              ? t('board.marked', { count: marks.length })
+              : t('board.markedOf', { marked: marks.length, total: exactCount })}
           </p>
           <Button
             disabled={!ready}
@@ -78,7 +83,7 @@ export function MultiSelectBoard({
               respond({ format: 'multi-select', indices: marks });
             }}
           >
-            {submitLabel}
+            {submitLabel === undefined ? t('board.check') : tx(submitLabel)}
           </Button>
           {marks.length > 0 && (
             <Button
@@ -87,7 +92,7 @@ export function MultiSelectBoard({
                 setMarks([]);
               }}
             >
-              Clear
+              {t('common:actions.clear')}
             </Button>
           )}
         </div>

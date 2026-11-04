@@ -1,7 +1,7 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, sample } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
 import { distinctGlyphs } from '@/games/kit/content';
 import { mark, markLabel, type Mark } from '../../shared/content';
 import { REVEAL_MS, TARGET_TRACKING_LEVELS } from './levels';
@@ -39,10 +39,9 @@ export function arrangementAfter(
 
 export const targetTrackingGame: GameDefinition<TargetTrackingChallenge, TargetTrackingProfile> = {
   id: TARGET_TRACKING_ID,
-  name: 'Target Tracking',
-  tagline: 'Keep your eyes on the card.',
-  description:
-    'A few cards are shown face up and one (later two) is marked. The cards are covered and swap places one pair at a time, each swap shown with an arrow. Then point to where the card ended up.',
+  name: msg('attention:targetTracking.name'),
+  tagline: msg('attention:targetTracking.tagline'),
+  description: msg('attention:targetTracking.description'),
   area: 'attention',
   skills: ['sustained-attention', 'concentration', 'spatial-reasoning'],
   meta: {
@@ -53,19 +52,17 @@ export const targetTrackingGame: GameDefinition<TargetTrackingChallenge, TargetT
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A round counts as correct when you point to the card asked about. Your result is the share of rounds right; the swaps play at a fixed, unhurried pace and answering is not timed.',
+    scoringSummary: msg('attention:targetTracking.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Each swap is also announced as text ("cards 2 and 4 change places"), one every second or more, and the pace slows in relaxed mode. Nothing moves or flashes.',
+    accessibilityNotes: msg('attention:targetTracking.accessibilityNotes'),
   },
   instructions: [
-    'Look at the marked card before the cards are covered.',
-    'Each step, an arrow shows two cards changing places. Follow the marked card.',
-    'When the swaps end, press the card where it is now.',
-    'From level 7, follow two marked cards: the question names one of them only at the end.',
+    msg('attention:targetTracking.instructions.1'),
+    msg('attention:targetTracking.instructions.2'),
+    msg('attention:targetTracking.instructions.3'),
+    msg('attention:targetTracking.instructions.4'),
   ],
-  simpleInstructions: 'Watch the cards swap and find the marked one.',
+  simpleInstructions: msg('attention:targetTracking.simpleInstructions'),
   levels: TARGET_TRACKING_LEVELS,
   generate({ identity, profile, random }) {
     const followCount = profile.kind === 'double' ? 2 : 1;
@@ -99,13 +96,10 @@ export const targetTrackingGame: GameDefinition<TargetTrackingChallenge, TargetT
     const items: Mark[] = distinctGlyphs(random, profile.slots).map((g) => mark(g.shape, g.color));
     const askedItem = items[draft.asked] as Mark;
     const answer = finalPosition(draft.asked, draft.swaps);
-    const path = pathOf(draft.asked, draft.swaps).map((p) => p + 1);
+    const path = pathOf(draft.asked, draft.swaps).map((p) => String(p + 1));
     return {
       ...identity,
-      prompt:
-        profile.kind === 'single'
-          ? 'Follow the marked card, then press where it ends up.'
-          : 'Follow both marked cards. At the end you will be asked about one of them.',
+      prompt: msg(`attention:targetTracking.prompt.${profile.kind}`),
       content: {
         kind: profile.kind,
         items,
@@ -116,7 +110,11 @@ export const targetTrackingGame: GameDefinition<TargetTrackingChallenge, TargetT
         revealMs: REVEAL_MS,
       },
       response: locateResponse(profile.slots, answer),
-      explanation: `The ${markLabel(askedItem)} went ${path.join(' → ')}, so it ended in position ${answer + 1}.`,
+      explanation: msg('attention:targetTracking.explanation', {
+        item: markLabel(askedItem),
+        path: joinText(path, ' → '),
+        position: answer + 1,
+      }),
       skills:
         profile.kind === 'single'
           ? ['sustained-attention', 'spatial-reasoning']

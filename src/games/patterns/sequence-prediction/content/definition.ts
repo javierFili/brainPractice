@@ -1,18 +1,20 @@
-import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg, type Message } from '@/domain/shared';
 import { COLORS, SHAPES, type ColorName, type ShapeKind } from '@/games/kit/content';
 import {
   balancedDesign,
   constantStep,
   figure,
+  textChoice,
   turn,
   type Draft,
   type Figure,
   type Rotation,
 } from '../../shared/content';
-import { frameLabel, frameWords, stepWords } from './frames';
+import { frameKey, frameLabel, frameWords, stepWords } from './frames';
+
+const T = 'patterns:sequencePrediction';
 import { SEQUENCE_PREDICTION_LEVELS } from './levels';
 import type { Frame, Mark, SequencePredictionChallenge, SequencePredictionProfile } from './types';
 
@@ -169,7 +171,7 @@ function draft(random: RandomGenerator, profile: SequencePredictionProfile) {
     const frames = all.slice(0, n);
     const answer = all[n] as Frame;
     const solved = solveFrames(frames, size, wrap);
-    if (solved === null || frameLabel(solved, size) !== frameLabel(answer, size)) return null;
+    if (solved === null || frameKey(solved, size) !== frameKey(answer, size)) return null;
 
     // Options vary each mark's cell and (for arrows) its direction, from tempting misreadings:
     // standing still, stepping back, a double step, only the row or column step, swapped steps.
@@ -242,32 +244,32 @@ function draft(random: RandomGenerator, profile: SequencePredictionProfile) {
     let options: Choice[] | null = null;
     for (let attempt = 0; attempt < 10 && options === null; attempt++) {
       const design = balancedDesign(random, target, alternatives, profile.options, (o) =>
-        frameLabel(toFrame(o), size),
+        frameKey(toFrame(o), size),
       );
       if (design?.every((o) => !xb || o.a !== o.b)) options = design;
     }
     if (options === null) return null;
     const [right, ...wrong] = options.map((o) => frameLabel(toFrame(o), size));
 
-    const describe = (m: Motion) => {
-      const name =
-        m.figure.shape === 'arrow'
-          ? `${m.figure.color} arrow`
-          : `${m.figure.color} ${m.figure.shape}`;
-      const moves = m.dr === 0 && m.dc === 0 ? [] : [`moves ${stepWords(m.dr, m.dc)}`];
-      const turns =
-        m.turnBy === 0
-          ? []
-          : [`turns a quarter turn ${m.turnBy > 0 ? 'clockwise' : 'anticlockwise'}`];
-      return `The ${name} ${[...moves, ...turns].join(' and ')} each frame`;
+    // "The blue circle moves 1 square right each frame": the subject (with its article) is a
+    // per-shape message, so articles and adjectives agree in every language.
+    const describe = (m: Motion): Message => {
+      const name = msg(`patterns:shared.theFigure.${m.figure.shape}`, { color: m.figure.color });
+      const moves = m.dr !== 0 || m.dc !== 0;
+      const way = m.turnBy > 0 ? 'clockwise' : 'anticlockwise';
+      if (m.turnBy === 0) return msg(`${T}.describe.move`, { name, steps: stepWords(m.dr, m.dc) });
+      return moves
+        ? msg(`${T}.describe.moveTurn.${way}`, { name, steps: stepWords(m.dr, m.dc) })
+        : msg(`${T}.describe.turn.${way}`, { name });
     };
     return {
-      prompt: wrap
-        ? 'Which frame comes next? Marks leaving one edge come back on the opposite edge.'
-        : 'Which frame comes next?',
+      prompt: msg(`${T}.prompt.${wrap ? 'wrap' : 'plain'}`),
       content: { kind: profile.kind, size, wrap, frames },
-      response: singleChoice(random, right as string, wrong),
-      explanation: `${ms.map(describe).join('. ')}${wrap ? ', wrapping around the edges' : ''}. So the next frame shows ${frameWords(answer)}.`,
+      response: textChoice(random, right as Message, wrong),
+      explanation: msg(`${T}.explanation.${wrap ? 'wrap' : 'plain'}`, {
+        moves: joinText(ms.map(describe), '. '),
+        answer: frameWords(answer),
+      }),
       skills:
         profile.kind === 'move'
           ? ['spatial-reasoning', 'sequential-thinking']
@@ -281,10 +283,9 @@ export const sequencePredictionGame: GameDefinition<
   SequencePredictionProfile
 > = {
   id: SEQUENCE_PREDICTION_ID,
-  name: 'Sequence Prediction',
-  tagline: 'Where will it be next?',
-  description:
-    'A few frames show marks moving across a grid or arrows turning, always by the same step. Work out each step and choose the frame that comes next. Higher levels combine moving and turning, wrap around the edges and track two marks at once.',
+  name: msg('patterns:sequencePrediction.name'),
+  tagline: msg('patterns:sequencePrediction.tagline'),
+  description: msg('patterns:sequencePrediction.description'),
   area: 'patterns',
   skills: ['spatial-reasoning', 'sequential-thinking', 'visual-orientation'],
   meta: {
@@ -295,17 +296,16 @@ export const sequencePredictionGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each sequence counts as correct when you choose the frame that continues it. Your result is the share of sequences predicted correctly; there is no time limit.',
+    scoringSummary: msg('patterns:sequencePrediction.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Watch how each mark changes from one frame to the next: how far it moves and which way an arrow turns.',
-    'Every mark keeps the same step in every frame.',
-    'When a level says so, a mark leaving one edge comes back on the opposite edge.',
-    'Choose the next frame. Keys 1 to 8 pick an option.',
+    msg('patterns:sequencePrediction.instructions.1'),
+    msg('patterns:sequencePrediction.instructions.2'),
+    msg('patterns:sequencePrediction.instructions.3'),
+    msg('patterns:sequencePrediction.instructions.4'),
   ],
-  simpleInstructions: 'See how the shape moves, then pick where it goes next.',
+  simpleInstructions: msg('patterns:sequencePrediction.simpleInstructions'),
   levels: SEQUENCE_PREDICTION_LEVELS,
   generate({ identity, profile, random }) {
     return { ...identity, ...draft(random, profile), timing: profile.timing };

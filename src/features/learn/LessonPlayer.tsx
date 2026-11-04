@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   currentStep,
   MAX_ATTEMPTS,
-  type ExercisePhase,
   type LessonId,
   type LessonSessionState,
   type LessonStep,
 } from '@/domain/learning';
+import { textId, type Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { createLessonSession, type LessonSession } from '@/engine';
 import { useServices } from '@/app/providers/servicesContext';
 import { Badge } from '@/components/ui/Badge';
@@ -16,12 +18,6 @@ import { ExerciseView } from './exercises/ExerciseView';
 import { FeedbackPanel } from './FeedbackPanel';
 import { PlaygroundView } from './PlaygroundView';
 import { InlineText, RichBlocks } from './RichBlocks';
-
-const PHASE: Readonly<Record<ExercisePhase, { label: string; note: string }>> = {
-  guided: { label: 'Guided', note: 'Hints available · up to 3 tries' },
-  practice: { label: 'Practice', note: 'Hints available · up to 2 tries' },
-  checkpoint: { label: 'Checkpoint', note: 'One try, no hints — this is what shows you have it' },
-};
 
 function ExerciseStepView({
   step,
@@ -34,6 +30,7 @@ function ExerciseStepView({
   session: LessonSession;
   isLast: boolean;
 }) {
+  const { t } = useTranslation(['learn', 'lessons']);
   const exercise = state.exercise;
   if (exercise === null) return null;
   const { hints } = step.exercise;
@@ -48,8 +45,8 @@ function ExerciseStepView({
   return (
     <div className="flex flex-col gap-5">
       <p className="text-sm text-slate-400">
-        <Badge className="mr-2">{PHASE[step.phase].label}</Badge>
-        {PHASE[step.phase].note}
+        <Badge className="mr-2">{t(`player.phase.${step.phase}.label`)}</Badge>
+        {t(`player.phase.${step.phase}.note`)}
       </p>
       <ExerciseView
         // Same key across retries: the learner edits their previous attempt.
@@ -65,8 +62,9 @@ function ExerciseStepView({
       {answering && exercise.hintsShown > 0 && (
         <ul className="flex flex-col gap-1 rounded-lg border border-sky-400/30 bg-sky-400/5 p-3 text-sm text-sky-100">
           {hints.slice(0, exercise.hintsShown).map((hint, i) => (
-            <li key={hint}>
-              <span className="font-semibold">Hint {i + 1}:</span> <InlineText text={hint} />
+            <li key={textId(hint)}>
+              <span className="font-semibold">{t('player.hintNumber', { number: i + 1 })}</span>{' '}
+              <InlineText text={hint} />
             </li>
           ))}
         </ul>
@@ -79,7 +77,7 @@ function ExerciseStepView({
               session.hint();
             }}
           >
-            Show a hint
+            {t('player.showHint')}
           </Button>
         </div>
       )}
@@ -88,7 +86,7 @@ function ExerciseStepView({
           state={exercise}
           attemptsLeft={MAX_ATTEMPTS[step.phase] - exercise.attempts}
           nextHint={nextHint}
-          continueLabel={isLast ? 'Finish' : 'Continue'}
+          continueLabel={isLast ? t('player.finish') : t('player.continue')}
           onRetry={() => {
             session.retry();
           }}
@@ -114,11 +112,13 @@ export function LessonPlayer({
   steps,
   onFinished,
 }: {
-  title: string;
+  title: Text;
   lessonId: LessonId | null;
   steps: readonly LessonStep[];
   onFinished: (state: LessonSessionState, session: LessonSession) => void;
 }) {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
   const { clock } = useServices();
   const [session] = useState(() => createLessonSession(lessonId, steps, clock));
   const state = useSyncExternalStore(session.subscribe, session.getState);
@@ -145,15 +145,15 @@ export function LessonPlayer({
     <article aria-labelledby="step-title" className="flex flex-col gap-6">
       <header className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-          <p className="font-medium text-white">{title}</p>
+          <p className="font-medium text-white">{tx(title)}</p>
           <p className="font-mono text-slate-400">
-            Step {state.index + 1} / {state.steps.length}
+            {t('player.step', { number: state.index + 1, total: state.steps.length })}
           </p>
         </div>
         <ProgressBar
           value={state.index}
           max={state.steps.length}
-          label="Lesson progress"
+          label={t('player.progress')}
           tone="bg-violet-400"
         />
       </header>
@@ -179,7 +179,7 @@ export function LessonPlayer({
               session.next();
             }}
           >
-            {isLast ? 'Finish' : 'Continue'} <span aria-hidden="true">→</span>
+            {isLast ? t('player.finish') : t('player.continue')} <span aria-hidden="true">→</span>
           </Button>
         </div>
       )}

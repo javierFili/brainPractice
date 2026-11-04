@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { visualSearchSprintGame } from './content/definition';
 import type { VisualSearchChallenge } from './content/types';
@@ -7,8 +8,8 @@ export const visualSearchSprintModule = defineGameModule<VisualSearchChallenge>(
   definition: visualSearchSprintGame,
   ContentView: VisualSearchView,
   kindLabels: {
-    feature: 'Shape pop-out',
-    similar: 'Look-alike shapes',
-    conjunction: 'Colour and shape combined',
+    feature: msg('speed:visualSearchSprint.kinds.feature'),
+    similar: msg('speed:visualSearchSprint.kinds.similar'),
+    conjunction: msg('speed:visualSearchSprint.kinds.conjunction'),
   },
 });

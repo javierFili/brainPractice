@@ -1,0 +1,95 @@
+{
+  "protocols": {
+    "quick": {
+      "name": "Valutazione cognitiva · rapida",
+      "title": "Rapida",
+      "summary": "Un breve passaggio su memoria, logica, attenzione, velocità e schemi.",
+      "start": "Inizia la valutazione rapida"
+    },
+    "standard": {
+      "name": "Valutazione cognitiva · standard",
+      "title": "Standard",
+      "summary": "Più sfide per area, con rotazione spaziale e memoria delle posizioni: un risultato più stabile.",
+      "start": "Inizia la valutazione standard"
+    },
+    "programming": {
+      "name": "Valutazione cognitiva di programmazione",
+      "title": "Programmazione",
+      "summary": "Le cinque aree misurate con attività sul codice, per il percorso di programmazione.",
+      "start": "Inizia la valutazione di programmazione"
+    }
+  },
+  "page": {
+    "eyebrow": "Valutazione",
+    "title": "Valutazione cognitiva",
+    "description": "Un percorso strutturato tra diversi tipi di attività che produce un profilo di rendimento ricreativo. Confrontalo solo con le tue valutazioni precedenti dello stesso protocollo.",
+    "chooseLength": "Scegli una durata",
+    "protocol": "Protocollo di valutazione",
+    "length_one": "{{count}} sfida · {{minutes}} min",
+    "length_other": "{{count}} sfide · {{minutes}} min",
+    "howItWorks": "Come funziona",
+    "section": "{{game}} · livelli {{levels}}",
+    "structureNote": "Sempre gli stessi giochi, livelli e numero di sfide, così le valutazioni di uno stesso protocollo si possono confrontare. I livelli più difficili pesano di più. Ogni turno spiega le sue regole; i turni non contano per i record di livello.",
+    "missing": "Non disponibile: mancano i giochi {{games}}."
+  },
+  "flow": {
+    "unavailable": "Questo passaggio della valutazione non è disponibile.",
+    "area": "{{area}} · livello {{level}}",
+    "round": "Turno {{round}} di {{total}}",
+    "progress": "Avanzamento della valutazione",
+    "skipRound": "Salta il turno (conta come non risolto)"
+  },
+  "disclaimer": {
+    "title": "Che cos’è e che cosa non è",
+    "what": "È uno strumento ricreativo di autovalutazione. I punteggi descrivono come sei andato in questi esercizi specifici: precisione e ritmo, con più peso ai livelli difficili. Si basano su poche sfide, hanno un margine ampio e non sono confrontati con norme di popolazione.",
+    "not": "<strong>Non</strong> è un test del QI, né uno strumento psicometrico, né una diagnosi clinica o professionale, e non va usato per assunzioni o per decisioni importanti."
+  },
+  "history": {
+    "earlierProtocol": "Protocollo precedente",
+    "empty": "Ancora nessuna valutazione.",
+    "take": "Fai la valutazione",
+    "title": "Risultati precedenti",
+    "description": "Ogni valutazione è confrontata solo con la precedente dello stesso protocollo.",
+    "same": "uguale all’ultima volta",
+    "delta": "{{delta}} rispetto all’ultima volta"
+  },
+  "profilePage": {
+    "title": "Il mio profilo di rendimento",
+    "description": "La tua valutazione più recente, area per area. Un profilo ricreativo di queste attività, non una misura di intelligenza o di salute.",
+    "index": "indice {{value}}/100",
+    "keepPractising": "Un’area su cui puoi continuare ad allenarti:",
+    "seeGames": "Vedi i suoi giochi"
+  },
+  "result": {
+    "eyebrow": "Profilo di rendimento",
+    "index": "Indice di rendimento:",
+    "summary_one": "Nel complesso: {{band}} · ±{{margin}} punti · {{answered}} sfida su {{count}} con risposta · {{duration}}",
+    "summary_other": "Nel complesso: {{band}} · ±{{margin}} punti · {{answered}} sfide su {{count}} con risposta · {{duration}}",
+    "caveat_one": "Con {{count}} sfida il margine è ampio: leggi questi numeri come un punto di partenza indicativo per scegliere cosa allenare, non come una misura precisa. Le sfide saltate contano come non risolte. È un indice interno di questa piattaforma: non è un punteggio di QI, non è una misura clinica e non è confrontato con alcuna popolazione.",
+    "caveat_other": "Con {{count}} sfide il margine è ampio: leggi questi numeri come un punto di partenza indicativo per scegliere cosa allenare, non come una misura precisa. Le sfide saltate contano come non risolte. È un indice interno di questa piattaforma: non è un punteggio di QI, non è una misura clinica e non è confrontato con alcuna popolazione.",
+    "byArea": "Per area",
+    "caption": "Punteggio cognitivo per area, da 0 a 100",
+    "columns": {
+      "area": "Area",
+      "score": "Punteggio",
+      "band": "Fascia",
+      "evidence": "Dati"
+    },
+    "notMeasured": "Non misurata",
+    "skipped": "Saltata: conta come 0",
+    "bands": {
+      "developing": "Margine di crescita",
+      "solid": "Stabile",
+      "strong": "Forte",
+      "exceptional": "Molto forte"
+    },
+    "evidence": "±{{margin}} · {{answered}}/{{items}} con risposta",
+    "next": {
+      "title": "Cosa allenare ora",
+      "areas": "La tua area più forte è stata <strong>{{strongest}}</strong>. La maggiore opportunità è <strong>{{weakest}}</strong>.",
+      "train": "Allenati con {{game}}",
+      "browse": "Sfoglia i giochi",
+      "retake": "Ripeti la valutazione"
+    }
+  }
+}

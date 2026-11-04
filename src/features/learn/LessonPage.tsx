@@ -1,5 +1,7 @@
 import { useCourse } from '@/app/providers/useCourse';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useText } from '@/i18n';
 import { useParams } from 'react-router';
 import {
   applyLessonResult,
@@ -21,6 +23,8 @@ import { LessonSummary } from './LessonSummary';
 import { useLearning } from './useLearning';
 
 export function LessonPage() {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
   const { lessonId = '' } = useParams();
   const course = useCourse();
   const { state, update } = useLearning();
@@ -51,12 +55,12 @@ export function LessonPage() {
     [lesson, update, recordActivity],
   );
 
-  if (!lesson) return <NotFound message="This lesson does not exist." />;
+  if (!lesson) return <NotFound message={t('lesson.notFound')} />;
   if (state.status === 'loading') return <PageLoading />;
   if (state.status === 'error')
     return (
       <p role="alert" className="text-rose-300">
-        Your learning progress could not be loaded.
+        {t('loadError')}
       </p>
     );
 
@@ -86,15 +90,22 @@ export function LessonPage() {
         <p className="font-mono text-sm text-slate-500" aria-hidden="true">
           🔒
         </p>
-        <h1 className="mt-2 text-2xl font-semibold text-white">{lesson.title} is not open yet</h1>
+        <h1 className="mt-2 text-2xl font-semibold text-white">
+          {t('lesson.locked', { title: tx(lesson.title) })}
+        </h1>
         <p className="mx-auto mt-2 max-w-md text-slate-400">
-          Each lesson builds on the one before it. Finish{' '}
-          {previous ? `“${previous.title}”` : 'the previous lesson'} to open this one.
+          {previous
+            ? t('lesson.finishPrevious', { title: tx(previous.title) })
+            : t('lesson.finishPreviousLesson')}
         </p>
         <div className="mt-6 flex justify-center gap-2">
-          {previous && <ButtonLink to={`/learn/${previous.id}`}>Go to {previous.title}</ButtonLink>}
+          {previous && (
+            <ButtonLink to={`/learn/${previous.id}`}>
+              {t('lesson.goTo', { title: tx(previous.title) })}
+            </ButtonLink>
+          )}
           <ButtonLink to="/learn" variant="secondary">
-            Learning path
+            {t('learningPath')}
           </ButtonLink>
         </div>
       </div>

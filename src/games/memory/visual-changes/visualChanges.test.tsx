@@ -5,6 +5,7 @@ import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { glyphKey, type Glyph } from '@/games/kit/content';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { cellName } from '../shared/content';
 import { differences, visualChangesGame } from './content/definition';
 import { VISUAL_CHANGES_LEVELS } from './content/levels';
@@ -76,7 +77,7 @@ describe('Visual Changes view', () => {
       />,
     );
     const i = c.content.changed[0] as number;
-    await user.click(screen.getByRole('button', { name: new RegExp(`^${cellName(i, 3)},`) }));
+    await user.click(screen.getByRole('button', { name: new RegExp(`^${en(cellName(i, 3))},`) }));
     expect(onLocate).toHaveBeenCalledWith(i);
   });
 
@@ -98,7 +99,7 @@ describe('Visual Changes view', () => {
       />,
     );
     for (const i of c.content.changed) {
-      await user.click(screen.getByRole('button', { name: new RegExp(`^${cellName(i, 5)},`) }));
+      await user.click(screen.getByRole('button', { name: new RegExp(`^${en(cellName(i, 5))},`) }));
     }
     await user.click(screen.getByRole('button', { name: 'Check' }));
     expect(respond).toHaveBeenCalledWith({

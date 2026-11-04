@@ -1,5 +1,6 @@
 import type { Challenge, ChallengeTiming } from './challenge';
 import type { ChoiceOption, Response } from './responseFormats';
+import { isBlankText, textId } from '../shared/text';
 
 const isPositiveOrNull = (value: number | null) =>
   value === null || (Number.isFinite(value) && value > 0);
@@ -9,10 +10,10 @@ function optionIssues(options: readonly ChoiceOption[], label: string): string[]
   if (options.length < 2) issues.push(`${label}: at least 2 entries required`);
   if (new Set(options.map((o) => o.id)).size !== options.length)
     issues.push(`${label}: duplicate ids`);
-  if (new Set(options.map((o) => o.label)).size !== options.length) {
+  if (new Set(options.map((o) => textId(o.label))).size !== options.length) {
     issues.push(`${label}: duplicate labels make the challenge ambiguous`);
   }
-  if (options.some((o) => o.label.trim() === '')) issues.push(`${label}: empty label`);
+  if (options.some((o) => isBlankText(o.label))) issues.push(`${label}: empty label`);
   return issues;
 }
 
@@ -115,8 +116,8 @@ export function validateTiming(timing: ChallengeTiming): string[] {
 /** Structural checks every generated challenge must pass. Returns human-readable issues; empty = valid. */
 export function validateChallenge(challenge: Challenge): string[] {
   const issues = [...validateResponse(challenge.response), ...validateTiming(challenge.timing)];
-  if (challenge.prompt.trim() === '') issues.push('prompt is empty');
-  if (challenge.explanation.trim() === '') issues.push('explanation is empty');
+  if (isBlankText(challenge.prompt)) issues.push('prompt is empty');
+  if (isBlankText(challenge.explanation)) issues.push('explanation is empty');
   if (challenge.skills.length === 0) issues.push('at least one skill is required');
   if (challenge.content.kind.trim() === '') issues.push('content.kind is empty');
   return issues;

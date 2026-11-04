@@ -1,5 +1,7 @@
 import { generateChallenge } from '@/domain/game';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
+import { en } from '@/test/i18n';
+import { valueLabel } from './content/categories';
 import { contractSeeds, describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import { logicalDeductionGame } from './content/definition';
 import { LOGICAL_DEDUCTION_LEVELS } from './content/levels';
@@ -29,8 +31,14 @@ describe('Logical Deduction', () => {
         const expected =
           q.type === 'who'
             ? content.people[(content.solution[q.category] ?? []).indexOf(q.value)]
-            : category?.values[content.solution[q.category]?.[q.person] as number];
-        expect(answer?.label).toBe(expected);
+            : category &&
+              en(
+                valueLabel(
+                  category.id,
+                  category.values[content.solution[q.category]?.[q.person] as number] as string,
+                ),
+              );
+        expect(answer && en(answer.label)).toBe(expected);
       }
     }
   });

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeBlock } from '@/components/code/CodeBlock';
 import type { Variables } from '@/domain/pseudocode';
 import type { ChallengePhase } from '@/games/types';
@@ -21,18 +22,19 @@ interface Props {
 export function ProgramPanel({
   source,
   phase,
-  label = 'Program',
+  label,
   caption,
   highlight,
   inputs,
   trace = true,
   children,
 }: Props) {
+  const { t } = useTranslation('programming');
   return (
     <div className="flex min-w-0 flex-col gap-4">
       <CodeBlock
         source={source}
-        label={label}
+        label={label ?? t('shared.program')}
         {...(caption === undefined ? {} : { caption })}
         {...(highlight === undefined ? {} : { highlight })}
       />

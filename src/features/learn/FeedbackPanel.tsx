@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ExerciseState } from '@/domain/learning';
+import { textId, type Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { Button } from '@/components/ui/Button';
 import { InlineText } from './RichBlocks';
 
@@ -26,12 +29,14 @@ export function FeedbackPanel({
 }: {
   state: Feedback;
   attemptsLeft: number;
-  nextHint: string | null;
+  nextHint: Text | null;
   onRetry: () => void;
   onReveal: () => void;
   onContinue: () => void;
   continueLabel: string;
 }) {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
   const { evaluation, final, revealed } = state;
   const { feedback, verdict } = evaluation;
   const tone = TONE[verdict];
@@ -45,7 +50,7 @@ export function FeedbackPanel({
       <div role="status" aria-live="polite">
         <p className={`text-lg font-semibold ${tone.title}`}>
           <span aria-hidden="true">{tone.icon} </span>
-          {revealed ? 'Here is the solution.' : feedback.headline}
+          {revealed ? t('feedbackPanel.solution') : tx(feedback.headline)}
         </p>
         <p className="mt-1 text-sm text-slate-300">
           <InlineText text={feedback.yourAnswer} />
@@ -53,7 +58,7 @@ export function FeedbackPanel({
         {feedback.diagnosis.length > 0 && (
           <ul className="mt-2 space-y-1 text-sm text-slate-100">
             {feedback.diagnosis.map((line) => (
-              <li key={line}>
+              <li key={textId(line)}>
                 <InlineText text={line} />
               </li>
             ))}
@@ -64,7 +69,7 @@ export function FeedbackPanel({
         <div className="mt-3 border-t border-slate-700/60 pt-3 text-sm">
           {verdict !== 'correct' && (
             <p className="text-slate-200">
-              Correct answer:{' '}
+              {t('feedbackPanel.correctAnswer')}{' '}
               <span className="font-semibold text-emerald-300">
                 <InlineText text={feedback.correctAnswer} />
               </span>
@@ -77,19 +82,22 @@ export function FeedbackPanel({
       ) : (
         nextHint !== null && (
           <p className="mt-3 text-sm text-sky-200">
-            <span className="font-semibold">Hint:</span> <InlineText text={nextHint} />
+            <span className="font-semibold">{t('feedbackPanel.hint')}</span>{' '}
+            <InlineText text={nextHint} />
           </p>
         )
       )}
       <div className="mt-4 flex flex-wrap gap-2">
         {!final && (
           <Button ref={primary} onClick={onRetry}>
-            Try again{attemptsLeft > 0 ? ` (${attemptsLeft} left)` : ''}
+            {attemptsLeft > 0
+              ? t('feedbackPanel.tryAgainLeft', { count: attemptsLeft })
+              : t('feedbackPanel.tryAgain')}
           </Button>
         )}
         {!final && (
           <Button variant="secondary" onClick={onReveal}>
-            Show solution
+            {t('feedbackPanel.showSolution')}
           </Button>
         )}
         <Button
@@ -97,7 +105,7 @@ export function FeedbackPanel({
           variant={final ? 'primary' : 'ghost'}
           onClick={onContinue}
         >
-          {final ? continueLabel : 'Skip'} <span aria-hidden="true">→</span>
+          {final ? continueLabel : t('feedbackPanel.skip')} <span aria-hidden="true">→</span>
         </Button>
       </div>
     </div>

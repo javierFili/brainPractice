@@ -1,7 +1,7 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SPEED_SCORING } from '@/games/speed/shared/content';
 import { CODE_SCAN_SPRINT_LEVELS } from './levels';
 import { buildSnippet, type FactLine } from './snippet';
@@ -60,30 +60,22 @@ export function candidates(
   }
 }
 
-const QUESTION: Record<QueryKind, (subject: string) => string> = {
-  call: (f) => `Which line calls ${f}?`,
-  number: (n) => `Which line uses the number ${n}?`,
-  'first-assign': (x) => `Where is ${x} first given a value?`,
-  'last-assign': (x) => `Where is ${x} given a value for the last time?`,
-  condition: (x) => `Which line checks ${x} in a condition?`,
-};
-
-const REASON: Record<QueryKind, (subject: string) => string> = {
-  call: (f) => `it is the only line that calls ${f}.`,
-  number: (n) => `it is the only line with the number ${n}.`,
-  'first-assign': (x) => `it is the first line of the form “${x} ← …”.`,
-  'last-assign': (x) => `it is the last line of the form “${x} ← …”.`,
-  condition: (x) => `it is the only if / while line whose condition mentions ${x}.`,
+/** Message key part per query kind (questions and reasons). */
+const KEY: Record<QueryKind, string> = {
+  call: 'call',
+  number: 'number',
+  'first-assign': 'firstAssign',
+  'last-assign': 'lastAssign',
+  condition: 'condition',
 };
 
 export const CODE_SCAN_SPRINT_ID = gameIdOf('code-scan-sprint');
 
 export const codeScanSprintGame: GameDefinition<CodeScanSprintChallenge, CodeScanSprintProfile> = {
   id: CODE_SCAN_SPRINT_ID,
-  name: 'Code Scan',
-  tagline: 'Read a listing at a glance and point at the line.',
-  description:
-    'A short piece of pseudocode and one question: which line calls print, uses the number 7, or first gives total a value? Find that line as fast as you can. Early levels use a handful of plain lines; later ones nest blocks and repeat names to mislead a quick glance.',
+  name: msg('speed:codeScanSprint.name'),
+  tagline: msg('speed:codeScanSprint.tagline'),
+  description: msg('speed:codeScanSprint.description'),
   area: 'speed',
   skills: ['processing-speed', 'selective-attention', 'attention'],
   meta: {
@@ -94,19 +86,17 @@ export const codeScanSprintGame: GameDefinition<CodeScanSprintChallenge, CodeSca
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time'],
-    scoringSummary:
-      'A trial is correct when you press the one line that answers the question. Correct answers earn more points the faster they are; a wrong line costs points and running out of time scores nothing. Accuracy and average response time are reported separately; relaxed timing removes the limit.',
+    scoringSummary: msg('speed:codeScanSprint.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Each line is a button named with its number and text, so screen readers can scan the listing line by line. “←” means “gets the value”.',
+    accessibilityNotes: msg('speed:codeScanSprint.accessibilityNotes'),
   },
   instructions: [
-    'Read the question, then press the line in the listing that answers it.',
-    '“total ← 5” gives total a value; “print(total)” calls print; “if score > 3:” checks score.',
-    'Exactly one line answers each question.',
-    'Keyboard: Tab to the listing, move with the arrow keys, press Enter.',
+    msg('speed:codeScanSprint.instructions.read'),
+    msg('speed:codeScanSprint.instructions.syntax'),
+    msg('speed:codeScanSprint.instructions.unique'),
+    msg('speed:codeScanSprint.instructions.keyboard'),
   ],
-  simpleInstructions: 'Read the question and press the line that matches it.',
+  simpleInstructions: msg('speed:codeScanSprint.simpleInstructions'),
   levels: CODE_SCAN_SPRINT_LEVELS,
   scoring: SPEED_SCORING,
   generate({ identity, profile, random }) {
@@ -124,14 +114,18 @@ export const codeScanSprintGame: GameDefinition<CodeScanSprintChallenge, CodeSca
       const text = (lines[line] as FactLine).text;
       return {
         ...identity,
-        prompt: QUESTION[kind](subject),
+        prompt: msg(`speed:codeScanSprint.question.${KEY[kind]}`, { subject }),
         content: {
           kind,
           subject,
           lines: lines.map(({ indent, text: t }) => ({ indent, text: t })),
         },
         response: locateResponse(lines.length, line),
-        explanation: `Line ${line + 1} (“${text}”): ${REASON[kind](subject)}`,
+        explanation: msg('speed:codeScanSprint.explanation', {
+          line: line + 1,
+          text,
+          reason: msg(`speed:codeScanSprint.reason.${KEY[kind]}`, { subject }),
+        }),
         skills:
           kind === 'call' || kind === 'number'
             ? ['processing-speed', 'selective-attention']

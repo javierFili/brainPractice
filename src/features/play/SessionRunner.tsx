@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Answer } from '@/domain/challenge';
 import { currentChallenge, lastRecord, type GameResult } from '@/domain/session';
 import type { GameSession } from '@/engine';
 import { useServices } from '@/app/providers/servicesContext';
 import type { GameModule } from '@/games/types';
 import { Button } from '@/components/ui/Button';
+import { textId } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { ChallengeStage } from './ChallengeStage';
 import { SessionHeader } from './SessionHeader';
 import { useSessionLifecycle } from './useSessionLifecycle';
@@ -14,11 +17,14 @@ interface Props {
   readonly session: GameSession;
   /** Called once when the session finishes (naturally or ended early). */
   readonly onFinished: (result: GameResult) => void;
+  /** Overrides the end button (already translated). */
   readonly endLabel?: string;
 }
 
 /** The game loop UI shared by regular play and the assessment. */
-export function SessionRunner({ module, session, onFinished, endLabel = 'End session' }: Props) {
+export function SessionRunner({ module, session, onFinished, endLabel }: Props) {
+  const { t } = useTranslation('play');
+  const tx = useText();
   const { clock } = useServices();
   const state = useSyncExternalStore(session.subscribe, session.getState);
   useSessionLifecycle(session, state, clock);
@@ -58,7 +64,7 @@ export function SessionRunner({ module, session, onFinished, endLabel = 'End ses
           }}
           className="rounded-md text-sm text-ink-muted underline-offset-4 hover:text-ink hover:underline focus-visible:outline-2 focus-visible:outline-brand"
         >
-          {showHelp ? 'Hide instructions' : 'How to play'}
+          {showHelp ? t('runner.hideInstructions') : t('runner.howToPlay')}
         </button>
         {showHelp && (
           <ul
@@ -66,7 +72,7 @@ export function SessionRunner({ module, session, onFinished, endLabel = 'End ses
             className="mt-2 list-disc space-y-1 rounded-xl border border-line bg-surface p-4 pl-8 text-sm text-ink-soft"
           >
             {module.definition.instructions.map((line) => (
-              <li key={line}>{line}</li>
+              <li key={textId(line)}>{tx(line)}</li>
             ))}
           </ul>
         )}
@@ -93,7 +99,7 @@ export function SessionRunner({ module, session, onFinished, endLabel = 'End ses
             session.finish();
           }}
         >
-          {endLabel}
+          {endLabel ?? t('runner.endSession')}
         </Button>
       </div>
     </div>

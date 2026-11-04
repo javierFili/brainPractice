@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { CheckButton } from './CheckButton';
 import type { ExerciseViewProps } from './types';
 
@@ -9,6 +11,7 @@ export function CodeCompletionView({
   showSolution,
   onSubmit,
 }: ExerciseViewProps<'code-completion'>) {
+  const { t } = useTranslation('learn');
   const [values, setValues] = useState<Record<string, string>>({});
   const complete = exercise.blanks.every((b) => values[b.id] !== undefined);
   let blankNumber = 0;
@@ -27,7 +30,7 @@ export function CodeCompletionView({
               return (
                 <span key={j} className="inline-flex items-center gap-1">
                   <select
-                    aria-label={`Blank ${blankNumber}`}
+                    aria-label={t('exercise.blank', { number: blankNumber })}
                     value={chosen ?? ''}
                     disabled={locked}
                     onChange={(e) => {

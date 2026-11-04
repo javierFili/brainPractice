@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "BrainPractice — Entraînement mental pour tous les âges"
+  },
+  "skipToContent": "Aller au contenu",
+  "landmarks": {
+    "main": "Principale",
+    "navigation": "Navigation",
+    "sidebar": "Barre latérale"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Fermer la navigation"
+  },
+  "sidebar": {
+    "expand": "Déplier la barre latérale",
+    "collapse": "Replier la barre latérale"
+  },
+  "language": {
+    "label": "Langue"
+  },
+  "storageBlocked": "Ce navigateur bloque le stockage local : votre progression sera perdue à la fermeture de l’onglet.",
+  "disclaimer": "Entraînement mental récréatif. Les résultats décrivent uniquement la performance dans ces activités : ce n’est ni une évaluation médicale, ni psychologique, ni un test de QI, et cela ne diagnostique, ne traite ni ne prévient aucune affection.",
+  "sections": {
+    "general": "Général",
+    "training": "Entraînement",
+    "routes": "Parcours",
+    "assessment": "Évaluation",
+    "learning": "Apprentissage",
+    "settings": "Paramètres"
+  },
+  "items": {
+    "home": "Accueil",
+    "continue": "Reprendre l’entraînement",
+    "daily": "Défi du jour",
+    "progress": "Ma progression",
+    "games": "Toutes les activités",
+    "quick": "Session rapide",
+    "trainMemory": "Mémoire",
+    "trainLogic": "Logique",
+    "trainAttention": "Attention",
+    "trainSpeed": "Vitesse mentale",
+    "trainPatterns": "Motifs",
+    "trainSpatial": "Raisonnement spatial",
+    "trainConcentration": "Concentration",
+    "pathsKids": "Enfants",
+    "pathsTeens": "Ados",
+    "pathsAdults": "Adultes",
+    "pathsSeniors": "Seniors",
+    "pathsProgrammers": "Développeurs",
+    "assessment": "Évaluation cognitive",
+    "assessmentHistory": "Résultats précédents",
+    "assessmentProfile": "Mon profil de performance",
+    "learn": "Logique de programmation",
+    "learnThinking": "Pensée informatique",
+    "trainProgramming": "Défis d’algorithmes",
+    "settings": "Préférences",
+    "settingsAccessibility": "Accessibilité",
+    "settingsData": "Réinitialiser les données de démo"
+  }
+}

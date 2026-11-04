@@ -4,6 +4,7 @@ import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { cellName, objectById } from '../shared/content';
 import { dualMemoryGame } from './content/definition';
 import { DUAL_MEMORY_LEVELS } from './content/levels';
@@ -27,14 +28,15 @@ describe('Dual Memory Challenge content', () => {
           if (c.response.format !== 'locate') throw new Error('locate expected');
           expect(c.response.solution.index).toBe(target.cell);
           expect(c.response.question.itemCount).toBe(size * size);
-          if (kind === 'where') expect(c.prompt).toContain(objectById(target.objectId).name);
+          if (kind === 'where')
+            expect(en(c.prompt)).toContain(en(objectById(target.objectId).label));
         } else {
           if (c.response.format !== 'single-choice') throw new Error('choice expected');
-          const shown = placements.map((p) => objectById(p.objectId).name);
-          for (const o of c.response.question.options) expect(shown).toContain(o.label);
+          const shown = placements.map((p) => en(objectById(p.objectId).label));
+          for (const o of c.response.question.options) expect(shown).toContain(en(o.label));
           const { optionId } = c.response.solution;
           const right = c.response.question.options.find((o) => o.id === optionId);
-          expect(right?.label).toBe(objectById(target.objectId).name);
+          expect(right && en(right.label)).toBe(en(objectById(target.objectId).label));
         }
       }
     }
@@ -80,7 +82,8 @@ describe('Dual Memory Challenge view', () => {
         assisted={false}
       />,
     );
-    const nameOf = (p: typeof first) => `${cellName(p.cell, 3)}, ${objectById(p.objectId).name}`;
+    const nameOf = (p: typeof first) =>
+      `${en(cellName(p.cell, 3))}, ${en(objectById(p.objectId).label)}`;
     expect(screen.getByRole('listitem', { name: nameOf(first) })).toBeInTheDocument();
     act(() => {
       vi.advanceTimersByTime(c.content.itemMs / 2);
@@ -110,7 +113,7 @@ describe('Dual Memory Challenge view', () => {
       />,
     );
     const cell = c.content.placements[c.content.ask]?.cell as number;
-    await user.click(screen.getByRole('button', { name: cellName(cell, 3) }));
+    await user.click(screen.getByRole('button', { name: en(cellName(cell, 3)) }));
     expect(onLocate).toHaveBeenCalledWith(cell);
   });
 });

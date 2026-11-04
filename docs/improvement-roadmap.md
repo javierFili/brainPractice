@@ -42,6 +42,6 @@ No se encontraron P0: lint, tipos, 548 tests y build estaban en verde.
 
 ## P3 — evolución futura
 
-Internacionalización (español primero), cuentas y backend, assessment adaptativo (IRT), recuperación
+~~Internacionalización~~ (hecho: es, en, it, fr, de — [i18n.md](i18n.md)), cuentas y backend, assessment adaptativo (IRT), recuperación
 espaciada de largo plazo para juegos de memoria (hoy sólo en el curso), panel para tutores,
 contenido por organización. Ver [future-saas.md](future-saas.md).

@@ -1,17 +1,23 @@
 import { err, ok, type Result } from '../shared/result';
+import { msg, type Message } from '../shared/text';
 import type { BinaryOp, Expr, Program, Stmt } from './ast';
 
 export interface ParseError {
   readonly line: number;
-  readonly message: string;
+  /** What is wrong, for the learner (resolved by the UI in their language). */
+  readonly message: Message;
 }
 
-class SyntaxProblem extends Error {
+/** Syntax messages are translation keys (`learn:pseudocode.parse.*`); the language stays English. */
+const M = (key: string, values?: Readonly<Record<string, string>>) =>
+  msg(`learn:pseudocode.parse.${key}`, values);
+
+export class SyntaxProblem extends Error {
   constructor(
     readonly line: number,
-    message: string,
+    readonly text: Message,
   ) {
-    super(message);
+    super(text.key);
   }
 }
 
@@ -63,7 +69,7 @@ export function tokenize(text: string, line: number): Token[] {
     }
     if (char === '"') {
       const end = text.indexOf('"', i + 1);
-      if (end === -1) throw new SyntaxProblem(line, 'Text is missing its closing quote (")');
+      if (end === -1) throw new SyntaxProblem(line, M('missingQuote'));
       tokens.push({ kind: 'string', value: text.slice(i + 1, end) });
       i = end + 1;
       continue;
@@ -75,7 +81,7 @@ export function tokenize(text: string, line: number): Token[] {
       continue;
     }
     const op = OPERATORS.find((candidate) => text.startsWith(candidate, i));
-    if (!op) throw new SyntaxProblem(line, `Unexpected character "${char}"`);
+    if (!op) throw new SyntaxProblem(line, M('unexpectedChar', { char }));
     tokens.push({ kind: 'op', value: op });
     i += op.length;
   }
@@ -117,7 +123,7 @@ class ExpressionParser {
 
   parseAll(): Expr {
     const expr = this.expression(0);
-    if (this.position < this.tokens.length) this.fail('Unexpected text after the expression');
+    if (this.position < this.tokens.length) this.fail(M('trailing'));
     return expr;
   }
 
@@ -127,7 +133,7 @@ class ExpressionParser {
 
   private next(): Token {
     const token = this.tokens[this.position];
-    if (!token) this.fail('The line ends too early');
+    if (!token) this.fail(M('endsEarly'));
     this.position++;
     return token;
   }
@@ -138,11 +144,11 @@ class ExpressionParser {
   }
 
   private expect(value: string): void {
-    if (!this.isOp(value)) this.fail(`Expected "${value}"`);
+    if (!this.isOp(value)) this.fail(M('expected', { value }));
     this.position++;
   }
 
-  private fail(message: string): never {
+  private fail(message: Message): never {
     throw new SyntaxProblem(this.line, message);
   }
 
@@ -161,7 +167,7 @@ class ExpressionParser {
         following !== null &&
         PRECEDENCE[following] === COMPARISON
       )
-        this.fail('Combine comparisons with "and" / "or"');
+        this.fail(M('chainedComparison'));
     }
   }
 
@@ -201,7 +207,7 @@ class ExpressionParser {
         if (token.value === 'true') return { type: 'literal', value: true };
         if (token.value === 'false') return { type: 'literal', value: false };
         if (token.value === 'none') return { type: 'literal', value: null };
-        if (KEYWORDS.has(token.value)) this.fail(`"${token.value}" cannot be used here`);
+        if (KEYWORDS.has(token.value)) this.fail(M('keywordHere', { word: token.value }));
         if (this.isOp('(')) {
           this.position++;
           const args = this.list(')');
@@ -216,7 +222,7 @@ class ExpressionParser {
           return inner;
         }
         if (token.value === '[') return { type: 'list', items: this.list(']') };
-        return this.fail(`Unexpected "${token.value}"`);
+        return this.fail(M('unexpected', { token: token.value }));
     }
   }
 
@@ -255,7 +261,7 @@ function sourceLines(source: string): SourceLine[] {
   return source.split('\n').flatMap((raw, i) => {
     const withoutComment = stripComment(raw);
     if (withoutComment.trim() === '') return [];
-    if (/^\t/.test(raw)) throw new SyntaxProblem(i + 1, 'Indent with spaces, not tabs');
+    if (/^\t/.test(raw)) throw new SyntaxProblem(i + 1, M('tabs'));
     const indent = withoutComment.length - withoutComment.trimStart().length;
     return [{ number: i + 1, indent, text: withoutComment.trim() }];
   });
@@ -279,7 +285,7 @@ class StatementParser {
   parseProgram(): Stmt[] {
     const body = this.block(0);
     const extra = this.lines[this.position];
-    if (extra) throw new SyntaxProblem(extra.number, 'Unexpected indentation');
+    if (extra) throw new SyntaxProblem(extra.number, M('indentation'));
     return body;
   }
 
@@ -288,7 +294,7 @@ class StatementParser {
     for (;;) {
       const line = this.lines[this.position];
       if (!line || line.indent < indent) return body;
-      if (line.indent > indent) throw new SyntaxProblem(line.number, 'Unexpected indentation');
+      if (line.indent > indent) throw new SyntaxProblem(line.number, M('indentation'));
       this.position++;
       body.push(this.statement(line));
     }
@@ -298,13 +304,13 @@ class StatementParser {
   private childBlock(header: SourceLine): Stmt[] {
     const first = this.lines[this.position];
     if (!first || first.indent <= header.indent)
-      throw new SyntaxProblem(header.number, 'This line needs an indented block below it');
+      throw new SyntaxProblem(header.number, M('needsBlock'));
     return this.block(first.indent);
   }
 
   private header(line: SourceLine, keyword: string): string {
     if (!line.text.endsWith(':'))
-      throw new SyntaxProblem(line.number, `"${keyword}" lines end with ":"`);
+      throw new SyntaxProblem(line.number, M('needsColon', { keyword }));
     return line.text.slice(keyword.length, -1).trim();
   }
 
@@ -318,7 +324,7 @@ class StatementParser {
         return this.ifStatement(line);
       case 'elif':
       case 'else':
-        throw new SyntaxProblem(number, `"${word}" must follow an "if" block`);
+        throw new SyntaxProblem(number, M('mustFollowIf', { word }));
       case 'while':
         return {
           ...at,
@@ -328,7 +334,7 @@ class StatementParser {
         };
       case 'for': {
         const match = /^for\s+([A-Za-z_][A-Za-z0-9_]*)\s+in\s+(.+):$/.exec(text);
-        if (!match) throw new SyntaxProblem(number, 'Write loops as "for item in list:"');
+        if (!match) throw new SyntaxProblem(number, M('forSyntax'));
         return {
           ...at,
           type: 'for',
@@ -339,13 +345,12 @@ class StatementParser {
       }
       case 'function': {
         const match = /^function\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(([^)]*)\)\s*:$/.exec(text);
-        if (!match) throw new SyntaxProblem(number, 'Write functions as "function name(a, b):"');
+        if (!match) throw new SyntaxProblem(number, M('functionSyntax'));
         const params = (match[2] as string)
           .split(',')
           .map((p) => p.trim())
           .filter((p) => p !== '');
-        if (params.some((p) => !NAME.test(p)))
-          throw new SyntaxProblem(number, 'Parameter names must be simple names');
+        if (params.some((p) => !NAME.test(p))) throw new SyntaxProblem(number, M('paramNames'));
         return {
           ...at,
           type: 'function',
@@ -372,8 +377,7 @@ class StatementParser {
       const target = assignment[1] as string;
       const index = assignment[3];
       const value = assignment[4] as string;
-      if (KEYWORDS.has(target))
-        throw new SyntaxProblem(number, `"${target}" cannot be a variable name`);
+      if (KEYWORDS.has(target)) throw new SyntaxProblem(number, M('badTarget', { target }));
       return index === undefined
         ? { ...at, type: 'assign', target, value: parseExpression(value, number) }
         : {
@@ -406,7 +410,7 @@ class StatementParser {
       if (/^else\b/.test(next.text)) {
         this.position++;
         if (this.header(next, 'else') !== '')
-          throw new SyntaxProblem(next.number, '"else" takes no condition (did you mean "elif"?)');
+          throw new SyntaxProblem(next.number, M('elseCondition'));
         otherwise = this.childBlock(next);
       }
       break;
@@ -420,7 +424,7 @@ export function parseProgram(source: string): Result<Program, ParseError> {
     const body = new StatementParser(sourceLines(source)).parseProgram();
     return ok({ source, body });
   } catch (error) {
-    if (error instanceof SyntaxProblem) return err({ line: error.line, message: error.message });
+    if (error instanceof SyntaxProblem) return err({ line: error.line, message: error.text });
     throw error;
   }
 }

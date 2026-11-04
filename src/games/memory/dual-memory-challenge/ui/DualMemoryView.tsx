@@ -1,3 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { CellGrid, ObjectFace, useStepper, type CellState } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
 import { cellName, objectById } from '../../shared/content';
@@ -11,6 +14,8 @@ export function DualMemoryView({
   answer,
   assisted,
 }: ContentViewProps<DualMemoryChallenge>) {
+  const { t } = useTranslation('memory');
+  const tx = useText();
   const { size, placements, ask, itemMs, kind } = challenge.content;
   const count = size * size;
   const gridSize = size >= 5 ? 'sm' : 'md';
@@ -29,7 +34,7 @@ export function DualMemoryView({
     return (
       <div className="flex flex-col items-center gap-3">
         <CellGrid
-          label="Grid"
+          label={msg('memory:dualMemoryChallenge.view.grid')}
           columns={size}
           size={gridSize}
           cells={Array.from({ length: count }, (_, i) => {
@@ -37,16 +42,25 @@ export function DualMemoryView({
             const item = here ? objectById(here.objectId) : undefined;
             return {
               key: String(i),
-              label: item ? `${cellName(i, size)}, ${item.name}` : cellName(i, size),
+              label: item
+                ? msg('memory:dualMemoryChallenge.view.cellWith', {
+                    cell: cellName(i, size),
+                    name: item.label,
+                  })
+                : cellName(i, size),
               content: item ? <ObjectFace item={item} className="text-2xl sm:text-3xl" /> : null,
             };
           })}
         />
         <p aria-live="assertive" aria-atomic="true" className="text-sm text-ink-muted">
           {half >= placements.length * 2
-            ? 'Done — get ready'
+            ? t('dualMemoryChallenge.view.done')
             : current
-              ? `${half / 2 + 1}: ${objectById(current.objectId).name} at ${cellName(current.cell, size)}`
+              ? t('dualMemoryChallenge.view.appeared', {
+                  turn: half / 2 + 1,
+                  name: tx(objectById(current.objectId).label),
+                  cell: tx(cellName(current.cell, size)),
+                })
               : ''}
         </p>
       </div>
@@ -54,16 +68,24 @@ export function DualMemoryView({
   }
 
   if (phase === 'respond') {
-    if (kind === 'which-nth') return <HiddenNote>Hidden — pick the object from memory.</HiddenNote>;
+    if (kind === 'which-nth')
+      return <HiddenNote>{t('dualMemoryChallenge.view.hidden')}</HiddenNote>;
     const marked = kind === 'which-here' ? target?.cell : undefined;
     return (
       <CellGrid
-        label={kind === 'which-here' ? 'Grid with the marked square' : 'Point at the square'}
+        label={msg(
+          kind === 'which-here'
+            ? 'memory:dualMemoryChallenge.view.gridMarked'
+            : 'memory:dualMemoryChallenge.view.pointSquare',
+        )}
         columns={size}
         size={gridSize}
         cells={Array.from({ length: count }, (_, i) => ({
           key: String(i),
-          label: i === marked ? `${cellName(i, size)}, marked` : cellName(i, size),
+          label:
+            i === marked
+              ? msg('memory:dualMemoryChallenge.view.cellMarked', { cell: cellName(i, size) })
+              : cellName(i, size),
           state: i === marked ? 'highlight' : 'idle',
           content:
             i === marked ? (
@@ -92,7 +114,7 @@ export function DualMemoryView({
   };
   return (
     <CellGrid
-      label="What was shown"
+      label={msg('memory:dualMemoryChallenge.view.whatShown')}
       columns={size}
       size={gridSize}
       cells={Array.from({ length: count }, (_, i) => {
@@ -102,7 +124,11 @@ export function DualMemoryView({
           key: String(i),
           label:
             here && item
-              ? `${cellName(i, size)}, ${item.name}, shown ${here.turn}`
+              ? msg('memory:dualMemoryChallenge.view.cellShown', {
+                  cell: cellName(i, size),
+                  name: item.label,
+                  turn: here.turn,
+                })
               : cellName(i, size),
           state: stateOf(i),
           content:

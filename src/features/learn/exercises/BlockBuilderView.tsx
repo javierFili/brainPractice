@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { joinText } from '@/domain/shared';
+import { useText } from '@/i18n';
 import type { ChoiceOption } from '@/domain/challenge';
 import { Button } from '@/components/ui/Button';
 import { plainText } from '../text';
@@ -15,6 +18,8 @@ export function BlockBuilderView({
   showSolution,
   onSubmit,
 }: ExerciseViewProps<'block-builder'>) {
+  const { t } = useTranslation('learn');
+  const tx = useText();
   const [palette] = useState(() => stableShuffle(exercise.blocks, exercise.id));
   const [chosen, setChosen] = useState<ChoiceOption[]>([]);
   const available = palette.filter((b) => !chosen.some((c) => c.id === b.id));
@@ -25,7 +30,7 @@ export function BlockBuilderView({
           id={`${exercise.id}-palette`}
           className="text-xs font-semibold tracking-widest text-slate-400 uppercase"
         >
-          Blocks
+          {t('exercise.blocks')}
         </h3>
         <ul className="flex flex-col gap-2">
           {available.map((block) => (
@@ -34,16 +39,18 @@ export function BlockBuilderView({
                 variant="secondary"
                 disabled={locked}
                 className="w-full justify-start font-mono whitespace-pre-wrap"
-                aria-label={`Add ${plainText(block.label).trim()}`}
+                aria-label={t('exercise.add', { item: plainText(tx(block.label)).trim() })}
                 onClick={() => {
                   setChosen((c) => [...c, block]);
                 }}
               >
-                <span aria-hidden="true">+</span> {plainText(block.label)}
+                <span aria-hidden="true">+</span> {plainText(tx(block.label))}
               </Button>
             </li>
           ))}
-          {available.length === 0 && <li className="text-sm text-slate-500">All blocks used.</li>}
+          {available.length === 0 && (
+            <li className="text-sm text-slate-500">{t('exercise.allBlocksUsed')}</li>
+          )}
         </ul>
       </section>
       <section aria-labelledby={`${exercise.id}-program`} className="flex flex-col gap-2">
@@ -51,17 +58,17 @@ export function BlockBuilderView({
           id={`${exercise.id}-program`}
           className="text-xs font-semibold tracking-widest text-slate-400 uppercase"
         >
-          Your algorithm
+          {t('exercise.yourAlgorithm')}
         </h3>
         {chosen.length === 0 ? (
           <p className="rounded-lg border border-dashed border-slate-700 p-4 text-sm text-slate-500">
-            Add blocks from the list, then order them.
+            {t('exercise.addBlocks')}
           </p>
         ) : (
           <ReorderList
             items={chosen}
             locked={locked}
-            label="Your algorithm"
+            label={t('exercise.yourAlgorithm')}
             onMove={(i, d) => {
               setChosen((c) => moveItem(c, i, d));
             }}
@@ -72,10 +79,18 @@ export function BlockBuilderView({
         )}
         {showSolution && (
           <p className="text-sm text-emerald-300">
-            Solution:{' '}
-            {exercise.solution
-              .map((id) => plainText(exercise.blocks.find((b) => b.id === id)?.label ?? id).trim())
-              .join(' → ')}
+            {t('exercise.solution', {
+              solution: plainText(
+                tx(
+                  joinText(
+                    exercise.solution.map(
+                      (id) => exercise.blocks.find((b) => b.id === id)?.label ?? id,
+                    ),
+                    ' → ',
+                  ),
+                ),
+              ),
+            })}
           </p>
         )}
         {!locked && (

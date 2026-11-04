@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { evaluateAnswer } from '@/domain/challenge';
 import { generateChallenge } from '@/domain/game';
 import { DIFFICULTY_LEVELS, type DifficultyLevel } from '@/domain/shared';
@@ -32,8 +33,8 @@ function options(challenge: PatternChallenge) {
   const correct = response.question.options.find((o) => o.id === response.solution.optionId);
   if (correct === undefined) throw new Error('Solution is not an option');
   return {
-    correct: correct.label,
-    labels: response.question.options.map((o) => o.label),
+    correct: en(correct.label),
+    labels: response.question.options.map((o) => en(o.label)),
     optionId: correct.id,
   };
 }
@@ -67,7 +68,7 @@ describe('Pattern Architect — generated content', () => {
   });
 
   it('writes an explanation that contains the answer', () => {
-    for (const c of all) expect(c.explanation).toContain(options(c).correct);
+    for (const c of all) expect(en(c.explanation)).toContain(options(c).correct);
   });
 
   it('covers every kind across the sample', () => {

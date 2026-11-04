@@ -7,6 +7,7 @@ import { resultFixture } from '@/test/fixtures/results';
 import { cognitiveProfile } from './cognitiveProfile';
 import { DAILY_CHALLENGE_COUNT, dailyChallenge } from './daily';
 import { recommend, type RecommendationInput } from './recommend';
+import { en } from '@/test/i18n';
 
 const GAMES = ['algorithmic-logic', 'code-memory', 'code-scan', 'bug-hunter', 'pattern-architect'];
 const gameOfArea = {
@@ -81,7 +82,7 @@ describe('recommendations', () => {
     const kinds = recommend(base()).map((r) => r.kind);
     expect(kinds).toEqual(['lesson', 'daily', 'train']);
     const train = recommend(base()).find((r) => r.kind === 'train');
-    expect(train?.reason).toMatch(/You are learning variables/);
+    expect(en(train?.reason ?? '')).toMatch(/You are learning Variables\./);
     expect(train?.href).toBe('/games/code-memory/play/2');
   });
 
@@ -95,13 +96,12 @@ describe('recommendations', () => {
       endedAt: 0,
     });
     const items = recommend(base({ learning, now: DAY_MS }));
-    expect(items[0]).toMatchObject({
-      kind: 'review',
-      title: 'Review: Variables',
-      href: '/learn/review',
-    });
-    expect(items.find((r) => r.kind === 'lesson')?.title).toBe('Lesson: Fixture conditions');
-    for (const item of items) expect(item.reason.length).toBeGreaterThan(10);
+    expect(items[0]).toMatchObject({ kind: 'review', href: '/learn/review' });
+    expect(en(items[0]?.title ?? '')).toBe('Review: Variables');
+    expect(en(items.find((r) => r.kind === 'lesson')?.title ?? '')).toBe(
+      'Lesson: Fixture conditions',
+    );
+    for (const item of items) expect(en(item.reason).length).toBeGreaterThan(10);
   });
 
   it('drops the daily challenge once done and lessons for training-only goals', () => {
@@ -118,7 +118,7 @@ describe('recommendations', () => {
     );
     const items = recommend(base({ profile }));
     expect(items.map((r) => r.kind)).toEqual(['train']);
-    expect(items[0]?.reason).toMatch(/not trained this area yet/);
+    expect(en(items[0]?.reason ?? '')).toMatch(/not trained this area yet/);
   });
 
   it('suggests a baseline assessment after a few sessions', () => {

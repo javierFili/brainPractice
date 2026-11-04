@@ -1,4 +1,7 @@
 import { useId, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { textId, type Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 import type { Playground, PlaygroundInput } from '@/domain/learning';
 import { playgroundInitial } from '@/domain/learning';
 import { execute, literal, type Value } from '@/domain/pseudocode';
@@ -14,6 +17,7 @@ function InputControl({
   value: Value;
   onChange: (value: Value) => void;
 }) {
+  const { t } = useTranslation('learn');
   const id = useId();
   const label = (
     <label htmlFor={id} className="font-mono text-sm text-slate-200">
@@ -40,7 +44,7 @@ function InputControl({
           />
           <input
             type="range"
-            aria-label={`${input.name} slider`}
+            aria-label={t('playground.slider', { name: input.name })}
             min={input.min}
             max={input.max}
             step={input.step ?? 1}
@@ -108,7 +112,9 @@ function InputControl({
  * Interactive example: the learner changes the inputs of a fixed program and the interpreter
  * reruns it. Shows output, variables, the lines that ran and a step-by-step replay.
  */
-export function PlaygroundView({ playground, intro }: { playground: Playground; intro: string }) {
+export function PlaygroundView({ playground, intro }: { playground: Playground; intro: Text }) {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
   const [inputs, setInputs] = useState<Record<string, Value>>(() => ({
     ...playgroundInitial(playground),
   }));
@@ -120,7 +126,7 @@ export function PlaygroundView({ playground, intro }: { playground: Playground; 
   const offset = header.length;
   const source = [...header, ...playground.source.split('\n')].join('\n');
 
-  if (!run.ok) return <p role="alert">This example could not be loaded.</p>;
+  if (!run.ok) return <p role="alert">{t('playground.loadError')}</p>;
   const { output, variables, trace, error } = run.value;
   const shown = step === null ? null : trace[step];
   const executed = new Set(trace.map((t) => t.line + offset));
@@ -138,7 +144,7 @@ export function PlaygroundView({ playground, intro }: { playground: Playground; 
         <div className="flex flex-col gap-4">
           <fieldset className="flex flex-col gap-3 rounded-lg border border-sky-400/30 bg-sky-400/5 p-3">
             <legend className="px-1 text-xs font-semibold tracking-widest text-sky-200 uppercase">
-              Change the values
+              {t('playground.changeValues')}
             </legend>
             {playground.inputs.map((input) => (
               <InputControl
@@ -157,34 +163,39 @@ export function PlaygroundView({ playground, intro }: { playground: Playground; 
             highlight={Array.from({ length: offset }, (_, i) => i + 1)}
             executed={executed}
             current={shown ? shown.line + offset : null}
-            label="Example program"
-            caption="▸ marks the lines that ran. The first lines are the values you control."
+            label={t('playground.program')}
+            caption={t('playground.caption')}
           />
         </div>
-        <aside className="flex flex-col gap-4" aria-label="What the program did">
+        <aside className="flex flex-col gap-4" aria-label={t('playground.results')}>
           <section>
             <h3 className="mb-1 text-xs font-semibold tracking-widest text-slate-400 uppercase">
-              Output
+              {t('playground.output')}
             </h3>
             <pre
               aria-live="polite"
               className="min-h-10 rounded-lg border border-slate-800 bg-slate-950 p-3 font-mono text-sm whitespace-pre-wrap text-emerald-200"
             >
               {output.length === 0 ? (
-                <span className="text-slate-600">(nothing printed)</span>
+                <span className="text-slate-600">{t('playground.nothingPrinted')}</span>
               ) : (
                 output.join('\n')
               )}
             </pre>
             {error && (
               <p role="alert" className="mt-2 text-sm text-rose-300">
-                Line {error.line + offset}: {error.message}
+                {t('playground.errorLine', {
+                  line: error.line + offset,
+                  message: tx(error.message),
+                })}
               </p>
             )}
           </section>
           <section>
             <h3 className="mb-1 text-xs font-semibold tracking-widest text-slate-400 uppercase">
-              Variables {shown ? `after line ${shown.line + offset}` : 'at the end'}
+              {shown
+                ? t('playground.variablesAfter', { line: shown.line + offset })
+                : t('playground.variablesEnd')}
             </h3>
             <table className="w-full font-mono text-sm">
               <tbody>
@@ -202,16 +213,18 @@ export function PlaygroundView({ playground, intro }: { playground: Playground; 
           {trace.length > 1 && (
             <section>
               <h3 className="mb-1 text-xs font-semibold tracking-widest text-slate-400 uppercase">
-                Step through
+                {t('playground.stepThrough')}
               </h3>
               <input
                 type="range"
                 min={0}
                 max={trace.length}
                 value={step === null ? trace.length : step}
-                aria-label="Step"
+                aria-label={t('playground.stepLabel')}
                 aria-valuetext={
-                  step === null ? 'End of program' : `Step ${step + 1} of ${trace.length}`
+                  step === null
+                    ? t('playground.endOfProgram')
+                    : t('playground.stepOf', { number: step + 1, total: trace.length })
                 }
                 onChange={(e) => {
                   const value = Number(e.target.value);
@@ -221,8 +234,8 @@ export function PlaygroundView({ playground, intro }: { playground: Playground; 
               />
               <p className="text-xs text-slate-400">
                 {step === null
-                  ? `End · ${trace.length} steps`
-                  : `Step ${step + 1} of ${trace.length}`}
+                  ? t('playground.endSteps', { count: trace.length })
+                  : t('playground.stepOf', { number: step + 1, total: trace.length })}
               </p>
             </section>
           )}
@@ -233,11 +246,11 @@ export function PlaygroundView({ playground, intro }: { playground: Playground; 
         className="rounded-lg border border-slate-800 p-3 text-sm"
       >
         <h3 id="try-title" className="mb-1 font-semibold text-white">
-          Try this
+          {t('playground.tryThis')}
         </h3>
         <ul className="list-disc space-y-1 pl-5 text-slate-300">
           {playground.prompts.map((prompt) => (
-            <li key={prompt}>
+            <li key={textId(prompt)}>
               <InlineText text={prompt} />
             </li>
           ))}

@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { render, screen, within } from '@testing-library/react';
 import { generateChallenge } from '@/domain/game';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
@@ -59,7 +60,7 @@ describe('PatternContentView', () => {
       if (cell === null) expect(td).toHaveTextContent('Missing cell');
       else {
         expect(td).toHaveTextContent(cellLabel(cell));
-        expect(within(td).getByText(describeCell(cell))).toBeInTheDocument();
+        expect(within(td).getByText(en(describeCell(cell)))).toBeInTheDocument();
       }
     });
     expect(within(table).getAllByText('Missing cell')).toHaveLength(1);

@@ -6,6 +6,7 @@ import { applySessionResult, emptyProgress, type ProgressRepository } from '@/do
 import { gameIdOf } from '@/domain/shared';
 import { resultFixture } from '@/test/fixtures/results';
 import { FakeClock } from '@/test/fakes/FakeClock';
+import { en } from '@/test/i18n';
 import { renderApp } from '@/test/renderApp';
 
 const NOW = Date.UTC(2026, 9, 1, 12);
@@ -22,7 +23,7 @@ const memoryProgress = applySessionResult(
 );
 
 describe('navigation and pages', () => {
-  it.each(NAV_SECTIONS.flatMap((s) => s.items).map((item) => [item.label, item.to] as const))(
+  it.each(NAV_SECTIONS.flatMap((s) => s.items).map((item) => [en(item.label), item.to] as const))(
     'sidebar entry "%s" leads to a working screen (%s)',
     async (label, to) => {
       renderApp(to, { clock: new FakeClock(NOW) });

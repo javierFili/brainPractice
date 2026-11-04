@@ -1,3 +1,4 @@
+import { joinText, msg, type Text } from '@/domain/shared';
 import { pick, randomInt, type RandomGenerator } from '@/domain/random';
 import type { OperationFamily } from './types';
 
@@ -120,12 +121,26 @@ export function evaluateExpression(text: string): number {
   return sum();
 }
 
+const SPOKEN: Readonly<Record<string, string>> = {
+  [PLUS]: 'plus',
+  [MINUS]: 'minus',
+  [TIMES]: 'times',
+  [DIVIDE]: 'dividedBy',
+  '(': 'openBracket',
+  ')': 'closeBracket',
+};
+
 /** "3 + 4 × 2" → "3 plus 4 times 2", for screen readers. */
-export const spokenExpression = (text: string) =>
-  text
-    .replaceAll(PLUS, 'plus')
-    .replaceAll(MINUS, 'minus')
-    .replaceAll(TIMES, 'times')
-    .replaceAll(DIVIDE, 'divided by')
-    .replaceAll('(', 'open bracket ')
-    .replaceAll(')', ' close bracket');
+export const spokenExpression = (text: string): Text =>
+  joinText(
+    text
+      .replaceAll('(', ' ( ')
+      .replaceAll(')', ' ) ')
+      .trim()
+      .split(/\s+/)
+      .map((token) => {
+        const word = SPOKEN[token];
+        return word === undefined ? token : msg(`speed:mentalArithmeticSprint.spoken.${word}`);
+      }),
+    ' ',
+  );

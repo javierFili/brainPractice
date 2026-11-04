@@ -4,6 +4,7 @@ import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { objectById } from '../shared/content';
 import { objectRecallGame } from './content/definition';
 import { OBJECT_RECALL_LEVELS } from './content/levels';
@@ -56,7 +57,7 @@ describe('Object Recall board', () => {
       />,
     );
     for (const id of c.content.studied) {
-      await user.click(screen.getByRole('button', { name: objectById(id).name }));
+      await user.click(screen.getByRole('button', { name: en(objectById(id).label) }));
     }
     await user.click(screen.getByRole('button', { name: 'Check' }));
     if (c.response.format !== 'multi-select') throw new Error('multi-select expected');

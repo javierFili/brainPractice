@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps } from '@/games/types';
 import type { NumberCross, NumberPatternChallenge } from '../content/types';
 
@@ -5,29 +6,29 @@ const CELL =
   'flex h-12 min-w-12 items-center justify-center rounded-lg border px-1 font-mono text-lg font-semibold sm:h-14 sm:min-w-14';
 
 function NumberCell({ value, blank = false }: { value: number | null; blank?: boolean }) {
+  const { t } = useTranslation('patterns');
   if (value !== null)
     return <span className={`${CELL} border-line bg-raised text-ink`}>{value}</span>;
   if (blank)
     return (
       <span className={`${CELL} border-line border-dashed bg-surface text-ink-muted`}>
         <span aria-hidden="true">…</span>
-        <span className="sr-only">blank</span>
+        <span className="sr-only">{t('numberPatternCompletion.view.blank')}</span>
       </span>
     );
   return (
     <span className={`${CELL} border-2 border-dashed border-glow/70 bg-glow/10 text-glow`}>
       <span aria-hidden="true">?</span>
-      <span className="sr-only">missing number</span>
+      <span className="sr-only">{t('numberPatternCompletion.view.missingNumber')}</span>
     </span>
   );
 }
 
 function GridLayout({ cells }: { cells: readonly (readonly (number | null)[])[] }) {
+  const { t } = useTranslation('patterns');
   return (
     <table className="mx-auto border-separate border-spacing-1.5">
-      <caption className="sr-only">
-        Number grid, 3 rows by 3 columns, with one missing number
-      </caption>
+      <caption className="sr-only">{t('numberPatternCompletion.view.gridCaption')}</caption>
       <tbody>
         {cells.map((row, r) => (
           <tr key={r}>
@@ -50,14 +51,18 @@ function PyramidLayout({
   rows: readonly (readonly (number | null)[])[];
   ask: readonly [number, number];
 }) {
+  const { t } = useTranslation('patterns');
   return (
     <ol
-      aria-label="Number pyramid, from the top brick down"
+      aria-label={t('numberPatternCompletion.view.pyramid')}
       className="flex flex-col items-center gap-1.5"
     >
       {rows.map((row, r) => (
         <li key={r}>
-          <ol aria-label={`Row ${r + 1} from the top`} className="flex gap-1.5">
+          <ol
+            aria-label={t('numberPatternCompletion.view.pyramidRow', { row: r + 1 })}
+            className="flex gap-1.5"
+          >
             {row.map((v, i) => (
               <li key={i}>
                 <NumberCell value={v} blank={v === null && (ask[0] !== r || ask[1] !== i)} />
@@ -71,6 +76,7 @@ function PyramidLayout({
 }
 
 function WheelLayout({ segments }: { segments: readonly (number | null)[] }) {
+  const { t } = useTranslation('patterns');
   const n = segments.length;
   const point = (angle: number, radius: number) => {
     const rad = ((angle - 90) * Math.PI) / 180;
@@ -128,17 +134,29 @@ function WheelLayout({ segments }: { segments: readonly (number | null)[] }) {
         })}
       </svg>
       <figcaption className="sr-only">
-        Wheel with {n} segments, clockwise from the top:{' '}
-        {segments.map((v) => (v === null ? 'missing' : String(v))).join(', ')}. Segment 1 is
-        opposite segment {n / 2 + 1}.
+        {t('numberPatternCompletion.view.wheel', {
+          segments: n,
+          values: segments
+            .map((v) => (v === null ? t('numberPatternCompletion.view.missing') : String(v)))
+            .join(', '),
+          opposite: n / 2 + 1,
+        })}
       </figcaption>
     </figure>
   );
 }
 
 function CrossFigure({ cross, index }: { cross: NumberCross; index: number }) {
+  const { t } = useTranslation('patterns');
   const { top, right, bottom, left, centre } = cross;
-  const words = `Cross ${index + 1}: top ${top}, right ${right}, bottom ${bottom}, left ${left}, centre ${centre ?? 'missing'}`;
+  const words = t('numberPatternCompletion.view.cross', {
+    index: index + 1,
+    top,
+    right,
+    bottom,
+    left,
+    centre: centre ?? t('numberPatternCompletion.view.missing'),
+  });
   return (
     <li aria-label={words} className="rounded-xl border border-line bg-surface p-1.5">
       <div aria-hidden="true" className="grid grid-cols-3 gap-1">
@@ -157,6 +175,7 @@ function CrossFigure({ cross, index }: { cross: NumberCross; index: number }) {
 }
 
 export function NumberPatternView({ challenge }: ContentViewProps<NumberPatternChallenge>) {
+  const { t } = useTranslation('patterns');
   const { content } = challenge;
   switch (content.kind) {
     case 'grid':
@@ -167,7 +186,10 @@ export function NumberPatternView({ challenge }: ContentViewProps<NumberPatternC
       return <WheelLayout segments={content.segments} />;
     case 'cross':
       return (
-        <ol aria-label="Number crosses" className="flex flex-wrap justify-center gap-3">
+        <ol
+          aria-label={t('numberPatternCompletion.view.crosses')}
+          className="flex flex-wrap justify-center gap-3"
+        >
           {content.crosses.map((cross, i) => (
             <CrossFigure key={i} cross={cross} index={i} />
           ))}

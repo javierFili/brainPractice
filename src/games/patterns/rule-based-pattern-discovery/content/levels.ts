@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { RuleDiscoveryProfile } from './types';
 
@@ -10,7 +11,7 @@ const one = { secondFamilies: [] } as const;
 export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   {
     ...one,
-    objective: 'One kind of tile changes into another.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.1'),
     challengeCount: 5,
     families: ['colour'],
     size: 3,
@@ -22,7 +23,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   },
   {
     ...one,
-    objective: 'Tiles fall, slide or spread.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.2'),
     challengeCount: 5,
     families: ['gather'],
     size: 3,
@@ -34,7 +35,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   },
   {
     ...one,
-    objective: 'The grid is mirrored, turned or slid.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.3'),
     challengeCount: 6,
     families: ['move'],
     size: 3,
@@ -46,7 +47,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   },
   {
     ...one,
-    objective: 'Moves and turns on bigger grids with two kinds of tile.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.4'),
     challengeCount: 6,
     families: ['move'],
     size: 4,
@@ -58,7 +59,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   },
   {
     ...one,
-    objective: 'Tile changes with two or three kinds: replace or swap.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.5'),
     challengeCount: 6,
     families: ['colour'],
     size: 4,
@@ -70,7 +71,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   },
   {
     ...one,
-    objective: 'Any single rule: find which kind of change it is.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.6'),
     challengeCount: 6,
     families: ['move', 'colour', 'gather'],
     size: 4,
@@ -82,7 +83,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
   },
   {
     ...one,
-    objective: 'Any single rule on 5×5 grids with three kinds of tile.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.7'),
     challengeCount: 6,
     families: ['move', 'colour', 'gather'],
     size: 5,
@@ -93,7 +94,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
     timing: untimed(26_000),
   },
   {
-    objective: 'Two changes in a row: a move, then a tile change.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.8'),
     challengeCount: 6,
     families: ['move'],
     secondFamilies: ['colour'],
@@ -105,7 +106,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
     timing: untimed(30_000),
   },
   {
-    objective: 'Two changes in a row, of any two different kinds.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.9'),
     challengeCount: 6,
     families: ['move', 'gather', 'colour'],
     secondFamilies: ['move', 'gather', 'colour'],
@@ -117,7 +118,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleDiscoveryProfile>([
     timing: untimed(32_000),
   },
   {
-    objective: 'Two chained changes on 5×5 grids with three kinds of tile.',
+    objective: msg('patterns:ruleBasedPatternDiscovery.levels.10'),
     challengeCount: 6,
     families: ['move', 'gather', 'colour'],
     secondFamilies: ['move', 'gather', 'colour'],

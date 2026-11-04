@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { Clock } from '@/domain/time/Clock';
 import { useNow } from '@/components/feedback/useNow';
 
@@ -14,6 +15,7 @@ export function Countdown({
   label: string;
 }) {
   const now = useNow(clock, true, 100);
+  const { t } = useTranslation('home');
   const remaining = Math.max(0, deadline - now);
   const ratio = durationMs > 0 ? remaining / durationMs : 0;
   const seconds = Math.ceil(remaining / 1000);
@@ -30,11 +32,11 @@ export function Countdown({
         className={`font-mono text-sm tabular-nums ${urgent ? 'text-rose-300' : 'text-slate-300'}`}
       >
         <span className="sr-only">{label}: </span>
-        {seconds}s
+        {t('ui.countdown.short', { seconds })}
       </span>
       {urgent && (
         <span role="status" className="sr-only">
-          {seconds} seconds left
+          {t('ui.countdown.left', { count: seconds })}
         </span>
       )}
     </div>

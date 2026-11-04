@@ -1,0 +1,581 @@
+{
+  "shared": {
+    "ell": "L shape",
+    "colouredEll": "$t(kit:color.{{color}}) L shape",
+    "mirrored": "mirrored",
+    "turn": {
+      "0": "upright",
+      "90": "turned right",
+      "180": "upside down",
+      "270": "turned left"
+    },
+    "inLanguage": "{{en}}",
+    "shapes": {
+      "circle": "circles",
+      "square": "squares",
+      "triangle": "triangles",
+      "diamond": "diamonds",
+      "star": "stars",
+      "hexagon": "hexagons",
+      "heart": "hearts",
+      "cross": "crosses",
+      "ell": "L shapes"
+    },
+    "colouredShapes": {
+      "circle": "$t(kit:color.{{color}}) circles",
+      "square": "$t(kit:color.{{color}}) squares",
+      "triangle": "$t(kit:color.{{color}}) triangles",
+      "diamond": "$t(kit:color.{{color}}) diamonds",
+      "star": "$t(kit:color.{{color}}) stars",
+      "hexagon": "$t(kit:color.{{color}}) hexagons",
+      "heart": "$t(kit:color.{{color}}) hearts",
+      "cross": "$t(kit:color.{{color}}) crosses",
+      "ell": "$t(kit:color.{{color}}) L shapes"
+    },
+    "shapeCount": {
+      "circle_one": "{{count}} circle",
+      "circle_other": "{{count}} circles",
+      "square_one": "{{count}} square",
+      "square_other": "{{count}} squares",
+      "triangle_one": "{{count}} triangle",
+      "triangle_other": "{{count}} triangles",
+      "diamond_one": "{{count}} diamond",
+      "diamond_other": "{{count}} diamonds",
+      "star_one": "{{count}} star",
+      "star_other": "{{count}} stars",
+      "hexagon_one": "{{count}} hexagon",
+      "hexagon_other": "{{count}} hexagons",
+      "heart_one": "{{count}} heart",
+      "heart_other": "{{count}} hearts",
+      "cross_one": "{{count}} cross",
+      "cross_other": "{{count}} crosses",
+      "ell_one": "{{count}} L shape",
+      "ell_other": "{{count}} L shapes"
+    },
+    "colouredShapeCount": {
+      "circle_one": "{{count}} $t(kit:color.{{color}}) circle",
+      "circle_other": "{{count}} $t(kit:color.{{color}}) circles",
+      "square_one": "{{count}} $t(kit:color.{{color}}) square",
+      "square_other": "{{count}} $t(kit:color.{{color}}) squares",
+      "triangle_one": "{{count}} $t(kit:color.{{color}}) triangle",
+      "triangle_other": "{{count}} $t(kit:color.{{color}}) triangles",
+      "diamond_one": "{{count}} $t(kit:color.{{color}}) diamond",
+      "diamond_other": "{{count}} $t(kit:color.{{color}}) diamonds",
+      "star_one": "{{count}} $t(kit:color.{{color}}) star",
+      "star_other": "{{count}} $t(kit:color.{{color}}) stars",
+      "hexagon_one": "{{count}} $t(kit:color.{{color}}) hexagon",
+      "hexagon_other": "{{count}} $t(kit:color.{{color}}) hexagons",
+      "heart_one": "{{count}} $t(kit:color.{{color}}) heart",
+      "heart_other": "{{count}} $t(kit:color.{{color}}) hearts",
+      "cross_one": "{{count}} $t(kit:color.{{color}}) cross",
+      "cross_other": "{{count}} $t(kit:color.{{color}}) crosses",
+      "ell_one": "{{count}} $t(kit:color.{{color}}) L shape",
+      "ell_other": "{{count}} $t(kit:color.{{color}}) L shapes"
+    }
+  },
+  "changeDetection": {
+    "name": "Change Detection",
+    "tagline": "Same scene… or not?",
+    "description": "Look at a small scene of shapes. It disappears for a moment and comes back. Did anything change? About half the time nothing did. Changes become finer and scenes busier as you go.",
+    "scoringSummary": "Each trial counts as correct when you answer yes for a changed scene or no for an unchanged one; about half are unchanged, so guessing scores near 50%. Answering is not timed.",
+    "accessibilityNotes": "Some changes are colour only (from level 6, to a nearby colour). The scene is a list of named cells, so a screen reader can compare the two looks, but the first look is time-limited (doubled in relaxed mode).",
+    "instructions": {
+      "look": "Look at the whole scene while it is shown (press “I’m ready” to move on early).",
+      "blank": "After a short blank, the scene comes back.",
+      "answer": "Answer yes if anything changed (colour, shape, direction, position, an item appearing or vanishing), no if it is identical.",
+      "keys": "Keys: 1 = yes, 2 = no. About half the scenes do not change."
+    },
+    "simpleInstructions": "Look, wait, look again: did anything change?",
+    "levels": {
+      "1": "3 items: did one appear, vanish or change colour?",
+      "2": "4 items; shapes can change too.",
+      "3": "5 items on a bigger board: colour or shape changes.",
+      "4": "6 items; an item may also move.",
+      "5": "6 pointing shapes: one may turn.",
+      "6": "7 items with fine changes (nearby colour, similar outline).",
+      "7": "8 items; any fine change.",
+      "8": "9 items, a longer blank in between.",
+      "9": "10 items, shorter first look.",
+      "10": "12 items, short look, finest changes."
+    },
+    "kinds": {
+      "none": "No change",
+      "appear": "Item appeared or vanished",
+      "move": "Item moved",
+      "color": "Colour change",
+      "shape": "Shape change",
+      "turn": "Turned item"
+    },
+    "options": {
+      "yes": "Yes, something changed",
+      "no": "No, it is the same"
+    },
+    "prompt": "Did anything change?",
+    "studyPrompt": "Look at the scene — it will disappear for a moment.",
+    "explanation": {
+      "changed": "Yes: {{changes}}.",
+      "unchanged": "No: the second look was identical to the first."
+    },
+    "change": "{{cell}} went from {{before}} to {{after}}",
+    "empty": "empty",
+    "view": {
+      "firstLook": "First look",
+      "secondLook": "Second look",
+      "noChange": "(no change)",
+      "wait": "Wait…",
+      "blankBoard": "Blank board",
+      "changed": "changed"
+    }
+  },
+  "oddOneOut": {
+    "name": "Odd One Out",
+    "tagline": "All the same… except one.",
+    "description": "A grid of identical shapes hides exactly one that is different. Find it. The difference starts as a clear colour change and becomes a similar outline, a turned shape or a mirrored L in bigger grids.",
+    "scoringSummary": "A grid counts as correct when you point at the one different shape. Your result is the share of grids solved; answering is not timed.",
+    "accessibilityNotes": "Levels 1, 2 and 6 differ only in colour; every cell is also named (e.g. \"red circle\"), so screen readers can compare names. Orientation levels name the pose (\"turned right\", \"mirrored\").",
+    "instructions": {
+      "1": "Every shape in the grid looks the same except one.",
+      "2": "Find the different one and press it. There is always exactly one.",
+      "3": "It may differ in colour, outline, which way it points, or be mirrored.",
+      "4": "Keyboard: arrow keys move between cells, Enter chooses."
+    },
+    "simpleInstructions": "Find the one shape that is different and tap it.",
+    "levels": {
+      "1": "Spot the one shape in a different colour (3×3).",
+      "2": "Spot the different colour in a bigger 4×4 grid.",
+      "3": "Now the odd one is a different shape, same colour.",
+      "4": "Spot a shape with a similar outline (square vs diamond…).",
+      "5": "Same shape, same colour — one points another way.",
+      "6": "Spot a nearby colour (red vs orange…) among 30.",
+      "7": "One shape is turned only a quarter turn (6×6).",
+      "8": "One L shape is mirrored.",
+      "9": "Any feature can differ, finely: colour, outline, turn or mirror.",
+      "10": "Any fine difference among 48 shapes."
+    },
+    "kinds": {
+      "color": "Different colour",
+      "shape": "Different shape",
+      "turn": "Turned shape",
+      "mirror": "Mirrored shape"
+    },
+    "prompt": "Find the one shape that is different.",
+    "explanation": "At {{cell}}: a {{odd}} among {{base}}s — it differs in {{feature}}.",
+    "feature": {
+      "color": "colour",
+      "shape": "shape",
+      "turn": "orientation",
+      "mirror": "mirroring"
+    },
+    "view": {
+      "shapes": "Shapes"
+    }
+  },
+  "visualDifference": {
+    "name": "Visual Difference",
+    "tagline": "Spot the differences, one cell at a time.",
+    "description": "Two pictures made of shapes look the same, but a few cells of the right one differ. Mark every difference on the right picture. The counter tells you how many there are.",
+    "scoringSummary": "A pair of pictures counts as correct when every marked cell is a real difference. Your result is the share of pairs solved exactly; answering is not timed.",
+    "accessibilityNotes": "Some differences are colour only (from level 6, nearby colours such as red and orange). Every cell is named with its colour, shape and pose, so screen readers can compare the two pictures cell by cell.",
+    "instructions": {
+      "1": "Compare the two pictures cell by cell (the right one is below on small screens).",
+      "2": "Mark each cell of the right picture that differs, then press Check.",
+      "3": "A difference is a change of colour, shape, which way it points, or a mirrored L.",
+      "4": "The counter shows how many differences to find."
+    },
+    "simpleInstructions": "Find what is different in the second picture and tap it.",
+    "levels": {
+      "1": "Find 1 difference between two 3×3 pictures.",
+      "2": "Find 2 differences in 3×3 pictures.",
+      "3": "Find 2 differences in bigger 4×4 pictures.",
+      "4": "Find 3 differences in 4×4 pictures.",
+      "5": "Shapes can now be turned, too: 3 differences.",
+      "6": "Find 3 fine differences in 5×5 pictures.",
+      "7": "Find 4 differences, including mirrored L shapes.",
+      "8": "Find 4 fine differences of any kind.",
+      "9": "Find 5 fine differences in 6×6 pictures.",
+      "10": "Find 6 fine differences in busy 6×6 pictures."
+    },
+    "kinds": {
+      "plain": "Colour and shape",
+      "oriented": "With turns and mirrors"
+    },
+    "prompt_one": "Mark the {{count}} cell of the right picture that differ.",
+    "prompt_other": "Mark the {{count}} cells of the right picture that differ.",
+    "explanation": "Differences: {{differences}}.",
+    "difference": "{{cell}} ({{before}} → {{after}})",
+    "view": {
+      "leftPicture": "Left picture",
+      "rightPicture": "Right picture",
+      "left": "Left",
+      "rightHeading": "Right — mark the differences",
+      "leftCell": "left",
+      "rightCell": "right"
+    }
+  },
+  "targetTracking": {
+    "name": "Target Tracking",
+    "tagline": "Keep your eyes on the card.",
+    "description": "A few cards are shown face up and one (later two) is marked. The cards are covered and swap places one pair at a time, each swap shown with an arrow. Then point to where the card ended up.",
+    "scoringSummary": "A round counts as correct when you point to the card asked about. Your result is the share of rounds right; the swaps play at a fixed, unhurried pace and answering is not timed.",
+    "accessibilityNotes": "Each swap is also announced as text (\"cards 2 and 4 change places\"), one every second or more, and the pace slows in relaxed mode. Nothing moves or flashes.",
+    "instructions": {
+      "1": "Look at the marked card before the cards are covered.",
+      "2": "Each step, an arrow shows two cards changing places. Follow the marked card.",
+      "3": "When the swaps end, press the card where it is now.",
+      "4": "From level 7, follow two marked cards: the question names one of them only at the end."
+    },
+    "simpleInstructions": "Watch the cards swap and find the marked one.",
+    "levels": {
+      "1": "Follow one card through 2 swaps of 3 cards.",
+      "2": "Follow one card through 3 swaps.",
+      "3": "Four cards, 4 swaps.",
+      "4": "Four cards, 5 quicker swaps.",
+      "5": "Five cards, 5 swaps.",
+      "6": "Five cards, 6 swaps.",
+      "7": "Follow two cards at once: you will be asked about one.",
+      "8": "Two cards through 7 swaps.",
+      "9": "Two cards among 6, 8 swaps.",
+      "10": "Two cards among 6, 10 swaps at a brisk pace."
+    },
+    "kinds": {
+      "single": "One card",
+      "double": "Two cards"
+    },
+    "prompt": {
+      "single": "Follow the marked card, then press where it ends up.",
+      "double": "Follow both marked cards. At the end you will be asked about one of them."
+    },
+    "explanation": "The {{item}} went {{path}}, so it ended in position {{position}}.",
+    "view": {
+      "position": "position {{position}}",
+      "followThis": "follow this card",
+      "follow": "follow",
+      "covered": "covered card",
+      "swapping": "swapping",
+      "remember_one": "Remember the marked card: {{cards}}.",
+      "remember_other": "Remember the marked cards: {{cards}}.",
+      "cardAt": "{{item}} in position {{position}}",
+      "swap": "Swap {{step}} of {{total}}: cards {{a}} and {{b}} change places.",
+      "swapDone": "Swap {{step}} of {{total}} done.",
+      "ended": "Where the cards ended up.",
+      "where": "Where is the {{item}} now?",
+      "cards": "Cards"
+    }
+  },
+  "distractorFiltering": {
+    "name": "Distractor Filtering",
+    "tagline": "Only the blue triangles. Ignore the rest.",
+    "description": "Mark every item that matches a rule such as “blue triangles”, while look-alikes share the colour or the shape. Distractors get closer to the target and, at higher levels, you decide yourself when you have found them all.",
+    "scoringSummary": "A grid counts as correct when your marks match the targets: missed targets and wrong marks are errors. From level 8 one error is tolerated. Your result is the share of grids solved; answering is not timed.",
+    "accessibilityNotes": "Rules that name a colour need colour vision to play visually; every item is also named (\"purple triangle\"), so a screen reader can filter by name. Shapes always differ in outline too.",
+    "instructions": {
+      "1": "Read the rule above the grid: it names a shape, a colour, or both.",
+      "2": "Mark every item that matches the rule exactly, then press Check.",
+      "3": "Look-alikes share only part of the rule: a blue heart is not a blue triangle.",
+      "4": "From level 7 the count is not given; from level 8 one slip is allowed."
+    },
+    "simpleInstructions": "Tap all the shapes that match the rule, and only those.",
+    "levels": {
+      "1": "Mark every item of one shape.",
+      "2": "Mark every item of one colour.",
+      "3": "Two features at once: right shape AND right colour.",
+      "4": "More look-alikes share one feature with the target.",
+      "5": "Almost every distractor shares a feature.",
+      "6": "Lures in the nearest colour or outline.",
+      "7": "The number of targets is not given: decide when you are done.",
+      "8": "7 targets among close lures (one slip allowed).",
+      "9": "8 targets among 42 items (one slip allowed).",
+      "10": "9 targets among 48 close lures (one slip allowed)."
+    },
+    "kinds": {
+      "shape": "One shape",
+      "color": "One colour",
+      "conjunction": "Shape and colour"
+    },
+    "phrase": {
+      "shape": "{{shapes}} (any colour)",
+      "color": "$t(kit:color.{{color}}) shapes (any shape)"
+    },
+    "prompt": {
+      "exact": "Mark all {{count}} {{phrase}}.",
+      "free": "Mark every one of the {{phrase}} — you decide how many there are.",
+      "freeWithSlip": "Mark every one of the {{phrase}} — you decide how many there are. One slip is allowed."
+    },
+    "explanation_one": "There was {{count}} {{phrase}}.",
+    "explanation_other": "There were {{count}} {{phrase}}.",
+    "view": {
+      "rule": "Rule:",
+      "items": "Items"
+    }
+  },
+  "symbolCounting": {
+    "name": "Symbol Counting",
+    "tagline": "How many are there — exactly?",
+    "description": "Count how many times one symbol appears in a field of shapes. Look-alikes that differ only in colour, outline, direction or mirroring must not be counted. Fields grow to 48 items.",
+    "scoringSummary": "A field counts as correct when your number is exactly right. Your result is the share of fields counted exactly; answering is not timed.",
+    "accessibilityNotes": "Some look-alikes differ only in colour. The field is also a list of named items (\"blue triangle, turned left\"), so a screen reader can count by name.",
+    "instructions": {
+      "1": "The symbol to count is shown above the field.",
+      "2": "Count every exact copy: same shape, same colour, same direction.",
+      "3": "Look-alikes do not count. Type the number and press Enter.",
+      "4": "Tip: go row by row so you do not count anything twice."
+    },
+    "simpleInstructions": "Count how many times you see the symbol at the top.",
+    "levels": {
+      "1": "Count one symbol among clearly different ones.",
+      "2": "Same shape in other colours must not be counted.",
+      "3": "Look-alikes in colour or shape, 25 items.",
+      "4": "Close look-alikes: nearby colour, similar outline.",
+      "5": "Count only the shapes pointing the right way.",
+      "6": "A 6×6 field of close look-alikes.",
+      "7": "Direction and nearby colours, 36 items.",
+      "8": "Count one L among turned and mirrored Ls.",
+      "9": "48 items, every kind of look-alike.",
+      "10": "48 items, all look-alikes, up to 15 targets."
+    },
+    "kinds": {
+      "plain": "Distinct fillers",
+      "lookalike": "Colour and shape look-alikes",
+      "oriented": "Direction look-alikes"
+    },
+    "prompt": "How many {{mark}} symbols are there?",
+    "explanation_one": "There is {{count}} exact copy of the {{mark}} (highlighted).",
+    "explanation_other": "There are {{count}} exact copies of the {{mark}} (highlighted).",
+    "view": {
+      "count": "Count:",
+      "field": "Field"
+    }
+  },
+  "sustainedAttention": {
+    "name": "Sustained Attention Challenge",
+    "tagline": "Stay with the stream.",
+    "description": "Letters appear one at a time at a steady pace. Press “Now!” (or Space) each time the target appears — later, only when an X comes right after an A. Streams grow from 15 to 45 letters.",
+    "scoringSummary": "Each stream is scored on misses plus wrong presses; it counts as correct when that total is within the stated tolerance (0 to 2, depending on the level). Your result is the share of streams within tolerance.",
+    "accessibilityNotes": "Letters change at a fixed pace (0.8–1.5 s each, 50% slower in relaxed mode) and are announced to screen readers; nothing flashes. A press counts for the letter on screen at that moment.",
+    "instructions": {
+      "1": "Letters appear one at a time in the box. Keep watching until the stream ends.",
+      "2": "Press “Now!” or Space while the target letter is on screen.",
+      "3": "From level 5: press only for an X that comes right after an A.",
+      "4": "The stream submits itself at the end. A press counts for the letter shown at that moment."
+    },
+    "simpleInstructions": "Press the button every time you see the X.",
+    "levels": {
+      "1": "Press for every X in a stream of 15 letters.",
+      "2": "20 letters, a little quicker.",
+      "3": "Look-alike letters (K, Y) join the stream.",
+      "4": "30 letters with look-alikes.",
+      "5": "Press for an X only when it comes right after an A.",
+      "6": "A then X, with more lures.",
+      "7": "A then X, 35 letters.",
+      "8": "A then X among look-alikes.",
+      "9": "40 letters, brisk pace.",
+      "10": "45 letters, the longest watch."
+    },
+    "kinds": {
+      "single": "Single target",
+      "sequence": "Target after cue"
+    },
+    "prompt": {
+      "single": "Press “Now!” for every {{target}}.",
+      "sequence": "Press “Now!” for an {{target}} right after an {{cue}}."
+    },
+    "slips_one": "Up to {{count}} slip is allowed.",
+    "slips_other": "Up to {{count}} slips are allowed.",
+    "explanation": "There were {{count}} targets, at positions {{positions}}.",
+    "view": {
+      "rule": {
+        "single": "Press for every {{target}}.",
+        "sequence": "Press for an {{target}} right after an {{cue}}."
+      },
+      "legend": "The stream: ✓ pressed target · • missed target · ✗ wrong press",
+      "stream": "The stream",
+      "letter": "letter {{position}}, {{letter}}",
+      "target": "target",
+      "pressed": "you pressed",
+      "done": "Done",
+      "getReady": "Get ready…",
+      "letters_one": "{{count}} letters",
+      "letters_other": "{{count}} letters",
+      "recorded": "press recorded",
+      "now": "Now! (Space)"
+    }
+  },
+  "dualTask": {
+    "name": "Dual-Task Attention",
+    "tagline": "Two counts at once.",
+    "description": "Pairs of a number and a shape appear one at a time. Keep two running counts — for example even numbers and stars — then pick the option with both counts right.",
+    "scoringSummary": "A stream counts as correct when the chosen option has both counts right. Each count has two candidate values, so getting only one count right leaves a 50% guess. Answering is not timed.",
+    "accessibilityNotes": "From level 6 the shape count names a colour. Each pair is announced to screen readers (\"7, blue star\"); the pace (0.9–1.6 s per pair) doubles in relaxed mode.",
+    "instructions": {
+      "1": "Read both rules before the stream starts: one about numbers, one about shapes.",
+      "2": "Pairs appear one at a time. Keep two counts in your head.",
+      "3": "A pair can count for both rules, for one, or for neither.",
+      "4": "At the end, choose the option where both counts are right (keys 1–4)."
+    },
+    "simpleInstructions": "Count two things at once, then pick the right pair of numbers.",
+    "levels": {
+      "1": "Count even numbers and stars in 6 pairs.",
+      "2": "Two counts over 8 pairs.",
+      "3": "10 pairs; options now differ by one.",
+      "4": "Look-alike shapes join the stream.",
+      "5": "New number rule: count the numbers above 5.",
+      "6": "Only shapes of one colour count.",
+      "7": "Two-digit numbers above 50, coloured shapes.",
+      "8": "Even two-digit numbers, 16 pairs.",
+      "9": "18 pairs at a brisk pace.",
+      "10": "20 pairs, odd two-digit numbers."
+    },
+    "kinds": {
+      "parity": "Even/odd + shapes",
+      "threshold": "Big numbers + shapes"
+    },
+    "numbers": {
+      "even": "even numbers",
+      "odd": "odd numbers",
+      "above": "numbers above {{threshold}}"
+    },
+    "numberCount": {
+      "even_one": "{{count}} even number",
+      "even_other": "{{count}} even numbers",
+      "odd_one": "{{count}} odd number",
+      "odd_other": "{{count}} odd numbers",
+      "above_one": "{{count}} number above {{threshold}}",
+      "above_other": "{{count}} numbers above {{threshold}}"
+    },
+    "prompt": "Which option has both counts right?",
+    "studyPrompt": "Count the {{numbers}} AND the {{shapes}}.",
+    "explanation": "There were {{numbers}} and {{shapes}}.",
+    "view": {
+      "rules": "Count: {{numbers}} · {{shapes}}",
+      "getReady": "Get ready…",
+      "done": "Done — get ready to answer",
+      "pairs_one": "{{count}} pairs",
+      "pairs_other": "{{count}} pairs",
+      "legend": "The stream (# = counted number, ★ = counted shape):",
+      "stream": "The stream",
+      "counted": "(counted)"
+    }
+  },
+  "complexVisualInspection": {
+    "name": "Complex Visual Inspection",
+    "tagline": "Three features must all match.",
+    "description": "Inspect a dense grid and mark every item that matches a rule on three features at once — shape, colour and direction (later also mirroring and “any colour except…”). Most distractors break just one feature.",
+    "scoringSummary": "A grid counts as correct when your marks match the targets (missed targets and wrong marks are errors); from level 8 one error is tolerated. Your result is the share of grids solved; answering is not timed.",
+    "accessibilityNotes": "Rules name a colour, so playing visually needs colour vision; every item is also named with colour, shape and pose (\"green L shape, mirrored, turned left\") for screen readers. Direction is judged on the drawn shape, which takes careful looking.",
+    "instructions": {
+      "1": "Read the rule: a shape, a direction and a colour must ALL match.",
+      "2": "Most items break only one part of the rule — check each feature.",
+      "3": "“Mirrored” means flipped left-to-right; “turned right” means a quarter turn clockwise.",
+      "4": "Mark every match, then press Check. From level 7 you decide how many there are."
+    },
+    "simpleInstructions": "Tap the shapes that match the rule in every way.",
+    "levels": {
+      "1": "Shape, colour and direction: triangles up or down.",
+      "2": "Three shapes, two directions.",
+      "3": "All four directions.",
+      "4": "More colours, more look-alikes.",
+      "5": "L shapes: mirrored or not also counts.",
+      "6": "Lures in the nearest colour, 6×6.",
+      "7": "The number of targets is no longer given.",
+      "8": "Negated colour: any colour except one (one slip allowed).",
+      "9": "Negated rule with mirrored L shapes everywhere.",
+      "10": "Densest grid: 48 items, any rule."
+    },
+    "kinds": {
+      "positive": "Shape, colour and direction",
+      "negated": "Any colour except one"
+    },
+    "rule": {
+      "negated": "{{shapes}}, in any colour except {{color}}"
+    },
+    "prompt": {
+      "exact": "Mark all {{count}}: {{rule}}.",
+      "free": "Mark every match: {{rule}}. You decide how many.",
+      "freeWithSlip": "Mark every match: {{rule}}. You decide how many. One slip is allowed."
+    },
+    "explanation": "{{count}} items matched all features ({{rule}}). The rest differed in shape, colour or direction.",
+    "view": {
+      "rule": "Rule:",
+      "ruleExample": "Rule (e.g.):",
+      "items": "Items"
+    }
+  },
+  "errorDetection": {
+    "name": "Error Detection",
+    "tagline": "Proofread: exactly one thing is wrong.",
+    "description": "Proofread everyday lists — a sorted list, a shopping receipt, a day schedule, a word list, copied codes — and point at the single row that is wrong. Errors get smaller and lists longer.",
+    "scoringSummary": "A list counts as correct when you point at the one wrong row. Your result is the share of lists solved; answering is not timed.",
+    "accessibilityNotes": "Receipts and schedules need simple arithmetic (multiplying small quantities, adding prices, subtracting times). Word lists use common English words.",
+    "instructions": {
+      "1": "Read the rule above the list: it says what every row must satisfy.",
+      "2": "Check the rows one by one. Exactly one row breaks the rule.",
+      "3": "Press that row (or move with the arrow keys and press Enter).",
+      "4": "From level 7 errors are small: 10 cents, 5 minutes, an 0 instead of an O."
+    },
+    "simpleInstructions": "One line in the list is wrong. Find it and tap it.",
+    "levels": {
+      "1": "Find the number out of order in a short list.",
+      "2": "Find the misspelt word.",
+      "3": "Check a shopping receipt: one line total is wrong.",
+      "4": "Proofread copied codes.",
+      "5": "Check a day schedule: one length is wrong.",
+      "6": "Mixed lists, 7 rows.",
+      "7": "Receipts with a grand total; small errors.",
+      "8": "Codes with look-alike characters (0 and O, 8 and B).",
+      "9": "Mixed lists with small errors, 9 rows.",
+      "10": "Mixed lists with small errors, 10 rows."
+    },
+    "kinds": {
+      "sorted": "Sorted list",
+      "receipt": "Receipt",
+      "schedule": "Schedule",
+      "spelling": "Spelling",
+      "copy": "Copied codes"
+    },
+    "prompt": "Which row is wrong?",
+    "rule": {
+      "sortedNumbers": "The numbers should go from smallest to largest. One is out of place.",
+      "sortedWords": "The words should be in alphabetical order. One is out of place.",
+      "receipt": "Each line: quantity × price = line total. One line is wrong.",
+      "receiptWithTotal": "Each line: quantity × price = line total, and TOTAL is the sum of the lines. One row is wrong.",
+      "schedule": "Each slot states its length in minutes. One length does not match its times.",
+      "spelling": "Every word is a common English word. One is misspelt.",
+      "copy": "Each code on the right should be an exact copy of the one on the left. One copy is wrong."
+    },
+    "row": {
+      "receipt": "{{quantity}} × {{item}} @ {{price}} = {{total}}",
+      "total": "TOTAL = {{total}}",
+      "schedule": "{{start}}–{{end}}  {{activity}} ({{minutes}} min)"
+    },
+    "activity": {
+      "reading": "Reading",
+      "maths": "Maths",
+      "lunch": "Lunch",
+      "music": "Music",
+      "walk": "Walk",
+      "art": "Art",
+      "break": "Break",
+      "science": "Science",
+      "meeting": "Meeting",
+      "emails": "Emails",
+      "gym": "Gym",
+      "cooking": "Cooking",
+      "phoneCall": "Phone call",
+      "shopping": "Shopping"
+    },
+    "explanation": {
+      "sorted": "{{value}} is out of place: without it, the list is in order.",
+      "total": "The lines add up to {{sum}}, but TOTAL says {{total}}.",
+      "line": "{{quantity}} × {{price}} = {{right}}, not {{wrong}}.",
+      "schedule_one": "{{start}}–{{end}} is {{count}} minute, not {{stated}}.",
+      "schedule_other": "{{start}}–{{end}} is {{count}} minutes, not {{stated}}.",
+      "spelling": "“{{wrong}}” should be spelt “{{right}}”.",
+      "copy": "{{wrong}} is not {{original}}: character {{position}} is “{{replacement}}” instead of “{{char}}”."
+    },
+    "view": {
+      "row": "Row {{row}}: {{text}}",
+      "wrongRow": "wrong row",
+      "yourPick": "your pick"
+    }
+  }
+}

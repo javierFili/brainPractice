@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ObjectRecallProfile } from './types';
 
@@ -11,7 +12,7 @@ const look = (studied: number, msPerObject: number) =>
  */
 export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
   {
-    objective: 'Recognise 3 objects among 6.',
+    objective: msg('memory:objectRecall.levels.1'),
     challengeCount: 4,
     kind: 'mixed',
     studied: 3,
@@ -21,7 +22,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(3, 2000),
   },
   {
-    objective: 'Recognise 4 objects among 8.',
+    objective: msg('memory:objectRecall.levels.2'),
     challengeCount: 4,
     kind: 'mixed',
     studied: 4,
@@ -31,7 +32,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(4, 1800),
   },
   {
-    objective: 'Recognise 5 objects among 10.',
+    objective: msg('memory:objectRecall.levels.3'),
     challengeCount: 4,
     kind: 'mixed',
     studied: 5,
@@ -41,7 +42,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(5, 1600),
   },
   {
-    objective: 'Recognise 5 objects when the new ones are of the same kind.',
+    objective: msg('memory:objectRecall.levels.4'),
     challengeCount: 4,
     kind: 'family',
     studied: 5,
@@ -51,7 +52,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(5, 1600),
   },
   {
-    objective: 'Recognise 6 objects among 12.',
+    objective: msg('memory:objectRecall.levels.5'),
     challengeCount: 4,
     kind: 'mixed',
     studied: 6,
@@ -61,7 +62,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(6, 1400),
   },
   {
-    objective: 'Recognise 6 objects among 12 look-alikes from the same families.',
+    objective: msg('memory:objectRecall.levels.6'),
     challengeCount: 4,
     kind: 'family',
     studied: 6,
@@ -71,7 +72,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(6, 1300),
   },
   {
-    objective: 'Recognise 7 objects among 14 of the same families.',
+    objective: msg('memory:objectRecall.levels.7'),
     challengeCount: 3,
     kind: 'family',
     studied: 7,
@@ -81,7 +82,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(7, 1200),
   },
   {
-    objective: 'Recognise 8 objects among 16 with a shorter look.',
+    objective: msg('memory:objectRecall.levels.8'),
     challengeCount: 3,
     kind: 'family',
     studied: 8,
@@ -91,7 +92,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(8, 1000),
   },
   {
-    objective: 'Recognise 9 objects among 18 from three families.',
+    objective: msg('memory:objectRecall.levels.9'),
     challengeCount: 3,
     kind: 'family',
     studied: 9,
@@ -101,7 +102,7 @@ export const OBJECT_RECALL_LEVELS = defineLevels<ObjectRecallProfile>([
     timing: look(9, 900),
   },
   {
-    objective: 'Recognise 10 objects among 20 with a brief look.',
+    objective: msg('memory:objectRecall.levels.10'),
     challengeCount: 3,
     kind: 'family',
     studied: 10,

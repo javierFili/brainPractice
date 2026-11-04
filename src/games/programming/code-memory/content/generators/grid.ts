@@ -1,7 +1,8 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, sample, type RandomGenerator } from '@/domain/random';
-import { describeCell } from '../format';
+import { msg } from '@/domain/shared';
+import { cellLabelAt } from '@/games/kit/content';
 import type { CodeMemoryProfile } from '../types';
 import { KEYWORD_FAMILIES } from '../vocabulary';
 import type { MemoryDraft } from './draft';
@@ -42,16 +43,23 @@ export function positionRecall(random: RandomGenerator, profile: CodeMemoryProfi
     const target = pick(random, similarKeywords ? withTwin : words);
     const index = cells.indexOf(target);
     const twin = similarKeywords ? twinOf(target) : undefined;
-    const lure =
-      twin === undefined
-        ? ''
-        : ` The look-alike ${twin} was in ${describeCell(cells.indexOf(twin), cols)}.`;
 
     return {
-      prompt: `Where was the keyword “${target}”? Select its cell.`,
+      prompt: msg('programming:codeMemory.position.prompt', { keyword: target }),
       content: { kind: 'position-recall', rows, cols, cells, target },
       response: locateResponse(cellCount, index),
-      explanation: `${target} was in ${describeCell(index, cols)}.${lure}`,
+      explanation:
+        twin === undefined
+          ? msg('programming:codeMemory.position.explanation', {
+              keyword: target,
+              cell: cellLabelAt(index, cols),
+            })
+          : msg('programming:codeMemory.position.explanationTwin', {
+              keyword: target,
+              cell: cellLabelAt(index, cols),
+              twin,
+              twinCell: cellLabelAt(cells.indexOf(twin), cols),
+            }),
       skills: ['working-memory', 'attention'],
     };
   });

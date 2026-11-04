@@ -1,11 +1,13 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { pairsTally, type Answer, type ResponseOf } from '@/domain/challenge';
+import { msg, type Text } from '@/domain/shared';
 import { CellGrid, type CellState } from './CellGrid';
 
 interface Props {
   readonly response: ResponseOf<'pairs'>;
   /** Face of each card (shown when turned over) and its spoken name. */
-  readonly faces: readonly { readonly content: ReactNode; readonly label: string }[];
+  readonly faces: readonly { readonly content: ReactNode; readonly label: Text }[];
   readonly columns: number;
   readonly respond: ((answer: Answer) => void) | null;
   readonly answer: Answer | null;
@@ -29,6 +31,7 @@ export function PairsBoard({
   revealAll,
   mismatchMs = 900,
 }: Props) {
+  const { t } = useTranslation('kit');
   const [attempts, setAttempts] = useState<readonly (readonly [number, number])[]>([]);
   const [open, setOpen] = useState<readonly number[]>([]);
   const { pairs } = response.solution;
@@ -79,7 +82,9 @@ export function PairsBoard({
           : 'idle';
     return {
       key: String(index),
-      label: visible ? `card ${index + 1}, ${face.label}` : `card ${index + 1}, face down`,
+      label: visible
+        ? msg('kit:pairs.card', { position: index + 1, face: face.label })
+        : msg('kit:pairs.cardFaceDown', { position: index + 1 }),
       content: visible ? (
         <span className="animate-flip">{face.content}</span>
       ) : (
@@ -96,14 +101,13 @@ export function PairsBoard({
       <CellGrid
         cells={cells}
         columns={columns}
-        label="Cards"
+        label={msg('kit:pairs.cards')}
         {...(respond !== null && !revealAll ? { onPress: press } : {})}
         disabled={respond === null}
       />
       {!revealAll && (
         <p aria-live="polite" className="text-sm text-ink-muted">
-          {found} of {pairs.length} pairs found · {misses} of {maxMisses}{' '}
-          {maxMisses === 1 ? 'miss' : 'misses'} allowed
+          {t('pairs.status', { found, total: pairs.length, misses, count: maxMisses })}
         </p>
       )}
     </div>

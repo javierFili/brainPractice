@@ -1,0 +1,854 @@
+{
+  "shared": {
+    "missing": "Manquant (c’est ce que vous choisissez)",
+    "colour": {
+      "m": {
+        "red": "rouge",
+        "orange": "orange",
+        "yellow": "jaune",
+        "green": "vert",
+        "blue": "bleu",
+        "purple": "violet"
+      },
+      "f": {
+        "red": "rouge",
+        "orange": "orange",
+        "yellow": "jaune",
+        "green": "verte",
+        "blue": "bleue",
+        "purple": "violette"
+      },
+      "n": {
+        "red": "rouge",
+        "orange": "orange",
+        "yellow": "jaune",
+        "green": "vert",
+        "blue": "bleu",
+        "purple": "violet"
+      },
+      "mp": {
+        "red": "rouges",
+        "orange": "orange",
+        "yellow": "jaunes",
+        "green": "verts",
+        "blue": "bleus",
+        "purple": "violets"
+      },
+      "fp": {
+        "red": "rouges",
+        "orange": "orange",
+        "yellow": "jaunes",
+        "green": "vertes",
+        "blue": "bleues",
+        "purple": "violettes"
+      },
+      "np": {
+        "red": "rouges",
+        "orange": "orange",
+        "yellow": "jaunes",
+        "green": "verts",
+        "blue": "bleus",
+        "purple": "violets"
+      },
+      "w": {
+        "red": "rouge",
+        "orange": "orange",
+        "yellow": "jaune",
+        "green": "vert",
+        "blue": "bleu",
+        "purple": "violet"
+      }
+    },
+    "shape": {
+      "circle": "cercle",
+      "square": "carré",
+      "triangle": "triangle",
+      "diamond": "losange",
+      "star": "étoile",
+      "hexagon": "hexagone",
+      "heart": "cœur",
+      "cross": "croix",
+      "arrow": "flèche"
+    },
+    "shapes": {
+      "circle": "cercles",
+      "square": "carrés",
+      "triangle": "triangles",
+      "diamond": "losanges",
+      "star": "étoiles",
+      "hexagon": "hexagones",
+      "heart": "cœurs",
+      "cross": "croix",
+      "arrow": "flèches"
+    },
+    "figureOne": {
+      "circle": "cercle $t(patterns:shared.colour.m.{{color}})",
+      "square": "carré $t(patterns:shared.colour.m.{{color}})",
+      "triangle": "triangle $t(patterns:shared.colour.m.{{color}})",
+      "diamond": "losange $t(patterns:shared.colour.m.{{color}})",
+      "star": "étoile $t(patterns:shared.colour.f.{{color}})",
+      "hexagon": "hexagone $t(patterns:shared.colour.m.{{color}})",
+      "heart": "cœur $t(patterns:shared.colour.m.{{color}})",
+      "cross": "croix $t(patterns:shared.colour.f.{{color}})",
+      "arrow": "flèche $t(patterns:shared.colour.f.{{color}})"
+    },
+    "figure": {
+      "circle_one": "{{count}} cercle $t(patterns:shared.colour.m.{{color}})",
+      "circle_other": "{{count}} cercles $t(patterns:shared.colour.mp.{{color}})",
+      "square_one": "{{count}} carré $t(patterns:shared.colour.m.{{color}})",
+      "square_other": "{{count}} carrés $t(patterns:shared.colour.mp.{{color}})",
+      "triangle_one": "{{count}} triangle $t(patterns:shared.colour.m.{{color}})",
+      "triangle_other": "{{count}} triangles $t(patterns:shared.colour.mp.{{color}})",
+      "diamond_one": "{{count}} losange $t(patterns:shared.colour.m.{{color}})",
+      "diamond_other": "{{count}} losanges $t(patterns:shared.colour.mp.{{color}})",
+      "star_one": "{{count}} étoile $t(patterns:shared.colour.f.{{color}})",
+      "star_other": "{{count}} étoiles $t(patterns:shared.colour.fp.{{color}})",
+      "hexagon_one": "{{count}} hexagone $t(patterns:shared.colour.m.{{color}})",
+      "hexagon_other": "{{count}} hexagones $t(patterns:shared.colour.mp.{{color}})",
+      "heart_one": "{{count}} cœur $t(patterns:shared.colour.m.{{color}})",
+      "heart_other": "{{count}} cœurs $t(patterns:shared.colour.mp.{{color}})",
+      "cross_one": "{{count}} croix $t(patterns:shared.colour.f.{{color}})",
+      "cross_other": "{{count}} croix $t(patterns:shared.colour.fp.{{color}})",
+      "arrow_one": "{{count}} flèche $t(patterns:shared.colour.f.{{color}})",
+      "arrow_other": "{{count}} flèches $t(patterns:shared.colour.fp.{{color}})"
+    },
+    "pointing": {
+      "up": "{{figure}} vers le haut",
+      "right": "{{figure}} vers la droite",
+      "down": "{{figure}} vers le bas",
+      "left": "{{figure}} vers la gauche"
+    },
+    "direction": {
+      "up": "vers le haut",
+      "right": "vers la droite",
+      "down": "vers le bas",
+      "left": "vers la gauche"
+    },
+    "grid": {
+      "empty": "vide",
+      "describe": "grille de {{rows}} sur {{cols}} ; {{lines}}",
+      "rowEmpty": "ligne {{row}} vide",
+      "rowFilled_one": "ligne {{row}} remplie en colonne {{columns}}",
+      "rowFilled_other": "ligne {{row}} remplie en colonnes {{columns}}",
+      "rowTiles": "ligne {{row}} : {{tiles}}",
+      "tileInColumn": "{{tile}} en colonne {{column}}"
+    },
+    "theFigure": {
+      "circle": "Le cercle $t(patterns:shared.colour.m.{{color}})",
+      "square": "Le carré $t(patterns:shared.colour.m.{{color}})",
+      "triangle": "Le triangle $t(patterns:shared.colour.m.{{color}})",
+      "diamond": "Le losange $t(patterns:shared.colour.m.{{color}})",
+      "star": "L’étoile $t(patterns:shared.colour.f.{{color}})",
+      "hexagon": "L’hexagone $t(patterns:shared.colour.m.{{color}})",
+      "heart": "Le cœur $t(patterns:shared.colour.m.{{color}})",
+      "cross": "La croix $t(patterns:shared.colour.f.{{color}})",
+      "arrow": "La flèche $t(patterns:shared.colour.f.{{color}})"
+    }
+  },
+  "visualPatternCompletion": {
+    "name": "Compléter des suites visuelles",
+    "tagline": "Qu’est-ce qui vient ensuite dans la rangée ?",
+    "description": "Une rangée de formes colorées suit une logique : un bloc qui se répète, un nombre de formes qui augmente, une flèche qui tourne, ou des formes et des couleurs qui suivent des cycles distincts. Choisissez la figure qui vient ensuite.",
+    "scoringSummary": "Chaque rangée est correcte lorsque vous choisissez la figure qui la prolonge. Votre résultat est la part de rangées correctement prolongées ; il n’y a pas de limite de temps.",
+    "simpleInstructions": "Trouvez la logique et choisissez ce qui vient ensuite.",
+    "instructions": {
+      "1": "Regardez la rangée de gauche à droite et cherchez ce qui se répète ou change.",
+      "2": "Vérifiez chaque caractéristique séparément : forme, couleur, nombre et direction d’une flèche.",
+      "3": "Choisissez la figure qui vient ensuite. Les touches 1 à 8 sélectionnent une option."
+    },
+    "levels": {
+      "1": "Prolongez une suite de deux figures qui alternent.",
+      "2": "Prolongez un bloc de trois figures.",
+      "3": "Des blocs avec des répétitions internes, comme AABB.",
+      "4": "Une suite qui grandit : une de plus à chaque fois.",
+      "5": "Des blocs plus longs qui peuvent commencer au milieu.",
+      "6": "Les formes et les couleurs suivent deux cycles distincts.",
+      "7": "Des flèches qui tournent toujours du même pas pendant que les couleurs se répètent.",
+      "8": "Deux cycles de longueurs différentes, avec plus d’options.",
+      "9": "Les quantités changent pas à pas pendant que les formes suivent un cycle.",
+      "10": "Trois caractéristiques changent à la fois : forme, couleur et quantité."
+    },
+    "kinds": {
+      "repeat": "Blocs qui se répètent",
+      "two-rules": "Deux cycles distincts",
+      "growing": "Grandir et tourner"
+    },
+    "prompt": "Qu’est-ce qui vient ensuite dans la rangée ?",
+    "explanation": "{{rule}} La suivante est donc : {{answer}}.",
+    "rule": {
+      "repeat": "Le bloc {{block}} se répète encore et encore.",
+      "parts": "{{parts}}."
+    },
+    "partStart": {
+      "countUp": "Le nombre de formes augmente de un à chaque fois",
+      "countDown": "Le nombre de formes diminue de un à chaque fois",
+      "turnClockwise": "La flèche tourne d’un quart de tour dans le sens horaire à chaque fois",
+      "turnAnticlockwise": "La flèche tourne d’un quart de tour dans le sens antihoraire à chaque fois",
+      "shapes_one": "Les formes se répètent toutes les {{count}} : {{cycle}}",
+      "shapes_other": "Les formes se répètent toutes les {{count}} : {{cycle}}",
+      "colours_one": "Les couleurs se répètent toutes les {{count}} : {{cycle}}",
+      "colours_other": "Les couleurs se répètent toutes les {{count}} : {{cycle}}"
+    },
+    "part": {
+      "countUp": "le nombre de formes augmente de un à chaque fois",
+      "countDown": "le nombre de formes diminue de un à chaque fois",
+      "turnClockwise": "la flèche tourne d’un quart de tour dans le sens horaire à chaque fois",
+      "turnAnticlockwise": "la flèche tourne d’un quart de tour dans le sens antihoraire à chaque fois",
+      "shapes_one": "les formes se répètent toutes les {{count}} : {{cycle}}",
+      "shapes_other": "les formes se répètent toutes les {{count}} : {{cycle}}",
+      "colours_one": "les couleurs se répètent toutes les {{count}} : {{cycle}}",
+      "colours_other": "les couleurs se répètent toutes les {{count}} : {{cycle}}"
+    },
+    "view": {
+      "row": "Rangée du motif, de gauche à droite",
+      "next": "Figure suivante (inconnue)"
+    }
+  },
+  "numberPatternCompletion": {
+    "name": "Compléter des suites de nombres",
+    "tagline": "Trouvez le nombre manquant dans des grilles, pyramides, roues et croix.",
+    "description": "Des nombres sont disposés en grilles, pyramides, roues et croix, et chaque disposition suit une règle : des lignes qui s’additionnent, des briques qui valent la somme des deux du dessous, des secteurs opposés liés, des centres calculés à partir des bras. Trouvez la règle et tapez le nombre manquant.",
+    "scoringSummary": "Chaque disposition est correcte lorsque vous tapez exactement le nombre manquant. Votre résultat est la part de dispositions correctement complétées ; il n’y a pas de limite de temps.",
+    "simpleInstructions": "Trouvez la règle et tapez le nombre manquant.",
+    "instructions": {
+      "1": "Chaque disposition cache un nombre, marqué « ? ». Trouvez la règle que suivent les autres nombres.",
+      "2": "Grilles : comparez les lignes et les colonnes. Pyramides : chaque brique est la somme des deux du dessous.",
+      "3": "Roues : regardez les nombres des côtés opposés. Croix : le centre vient des quatre bras, de la même façon dans chaque croix.",
+      "4": "Tapez le nombre manquant et appuyez sur Entrée."
+    },
+    "levels": {
+      "1": "Chaque ligne s’additionne : le premier plus le deuxième donne le troisième.",
+      "2": "Des sommes en lignes ou en colonnes, avec le trou n’importe où.",
+      "3": "Pyramides de nombres : chaque brique est la somme des deux du dessous.",
+      "4": "Des lignes qui soustraient ou avancent d’un pas fixe.",
+      "5": "Roues : les secteurs opposés ont un lien caché.",
+      "6": "Des pyramides plus grandes où il faut parfois remonter à l’envers.",
+      "7": "Des grilles où lignes et colonnes fonctionnent ensemble.",
+      "8": "Croix : trouvez comment les bras donnent le centre.",
+      "9": "Des pyramides avec plus de briques vides, et des dispositions mélangées.",
+      "10": "Toutes les dispositions, avec des produits et des pyramides de cinq briques."
+    },
+    "kinds": {
+      "grid": "Grilles de nombres",
+      "pyramid": "Pyramides de nombres",
+      "wheel": "Roues de nombres",
+      "cross": "Croix de nombres"
+    },
+    "grid": {
+      "prompt": "Trouvez la règle dans les lignes ou les colonnes. Quel nombre manque ?",
+      "explanation": "{{rule}} Ici, {{working}}.",
+      "rule": {
+        "row-sum": "Dans chaque ligne, le premier nombre plus le deuxième donne le troisième.",
+        "column-sum": "Dans chaque colonne, le nombre du haut plus celui du milieu donne celui du bas.",
+        "row-difference": "Dans chaque ligne, le premier nombre moins le deuxième donne le troisième.",
+        "column-difference": "Dans chaque colonne, le nombre du haut moins celui du milieu donne celui du bas.",
+        "row-step": "Chaque ligne monte ou descend d’un pas fixe qui lui est propre, de gauche à droite.",
+        "column-step": "Chaque colonne monte ou descend d’un pas fixe qui lui est propre, de haut en bas.",
+        "row-product": "Dans chaque ligne, le premier nombre fois le deuxième donne le troisième.",
+        "column-product": "Dans chaque colonne, le nombre du haut fois celui du milieu donne celui du bas.",
+        "add-table": "Passer d’une colonne à une autre ajoute la même quantité dans chaque ligne (et passer d’une ligne à une autre ajoute la même quantité dans chaque colonne).",
+        "row-total": "Toutes les lignes ont le même total.",
+        "column-total": "Toutes les colonnes ont le même total."
+      },
+      "working": {
+        "table": "le nombre manquant est {{answer}}",
+        "rowTotal": "le total est {{total}}, donc dans la ligne {{row}} le nombre manquant est {{answer}}",
+        "columnTotal": "le total est {{total}}, donc dans la colonne {{column}} le nombre manquant est {{answer}}",
+        "row": "dans la ligne {{row}} ({{shown}}) le nombre manquant est {{answer}}",
+        "column": "dans la colonne {{column}} ({{shown}}) le nombre manquant est {{answer}}"
+      }
+    },
+    "pyramid": {
+      "prompt": "Chaque brique est la somme des deux briques du dessous. Quel nombre va dans la brique marquée « ? » ?",
+      "explanation": "Chaque brique est la somme des deux du dessous. Étape par étape : {{steps}}. Donc « ? » vaut {{answer}}."
+    },
+    "wheel": {
+      "prompt": "Trouvez le lien entre les nombres opposés de la roue. Quel nombre manque ?",
+      "explanation": {
+        "sum": "Les secteurs opposés font toujours {{k}} au total. Le secteur opposé au trou vaut {{partner}}, donc le nombre manquant est {{k}} − {{partner}} = {{answer}}.",
+        "difference_one": "Le premier secteur (dans le sens horaire depuis le haut) vaut {{k}} de plus que le secteur opposé. Le secteur opposé au trou vaut {{partner}}, donc le nombre manquant est {{working}} = {{answer}}.",
+        "difference_other": "Chacun des {{count}} premiers secteurs (dans le sens horaire depuis le haut) vaut {{k}} de plus que le secteur opposé. Le secteur opposé au trou vaut {{partner}}, donc le nombre manquant est {{working}} = {{answer}}."
+      }
+    },
+    "cross": {
+      "prompt": "Le centre de chaque croix vient de ses quatre bras, toujours de la même façon. Quel est le centre manquant ?",
+      "explanation": "{{rule}}. Dans la dernière croix : {{working}} = {{answer}}.",
+      "rule": {
+        "sum": "Le centre est la somme des quatre bras",
+        "vertical-minus-horizontal": "Le centre vaut (haut + bas) − (gauche + droite)",
+        "product-sum": "Le centre vaut haut × bas + gauche × droite",
+        "product-difference": "Le centre vaut haut × bas − gauche × droite"
+      }
+    },
+    "view": {
+      "blank": "vide",
+      "missingNumber": "nombre manquant",
+      "missing": "manquant",
+      "gridCaption": "Grille de nombres, 3 lignes sur 3 colonnes, avec un nombre manquant",
+      "pyramid": "Pyramide de nombres, de la brique du haut vers le bas",
+      "pyramidRow": "Rangée {{row}} depuis le haut",
+      "wheel": "Roue de {{segments}} secteurs, dans le sens horaire depuis le haut : {{values}}. Le secteur 1 est opposé au secteur {{opposite}}.",
+      "cross": "Croix {{index}} : haut {{top}}, droite {{right}}, bas {{bottom}}, gauche {{left}}, centre {{centre}}",
+      "crosses": "Croix de nombres"
+    }
+  },
+  "shapeRotation": {
+    "name": "Rotation de formes",
+    "tagline": "Faites-la tourner dans votre tête.",
+    "description": "Une pièce faite de carrés est affichée. Trouvez l’option qui est la même pièce tournée. À partir du niveau 2, chaque pièce apparaît aussi en image miroir, très ressemblante mais impossible à obtenir sans retourner la pièce.",
+    "scoringSummary": "Chaque pièce est correcte lorsque vous choisissez la copie tournée. Votre résultat est la part de pièces correctement associées ; il n’y a pas de limite de temps.",
+    "accessibilityNotes": "Les pièces sont lues à voix haute ligne par ligne (quelles colonnes sont remplies), ce qui rend la rotation mentale bien plus difficile qu’avec le dessin.",
+    "simpleInstructions": "Trouvez la même forme, simplement tournée.",
+    "instructions": {
+      "1": "Regardez la pièce. Imaginez-la tourner sur la table, comme une pièce de puzzle.",
+      "2": "Choisissez l’option qui est la même pièce, tournée. La retourner n’est pas permis.",
+      "3": "Les images miroir se ressemblent presque : vérifiez où dépasse le carré isolé.",
+      "4": "Les touches 1 à 8 sélectionnent une option."
+    },
+    "levels": {
+      "1": "Trouvez la même pièce, tournée, parmi des pièces différentes.",
+      "2": "Distinguez une pièce tournée de son image miroir.",
+      "3": "Images miroir et pièces qui diffèrent d’un carré.",
+      "4": "Des pièces plus grandes, de 6 carrés.",
+      "5": "Des pièces de 6 carrés qui diffèrent d’un carré.",
+      "6": "Des pièces de 6 carrés parmi six options.",
+      "7": "Des pièces semblables de 6 carrés qui diffèrent d’un carré.",
+      "8": "De grandes pièces de 7 carrés.",
+      "9": "Des pièces semblables de 7 carrés qui diffèrent d’un carré.",
+      "10": "Huit options : quatre pièces semblables de 7 carrés et leurs images miroir."
+    },
+    "kinds": {
+      "pieces": "Pièces différentes",
+      "mirrors": "Rotations ou images miroir"
+    },
+    "prompt": "Quelle option est la même pièce, seulement tournée (sans la retourner) ?",
+    "turn": {
+      "cw": "d’un quart de tour dans le sens horaire",
+      "180": "d’un demi-tour",
+      "ccw": "d’un quart de tour dans le sens antihoraire"
+    },
+    "explanation": {
+      "mirrors": "La réponse est la pièce tournée {{turn}}. Chaque pièce semblable est une image miroir : pour la faire correspondre, il faudrait retourner la pièce, et une rotation n’y parvient jamais. Les autres options sont des pièces différentes.",
+      "pieces": "La réponse est la pièce tournée {{turn}}. Les autres options sont des pièces différentes : aucune rotation ne les fait correspondre."
+    },
+    "view": {
+      "piece": "Pièce à tourner : {{grid}}",
+      "mirrors": "Tournez-la, ne la retournez pas : les images miroir ne comptent pas.",
+      "pieces": "Trouvez cette pièce, tournée."
+    }
+  },
+  "matrixReasoning": {
+    "name": "Raisonnement matriciel",
+    "tagline": "Trouvez les règles des lignes et des colonnes.",
+    "description": "Une grille de figures avec une case manquante. La forme, la couleur, le nombre et la direction suivent chacun leur propre règle le long des lignes et des colonnes. Trouvez toutes les règles et choisissez la figure qui comble le trou.",
+    "scoringSummary": "Chaque matrice est correcte lorsque vous choisissez la figure qui respecte toutes les règles. Votre résultat est la part de matrices correctement complétées ; il n’y a pas de limite de temps.",
+    "simpleInstructions": "Regardez les lignes et les colonnes et choisissez l’image qui comble le trou.",
+    "instructions": {
+      "1": "Regardez une caractéristique à la fois : forme, couleur, nombre et direction des flèches.",
+      "2": "Chaque caractéristique suit sa propre règle : identique le long d’une ligne, identique le long d’une colonne, une fois dans chaque ligne et colonne, ou un pas de plus à chaque case.",
+      "3": "Choisissez la figure qui respecte toutes les règles à l’emplacement vide. Chaque mauvaise option enfreint au moins une règle."
+    },
+    "levels": {
+      "1": "Complétez une matrice 2×2 où une caractéristique change.",
+      "2": "Une matrice 2×2 où forme et couleur suivent des règles différentes.",
+      "3": "Une matrice 3×3 : lignes ou colonnes partagent une caractéristique.",
+      "4": "Une matrice 3×3 où forme et couleur suivent toutes deux des règles.",
+      "5": "Chaque valeur une fois dans chaque ligne et colonne.",
+      "6": "Le nombre de formes s’en mêle, parfois en augmentant.",
+      "7": "Trois caractéristiques à la fois, et le trou peut être n’importe où.",
+      "8": "Des flèches qui tournent pas à pas, avec des règles de couleur et de nombre.",
+      "9": "Trois caractéristiques, uniquement des carrés latins et des pas, huit options.",
+      "10": "Flèches ou formes, chaque caractéristique avec sa propre règle difficile, huit options."
+    },
+    "kinds": {
+      "shapes-colours": "Formes et couleurs",
+      "counts": "Formes, couleurs et nombres",
+      "arrows": "Flèches qui tournent"
+    },
+    "prompt": "Quelle figure complète la matrice ?",
+    "explanation": "{{rules}} La case manquante (ligne {{row}}, colonne {{column}}) est donc : {{answer}}.",
+    "line": {
+      "shape": "Forme : {{rule}}.",
+      "color": "Couleur : {{rule}}.",
+      "count": "Nombre de formes : {{rule}}.",
+      "rotation": "Direction : {{rule}}."
+    },
+    "layout": {
+      "shape": {
+        "byRow": "chaque ligne garde une seule forme ({{list}}, de haut en bas)",
+        "byColumn": "chaque colonne garde une seule forme ({{list}}, de gauche à droite)",
+        "latin": "les formes {{list}} apparaissent une fois dans chaque ligne et chaque colonne",
+        "constant": "chaque case a la même forme : {{value}}"
+      },
+      "color": {
+        "byRow": "chaque ligne garde une seule couleur ({{list}}, de haut en bas)",
+        "byColumn": "chaque colonne garde une seule couleur ({{list}}, de gauche à droite)",
+        "latin": "les couleurs {{list}} apparaissent une fois dans chaque ligne et chaque colonne",
+        "constant": "chaque case a la même couleur : {{value}}"
+      },
+      "count": {
+        "byRow": "chaque ligne garde un seul nombre de formes ({{list}}, de haut en bas)",
+        "byColumn": "chaque colonne garde un seul nombre de formes ({{list}}, de gauche à droite)",
+        "latin": "les nombres {{list}} apparaissent une fois dans chaque ligne et chaque colonne",
+        "constant": "chaque case a le même nombre de formes : {{value}}",
+        "stepRowMore": "le long de chaque ligne, de gauche à droite, il y a une forme de plus dans chaque case",
+        "stepRowFewer": "le long de chaque ligne, de gauche à droite, il y a une forme de moins dans chaque case",
+        "stepColumnMore": "en descendant chaque colonne, il y a une forme de plus dans chaque case",
+        "stepColumnFewer": "en descendant chaque colonne, il y a une forme de moins dans chaque case"
+      },
+      "rotation": {
+        "byRow": "chaque ligne garde une seule direction ({{list}}, de haut en bas)",
+        "byColumn": "chaque colonne garde une seule direction ({{list}}, de gauche à droite)",
+        "latin": "les directions {{list}} apparaissent une fois dans chaque ligne et chaque colonne",
+        "constant": "chaque case a la même direction : {{value}}",
+        "stepRowClockwise": "le long de chaque ligne, de gauche à droite, la flèche tourne d’un quart de tour dans le sens horaire d’une case à l’autre",
+        "stepRowAnticlockwise": "le long de chaque ligne, de gauche à droite, la flèche tourne d’un quart de tour dans le sens antihoraire d’une case à l’autre",
+        "stepColumnClockwise": "en descendant chaque colonne, la flèche tourne d’un quart de tour dans le sens horaire d’une case à l’autre",
+        "stepColumnAnticlockwise": "en descendant chaque colonne, la flèche tourne d’un quart de tour dans le sens antihoraire d’une case à l’autre"
+      }
+    },
+    "view": {
+      "matrix": "Matrice de {{size}} lignes sur {{size}} colonnes, une case manquante",
+      "missingAt": "Ligne {{row}}, colonne {{column}} : manquante",
+      "cell": "Ligne {{row}}, colonne {{column}} : {{figure}}",
+      "missing": "Case manquante"
+    }
+  },
+  "sequencePrediction": {
+    "name": "Prédiction de séquences",
+    "tagline": "Où sera-t-il ensuite ?",
+    "description": "Quelques images montrent des marques qui se déplacent sur une grille ou des flèches qui tournent, toujours du même pas. Trouvez chaque pas et choisissez l’image qui suit. Les niveaux élevés combinent déplacement et rotation, traversent les bords et suivent deux marques à la fois.",
+    "scoringSummary": "Chaque séquence est correcte lorsque vous choisissez l’image qui la prolonge. Votre résultat est la part de séquences correctement prédites ; il n’y a pas de limite de temps.",
+    "simpleInstructions": "Regardez comment la forme se déplace, puis choisissez où elle va ensuite.",
+    "instructions": {
+      "1": "Observez comment chaque marque change d’une image à l’autre : de combien elle se déplace et dans quel sens une flèche tourne.",
+      "2": "Chaque marque garde le même pas dans toutes les images.",
+      "3": "Quand le niveau l’indique, une marque qui sort par un bord revient par le bord opposé.",
+      "4": "Choisissez l’image suivante. Les touches 1 à 8 sélectionnent une option."
+    },
+    "levels": {
+      "1": "Une forme glisse d’une case à chaque fois. Où sera-t-elle ensuite ?",
+      "2": "Les déplacements peuvent être en diagonale.",
+      "3": "Une flèche tourne toujours de la même quantité.",
+      "4": "Une flèche glisse et tourne en même temps.",
+      "5": "Les marques qui sortent par un bord reviennent par le bord opposé.",
+      "6": "Des pas plus longs, jusqu’à deux cases, en traversant les bords.",
+      "7": "Deux marques, chacune avec son propre pas.",
+      "8": "Une flèche se déplace, tourne et traverse les bords.",
+      "9": "Deux marques : l’une glisse, l’autre se déplace et tourne.",
+      "10": "Deux marques avec leurs propres pas, qui tournent et traversent les bords."
+    },
+    "kinds": {
+      "move": "Marques qui se déplacent",
+      "rotate": "Flèches qui tournent",
+      "move-rotate": "Se déplacer et tourner",
+      "two-marks": "Deux marques à la fois"
+    },
+    "mark": "{{figure}} en ligne {{row}}, colonne {{column}}",
+    "frame": "{{marks}}",
+    "step": {
+      "right_one": "de {{count}} case vers la droite",
+      "right_other": "de {{count}} cases vers la droite",
+      "left_one": "de {{count}} case vers la gauche",
+      "left_other": "de {{count}} cases vers la gauche",
+      "down_one": "de {{count}} case vers le bas",
+      "down_other": "de {{count}} cases vers le bas",
+      "up_one": "de {{count}} case vers le haut",
+      "up_other": "de {{count}} cases vers le haut"
+    },
+    "describe": {
+      "move": "{{name}} se déplace {{steps}} à chaque image",
+      "turn": {
+        "clockwise": "{{name}} tourne d’un quart de tour dans le sens horaire à chaque image",
+        "anticlockwise": "{{name}} tourne d’un quart de tour dans le sens antihoraire à chaque image"
+      },
+      "moveTurn": {
+        "clockwise": "{{name}} se déplace {{steps}} et tourne d’un quart de tour dans le sens horaire à chaque image",
+        "anticlockwise": "{{name}} se déplace {{steps}} et tourne d’un quart de tour dans le sens antihoraire à chaque image"
+      }
+    },
+    "prompt": {
+      "plain": "Quelle image vient ensuite ?",
+      "wrap": "Quelle image vient ensuite ? Les marques qui sortent par un bord reviennent par le bord opposé."
+    },
+    "explanation": {
+      "plain": "{{moves}}. L’image suivante montre donc : {{answer}}.",
+      "wrap": "{{moves}}, en traversant les bords. L’image suivante montre donc : {{answer}}."
+    },
+    "view": {
+      "frames": "Images, dans l’ordre",
+      "frame": "Image {{index}}",
+      "frameLabel": "Image {{index}} : {{marks}}",
+      "next": "Ensuite",
+      "nextFrame": "Image suivante (inconnue)",
+      "wrap": "Les marques qui sortent par un bord reviennent par le bord opposé."
+    }
+  },
+  "symmetryRecognition": {
+    "name": "Reconnaissance de symétries",
+    "tagline": "Pliez-le dans votre tête.",
+    "description": "Décidez si un motif a un axe de symétrie — vertical, horizontal, les deux ou aucun — et dessinez la moitié miroir manquante d’une image. Les niveaux élevés utilisent des tuiles colorées, des motifs presque symétriques et des moitiés sans indication du nombre de cases.",
+    "scoringSummary": "Un motif est correct lorsque vous indiquez exactement ses axes de symétrie, ou lorsque les cases que vous marquez (et aucune autre) complètent la moitié miroir. Votre résultat est la part de motifs corrects ; il n’y a pas de limite de temps.",
+    "accessibilityNotes": "Les motifs sont lus à voix haute ligne par ligne ; vérifier un axe de symétrie à l’oreille oblige à comparer des lignes ou des colonnes depuis les deux extrémités.",
+    "simpleInstructions": "Pliez l’image dans votre tête : les deux moitiés correspondent-elles ?",
+    "instructions": {
+      "1": "Un axe de symétrie partage un motif en deux moitiés qui se correspondent comme un reflet, comme si vous pliiez la feuille.",
+      "2": "Repérer : choisissez les axes de symétrie du motif. Vérifiez chaque case : une seule suffit à tout casser. Les tuiles doivent correspondre en forme et en couleur.",
+      "3": "Dessiner : marquez les cases de la moitié vide pour qu’elle reflète la moitié donnée, puis appuyez sur Vérifier.",
+      "4": "Clavier : les touches 1 à 4 choisissent une réponse ; les flèches passent d’une case à l’autre et Entrée marque une case."
+    },
+    "levels": {
+      "1": "Le côté gauche est-il le reflet du côté droit ?",
+      "2": "Dessinez le reflet d’une petite moitié.",
+      "3": "Trouvez tous les axes : gauche–droite, haut–bas, les deux ou aucun.",
+      "4": "Dessinez le reflet d’une moitié plus grande.",
+      "5": "Repérez les motifs presque symétriques, avec deux cases déplacées.",
+      "6": "Symétrie par rapport à un axe horizontal : dessinez la moitié du bas.",
+      "7": "Tuiles colorées : les formes aussi doivent se refléter.",
+      "8": "Dessinez la moitié miroir sans savoir combien de cases marquer.",
+      "9": "Grands motifs de tuiles avec une seule case déplacée.",
+      "10": "Grandes moitiés, l’un ou l’autre axe, sans nombre de cases indiqué."
+    },
+    "kinds": {
+      "classify": "Repérer les axes",
+      "complete": "Dessiner la moitié miroir"
+    },
+    "class": {
+      "left-right": "Axe vertical : la gauche correspond à la droite",
+      "top-bottom": "Axe horizontal : le haut correspond au bas",
+      "both": "Les deux axes",
+      "none": "Aucun axe"
+    },
+    "pair": "{{a}} et {{b}}",
+    "fold": {
+      "vertical": {
+        "ok": "En pliant le long de l’axe vertical, chaque case tombe sur une case identique.",
+        "broken": "Plier le long de l’axe vertical ne marche pas : {{pairs}} ne correspondent pas.",
+        "brokenMore": "Plier le long de l’axe vertical ne marche pas : {{pairs}} (et d’autres) ne correspondent pas."
+      },
+      "horizontal": {
+        "ok": "En pliant le long de l’axe horizontal, chaque case tombe sur une case identique.",
+        "broken": "Plier le long de l’axe horizontal ne marche pas : {{pairs}} ne correspondent pas.",
+        "brokenMore": "Plier le long de l’axe horizontal ne marche pas : {{pairs}} (et d’autres) ne correspondent pas."
+      }
+    },
+    "prompt": {
+      "classify": "Quels axes de symétrie ce motif possède-t-il ?",
+      "vertical": "Marquez les cases de droite pour que l’image reflète la moitié gauche.",
+      "horizontal": "Marquez les cases du bas pour que l’image reflète la moitié du haut."
+    },
+    "explanation": {
+      "classify": "{{answer}}.",
+      "vertical": "Chaque case de droite recopie la case située à la même distance de l’autre côté de l’axe. La moitié droite nécessite : {{cells}}.",
+      "horizontal": "Chaque case du bas recopie la case située à la même distance de l’autre côté de l’axe. La moitié du bas nécessite : {{cells}}."
+    },
+    "view": {
+      "pattern": "Motif : {{grid}}",
+      "given": {
+        "vertical": "Moitié gauche donnée",
+        "horizontal": "Moitié du haut donnée"
+      },
+      "fill": {
+        "vertical": "Moitié droite à remplir",
+        "horizontal": "Moitié du bas à remplir"
+      },
+      "filled": "{{cell}}, remplie",
+      "empty": "{{cell}}, vide"
+    }
+  },
+  "spatialTransformation": {
+    "name": "Transformation spatiale",
+    "tagline": "Tournez-le, retournez-le, imaginez le résultat.",
+    "description": "Un motif sur une grille et une consigne : tournez-le, retournez-le ou, à partir du niveau 7, faites deux mouvements d’affilée. Choisissez l’image du résultat. Les motifs passent de 3×3 à 5×5 et gagnent des tuiles colorées.",
+    "scoringSummary": "Chaque motif est correct lorsque vous choisissez le résultat des mouvements indiqués. Votre résultat est la part de choix corrects ; il n’y a pas de limite de temps.",
+    "accessibilityNotes": "Les motifs et les options sont lus à voix haute ligne par ligne, ce qui rend le mouvement bien plus difficile à imaginer qu’avec le dessin.",
+    "simpleInstructions": "Faites la rotation ou le retournement dans votre tête et choisissez l’image obtenue.",
+    "instructions": {
+      "1": "Lisez la consigne et imaginez le motif en mouvement : une rotation le fait pivoter sur la table, un retournement le tourne comme une page.",
+      "2": "Avec deux mouvements, faites le premier, puis le second sur le résultat.",
+      "3": "Choisissez l’option qui montre le résultat. Les touches 1 à 8 sélectionnent une option."
+    },
+    "levels": {
+      "1": "Retournez un petit motif comme dans un miroir.",
+      "2": "Tournez un petit motif.",
+      "3": "Tournez un motif plus grand dans un sens ou dans l’autre.",
+      "4": "N’importe quelle rotation ou retournement.",
+      "5": "Rotations et retournements avec deux sortes de tuiles.",
+      "6": "Un motif 5×5 avec trois sortes de tuiles, six options.",
+      "7": "Deux mouvements d’affilée.",
+      "8": "Deux mouvements d’affilée avec deux sortes de tuiles.",
+      "9": "Deux mouvements sur un motif 5×5 très chargé.",
+      "10": "Deux mouvements ; toutes les versions tournées et retournées sont proposées."
+    },
+    "kinds": {
+      "single": "Un mouvement",
+      "double": "Deux mouvements d’affilée"
+    },
+    "step": {
+      "cw": "Tournez-le d’un quart de tour dans le sens horaire",
+      "ccw": "Tournez-le d’un quart de tour dans le sens antihoraire",
+      "180": "Tournez-le d’un demi-tour",
+      "flip-lr": "Retournez-le de gauche à droite",
+      "flip-ud": "Retournez-le de haut en bas"
+    },
+    "stepInline": {
+      "cw": "tournez-le d’un quart de tour dans le sens horaire",
+      "ccw": "tournez-le d’un quart de tour dans le sens antihoraire",
+      "180": "tournez-le d’un demi-tour",
+      "flip-lr": "retournez-le de gauche à droite",
+      "flip-ud": "retournez-le de haut en bas"
+    },
+    "effect": {
+      "cw": "la ligne du haut devient la colonne de droite",
+      "ccw": "la ligne du haut devient la colonne de gauche",
+      "180": "la ligne du haut devient celle du bas, lue à l’envers",
+      "flip-lr": "les colonnes de gauche et de droite échangent leur place, comme avec un miroir posé à côté",
+      "flip-ud": "les lignes du haut et du bas échangent leur place, comme avec un miroir posé dessous"
+    },
+    "prompt": {
+      "single": "{{step}}. Quelle option montre le résultat ?",
+      "double": "D’abord, {{first}}, puis {{second}}. Quelle option montre le résultat ?"
+    },
+    "explanation": {
+      "single": "{{step}} : {{effect}}.",
+      "numbered": "Étape {{index}} : {{step}} : {{effect}}.",
+      "others": "Les autres options sont le motif tourné ou retourné d’autres façons."
+    },
+    "view": {
+      "start": "Motif de départ : {{grid}}",
+      "moves": "Mouvements, dans l’ordre"
+    }
+  },
+  "ruleBasedPatternDiscovery": {
+    "name": "Découverte de règles",
+    "tagline": "Déduisez la règle à partir d’exemples.",
+    "description": "Chaque exemple montre une petite grille avant et après un changement caché : un miroir, une rotation, un glissement, des tuiles qui changent de sorte ou qui tombent. Trouvez le changement et choisissez ce que devient une nouvelle grille. Les niveaux élevés enchaînent deux changements.",
+    "scoringSummary": "Chaque énigme est correcte lorsque vous choisissez la grille produite par la règle cachée. Votre résultat est la part d’énigmes résolues ; il n’y a pas de limite de temps.",
+    "simpleInstructions": "Regardez comment chaque image change, puis changez la nouvelle de la même façon.",
+    "instructions": {
+      "1": "Comparez chaque grille de départ avec son résultat : qu’est-ce qui a bougé, tourné, changé de sorte ou est tombé ?",
+      "2": "Vérifiez que votre idée marche pour tous les exemples, pas seulement le premier.",
+      "3": "Appliquez le même changement à la nouvelle grille et choisissez le résultat. À partir du niveau 8, la règle enchaîne deux changements.",
+      "4": "Les tuiles se distinguent par leur forme autant que par leur couleur, et chaque grille est aussi décrite en mots."
+    },
+    "levels": {
+      "1": "Une sorte de tuile se change en une autre.",
+      "2": "Les tuiles tombent, glissent ou s’étendent.",
+      "3": "La grille est reflétée, tournée ou décalée.",
+      "4": "Déplacements et rotations sur des grilles plus grandes avec deux sortes de tuiles.",
+      "5": "Changements de tuiles avec deux ou trois sortes : remplacer ou échanger.",
+      "6": "N’importe quelle règle simple : trouvez de quel type de changement il s’agit.",
+      "7": "N’importe quelle règle simple sur des grilles 5×5 avec trois sortes de tuiles.",
+      "8": "Deux changements d’affilée : un déplacement, puis un changement de tuile.",
+      "9": "Deux changements d’affilée, de deux types différents.",
+      "10": "Deux changements enchaînés sur des grilles 5×5 avec trois sortes de tuiles."
+    },
+    "kinds": {
+      "move": "Miroirs, rotations et glissements",
+      "colour": "Tuiles qui changent de sorte",
+      "gather": "Tomber et remplir",
+      "two-step": "Deux changements d’affilée"
+    },
+    "prompt": {
+      "one": "Le même changement transforme chaque grille de départ en son résultat. Que devient la nouvelle grille ?",
+      "two": "Deux changements, l’un après l’autre, transforment chaque grille de départ en son résultat. Que devient la nouvelle grille ?"
+    },
+    "explanation": {
+      "one": "Dans chaque exemple, la grille {{rule}}. Faire de même avec la nouvelle grille donne la grille choisie.",
+      "two": "Dans chaque exemple, la grille {{first}}, puis {{second}}. Faire de même avec la nouvelle grille donne la grille choisie."
+    },
+    "rule": {
+      "flip-lr": "est reflétée de gauche à droite",
+      "flip-ud": "est reflétée de haut en bas",
+      "cw": "tourne d’un quart de tour dans le sens horaire",
+      "ccw": "tourne d’un quart de tour dans le sens antihoraire",
+      "180": "tourne d’un demi-tour",
+      "shift-right": "glisse d’une case vers la droite (la dernière colonne revient à gauche)",
+      "shift-left": "glisse d’une case vers la gauche (la première colonne revient à droite)",
+      "shift-down": "glisse d’une case vers le bas (la ligne du bas revient en haut)",
+      "shift-up": "glisse d’une case vers le haut (la ligne du haut revient en bas)",
+      "fall": "fait tomber chaque tuile en bas de sa colonne",
+      "slide-left": "fait glisser chaque tuile au bout gauche de sa ligne",
+      "fill-rows": "remplit chaque ligne qui contient une tuile avec des copies de sa première tuile",
+      "fill-columns": "remplit chaque colonne qui contient une tuile avec des copies de sa tuile du haut",
+      "recolour": "remplace chaque $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) par $t(patterns:ruleBasedPatternDiscovery.tileA.{{to}})",
+      "swap": "échange chaque $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) et chaque $t(patterns:ruleBasedPatternDiscovery.tile.{{to}})"
+    },
+    "tile": {
+      "1": "carré bleu",
+      "2": "cercle orange",
+      "3": "losange violet",
+      "4": "croix verte"
+    },
+    "tileA": {
+      "1": "un carré bleu",
+      "2": "un cercle orange",
+      "3": "un losange violet",
+      "4": "une croix verte"
+    },
+    "view": {
+      "one": "Un changement caché",
+      "two": "Deux changements cachés, l’un après l’autre",
+      "examples": "Exemples",
+      "input": "Exemple {{index}}, départ : {{grid}}",
+      "output": "Exemple {{index}}, résultat : {{grid}}",
+      "new": "Nouvelle",
+      "newInput": "Nouvelle grille : {{grid}}",
+      "newOutput": "Résultat de la nouvelle grille (inconnu)"
+    }
+  },
+  "gridAndPathReasoning": {
+    "name": "Raisonnement sur grilles et chemins",
+    "tagline": "Trouvez votre chemin dans le labyrinthe.",
+    "description": "Une tortue se déplace dans un labyrinthe en grille, case par case, vers le haut, le bas, la gauche ou la droite, sans jamais traverser les murs. Comptez les pas du chemin le plus court, trouvez la seule sortie qu’elle peut atteindre ou repérez la case que tout chemin le plus court doit traverser.",
+    "scoringSummary": "Chaque labyrinthe est correct lorsque votre nombre ou votre choix est juste. Votre résultat est la part de labyrinthes résolus ; il n’y a pas de limite de temps.",
+    "accessibilityNotes": "Chaque labyrinthe est aussi décrit ligne par ligne pour les lecteurs d’écran, mais suivre des chemins à l’oreille est exigeant dans les grands labyrinthes.",
+    "simpleInstructions": "Aidez la tortue à contourner les murs.",
+    "instructions": {
+      "1": "La tortue avance d’une case à la fois : en haut, en bas, à gauche ou à droite. Elle ne peut ni traverser les murs (cases rayées) ni se déplacer en diagonale.",
+      "2": "Un pas est un déplacement vers la case voisine. Comptez les pas du chemin le plus court quand on vous le demande.",
+      "3": "Les sorties portent des lettres ; les cases numérotées sont les candidates quand vous devez trouver la case que traverse tout chemin le plus court."
+    },
+    "levels": {
+      "1": "Comptez les pas jusqu’à l’étoile sur une petite grille dégagée.",
+      "2": "Trouvez la seule sortie que la tortue peut atteindre.",
+      "3": "Comptez les pas quand les murs imposent un détour.",
+      "4": "Trouvez la case que traverse tout chemin le plus court.",
+      "5": "Des labyrinthes plus grands de 7×7 : sorties et nombre de pas.",
+      "6": "Des détours plus longs et des cases incontournables.",
+      "7": "Plusieurs chemins les plus courts, une case qu’ils partagent tous.",
+      "8": "Des labyrinthes de 8×8 avec quatre sorties.",
+      "9": "Des labyrinthes de 9×9 avec de longs détours.",
+      "10": "Toutes les questions sur des labyrinthes denses de 9×9."
+    },
+    "kinds": {
+      "shortest-length": "Longueur du chemin le plus court",
+      "reachable-exit": "Sortie atteignable",
+      "must-pass": "Case traversée par tous les chemins"
+    },
+    "prompt": {
+      "shortest": "Combien de pas compte le chemin le plus court de la tortue à l’étoile ?",
+      "exit": "Quelle sortie la tortue peut-elle atteindre ? Elle se déplace en haut, en bas, à gauche ou à droite, jamais à travers les murs.",
+      "mustPass": "Tout chemin le plus court de la tortue à l’étoile passe par l’une des cases numérotées. Laquelle ?"
+    },
+    "unit": "pas",
+    "exit": "Sortie {{letter}}",
+    "cell": "Case {{number}}",
+    "run": {
+      "right_one": "droite {{count}}",
+      "right_other": "droite {{count}}",
+      "left_one": "gauche {{count}}",
+      "left_other": "gauche {{count}}",
+      "up_one": "haut {{count}}",
+      "up_other": "haut {{count}}",
+      "down_one": "bas {{count}}",
+      "down_other": "bas {{count}}"
+    },
+    "explanation": {
+      "shortest_one": "Le chemin le plus court compte {{count}} pas, par exemple : {{route}}. Aucun chemin ne contourne les murs en moins de pas.",
+      "shortest_other": "Le chemin le plus court compte {{count}} pas, par exemple : {{route}}. Aucun chemin ne contourne les murs en moins de pas.",
+      "exit_one": "On peut atteindre la {{exit}}, par exemple : {{route}}. La {{others}} est coupée par des murs : aucun chemin n’y mène.",
+      "exit_other": "On peut atteindre la {{exit}}, par exemple : {{route}}. {{others}} sont coupées par des murs : aucun chemin n’y mène.",
+      "mustPass": "Les chemins les plus courts comptent {{steps}} pas, et chacun passe par la {{cell}}. Passer par {{others}} allonge le chemin.",
+      "mustPassMany": "Les chemins les plus courts comptent {{steps}} pas (il y en a {{total}}), et chacun passe par la {{cell}}. Passer par {{others}} allonge le chemin."
+    },
+    "view": {
+      "start": "tortue (départ)",
+      "goal": "étoile (arrivée)",
+      "exit": "sortie {{letter}}",
+      "cell": "case {{number}}",
+      "at": "{{what}} en colonne {{column}}",
+      "walls_one": "mur en colonne {{columns}}",
+      "walls_other": "murs en colonnes {{columns}}",
+      "rowOpen": "Ligne {{row}} : tout est libre",
+      "row": "Ligne {{row}} : {{parts}}",
+      "legendStart": "départ",
+      "legendExits": "lettres : sorties",
+      "legendGoal": "arrivée",
+      "legendWalls": "les cases rayées sont des murs",
+      "maze": "Labyrinthe de {{size}} sur {{size}} cases, décrit ligne par ligne."
+    }
+  },
+  "abstractPatternChallenge": {
+    "name": "Défi de motifs abstraits",
+    "tagline": "Un panneau enfreint la règle. Lequel ?",
+    "description": "Plusieurs panneaux de figures partagent une règle cachée — de couleur, de forme, de nombre, de direction ou d’ordre — tandis que d’autres caractéristiques varient librement. Trouvez la règle et repérez le seul panneau qui l’enfreint.",
+    "scoringSummary": "Chaque série est correcte lorsque vous choisissez le panneau qui enfreint la règle commune. Votre résultat est la part de séries résolues ; il n’y a pas de limite de temps.",
+    "simpleInstructions": "Trouvez le panneau qui ne va pas avec les autres.",
+    "instructions": {
+      "1": "Tous les panneaux sauf un suivent la même règle. Certaines caractéristiques changent juste pour vous distraire.",
+      "2": "Les règles peuvent porter sur la couleur, la forme, le nombre de figures, la direction des flèches ou l’ordre des figures.",
+      "3": "Un seul panneau peut être l’intrus selon une règle, quelle qu’elle soit. Les touches 1 à 6 sélectionnent un panneau."
+    },
+    "levels": {
+      "1": "Quatre panneaux : trouvez celui dont les figures ne s’accordent pas.",
+      "2": "Tous les panneaux sauf un contiennent la même forme.",
+      "3": "Tout différent : aucune forme ni couleur répétée dans un panneau.",
+      "4": "Cinq panneaux ; la règle peut porter sur la couleur, la forme ou le contenu.",
+      "5": "Comptez aussi les figures : la règle peut être leur nombre.",
+      "6": "Les flèches arrivent : la règle peut être leur direction.",
+      "7": "N’importe laquelle de sept règles, avec des panneaux plus grands pour brouiller.",
+      "8": "Six panneaux ; une nouvelle règle : exactement une figure a une autre couleur.",
+      "9": "L’ordre compte : des panneaux qui se lisent pareil à l’envers.",
+      "10": "N’importe quelle règle, six panneaux de trois ou quatre figures."
+    },
+    "kinds": {
+      "colour": "Règles de couleur",
+      "shape": "Règles de forme",
+      "count": "Règles de nombre",
+      "direction": "Règles de direction",
+      "order": "Règles d’ordre"
+    },
+    "prompt": "Quel panneau enfreint la règle que suivent tous les autres ?",
+    "panel": "Panneau {{index}}",
+    "explanation": "Dans tous les autres panneaux, {{rule}}. Le panneau {{index}} l’enfreint : {{reason}}.",
+    "rule": {
+      "same-colour": "toutes les figures d’un panneau ont la même couleur",
+      "same-shape": "toutes les figures d’un panneau ont la même forme",
+      "different-shapes": "aucune paire de figures d’un panneau ne partage une forme",
+      "different-colours": "aucune paire de figures d’un panneau ne partage une couleur",
+      "same-count_one": "chaque panneau a {{count}} figure",
+      "same-count_other": "chaque panneau a {{count}} figures",
+      "contains-shape": {
+        "circle": "chaque panneau contient au moins un cercle",
+        "square": "chaque panneau contient au moins un carré",
+        "triangle": "chaque panneau contient au moins un triangle",
+        "diamond": "chaque panneau contient au moins un losange",
+        "star": "chaque panneau contient au moins une étoile",
+        "hexagon": "chaque panneau contient au moins un hexagone",
+        "heart": "chaque panneau contient au moins un cœur",
+        "cross": "chaque panneau contient au moins une croix",
+        "arrow": "chaque panneau contient au moins une flèche"
+      },
+      "same-direction": "toutes les flèches d’un panneau pointent dans le même sens",
+      "one-odd-colour": "exactement une figure de chaque panneau a une couleur différente des autres",
+      "mirror-order": "chaque panneau se lit pareil de gauche à droite et de droite à gauche"
+    },
+    "break": {
+      "mixes": "il mélange {{list}}",
+      "sameShape": "deux de ses figures ont la même forme",
+      "sameColour": "deux de ses figures ont la même couleur",
+      "count_one": "il a {{count}} figure au lieu de {{expected}}",
+      "count_other": "il a {{count}} figures au lieu de {{expected}}",
+      "contains": {
+        "circle": "il n’a aucun cercle",
+        "square": "il n’a aucun carré",
+        "triangle": "il n’a aucun triangle",
+        "diamond": "il n’a aucun losange",
+        "star": "il n’a aucune étoile",
+        "hexagon": "il n’a aucun hexagone",
+        "heart": "il n’a aucun cœur",
+        "cross": "il n’a aucune croix",
+        "arrow": "il n’a aucune flèche"
+      },
+      "directions": "ses flèches pointent {{list}}",
+      "allSame": "toutes ses figures ont la même couleur",
+      "severalOdd": "plus d’une de ses figures a une couleur différente",
+      "order": "lues à l’envers, ses figures viennent dans un autre ordre"
+    },
+    "view": {
+      "panels": "Panneaux",
+      "panel": "Panneau {{index}} : {{figures}}"
+    }
+  }
+}

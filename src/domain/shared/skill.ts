@@ -1,3 +1,5 @@
+import { msg, type Message } from './text';
+
 /** Programming-thinking capabilities trained by the programming specialisation. */
 export const PROGRAMMING_SKILLS = [
   'decomposition',
@@ -46,6 +48,5 @@ export const SKILLS: readonly Skill[] = [...PROGRAMMING_SKILLS, ...COGNITIVE_SKI
 export const isSkill = (value: unknown): value is Skill =>
   typeof value === 'string' && (SKILLS as readonly string[]).includes(value);
 
-/** Human label: `short-term-memory` → `short-term memory`. */
-export const skillLabel = (skill: Skill): string =>
-  skill === 'short-term-memory' ? 'short-term memory' : skill.replaceAll('-', ' ');
+/** Human label, translated by the UI (lower case, to read inside sentences). */
+export const skillLabel = (skill: Skill): Message => msg(`common:skills.${skill}`);

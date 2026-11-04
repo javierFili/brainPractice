@@ -1,20 +1,18 @@
+import { Trans, useTranslation } from 'react-i18next';
+
 export function AssessmentDisclaimer() {
+  const { t } = useTranslation('assessment');
   return (
     <aside
       aria-labelledby="disclaimer-title"
       className="rounded-xl border border-slate-700 bg-slate-900/60 p-4 text-sm text-slate-300"
     >
       <h2 id="disclaimer-title" className="mb-2 font-semibold text-white">
-        What this is — and is not
+        {t('disclaimer.title')}
       </h2>
-      <p>
-        This is a recreational self-evaluation tool. Scores describe how you performed on these
-        specific exercises: accuracy and pace, with harder levels weighing more. They are based on
-        few challenges, carry a wide margin and are not compared with population norms.
-      </p>
+      <p>{t('disclaimer.what')}</p>
       <p className="mt-2">
-        It is <strong>not</strong> an IQ test, a psychometric instrument or a clinical or
-        professional diagnosis, and it should not be used for hiring or any consequential decision.
+        <Trans t={t} i18nKey="disclaimer.not" components={{ strong: <strong /> }} />
       </p>
     </aside>
   );

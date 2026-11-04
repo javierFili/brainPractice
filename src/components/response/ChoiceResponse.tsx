@@ -1,5 +1,8 @@
 import { useEffect, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ChoiceOption, ResponseOf } from '@/domain/challenge';
+import type { Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 
 interface Props {
   readonly response: ResponseOf<'single-choice'>;
@@ -9,7 +12,7 @@ interface Props {
   readonly onSelect: (optionId: string) => void;
   readonly monospace?: boolean;
   /** Spoken label for options whose text does not read well aloud. */
-  readonly describe?: (label: string) => string | undefined;
+  readonly describe?: (label: string) => Text | undefined;
   /** Visual face of an option (e.g. a shape); the label stays its accessible name. */
   readonly renderOption?: ((option: ChoiceOption) => ReactNode) | undefined;
 }
@@ -24,9 +27,11 @@ export function ChoiceResponse({
   describe,
   renderOption,
 }: Props) {
+  const { t } = useTranslation();
+  const tx = useText();
   const { options } = response.question;
   // Long options (e.g. whole execution orders) are easier to compare stacked in one column.
-  const stacked = options.some((option) => option.label.length > 36);
+  const stacked = options.some((option) => tx(option.label).length > 36);
 
   useEffect(() => {
     if (disabled) return undefined;
@@ -49,7 +54,7 @@ export function ChoiceResponse({
 
   return (
     <fieldset>
-      <legend className="sr-only">Answer options</legend>
+      <legend className="sr-only">{t('response.answerOptions')}</legend>
       <ul className={`grid gap-2 ${stacked ? '' : 'sm:grid-cols-2'}`}>
         {options.map((option, i) => {
           const isSolution = review !== null && option.id === response.solution.optionId;
@@ -60,8 +65,10 @@ export function ChoiceResponse({
               ? 'border-rose-400/70 bg-rose-400/10'
               : 'border-slate-700 bg-slate-900 hover:border-slate-500 hover:bg-slate-800';
           const face = renderOption?.(option);
+          const label = tx(option.label);
+          const described = describe?.(label);
           const spoken =
-            describe?.(option.label) ?? (face === undefined ? undefined : option.label);
+            described === undefined ? (face === undefined ? undefined : label) : tx(described);
           return (
             <li key={option.id}>
               <button
@@ -69,7 +76,11 @@ export function ChoiceResponse({
                 aria-label={
                   spoken === undefined
                     ? undefined
-                    : `${spoken}${isSolution ? ', correct answer' : ''}${isWrongPick ? ', your answer' : ''}`
+                    : isSolution
+                      ? t('response.spokenCorrect', { option: spoken })
+                      : isWrongPick
+                        ? t('response.spokenYours', { option: spoken })
+                        : spoken
                 }
                 disabled={disabled}
                 onClick={() => {
@@ -84,13 +95,17 @@ export function ChoiceResponse({
                   {i + 1}
                 </kbd>
                 <span className={`flex-1 break-words ${monospace ? 'font-mono' : ''}`}>
-                  {face ?? option.label}
+                  {face ?? label}
                 </span>
                 {isSolution && (
-                  <span className="text-xs font-semibold text-emerald-300">✓ Correct answer</span>
+                  <span className="text-xs font-semibold text-emerald-300">
+                    ✓ {t('response.correctAnswer')}
+                  </span>
                 )}
                 {isWrongPick && (
-                  <span className="text-xs font-semibold text-rose-300">✗ Your answer</span>
+                  <span className="text-xs font-semibold text-rose-300">
+                    ✗ {t('response.yourAnswerMark')}
+                  </span>
                 )}
               </button>
             </li>

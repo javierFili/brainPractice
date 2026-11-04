@@ -1,4 +1,5 @@
-import type { ColorName, ShapeKind } from '@/games/kit/content';
+import { joinText, msg, type Message } from '@/domain/shared';
+import { cellLabel, glyphLabel, type ColorName, type ShapeKind } from '@/games/kit/content';
 
 /**
  * Tile grids: every cell is empty (0) or one of four tiles. Tiles are shape + colour (never colour
@@ -23,9 +24,10 @@ export const TILES: readonly TileSpec[] = [
   { shape: 'cross', color: 'green', symbol: '✚' },
 ];
 
-export const tileName = (value: number): string => {
+/** "blue square" in the reader's language, or "empty". */
+export const tileName = (value: number): Message => {
   const tile = TILES[value - 1];
-  return tile === undefined ? 'empty' : `${tile.color} ${tile.shape}`;
+  return tile === undefined ? msg('patterns:shared.grid.empty') : glyphLabel(tile);
 };
 
 export const rowsOf = (grid: TileGrid) => grid.length;
@@ -69,24 +71,36 @@ export function parseGrid(label: string): number[][] | null {
   return grid;
 }
 
-export const cellName = (r: number, c: number) => `row ${r + 1}, column ${c + 1}`;
-
-const listWords = (items: readonly string[]) =>
-  items.length <= 1
-    ? (items[0] ?? '')
-    : `${items.slice(0, -1).join(', ')} and ${items.at(-1) ?? ''}`;
+/** "row 2, column 3" (from 0-based row and column). */
+export const cellName = (r: number, c: number): Message => cellLabel(r, c);
 
 /** The grid in words, row by row, for screen readers and explanations. */
-export function describeGrid(g: TileGrid): string {
+export function describeGrid(g: TileGrid): Message {
   const binary = g.every((row) => row.every((v) => v <= 1));
   const lines = g.map((row, r) => {
     const filled = row.flatMap((v, c) => (v === 0 ? [] : [{ v, c }]));
-    if (filled.length === 0) return `row ${r + 1} empty`;
+    if (filled.length === 0) return msg('patterns:shared.grid.rowEmpty', { row: r + 1 });
     if (binary)
-      return `row ${r + 1} filled at ${filled.length === 1 ? 'column' : 'columns'} ${listWords(filled.map((f) => String(f.c + 1)))}`;
-    return `row ${r + 1}: ${filled.map((f) => `${tileName(f.v)} in column ${f.c + 1}`).join(', ')}`;
+      return msg('patterns:shared.grid.rowFilled', {
+        row: r + 1,
+        count: filled.length,
+        columns: joinText(filled.map((f) => String(f.c + 1))),
+      });
+    return msg('patterns:shared.grid.rowTiles', {
+      row: r + 1,
+      tiles: joinText(
+        filled.map((f) =>
+          msg('patterns:shared.grid.tileInColumn', { tile: tileName(f.v), column: f.c + 1 }),
+        ),
+        ', ',
+      ),
+    });
   });
-  return `${rowsOf(g)} by ${colsOf(g)} grid; ${lines.join('; ')}`;
+  return msg('patterns:shared.grid.describe', {
+    rows: rowsOf(g),
+    cols: colsOf(g),
+    lines: joinText(lines, '; '),
+  });
 }
 
 export const filledCells = (g: TileGrid): [number, number][] =>

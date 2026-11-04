@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Answer } from '@/domain/challenge';
 import { Button } from '@/components/ui/Button';
 import { useStepper } from '@/games/kit/ui';
@@ -20,6 +21,7 @@ interface Props {
  * each other at ≥ 0.7 s intervals: no flashing.
  */
 export function StreamStage({ id, stream, itemMs, respond, rule }: Props) {
+  const { t } = useTranslation('attention');
   const active = respond !== null;
   const step = useStepper(stream.length + 1, itemMs, active, id);
   const [pressed, setPressed] = useState<readonly number[]>([]);
@@ -64,7 +66,9 @@ export function StreamStage({ id, stream, itemMs, respond, rule }: Props) {
         className="flex h-36 w-36 items-center justify-center rounded-2xl border border-line bg-raised"
       >
         {letter === undefined ? (
-          <span className="text-sm text-ink-muted">{over ? 'Done' : 'Get ready…'}</span>
+          <span className="text-sm text-ink-muted">
+            {over ? t('sustainedAttention.view.done') : t('sustainedAttention.view.getReady')}
+          </span>
         ) : (
           <span key={step} className="animate-fade-in font-mono text-7xl font-bold text-ink">
             {letter}
@@ -72,11 +76,13 @@ export function StreamStage({ id, stream, itemMs, respond, rule }: Props) {
         )}
       </div>
       <p aria-hidden="true" className="text-xs text-ink-muted">
-        {showing ? `${position + 1} / ${stream.length}` : `${stream.length} letters`}
-        {recorded ? ' · press recorded' : ''}
+        {showing
+          ? `${position + 1} / ${stream.length}`
+          : t('sustainedAttention.view.letters', { count: stream.length })}
+        {recorded ? ` · ${t('sustainedAttention.view.recorded')}` : ''}
       </p>
       <Button onClick={press} disabled={!active || !showing}>
-        Now! (Space)
+        {t('sustainedAttention.view.now')}
       </Button>
     </div>
   );

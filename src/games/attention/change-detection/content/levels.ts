@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ChangeDetectionProfile } from './types';
 
@@ -9,7 +10,7 @@ const look = (studyMs: number) => untimed(6000, studyMs);
  */
 export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
   {
-    objective: '3 items: did one appear, vanish or change colour?',
+    objective: msg('attention:changeDetection.levels.1'),
     challengeCount: 6,
     columns: 3,
     rows: 3,
@@ -20,7 +21,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(3000),
   },
   {
-    objective: '4 items; shapes can change too.',
+    objective: msg('attention:changeDetection.levels.2'),
     challengeCount: 6,
     columns: 3,
     rows: 3,
@@ -31,7 +32,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(3000),
   },
   {
-    objective: '5 items on a bigger board: colour or shape changes.',
+    objective: msg('attention:changeDetection.levels.3'),
     challengeCount: 6,
     columns: 4,
     rows: 4,
@@ -42,7 +43,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2500),
   },
   {
-    objective: '6 items; an item may also move.',
+    objective: msg('attention:changeDetection.levels.4'),
     challengeCount: 6,
     columns: 4,
     rows: 4,
@@ -53,7 +54,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2500),
   },
   {
-    objective: '6 pointing shapes: one may turn.',
+    objective: msg('attention:changeDetection.levels.5'),
     challengeCount: 6,
     columns: 4,
     rows: 4,
@@ -64,7 +65,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2500),
   },
   {
-    objective: '7 items with fine changes (nearby colour, similar outline).',
+    objective: msg('attention:changeDetection.levels.6'),
     challengeCount: 6,
     columns: 4,
     rows: 4,
@@ -75,7 +76,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2500),
   },
   {
-    objective: '8 items; any fine change.',
+    objective: msg('attention:changeDetection.levels.7'),
     challengeCount: 6,
     columns: 5,
     rows: 5,
@@ -86,7 +87,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2500),
   },
   {
-    objective: '9 items, a longer blank in between.',
+    objective: msg('attention:changeDetection.levels.8'),
     challengeCount: 6,
     columns: 5,
     rows: 5,
@@ -97,7 +98,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2500),
   },
   {
-    objective: '10 items, shorter first look.',
+    objective: msg('attention:changeDetection.levels.9'),
     challengeCount: 6,
     columns: 5,
     rows: 5,
@@ -108,7 +109,7 @@ export const CHANGE_DETECTION_LEVELS = defineLevels<ChangeDetectionProfile>([
     timing: look(2200),
   },
   {
-    objective: '12 items, short look, finest changes.',
+    objective: msg('attention:changeDetection.levels.10'),
     challengeCount: 6,
     columns: 5,
     rows: 5,

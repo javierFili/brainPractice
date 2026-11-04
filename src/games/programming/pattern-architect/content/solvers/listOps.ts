@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import type { ListOp, ListOpName } from '../types';
 import type { ProgramSpace } from './programSpace';
 
@@ -79,58 +80,51 @@ export const LIST_SPACE: ProgramSpace<List, ListOp> = {
   key: formatList,
 };
 
-export function describeListOp(op: ListOp): string {
+const OP = 'programming:patternArchitect.listOp';
+
+export function describeListOp(op: ListOp): Message {
   switch (op.op) {
-    case 'reverse':
-      return 'reverse the list';
-    case 'sort-ascending':
-      return 'sort from smallest to largest';
-    case 'sort-descending':
-      return 'sort from largest to smallest';
-    case 'rotate-left':
-      return 'move the first item to the end';
-    case 'rotate-right':
-      return 'move the last item to the front';
-    case 'drop-first':
-      return 'remove the first item';
-    case 'drop-last':
-      return 'remove the last item';
-    case 'duplicate-each':
-      return 'write every item twice';
     case 'add':
-      return `add ${op.amount} to every item`;
-    case 'double':
-      return 'double every item';
-    case 'keep-even':
-      return 'keep only the even numbers';
-    case 'keep-odd':
-      return 'keep only the odd numbers';
+      return msg(`${OP}.add`, { n: String(op.amount) });
     case 'take-first':
-      return `keep only the first ${op.count} items`;
-    case 'swap-pairs':
-      return 'swap each neighbouring pair (1st↔2nd, 3rd↔4th, …)';
-    case 'remove-repeats':
-      return 'remove repeated values (keep the first of each)';
-    case 'running-total':
-      return 'replace each item by the total so far';
+      return msg(`${OP}.takeFirst`, { count: op.count });
+    default:
+      return msg(`${OP}.${LIST_OP_KEYS[op.op]}`);
   }
 }
 
+const LIST_OP_KEYS: Readonly<Record<Exclude<ListOpName, 'add' | 'take-first'>, string>> = {
+  reverse: 'reverse',
+  'sort-ascending': 'sortAscending',
+  'sort-descending': 'sortDescending',
+  'rotate-left': 'rotateLeft',
+  'rotate-right': 'rotateRight',
+  'drop-first': 'dropFirst',
+  'drop-last': 'dropLast',
+  'duplicate-each': 'duplicateEach',
+  double: 'double',
+  'keep-even': 'keepEven',
+  'keep-odd': 'keepOdd',
+  'swap-pairs': 'swapPairs',
+  'remove-repeats': 'removeRepeats',
+  'running-total': 'runningTotal',
+};
+
 /** The vocabulary grouped for display (parameterised operations described once). */
-export const LIST_VOCABULARY: readonly string[] = [
-  'reverse the list',
-  'sort from smallest to largest, or from largest to smallest',
-  'move the first item to the end, or the last item to the front',
-  'remove the first item, or the last item',
-  'write every item twice',
-  'add 1, 2 or 3 to every item',
-  'double every item',
-  'keep only the even numbers, or only the odd numbers',
-  'keep only the first 2 or 3 items',
-  'swap each neighbouring pair (1st↔2nd, 3rd↔4th, …)',
-  'remove repeated values (keep the first of each)',
-  'replace each item by the total so far',
-];
+export const LIST_VOCABULARY: readonly Message[] = [
+  'reverse',
+  'sort',
+  'rotate',
+  'drop',
+  'duplicateEach',
+  'add',
+  'double',
+  'keepParity',
+  'takeFirst',
+  'swapPairs',
+  'removeRepeats',
+  'runningTotal',
+].map((key) => msg(`programming:patternArchitect.vocabulary.${key}`));
 
 const same = (a: ListOp, b: ListOp) => JSON.stringify(a) === JSON.stringify(b);
 

@@ -4,3 +4,4 @@ export * from './errors';
 export * from './ids';
 export * from './skill';
 export * from './result';
+export * from './text';

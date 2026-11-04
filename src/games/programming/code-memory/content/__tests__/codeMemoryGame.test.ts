@@ -8,6 +8,7 @@ import { CODE_MEMORY_LEVELS } from '../levels';
 import { loadUnits, STUDY_WEIGHT, timingFor } from '../load';
 import type { Assignment, DataRecord, MemoryChallenge, MemoryKind, Operand } from '../types';
 import { KEYWORD_FAMILIES } from '../vocabulary';
+import { en } from '@/test/i18n';
 
 // Derived like session seeds, so kinds are spread as they are in real play.
 const SEEDS = Array.from({ length: 40 }, (_, i) => deriveSeed(toSeed(20260929), i));
@@ -168,7 +169,7 @@ describe('Code Memory — generated content', () => {
         expect(r.fields).toHaveLength(profile.fieldCount);
       });
       const record = records[ask.recordIndex];
-      expect(c.prompt).toContain(`${record?.type} record`);
+      expect(en(c.prompt)).toContain(`${record?.type} record`);
       expect(['true', 'false']).not.toContain(valueOf(record, ask.field));
       expectOnlyCorrectOption(c, valueOf(record, ask.field));
     }
@@ -193,7 +194,7 @@ describe('Code Memory — generated content', () => {
       expect(ask.keyField).not.toBe(ask.targetField);
       const matches = records.filter((r) => valueOf(r, ask.keyField) === ask.keyValue);
       expect(matches).toHaveLength(1);
-      expect(c.prompt).toContain(`${ask.keyField} was ${ask.keyValue}`);
+      expect(en(c.prompt)).toContain(`${ask.keyField} was ${ask.keyValue}`);
       expectOnlyCorrectOption(c, valueOf(matches[0], ask.targetField));
       // Every other record's target value is a distinct, visible lure.
       const targets = records.map((r) => valueOf(r, ask.targetField));
@@ -242,7 +243,7 @@ describe('Code Memory — generated content', () => {
       } else {
         const truth = ask.type === 'position' ? calls[ask.index] : calls[ask.index + 1];
         if (ask.type === 'successor') {
-          expect(c.prompt).toContain(calls[ask.index]);
+          expect(en(c.prompt)).toContain(calls[ask.index]);
           expect(options(c)).not.toContain(calls[ask.index]);
         }
         expectOnlyCorrectOption(c, truth);
@@ -300,15 +301,15 @@ describe('Code Memory — generated content', () => {
     for (const c of all) {
       const { response, content } = c;
       if (response.format === 'numeric')
-        expect(c.explanation).toContain(String(response.solution.value));
+        expect(en(c.explanation)).toContain(String(response.solution.value));
       else if (response.format === 'single-choice')
-        expect(c.explanation).toContain(solutionLabel(c));
+        expect(en(c.explanation)).toContain(solutionLabel(c));
       else if (response.format === 'ordering' && content.kind === 'sequence-recall')
-        expect(c.explanation).toContain(content.calls.join(' → '));
+        expect(en(c.explanation)).toContain(content.calls.join(' → '));
       else if (content.kind === 'position-recall') {
         const index = content.cells.indexOf(content.target);
         const where = `row ${Math.floor(index / content.cols) + 1}, column ${(index % content.cols) + 1}`;
-        expect(c.explanation).toContain(`${content.target} was in ${where}`);
+        expect(en(c.explanation)).toContain(`${content.target} was in ${where}`);
       }
     }
   });

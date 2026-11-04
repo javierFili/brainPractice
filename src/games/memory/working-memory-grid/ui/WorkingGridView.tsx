@@ -1,3 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { joinText, msg } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { CellGrid, MultiSelectBoard, useStepper, type CellState } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
 import { cellName } from '../../shared/content';
@@ -22,6 +25,8 @@ export function WorkingGridView({
   answer,
   assisted,
 }: ContentViewProps<WorkingGridChallenge>) {
+  const { t } = useTranslation('memory');
+  const tx = useText();
   const { size, stream, itemMs } = challenge.content;
   const { response } = challenge;
   const count = size * size;
@@ -39,20 +44,23 @@ export function WorkingGridView({
     return (
       <div className="flex flex-col items-center gap-3">
         <CellGrid
-          label="Lights"
+          label={msg('memory:workingMemoryGrid.view.lights')}
           columns={size}
           size={gridSize}
           cells={Array.from({ length: count }, (_, i) => ({
             key: String(i),
-            label: `${cellName(i, size)}${i === lit ? ', lit' : ''}`,
+            label:
+              i === lit
+                ? msg('memory:workingMemoryGrid.view.cellLit', { cell: cellName(i, size) })
+                : cellName(i, size),
             content: i === lit ? <Light /> : null,
           }))}
         />
         <p aria-live="assertive" aria-atomic="true" className="text-sm text-ink-muted">
           {half >= stream.length * 2
-            ? 'Done — get ready'
+            ? t('workingMemoryGrid.view.done')
             : lit !== null
-              ? `Light at ${cellName(lit, size)}`
+              ? t('workingMemoryGrid.view.lightAt', { cell: tx(cellName(lit, size)) })
               : ''}
         </p>
       </div>
@@ -63,7 +71,7 @@ export function WorkingGridView({
     return (
       <MultiSelectBoard
         response={response}
-        label="Mark the last lights"
+        label={msg('memory:workingMemoryGrid.view.markLast')}
         columns={size}
         size={gridSize}
         respond={respond}
@@ -87,7 +95,7 @@ export function WorkingGridView({
   return (
     <div className="flex flex-col items-center gap-3">
       <CellGrid
-        label="Point at the light"
+        label={msg('memory:workingMemoryGrid.view.pointLight')}
         columns={size}
         size={gridSize}
         cells={Array.from({ length: count }, (_, i) => ({
@@ -106,7 +114,14 @@ export function WorkingGridView({
       />
       {phase === 'review' && (
         <p className="text-center text-sm text-ink-soft">
-          Order shown: {stream.map((i) => cellName(i, size)).join(' → ')}
+          {t('workingMemoryGrid.view.orderShown', {
+            order: tx(
+              joinText(
+                stream.map((i) => cellName(i, size)),
+                ' → ',
+              ),
+            ),
+          })}
         </p>
       )}
     </div>

@@ -1,3 +1,7 @@
+import { joinText, msg, type Message, type Text } from '@/domain/shared';
+
+const T = 'patterns:gridAndPathReasoning';
+
 /** Breadth-first search on a square maze with 4-way moves. Pure helpers shared by generator and view. */
 
 export interface Maze {
@@ -41,7 +45,7 @@ export const manhattan = (a: number, b: number, size: number) =>
   Math.abs(rowOf(a, size) - rowOf(b, size)) + Math.abs(colOf(a, size) - colOf(b, size));
 
 /** A shortest route from the BFS source to `to`, written as runs: "right 2, down 3". */
-export function routeWords(parent: readonly number[], to: number): string {
+export function routeWords(parent: readonly number[], to: number): Text {
   const cells = [to];
   while ((parent[cells[0] as number] ?? -1) !== -1)
     cells.unshift(parent[cells[0] as number] as number);
@@ -57,11 +61,12 @@ export function routeWords(parent: readonly number[], to: number): string {
     if (last?.move === move) last.n++;
     else runs.push({ move, n: 1 });
   }
-  return runs.map((r) => `${r.move} ${r.n}`).join(', ');
+  return joinText(
+    runs.map((r) => msg(`${T}.run.${r.move}`, { count: r.n })),
+    ', ',
+  );
 }
 
-export const cellName = (cell: number, size: number) =>
-  `row ${rowOf(cell, size) + 1}, column ${colOf(cell, size) + 1}`;
-
-export const exitLabel = (i: number) => `Exit ${String.fromCharCode(65 + i)}`;
-export const markLabel = (i: number) => `Cell ${i + 1}`;
+export const exitLabel = (i: number): Message =>
+  msg(`${T}.exit`, { letter: String.fromCharCode(65 + i) });
+export const markLabel = (i: number): Message => msg(`${T}.cell`, { number: i + 1 });

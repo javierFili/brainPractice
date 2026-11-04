@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import type { Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { describeGrid, TILES, type TileGrid } from '../content/tiles';
 
 /** Small static picture of a tile grid. Each tile has its own shape, so colour is never needed. */
@@ -19,7 +21,7 @@ const TILE: Record<number, (x: number, y: number) => ReactNode> = {
 interface Props {
   readonly grid: TileGrid;
   /** Accessible name; defaults to the grid described in words. Ignored when decorative. */
-  readonly label?: string;
+  readonly label?: Text;
   readonly decorative?: boolean;
   readonly className?: string;
   /** Cells drawn with a highlighted border (e.g. the marks to reproduce). */
@@ -33,6 +35,7 @@ export function TileGridFigure({
   className = 'w-24 sm:w-28',
   highlight = [],
 }: Props) {
+  const tx = useText();
   const rows = grid.length;
   const cols = grid[0]?.length ?? 0;
   const lit = new Set(highlight.map(([r, c]) => `${r}:${c}`));
@@ -42,7 +45,7 @@ export function TileGridFigure({
       className={`${className} shrink-0`}
       {...(decorative
         ? { 'aria-hidden': true }
-        : { role: 'img', 'aria-label': label ?? describeGrid(grid) })}
+        : { role: 'img', 'aria-label': tx(label ?? describeGrid(grid)) })}
     >
       {grid.map((row, r) =>
         row.map((value, c) => (

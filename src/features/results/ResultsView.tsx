@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { lessonsOf } from '@/domain/learning';
 import { useCourse } from '@/app/providers/useCourse';
 import { Suspense, useEffect, useRef } from 'react';
@@ -12,7 +13,7 @@ import { describeAnswer, describeSolution } from '@/features/play/describe';
 import type { PersistStatus } from '@/features/play/usePersistResult';
 import { compareWith } from '@/domain/insights';
 import { useServices } from '@/app/providers/servicesContext';
-import { formatMs, formatPercent, formatPoints } from '@/features/shared/format';
+import { useFormat, useText } from '@/i18n';
 import { useProgress } from '@/features/shared/useProgress';
 
 interface Props {
@@ -25,17 +26,17 @@ interface Props {
 
 function performanceLabel(index: number, completed: boolean): string {
   // An index over a handful of answers is not a verdict on the level.
-  if (!completed) return 'Session ended early';
-  if (index >= 90) return 'Excellent session';
-  if (index >= 70) return 'Level cleared';
-  if (index >= 50) return 'Getting there';
-  return 'Good practice — keep going';
+  if (!completed) return 'results.label.endedEarly';
+  if (index >= 90) return 'results.label.excellent';
+  if (index >= 70) return 'results.label.cleared';
+  if (index >= 50) return 'results.label.gettingThere';
+  return 'results.label.keepGoing';
 }
-
-const DIRECTION = { up: '↑ Level up', stay: '→ Stay', down: '↓ Step back' } as const;
 
 /** "In this game, your accuracy was higher than in your last comparable session." */
 function Comparison({ result }: { result: GameResult }) {
+  const { t } = useTranslation('play');
+  const format = useFormat();
   const { progress } = useServices();
   const { state } = useProgress(progress);
   if (state.status !== 'ready' || !result.completed) return null;
@@ -51,17 +52,26 @@ function Comparison({ result }: { result: GameResult }) {
     endedAt: result.endedAt,
     durationMs: result.durationMs,
   });
+  const values =
+    comparison === null
+      ? { level: result.level }
+      : {
+          level: result.level,
+          before: format.percent(comparison.previous.accuracy),
+          after: format.percent(result.metrics.accuracy),
+          delta: `${comparison.performanceDelta >= 0 ? '+' : ''}${format.number(comparison.performanceDelta)}`,
+        };
   const text =
     comparison === null
-      ? `This is your first completed session at level ${result.level} in this mode, so there is nothing comparable yet.`
+      ? t('results.comparison.first', values)
       : comparison.accuracyDelta > 0.001
-        ? `In this game, your accuracy was higher than in your last comparable session (level ${result.level}): ${formatPercent(comparison.previous.accuracy)} → ${formatPercent(result.metrics.accuracy)}.`
+        ? t('results.comparison.higher', values)
         : comparison.accuracyDelta < -0.001
-          ? `Your accuracy was lower than in your last comparable session (${formatPercent(comparison.previous.accuracy)} → ${formatPercent(result.metrics.accuracy)}). Results vary from session to session; that is normal.`
-          : `Your accuracy matched your last comparable session (${formatPercent(result.metrics.accuracy)}); performance ${comparison.performanceDelta >= 0 ? '+' : ''}${comparison.performanceDelta}.`;
+          ? t('results.comparison.lower', values)
+          : t('results.comparison.same', values);
   return (
     <p className="rounded-xl border border-line bg-surface p-4 text-sm text-ink-soft">
-      <span className="font-semibold text-ink">Compared with last time: </span>
+      <span className="font-semibold text-ink">{t('results.comparison.title')} </span>
       {text}
     </p>
   );
@@ -69,6 +79,8 @@ function Comparison({ result }: { result: GameResult }) {
 
 /** TRAIN → LEARN: lessons whose concepts rely on the skill this game practises. */
 function RelatedLessons({ gameId }: { gameId: string }) {
+  const { t } = useTranslation('play');
+  const tx = useText();
   const course = useCourse();
   const linked = course.concepts.filter((c) =>
     c.cognitiveLinks.some((link) => link.gameId === gameId),
@@ -83,7 +95,7 @@ function RelatedLessons({ gameId }: { gameId: string }) {
       className="rounded-xl border border-violet-400/30 bg-violet-400/5 p-5 text-sm"
     >
       <h2 id="related-title" className="font-semibold text-violet-200">
-        Where this skill shows up in programming
+        {t('results.related.title')}
       </h2>
       <ul className="mt-2 flex flex-wrap gap-2">
         {relatedLessons.map((lesson) => (
@@ -92,7 +104,7 @@ function RelatedLessons({ gameId }: { gameId: string }) {
               to={`/learn/${lesson.id}`}
               className="inline-flex rounded-md border border-violet-400/40 px-2 py-1 text-violet-100 hover:bg-violet-400/10 focus-visible:outline-2 focus-visible:outline-sky-400"
             >
-              Lesson: {lesson.title}
+              {t('results.related.lesson', { lesson: tx(lesson.title) })}
             </Link>
           </li>
         ))}
@@ -102,6 +114,9 @@ function RelatedLessons({ gameId }: { gameId: string }) {
 }
 
 export function ResultsView({ module, result, challenges, saveStatus, onRestart }: Props) {
+  const { t } = useTranslation('play');
+  const tx = useText();
+  const format = useFormat();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const { metrics, score, recommendation, level } = result;
   const mistakes = result.records
@@ -130,7 +145,8 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
     <article aria-labelledby="results-title" className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-          {module.definition.name} · Level {level} · {tierOf(level)}
+          {tx(module.definition.name)} · {t('common:level.label', { level })} ·{' '}
+          {t(`common:tiers.${tierOf(level)}`)}
         </p>
         <h1
           id="results-title"
@@ -138,57 +154,64 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
           tabIndex={-1}
           className="text-3xl font-semibold text-white outline-none"
         >
-          {performanceLabel(score.performanceIndex, result.completed)}
+          {t(performanceLabel(score.performanceIndex, result.completed))}
         </h1>
         {!result.completed && (
-          <p className="text-sm text-amber-300">
-            Unanswered challenges were skipped and it does not count toward records.
-          </p>
+          <p className="text-sm text-amber-300">{t('results.endedEarlyNote')}</p>
         )}
-        {result.assisted && (
-          <p className="text-sm text-sky-300">
-            Relaxed timing session — saved to history, not to records.
-          </p>
-        )}
+        {result.assisted && <p className="text-sm text-sky-300">{t('results.relaxedNote')}</p>}
       </header>
 
       <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile
-          label="Performance"
+          label={t('results.stats.performance')}
           value={`${score.performanceIndex}/100`}
-          hint={`${accuracyShare}% accuracy · ${100 - accuracyShare}% pace`}
+          hint={t('results.stats.performanceHint', {
+            accuracy: format.percent(accuracyShare / 100),
+            pace: format.percent((100 - accuracyShare) / 100),
+          })}
         />
         <StatTile
-          label="Score"
-          value={formatPoints(score.total)}
-          hint={`of ${formatPoints(score.maxPossible)} possible`}
+          label={t('results.stats.score')}
+          value={format.points(score.total)}
+          hint={t('results.stats.scoreHint', { max: format.points(score.maxPossible) })}
         />
         <StatTile
-          label="Accuracy"
-          value={metrics.attempted === 0 ? '—' : formatPercent(metrics.accuracy)}
-          hint={`${metrics.correct} of ${metrics.attempted} correct`}
+          label={t('results.stats.accuracy')}
+          value={metrics.attempted === 0 ? '—' : format.percent(metrics.accuracy)}
+          hint={t('results.stats.accuracyHint', {
+            correct: format.number(metrics.correct),
+            attempted: format.number(metrics.attempted),
+          })}
         />
         {reaction ? (
           <StatTile
-            label="Median reaction"
-            value={formatMs(metrics.medianReactionMs)}
-            hint="signal to tap, correct taps only"
+            label={t('results.stats.medianReaction')}
+            value={format.ms(metrics.medianReactionMs)}
+            hint={t('results.stats.medianReactionHint')}
           />
         ) : (
           <StatTile
-            label={timed ? 'Median time' : 'Median answer time'}
-            value={formatMs(metrics.medianResponseMs)}
+            label={timed ? t('results.stats.medianTime') : t('results.stats.medianAnswerTime')}
+            value={format.ms(metrics.medianResponseMs)}
             hint={
               timed
-                ? `avg ${formatMs(metrics.averageResponseMs)} · best ${formatMs(metrics.fastestResponseMs)}`
-                : 'untimed game: shown for information only'
+                ? t('results.stats.timeHint', {
+                    average: format.ms(metrics.averageResponseMs),
+                    best: format.ms(metrics.fastestResponseMs),
+                  })
+                : t('results.stats.untimedHint')
             }
           />
         )}
-        <StatTile label="Longest streak" value={metrics.longestStreak} />
-        <StatTile label="Time-outs" value={metrics.timedOut} />
-        <StatTile label="Duration" value={formatMs(result.durationMs)} />
-        <StatTile label="Seed" value={result.seed} hint="Replay the exact same challenges" />
+        <StatTile label={t('results.stats.longestStreak')} value={metrics.longestStreak} />
+        <StatTile label={t('results.stats.timeouts')} value={metrics.timedOut} />
+        <StatTile label={t('results.stats.duration')} value={format.ms(result.durationMs)} />
+        <StatTile
+          label={t('results.stats.seed')}
+          value={result.seed}
+          hint={t('results.stats.seedHint')}
+        />
       </dl>
 
       <section
@@ -196,16 +219,19 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
         className="rounded-xl border border-sky-400/30 bg-sky-400/5 p-5"
       >
         <h2 id="recommendation-title" className="text-sm font-semibold text-sky-200">
-          Recommendation: {DIRECTION[recommendation.direction]} (level {recommendation.level})
+          {t('results.recommendation.title', {
+            direction: t(`results.direction.${recommendation.direction}`),
+            level: recommendation.level,
+          })}
         </h2>
-        <p className="mt-1 text-sm text-slate-300">{recommendation.reason}</p>
+        <p className="mt-1 text-sm text-slate-300">{tx(recommendation.reason)}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           <Button
             onClick={() => {
               onRestart({ level });
             }}
           >
-            Repeat level
+            {t('results.actions.repeat')}
           </Button>
           {level < 10 && (
             <Button
@@ -214,7 +240,7 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
                 onRestart({ level: stepLevel(level, 1) });
               }}
             >
-              Next level →
+              {t('results.actions.nextLevel')} <span aria-hidden="true">→</span>
             </Button>
           )}
           <Button
@@ -223,10 +249,10 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
               onRestart({ level, seed: result.seed });
             }}
           >
-            Replay this seed
+            {t('results.actions.replaySeed')}
           </Button>
           <ButtonLink variant="ghost" to={`/games/${module.definition.id}`}>
-            Back to game
+            {t('results.actions.backToGame')}
           </ButtonLink>
         </div>
       </section>
@@ -235,8 +261,12 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
 
       {weakest && (
         <p className="rounded-xl border border-line bg-surface p-4 text-sm text-ink-soft">
-          <span className="font-semibold text-ink">Something to practise: </span>
-          {labels[weakest[0]] ?? weakest[0]} ({weakest[1].correct}/{weakest[1].total} this session).
+          <span className="font-semibold text-ink">{t('results.practise.title')} </span>
+          {t('results.practise.detail', {
+            kind: tx(labels[weakest[0]] ?? weakest[0]),
+            correct: weakest[1].correct,
+            total: weakest[1].total,
+          })}
         </p>
       )}
 
@@ -249,7 +279,7 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
       {kinds.length > 0 && (
         <section aria-labelledby="breakdown-title">
           <h2 id="breakdown-title" className="mb-3 text-lg font-semibold text-white">
-            By challenge type
+            {t('results.breakdown')}
           </h2>
           <ul className="grid gap-2 sm:grid-cols-2">
             {kinds.map(([kind, tally]) => (
@@ -257,7 +287,7 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
                 key={kind}
                 className="flex items-center justify-between rounded-lg border border-slate-800 px-4 py-2 text-sm"
               >
-                <span>{labels[kind] ?? kind}</span>
+                <span>{tx(labels[kind] ?? kind)}</span>
                 <span className="font-mono tabular-nums text-slate-300">
                   {tally.correct}/{tally.total}
                 </span>
@@ -269,36 +299,40 @@ export function ResultsView({ module, result, challenges, saveStatus, onRestart 
 
       <section aria-labelledby="mistakes-title">
         <h2 id="mistakes-title" className="mb-3 text-lg font-semibold text-white">
-          Review {mistakes.length === 0 ? '— no mistakes 🎯' : `(${mistakes.length})`}
+          {mistakes.length === 0
+            ? t('results.review.none')
+            : t('results.review.count', { total: mistakes.length })}
         </h2>
         <ol className="flex flex-col gap-3">
           {mistakes.map(({ record, challenge }) => (
             <li key={record.challengeId} className="rounded-lg border border-slate-800 p-4 text-sm">
-              <p className="font-medium text-white">{challenge.prompt}</p>
+              <p className="font-medium text-white">{tx(challenge.prompt)}</p>
               <p className="mt-1 text-slate-300">
                 {record.outcome === 'timed-out' ? (
-                  'Timed out'
+                  t('results.review.timedOut')
                 ) : (
                   <>
-                    You answered{' '}
-                    <span className="font-mono">{describeAnswer(challenge, record.answer)}</span>
+                    {t('results.review.youAnswered')}{' '}
+                    <span className="font-mono">
+                      {tx(describeAnswer(challenge, record.answer))}
+                    </span>
                   </>
                 )}{' '}
-                · Correct:{' '}
+                · {t('feedback.correctAnswer')}{' '}
                 <span className="font-mono font-semibold text-emerald-300">
-                  {describeSolution(challenge)}
+                  {tx(describeSolution(challenge))}
                 </span>
               </p>
-              <p className="mt-2 text-slate-400">{challenge.explanation}</p>
+              <p className="mt-2 text-slate-400">{tx(challenge.explanation)}</p>
             </li>
           ))}
         </ol>
       </section>
 
       <p role="status" className="text-xs text-slate-500">
-        {saveStatus === 'saving' && 'Saving progress…'}
-        {saveStatus === 'saved' && 'Progress saved on this device.'}
-        {saveStatus === 'failed' && 'Progress could not be saved on this device.'}
+        {saveStatus === 'saving' && t('results.save.saving')}
+        {saveStatus === 'saved' && t('results.save.saved')}
+        {saveStatus === 'failed' && t('results.save.failed')}
       </p>
     </article>
   );

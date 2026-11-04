@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SustainedAttentionProfile } from './types';
 
@@ -10,7 +11,7 @@ const stream = (length: number, itemMs: number) => untimed((length + 1) * itemMs
  */
 export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile>([
   {
-    objective: 'Press for every X in a stream of 15 letters.',
+    objective: msg('attention:sustainedAttention.levels.1'),
     challengeCount: 4,
     kind: 'single',
     length: 15,
@@ -22,7 +23,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(15, 1500),
   },
   {
-    objective: '20 letters, a little quicker.',
+    objective: msg('attention:sustainedAttention.levels.2'),
     challengeCount: 4,
     kind: 'single',
     length: 20,
@@ -34,7 +35,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(20, 1400),
   },
   {
-    objective: 'Look-alike letters (K, Y) join the stream.',
+    objective: msg('attention:sustainedAttention.levels.3'),
     challengeCount: 4,
     kind: 'single',
     length: 25,
@@ -46,7 +47,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(25, 1300),
   },
   {
-    objective: '30 letters with look-alikes.',
+    objective: msg('attention:sustainedAttention.levels.4'),
     challengeCount: 4,
     kind: 'single',
     length: 30,
@@ -58,7 +59,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(30, 1200),
   },
   {
-    objective: 'Press for an X only when it comes right after an A.',
+    objective: msg('attention:sustainedAttention.levels.5'),
     challengeCount: 4,
     kind: 'sequence',
     length: 30,
@@ -70,7 +71,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(30, 1200),
   },
   {
-    objective: 'A then X, with more lures.',
+    objective: msg('attention:sustainedAttention.levels.6'),
     challengeCount: 4,
     kind: 'sequence',
     length: 32,
@@ -82,7 +83,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(32, 1100),
   },
   {
-    objective: 'A then X, 35 letters.',
+    objective: msg('attention:sustainedAttention.levels.7'),
     challengeCount: 3,
     kind: 'sequence',
     length: 35,
@@ -94,7 +95,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(35, 1000),
   },
   {
-    objective: 'A then X among look-alikes.',
+    objective: msg('attention:sustainedAttention.levels.8'),
     challengeCount: 3,
     kind: 'sequence',
     length: 38,
@@ -106,7 +107,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(38, 900),
   },
   {
-    objective: '40 letters, brisk pace.',
+    objective: msg('attention:sustainedAttention.levels.9'),
     challengeCount: 3,
     kind: 'sequence',
     length: 40,
@@ -118,7 +119,7 @@ export const SUSTAINED_ATTENTION_LEVELS = defineLevels<SustainedAttentionProfile
     timing: stream(40, 800),
   },
   {
-    objective: '45 letters, the longest watch.',
+    objective: msg('attention:sustainedAttention.levels.10'),
     challengeCount: 3,
     kind: 'sequence',
     length: 45,

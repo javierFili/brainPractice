@@ -1,5 +1,8 @@
+import { msg, type Message } from '@/domain/shared';
 import type { CodeLine, CodeRule } from '../types';
 import type { ItemViolation } from './recordRules';
+
+const REASON = 'programming:bugHunter.reason';
 
 /** Variables a line reads (resources are not variables). */
 export function readsOf(line: CodeLine): string[] {
@@ -34,8 +37,6 @@ export function namesOf(line: CodeLine): string[] {
 
 export const CAMEL_CASE = /^[a-z][a-zA-Z0-9]*$/;
 
-const lineOf = (index: number) => `line ${index + 1}`;
-
 function firstSetAfter(lines: readonly CodeLine[], name: string, from: number): number {
   return lines.findIndex((line, i) => i > from && line.op === 'set' && line.target === name);
 }
@@ -43,7 +44,7 @@ function firstSetAfter(lines: readonly CodeLine[], name: string, from: number): 
 /** Every line that breaks `rule`, top to bottom. The program is straight-line code. */
 export function codeRuleViolations(rule: CodeRule, lines: readonly CodeLine[]): ItemViolation[] {
   const found: ItemViolation[] = [];
-  const add = (index: number, reason: string) => found.push({ index, reason });
+  const add = (index: number, reason: Message) => found.push({ index, reason });
 
   switch (rule.type) {
     case 'defined-before-use': {
@@ -52,13 +53,13 @@ export function codeRuleViolations(rule: CodeRule, lines: readonly CodeLine[]): 
         const missing = readsOf(line).find((name) => !assigned.has(name));
         if (missing !== undefined) {
           const later = firstSetAfter(lines, missing, i - 1);
-          const where =
+          const reason =
             later === -1
-              ? 'it is never set'
+              ? msg(`${REASON}.unassigned.never`, { name: missing })
               : later === i
-                ? 'this line is the first to set it'
-                : `it is first set on ${lineOf(later)}`;
-          add(i, `it reads ${missing}, which has not been assigned yet (${where})`);
+                ? msg(`${REASON}.unassigned.here`, { name: missing })
+                : msg(`${REASON}.unassigned.later`, { name: missing, line: later + 1 });
+          add(i, reason);
         }
         if (line.op === 'set') assigned.add(line.target);
       });
@@ -70,7 +71,7 @@ export function codeRuleViolations(rule: CodeRule, lines: readonly CodeLine[]): 
         const closed = lines.some(
           (other, j) => j > i && other.op === 'close' && other.resource === line.resource,
         );
-        if (!closed) add(i, `${line.resource} is opened here but never closed afterwards`);
+        if (!closed) add(i, msg(`${REASON}.neverClosed`, { resource: line.resource }));
       });
       return found;
     case 'write-while-open': {
@@ -86,20 +87,21 @@ export function codeRuleViolations(rule: CodeRule, lines: readonly CodeLine[]): 
         const openedAt = lines.findIndex(
           (other, j) => j > i && other.op === 'open' && other.resource === resource,
         );
-        const state =
+        add(
+          i,
           closedAt !== -1
-            ? `was already closed on ${lineOf(closedAt)}`
+            ? msg(`${REASON}.write.closed`, { resource, line: closedAt + 1 })
             : openedAt !== -1
-              ? `is only opened later, on ${lineOf(openedAt)}`
-              : 'is never opened';
-        add(i, `it writes to ${resource}, which ${state}`);
+              ? msg(`${REASON}.write.openedLater`, { resource, line: openedAt + 1 })
+              : msg(`${REASON}.write.neverOpened`, { resource }),
+        );
       });
       return found;
     }
     case 'camel-case':
       lines.forEach((line, i) => {
         const bad = namesOf(line).find((name) => !CAMEL_CASE.test(name));
-        if (bad !== undefined) add(i, `the name ${bad} is not camelCase`);
+        if (bad !== undefined) add(i, msg(`${REASON}.camelCase`, { name: bad }));
       });
       return found;
   }

@@ -1,7 +1,7 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { rowTexts } from './format';
 import { GENERATORS, withSingleError } from './generators';
 import { ERROR_DETECTION_LEVELS } from './levels';
@@ -11,10 +11,9 @@ export const ERROR_DETECTION_ID = gameIdOf('error-detection');
 
 export const errorDetectionGame: GameDefinition<ErrorDetectionChallenge, ErrorDetectionProfile> = {
   id: ERROR_DETECTION_ID,
-  name: 'Error Detection',
-  tagline: 'Proofread: exactly one thing is wrong.',
-  description:
-    'Proofread everyday lists — a sorted list, a shopping receipt, a day schedule, a word list, copied codes — and point at the single row that is wrong. Errors get smaller and lists longer.',
+  name: msg('attention:errorDetection.name'),
+  tagline: msg('attention:errorDetection.tagline'),
+  description: msg('attention:errorDetection.description'),
   area: 'attention',
   skills: ['error-detection', 'concentration', 'sustained-attention'],
   meta: {
@@ -25,19 +24,17 @@ export const errorDetectionGame: GameDefinition<ErrorDetectionChallenge, ErrorDe
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A list counts as correct when you point at the one wrong row. Your result is the share of lists solved; answering is not timed.',
+    scoringSummary: msg('attention:errorDetection.scoringSummary'),
     feedback: 'explain',
-    accessibilityNotes:
-      'Receipts and schedules need simple arithmetic (multiplying small quantities, adding prices, subtracting times). Word lists use common English words.',
+    accessibilityNotes: msg('attention:errorDetection.accessibilityNotes'),
   },
   instructions: [
-    'Read the rule above the list: it says what every row must satisfy.',
-    'Check the rows one by one. Exactly one row breaks the rule.',
-    'Press that row (or move with the arrow keys and press Enter).',
-    'From level 7 errors are small: 10 cents, 5 minutes, an 0 instead of an O.',
+    msg('attention:errorDetection.instructions.1'),
+    msg('attention:errorDetection.instructions.2'),
+    msg('attention:errorDetection.instructions.3'),
+    msg('attention:errorDetection.instructions.4'),
   ],
-  simpleInstructions: 'One line in the list is wrong. Find it and tap it.',
+  simpleInstructions: msg('attention:errorDetection.simpleInstructions'),
   levels: ERROR_DETECTION_LEVELS,
   generate({ identity, profile, random }) {
     const draft = retryGeneration('a list with exactly one error', () =>
@@ -45,7 +42,7 @@ export const errorDetectionGame: GameDefinition<ErrorDetectionChallenge, ErrorDe
     );
     return {
       ...identity,
-      prompt: 'Which row is wrong?',
+      prompt: msg('attention:errorDetection.prompt'),
       content: draft.content,
       response: locateResponse(rowTexts(draft.content).length, draft.index),
       explanation: draft.explanation,

@@ -1,3 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { glyphLabel, type Glyph as GlyphSpec } from '@/games/kit/content';
 import { CellGrid, Glyph, MultiSelectBoard, type CellState } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
@@ -6,7 +9,10 @@ import type { VisualChangesChallenge } from '../content/types';
 
 const cellOf = (glyph: GlyphSpec | null, index: number, size: number) => ({
   key: String(index),
-  label: `${cellName(index, size)}, ${glyph === null ? 'empty' : glyphLabel(glyph)}`,
+  label: msg('memory:visualChanges.view.cell', {
+    cell: cellName(index, size),
+    content: glyph === null ? msg('memory:visualChanges.view.empty') : glyphLabel(glyph),
+  }),
   content: glyph === null ? null : <Glyph glyph={glyph} decorative className="h-3/5 w-3/5" />,
 });
 
@@ -17,6 +23,8 @@ export function VisualChangesView({
   respond,
   answer,
 }: ContentViewProps<VisualChangesChallenge>) {
+  const { t } = useTranslation('memory');
+  const tx = useText();
   const { size, before, after, changed } = challenge.content;
   const { response } = challenge;
   const gridSize = size >= 6 ? 'sm' : 'md';
@@ -24,7 +32,7 @@ export function VisualChangesView({
   if (phase === 'study') {
     return (
       <CellGrid
-        label="Shapes to remember"
+        label={msg('memory:visualChanges.view.toRemember')}
         columns={size}
         size={gridSize}
         cells={before.map((g, i) => cellOf(g, i, size))}
@@ -35,7 +43,7 @@ export function VisualChangesView({
     return (
       <MultiSelectBoard
         response={response}
-        label="Mark the two shapes that swapped"
+        label={msg('memory:visualChanges.view.markSwapped')}
         columns={size}
         size={gridSize}
         respond={respond}
@@ -53,7 +61,7 @@ export function VisualChangesView({
   return (
     <div className="flex flex-col items-center gap-3">
       <CellGrid
-        label="Which shape changed?"
+        label={msg('memory:visualChanges.view.whichChanged')}
         columns={size}
         size={gridSize}
         cells={after.map((g, i) => ({ ...cellOf(g, i, size), state: stateOf(i) }))}
@@ -68,9 +76,10 @@ export function VisualChangesView({
       />
       {phase === 'review' && changed[0] !== undefined && before[changed[0]] && (
         <p className="flex items-center gap-2 text-sm text-ink-soft">
-          It was
           <Glyph glyph={before[changed[0]] as GlyphSpec} className="h-6 w-6" />
-          {glyphLabel(before[changed[0]] as GlyphSpec)} before.
+          {t('visualChanges.view.wasBefore', {
+            glyph: tx(glyphLabel(before[changed[0]] as GlyphSpec)),
+          })}
         </p>
       )}
     </div>

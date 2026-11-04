@@ -1,7 +1,7 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
-import type { Skill } from '@/domain/shared';
+import { msg, type Message, type Skill } from '@/domain/shared';
 import { explainViolation, findViolations } from '../solvers/violations';
 import type {
   BugHunterProfile,
@@ -70,7 +70,7 @@ interface ArtifactSpec<C extends RecordContent> {
   readonly broken: RulePlan;
   readonly fields: C['fields'];
   readonly build: (records: readonly DataRecord[]) => C;
-  readonly prompt: string;
+  readonly prompt: Message;
   readonly skills: readonly Skill[];
 }
 
@@ -85,7 +85,7 @@ function recordDraft<C extends RecordContent>(
   spec: ArtifactSpec<C>,
 ): BugHunterDraft {
   const count = profile.elementCount;
-  const { content, violation } = retryGeneration(`${spec.prompt} artifact`, () => {
+  const { content, violation } = retryGeneration('record artifact', () => {
     const records = baseRecords(random, spec.fields, count);
     const target = randomInt(random, 0, count - 1);
     const { broken } = spec;
@@ -176,7 +176,7 @@ export function sequenceAnomaly(
       records,
       rules: plans.map((p) => p.rule),
     }),
-    prompt: 'Scan the log. Exactly one line breaks a rule — which one?',
+    prompt: msg('programming:bugHunter.prompt.sequenceAnomaly'),
     skills: ['attention', 'debugging', 'pattern-recognition'],
   });
 }
@@ -207,7 +207,7 @@ export function schemaViolation(
       records,
       rules: plans.map((p) => p.rule),
     }),
-    prompt: 'Validate the records against the schema. Exactly one record is invalid — which one?',
+    prompt: msg('programming:bugHunter.prompt.schemaViolation'),
     skills: ['attention', 'debugging', 'abstraction'],
   });
 }
@@ -235,8 +235,7 @@ export function multiRule(random: RandomGenerator, profile: BugHunterProfile): B
     fields,
     broken,
     build: (records) => ({ kind: 'multi-rule', fields, records, rules: plans.map((p) => p.rule) }),
-    prompt:
-      'Every log line must satisfy all the rules. Exactly one line breaks one of them — which one?',
+    prompt: msg('programming:bugHunter.prompt.multiRule'),
     skills: ['attention', 'debugging', 'working-memory'],
   });
 }

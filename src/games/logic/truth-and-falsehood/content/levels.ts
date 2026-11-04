@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { TruthProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { TruthProfile } from './types';
  */
 export const TRUTH_LEVELS = defineLevels<TruthProfile>([
   {
-    objective: 'Two characters talk about each other.',
+    objective: msg('logic:truthAndFalsehood.levels.1'),
     challengeCount: 5,
     timing: untimed(30_000),
     characters: 2,
@@ -16,7 +17,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { one: 1 },
   },
   {
-    objective: 'Two characters: “we are the same” or “different”.',
+    objective: msg('logic:truthAndFalsehood.levels.2'),
     challengeCount: 5,
     timing: untimed(35_000),
     characters: 2,
@@ -24,7 +25,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { one: 1, who: 1 },
   },
   {
-    objective: 'Three characters.',
+    objective: msg('logic:truthAndFalsehood.levels.3'),
     challengeCount: 5,
     timing: untimed(50_000),
     characters: 3,
@@ -32,7 +33,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { one: 1, who: 1 },
   },
   {
-    objective: 'Three characters comparing each other.',
+    objective: msg('logic:truthAndFalsehood.levels.4'),
     challengeCount: 5,
     timing: untimed(60_000),
     characters: 3,
@@ -40,7 +41,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { one: 1, who: 2 },
   },
   {
-    objective: 'Statements about the whole group.',
+    objective: msg('logic:truthAndFalsehood.levels.5'),
     challengeCount: 5,
     timing: untimed(70_000),
     characters: 3,
@@ -48,7 +49,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { who: 2, count: 1 },
   },
   {
-    objective: 'Three characters, every kind of statement.',
+    objective: msg('logic:truthAndFalsehood.levels.6'),
     challengeCount: 5,
     timing: untimed(80_000),
     characters: 3,
@@ -56,7 +57,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { who: 2, count: 1 },
   },
   {
-    objective: 'Four characters.',
+    objective: msg('logic:truthAndFalsehood.levels.7'),
     challengeCount: 4,
     timing: untimed(100_000),
     characters: 4,
@@ -64,7 +65,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { one: 1, who: 2 },
   },
   {
-    objective: 'Four characters, “at least one of” statements.',
+    objective: msg('logic:truthAndFalsehood.levels.8'),
     challengeCount: 4,
     timing: untimed(110_000),
     characters: 4,
@@ -72,7 +73,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { who: 2, count: 1 },
   },
   {
-    objective: 'Four characters counting each other.',
+    objective: msg('logic:truthAndFalsehood.levels.9'),
     challengeCount: 4,
     timing: untimed(120_000),
     characters: 4,
@@ -80,7 +81,7 @@ export const TRUTH_LEVELS = defineLevels<TruthProfile>([
     asks: { who: 1, count: 1 },
   },
   {
-    objective: 'Four characters, every kind of statement.',
+    objective: msg('logic:truthAndFalsehood.levels.10'),
     challengeCount: 4,
     timing: untimed(140_000),
     characters: 4,

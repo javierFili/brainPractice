@@ -1,0 +1,175 @@
+{
+  "catalog": {
+    "eyebrow": "Training",
+    "title": "All activities",
+    "description_one": "{{count}} game in {{areas}} areas. Each has ten levels, explains its rules before you start and saves your results on this device.",
+    "description_other": "{{count}} games in {{areas}} areas. Each has ten levels, explains its rules before you start and saves your results on this device.",
+    "filter": "Filter activities",
+    "search": "Search",
+    "searchPlaceholder": "memory, shapes, numbers…",
+    "area": "Area",
+    "allAreas": "All areas",
+    "suitedTo": "Suited to",
+    "everyone": "Everyone",
+    "noRush": "Works without time limits",
+    "count_one": "{{count}} game",
+    "count_other": "{{count}} games",
+    "countOf_one": "{{shown}} of {{count}} games",
+    "countOf_other": "{{shown}} of {{count}} games",
+    "empty": "No game matches these filters. Try clearing the search or choosing “All areas”."
+  },
+  "card": {
+    "duration": "Duration",
+    "minutes": "~{{minutes}} min",
+    "progress": "Progress",
+    "cleared": "{{cleared}}/10 cleared · {{open}} open",
+    "notPlayed": "Not played yet",
+    "timing": "Timing",
+    "noRush": "No-rush mode"
+  },
+  "collections": {
+    "spatial": {
+      "title": "Spatial reasoning",
+      "description": "Rotate, mirror, place and navigate: games that ask you to picture space."
+    },
+    "concentration": {
+      "title": "Concentration",
+      "description": "Longer, steady tasks where keeping focus is the challenge."
+    }
+  },
+  "collection": {
+    "notFound": "This area does not exist.",
+    "eyebrow": "Training area",
+    "all": "All activities",
+    "empty": "No games in this area yet.",
+    "count_one": "{{count}} game · every game has ten levels; level 1 is always open.",
+    "count_other": "{{count}} games · every game has ten levels; level 1 is always open."
+  },
+  "intro": {
+    "notFound": "This game does not exist.",
+    "level": "Level",
+    "cleared": "cleared",
+    "locked": "locked",
+    "suggested": "suggested",
+    "stateSeparator": ", ",
+    "legendFree": "✓ cleared (performance ≥ 70) · dot = suggested level · free play: every level is open.",
+    "legend_one": "✓ cleared (performance ≥ 70) · dot = suggested level. Level 1 is always open; the next level opens after a session with performance ≥ {{performance}} or after {{count}} completed session. Free play (Settings) opens all.",
+    "legend_other": "✓ cleared (performance ≥ 70) · dot = suggested level. Level 1 is always open; the next level opens after a session with performance ≥ {{performance}} or after {{count}} completed sessions. Free play (Settings) opens all.",
+    "levelTier": "Level {{level}} · {{tier}}",
+    "challenges": "Challenges",
+    "timeLimit": "Time limit",
+    "none": "None",
+    "targetPace": "Target pace",
+    "start": "Start level {{level}}",
+    "relaxed": "Relaxed timing (no answer limit, double memorisation time, not counted in records)",
+    "relaxedSpeed": "Relaxed timing (no answer limit, double memorisation time, not counted in records) — this game is about speed, so its signals stay quick",
+    "howTo": "How to play",
+    "keyboardFull": "Playable with mouse, touch or keyboard (Tab, arrows, Enter; number keys pick options). You can reopen these instructions during the game.",
+    "keyboardPartial": "Some steps need a pointer or touch; options also have number keys. You can reopen these instructions during the game.",
+    "scoring": "How your result is calculated",
+    "practises": "Practises: {{skills}} · about {{minutes}} min · results are saved only on this device.",
+    "accessibility": "Accessibility: {{notes}}",
+    "record": "Your record · level {{level}}",
+    "bestPerformance": "Best performance",
+    "bestScore": "Best score",
+    "bestAccuracy": "Best accuracy",
+    "bestMedian": "Best median time",
+    "plays_one": "{{count}} completed session",
+    "plays_other": "{{count}} completed sessions",
+    "notPlayed": "Not played yet. Metrics tracked: score, accuracy, response time, streak and performance index."
+  },
+  "path": {
+    "notFound": "This route does not exist.",
+    "eyebrow": "Route",
+    "leave": "Leave this route",
+    "choose": "Make this my route",
+    "offers": "What this route offers",
+    "startWith": "Start with {{game}}",
+    "mixed_one": "{{count}}-minute mixed session",
+    "mixed_other": "{{count}}-minute mixed session",
+    "about": "About this route",
+    "yours": "This is your route",
+    "goodToKnow": "Good to know",
+    "turnsOn": "Choosing it turns on: {{settings}}. You can change each one in <link>Settings</link>.",
+    "onlySuggests": "A route only suggests games. Every game and level of the catalog stays available.",
+    "activities": "Activities in this route",
+    "startHere": "Start here",
+    "settings": {
+      "textSize": "larger text",
+      "comfort": "comfortable controls",
+      "relaxedByDefault": "relaxed timing",
+      "freePlay": "every level open"
+    }
+  },
+  "paths": {
+    "eyebrow": "Routes",
+    "title": "Choose a route",
+    "description": "Routes pick games and settings for different ages and interests. They are optional, can be changed any time, and never limit what you can play.",
+    "yours": "· your route"
+  },
+  "routes": {
+    "kids": {
+      "tagline": "Short, playful puzzles with pictures.",
+      "intro": "Picture memory, simple logic and spotting games with short instructions and no rush. Start at level 1 and move up when it feels easy.",
+      "goals": {
+        "1": "Play with memory, patterns and logic",
+        "2": "Short rounds without time pressure",
+        "3": "Clear, friendly feedback after every answer"
+      },
+      "notes": {
+        "1": "No names, emails or personal details are asked. Progress stays on this device.",
+        "2": "There are no public rankings or chats.",
+        "3": "If this site is ever offered to children publicly, parental consent and data rules apply first (see docs/privacy.md)."
+      }
+    },
+    "teens": {
+      "tagline": "Visual challenges, strategy and logic.",
+      "intro": "Harder visual puzzles, strategy problems and working-memory challenges. Beat your own records — there are no public leaderboards.",
+      "goals": {
+        "1": "Take on logic and strategy puzzles",
+        "2": "Push working memory and pattern finding",
+        "3": "Track personal bests level by level"
+      },
+      "notes": {
+        "1": "Records are personal and stay on this device."
+      }
+    },
+    "adults": {
+      "tagline": "Everyday memory, focus and planning.",
+      "intro": "Practise remembering lists and numbers, staying focused, switching between tasks and planning ahead, in sessions of 3 to 15 minutes.",
+      "goals": {
+        "1": "Practise everyday memory (words, numbers, associations)",
+        "2": "Keep focus on demanding tasks",
+        "3": "Fit practice into short daily sessions"
+      },
+      "notes": {
+        "1": "Results describe your performance in these activities only; they are not a medical or psychological evaluation."
+      }
+    },
+    "seniors": {
+      "tagline": "Clear, calm activities at your own pace.",
+      "intro": "Larger text, bigger buttons and no time limits by default. Instructions can be reopened at any moment during a game.",
+      "goals": {
+        "1": "Keep a regular routine of mental activity",
+        "2": "Practise memory and attention at a comfortable pace",
+        "3": "See your own results over time"
+      },
+      "notes": {
+        "1": "Choosing this route turns on larger text, comfortable controls and relaxed timing. Change them any time in Settings.",
+        "2": "A slow or mistaken answer is simply part of practising; it says nothing about your health."
+      }
+    },
+    "programmers": {
+      "tagline": "Logic, code reading and working memory.",
+      "intro": "Trace algorithms, hunt bugs, track variables and reason about dependencies, plus general logic and memory games. Pair it with the programming logic course.",
+      "goals": {
+        "1": "Read and trace code accurately",
+        "2": "Hold program state in working memory",
+        "3": "Reason about conditions, loops and dependencies"
+      },
+      "notes": {
+        "1": "Choosing this route opens every level (free play). Turn it off in Settings."
+      }
+    }
+  }
+}

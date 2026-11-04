@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SpatialTransformProfile } from './types';
 
@@ -9,7 +10,7 @@ const ALL = ['cw', 'ccw', '180', 'flip-lr', 'flip-ud'] as const;
  */
 export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
   {
-    objective: 'Flip a small pattern like a mirror.',
+    objective: msg('patterns:spatialTransformation.levels.1'),
     challengeCount: 5,
     size: 3,
     tiles: 1,
@@ -19,7 +20,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(12_000),
   },
   {
-    objective: 'Turn a small pattern.',
+    objective: msg('patterns:spatialTransformation.levels.2'),
     challengeCount: 5,
     size: 3,
     tiles: 1,
@@ -29,7 +30,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(14_000),
   },
   {
-    objective: 'Turn a bigger pattern either way.',
+    objective: msg('patterns:spatialTransformation.levels.3'),
     challengeCount: 6,
     size: 4,
     tiles: 1,
@@ -39,7 +40,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(16_000),
   },
   {
-    objective: 'Any turn or flip.',
+    objective: msg('patterns:spatialTransformation.levels.4'),
     challengeCount: 6,
     size: 4,
     tiles: 1,
@@ -49,7 +50,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(18_000),
   },
   {
-    objective: 'Turns and flips with two kinds of tiles.',
+    objective: msg('patterns:spatialTransformation.levels.5'),
     challengeCount: 6,
     size: 4,
     tiles: 2,
@@ -59,7 +60,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(20_000),
   },
   {
-    objective: 'A 5×5 pattern with three kinds of tiles, six options.',
+    objective: msg('patterns:spatialTransformation.levels.6'),
     challengeCount: 6,
     size: 5,
     tiles: 3,
@@ -69,7 +70,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(24_000),
   },
   {
-    objective: 'Two moves in a row.',
+    objective: msg('patterns:spatialTransformation.levels.7'),
     challengeCount: 6,
     size: 5,
     tiles: 1,
@@ -79,7 +80,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(28_000),
   },
   {
-    objective: 'Two moves in a row with two kinds of tiles.',
+    objective: msg('patterns:spatialTransformation.levels.8'),
     challengeCount: 6,
     size: 5,
     tiles: 2,
@@ -89,7 +90,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(30_000),
   },
   {
-    objective: 'Two moves on a busy 5×5 pattern.',
+    objective: msg('patterns:spatialTransformation.levels.9'),
     challengeCount: 6,
     size: 5,
     tiles: 3,
@@ -99,7 +100,7 @@ export const SPATIAL_TRANSFORM_LEVELS = defineLevels<SpatialTransformProfile>([
     timing: untimed(32_000),
   },
   {
-    objective: 'Two moves; every turned and flipped version is an option.',
+    objective: msg('patterns:spatialTransformation.levels.10'),
     challengeCount: 6,
     size: 5,
     tiles: 4,

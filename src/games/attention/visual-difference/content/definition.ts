@@ -1,7 +1,7 @@
 import { multiSelectResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, sample, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SHAPES } from '@/games/kit/content';
 import {
   ROTATIONS,
@@ -48,10 +48,9 @@ export const visualDifferenceGame: GameDefinition<
   VisualDifferenceProfile
 > = {
   id: VISUAL_DIFFERENCE_ID,
-  name: 'Visual Difference',
-  tagline: 'Spot the differences, one cell at a time.',
-  description:
-    'Two pictures made of shapes look the same, but a few cells of the right one differ. Mark every difference on the right picture. The counter tells you how many there are.',
+  name: msg('attention:visualDifference.name'),
+  tagline: msg('attention:visualDifference.tagline'),
+  description: msg('attention:visualDifference.description'),
   area: 'attention',
   skills: ['selective-attention', 'concentration', 'error-detection', 'visual-orientation'],
   meta: {
@@ -62,19 +61,17 @@ export const visualDifferenceGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A pair of pictures counts as correct when every marked cell is a real difference. Your result is the share of pairs solved exactly; answering is not timed.',
+    scoringSummary: msg('attention:visualDifference.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Some differences are colour only (from level 6, nearby colours such as red and orange). Every cell is named with its colour, shape and pose, so screen readers can compare the two pictures cell by cell.',
+    accessibilityNotes: msg('attention:visualDifference.accessibilityNotes'),
   },
   instructions: [
-    'Compare the two pictures cell by cell (the right one is below on small screens).',
-    'Mark each cell of the right picture that differs, then press Check.',
-    'A difference is a change of colour, shape, which way it points, or a mirrored L.',
-    'The counter shows how many differences to find.',
+    msg('attention:visualDifference.instructions.1'),
+    msg('attention:visualDifference.instructions.2'),
+    msg('attention:visualDifference.instructions.3'),
+    msg('attention:visualDifference.instructions.4'),
   ],
-  simpleInstructions: 'Find what is different in the second picture and tap it.',
+  simpleInstructions: msg('attention:visualDifference.simpleInstructions'),
   levels: VISUAL_DIFFERENCE_LEVELS,
   generate({ identity, profile, random }) {
     const count = profile.columns * profile.columns;
@@ -103,15 +100,20 @@ export const visualDifferenceGame: GameDefinition<
     });
     return {
       ...identity,
-      prompt: `Mark the ${profile.differences} ${profile.differences === 1 ? 'cell' : 'cells'} of the right picture that differ.`,
+      prompt: msg('attention:visualDifference.prompt', { count: profile.differences }),
       content: { kind: oriented ? 'oriented' : 'plain', columns: profile.columns, left, right },
       response: multiSelectResponse(count, changed),
-      explanation: `Differences: ${listWords(
-        changed.map(
-          (i) =>
-            `${cellName(i, profile.columns)} (${markLabel(left[i] as Mark)} → ${markLabel(right[i] as Mark)})`,
+      explanation: msg('attention:visualDifference.explanation', {
+        differences: listWords(
+          changed.map((i) =>
+            msg('attention:visualDifference.difference', {
+              cell: cellName(i, profile.columns),
+              before: markLabel(left[i] as Mark),
+              after: markLabel(right[i] as Mark),
+            }),
+          ),
         ),
-      )}.`,
+      }),
       skills: oriented
         ? ['selective-attention', 'visual-orientation']
         : ['selective-attention', 'error-detection'],

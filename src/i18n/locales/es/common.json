@@ -1,0 +1,167 @@
+{
+  "loading": "Cargando…",
+  "actions": {
+    "back": "Volver",
+    "next": "Siguiente",
+    "start": "Empezar",
+    "continue": "Continuar",
+    "retry": "Reintentar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "submit": "Enviar",
+    "undo": "Deshacer",
+    "clear": "Borrar",
+    "skip": "Omitir",
+    "finish": "Terminar",
+    "reload": "Recargar la página",
+    "goHome": "Ir al inicio"
+  },
+  "answer": {
+    "correct": "Correcto",
+    "incorrect": "Incorrecto",
+    "timedOut": "Se acabó el tiempo",
+    "skipped": "Omitido"
+  },
+  "level": {
+    "label": "Nivel {{level}}",
+    "short": "N{{level}}",
+    "locked": "Bloqueado"
+  },
+  "tiers": {
+    "fundamentals": "Fundamentos",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado",
+    "expert": "Experto"
+  },
+  "areas": {
+    "logic": {
+      "label": "Lógica",
+      "summary": "Deducción, dependencias y razonamiento algorítmico."
+    },
+    "memory": {
+      "label": "Memoria",
+      "summary": "Retener y actualizar información bajo carga."
+    },
+    "speed": {
+      "label": "Velocidad",
+      "summary": "Comparar y decidir con rapidez y precisión."
+    },
+    "attention": {
+      "label": "Atención",
+      "summary": "Encontrar lo que importa entre el ruido."
+    },
+    "patterns": {
+      "label": "Patrones",
+      "summary": "Abstraer reglas a partir de ejemplos y estructuras."
+    }
+  },
+  "categories": {
+    "memory": {
+      "label": "Memoria",
+      "summary": "Retener, recordar y actualizar imágenes, palabras, números y posiciones."
+    },
+    "logic": {
+      "label": "Lógica",
+      "summary": "Deducir, planificar y resolver acertijos con una única respuesta verificable."
+    },
+    "speed": {
+      "label": "Velocidad mental",
+      "summary": "Decisiones rápidas y precisas: reaccionar, comparar y clasificar."
+    },
+    "attention": {
+      "label": "Atención",
+      "summary": "Encontrar objetivos, ignorar distracciones y mantener el foco."
+    },
+    "patterns": {
+      "label": "Patrones y espacio",
+      "summary": "Descubrir reglas, completar patrones y girar figuras mentalmente."
+    },
+    "programming": {
+      "label": "Programación",
+      "summary": "Seguir código, rastrear variables y cazar errores: para programadores."
+    }
+  },
+  "audiences": {
+    "kids": "Niños",
+    "teens": "Adolescentes",
+    "adults": "Adultos",
+    "seniors": "Mayores",
+    "programmers": "Programadores"
+  },
+  "skills": {
+    "decomposition": "descomposición",
+    "abstraction": "abstracción",
+    "pattern-recognition": "reconocimiento de patrones",
+    "logical-reasoning": "razonamiento lógico",
+    "working-memory": "memoria de trabajo",
+    "attention": "atención",
+    "debugging": "depuración",
+    "algorithmic-thinking": "pensamiento algorítmico",
+    "short-term-memory": "memoria a corto plazo",
+    "long-term-recall": "recuerdo a largo plazo",
+    "visual-memory": "memoria visual",
+    "auditory-memory": "memoria auditiva",
+    "selective-attention": "atención selectiva",
+    "sustained-attention": "atención sostenida",
+    "concentration": "concentración",
+    "processing-speed": "velocidad de procesamiento",
+    "reaction-time": "tiempo de reacción",
+    "problem-solving": "resolución de problemas",
+    "spatial-reasoning": "razonamiento espacial",
+    "visual-orientation": "orientación visual",
+    "cognitive-flexibility": "flexibilidad cognitiva",
+    "sequential-thinking": "pensamiento secuencial",
+    "planning": "planificación",
+    "error-detection": "detección de errores",
+    "instruction-comprehension": "comprensión de instrucciones",
+    "mental-agility": "agilidad mental"
+  },
+  "format": {
+    "noLimit": "Sin límite"
+  },
+  "errors": {
+    "generic": "Algo salió mal."
+  },
+  "response": {
+    "enterNumber": "Escribe un número.",
+    "yourAnswer": "Tu respuesta",
+    "yourAnswerUnit": "Tu respuesta ({{unit}})",
+    "toggleSign": "Cambiar el signo negativo",
+    "yourOrder": "Tu orden",
+    "moveUp": "Subir {{item}}",
+    "moveDown": "Bajar {{item}}",
+    "submitOrder": "Enviar orden",
+    "yourSequence": "Tu secuencia, {{entered}} de {{total}}",
+    "slot": "{{position}}: {{item}}",
+    "emptySlot": "{{position}}: vacío",
+    "symbols": "Símbolos",
+    "submitSequence": "Enviar secuencia",
+    "answerOptions": "Opciones de respuesta",
+    "spokenCorrect": "{{option}}, respuesta correcta",
+    "spokenYours": "{{option}}, tu respuesta",
+    "correctAnswer": "Respuesta correcta",
+    "yourAnswerMark": "Tu respuesta"
+  },
+  "describe": {
+    "nothingMarked": "nada marcado",
+    "items_one": "elemento {{positions}}",
+    "items_other": "elementos {{positions}}",
+    "item": "elemento {{position}}",
+    "number": "{{value}}",
+    "allPairs_one": "la pareja",
+    "allPairs_other": "las {{count}} parejas",
+    "tapDuringSignal": "tocar mientras se ve la señal",
+    "doNotTap": "no tocar",
+    "noAnswer": "sin respuesta",
+    "attempts_one": "{{count}} intento",
+    "attempts_other": "{{count}} intentos",
+    "pairsFound": "{{found}} de {{total}} parejas, {{misses}}",
+    "misses_one": "{{count}} fallo",
+    "misses_other": "{{count}} fallos",
+    "noTap": "sin toque",
+    "tappedEarly": "tocaste antes de la señal",
+    "tappedAfter": "tocaste a los {{ms}} ms"
+  }
+}

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
-import { ALL_WORDS } from '@/games/kit/content';
+import { ALL_RESOURCES } from '@/test/i18n';
 import { contractSeeds, describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import { errorDetectionGame } from './content/definition';
 import { rowTexts } from './content/format';
@@ -14,18 +14,42 @@ import { ErrorDetectionView } from './ui/ErrorDetectionView';
 
 describeGameContract(errorDetectionModule);
 
-/** Independent oracle written against the printed meaning of each list. */
+const LANGUAGES = ['es', 'en', 'it', 'fr', 'de'] as const;
+
+/** Each language's word list, read straight from the translation files. */
+const dictionary = (language: string) =>
+  new Set(
+    Object.values(
+      (ALL_RESOURCES[language]?.['kit'] as { words: Record<string, string> } | undefined)?.words ??
+        {},
+    ),
+  );
+
+/** Rows that, removed, leave the list in order. */
+function outOfPlace(values: readonly (number | string)[], language: string): number[] {
+  const sortedWithout = (skip: number) => {
+    const rest = values.filter((_, j) => j !== skip);
+    return rest.every(
+      (v, j) =>
+        j === 0 || String(rest[j - 1]).localeCompare(String(v), language, { numeric: true }) < 0,
+    );
+  };
+  return values.flatMap((_, i) => (sortedWithout(i) ? [i] : []));
+}
+
+/** Independent oracle written against the printed meaning of each list, in every language. */
 function oracle(content: ErrorDetectionContent): number[] {
+  const everywhere = (rows: (language: (typeof LANGUAGES)[number]) => number[]) => {
+    const all = LANGUAGES.map((language) => rows(language));
+    // The wrong row must be the same whatever language the list is read in.
+    for (const found of all) expect(found).toEqual(all[0]);
+    return all[0] ?? [];
+  };
   switch (content.kind) {
     case 'sorted': {
-      const sortedWithout = (skip: number) => {
-        const rest = content.values.filter((_, j) => j !== skip);
-        return rest.every(
-          (v, j) =>
-            j === 0 || String(rest[j - 1]).localeCompare(String(v), 'en', { numeric: true }) < 0,
-        );
-      };
-      return content.values.flatMap((_, i) => (sortedWithout(i) ? [i] : []));
+      const { words } = content;
+      if (words === null) return outOfPlace(content.values, 'en');
+      return everywhere((language) => outOfPlace(words[language], language));
     }
     case 'receipt': {
       const wrong = content.lines.flatMap((l, i) =>
@@ -38,8 +62,13 @@ function oracle(content: ErrorDetectionContent): number[] {
     }
     case 'schedule':
       return content.events.flatMap((e, i) => (e.start + e.minutes === e.end ? [] : [i]));
-    case 'spelling':
-      return content.words.flatMap((w, i) => (ALL_WORDS.includes(w) ? [] : [i]));
+    case 'spelling': {
+      const { words } = content;
+      return everywhere((language) => {
+        const known = dictionary(language);
+        return words[language].flatMap((w, i) => (known.has(w) ? [] : [i]));
+      });
+    }
     case 'copy':
       return content.pairs.flatMap((p, i) => (p.copy === p.original ? [] : [i]));
   }

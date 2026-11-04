@@ -1,0 +1,512 @@
+{
+  "sequenceRecall": {
+    "name": "Sequence Recall",
+    "tagline": "Watch the sequence, then rebuild it.",
+    "description": "Colours, digits or shapes appear one after another. When they are gone, rebuild the sequence on the answer pad — in the same order, or from last to first when asked.",
+    "scoringSummary": "A sequence counts as correct only when every position matches. Your result is the share of sequences rebuilt exactly; answering is not timed.",
+    "instructions": {
+      "watch": "Watch the symbols appear one at a time. Press “I’m ready” if you want to answer early.",
+      "rebuild": "Rebuild the sequence by pressing the symbols in order (or the number keys shown on them).",
+      "reverse": "Some sequences ask for reverse order: start with the last symbol you saw.",
+      "undo": "Undo (or Backspace) removes the last symbol; submit when every slot is filled."
+    },
+    "simpleInstructions": "Watch the colours, then press them in the same order.",
+    "prompt": {
+      "forward_one": "Rebuild the symbol you saw.",
+      "forward_other": "Rebuild the {{count}} symbols in the order you saw them.",
+      "backward_one": "Rebuild the symbol you saw.",
+      "backward_other": "Rebuild the {{count}} symbols in reverse order — last one first."
+    },
+    "studyPrompt": {
+      "forward": "Watch the sequence.",
+      "backward": "Watch the sequence — you will repeat it backwards."
+    },
+    "explanation": {
+      "forward": "The sequence had to be repeated exactly as shown.",
+      "backward": "The sequence had to be repeated from the last symbol back to the first."
+    },
+    "kinds": {
+      "forward": "Forward order",
+      "backward": "Reverse order"
+    },
+    "levels": {
+      "1": "Repeat 3 colours in order.",
+      "2": "Repeat 4 colours in order.",
+      "3": "Repeat 4 shapes; symbols can come back.",
+      "4": "Repeat 5 digits — sometimes backwards.",
+      "5": "Hold 5 shapes forwards or backwards.",
+      "6": "Hold 6 digits forwards or backwards.",
+      "7": "Hold 6 mixed colours and digits.",
+      "8": "Hold 7 mixed symbols, faster.",
+      "9": "Reverse 8 digits shown quickly.",
+      "10": "Reverse 9 mixed symbols shown quickly."
+    },
+    "view": {
+      "done": "Done — get ready",
+      "youSaw": "You saw:",
+      "sequenceShown": "The sequence shown",
+      "hint": {
+        "forward_one": "Same order as shown. {{count}} symbol.",
+        "forward_other": "Same order as shown. {{count}} symbols.",
+        "backward_one": "Reverse order: begin with the last symbol. {{count}} symbol.",
+        "backward_other": "Reverse order: begin with the last symbol. {{count}} symbols."
+      }
+    }
+  },
+  "associationMemory": {
+    "name": "Association Memory",
+    "tagline": "What went with what?",
+    "description": "Learn a few pairs — an object and a colour, a shape and an object, a word and a number. Then answer what went with one of them. Higher levels add pairs, make the items look alike and ask in the other direction.",
+    "scoringSummary": "An answer counts when you pick the item that was paired with the one asked about. Every option was part of the pairs you learned. Your result is the share of pairs recalled; answering is not timed.",
+    "instructions": {
+      "study": "Study the pairs. Linking them in a little story or image can help (“a red apple”).",
+      "pick": "When they are hidden, pick what went with the item in the question.",
+      "exact": "All options come from the pairs you saw, so be exact.",
+      "reversed": "From level 6 the question may go the other way round (from the second item to the first)."
+    },
+    "simpleInstructions": "Remember what goes together, then pick the missing one.",
+    "prompt": {
+      "object-color": {
+        "forward": "Which colour went with the {{item}}?",
+        "reversed": "Which object went with {{item}}?"
+      },
+      "glyph-object": {
+        "forward": "Which object went with the {{item}}?",
+        "reversed": "Which shape went with the {{item}}?"
+      },
+      "word-number": {
+        "forward": "Which number went with “{{item}}”?",
+        "reversed": "Which word went with {{item}}?"
+      }
+    },
+    "studyPrompt_one": "Learn this pair.",
+    "studyPrompt_other": "Learn these {{count}} pairs.",
+    "explanation": "{{cue}} went with {{partner}}.",
+    "kinds": {
+      "objectColor": "Objects and colours",
+      "glyphObject": "Shapes and objects",
+      "wordNumber": "Words and numbers"
+    },
+    "levels": {
+      "1": "Learn which colour goes with each of 3 objects.",
+      "2": "Learn 4 object–colour pairs.",
+      "3": "Learn which object goes with each of 4 shapes.",
+      "4": "Learn 4 word–number pairs.",
+      "5": "Learn colours for 5 objects of the same family.",
+      "6": "Learn 5 word–number pairs, then recall the word from its number.",
+      "7": "Learn 6 look-alike shapes with objects; you may be asked either way.",
+      "8": "Learn 6 words with numbers made of the same digits, asked either way.",
+      "9": "Learn 7 look-alike pairs of any kind, asked either way.",
+      "10": "Learn 8 look-alike pairs with a shorter look, asked either way."
+    },
+    "view": {
+      "whatWent": "What went with this?",
+      "pairs": "Pairs",
+      "pair": "{{cue}} goes with {{partner}}",
+      "pairAsked": "{{cue}} goes with {{partner}}, asked"
+    }
+  },
+  "shared": {
+    "ordinal": {
+      "1": "first",
+      "2": "second",
+      "3": "third",
+      "4": "fourth",
+      "5": "fifth",
+      "6": "sixth",
+      "7": "seventh",
+      "8": "eighth",
+      "9": "ninth",
+      "10": "tenth"
+    }
+  },
+  "dualMemoryChallenge": {
+    "name": "Dual Memory Challenge",
+    "tagline": "What, where and when — all at once.",
+    "description": "Objects appear one at a time, each in its own square. Keep both things in mind — where each object was and in which order they came — because the question may ask about either, or both together.",
+    "scoringSummary": "An answer counts when you point at the right square or pick the right object. Questions about place and about order are mixed at random, so the result reflects both. Answering is not timed.",
+    "instructions": {
+      "watch": "Objects appear one by one, each in a square of the grid.",
+      "remember": "Remember where each one was and the order they came in.",
+      "question": "You will be asked one question: where something was, which object came in a given turn, or which object was in a marked square.",
+      "keyboard": "Keyboard: arrow keys move between squares, Enter chooses; number keys pick an option."
+    },
+    "simpleInstructions": "Watch where each picture appears and in what order.",
+    "studyPrompt": "Remember where each object appears, and in what order.",
+    "prompt": {
+      "where": "Where was the {{name}}?",
+      "whereNth": "Where was the {{turn}} object?",
+      "whichNth": "Which object came {{turn}}?",
+      "whichHere": "Which object was in the marked square?"
+    },
+    "explanation": "The {{name}} came {{turn}}, at {{where}}.",
+    "kinds": {
+      "where": "Where was it?",
+      "whichNth": "Which came in a given turn?",
+      "whichHere": "Which was in this square?",
+      "whereNth": "Where was the n-th object?"
+    },
+    "levels": {
+      "1": "Remember where and in what order 3 objects appeared.",
+      "2": "Remember the place and order of 4 objects.",
+      "3": "Also say which object sat in a marked cell.",
+      "4": "Place and order of 5 objects on a 4×4 grid.",
+      "5": "Add the hardest question: where was the object shown in a given turn?",
+      "6": "Six objects of the same family, any question.",
+      "7": "Six objects at a quicker pace.",
+      "8": "Seven objects of one family on a 4×4 grid.",
+      "9": "Seven objects spread over a 5×5 grid.",
+      "10": "Eight objects of one family, quickly, on a 5×5 grid."
+    },
+    "view": {
+      "grid": "Grid",
+      "cellWith": "{{cell}}, {{name}}",
+      "done": "Done — get ready",
+      "appeared": "{{turn}}: {{name}} at {{cell}}",
+      "hidden": "Hidden — pick the object from memory.",
+      "gridMarked": "Grid with the marked square",
+      "pointSquare": "Point at the square",
+      "cellMarked": "{{cell}}, marked",
+      "whatShown": "What was shown",
+      "cellShown": "{{cell}}, {{name}}, shown {{turn}}"
+    }
+  },
+  "memoryCards": {
+    "name": "Memory Cards",
+    "tagline": "Turn two cards, find the twins.",
+    "description": "A board of face-down cards hides pairs of identical pictures. Turn two cards at a time and remember where each picture is, to find every pair with as few misses as possible.",
+    "scoringSummary": "A board counts as solved when you find every pair within the allowed number of misses. Accuracy is the share of boards solved; there is no time limit.",
+    "instructions": {
+      "preview": "Some levels start by showing every card for a moment: look at where things are.",
+      "turn": "Turn over two cards. If they match, they stay face up; if not, they turn back.",
+      "misses": "Find every pair before you run out of misses (shown under the board).",
+      "keyboard": "Keyboard: move between cards with the arrow keys and press Enter to turn one over."
+    },
+    "simpleInstructions": "Turn two cards at a time and find the matching pictures.",
+    "prompt_one": "Find the {{count}} pair.",
+    "prompt_other": "Find all {{count}} pairs.",
+    "studyPrompt": "Look at the cards — they will turn face down.",
+    "explanation_one": "Every picture appeared on exactly two cards. Up to {{count}} mismatched turn was allowed on this board.",
+    "explanation_other": "Every picture appeared on exactly two cards. Up to {{count}} mismatched turns were allowed on this board.",
+    "kinds": {
+      "objects": "Everyday objects",
+      "family": "Objects of one family",
+      "glyphs": "Coloured shapes",
+      "nearGlyphs": "Look-alike shapes"
+    },
+    "levels": {
+      "1": "Find 3 pairs after a look at the board.",
+      "2": "Find 4 pairs after a shorter look.",
+      "3": "Find 5 pairs of objects from the same family.",
+      "4": "Find 6 pairs with only a brief look.",
+      "5": "Find 6 pairs with no preview: remember every card you turn.",
+      "6": "Find 8 pairs of shapes with no preview.",
+      "7": "Find 8 pairs among look-alike shapes.",
+      "8": "Find 10 pairs among look-alike shapes.",
+      "9": "Find 10 pairs with fewer misses allowed.",
+      "10": "Find 12 look-alike pairs with a tight miss budget."
+    }
+  },
+  "numberRecall": {
+    "name": "Number Recall",
+    "tagline": "Codes, phone numbers, tickets: hold them for a moment.",
+    "description": "A number appears in chunks, like a phone number or a door code. When it is hidden, type it back, say which chunk came in a given place, or — with two numbers on screen — recall the one that is asked.",
+    "scoringSummary": "An answer counts when the whole number is typed exactly or the right chunk is picked. Your result is the share of numbers recalled; answering is not timed.",
+    "instructions": {
+      "read": "Read the number. The gaps split it into chunks, which are easier to hold.",
+      "answer": "When it is hidden, answer the question: type the number without spaces, or pick a chunk.",
+      "two": "Some levels show two numbers with names: remember both, only one will be asked."
+    },
+    "simpleInstructions": "Look at the number, then type it back.",
+    "names": {
+      "phone": "Phone",
+      "doorCode": "Door code",
+      "locker": "Locker",
+      "ticket": "Ticket",
+      "order": "Order",
+      "flight": "Flight",
+      "room": "Room",
+      "account": "Account"
+    },
+    "studyPrompt": {
+      "one": "Remember the number.",
+      "chunks": "Remember the chunks and their order.",
+      "both": "Remember both numbers."
+    },
+    "prompt": {
+      "whichGroup": "Which chunk came {{turn}}?",
+      "typeBack": "Type the {{name}} number, without spaces.",
+      "twoNumbers": "Type the {{name}} number (not the {{other}})."
+    },
+    "explanation": {
+      "whichGroup": "The {{name}} number was {{number}}; chunk {{position}} was {{chunk}}.",
+      "typeBack": "The {{name}} number was {{number}}.",
+      "twoNumbers": "{{numbers}}. The {{name}} number was asked."
+    },
+    "entry": "{{name}}: {{number}}",
+    "kinds": {
+      "typeBack": "Type the number back",
+      "whichGroup": "Chunk in a given place",
+      "twoNumbers": "Two numbers at once"
+    },
+    "levels": {
+      "1": "Type back a 4-digit code shown as two pairs.",
+      "2": "Type back a 5-digit number in two chunks.",
+      "3": "Type back a 6-digit number in two chunks.",
+      "4": "Remember three pairs of digits and the order they came in.",
+      "5": "Type back a 7-digit phone number.",
+      "6": "Hold two 4-digit numbers; one of them will be asked.",
+      "7": "Remember three chunks of three digits in order.",
+      "8": "Type back a 9-digit number, or hold two 5-digit numbers.",
+      "9": "Hold two 6-digit numbers at once.",
+      "10": "Four chunks in order, or two 6-digit numbers: any can be asked."
+    },
+    "view": {
+      "hiddenChunk": "Hidden — pick the chunk from memory.",
+      "hiddenDigits": "Hidden — type the digits from memory, without spaces.",
+      "numbers": "Numbers",
+      "card": "{{name}}: {{digits}}",
+      "cardAsked": "{{name}}: {{digits}}, asked"
+    }
+  },
+  "objectRecall": {
+    "name": "Object Recall",
+    "tagline": "Which of these did you see?",
+    "description": "Look at a small set of everyday objects. Then a bigger board mixes them with new ones: mark the objects you saw. At higher levels the new objects belong to the same families as the studied ones.",
+    "scoringSummary": "A board counts as correct when every object you mark is one you studied. Your result is the share of boards recognised exactly; answering is not timed.",
+    "instructions": {
+      "look": "Look at the objects. Press “I’m ready” when you have them.",
+      "board": "A bigger board appears with the same objects and some new ones.",
+      "mark": "Mark exactly the objects you saw (the counter shows how many), then press Check.",
+      "keyboard": "Keyboard: arrow keys move between objects, Enter marks or unmarks one."
+    },
+    "simpleInstructions": "Look at the pictures, then find them again among new ones.",
+    "prompt_one": "Mark the {{count}} object you saw.",
+    "prompt_other": "Mark the {{count}} objects you saw.",
+    "studyPrompt_one": "Remember this object.",
+    "studyPrompt_other": "Remember these {{count}} objects.",
+    "explanation": "You saw: {{objects}}.",
+    "kinds": {
+      "mixed": "Objects of any kind",
+      "family": "Look-alike families"
+    },
+    "levels": {
+      "1": "Recognise 3 objects among 6.",
+      "2": "Recognise 4 objects among 8.",
+      "3": "Recognise 5 objects among 10.",
+      "4": "Recognise 5 objects when the new ones are of the same kind.",
+      "5": "Recognise 6 objects among 12.",
+      "6": "Recognise 6 objects among 12 look-alikes from the same families.",
+      "7": "Recognise 7 objects among 14 of the same families.",
+      "8": "Recognise 8 objects among 16 with a shorter look.",
+      "9": "Recognise 9 objects among 18 from three families.",
+      "10": "Recognise 10 objects among 20 with a brief look."
+    },
+    "view": {
+      "toRemember": "Objects to remember",
+      "youSaw": "Objects you saw"
+    }
+  },
+  "positionMemory": {
+    "name": "Position Memory",
+    "tagline": "Where did the lights appear?",
+    "description": "Some cells of a grid light up for a moment. When they go dark, mark the same cells. Higher levels add more cells, bigger grids and decoy cells in another colour that you must ignore.",
+    "scoringSummary": "A grid counts as correct when every marked cell is one that lit up. Your result is the share of grids recalled exactly; answering is not timed.",
+    "instructions": {
+      "watch": "Watch which cells light up. Press “I’m ready” to hide them early.",
+      "mark": "Mark the same cells, then press Check. The counter shows how many to mark.",
+      "filter": "From level 5, remember only the blue cells (marked with a dot) and ignore the orange ones (striped).",
+      "keyboard": "Keyboard: arrow keys move between cells, Enter marks or unmarks a cell."
+    },
+    "simpleInstructions": "Remember where the lights were, then tap the same squares.",
+    "prompt": {
+      "plain_one": "Mark the {{count}} cell that lit up.",
+      "plain_other": "Mark the {{count}} cells that lit up.",
+      "filtered_one": "Mark the {{count}} blue cell. Ignore the orange ones.",
+      "filtered_other": "Mark the {{count}} blue cells. Ignore the orange ones."
+    },
+    "studyPrompt": {
+      "plain": "Remember the lit cells.",
+      "filtered": "Remember only the blue cells."
+    },
+    "explanation": "The lit cells were: {{cells}}.",
+    "kinds": {
+      "plain": "Lit cells",
+      "filtered": "Blue cells among decoys"
+    },
+    "levels": {
+      "1": "Remember 2 lit cells on a 3×3 grid.",
+      "2": "Remember 3 lit cells on a 3×3 grid.",
+      "3": "Remember 3 cells on a bigger 4×4 grid.",
+      "4": "Remember 4 cells on a 4×4 grid.",
+      "5": "Remember 4 blue cells and ignore 2 orange ones.",
+      "6": "Remember 5 cells on a 5×5 grid.",
+      "7": "Remember 5 blue cells among 3 distractors.",
+      "8": "Remember 6 cells with a short look.",
+      "9": "Remember 7 blue cells among 3 distractors on 6×6.",
+      "10": "Remember 8 blue cells among 4 distractors on 6×6."
+    },
+    "view": {
+      "toRemember": "Grid to remember",
+      "target": "{{cell}}, lit blue",
+      "distractor": "{{cell}}, lit orange",
+      "markCells": "Mark the cells"
+    }
+  },
+  "visualChanges": {
+    "name": "Visual Changes",
+    "tagline": "Something is different. What?",
+    "description": "Look at a grid of shapes. It disappears and comes back with one difference: a shape changed colour or form, or — at higher levels — two shapes swapped places. Point at what changed.",
+    "scoringSummary": "An answer counts when you point at the changed shape (or both swapped shapes). Your result is the share of changes found; answering is not timed.",
+    "instructions": {
+      "look": "Look at the shapes and where they are. Press “I’m ready” when you have them.",
+      "tap": "The grid comes back with exactly one change: tap the shape that changed.",
+      "swap": "From level 7, two shapes may swap places instead: mark both, then press Check.",
+      "keyboard": "Keyboard: arrow keys move between cells, Enter chooses one."
+    },
+    "simpleInstructions": "Remember the picture, then tap what changed.",
+    "prompt": {
+      "swap": "Two shapes swapped places. Mark both.",
+      "change": "One shape changed. Which one?"
+    },
+    "studyPrompt": "Remember the shapes and where they are.",
+    "explanation": {
+      "swap": "The {{first}} and the {{second}} swapped ({{firstCell}} and {{secondCell}}).",
+      "change": "At {{cell}}, the {{before}} became a {{after}}."
+    },
+    "kinds": {
+      "color": "Colour change",
+      "shape": "Shape change",
+      "swap": "Two shapes swapped"
+    },
+    "levels": {
+      "1": "Spot which of 4 shapes changed colour.",
+      "2": "Spot a change of colour or shape among 5 items.",
+      "3": "Spot the change among 6 items on a 4×4 grid.",
+      "4": "Spot the change among 7 items with a shorter look.",
+      "5": "Spot the change among 8 look-alike items.",
+      "6": "Spot the change among 9 look-alike items on a 5×5 grid.",
+      "7": "Spot a change or find two items that swapped places.",
+      "8": "Spot changes and swaps among 12 look-alike items.",
+      "9": "Spot changes and swaps among 14 items on a 6×6 grid.",
+      "10": "Spot changes and swaps among 16 look-alike items with a brief look."
+    },
+    "view": {
+      "cell": "{{cell}}, {{content}}",
+      "empty": "empty",
+      "toRemember": "Shapes to remember",
+      "markSwapped": "Mark the two shapes that swapped",
+      "whichChanged": "Which shape changed?",
+      "wasBefore": "It was {{glyph}} before."
+    }
+  },
+  "wordRecall": {
+    "name": "Word Recall",
+    "tagline": "Read a list of words, then find them again.",
+    "description": "Words appear one at a time. Then pick them out on a board that also has new words — later from the same themes, so “it was a kitchen word” is not enough. Some higher-level lists must be put back in order.",
+    "scoringSummary": "A board counts when your marks match the list within the allowed slips (missed words plus wrong marks); an order counts when every word is in place. Your result is the share of lists recalled; answering is not timed.",
+    "instructions": {
+      "read": "Read each word as it appears. Saying it quietly to yourself can help.",
+      "mark": "Then mark the words you saw on the board and press Check.",
+      "variants": "On some levels one slip is allowed; on others, put the words back in the order shown.",
+      "keyboard": "Keyboard: arrow keys move between words, Enter marks one."
+    },
+    "simpleInstructions": "Read the words, then find them again.",
+    "prompt": {
+      "order_one": "Put the {{count}} word in the order it appeared.",
+      "order_other": "Put the {{count}} words in the order they appeared.",
+      "exact_one": "Mark the {{count}} word you saw.",
+      "exact_other": "Mark the {{count}} words you saw.",
+      "tolerant_one": "Mark the words you saw (there was {{count}}; one slip is allowed).",
+      "tolerant_other": "Mark the words you saw (there were {{count}}; one slip is allowed)."
+    },
+    "studyPrompt": {
+      "order": "Read the words and remember their order.",
+      "recognise": "Read the words."
+    },
+    "explanation": {
+      "order": "The order was: {{words}}.",
+      "list": "The list was: {{words}}."
+    },
+    "kinds": {
+      "recognise": "Words among new words",
+      "similar": "Words among same-theme words",
+      "order": "Words in order"
+    },
+    "levels": {
+      "1": "Recognise 4 words among 8.",
+      "2": "Recognise 5 words among 10.",
+      "3": "Recognise 6 words among 12.",
+      "4": "Recognise 6 words when the new ones share their theme.",
+      "5": "Recognise 7 words among 14 of the same themes.",
+      "6": "Mark the 8 words you saw among 16 (one slip allowed).",
+      "7": "Recognise 8 words, or put 5 words back in order.",
+      "8": "Recognise 9 words among 16, or order 6 words.",
+      "9": "Recognise 10 words among 18, or order 6 words.",
+      "10": "Recognise 10 words among 20 from three themes, or order 7 words."
+    },
+    "view": {
+      "done": "Done — get ready",
+      "hiddenOrder": "Hidden — use the arrows below to put the words in order.",
+      "orderShown": "The words appeared in this order:",
+      "listShown": "The list shown",
+      "board": "Words",
+      "boardSimilar": "Words, some from the same themes"
+    }
+  },
+  "workingMemoryGrid": {
+    "name": "Working Memory Grid",
+    "tagline": "Keep track of the latest lights.",
+    "description": "Lights appear one at a time on a grid, and you do not know how many will come. Keep the most recent ones in mind and update as each new light appears: then mark the last few, or point at the one a few steps back.",
+    "scoringSummary": "An answer counts when you mark exactly the last lights asked for, or point at the right earlier light. Your result is the share of streams answered correctly; answering is not timed.",
+    "instructions": {
+      "watch": "Watch the lights. Each new one pushes the oldest out of what you need to keep.",
+      "update": "The stream length changes, so keep updating until it stops.",
+      "answer": "Then answer: mark the last few lights, or point at the light a set number of steps before the last.",
+      "keyboard": "Keyboard: arrow keys move between cells, Enter chooses or marks one."
+    },
+    "simpleInstructions": "Watch the lights and remember the last ones.",
+    "steps_one": "just before the last one",
+    "steps_other": "{{count}} steps before the last one",
+    "prompt": {
+      "lastK_one": "Mark the cell of the last light.",
+      "lastK_other": "Mark the cells of the last {{count}} lights.",
+      "nBack": "Where was the light {{steps}}?"
+    },
+    "studyPrompt": {
+      "lastK_one": "Keep the last light in mind.",
+      "lastK_other": "Keep the last {{count}} lights in mind.",
+      "nBack": "Watch the lights: you will be asked about the one {{steps}}."
+    },
+    "explanation": {
+      "lastK_one": "There were {{length}} lights; the last one was at {{cells}}.",
+      "lastK_other": "There were {{length}} lights; the last {{count}} were at {{cells}}.",
+      "nBack": "There were {{length}} lights; the one {{steps}} was at {{cell}}."
+    },
+    "kinds": {
+      "lastK": "Last few lights",
+      "nBack": "Light a few steps back"
+    },
+    "levels": {
+      "1": "Keep the last 2 lights of a short stream on a 3×3 grid.",
+      "2": "Keep the last 2 lights of a longer stream.",
+      "3": "Point at the light that came just before the last one.",
+      "4": "Keep the last 3 lights on a 4×4 grid.",
+      "5": "Point at the light 2 steps before the last one.",
+      "6": "Either question: last 3 lights, or 2 steps before the last.",
+      "7": "Keep the last 4 lights of a long stream.",
+      "8": "On a 5×5 grid: last 4 lights, or 3 steps before the last.",
+      "9": "Faster lights: last 4, or 3 steps back, in streams up to 10.",
+      "10": "Last 5 lights, or 4 steps before the last, in streams up to 11."
+    },
+    "view": {
+      "lights": "Lights",
+      "cellLit": "{{cell}}, lit",
+      "done": "Done — get ready",
+      "lightAt": "Light at {{cell}}",
+      "markLast": "Mark the last lights",
+      "pointLight": "Point at the light",
+      "orderShown": "Order shown: {{order}}"
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import type { Challenge } from '@/domain/challenge';
+import { en } from './i18n';
 
 /**
  * Measurement invariants for multiple-choice content: a player who never reads the material must
@@ -15,7 +16,9 @@ export function choiceItems(challenges: readonly Challenge[]): ChoiceItem[] {
     if (response.format !== 'single-choice') return [];
     const answer = response.question.options.find((o) => o.id === response.solution.optionId);
     if (!answer) throw new Error('Solution is not among the options');
-    return [{ options: response.question.options.map((o) => o.label), answer: answer.label }];
+    return [
+      { options: response.question.options.map((o) => en(o.label)), answer: en(answer.label) },
+    ];
   });
 }
 

@@ -1,0 +1,167 @@
+{
+  "loading": "Caricamento…",
+  "actions": {
+    "back": "Indietro",
+    "next": "Avanti",
+    "start": "Inizia",
+    "continue": "Continua",
+    "retry": "Riprova",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "close": "Chiudi",
+    "save": "Salva",
+    "submit": "Invia",
+    "undo": "Annulla ultimo",
+    "clear": "Cancella",
+    "skip": "Salta",
+    "finish": "Termina",
+    "reload": "Ricarica la pagina",
+    "goHome": "Vai alla home"
+  },
+  "answer": {
+    "correct": "Corretto",
+    "incorrect": "Sbagliato",
+    "timedOut": "Tempo scaduto",
+    "skipped": "Saltato"
+  },
+  "level": {
+    "label": "Livello {{level}}",
+    "short": "L{{level}}",
+    "locked": "Bloccato"
+  },
+  "tiers": {
+    "fundamentals": "Fondamenti",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzato",
+    "expert": "Esperto"
+  },
+  "areas": {
+    "logic": {
+      "label": "Logica",
+      "summary": "Deduzione, dipendenze e ragionamento algoritmico."
+    },
+    "memory": {
+      "label": "Memoria",
+      "summary": "Trattenere e aggiornare informazioni sotto carico."
+    },
+    "speed": {
+      "label": "Velocità",
+      "summary": "Confrontare e decidere in modo rapido e preciso."
+    },
+    "attention": {
+      "label": "Attenzione",
+      "summary": "Trovare ciò che conta in mezzo al rumore."
+    },
+    "patterns": {
+      "label": "Schemi",
+      "summary": "Ricavare regole da esempi e strutture."
+    }
+  },
+  "categories": {
+    "memory": {
+      "label": "Memoria",
+      "summary": "Trattenere, ricordare e aggiornare immagini, parole, numeri e posizioni."
+    },
+    "logic": {
+      "label": "Logica",
+      "summary": "Dedurre, pianificare e risolvere enigmi con un’unica risposta verificabile."
+    },
+    "speed": {
+      "label": "Velocità mentale",
+      "summary": "Decisioni rapide e precise: reagire, confrontare e classificare."
+    },
+    "attention": {
+      "label": "Attenzione",
+      "summary": "Trovare obiettivi, ignorare le distrazioni e restare concentrati."
+    },
+    "patterns": {
+      "label": "Schemi e spazio",
+      "summary": "Scoprire regole, completare schemi e ruotare figure con la mente."
+    },
+    "programming": {
+      "label": "Programmazione",
+      "summary": "Seguire il codice, tracciare variabili e scovare bug: per programmatori."
+    }
+  },
+  "audiences": {
+    "kids": "Bambini",
+    "teens": "Ragazzi",
+    "adults": "Adulti",
+    "seniors": "Over 65",
+    "programmers": "Programmatori"
+  },
+  "skills": {
+    "decomposition": "scomposizione",
+    "abstraction": "astrazione",
+    "pattern-recognition": "riconoscimento di schemi",
+    "logical-reasoning": "ragionamento logico",
+    "working-memory": "memoria di lavoro",
+    "attention": "attenzione",
+    "debugging": "debugging",
+    "algorithmic-thinking": "pensiero algoritmico",
+    "short-term-memory": "memoria a breve termine",
+    "long-term-recall": "richiamo a lungo termine",
+    "visual-memory": "memoria visiva",
+    "auditory-memory": "memoria uditiva",
+    "selective-attention": "attenzione selettiva",
+    "sustained-attention": "attenzione sostenuta",
+    "concentration": "concentrazione",
+    "processing-speed": "velocità di elaborazione",
+    "reaction-time": "tempo di reazione",
+    "problem-solving": "problem solving",
+    "spatial-reasoning": "ragionamento spaziale",
+    "visual-orientation": "orientamento visivo",
+    "cognitive-flexibility": "flessibilità cognitiva",
+    "sequential-thinking": "pensiero sequenziale",
+    "planning": "pianificazione",
+    "error-detection": "individuazione degli errori",
+    "instruction-comprehension": "comprensione delle istruzioni",
+    "mental-agility": "agilità mentale"
+  },
+  "format": {
+    "noLimit": "Nessun limite"
+  },
+  "errors": {
+    "generic": "Qualcosa è andato storto."
+  },
+  "response": {
+    "enterNumber": "Inserisci un numero.",
+    "yourAnswer": "La tua risposta",
+    "yourAnswerUnit": "La tua risposta ({{unit}})",
+    "toggleSign": "Cambia il segno negativo",
+    "yourOrder": "Il tuo ordine",
+    "moveUp": "Sposta su {{item}}",
+    "moveDown": "Sposta giù {{item}}",
+    "submitOrder": "Invia ordine",
+    "yourSequence": "La tua sequenza, {{entered}} di {{total}}",
+    "slot": "{{position}}: {{item}}",
+    "emptySlot": "{{position}}: vuoto",
+    "symbols": "Simboli",
+    "submitSequence": "Invia sequenza",
+    "answerOptions": "Opzioni di risposta",
+    "spokenCorrect": "{{option}}, risposta corretta",
+    "spokenYours": "{{option}}, la tua risposta",
+    "correctAnswer": "Risposta corretta",
+    "yourAnswerMark": "La tua risposta"
+  },
+  "describe": {
+    "nothingMarked": "niente segnato",
+    "items_one": "elemento {{positions}}",
+    "items_other": "elementi {{positions}}",
+    "item": "elemento {{position}}",
+    "number": "{{value}}",
+    "allPairs_one": "la coppia",
+    "allPairs_other": "tutte le {{count}} coppie",
+    "tapDuringSignal": "tocca mentre il segnale è visibile",
+    "doNotTap": "non toccare",
+    "noAnswer": "nessuna risposta",
+    "attempts_one": "{{count}} tentativo",
+    "attempts_other": "{{count}} tentativi",
+    "pairsFound": "{{found}} coppie su {{total}}, {{misses}}",
+    "misses_one": "{{count}} errore",
+    "misses_other": "{{count}} errori",
+    "noTap": "nessun tocco",
+    "tappedEarly": "toccato prima del segnale",
+    "tappedAfter": "toccato dopo {{ms}} ms"
+  }
+}

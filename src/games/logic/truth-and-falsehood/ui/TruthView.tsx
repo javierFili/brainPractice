@@ -1,13 +1,17 @@
+import { useTranslation } from 'react-i18next';
 import { Panel } from '@/games/logic/shared/ui';
 import type { ContentViewProps } from '@/games/types';
+import { useText } from '@/i18n';
 import { describeClaim } from '../content/solver';
 import type { TruthChallenge } from '../content/types';
 
 export function TruthView({ challenge, phase }: ContentViewProps<TruthChallenge>) {
+  const { t } = useTranslation('logic');
+  const tx = useText();
   const { names, claims, solution } = challenge.content;
   return (
-    <Panel title="What they say">
-      <ul aria-label="Statements" className="flex flex-col gap-2">
+    <Panel title={t('truthAndFalsehood.view.title')}>
+      <ul aria-label={t('truthAndFalsehood.view.statements')} className="flex flex-col gap-2">
         {claims.map((claim, i) => (
           <li
             key={names[i]}
@@ -17,12 +21,14 @@ export function TruthView({ challenge, phase }: ContentViewProps<TruthChallenge>
               {names[i]}
               {phase === 'review' && (
                 <span className="ml-2 text-xs font-normal text-ink-muted">
-                  ({solution[i] ? 'truth-teller' : 'liar'})
+                  ({t(`truthAndFalsehood.roleLower.${solution[i] ? 'honest' : 'liar'}`)})
                 </span>
               )}
-              <span className="sr-only"> says:</span>
+              <span className="sr-only"> {t('truthAndFalsehood.view.says')}</span>
             </span>
-            <q className="text-ink-soft">{describeClaim(claim, i, names)}</q>
+            <q className="text-ink-soft">
+              {t('shared.sentence', { text: tx(describeClaim(claim, i, names)) })}
+            </q>
           </li>
         ))}
       </ul>

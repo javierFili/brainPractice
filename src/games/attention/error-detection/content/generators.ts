@@ -1,12 +1,25 @@
 import { chance, pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
+import { msg, type Message } from '@/domain/shared';
 import { ALL_WORDS, distinctInts, objectsOf } from '@/games/kit/content';
-import { clock, money } from './format';
-import { findErrors, isKnownWord } from './solve';
+import { clock, moneyText } from './format';
+import { LEXICON, compareIn, inLanguages, isKnownWord, localize, spell } from './lexicon';
+import { findErrors } from './solve';
 import type { ErrorDetectionContent, ErrorDetectionProfile, ErrorKind } from './types';
 
 export interface ErrorDraft {
   readonly content: ErrorDetectionContent;
-  readonly explanation: string;
+  readonly explanation: Message;
+}
+
+const explain = (key: string, values: Parameters<typeof msg>[1]) =>
+  msg(`attention:errorDetection.explanation.${key}`, values);
+
+/** Moves the item at `from` to `to`. */
+function displaced<T>(base: readonly T[], from: number, to: number): T[] {
+  const values = [...base];
+  const [moved] = values.splice(from, 1);
+  values.splice(to, 0, moved as T);
+  return values;
 }
 
 type Generator = (random: RandomGenerator, profile: ErrorDetectionProfile) => ErrorDraft | null;
@@ -15,19 +28,34 @@ function sorted(
   random: RandomGenerator,
   { items, subtle }: ErrorDetectionProfile,
 ): ErrorDraft | null {
-  const words = subtle && chance(random, 0.5);
-  const base: (number | string)[] = words
-    ? sample(random, ALL_WORDS, items).sort()
+  const useWords = subtle && chance(random, 0.5);
+  const ids = useWords ? sample(random, ALL_WORDS, items) : [];
+  const numbers = useWords
+    ? []
     : distinctInts(random, items, subtle ? 100 : 1, subtle ? 999 : 60).sort((a, b) => a - b);
   const from = randomInt(random, 0, items - 1);
   const to = randomInt(random, 0, items - 1);
   if (Math.abs(from - to) < (subtle ? 2 : 3)) return null;
-  const values = [...base];
-  const [moved] = values.splice(from, 1);
-  values.splice(to, 0, moved as number | string);
+  if (!useWords) {
+    return {
+      content: { kind: 'sorted', values: displaced(numbers, from, to), words: null },
+      explanation: explain('sorted', { value: String(numbers[from]) }),
+    };
+  }
+  // Each language sorts the same words its own way; the same move puts one word out of place
+  // on the same row in every language.
+  const base = localize((language) =>
+    ids.map((id) => spell(id, language)).sort((a, b) => compareIn(language, a, b)),
+  );
   return {
-    content: { kind: 'sorted', values },
-    explanation: `${String(moved)} is out of place: without it, the list is in order.`,
+    content: {
+      kind: 'sorted',
+      values: [],
+      words: localize((language) => displaced(base[language], from, to)),
+    },
+    explanation: explain('sorted', {
+      value: inLanguages(localize((language) => base[language][from] as string)),
+    }),
   };
 }
 
@@ -49,7 +77,7 @@ function receipt(random: RandomGenerator, profile: ErrorDetectionProfile): Error
     if (sum + delta <= 0) return null;
     return {
       content: { kind: 'receipt', lines, totalCents: sum + delta },
-      explanation: `The lines add up to ${money(sum)}, but TOTAL says ${money(sum + delta)}.`,
+      explanation: explain('total', { sum: moneyText(sum), total: moneyText(sum + delta) }),
     };
   }
   const at = randomInt(random, 0, lineCount - 1);
@@ -63,25 +91,31 @@ function receipt(random: RandomGenerator, profile: ErrorDetectionProfile): Error
       lines: printed,
       totalCents: profile.withTotal ? printed.reduce((s, l) => s + l.totalCents, 0) : null,
     },
-    explanation: `${line.quantity} × ${money(line.priceCents)} = ${money(line.totalCents)}, not ${money(wrong.totalCents)}.`,
+    explanation: explain('line', {
+      quantity: String(line.quantity),
+      price: moneyText(line.priceCents),
+      right: moneyText(line.totalCents),
+      wrong: moneyText(wrong.totalCents),
+    }),
   };
 }
 
+/** Activity ids (`attention:errorDetection.activity.<id>`). */
 const ACTIVITIES = [
-  'Reading',
-  'Maths',
-  'Lunch',
-  'Music',
-  'Walk',
-  'Art',
-  'Break',
-  'Science',
-  'Meeting',
-  'Emails',
-  'Gym',
-  'Cooking',
-  'Phone call',
-  'Shopping',
+  'reading',
+  'maths',
+  'lunch',
+  'music',
+  'walk',
+  'art',
+  'break',
+  'science',
+  'meeting',
+  'emails',
+  'gym',
+  'cooking',
+  'phoneCall',
+  'shopping',
 ];
 
 function schedule(
@@ -103,16 +137,29 @@ function schedule(
   events[index] = { ...event, minutes: stated };
   return {
     content: { kind: 'schedule', events },
-    explanation: `${clock(event.start)}–${clock(event.end)} is ${event.minutes} minutes, not ${stated}.`,
+    explanation: explain('schedule', {
+      start: clock(event.start),
+      end: clock(event.end),
+      count: event.minutes,
+      stated,
+    }),
   };
 }
 
 const VOWELS = ['a', 'e', 'i', 'o', 'u'];
 
+interface Typo {
+  /** Uniform draw choosing the letter position (scaled to each word's length). */
+  readonly at: number;
+  readonly kind: number;
+  /** Index among the four other vowels, for a changed vowel. */
+  readonly vowel: number;
+}
+
 /** One small typo: swapped neighbours, doubled or dropped letter, or a changed vowel. */
-function misspell(random: RandomGenerator, word: string): string {
-  const i = randomInt(random, 1, word.length - 2);
-  switch (randomInt(random, 0, 3)) {
+function misspell(word: string, { at, kind, vowel: choice }: Typo): string {
+  const i = 1 + Math.floor(at * Math.max(1, word.length - 2));
+  switch (kind) {
     case 0:
       return word.slice(0, i) + (word[i + 1] ?? '') + (word[i] ?? '') + word.slice(i + 2);
     case 1:
@@ -122,29 +169,37 @@ function misspell(random: RandomGenerator, word: string): string {
     default: {
       const vowel = Array.from(word).findIndex((c, k) => k > 0 && VOWELS.includes(c));
       if (vowel === -1) return word;
-      const replacement = pick(
-        random,
-        VOWELS.filter((v) => v !== word[vowel]),
-      );
+      const replacement = VOWELS.filter((v) => v !== word[vowel])[choice] as string;
       return word.slice(0, vowel) + replacement + word.slice(vowel + 1);
     }
   }
 }
 
+/** Words long enough (in every language) for a typo inside them. */
+const SPELLING_WORDS = ALL_WORDS.filter((id) =>
+  Object.values(LEXICON[id] ?? {}).every((word) => word.length >= 4),
+);
+
 function spelling(random: RandomGenerator, { items }: ErrorDetectionProfile): ErrorDraft | null {
-  const words = sample(
-    random,
-    ALL_WORDS.filter((w) => w.length >= 4),
-    items,
-  );
+  const ids = sample(random, SPELLING_WORDS, items);
   const index = randomInt(random, 0, items - 1);
-  const right = words[index] as string;
-  const wrong = misspell(random, right);
-  if (wrong === right || isKnownWord(wrong) || wrong.length < 3) return null;
-  words[index] = wrong;
+  // One set of draws describes the typo; it is applied to the word in every language.
+  const at = random.next();
+  const kind = randomInt(random, 0, 3);
+  const typo: Typo = { at, kind, vowel: kind === 3 ? randomInt(random, 0, 3) : 0 };
+  const right = localize((language) => spell(ids[index] as string, language));
+  const wrong = localize((language) => misspell(right[language], typo));
+  for (const [language, word] of Object.entries(wrong) as [keyof typeof wrong, string][]) {
+    if (word === right[language] || isKnownWord(word, language) || word.length < 3) return null;
+  }
   return {
-    content: { kind: 'spelling', words },
-    explanation: `“${wrong}” should be spelt “${right}”.`,
+    content: {
+      kind: 'spelling',
+      words: localize((language) =>
+        ids.map((id, i) => (i === index ? wrong[language] : spell(id, language))),
+      ),
+    },
+    explanation: explain('spelling', { wrong: inLanguages(wrong), right: inLanguages(right) }),
   };
 }
 
@@ -204,7 +259,13 @@ function copy(
       kind: 'copy',
       pairs: originals.map((o, i) => ({ original: o, copy: i === index ? wrong : o })),
     },
-    explanation: `${wrong} is not ${original}: character ${at + 1} is “${replacement}” instead of “${char}”.`,
+    explanation: explain('copy', {
+      wrong,
+      original,
+      position: at + 1,
+      replacement,
+      char,
+    }),
   };
 }
 

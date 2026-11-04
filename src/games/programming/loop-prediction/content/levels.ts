@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { LoopProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { LoopProfile } from './types';
  */
 export const LOOP_LEVELS = defineLevels<LoopProfile>([
   {
-    objective: 'Count the turns of a simple loop and add up as it goes.',
+    objective: msg('programming:loopPrediction.levels.1'),
     challengeCount: 5,
     timing: untimed(30_000),
     kinds: { iterations: 1, 'final-value': 1 },
@@ -17,7 +18,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'choice',
   },
   {
-    objective: 'While loops: the condition is checked before every turn.',
+    objective: msg('programming:loopPrediction.levels.2'),
     challengeCount: 5,
     timing: untimed(35_000),
     kinds: { iterations: 1, 'final-value': 1 },
@@ -26,7 +27,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'choice',
   },
   {
-    objective: 'An if inside the loop: not every turn changes the total.',
+    objective: msg('programming:loopPrediction.levels.3'),
     challengeCount: 6,
     timing: untimed(40_000),
     kinds: { iterations: 1, 'final-value': 1, 'last-output': 1 },
@@ -35,7 +36,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'choice',
   },
   {
-    objective: 'Exact answers: type the number.',
+    objective: msg('programming:loopPrediction.levels.4'),
     challengeCount: 6,
     timing: untimed(45_000),
     kinds: { iterations: 1, 'final-value': 1, 'last-output': 1 },
@@ -44,7 +45,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'A loop inside a loop: the inner one restarts every outer turn.',
+    objective: msg('programming:loopPrediction.levels.5'),
     challengeCount: 6,
     timing: untimed(55_000),
     kinds: { iterations: 1, 'final-value': 1, 'last-output': 1 },
@@ -53,7 +54,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Early exits: a return inside a loop ends it at once.',
+    objective: msg('programming:loopPrediction.levels.6'),
     challengeCount: 6,
     timing: untimed(60_000),
     kinds: { iterations: 1, 'final-value': 1, 'last-output': 1 },
@@ -62,7 +63,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Longer loops of every kind.',
+    objective: msg('programming:loopPrediction.levels.7'),
     challengeCount: 7,
     timing: untimed(70_000),
     kinds: { iterations: 1, 'final-value': 1, 'last-output': 1 },
@@ -71,7 +72,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Inner loops whose length depends on the outer variable.',
+    objective: msg('programming:loopPrediction.levels.8'),
     challengeCount: 7,
     timing: untimed(80_000),
     kinds: { iterations: 1, 'final-value': 1, 'last-output': 1 },
@@ -80,7 +81,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Stop conditions joined with “and”: which one ends the loop first?',
+    objective: msg('programming:loopPrediction.levels.9'),
     challengeCount: 7,
     timing: untimed(90_000),
     kinds: { iterations: 2, 'final-value': 1, 'last-output': 1 },
@@ -89,7 +90,7 @@ export const LOOP_LEVELS = defineLevels<LoopProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Everything at once, with up to nine turns per loop.',
+    objective: msg('programming:loopPrediction.levels.10'),
     challengeCount: 8,
     timing: untimed(100_000),
     kinds: { iterations: 2, 'final-value': 1, 'last-output': 1 },

@@ -1,5 +1,7 @@
 import { useId, useState, type ComponentProps } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ResponseOf } from '@/domain/challenge';
+import { useText } from '@/i18n';
 import { Button } from '../ui/Button';
 
 interface Props {
@@ -10,16 +12,19 @@ interface Props {
 
 export function NumericResponse({ response, disabled, onSubmit }: Props) {
   const id = useId();
+  const { t } = useTranslation();
+  const tx = useText();
   const [raw, setRaw] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<'response.enterNumber' | null>(null);
 
   const submit: NonNullable<ComponentProps<'form'>['onSubmit']> = (event) => {
     event.preventDefault();
-    // Accept the typographic minus some keyboards insert.
-    const text = raw.trim().replace(/^[−–]/, '-');
+    // Accept the typographic minus some keyboards insert, and a decimal comma (3,5) as well as a
+    // point: it is the usual separator in Spanish, Italian, French and German.
+    const text = raw.trim().replace(/^[−–]/, '-').replace(',', '.');
     const value = text === '' ? Number.NaN : Number(text);
     if (!Number.isFinite(value)) {
-      setError('Enter a number.');
+      setError('response.enterNumber');
       return;
     }
     setError(null);
@@ -30,11 +35,13 @@ export function NumericResponse({ response, disabled, onSubmit }: Props) {
     <form onSubmit={submit} className="flex flex-wrap items-end gap-3" noValidate>
       <div className="flex flex-col gap-1">
         <label htmlFor={id} className="text-sm text-slate-300">
-          Your answer{response.question.unit !== undefined ? ` (${response.question.unit})` : ''}
+          {response.question.unit !== undefined
+            ? t('response.yourAnswerUnit', { unit: tx(response.question.unit) })
+            : t('response.yourAnswer')}
         </label>
         <input
           id={id}
-          inputMode="numeric"
+          inputMode="decimal"
           autoComplete="off"
           autoFocus
           disabled={disabled}
@@ -51,7 +58,7 @@ export function NumericResponse({ response, disabled, onSubmit }: Props) {
       <Button
         variant="secondary"
         disabled={disabled}
-        aria-label="Toggle negative sign"
+        aria-label={t('response.toggleSign')}
         onClick={() => {
           setRaw((current) =>
             current.trim().startsWith('-') ? current.trim().slice(1) : `-${current.trim()}`,
@@ -61,11 +68,11 @@ export function NumericResponse({ response, disabled, onSubmit }: Props) {
         ±
       </Button>
       <Button type="submit" disabled={disabled}>
-        Submit
+        {t('actions.submit')}
       </Button>
       {error !== null && (
         <p id={`${id}-error`} role="alert" className="w-full text-sm text-rose-300">
-          {error}
+          {t(error)}
         </p>
       )}
     </form>

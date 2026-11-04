@@ -1,10 +1,11 @@
 import { numericResponse } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, weightedPick, type RandomGenerator } from '@/domain/random';
+import { msg } from '@/domain/shared';
 import {
   compile,
   isInteger,
-  narrate,
+  narrateText,
   numberChoice,
   runTraced,
   type DraftOf,
@@ -45,17 +46,21 @@ function candidate(random: RandomGenerator, profile: LoopProfile): Draft | null 
 
   const respond = (value: number) =>
     profile.answer === 'numeric' ? numericResponse(value) : numberChoice(random, value);
-  const steps = narrate(source, result, 14);
+  const steps = narrateText(source, result, 14);
   const base = { structure, source };
 
   if (kind === 'iterations') {
     const runs = runsOf(result.trace, program.countLine);
     if (runs < 2 || runs > 40) return null;
     return {
-      prompt: `How many times does line ${program.countLine} run?`,
+      prompt: msg('programming:loopPrediction.prompt.iterations', { line: program.countLine }),
       content: { ...base, kind, line: program.countLine, ask: null },
       response: respond(runs),
-      explanation: `Line ${program.countLine} ran ${runs} times. Step by step — ${steps}.`,
+      explanation: msg('programming:loopPrediction.explanation.iterations', {
+        line: program.countLine,
+        count: runs,
+        steps,
+      }),
       skills: ['algorithmic-thinking', 'pattern-recognition'],
     };
   }
@@ -67,10 +72,14 @@ function candidate(random: RandomGenerator, profile: LoopProfile): Draft | null 
     const start = program.lines.find((l) => l.startsWith(`${ask} = `))?.split(' = ')[1];
     if (start === String(value)) return null;
     return {
-      prompt: `What is the value of ${ask} when the program ends?`,
+      prompt: msg('programming:loopPrediction.prompt.finalValue', { name: ask }),
       content: { ...base, kind, line: null, ask },
       response: respond(value),
-      explanation: `${ask} ends at ${value}. Step by step — ${steps}.`,
+      explanation: msg('programming:loopPrediction.explanation.finalValue', {
+        name: ask,
+        value,
+        steps,
+      }),
       skills: ['algorithmic-thinking', 'working-memory'],
     };
   }
@@ -79,10 +88,15 @@ function candidate(random: RandomGenerator, profile: LoopProfile): Draft | null 
   if (output.length < 2 || !Number.isInteger(last) || Math.abs(last) > MAX_ANSWER) return null;
   const shown = output.length > 12 ? `${output.slice(0, 11).join(', ')}, …` : output.join(', ');
   return {
-    prompt: 'What is the last value this program prints?',
+    prompt: msg('programming:loopPrediction.prompt.lastOutput'),
     content: { ...base, kind, line: null, ask: null },
     response: respond(last),
-    explanation: `It prints ${shown} — ${output.length} values, the last is ${last}. Step by step — ${steps}.`,
+    explanation: msg('programming:loopPrediction.explanation.lastOutput', {
+      shown,
+      count: output.length,
+      last,
+      steps,
+    }),
     skills: ['algorithmic-thinking', 'sequential-thinking'],
   };
 }

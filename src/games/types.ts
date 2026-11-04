@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode } from 'react';
 import type { Answer, Challenge, ChoiceOption } from '@/domain/challenge';
 import type { GameDefinition } from '@/domain/game';
+import type { Text } from '@/domain/shared';
 
 /** What part of a challenge is visible: memorisation, answering, or reviewing after the answer. */
 export type ChallengePhase = 'study' | 'respond' | 'review';
@@ -34,9 +35,9 @@ export interface GameModule<C extends Challenge = Challenge> {
   readonly definition: GameDefinition<C>;
   readonly ContentView: ComponentType<ContentViewProps<C>>;
   /** Human labels for each content kind (results breakdown). */
-  readonly kindLabels: Readonly<Record<C['content']['kind'], string>>;
+  readonly kindLabels: Readonly<Record<C['content']['kind'], Text>>;
   /** Words for option labels that are not readable aloud (e.g. symbol strings). */
-  readonly describeOption?: (label: string) => string | undefined;
+  readonly describeOption?: (label: string) => Text | undefined;
   /**
    * Visual face for an option or sequence symbol (e.g. a coloured shape). The label is still
    * used as its accessible name. Return undefined to show the label as text.

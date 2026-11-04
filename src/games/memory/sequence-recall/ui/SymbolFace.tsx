@@ -15,4 +15,3 @@ export function SymbolFace({ id, className = 'h-9 w-9' }: { id: string; classNam
     return <Glyph glyph={{ shape: value, color: 'blue' }} decorative className={className} />;
   return <span className="font-mono text-2xl font-semibold">{value}</span>;
 }
-

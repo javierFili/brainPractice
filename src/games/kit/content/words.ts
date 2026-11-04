@@ -1,8 +1,10 @@
 import { sample, type RandomGenerator } from '@/domain/random';
+import { msg, type Message } from '@/domain/shared';
 
 /**
- * Concrete, short, high-frequency English nouns, grouped by theme. Familiar words keep word tasks
- * about memory rather than vocabulary. Every word is unique across groups.
+ * Concrete, short, high-frequency nouns, grouped by theme. Familiar words keep word tasks about
+ * memory rather than vocabulary. Every word is unique across groups. The English word is the
+ * word's id; `wordLabel` is what people read, translated (and unique) in every language.
  */
 export const WORD_GROUPS = {
   home: ['chair', 'table', 'lamp', 'door', 'window', 'bed', 'clock', 'mirror', 'sofa', 'shelf'],
@@ -56,6 +58,11 @@ export const groupOf = (word: string): WordGroup | undefined =>
   (Object.keys(WORD_GROUPS) as WordGroup[]).find((group) =>
     (WORD_GROUPS[group] as readonly string[]).includes(word),
   );
+
+export const wordLabel = (word: string): Message => msg(`kit:words.${word}`);
+
+/** Theme name, e.g. "kitchen" → "cocina". */
+export const wordGroupLabel = (group: WordGroup): Message => msg(`kit:wordGroups.${group}`);
 
 export const sampleWords = (random: RandomGenerator, count: number) =>
   sample(random, ALL_WORDS, count);

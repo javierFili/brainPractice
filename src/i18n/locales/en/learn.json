@@ -1,0 +1,276 @@
+{
+  "loadError": "Your learning progress could not be loaded.",
+  "learningPath": "Learning path",
+  "blocks": {
+    "flowchart": "Flowchart",
+    "decision": "Decision:",
+    "yes": "YES",
+    "no": "NO",
+    "callout": {
+      "key": "Key idea",
+      "tip": "Tip",
+      "warning": "Watch out"
+    }
+  },
+  "feedbackPanel": {
+    "solution": "Here is the solution.",
+    "correctAnswer": "Correct answer:",
+    "hint": "Hint:",
+    "tryAgain": "Try again",
+    "tryAgainLeft_one": "Try again ({{count}} left)",
+    "tryAgainLeft_other": "Try again ({{count}} left)",
+    "showSolution": "Show solution",
+    "skip": "Skip"
+  },
+  "player": {
+    "phase": {
+      "guided": {
+        "label": "Guided",
+        "note": "Hints available · up to 3 tries"
+      },
+      "practice": {
+        "label": "Practice",
+        "note": "Hints available · up to 2 tries"
+      },
+      "checkpoint": {
+        "label": "Checkpoint",
+        "note": "One try, no hints — this is what shows you have it"
+      }
+    },
+    "hintNumber": "Hint {{number}}:",
+    "showHint": "Show a hint",
+    "finish": "Finish",
+    "continue": "Continue",
+    "step": "Step {{number}} / {{total}}",
+    "progress": "Lesson progress"
+  },
+  "playground": {
+    "slider": "{{name}} slider",
+    "loadError": "This example could not be loaded.",
+    "changeValues": "Change the values",
+    "program": "Example program",
+    "caption": "▸ marks the lines that ran. The first lines are the values you control.",
+    "results": "What the program did",
+    "output": "Output",
+    "nothingPrinted": "(nothing printed)",
+    "errorLine": "Line {{line}}: {{message}}",
+    "variablesAfter": "Variables after line {{line}}",
+    "variablesEnd": "Variables at the end",
+    "stepThrough": "Step through",
+    "stepLabel": "Step",
+    "endOfProgram": "End of program",
+    "stepOf": "Step {{number}} of {{total}}",
+    "endSteps_one": "End · {{count}} step",
+    "endSteps_other": "End · {{count}} steps",
+    "tryThis": "Try this"
+  },
+  "mastery": {
+    "understanding": "Understanding",
+    "application": "Application",
+    "debugging": "Debugging",
+    "mastered": "mastered"
+  },
+  "path": {
+    "eyebrow": "Learn",
+    "start": "Start the first lesson",
+    "continue": "Continue: {{lesson}}",
+    "progress": "Your progress",
+    "lessonsCompleted": "Lessons completed",
+    "summary": "{{lessons}} / {{totalLessons}} lessons completed · {{concepts}} / {{totalConcepts}} concepts mastered",
+    "best": "best {{score}}",
+    "lessonLabel": "{{number}}. {{title}}, {{status}}",
+    "lessonLabelBest": "{{number}}. {{title}}, {{status}}, best {{score}}",
+    "status": {
+      "completed": "completed",
+      "available": "open",
+      "locked": "locked"
+    },
+    "aside": "Review and mastery",
+    "review": "Review",
+    "due_one": "{{count}} concept ready for a short review. Recalling things just as you start to forget them is what makes them last.",
+    "due_other": "{{count}} concepts ready for a short review. Recalling things just as you start to forget them is what makes them last.",
+    "reviewNow": "Review now (≈{{duration}})",
+    "nothingDue": "Nothing due. Next review {{when}}.",
+    "noReviews": "Reviews appear here after you complete a lesson.",
+    "masteryByConcept": "Mastery by concept",
+    "masteryEmpty": "Mastery grows from exercises you get right without help — clicking through does not count."
+  },
+  "lesson": {
+    "notFound": "This lesson does not exist.",
+    "locked": "{{title}} is not open yet",
+    "finishPrevious": "Each lesson builds on the one before it. Finish “{{title}}” to open this one.",
+    "finishPreviousLesson": "Each lesson builds on the one before it. Finish the previous lesson to open this one.",
+    "goTo": "Go to {{title}}"
+  },
+  "summary": {
+    "complete": "Lesson complete",
+    "notPassed": "Not passed yet",
+    "passedNext": "You passed. “{{title}}” is now open.",
+    "passedLast": "You passed the last lesson of this module.",
+    "failed": "You need {{score}} to pass. Replaying the lesson is the fastest way to close the gap — the explanations will make more sense the second time.",
+    "score": "Lesson score",
+    "scoreHint": "Checkpoint counts double",
+    "checkpoint": "Checkpoint",
+    "firstTime": "Right first time",
+    "solutionsShown": "Solutions shown",
+    "solutionsHint": "Revealed answers count as not yet learned",
+    "keyPoints": "Key points",
+    "mastery": "Mastery",
+    "reviewNote": "A short review of {{concepts}} will come back tomorrow, then at growing intervals — that is how it sticks.",
+    "nextLesson": "Next lesson: {{title}}",
+    "replay": "Replay lesson",
+    "saveFailed": "Your progress could not be saved on this device."
+  },
+  "review": {
+    "eyebrow": "Review",
+    "done": "Review done",
+    "score": "Recall score {{score}}.",
+    "next": "next review {{when}} (box {{box}} of {{boxes}})",
+    "saving": "saving…",
+    "back": "Back to the learning path",
+    "empty": "Nothing to review right now",
+    "emptyNote": "Concepts come back for review a day after you learn them, then at growing intervals.",
+    "title": "Review · {{concepts}}"
+  },
+  "training": {
+    "title": "Train the skills behind it",
+    "note": "Optional, a few minutes each. Practice, not a requirement.",
+    "gameLevel": "{{game}} · level {{level}}"
+  },
+  "thinking": {
+    "eyebrow": "Learning",
+    "title": "Computational thinking",
+    "description": "Four ways of thinking that programmers use — and that are useful without writing any code. Each links to lessons of the course and to games that use the same idea.",
+    "openCourse": "Open the course",
+    "lessons": "Lessons",
+    "practise": "Practise without code",
+    "ideas": {
+      "decomposition": {
+        "title": "Decomposition",
+        "text": "Split a big problem into small steps you can solve one at a time."
+      },
+      "patterns": {
+        "title": "Pattern recognition",
+        "text": "Notice what repeats, so one solution can serve many cases."
+      },
+      "abstraction": {
+        "title": "Abstraction",
+        "text": "Keep what matters and leave out the details that do not change the answer."
+      },
+      "algorithms": {
+        "title": "Algorithms",
+        "text": "Write exact, ordered instructions that always reach the result."
+      }
+    }
+  },
+  "exercise": {
+    "check": "Check answer",
+    "options": "Options",
+    "correctAnswer": "Correct answer",
+    "yourAnswer": "Your answer",
+    "predictOutput": "What does it print? One line per print.",
+    "predictValue": "Value of {{name}}",
+    "quotes": "Text can be written with or without quotes.",
+    "blank": "Blank {{number}}",
+    "yourOrder": "Your order",
+    "correctOrder": "Correct order: {{order}}",
+    "moveUp": "Move {{item}} up",
+    "moveDown": "Move {{item}} down",
+    "remove": "Remove {{item}}",
+    "blocks": "Blocks",
+    "add": "Add {{item}}",
+    "allBlocksUsed": "All blocks used.",
+    "yourAlgorithm": "Your algorithm",
+    "addBlocks": "Add blocks from the list, then order them.",
+    "solution": "Solution: {{solution}}",
+    "choose": "Choose…",
+    "bugLine": "1. Click the line with the bug.",
+    "buggyCode": "Code with a bug",
+    "why": "2. Why is it wrong?",
+    "reason": "Reason"
+  },
+  "feedback": {
+    "headline": {
+      "correct": "Correct.",
+      "partial": "Partly right.",
+      "incorrect": "Not quite."
+    },
+    "youChose": "You chose “{{option}}”.",
+    "youAnswered": "You answered {{value}}.",
+    "youFilledIn": "You filled in {{value}}.",
+    "blanksRight_one": "{{right}} of {{count}} blank is right.",
+    "blanksRight_other": "{{right}} of {{count}} blanks are right.",
+    "stepsInPlace_one": "{{right}} of {{count}} step is in the right place.",
+    "stepsInPlace_other": "{{right}} of {{count}} steps are in the right place.",
+    "stepShouldBe": "Step {{step}} should be “{{item}}”.",
+    "notNeeded": "“{{block}}” is not needed.",
+    "missing": "Missing: {{blocks}}.",
+    "quoted": "“{{text}}”",
+    "wrongOrder": "The right blocks, but not in the right order.",
+    "blocksUsed_one": "You used {{count}} block.",
+    "blocksUsed_other": "You used {{count}} blocks.",
+    "matchesRight_one": "{{right}} of {{count}} match is right.",
+    "matchesRight_other": "{{right}} of {{count}} matches are right.",
+    "goesWith": "“{{left}}” goes with “{{right}}”.",
+    "pointedAt": "You pointed at line {{line}}: “{{cause}}”.",
+    "notOnLine": "The problem is not on line {{line}}.",
+    "reasonRight": "Your reason is right, though.",
+    "lineCause": "Line {{line}}: {{cause}}"
+  },
+  "pseudocode": {
+    "types": {
+      "list": "list",
+      "text": "text",
+      "number": "number"
+    },
+    "what": {
+      "index": "An index",
+      "negation": "Negation"
+    },
+    "run": {
+      "isFunction": "\"{{name}}\" is a function: call it with {{name}}(…)",
+      "unset": "\"{{name}}\" has no value yet — it is used before being set",
+      "needsNumber": "{{what}} needs a number, got {{type}} {{value}}",
+      "condition": "A condition must be true or false, got {{type}} {{value}}",
+      "notIndexable": "Only lists and text can be indexed, got {{type}}",
+      "indexNotWhole": "Index {{index}} is not a whole number",
+      "indexOutsideList": "Index {{index}} is outside the list (valid: 0 to {{last}})",
+      "indexOutsideText": "Index {{index}} is outside the text (valid: 0 to {{last}})",
+      "lenType": "len() needs a list or text, got {{type}}",
+      "rangeTooLarge": "range() is too large",
+      "appendList": "append() needs a list first",
+      "noValues": "{{fn}} needs at least one value",
+      "cannotAdd": "Cannot add {{left}} and {{right}}: convert with str() first",
+      "divisionByZero": "Division by zero",
+      "cannotCompare": "Cannot compare {{left}} with {{right}}",
+      "noFunction": "There is no function called \"{{name}}\"",
+      "arity_one": "{{name}}() takes {{count}} value, got {{got}}",
+      "arity_other": "{{name}}() takes {{count}} values, got {{got}}",
+      "tooDeep": "Too many nested calls (endless recursion?)",
+      "tooManySteps": "Stopped after {{steps}} steps — the loop may never end",
+      "notAList": "\"{{name}}\" is not a list",
+      "returnOutside": "\"return\" only works inside a function",
+      "forIterable": "\"for\" needs a list, text or range(), got {{type}}"
+    },
+    "parse": {
+      "missingQuote": "Text is missing its closing quote (\")",
+      "unexpectedChar": "Unexpected character \"{{char}}\"",
+      "trailing": "Unexpected text after the expression",
+      "endsEarly": "The line ends too early",
+      "expected": "Expected \"{{value}}\"",
+      "chainedComparison": "Combine comparisons with \"and\" / \"or\"",
+      "keywordHere": "\"{{word}}\" cannot be used here",
+      "unexpected": "Unexpected \"{{token}}\"",
+      "tabs": "Indent with spaces, not tabs",
+      "indentation": "Unexpected indentation",
+      "needsBlock": "This line needs an indented block below it",
+      "needsColon": "\"{{keyword}}\" lines end with \":\"",
+      "mustFollowIf": "\"{{word}}\" must follow an \"if\" block",
+      "forSyntax": "Write loops as \"for item in list:\"",
+      "functionSyntax": "Write functions as \"function name(a, b):\"",
+      "paramNames": "Parameter names must be simple names",
+      "badTarget": "\"{{target}}\" cannot be a variable name",
+      "elseCondition": "\"else\" takes no condition (did you mean \"elif\"?)"
+    }
+  }
+}

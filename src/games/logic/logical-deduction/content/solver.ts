@@ -1,6 +1,6 @@
+import type { Message } from '@/domain/shared';
 import { indexPermutations } from '@/games/logic/shared/content';
-import { capitalize } from '@/games/logic/shared/content';
-import { CATEGORIES } from './categories';
+import { categorySentence, subjectBy } from './categories';
 import type { DeductionClue, DeductionContent } from './types';
 
 /** A candidate table: one permutation per category; table[c][p] = value of person p. */
@@ -69,27 +69,29 @@ export function solveTables(
 export function describeClue(
   clue: DeductionClue,
   content: Pick<DeductionContent, 'people' | 'categories'>,
-) {
+): Message {
   const cat = (c: number) => content.categories[c] as DeductionContent['categories'][number];
-  const text = (c: number) => CATEGORIES[cat(c).id];
   const value = (c: number, v: number) => cat(c).values[v] as string;
   const person = (p: number) => content.people[p] as string;
   switch (clue.type) {
     case 'is':
-      return `${person(clue.person)} ${text(clue.category).is(value(clue.category, clue.value))}.`;
     case 'is-not':
-      return `${person(clue.person)} ${text(clue.category).isNot(value(clue.category, clue.value))}.`;
+      return categorySentence(cat(clue.category).id, clue.type === 'is' ? 'is' : 'isNot', {
+        subject: person(clue.person),
+        value: value(clue.category, clue.value),
+      });
     case 'either':
-      return `${person(clue.person)} ${text(clue.category).either(
-        value(clue.category, clue.values[0]),
-        value(clue.category, clue.values[1]),
-      )}.`;
+      return categorySentence(cat(clue.category).id, 'either', {
+        subject: person(clue.person),
+        a: value(clue.category, clue.values[0]),
+        b: value(clue.category, clue.values[1]),
+      });
     case 'link':
-    case 'not-link': {
-      const subject = capitalize(`the person ${text(clue.catA).who(value(clue.catA, clue.a))}`);
-      const b = value(clue.catB, clue.b);
-      return `${subject} ${clue.type === 'link' ? text(clue.catB).is(b) : text(clue.catB).isNot(b)}.`;
-    }
+    case 'not-link':
+      return categorySentence(cat(clue.catB).id, clue.type === 'link' ? 'is' : 'isNot', {
+        subject: subjectBy(cat(clue.catA).id, value(clue.catA, clue.a)),
+        value: value(clue.catB, clue.b),
+      });
   }
 }
 

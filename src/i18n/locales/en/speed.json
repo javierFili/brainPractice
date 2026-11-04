@@ -1,0 +1,561 @@
+{
+  "reactionTest": {
+    "name": "Reaction Test",
+    "tagline": "Wait for it… now!",
+    "description": "Wait for a shape to appear and tap as fast as you can. Later levels add stop shapes that must not be tapped, and a cue that changes the go shape on every trial — speed only counts when the decision is right.",
+    "scoringSummary": "A trial is correct when you tap during the signal on a go trial, or hold back on a stop trial. Taps before the signal are false starts. Reaction time (signal to tap) is reported separately from accuracy.",
+    "accessibilityNotes": "Needs a quick response; relaxed timing does not lengthen the signal. Works with Space, Enter, a click, a tap or a switch mapped to Space.",
+    "simpleInstructions": "When the shape appears, tap as fast as you can.",
+    "instructions": {
+      "watch": "Keep your eyes on the box. After a random wait, a shape appears.",
+      "tap": "Tap the box (or press Space) while the shape is visible. Tapping before it appears is a false start.",
+      "goNoGo": "From level 4: tap only for the go shape (green circle) and hold back for the stop shape.",
+      "cued": "From level 7: a cue at the top shows which shape to tap for — it changes on every trial."
+    },
+    "levels": {
+      "1": "Tap when the shape appears.",
+      "2": "Tap faster: the shape stays a little less.",
+      "3": "Unpredictable waits: do not tap early.",
+      "4": "Tap only for the go shape (1 in 5 is a stop shape).",
+      "5": "More stop shapes: hold back when it is not the go shape.",
+      "6": "Stop shapes now look like the go shape.",
+      "7": "Follow the cue: the go shape changes every trial.",
+      "8": "Cued trials with look-alike shapes.",
+      "9": "Cued look-alikes, shorter window.",
+      "10": "Master: cued look-alikes, short window, long unpredictable waits."
+    },
+    "prompt": {
+      "simple": "Tap as soon as the shape appears.",
+      "target": "Tap only for the {{target}}."
+    },
+    "explanation": {
+      "go": "It was the {{target}}: a go trial.",
+      "stop": "It was the {{stimulus}}, not the {{target}}: holding back was right."
+    },
+    "kinds": {
+      "simple": "Simple reaction",
+      "goNoGo": "Go / stop",
+      "cued": "Cued go / stop"
+    },
+    "view": {
+      "goShape": "Go shape:"
+    }
+  },
+  "rapidSymbolMatching": {
+    "name": "Rapid Symbol Matching",
+    "tagline": "Same or different? Look closely, answer fast.",
+    "description": "Compare short strings of letters and symbols: are the two the same, or which candidate is an exact copy? Strings grow longer, symbols become look-alikes (b, d, p, q) and changes become subtler, down to two neighbours swapped.",
+    "scoringSummary": "Each comparison is right or wrong; a wrong answer costs points. A correct answer earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit.",
+    "accessibilityNotes": "The task is visual. Strings are also announced symbol by symbol (“small b, capital Q…”), which makes the comparison possible by listening but much slower.",
+    "simpleInstructions": "Are the two the same? Answer as fast as you can.",
+    "instructions": {
+      "sameDifferent": "Same or different: press 1 if both strings are identical, 2 if anything differs.",
+      "findCopy": "Find the copy: pick the candidate that is exactly the same as the reference.",
+      "checkEvery": "Check every symbol and its position — swapped neighbours count as different."
+    },
+    "levels": {
+      "1": "Same or different? Three letters.",
+      "2": "Four letters, only one may change.",
+      "3": "Four symbols, only one may change.",
+      "4": "Find the exact copy among three.",
+      "5": "Look-alike letters: b, d, p, q…",
+      "6": "Five look-alikes, three candidates.",
+      "7": "Swapped neighbours count as different.",
+      "8": "Six look-alikes, four candidates.",
+      "9": "Six look-alikes, same or different — quicker.",
+      "10": "Master: seven look-alikes, four candidates."
+    },
+    "same": "Same",
+    "different": "Different",
+    "prompt": {
+      "sameDifferent": "Same or different?",
+      "findMatch": "Which one is an exact copy?"
+    },
+    "explanation": {
+      "same": "Both strings are identical.",
+      "different": "They differ: {{reference}} vs {{other}}.",
+      "findMatch": "{{reference}} is the only exact copy; every other candidate changes a symbol or its position."
+    },
+    "spoken": {
+      "upTriangle": "up triangle",
+      "square": "square",
+      "circle": "circle",
+      "diamond": "diamond",
+      "star": "star",
+      "heart": "heart",
+      "downTriangle": "down triangle",
+      "small": "small {{letter}}",
+      "capital": "capital {{letter}}"
+    },
+    "view": {
+      "left": "Left",
+      "right": "Right",
+      "reference": "Reference"
+    },
+    "kinds": {
+      "sameDifferent": "Same or different",
+      "findMatch": "Find the copy"
+    }
+  },
+  "numberComparison": {
+    "name": "Number Comparison",
+    "tagline": "Which one is bigger? Quick!",
+    "description": "Pick the largest (or smallest) value as fast as you can. The numbers get closer together, more of them appear, and later they come as decimals, fractions and small calculations.",
+    "scoringSummary": "Each pick is right or wrong; a wrong pick costs points. A correct pick earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit.",
+    "simpleInstructions": "Pick the biggest number, fast.",
+    "instructions": {
+      "question": "Read the question: largest or smallest.",
+      "pick": "Pick that value with a click or its number key (1–4).",
+      "decimals": "Decimals: compare digit by digit after the point — 0.5 is larger than 0.45.",
+      "fractions": "Fractions and calculations: work out the value before comparing."
+    },
+    "levels": {
+      "1": "Pick the larger of two numbers.",
+      "2": "Two-digit numbers, closer together.",
+      "3": "Three two-digit numbers: pick the largest.",
+      "4": "Three-digit numbers that start the same; sometimes pick the smallest.",
+      "5": "Four close four-digit numbers.",
+      "6": "Decimals: longer is not always larger.",
+      "7": "Close decimals.",
+      "8": "Fractions with different denominators.",
+      "9": "Work out each expression, then compare.",
+      "10": "Master: a mix of close integers, decimals, fractions and expressions."
+    },
+    "prompt": {
+      "integers": {
+        "largest": "Which number is the largest?",
+        "smallest": "Which number is the smallest?"
+      },
+      "decimals": {
+        "largest": "Which decimal is the largest?",
+        "smallest": "Which decimal is the smallest?"
+      },
+      "fractions": {
+        "largest": "Which fraction is the largest?",
+        "smallest": "Which fraction is the smallest?"
+      },
+      "expressions": {
+        "largest": "Which result is the largest?",
+        "smallest": "Which result is the smallest?"
+      }
+    },
+    "explanation": {
+      "expression": {
+        "largest": "{{expression}} = {{value}}, the largest result.",
+        "smallest": "{{expression}} = {{value}}, the smallest result."
+      },
+      "value": {
+        "largest": "{{value}} is the largest.",
+        "smallest": "{{value}} is the smallest."
+      }
+    },
+    "spoken": {
+      "fraction": "{{num}} over {{den}}",
+      "minus": "{{a}} minus {{b}}",
+      "times": "{{a}} times {{b}}"
+    },
+    "view": {
+      "ask": {
+        "largest": "largest",
+        "smallest": "smallest"
+      },
+      "summary": {
+        "largest_one": "{{count}} value · pick the largest",
+        "largest_other": "{{count}} values · pick the largest",
+        "smallest_one": "{{count}} value · pick the smallest",
+        "smallest_other": "{{count}} values · pick the smallest"
+      },
+      "values": "Values"
+    },
+    "kinds": {
+      "integers": "Whole numbers",
+      "decimals": "Decimals",
+      "fractions": "Fractions",
+      "expressions": "Calculations"
+    }
+  },
+  "visualSearchSprint": {
+    "name": "Visual Search Sprint",
+    "tagline": "One target, many distractors — find it fast.",
+    "description": "A grid of shapes hides exactly one target. At first it differs by shape and pops out; later every distractor shares its colour or its shape, so you have to check the combination. Grids grow from 9 to 36 cells.",
+    "scoringSummary": "A trial is correct when you press the target cell. Correct answers earn more points the faster they are; a wrong cell costs points and running out of time scores nothing. Accuracy and average response time are reported separately; relaxed timing removes the limit.",
+    "accessibilityNotes": "Levels 1–4 can be solved by shape alone. Conjunction levels (5–10) need colour discrimination: half the distractors have the target’s shape in another colour. Every cell’s accessible name gives its row, column, colour and shape, so screen-reader users can search by name (which is a different, slower task).",
+    "simpleInstructions": "Find the shape that matches the one at the top and press it.",
+    "instructions": {
+      "target": "The target is shown above the grid and named in the question.",
+      "press": "Press the one cell that shows exactly that shape in that colour.",
+      "conjunction": "From level 5 the other cells share either its colour or its shape — check both.",
+      "keyboard": "Keyboard: Tab into the grid, move with the arrow keys, press Enter."
+    },
+    "levels": {
+      "1": "Spot the one shape that differs in a 3 × 3 grid.",
+      "2": "A bigger grid: 12 cells.",
+      "3": "Look-alike shapes: the target is harder to tell apart.",
+      "4": "Plain and look-alike shapes mixed.",
+      "5": "Conjunction search: distractors share the colour or the shape.",
+      "6": "Conjunction search in 25 cells.",
+      "7": "Conjunctions mixed with look-alikes, 25 cells.",
+      "8": "Conjunction search in 30 cells.",
+      "9": "Conjunction search in a full 6 × 6 grid.",
+      "10": "Master: 36 cells, conjunctions with look-alike shapes."
+    },
+    "prompt": "Find the {{target}}.",
+    "explanation": "The {{target}} was at {{cell}}.",
+    "view": {
+      "find": "Find:",
+      "grid_one": "Search grid, {{count}} cell",
+      "grid_other": "Search grid, {{count}} cells",
+      "cell": "{{cell}}, {{glyph}}",
+      "cellTarget": "{{cell}}, {{glyph}}, target",
+      "cellPick": "{{cell}}, {{glyph}}, your pick"
+    },
+    "kinds": {
+      "feature": "Shape pop-out",
+      "similar": "Look-alike shapes",
+      "conjunction": "Colour and shape combined"
+    }
+  },
+  "rapidClassification": {
+    "name": "Rapid Classification",
+    "tagline": "Fruit or animal? Decide fast.",
+    "description": "An everyday object appears: put it in its group as fast as you can. Later levels show only the word, add more groups and finally switch rules: a cue says whether to sort by group or by the first letter of the name.",
+    "scoringSummary": "Each object is right or wrong; accuracy is always reported. Correct answers earn extra points the faster they come, wrong answers cost points, and your response time per answer is shown. Relaxed mode removes the time limit.",
+    "simpleInstructions": "Say which group the picture belongs to, as fast as you can.",
+    "instructions": {
+      "object": "An object appears. Choose its group with a click or the number keys.",
+      "groups": "The groups stay in the same place for the whole session, so you can keep your fingers ready.",
+      "words": "From level 5 you see only the word: read it, then decide.",
+      "rule": "From level 7 a cue says the rule: CATEGORY (its group) or FIRST LETTER (A–M or N–Z)."
+    },
+    "levels": {
+      "1": "Sort pictures into two groups: fruit or animal.",
+      "2": "Two new groups: vehicle or clothing.",
+      "3": "Three groups to choose from.",
+      "4": "Four groups to choose from.",
+      "5": "Words only: read the name, then sort it (fruit or tool).",
+      "6": "Words only, four groups.",
+      "7": "Follow the cue: sort by group, or by first letter (A–M or N–Z).",
+      "8": "More letter trials, three groups.",
+      "9": "Cued switching with words only.",
+      "10": "Master: words only, four groups, rule changes at random."
+    },
+    "prompt": {
+      "category": "Which group does it belong to?",
+      "letter": "Does its name start with a letter from A–M or N–Z?"
+    },
+    "explanation": {
+      "category": "“{{item}}” belongs to the group “{{group}}”.",
+      "letter": "“{{item}}” starts with “{{letter}}”, which is in {{range}}."
+    },
+    "groups": {
+      "fruit": "Fruit",
+      "animal": "Animal",
+      "vehicle": "Vehicle",
+      "tool": "Tool",
+      "clothing": "Clothing",
+      "nature": "Nature",
+      "food": "Food"
+    },
+    "view": {
+      "ruleCategory": "Rule: CATEGORY",
+      "ruleLetter": "Rule: FIRST LETTER"
+    },
+    "kinds": {
+      "picture": "Pictures",
+      "word": "Words only",
+      "switch": "Cued rule switch"
+    },
+    "initials": {
+      "cherries": "C",
+      "cat": "C",
+      "turtle": "T",
+      "elephant": "E",
+      "giraffe": "G",
+      "bee": "B",
+      "bus": "B",
+      "airplane": "A",
+      "train": "T",
+      "hammer": "H",
+      "magnet": "M",
+      "cap": "C",
+      "gloves": "G",
+      "moon": "M",
+      "cactus": "C",
+      "pizza": "P",
+      "cookie": "C"
+    }
+  },
+  "colorAndShapeDecisions": {
+    "name": "Color and Shape Decisions",
+    "tagline": "Colour or shape? The cue decides.",
+    "description": "A coloured shape appears with a cue: COLOUR or SHAPE. Answer the feature the cue asks for. Later the same key stands for a colour and a shape at once, so a red square means different answers under each rule — the cue is the only way to know which.",
+    "scoringSummary": "Each answer is right or wrong; accuracy is always reported. Correct answers earn extra points the faster they come, wrong answers cost points, and your response time per answer is shown. Relaxed mode removes the time limit.",
+    "accessibilityNotes": "Colour trials ask about colour itself, so they need colour vision; the palette avoids red/green. Every shape is announced with its colour and shape name (e.g. “red square”), and the cue is written as a word.",
+    "simpleInstructions": "Look at the word on top: say the colour or the shape it asks for.",
+    "instructions": {
+      "cue": "Read the cue: COLOUR means answer the colour, SHAPE means answer the shape.",
+      "keys": "Answer with a click or the number keys; keys keep the same meaning for the whole session.",
+      "shared": "From level 5 each key means a colour and a shape (“red / circle”).",
+      "check": "A red square is “red” under COLOUR but “square” under SHAPE: always check the cue."
+    },
+    "levels": {
+      "1": "Colour only: say the colour of each shape.",
+      "2": "Shape only: say the shape, whatever its colour.",
+      "3": "Follow the cue: COLOUR or SHAPE, each with its own answers.",
+      "4": "Cued rules, mixed half and half.",
+      "5": "Shared keys: each answer means a colour and a shape.",
+      "6": "Shared keys, rules mixed half and half, more conflicting shapes.",
+      "7": "Most shapes now conflict: colour and shape point to different keys.",
+      "8": "Three colours and three shapes.",
+      "9": "Three values, more conflict, less time.",
+      "10": "Master: three values, nearly every shape conflicts, short limit."
+    },
+    "prompt": {
+      "colour": "COLOUR: what colour is it?",
+      "shape": "SHAPE: what shape is it?"
+    },
+    "explanation": {
+      "colour": "The cue was COLOUR and it was a {{glyph}}: the answer is {{value}}.",
+      "shape": "The cue was SHAPE and it was a {{glyph}}: the answer is {{value}}.",
+      "colourShared": "The cue was COLOUR and it was a {{glyph}}: the answer is {{value}} ({{option}}).",
+      "shapeShared": "The cue was SHAPE and it was a {{glyph}}: the answer is {{value}} ({{option}})."
+    },
+    "view": {
+      "cueColour": "COLOUR",
+      "cueShape": "SHAPE",
+      "itWas": "It was a {{glyph}}."
+    },
+    "kinds": {
+      "colour": "Colour cue",
+      "shape": "Shape cue"
+    }
+  },
+  "fastSequenceRecognition": {
+    "name": "Fast Sequence Recognition",
+    "tagline": "One glimpse — which one was it?",
+    "description": "A short sequence of digits, letters or shapes is shown for a moment, then hidden. Pick it out from similar sequences as fast as you can. Sequences grow longer, glimpses get shorter, and at the top the candidates differ only in order.",
+    "scoringSummary": "Each pick is right or wrong; a wrong pick costs points. A correct pick earns more the faster it comes after the sequence is hidden, but accuracy carries most of the result. Relaxed timing doubles the glimpse and removes the answer limit.",
+    "accessibilityNotes": "The glimpse is a single, still display (no flashing). Screen readers announce the sequence once when it appears; a short glimpse can end before it is read, so relaxed timing is recommended with a screen reader.",
+    "simpleInstructions": "Look at the row, then find the same row.",
+    "instructions": {
+      "glimpse": "A sequence appears briefly. Take it in as a whole — press “I’m ready” if you are done early.",
+      "pick": "When it disappears, pick the same sequence among the candidates (click or number keys).",
+      "differ": "Candidates differ by one symbol or by two neighbours swapped."
+    },
+    "levels": {
+      "1": "Glimpse 3 digits, then pick them out of 2.",
+      "2": "4 digits, 3 candidates.",
+      "3": "4 letters, 3 candidates.",
+      "4": "4 shapes, 3 candidates.",
+      "5": "5 digits, 4 candidates.",
+      "6": "5 letters, shorter glimpse.",
+      "7": "5 shapes, shorter glimpse.",
+      "8": "6 digits: only the order differs.",
+      "9": "6 letters: only the order differs.",
+      "10": "Master: 7 digits or shapes, one-second glimpse, order only."
+    },
+    "prompt": "Which sequence did you see?",
+    "studyPrompt": {
+      "digits_one": "Take in this digit.",
+      "digits_other": "Take in these {{count}} digits.",
+      "letters_one": "Take in this letter.",
+      "letters_other": "Take in these {{count}} letters.",
+      "shapes_one": "Take in this shape.",
+      "shapes_other": "Take in these {{count}} shapes."
+    },
+    "explanation": "The sequence was {{sequence}}.",
+    "view": {
+      "sequence": "Sequence: {{sequence}}",
+      "hidden_one": "Hidden. Pick the {{count}}-symbol sequence you just saw.",
+      "hidden_other": "Hidden. Pick the {{count}}-symbol sequence you just saw.",
+      "youSaw": "You saw:"
+    },
+    "kinds": {
+      "digits": "Digits",
+      "letters": "Letters",
+      "shapes": "Shapes"
+    }
+  },
+  "mentalArithmeticSprint": {
+    "name": "Mental Arithmetic Sprint",
+    "tagline": "Quick sums, checked or solved.",
+    "description": "Short calculations against the clock. First decide whether an equation is true or false, then type results yourself — from one-digit sums to two-digit products and three-number expressions.",
+    "scoringSummary": "Each calculation is right or wrong; a wrong answer costs points. A correct answer earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit, and the task still works the same.",
+    "simpleInstructions": "Is the sum right? Or type the answer — as fast as you can.",
+    "instructions": {
+      "verify": "True or false: press 1 if the equation is right, 2 if it is wrong.",
+      "solve": "Type the answer: enter the missing result and press Enter.",
+      "precedence": "Multiply and divide before adding and subtracting, unless brackets say otherwise.",
+      "time": "Answer before the time runs out — accuracy counts more than speed."
+    },
+    "levels": {
+      "1": "True or false: one-digit sums.",
+      "2": "True or false: sums and differences up to 20.",
+      "3": "Type the answer: sums and differences up to 20.",
+      "4": "True or false: times tables and division.",
+      "5": "Type the answer: times tables and division.",
+      "6": "Mixed checks and answers with two-digit numbers.",
+      "7": "Type the answer: two-digit sums and differences.",
+      "8": "Type the answer: two-digit × one-digit.",
+      "9": "True or false: three numbers — multiply before adding.",
+      "10": "Master: type the answer to three-number expressions and two-digit products."
+    },
+    "true": "True",
+    "false": "False",
+    "prompt": {
+      "solve": "Type the result.",
+      "verify": "True or false?"
+    },
+    "explanation": {
+      "solve": "{{expression}} = {{value}}.",
+      "true": "True: {{expression}} = {{value}}.",
+      "false": "False: {{expression}} = {{value}}, not {{shown}}."
+    },
+    "spoken": {
+      "plus": "plus",
+      "minus": "minus",
+      "times": "times",
+      "dividedBy": "divided by",
+      "openBracket": "open bracket",
+      "closeBracket": "close bracket"
+    },
+    "view": {
+      "spoken": "{{expression}} equals {{result}}",
+      "spokenUnknown": "{{expression}} equals what"
+    },
+    "kinds": {
+      "verify": "True or false",
+      "solve": "Type the result"
+    }
+  },
+  "codeScanSprint": {
+    "name": "Code Scan",
+    "tagline": "Read a listing at a glance and point at the line.",
+    "description": "A short piece of pseudocode and one question: which line calls print, uses the number 7, or first gives total a value? Find that line as fast as you can. Early levels use a handful of plain lines; later ones nest blocks and repeat names to mislead a quick glance.",
+    "scoringSummary": "A trial is correct when you press the one line that answers the question. Correct answers earn more points the faster they are; a wrong line costs points and running out of time scores nothing. Accuracy and average response time are reported separately; relaxed timing removes the limit.",
+    "accessibilityNotes": "Each line is a button named with its number and text, so screen readers can scan the listing line by line. “←” means “gets the value”.",
+    "simpleInstructions": "Read the question and press the line that matches it.",
+    "instructions": {
+      "read": "Read the question, then press the line in the listing that answers it.",
+      "syntax": "“total ← 5” gives total a value; “print(total)” calls print; “if score > 3:” checks score.",
+      "unique": "Exactly one line answers each question.",
+      "keyboard": "Keyboard: Tab to the listing, move with the arrow keys, press Enter."
+    },
+    "levels": {
+      "1": "Find the line that calls a routine, in 4 lines.",
+      "2": "Calls or numbers, in 5 lines.",
+      "3": "Blocks appear: lines inside if and repeat.",
+      "4": "Where does a variable first get a value?",
+      "5": "Conditions: which line checks a variable?",
+      "6": "Variables assigned twice: first or last time?",
+      "7": "Nested blocks, every kind of question.",
+      "8": "Four variables, 10 lines.",
+      "9": "Mostly assignment and condition questions, 11 lines.",
+      "10": "Master: 12 nested lines, every kind of question."
+    },
+    "question": {
+      "call": "Which line calls {{subject}}?",
+      "number": "Which line uses the number {{subject}}?",
+      "firstAssign": "Where is {{subject}} first given a value?",
+      "lastAssign": "Where is {{subject}} given a value for the last time?",
+      "condition": "Which line checks {{subject}} in a condition?"
+    },
+    "reason": {
+      "call": "it is the only line that calls {{subject}}.",
+      "number": "it is the only line with the number {{subject}}.",
+      "firstAssign": "it is the first line of the form “{{subject}} ← …”.",
+      "lastAssign": "it is the last line of the form “{{subject}} ← …”.",
+      "condition": "it is the only if / while line whose condition mentions {{subject}}."
+    },
+    "explanation": "Line {{line}} (“{{text}}”): {{reason}}",
+    "view": {
+      "listing": "Code listing",
+      "badge": {
+        "answer": "✓ answer",
+        "pick": "✗ your pick"
+      },
+      "marker": {
+        "answer": "answer",
+        "pick": "your pick"
+      },
+      "line": "Line {{line}}: {{text}}",
+      "lineMarked": "Line {{line}}: {{text}} ({{markers}})"
+    },
+    "kinds": {
+      "call": "Find the call",
+      "number": "Find the number",
+      "firstAssign": "First assignment",
+      "lastAssign": "Last assignment",
+      "condition": "Find the condition"
+    }
+  },
+  "multiChoiceProcessing": {
+    "name": "Multi-Choice Processing Challenge",
+    "tagline": "Ignore the crowd: which way does the centre point?",
+    "description": "A row of arrows appears. Answer the direction of the centre arrow while the arrows around it point the same way, another way, or nowhere. Later levels add up and down, longer rows and a cue that sometimes asks for the outer arrows instead.",
+    "scoringSummary": "Each answer is right or wrong; a wrong answer costs points. A correct answer earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit; the conflict between arrows still has to be resolved.",
+    "accessibilityNotes": "Directions are given by arrow shape, never by colour. Screen readers announce the row as a list of directions; the visual conflict that makes the task hard is mostly lost when listening.",
+    "simpleInstructions": "Which way does the middle arrow point?",
+    "instructions": {
+      "centre": "Look at the arrow in the middle of the row and answer its direction (click or number keys).",
+      "ignore": "Ignore the arrows around it — they may point another way.",
+      "vertical": "From level 5 arrows can also point up or down.",
+      "cue": "From level 7 a cue says CENTRE (the middle arrow) or OUTER (the arrows around it)."
+    },
+    "levels": {
+      "1": "Which way does the arrow point?",
+      "2": "Answer the centre arrow; the others agree or are bars.",
+      "3": "Some outer arrows now point the other way.",
+      "4": "Half the rows conflict.",
+      "5": "Four directions: left, right, up, down.",
+      "6": "Seven arrows in a row, more conflict.",
+      "7": "Follow the cue: CENTRE arrow or OUTER arrows.",
+      "8": "Outer-arrow trials more often.",
+      "9": "Rules mixed half and half.",
+      "10": "Master: mixed rules, mostly conflicting rows, less time."
+    },
+    "directions": {
+      "left": "Left",
+      "right": "Right",
+      "up": "Up",
+      "down": "Down"
+    },
+    "pointing": {
+      "left": "left",
+      "right": "right",
+      "up": "up",
+      "down": "down"
+    },
+    "prompt": {
+      "single": "Which way does the arrow point?",
+      "centre": "Which way does the centre arrow point?",
+      "outer": "Which way do the outer arrows point?"
+    },
+    "explanation": {
+      "single": "The arrow pointed {{direction}}.",
+      "centre": "The centre arrow pointed {{direction}}.",
+      "outer": "The outer arrows pointed {{direction}}.",
+      "centreConflict": "The centre arrow pointed {{direction}}; the outer arrows pointed {{other}}.",
+      "outerConflict": "The outer arrows pointed {{direction}}; the centre arrow pointed {{other}}."
+    },
+    "spoken": {
+      "left": "left",
+      "right": "right",
+      "up": "up",
+      "down": "down",
+      "none": "bar"
+    },
+    "view": {
+      "cueCentre": "CENTRE",
+      "cueOuter": "OUTER",
+      "single": "One arrow pointing {{direction}}.",
+      "row_one": "Row of {{count}}: {{items}}.",
+      "row_other": "Row of {{count}}: {{items}}."
+    },
+    "kinds": {
+      "single": "Single arrow",
+      "flanker": "Centre arrow",
+      "cued": "Cued rule"
+    }
+  }
+}

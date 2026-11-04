@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps } from '@/games/types';
+import { useText } from '@/i18n';
 import { cellLabel, describeCell } from '../content/format';
 import { formatList, LIST_VOCABULARY } from '../content/solvers/listOps';
 import { formatTree } from '../content/solvers/treeOps';
@@ -25,8 +27,12 @@ function Unknown({ label }: { label: string }) {
 }
 
 function SequenceView({ terms }: { terms: readonly number[] }) {
+  const { t } = useTranslation('programming');
   return (
-    <ol className="flex flex-wrap items-center gap-2" aria-label="Sequence">
+    <ol
+      className="flex flex-wrap items-center gap-2"
+      aria-label={t('patternArchitect.view.sequence')}
+    >
       {terms.map((term, i) => (
         <li
           key={i}
@@ -36,19 +42,19 @@ function SequenceView({ terms }: { terms: readonly number[] }) {
         </li>
       ))}
       <li className="text-lg">
-        <Unknown label="Next term (unknown)" />
+        <Unknown label={t('patternArchitect.view.nextTerm')} />
       </li>
     </ol>
   );
 }
 
 function GridView({ cells }: { cells: readonly (readonly (GridCell | null)[])[] }) {
+  const { t } = useTranslation('programming');
+  const tx = useText();
   const size = cells.length;
   return (
     <table className="mx-auto border-separate border-spacing-1.5">
-      <caption className="sr-only">
-        Symbol grid, {size} rows by {size} columns, with one missing cell
-      </caption>
+      <caption className="sr-only">{t('patternArchitect.view.grid', { size })}</caption>
       <tbody>
         {cells.map((row, r) => (
           <tr key={r}>
@@ -60,12 +66,12 @@ function GridView({ cells }: { cells: readonly (readonly (GridCell | null)[])[] 
                 {cell === null ? (
                   <span className="font-mono text-xl font-semibold text-emerald-300">
                     <span aria-hidden="true">?</span>
-                    <span className="sr-only">Missing cell</span>
+                    <span className="sr-only">{t('patternArchitect.view.missingCell')}</span>
                   </span>
                 ) : (
                   <span className="text-base tracking-tight break-all text-slate-100 sm:text-lg">
                     <span aria-hidden="true">{cellLabel(cell)}</span>
-                    <span className="sr-only">{describeCell(cell)}</span>
+                    <span className="sr-only">{tx(describeCell(cell))}</span>
                   </span>
                 )}
               </td>
@@ -86,51 +92,57 @@ function TransformView({
   question: readonly number[];
   maxSteps: number;
 }) {
+  const { t } = useTranslation('programming');
+  const tx = useText();
   return (
     <div className="flex flex-col gap-4">
-      <table className="w-full text-left font-mono text-sm">
+      <table className="w-full text-left text-sm">
         <caption className={`${HEADING} text-left`}>
-          Examples · hidden program of up to {maxSteps} {maxSteps === 1 ? 'step' : 'steps'}
+          {t('patternArchitect.view.examples', { count: maxSteps })}
         </caption>
         <thead>
           <tr className="text-xs text-slate-400">
             <th scope="col" className="py-1 pr-4 font-semibold">
-              Input
+              {t('patternArchitect.view.input')}
             </th>
             <th scope="col" className="sr-only">
-              becomes
+              {t('patternArchitect.view.becomes')}
             </th>
             <th scope="col" className="py-1 font-semibold">
-              Output
+              {t('patternArchitect.view.output')}
             </th>
           </tr>
         </thead>
         <tbody>
           {examples.map(({ input, output }) => (
             <tr key={formatList(input)} className="border-t border-slate-800">
-              <td className="py-1.5 pr-4 text-slate-100">{formatList(input)}</td>
+              <td className="py-1.5 pr-4 font-mono text-slate-100">{formatList(input)}</td>
               <td aria-hidden="true" className="pr-4 text-emerald-300">
                 →
               </td>
-              <td className="py-1.5 text-slate-100">{formatList(output)}</td>
+              <td className="py-1.5 font-mono text-slate-100">{formatList(output)}</td>
             </tr>
           ))}
           <tr className="border-t border-emerald-400/40">
-            <td className="py-2 pr-4 font-semibold text-emerald-200">{formatList(question)}</td>
+            <td className="py-2 pr-4 font-mono font-semibold text-emerald-200">
+              {formatList(question)}
+            </td>
             <td aria-hidden="true" className="pr-4 text-emerald-300">
               →
             </td>
             <td className="py-2">
-              <Unknown label="Output for the new input (unknown)" />
+              <Unknown label={t('patternArchitect.view.newOutput')} />
             </td>
           </tr>
         </tbody>
       </table>
       <details className="rounded-lg border border-slate-800 p-3 text-sm text-slate-300">
-        <summary className="cursor-pointer font-medium text-slate-200">Possible steps</summary>
+        <summary className="cursor-pointer font-medium text-slate-200">
+          {t('patternArchitect.view.possibleSteps')}
+        </summary>
         <ul className="mt-2 list-disc space-y-0.5 pl-5">
           {LIST_VOCABULARY.map((step) => (
-            <li key={step}>{step}</li>
+            <li key={step.key}>{tx(step)}</li>
           ))}
         </ul>
       </details>
@@ -155,28 +167,27 @@ function TreeAnalogyView({
   question: TreeNode;
   maxSteps: number;
 }) {
+  const { t } = useTranslation('programming');
   return (
     <div className="flex flex-col gap-4">
-      <h3 className={HEADING}>
-        Restructuring rule of up to {maxSteps} {maxSteps === 1 ? 'step' : 'steps'}
-      </h3>
-      <ol className="flex flex-col gap-3" aria-label="Examples">
+      <h3 className={HEADING}>{t('patternArchitect.view.treeRule', { count: maxSteps })}</h3>
+      <ol className="flex flex-col gap-3" aria-label={t('patternArchitect.view.treeExamples')}>
         {examples.map(({ before, after }, i) => (
           <li
             key={formatTree(before)}
             className="grid grid-cols-[1fr_auto_1fr] gap-3 rounded-lg border border-slate-700 p-3"
           >
-            <TreeFigure tree={before} label={`Example ${i + 1}, before`} />
+            <TreeFigure tree={before} label={t('patternArchitect.view.before', { n: i + 1 })} />
             <Arrow />
-            <TreeFigure tree={after} label={`Example ${i + 1}, after`} />
+            <TreeFigure tree={after} label={t('patternArchitect.view.after', { n: i + 1 })} />
           </li>
         ))}
       </ol>
       <div className="grid grid-cols-[1fr_auto_1fr] gap-3 rounded-lg border border-emerald-400/40 bg-emerald-400/5 p-3">
-        <TreeFigure tree={question} label="New tree" />
+        <TreeFigure tree={question} label={t('patternArchitect.view.newTree')} />
         <Arrow />
         <div className="self-center">
-          <Unknown label="Restructured new tree (unknown)" />
+          <Unknown label={t('patternArchitect.view.newTreeResult')} />
         </div>
       </div>
     </div>

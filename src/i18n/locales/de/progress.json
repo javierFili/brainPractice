@@ -1,0 +1,170 @@
+{
+  "page": {
+    "eyebrow": "Allgemein",
+    "title": "Mein Fortschritt",
+    "description": "Echte Daten aus deinen Runden, nur in diesem Browser gespeichert. Die Werte beschreiben diese Aktivitäten, nicht deine allgemeinen Fähigkeiten.",
+    "manageData": "Daten verwalten",
+    "empty": "Noch keine Runden. Hier erscheinen dein Verlauf, deine Rekorde und Meilensteine.",
+    "browse": "Aktivitäten ansehen"
+  },
+  "stats": {
+    "sessions": "Abgeschlossene Runden",
+    "practiceTime": "Übungszeit",
+    "gamesExplored": "Entdeckte Spiele",
+    "levels": "Stufen offen / geschafft",
+    "activeDays": "Aktive Tage",
+    "activeDaysHint": "Tage mit Übung",
+    "daily": "Tägliche Aufgaben",
+    "assessments": "Einschätzungen",
+    "milestones": "Meilensteine"
+  },
+  "distribution": {
+    "title": "Worauf deine Übung entfiel",
+    "note": "Runden in deinem aktuellen Verlauf (bis zu 200)."
+  },
+  "mostPlayed": {
+    "title": "Am häufigsten gespielt",
+    "empty": "Noch nichts."
+  },
+  "records": {
+    "title": "Persönliche Rekorde und Trends",
+    "note": "Für Rekorde zählen nur abgeschlossene Runden ohne entspanntes Tempo. Trends vergleichen Runden desselben Spiels auf derselben Stufe – der einzig faire Vergleich.",
+    "trend": "Leistungstrend auf Stufe {{level}}: {{values}}",
+    "best": "Bestwert: Stufe {{level}} · Leistung {{performance}} · Genauigkeit {{accuracy}} · {{points}} Pkt.",
+    "median": "Median {{time}}",
+    "none": "Noch keine abgeschlossene Runde.",
+    "cleared": "Geschaffte Stufen: {{levels}}",
+    "clearedNone": "noch keine"
+  },
+  "milestonesTitle": "Meilensteine",
+  "milestoneAchieved": ", erreicht",
+  "milestoneNotYet": ", noch nicht",
+  "history": {
+    "title": "Verlauf",
+    "game": "Spiel",
+    "allGames": "Alle Spiele",
+    "caption": "Runden, neueste zuerst",
+    "date": "Datum",
+    "level": "Stufe",
+    "accuracy": "Genauigkeit",
+    "performance": "Leistung",
+    "duration": "Dauer",
+    "relaxed": "entspannt",
+    "endedEarly": "vorzeitig beendet",
+    "showingLatest": "Angezeigt werden die letzten {{shown}} von {{total}}."
+  },
+  "milestones": {
+    "first-session": {
+      "title": "Erste Runde",
+      "description": "Schließe eine beliebige Aktivität ab."
+    },
+    "ten-sessions": {
+      "title": "Zehn Runden",
+      "description": "Übe zehnmal, in deinem Tempo."
+    },
+    "fifty-sessions": {
+      "title": "Fünfzig Runden",
+      "description": "Eine dauerhafte Übungsgewohnheit."
+    },
+    "half-hour": {
+      "title": "30 Minuten Übung",
+      "description": "Gesamte Übungszeit über alle Aktivitäten."
+    },
+    "five-hours": {
+      "title": "5 Stunden Übung",
+      "description": "Gesamte Übungszeit über alle Aktivitäten."
+    },
+    "explorer": {
+      "title": "Entdecker",
+      "description": "Probiere fünf verschiedene Spiele aus."
+    },
+    "collector": {
+      "title": "Großer Entdecker",
+      "description": "Probiere zwanzig verschiedene Spiele aus."
+    },
+    "all-areas": {
+      "title": "Allrounder",
+      "description": "Übe Gedächtnis, Logik, Tempo, Aufmerksamkeit und Muster."
+    },
+    "first-clear": {
+      "title": "Erste Stufe geschafft",
+      "description": "Erreiche auf einer beliebigen Stufe eine Leistung von 70."
+    },
+    "advanced": {
+      "title": "Fortgeschritten",
+      "description": "Schaffe in einem beliebigen Spiel Stufe 7 oder höher."
+    },
+    "master": {
+      "title": "Meisterstufe",
+      "description": "Schaffe in einem beliebigen Spiel Stufe 10."
+    },
+    "daily-three": {
+      "title": "Tägliche Herausforderung",
+      "description": "Schließe drei tägliche Aufgaben ab (an beliebigen Tagen)."
+    },
+    "assessment": {
+      "title": "Selbstcheck",
+      "description": "Schließe eine kognitive Einschätzung ab."
+    },
+    "active-days": {
+      "title": "Sieben aktive Tage",
+      "description": "Übe an sieben verschiedenen Tagen – nicht unbedingt hintereinander."
+    }
+  },
+  "training": {
+    "startRoute": "Eine gute erste Aktivität für den gewählten Weg.",
+    "levelUp": "Du hast Stufe {{cleared}} geschafft. Stufe {{next}} bringt einen neuen Schwierigkeitsschritt.",
+    "discoverRoute": "Ein Teil deines Wegs, den du noch nicht ausprobiert hast.",
+    "discover": "Ein Spiel, das du noch nicht ausprobiert hast.",
+    "gentleStart": {
+      "memory": "Ein sanfter Einstieg mit Gedächtnisaufgaben.",
+      "logic": "Ein sanfter Einstieg mit Logikaufgaben.",
+      "speed": "Ein sanfter Einstieg mit Aufgaben zum Denktempo.",
+      "attention": "Ein sanfter Einstieg mit Aufmerksamkeitsaufgaben.",
+      "patterns": "Ein sanfter Einstieg mit Mustern und räumlichem Denken.",
+      "programming": "Ein sanfter Einstieg ins Programmieren."
+    },
+    "notPractised": {
+      "memory": "Du hast in den letzten zwei Wochen dein Gedächtnis nicht trainiert – ein Aufgabenwechsel hält das Üben abwechslungsreich.",
+      "logic": "Du hast in den letzten zwei Wochen keine Logik geübt – ein Aufgabenwechsel hält das Üben abwechslungsreich.",
+      "speed": "Du hast in den letzten zwei Wochen dein Denktempo nicht geübt – ein Aufgabenwechsel hält das Üben abwechslungsreich.",
+      "attention": "Du hast in den letzten zwei Wochen deine Aufmerksamkeit nicht trainiert – ein Aufgabenwechsel hält das Üben abwechslungsreich.",
+      "patterns": "Du hast in den letzten zwei Wochen weder Muster noch räumliches Denken geübt – ein Aufgabenwechsel hält das Üben abwechslungsreich.",
+      "programming": "Du hast in den letzten zwei Wochen nicht programmiert – ein Aufgabenwechsel hält das Üben abwechslungsreich."
+    },
+    "leastPractised": {
+      "memory": "Gedächtnis ist der Bereich, den du zuletzt am wenigsten geübt hast.",
+      "logic": "Logik ist der Bereich, den du zuletzt am wenigsten geübt hast.",
+      "speed": "Denktempo ist der Bereich, den du zuletzt am wenigsten geübt hast.",
+      "attention": "Aufmerksamkeit ist der Bereich, den du zuletzt am wenigsten geübt hast.",
+      "patterns": "Muster und räumliches Denken sind der Bereich, den du zuletzt am wenigsten geübt hast.",
+      "programming": "Programmieren ist der Bereich, den du zuletzt am wenigsten geübt hast."
+    }
+  },
+  "recommend": {
+    "review": {
+      "title": "Wiederholung: {{concepts}}",
+      "reason": "Du hast das vor einer Weile gelernt. Wenn du es dir jetzt wieder ins Gedächtnis rufst, gerade wenn es zu verblassen beginnt, bleibt es dauerhaft."
+    },
+    "lesson": {
+      "title": "Lektion: {{lesson}}",
+      "start": "Beginne {{course}} von vorn. {{objective}}",
+      "continue_one": "Mach weiter mit {{course}} – {{completed}} von {{count}} Lektion erledigt.",
+      "continue_other": "Mach weiter mit {{course}} – {{completed}} von {{count}} Lektionen erledigt."
+    },
+    "daily": {
+      "title": "Tägliche Aufgabe · {{game}}",
+      "reason": "Fünf kurze Aufgaben, heute für alle gleich, auf deiner Stufe."
+    },
+    "train": {
+      "title": "{{game}} · Stufe {{level}}",
+      "learning": "Du lernst gerade: {{concept}}. {{why}}",
+      "untrained": "Diesen Bereich hast du noch nicht trainiert.",
+      "leastPractised": "Dein zuletzt am wenigsten geübter Bereich (aktuelle Leistung {{performance}})."
+    },
+    "assessment": {
+      "title": "Einschätzung machen",
+      "reason": "Du hast schon ein paarmal trainiert: Ein Ausgangswert in allen fünf Bereichen zeigt, worauf du dich als Nächstes konzentrieren kannst."
+    }
+  }
+}

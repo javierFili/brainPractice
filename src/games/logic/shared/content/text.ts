@@ -1,4 +1,9 @@
-/** Short, distinct, easy-to-read first names (no two share a first letter). */
+import { joinText, msg, type Text } from '@/domain/shared';
+
+/**
+ * Short, distinct, easy-to-read first names (no two share a first letter). Names are proper
+ * nouns: they stay the same in every language and are never translated.
+ */
 export const PEOPLE = [
   'Ana',
   'Ben',
@@ -22,19 +27,17 @@ export const PEOPLE = [
   'Uma',
 ] as const;
 
-/** "a", "a and b", "a, b and c". */
-export function listJoin(items: readonly string[], conjunction = 'and'): string {
-  if (items.length <= 1) return items.join('');
-  return `${items.slice(0, -1).join(', ')} ${conjunction} ${items.at(-1) as string}`;
-}
+/** "a", "a and b", "a, b and c" in the reader's language. */
+export const listText = (items: readonly Text[]): Text => joinText(items);
 
-const ORDINALS = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'];
+/** "a", "a or b", "a, b or c" in the reader's language. */
+export const orListText = (items: readonly Text[]): Text =>
+  items.length <= 1
+    ? joinText(items)
+    : msg('logic:shared.or', {
+        head: joinText(items.slice(0, -1), ', '),
+        last: items.at(-1) as Text,
+      });
 
-/** 1 → "first". */
-export const ordinal = (position: number): string => ORDINALS[position - 1] ?? `${position}th`;
-
-export const capitalize = (text: string): string =>
-  text.length === 0 ? text : `${(text[0] as string).toUpperCase()}${text.slice(1)}`;
-
-export const plural = (count: number, one: string, many = `${one}s`) =>
-  `${count} ${count === 1 ? one : many}`;
+/** A clause shown as a sentence on its own: "{{text}}." (punctuation per language). */
+export const sentenceText = (text: Text): Text => msg('logic:shared.sentence', { text });

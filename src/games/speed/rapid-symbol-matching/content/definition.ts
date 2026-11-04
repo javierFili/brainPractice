@@ -1,13 +1,16 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SPEED_SCORING, fixedChoice } from '@/games/speed/shared/content';
 import { SYMBOL_MATCH_LEVELS } from './levels';
 import { differences, mutate, randomString } from './symbols';
 import type { SymbolMatchChallenge, SymbolMatchProfile } from './types';
 
-export const SAME_DIFFERENT = ['Same', 'Different'] as const;
+export const SAME_DIFFERENT = [
+  msg('speed:rapidSymbolMatching.same'),
+  msg('speed:rapidSymbolMatching.different'),
+] as const;
 
 /** A copy of `text` altered by the profile's mutations, or null when the candidate is unusable. */
 function alteredCopy(
@@ -26,10 +29,9 @@ export const RAPID_SYMBOL_MATCHING_ID = gameIdOf('rapid-symbol-matching');
 
 export const rapidSymbolMatchingGame: GameDefinition<SymbolMatchChallenge, SymbolMatchProfile> = {
   id: RAPID_SYMBOL_MATCHING_ID,
-  name: 'Rapid Symbol Matching',
-  tagline: 'Same or different? Look closely, answer fast.',
-  description:
-    'Compare short strings of letters and symbols: are the two the same, or which candidate is an exact copy? Strings grow longer, symbols become look-alikes (b, d, p, q) and changes become subtler, down to two neighbours swapped.',
+  name: msg('speed:rapidSymbolMatching.name'),
+  tagline: msg('speed:rapidSymbolMatching.tagline'),
+  description: msg('speed:rapidSymbolMatching.description'),
   area: 'speed',
   skills: ['processing-speed', 'selective-attention', 'error-detection'],
   meta: {
@@ -40,18 +42,16 @@ export const rapidSymbolMatchingGame: GameDefinition<SymbolMatchChallenge, Symbo
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time'],
-    scoringSummary:
-      'Each comparison is right or wrong; a wrong answer costs points. A correct answer earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit.',
+    scoringSummary: msg('speed:rapidSymbolMatching.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'The task is visual. Strings are also announced symbol by symbol (“small b, capital Q…”), which makes the comparison possible by listening but much slower.',
+    accessibilityNotes: msg('speed:rapidSymbolMatching.accessibilityNotes'),
   },
   instructions: [
-    'Same or different: press 1 if both strings are identical, 2 if anything differs.',
-    'Find the copy: pick the candidate that is exactly the same as the reference.',
-    'Check every symbol and its position — swapped neighbours count as different.',
+    msg('speed:rapidSymbolMatching.instructions.sameDifferent'),
+    msg('speed:rapidSymbolMatching.instructions.findCopy'),
+    msg('speed:rapidSymbolMatching.instructions.checkEvery'),
   ],
-  simpleInstructions: 'Are the two the same? Answer as fast as you can.',
+  simpleInstructions: msg('speed:rapidSymbolMatching.simpleInstructions'),
   levels: SYMBOL_MATCH_LEVELS,
   scoring: SPEED_SCORING,
   generate({ identity, profile, random }) {
@@ -65,12 +65,12 @@ export const rapidSymbolMatchingGame: GameDefinition<SymbolMatchChallenge, Symbo
         return {
           ...identity,
           skills: ['processing-speed', 'error-detection'],
-          prompt: 'Same or different?',
+          prompt: msg('speed:rapidSymbolMatching.prompt.sameDifferent'),
           content: { kind, pool: profile.pool, reference, other },
           response: fixedChoice(SAME_DIFFERENT, same ? 0 : 1),
           explanation: same
-            ? 'Both strings are identical.'
-            : `They differ: ${reference} vs ${other}.`,
+            ? msg('speed:rapidSymbolMatching.explanation.same')
+            : msg('speed:rapidSymbolMatching.explanation.different', { reference, other }),
           timing: profile.timing,
         };
       }
@@ -83,10 +83,10 @@ export const rapidSymbolMatchingGame: GameDefinition<SymbolMatchChallenge, Symbo
       return {
         ...identity,
         skills: ['processing-speed', 'selective-attention', 'error-detection'],
-        prompt: 'Which one is an exact copy?',
+        prompt: msg('speed:rapidSymbolMatching.prompt.findMatch'),
         content: { kind, pool: profile.pool, reference, other: null },
         response: singleChoice(random, reference, [...distractors]),
-        explanation: `${reference} is the only exact copy; every other candidate changes a symbol or its position.`,
+        explanation: msg('speed:rapidSymbolMatching.explanation.findMatch', { reference }),
         timing: profile.timing,
       };
     });

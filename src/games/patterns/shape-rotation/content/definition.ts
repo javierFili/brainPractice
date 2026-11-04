@@ -1,7 +1,7 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, type Message } from '@/domain/shared';
 import {
   applyTransform,
   gridKey,
@@ -19,10 +19,13 @@ export const SHAPE_ROTATION_ID = gameIdOf('shape-rotation');
 const TURNS: readonly Transform[] = ['cw', '180', 'ccw'];
 const MIRRORS: readonly Transform[] = ['flip-lr', 'flip-ud', 'diag', 'anti'];
 
-export const TURN_WORDS: Partial<Record<Transform, string>> = {
-  cw: 'a quarter turn clockwise',
-  '180': 'a half turn',
-  ccw: 'a quarter turn anticlockwise',
+const T = 'patterns:shapeRotation';
+
+/** "a quarter turn clockwise"… in the reader's language. */
+export const TURN_WORDS: Partial<Record<Transform, Message>> = {
+  cw: msg(`${T}.turn.cw`),
+  '180': msg(`${T}.turn.180`),
+  ccw: msg(`${T}.turn.ccw`),
 };
 
 type Grid = number[][];
@@ -70,12 +73,10 @@ function draft(random: RandomGenerator, profile: ShapeRotationProfile) {
     });
     const turnText = TURN_WORDS[turnUsed] ?? '';
     return {
-      prompt: 'Which option is the same piece, only turned (not flipped over)?',
+      prompt: msg(`${T}.prompt`),
       content: { kind: mirrors ? 'mirrors' : 'pieces', piece: trim(piece) },
       response: singleChoice(random, answer, shuffle(random, wrong)),
-      explanation: mirrors
-        ? `The answer is the piece turned ${turnText}. Each look-alike is a mirror image: to match it you would have to flip the piece over, and turning alone never does that. The remaining options are different pieces.`
-        : `The answer is the piece turned ${turnText}. The other options are different pieces: no turn makes them match.`,
+      explanation: msg(`${T}.explanation.${mirrors ? 'mirrors' : 'pieces'}`, { turn: turnText }),
       skills: ['spatial-reasoning', 'visual-orientation'],
     };
   });
@@ -83,10 +84,9 @@ function draft(random: RandomGenerator, profile: ShapeRotationProfile) {
 
 export const shapeRotationGame: GameDefinition<ShapeRotationChallenge, ShapeRotationProfile> = {
   id: SHAPE_ROTATION_ID,
-  name: 'Shape Rotation',
-  tagline: 'Turn it in your head.',
-  description:
-    'A piece made of squares is shown. Find the option that is the same piece turned around. From level 2 every piece also appears as its mirror image, which looks very similar but can only be made by flipping the piece over.',
+  name: msg('patterns:shapeRotation.name'),
+  tagline: msg('patterns:shapeRotation.tagline'),
+  description: msg('patterns:shapeRotation.description'),
   area: 'patterns',
   skills: ['spatial-reasoning', 'visual-orientation'],
   meta: {
@@ -97,19 +97,17 @@ export const shapeRotationGame: GameDefinition<ShapeRotationChallenge, ShapeRota
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each piece counts as correct when you choose the turned copy. Your result is the share of pieces matched correctly; there is no time limit.',
+    scoringSummary: msg('patterns:shapeRotation.scoringSummary'),
     feedback: 'explain',
-    accessibilityNotes:
-      'Pieces are read aloud row by row (which columns are filled), which is much harder to turn mentally than the picture.',
+    accessibilityNotes: msg('patterns:shapeRotation.accessibilityNotes'),
   },
   instructions: [
-    'Look at the piece. Imagine turning it on the table, like a puzzle piece.',
-    'Choose the option that is the same piece, turned. Flipping it over is not allowed.',
-    'Mirror images look almost the same: check where the odd square sticks out.',
-    'Keys 1 to 8 pick an option.',
+    msg('patterns:shapeRotation.instructions.1'),
+    msg('patterns:shapeRotation.instructions.2'),
+    msg('patterns:shapeRotation.instructions.3'),
+    msg('patterns:shapeRotation.instructions.4'),
   ],
-  simpleInstructions: 'Find the same shape, just turned around.',
+  simpleInstructions: msg('patterns:shapeRotation.simpleInstructions'),
   levels: SHAPE_ROTATION_LEVELS,
   generate({ identity, profile, random }) {
     return { ...identity, ...draft(random, profile), timing: profile.timing };

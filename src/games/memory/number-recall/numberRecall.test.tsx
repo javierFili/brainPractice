@@ -2,6 +2,7 @@ import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { numberRecallGame, valueOf } from './content/definition';
 import { NUMBER_RECALL_LEVELS } from './content/levels';
 import type { ChunkedNumber } from './content/types';
@@ -27,10 +28,10 @@ describe('Number Recall content', () => {
           const { options } = c.response.question;
           const { optionId } = c.response.solution;
           const right = options.filter((o) => o.id === optionId);
-          expect(right.map((o) => o.label)).toEqual([target.groups[ask.group as number]]);
+          expect(right.map((o) => en(o.label))).toEqual([target.groups[ask.group as number]]);
           expect(new Set(target.groups).size).toBe(target.groups.length);
           // Every option has the same number of digits: length gives nothing away.
-          expect(new Set(options.map((o) => o.label.length)).size).toBe(1);
+          expect(new Set(options.map((o) => en(o.label).length)).size).toBe(1);
         } else {
           if (c.response.format !== 'numeric') throw new Error('numeric expected');
           expect(c.response.solution.value).toBe(Number(target.groups.join('')));

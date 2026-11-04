@@ -1,4 +1,5 @@
 import { mulberry32, toSeed } from '@/domain/random';
+import { en } from '@/test/i18n';
 import { describeRule, permutations, satisfies, solutions } from '../solvers/constraints';
 import {
   ancestors,
@@ -78,7 +79,7 @@ describe('constraint solvers', () => {
     [{ type: 'not-at', a: 'y', position: 2 }, false],
   ])('evaluates %j → %s', (rule, expected) => {
     expect(satisfies(rule, order)).toBe(expected);
-    expect(describeRule(rule)).toMatch(/deployed/);
+    expect(en(describeRule(rule))).toMatch(/deployed/);
   });
 
   it('enumerates every permutation exactly once', () => {

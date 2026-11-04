@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { levelTrend, milestones } from '@/domain/insights';
 import type { UserProfile } from '@/domain/profile';
 import { isLevelCleared, unlockedLevels, type UserProgress } from '@/domain/progress';
@@ -11,13 +12,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { StatTile } from '@/components/ui/StatTile';
 import { CATEGORIES, GENERAL_CATEGORIES } from '@/features/shared/categories';
-import {
-  formatDate,
-  formatDuration,
-  formatMs,
-  formatPercent,
-  formatPoints,
-} from '@/features/shared/format';
+import { useFormat, useText } from '@/i18n';
 import { LoadError } from '@/features/shared/LoadError';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { useAppData } from '@/features/shared/useAppData';
@@ -45,6 +40,9 @@ export function Sparkline({ values, label }: { values: readonly number[]; label:
 }
 
 function History({ progress }: { progress: UserProgress }) {
+  const { t } = useTranslation('progress');
+  const tx = useText();
+  const format = useFormat();
   const { getModule } = useServices();
   const [game, setGame] = useState('all');
   const id = useId();
@@ -58,10 +56,10 @@ function History({ progress }: { progress: UserProgress }) {
     <section aria-labelledby="history-title" className="flex flex-col gap-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <h2 id="history-title" className="text-lg font-semibold text-ink">
-          History
+          {t('history.title')}
         </h2>
         <label htmlFor={id} className="flex items-center gap-2 text-sm text-ink-muted">
-          Game
+          {t('history.game')}
           <select
             id={id}
             value={game}
@@ -70,10 +68,10 @@ function History({ progress }: { progress: UserProgress }) {
             }}
             className="rounded-lg border border-line bg-raised px-3 py-1.5 text-ink"
           >
-            <option value="all">All games</option>
+            <option value="all">{t('history.allGames')}</option>
             {games.map((g) => (
               <option key={g} value={g}>
-                {getModule(g)?.definition.name}
+                {tx(getModule(g)?.definition.name ?? g)}
               </option>
             ))}
           </select>
@@ -81,57 +79,66 @@ function History({ progress }: { progress: UserProgress }) {
       </div>
       <div className="overflow-x-auto rounded-2xl border border-line">
         <table className="w-full min-w-[36rem] text-left text-sm">
-          <caption className="sr-only">Sessions, most recent first</caption>
+          <caption className="sr-only">{t('history.caption')}</caption>
           <thead className="bg-surface text-xs text-ink-muted uppercase">
             <tr>
               <th scope="col" className="px-4 py-2 font-medium">
-                Date
+                {t('history.date')}
               </th>
               <th scope="col" className="px-4 py-2 font-medium">
-                Game
+                {t('history.game')}
               </th>
               <th scope="col" className="px-4 py-2 font-medium">
-                Level
+                {t('history.level')}
               </th>
               <th scope="col" className="px-4 py-2 font-medium">
-                Accuracy
+                {t('history.accuracy')}
               </th>
               <th scope="col" className="px-4 py-2 font-medium">
-                Performance
+                {t('history.performance')}
               </th>
               <th scope="col" className="px-4 py-2 font-medium">
-                Duration
+                {t('history.duration')}
               </th>
             </tr>
           </thead>
           <tbody>
             {rows.slice(0, 50).map((s) => (
               <tr key={`${s.gameId}-${s.endedAt}`} className="border-t border-line">
-                <td className="px-4 py-2 text-ink-soft">{formatDate(s.endedAt)}</td>
+                <td className="px-4 py-2 text-ink-soft">{format.date(s.endedAt)}</td>
                 <td className="px-4 py-2 text-ink">
                   <Link to={`/games/${s.gameId}`} className="hover:underline">
-                    {getModule(s.gameId)?.definition.name}
+                    {tx(getModule(s.gameId)?.definition.name ?? s.gameId)}
                   </Link>
-                  {s.assisted && <span className="ml-2 text-xs text-ink-muted">relaxed</span>}
-                  {!s.completed && <span className="ml-2 text-xs text-warning">ended early</span>}
+                  {s.assisted && (
+                    <span className="ml-2 text-xs text-ink-muted">{t('history.relaxed')}</span>
+                  )}
+                  {!s.completed && (
+                    <span className="ml-2 text-xs text-warning">{t('history.endedEarly')}</span>
+                  )}
                 </td>
                 <td className="px-4 py-2 font-mono">{s.level}</td>
-                <td className="px-4 py-2 font-mono">{formatPercent(s.accuracy)}</td>
+                <td className="px-4 py-2 font-mono">{format.percent(s.accuracy)}</td>
                 <td className="px-4 py-2 font-mono">{s.performanceIndex}</td>
-                <td className="px-4 py-2 font-mono">{formatDuration(s.durationMs)}</td>
+                <td className="px-4 py-2 font-mono">{format.duration(s.durationMs)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       {rows.length > 50 && (
-        <p className="text-xs text-ink-muted">Showing the latest 50 of {rows.length}.</p>
+        <p className="text-xs text-ink-muted">
+          {t('history.showingLatest', { shown: 50, total: rows.length })}
+        </p>
       )}
     </section>
   );
 }
 
 function Overview({ progress, profile }: { progress: UserProgress; profile: UserProfile }) {
+  const { t } = useTranslation('progress');
+  const tx = useText();
+  const format = useFormat();
   const { modules, getModule } = useServices();
   const { preferences } = usePreferences();
   const playedIds = [
@@ -168,24 +175,30 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
   return (
     <div className="flex flex-col gap-10">
       <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile label="Sessions completed" value={progress.totals.sessions} />
-        <StatTile label="Practice time" value={formatDuration(progress.totals.practiceMs)} />
-        <StatTile label="Games explored" value={`${playedIds.length}/${modules.length}`} />
-        <StatTile label="Levels open / cleared" value={`${openLevels} / ${clearedLevels}`} />
+        <StatTile label={t('stats.sessions')} value={format.number(progress.totals.sessions)} />
         <StatTile
-          label="Active days"
-          value={profile.activeDays.length}
-          hint="days with any practice"
+          label={t('stats.practiceTime')}
+          value={format.duration(progress.totals.practiceMs)}
         />
-        <StatTile label="Daily challenges" value={dailies} />
-        <StatTile label="Assessments" value={progress.assessments?.length ?? 0} />
-        <StatTile label="Milestones" value={`${earned.length}/${badges.length}`} />
+        <StatTile
+          label={t('stats.gamesExplored')}
+          value={`${playedIds.length}/${modules.length}`}
+        />
+        <StatTile label={t('stats.levels')} value={`${openLevels} / ${clearedLevels}`} />
+        <StatTile
+          label={t('stats.activeDays')}
+          value={profile.activeDays.length}
+          hint={t('stats.activeDaysHint')}
+        />
+        <StatTile label={t('stats.daily')} value={dailies} />
+        <StatTile label={t('stats.assessments')} value={progress.assessments?.length ?? 0} />
+        <StatTile label={t('stats.milestones')} value={`${earned.length}/${badges.length}`} />
       </dl>
 
       <section aria-labelledby="distribution-title" className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-line bg-surface p-5">
           <h2 id="distribution-title" className="mb-4 font-semibold text-ink">
-            Where your practice went
+            {t('distribution.title')}
           </h2>
           <ul className="flex flex-col gap-3">
             {[...sessionsByCategory, { category: 'programming' as const, count: programming }].map(
@@ -196,7 +209,7 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
                 >
                   <span className={`flex items-center gap-1.5 ${CATEGORIES[category].text}`}>
                     <Icon name={CATEGORIES[category].icon} className="h-4 w-4" />
-                    {CATEGORIES[category].label}
+                    {tx(CATEGORIES[category].label)}
                   </span>
                   <span className="h-2 overflow-hidden rounded-full bg-raised">
                     <span
@@ -209,20 +222,18 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
               ),
             )}
           </ul>
-          <p className="mt-3 text-xs text-ink-muted">
-            Sessions in your recent history (up to 200).
-          </p>
+          <p className="mt-3 text-xs text-ink-muted">{t('distribution.note')}</p>
         </div>
         <div className="rounded-2xl border border-line bg-surface p-5">
-          <h2 className="mb-4 font-semibold text-ink">Most played</h2>
+          <h2 className="mb-4 font-semibold text-ink">{t('mostPlayed.title')}</h2>
           {mostPlayed.length === 0 ? (
-            <p className="text-sm text-ink-muted">Nothing yet.</p>
+            <p className="text-sm text-ink-muted">{t('mostPlayed.empty')}</p>
           ) : (
             <ol className="flex flex-col gap-2 text-sm">
               {mostPlayed.map(([id, count]) => (
                 <li key={id} className="flex justify-between gap-3">
                   <Link to={`/games/${id}`} className="text-ink hover:underline">
-                    {getModule(id)?.definition.name}
+                    {tx(getModule(id)?.definition.name ?? id)}
                   </Link>
                   <span className="font-mono text-ink-soft">{count}</span>
                 </li>
@@ -234,12 +245,9 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
 
       <section aria-labelledby="records-title" className="flex flex-col gap-3">
         <h2 id="records-title" className="text-lg font-semibold text-ink">
-          Personal records and trends
+          {t('records.title')}
         </h2>
-        <p className="text-sm text-ink-muted">
-          Records only count completed sessions without relaxed timing. Trends compare sessions of
-          the same game and level — the only fair comparison.
-        </p>
+        <p className="text-sm text-ink-muted">{t('records.note')}</p>
         <ul className="grid gap-3 md:grid-cols-2">
           {playedIds.map((id) => {
             const game = progress.games[id] ?? {};
@@ -262,29 +270,38 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
               >
                 <div className="flex items-start justify-between gap-3">
                   <Link to={`/games/${id}`} className="font-semibold text-ink hover:underline">
-                    {getModule(id)?.definition.name}
+                    {tx(getModule(id)?.definition.name ?? id)}
                   </Link>
                   {latest && (
                     <Sparkline
                       values={trend}
-                      label={`Performance trend at level ${latest.level}: ${trend.join(', ')}`}
+                      label={t('records.trend', {
+                        level: latest.level,
+                        values: trend.map((v) => format.number(v)).join(', '),
+                      })}
                     />
                   )}
                 </div>
                 {record && best !== null ? (
                   <p className="text-sm text-ink-soft">
-                    Best: level {best} · performance {record.bestPerformanceIndex} · accuracy{' '}
-                    {formatPercent(record.bestAccuracy)} · {formatPoints(record.bestScore)} pts
+                    {t('records.best', {
+                      level: best,
+                      performance: record.bestPerformanceIndex,
+                      accuracy: format.percent(record.bestAccuracy),
+                      points: format.points(record.bestScore),
+                    })}
                     {record.bestMedianResponseMs !== null &&
-                      ` · median ${formatMs(record.bestMedianResponseMs)}`}
+                      ` · ${t('records.median', { time: format.ms(record.bestMedianResponseMs) })}`}
                   </p>
                 ) : (
-                  <p className="text-sm text-ink-muted">No completed session yet.</p>
+                  <p className="text-sm text-ink-muted">{t('records.none')}</p>
                 )}
                 <p className="text-xs text-ink-muted">
-                  Levels cleared:{' '}
-                  {DIFFICULTY_LEVELS.filter((l) => isLevelCleared(game[l])).join(', ') ||
-                    'none yet'}
+                  {t('records.cleared', {
+                    levels:
+                      DIFFICULTY_LEVELS.filter((l) => isLevelCleared(game[l])).join(', ') ||
+                      t('records.clearedNone'),
+                  })}
                 </p>
               </li>
             );
@@ -294,7 +311,7 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
 
       <section aria-labelledby="milestones-title" className="flex flex-col gap-3">
         <h2 id="milestones-title" className="text-lg font-semibold text-ink">
-          Milestones
+          {t('milestonesTitle')}
         </h2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {badges.map((b) => (
@@ -308,10 +325,12 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
               />
               <div>
                 <p className="font-semibold text-ink">
-                  {b.title}
-                  <span className="sr-only">{b.achieved ? ', achieved' : ', not yet'}</span>
+                  {tx(b.title)}
+                  <span className="sr-only">
+                    {b.achieved ? t('milestoneAchieved') : t('milestoneNotYet')}
+                  </span>
                 </p>
-                <p className="text-sm text-ink-soft">{b.description}</p>
+                <p className="text-sm text-ink-soft">{tx(b.description)}</p>
                 {!b.achieved && b.target > 1 && (
                   <p className="mt-1 text-xs text-ink-muted">
                     {b.current} / {b.target}
@@ -329,16 +348,17 @@ function Overview({ progress, profile }: { progress: UserProgress; profile: User
 }
 
 export function ProgressPage() {
+  const { t } = useTranslation('progress');
   const data = useAppData();
   return (
     <>
       <PageHeader
-        eyebrow="General"
-        title="My progress"
-        description="Real data from your sessions, stored only in this browser. Scores describe these activities, not general ability."
+        eyebrow={t('page.eyebrow')}
+        title={t('page.title')}
+        description={t('page.description')}
         actions={
           <ButtonLink to="/settings/data" variant="ghost">
-            Manage data
+            {t('page.manageData')}
           </ButtonLink>
         }
       />
@@ -348,9 +368,9 @@ export function ProgressPage() {
         <LoadError onRetry={data.reload} />
       ) : data.progress.totals.sessions === 0 && data.progress.recentSessions.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-line p-6 text-ink-soft">
-          <p>No sessions yet. Your history, records and milestones will appear here.</p>
+          <p>{t('page.empty')}</p>
           <ButtonLink to="/games" className="mt-4">
-            Browse activities
+            {t('page.browse')}
           </ButtonLink>
         </div>
       ) : (

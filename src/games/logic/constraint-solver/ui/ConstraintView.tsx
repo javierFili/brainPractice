@@ -1,23 +1,26 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
 import { ClueList, Panel } from '@/games/logic/shared/ui';
 import type { ContentViewProps } from '@/games/types';
 import { cellName } from '../content/solver';
 import type { ConstraintChallenge } from '../content/types';
 
 export function ConstraintView({ challenge, phase }: ContentViewProps<ConstraintChallenge>) {
+  const { t } = useTranslation('logic');
   const { size, box, givens, inequalities, asked, solution } = challenge.content;
   const cols = Array.from({ length: size }, (_, c) => String.fromCharCode(65 + c));
   const reveal = phase === 'review';
   const rules = [
-    `Each row and each column holds 1 to ${size} once.`,
-    ...(box ? [`Each ${box[0]}×${box[1]} box (thick borders) also holds 1 to ${size} once.`] : []),
+    msg('logic:constraintSolver.view.rowsRule', { size }),
+    ...(box ? [msg('logic:constraintSolver.view.boxRule', { h: box[0], w: box[1], size })] : []),
   ];
   return (
     <div className="flex flex-col gap-4">
-      <Panel title="Rules">
-        <ClueList clues={rules} label="Rules" />
+      <Panel title={t('shared.rules')}>
+        <ClueList clues={rules} label={t('shared.rules')} />
       </Panel>
       <table
-        aria-label={`${size} by ${size} grid`}
+        aria-label={t('constraintSolver.view.grid', { size })}
         className="mx-auto table-fixed border-collapse text-center"
       >
         <thead>
@@ -50,15 +53,17 @@ export function ConstraintView({ challenge, phase }: ContentViewProps<Constraint
                         ? String(solution[i])
                         : '?'
                       : '';
-                const name = `${cellName(i, size)}: ${
-                  given !== null && given !== undefined
-                    ? given
-                    : isAsked
-                      ? reveal
-                        ? `${solution[i]}, the asked cell`
-                        : 'the asked cell'
-                      : 'empty'
-                }`;
+                const name = t('constraintSolver.view.cell', {
+                  cell: cellName(i, size),
+                  value:
+                    given !== null && given !== undefined
+                      ? String(given)
+                      : isAsked
+                        ? reveal
+                          ? t('constraintSolver.view.askedValue', { value: solution[i] })
+                          : t('constraintSolver.view.asked')
+                        : t('constraintSolver.view.empty'),
+                });
                 return (
                   <td
                     key={c}
@@ -82,9 +87,9 @@ export function ConstraintView({ challenge, phase }: ContentViewProps<Constraint
         </tbody>
       </table>
       {inequalities.length > 0 && (
-        <Panel title="“Smaller than” clues">
+        <Panel title={t('constraintSolver.view.smallerTitle')}>
           <ClueList
-            label="Smaller than clues"
+            label={t('constraintSolver.view.smallerLabel')}
             clues={inequalities.map(
               ({ smaller, larger }) => `${cellName(smaller, size)} < ${cellName(larger, size)}`,
             )}

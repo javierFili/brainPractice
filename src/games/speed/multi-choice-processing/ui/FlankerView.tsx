@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps } from '@/games/types';
 import type { Direction, FlankerChallenge, RowItem } from '../content/types';
 
@@ -20,28 +21,36 @@ export function Arrow({ item, className }: { readonly item: RowItem; readonly cl
   );
 }
 
-const spoken = (item: RowItem) => (item === 'none' ? 'bar' : item);
-
 /** The cue (cued levels) and the row of arrows. No motion: the row appears once and stays. */
 export function FlankerView({ challenge }: ContentViewProps<FlankerChallenge>) {
+  const { t } = useTranslation('speed');
+  const spoken = (item: RowItem) => t(`multiChoiceProcessing.spoken.${item}`);
   const { kind, rule, row, track, start } = challenge.content;
   return (
     <div className="flex flex-col items-center gap-4">
       {kind === 'cued' &&
         (rule === 'centre' ? (
           <p className="flex items-center gap-2 rounded-full border border-brand/60 bg-brand/10 px-4 py-1 text-base font-bold tracking-widest text-brand-strong">
-            <span aria-hidden="true">◎</span> CENTRE
+            <span aria-hidden="true">◎</span> {t('multiChoiceProcessing.view.cueCentre')}
           </p>
         ) : (
           <p className="flex items-center gap-2 rounded-full border border-glow/60 bg-glow/10 px-4 py-1 text-base font-bold tracking-widest text-glow">
-            <span aria-hidden="true">◌</span> OUTER
+            <span aria-hidden="true">◌</span> {t('multiChoiceProcessing.view.cueOuter')}
           </p>
         ))}
       <div className="flex w-full justify-center rounded-2xl border border-line bg-raised px-2 py-6">
         <p className="sr-only">
           {row.length === 1
-            ? `One arrow pointing ${spoken(row[0] ?? 'none')}.`
-            : `Row of ${row.length}: ${row.map(spoken).join(', ')}.`}
+            ? t('multiChoiceProcessing.view.single', {
+                direction:
+                  row[0] === undefined || row[0] === 'none'
+                    ? spoken('none')
+                    : t(`multiChoiceProcessing.pointing.${row[0]}`),
+              })
+            : t('multiChoiceProcessing.view.row', {
+                count: row.length,
+                items: row.map(spoken).join(', '),
+              })}
         </p>
         <div className="flex items-center gap-1 sm:gap-2">
           {Array.from({ length: track }, (_, slot) => {

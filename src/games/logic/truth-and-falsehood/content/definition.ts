@@ -1,8 +1,14 @@
-import { numericResponse, singleChoice } from '@/domain/challenge';
+import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { booleanAssignments, listJoin, PEOPLE, type Draft } from '@/games/logic/shared/content';
+import { gameIdOf, joinText, msg, type Text } from '@/domain/shared';
+import {
+  booleanAssignments,
+  listText,
+  PEOPLE,
+  textChoice,
+  type Draft,
+} from '@/games/logic/shared/content';
 import { TRUTH_LEVELS } from './levels';
 import { claimValue, consistentWorlds, describeClaim, describeGroup } from './solver';
 import type { Claim, ClaimType, TruthChallenge, TruthContent, TruthProfile } from './types';
@@ -58,22 +64,26 @@ function buildPuzzle(random: RandomGenerator, profile: TruthProfile) {
   return { claims, solution: worlds[0] as boolean[] };
 }
 
+const key = (path: string) => `logic:truthAndFalsehood.${path}`;
+
 /** "only Ana tells the truth", "Ana and Ben tell the truth", "nobody tells the truth". */
-function whoTellsTruth(world: readonly boolean[], names: readonly string[]): string {
+function whoTellsTruth(world: readonly boolean[], names: readonly string[]): Text {
   const honest = names.filter((_, i) => world[i]);
-  if (honest.length === 0) return 'nobody tells the truth';
-  if (honest.length === names.length) return 'everyone tells the truth';
+  if (honest.length === 0) return msg(key('who.nobody'));
+  if (honest.length === names.length) return msg(key('who.everyone'));
   return honest.length === 1
-    ? `only ${honest[0] as string} tells the truth`
-    : `${listJoin(honest)} tell the truth`;
+    ? msg(key('who.only'), { name: honest[0] as string })
+    : msg(key('who.many'), { names: listText(honest) });
 }
+
+/** "Truth-teller" / "Liar" (capitalised: option labels). */
+export const roleLabel = (honest: boolean): Text => msg(key(`role.${honest ? 'honest' : 'liar'}`));
 
 export const truthAndFalsehoodGame: GameDefinition<TruthChallenge, TruthProfile> = {
   id: TRUTH_AND_FALSEHOOD_ID,
-  name: 'Truth and Falsehood',
-  tagline: 'Some always tell the truth, some always lie.',
-  description:
-    'Each character is either a truth-teller, who only says true things, or a liar, who only says false things. Test each possibility against what they say to find the only one that works. Higher levels add characters and statements about the whole group.',
+  name: msg('logic:truthAndFalsehood.name'),
+  tagline: msg('logic:truthAndFalsehood.tagline'),
+  description: msg('logic:truthAndFalsehood.description'),
   area: 'logic',
   skills: ['logical-reasoning', 'problem-solving', 'working-memory'],
   meta: {
@@ -84,16 +94,15 @@ export const truthAndFalsehoodGame: GameDefinition<TruthChallenge, TruthProfile>
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Exactly one way of sorting truth-tellers and liars fits what everyone says. Your result is the share of puzzles answered correctly; there is no time limit.',
+    scoringSummary: msg('logic:truthAndFalsehood.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'A truth-teller only says true things. A liar only says false things.',
-    'Pick one character and suppose they tell the truth. Does everything else still fit? If not, they must be lying.',
-    'Exactly one way of sorting everyone works. Use it to answer the question.',
+    msg('logic:truthAndFalsehood.instructions.1'),
+    msg('logic:truthAndFalsehood.instructions.2'),
+    msg('logic:truthAndFalsehood.instructions.3'),
   ],
-  simpleInstructions: 'Truth-tellers never lie, liars never tell the truth — find out who is who.',
+  simpleInstructions: msg('logic:truthAndFalsehood.simpleInstructions'),
   levels: TRUTH_LEVELS,
   generate({ identity, profile, random }) {
     const { claims, solution } = retryGeneration('truth puzzle', () =>
@@ -106,12 +115,12 @@ export const truthAndFalsehoodGame: GameDefinition<TruthChallenge, TruthProfile>
     const targetName = names[target] as string;
     const response =
       ask === 'one'
-        ? singleChoice(random, solution[target] ? 'Truth-teller' : 'Liar', [
-            solution[target] ? 'Liar' : 'Truth-teller',
+        ? textChoice(random, roleLabel(solution[target] === true), [
+            roleLabel(solution[target] !== true),
           ])
         : ask === 'count'
           ? numericResponse(solution.filter(Boolean).length)
-          : singleChoice(
+          : textChoice(
               random,
               describeGroup(solution, names),
               sample(
@@ -122,21 +131,22 @@ export const truthAndFalsehoodGame: GameDefinition<TruthChallenge, TruthProfile>
                 Math.min(3, 2 ** names.length - 1),
               ),
             );
-    const checks = claims.map((claim, i) => {
-      const said = describeClaim(claim, i, names).replace(/\.$/, '');
-      const value = claimValue(claim, solution);
-      return `${names[i] as string} (${solution[i] ? 'truth-teller' : 'liar'}) says “${said}” — that is ${value ? 'true' : 'false'}`;
-    });
+    const checks = claims.map((claim, i) =>
+      msg(key(`check.${claimValue(claim, solution) ? 'true' : 'false'}`), {
+        name: names[i] as string,
+        role: msg(key(`roleLower.${solution[i] ? 'honest' : 'liar'}`)),
+        said: describeClaim(claim, i, names),
+      }),
+    );
     const draft: Draft<TruthChallenge> = {
       prompt:
-        ask === 'one'
-          ? `Is ${targetName} a truth-teller or a liar?`
-          : ask === 'count'
-            ? 'How many of them are truth-tellers?'
-            : 'Who is telling the truth?',
+        ask === 'one' ? msg(key('prompt.one'), { name: targetName }) : msg(key(`prompt.${ask}`)),
       content,
       response,
-      explanation: `Only one way works: ${whoTellsTruth(solution, names)}. ${checks.join('; ')}. Every other way makes someone break their rule.`,
+      explanation: msg(key('explanation'), {
+        who: whoTellsTruth(solution, names),
+        checks: joinText(checks, '; '),
+      }),
       skills: ['logical-reasoning', 'problem-solving'],
     };
     return { ...identity, ...draft, timing: profile.timing };

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { AbstractProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { AbstractProfile } from './types';
  */
 export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
   {
-    objective: 'Four panels: find the one whose figures do not match.',
+    objective: msg('patterns:abstractPatternChallenge.levels.1'),
     challengeCount: 5,
     panels: 4,
     minFigures: 2,
@@ -17,7 +18,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(15_000),
   },
   {
-    objective: 'Every panel but one contains the same shape.',
+    objective: msg('patterns:abstractPatternChallenge.levels.2'),
     challengeCount: 5,
     panels: 4,
     minFigures: 2,
@@ -26,7 +27,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(18_000),
   },
   {
-    objective: 'All different: no repeated shape or colour inside a panel.',
+    objective: msg('patterns:abstractPatternChallenge.levels.3'),
     challengeCount: 6,
     panels: 4,
     minFigures: 3,
@@ -35,7 +36,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(20_000),
   },
   {
-    objective: 'Five panels; the rule may be about colour, shape or content.',
+    objective: msg('patterns:abstractPatternChallenge.levels.4'),
     challengeCount: 6,
     panels: 5,
     minFigures: 2,
@@ -44,7 +45,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(22_000),
   },
   {
-    objective: 'Count the figures too: the rule may be how many.',
+    objective: msg('patterns:abstractPatternChallenge.levels.5'),
     challengeCount: 6,
     panels: 5,
     minFigures: 2,
@@ -53,7 +54,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(24_000),
   },
   {
-    objective: 'Arrows join in: the rule may be the direction they point.',
+    objective: msg('patterns:abstractPatternChallenge.levels.6'),
     challengeCount: 6,
     panels: 5,
     minFigures: 2,
@@ -62,7 +63,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(26_000),
   },
   {
-    objective: 'Any of seven rules, with bigger panels as noise.',
+    objective: msg('patterns:abstractPatternChallenge.levels.7'),
     challengeCount: 6,
     panels: 5,
     minFigures: 3,
@@ -79,7 +80,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(28_000),
   },
   {
-    objective: 'Six panels; a new rule: exactly one figure has another colour.',
+    objective: msg('patterns:abstractPatternChallenge.levels.8'),
     challengeCount: 6,
     panels: 6,
     minFigures: 3,
@@ -94,7 +95,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(30_000),
   },
   {
-    objective: 'Order matters: panels that read the same backwards.',
+    objective: msg('patterns:abstractPatternChallenge.levels.9'),
     challengeCount: 6,
     panels: 6,
     minFigures: 3,
@@ -103,7 +104,7 @@ export const ABSTRACT_LEVELS = defineLevels<AbstractProfile>([
     timing: untimed(32_000),
   },
   {
-    objective: 'Any rule, six panels of three or four figures.',
+    objective: msg('patterns:abstractPatternChallenge.levels.10'),
     challengeCount: 6,
     panels: 6,
     minFigures: 3,

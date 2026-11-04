@@ -1,17 +1,20 @@
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps, LocateBinding } from '@/games/types';
 import { changedLines, lineText } from '../content/format';
 import type { Snippet, SpeedChallenge } from '../content/types';
 
-type Marker = 'check' | 'changed' | 'your pick';
+type Marker = 'check' | 'changed' | 'pick';
 
 const MARKER_TONE: Record<Marker, string> = {
   check: 'border-amber-400/60 bg-amber-400/10 text-amber-200',
   changed: 'border-emerald-400/60 bg-emerald-400/10 text-emerald-200',
-  'your pick': 'border-sky-400/60 bg-sky-400/10 text-sky-200',
+  pick: 'border-sky-400/60 bg-sky-400/10 text-sky-200',
 };
 
+type Column = 'original' | 'copy';
+
 interface ColumnProps {
-  readonly title: 'Original' | 'Copy';
+  readonly column: Column;
   readonly lines: Snippet;
   readonly markersOf: (index: number) => readonly Marker[];
   /** Present only on the copy column of a find-the-change challenge. */
@@ -27,9 +30,13 @@ function LineBody({
   indent: number;
   markers: readonly Marker[];
 }) {
+  const { t } = useTranslation('programming');
   return (
     <>
-      <span style={{ paddingLeft: `${indent * 1.5}rem` }} className="flex-1 whitespace-pre">
+      <span
+        style={{ paddingLeft: `${indent * 1.5}rem` }}
+        className="flex-1 font-mono whitespace-pre"
+      >
         {text}
       </span>
       {markers.map((marker) => (
@@ -37,7 +44,7 @@ function LineBody({
           key={marker}
           className={`ml-2 shrink-0 rounded border px-1.5 font-sans text-xs font-semibold ${MARKER_TONE[marker]}`}
         >
-          {marker}
+          {t(`codeScan.view.marker.${marker}`)}
         </span>
       ))}
     </>
@@ -45,11 +52,14 @@ function LineBody({
 }
 
 /** One listing with line numbers; in the copy of find-the-change every line is a button. */
-function SnippetColumn({ title, lines, markersOf, locate }: ColumnProps) {
+function SnippetColumn({ column, lines, markersOf, locate }: ColumnProps) {
+  const { t } = useTranslation('programming');
   return (
-    <section aria-label={`${title} snippet`} className="min-w-0">
-      <h3 className="mb-2 text-xs font-semibold tracking-wide text-amber-300 uppercase">{title}</h3>
-      <ol className="overflow-x-auto rounded-lg border border-amber-400/40 bg-slate-950/60 py-2 font-mono text-sm leading-7">
+    <section aria-label={t(`codeScan.view.snippet.${column}`)} className="min-w-0">
+      <h3 className="mb-2 text-xs font-semibold tracking-wide text-amber-300 uppercase">
+        {t(`codeScan.view.title.${column}`)}
+      </h3>
+      <ol className="overflow-x-auto rounded-lg border border-amber-400/40 bg-slate-950/60 py-2 text-sm leading-7">
         {lines.map((line, i) => {
           const text = lineText(line);
           const markers = markersOf(i);
@@ -58,7 +68,7 @@ function SnippetColumn({ title, lines, markersOf, locate }: ColumnProps) {
             <li key={i} className="flex items-stretch">
               <span
                 aria-hidden="true"
-                className="w-8 shrink-0 pr-3 text-right text-slate-600 select-none"
+                className="w-8 shrink-0 pr-3 text-right font-mono text-slate-600 select-none"
               >
                 {i + 1}
               </span>
@@ -72,7 +82,17 @@ function SnippetColumn({ title, lines, markersOf, locate }: ColumnProps) {
                 <button
                   type="button"
                   disabled={locate.disabled}
-                  aria-label={`Line ${i + 1}: ${text}${flagged ? ` (${markers.join(', ')})` : ''}`}
+                  aria-label={
+                    flagged
+                      ? t('codeScan.view.lineMarked', {
+                          line: i + 1,
+                          code: text,
+                          markers: markers
+                            .map((marker) => t(`codeScan.view.marker.${marker}`))
+                            .join(', '),
+                        })
+                      : t('codeScan.view.line', { line: i + 1, code: text })
+                  }
                   onClick={() => {
                     locate.onLocate(i);
                   }}
@@ -98,6 +118,7 @@ export function CodeScanContentView({
   phase,
   locate,
 }: ContentViewProps<SpeedChallenge>) {
+  const { t } = useTranslation('programming');
   const { content } = challenge;
   const review = phase === 'review';
   const solution = review ? (locate?.solutionIndex ?? null) : null;
@@ -107,12 +128,12 @@ export function CodeScanContentView({
   const pick = review ? (locate?.selectedIndex ?? null) : null;
 
   const markersOf =
-    (column: 'Original' | 'Copy') =>
+    (column: Column) =>
     (index: number): Marker[] => {
       const markers: Marker[] = [];
       if (index === highlight && !review) markers.push('check');
       if (changed.has(index)) markers.push('changed');
-      if (column === 'Copy' && index === pick) markers.push('your pick');
+      if (column === 'copy' && index === pick) markers.push('pick');
       return markers;
     };
 
@@ -120,20 +141,20 @@ export function CodeScanContentView({
     <div className="flex flex-col gap-3">
       <div className="grid gap-4 md:grid-cols-2">
         <SnippetColumn
-          title="Original"
+          column="original"
           lines={content.original}
-          markersOf={markersOf('Original')}
+          markersOf={markersOf('original')}
           locate={null}
         />
         <SnippetColumn
-          title="Copy"
+          column="copy"
           lines={content.copy}
-          markersOf={markersOf('Copy')}
+          markersOf={markersOf('copy')}
           locate={content.kind === 'find-the-change' ? locate : null}
         />
       </div>
       {review && changed.size === 0 && (
-        <p className="text-sm text-slate-300">No line differs: the snippets are identical.</p>
+        <p className="text-sm text-slate-300">{t('codeScan.view.identical')}</p>
       )}
     </div>
   );

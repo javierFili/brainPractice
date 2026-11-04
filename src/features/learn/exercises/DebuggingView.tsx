@@ -1,4 +1,6 @@
 import { useId, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { CodeBlock } from '@/components/code/CodeBlock';
 import { InlineText } from '../RichBlocks';
 import { CheckButton } from './CheckButton';
@@ -11,16 +13,17 @@ export function DebuggingView({
   showSolution,
   onSubmit,
 }: ExerciseViewProps<'debugging'>) {
+  const { t } = useTranslation('learn');
   const [line, setLine] = useState<number | null>(null);
   const [cause, setCause] = useState<string | null>(null);
   const name = useId();
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="mb-2 text-sm text-slate-300">1. Click the line with the bug.</p>
+        <p className="mb-2 text-sm text-slate-300">{t('exercise.bugLine')}</p>
         <CodeBlock
           source={exercise.code.source}
-          label="Code with a bug"
+          label={t('exercise.buggyCode')}
           selection={{
             selected: line,
             onSelect: setLine,
@@ -30,7 +33,7 @@ export function DebuggingView({
         />
       </div>
       <fieldset className="flex flex-col gap-2">
-        <legend className="mb-2 text-sm text-slate-300">2. Why is it wrong?</legend>
+        <legend className="mb-2 text-sm text-slate-300">{t('exercise.why')}</legend>
         {exercise.causes.map((option) => {
           const correct = showSolution && option.id === exercise.correctCauseId;
           return (
@@ -57,7 +60,11 @@ export function DebuggingView({
               <span className="flex-1">
                 <InlineText text={option.label} />
               </span>
-              {correct && <span className="text-xs font-semibold text-emerald-300">✓ Reason</span>}
+              {correct && (
+                <span className="text-xs font-semibold text-emerald-300">
+                  ✓ {t('exercise.reason')}
+                </span>
+              )}
             </label>
           );
         })}

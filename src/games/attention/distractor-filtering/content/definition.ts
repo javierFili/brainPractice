@@ -1,7 +1,7 @@
 import { multiSelectResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, type Message } from '@/domain/shared';
 import { COLORS, SHAPES, type ColorName, type ShapeKind } from '@/games/kit/content';
 import {
   NEAR_COLORS,
@@ -9,6 +9,7 @@ import {
   countWhere,
   indicesWhere,
   mark,
+  shapePlural,
   type Mark,
 } from '../../shared/content';
 import { DISTRACTOR_FILTERING_LEVELS } from './levels';
@@ -30,10 +31,12 @@ export function isTarget(kind: FilterKind, target: Target, item: Mark): boolean 
   return item.shape === target.shape && item.color === target.color;
 }
 
-export function targetPhrase(kind: FilterKind, target: Target): string {
-  if (kind === 'shape') return `${target.shape}s (any colour)`;
-  if (kind === 'color') return `${target.color} shapes (any shape)`;
-  return `${target.color} ${target.shape}s`;
+export function targetPhrase(kind: FilterKind, target: Target): Message {
+  if (kind === 'shape')
+    return msg('attention:distractorFiltering.phrase.shape', { shapes: shapePlural(target.shape) });
+  if (kind === 'color')
+    return msg('attention:distractorFiltering.phrase.color', { color: target.color });
+  return shapePlural(target.shape, target.color);
 }
 
 const otherShape = (random: RandomGenerator, shape: ShapeKind, near: boolean) =>
@@ -77,10 +80,9 @@ export const distractorFilteringGame: GameDefinition<
   DistractorFilteringProfile
 > = {
   id: DISTRACTOR_FILTERING_ID,
-  name: 'Distractor Filtering',
-  tagline: 'Only the blue triangles. Ignore the rest.',
-  description:
-    'Mark every item that matches a rule such as “blue triangles”, while look-alikes share the colour or the shape. Distractors get closer to the target and, at higher levels, you decide yourself when you have found them all.',
+  name: msg('attention:distractorFiltering.name'),
+  tagline: msg('attention:distractorFiltering.tagline'),
+  description: msg('attention:distractorFiltering.description'),
   area: 'attention',
   skills: ['selective-attention', 'concentration', 'instruction-comprehension'],
   meta: {
@@ -91,19 +93,17 @@ export const distractorFilteringGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A grid counts as correct when your marks match the targets: missed targets and wrong marks are errors. From level 8 one error is tolerated. Your result is the share of grids solved; answering is not timed.',
+    scoringSummary: msg('attention:distractorFiltering.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Rules that name a colour need colour vision to play visually; every item is also named ("purple triangle"), so a screen reader can filter by name. Shapes always differ in outline too.',
+    accessibilityNotes: msg('attention:distractorFiltering.accessibilityNotes'),
   },
   instructions: [
-    'Read the rule above the grid: it names a shape, a colour, or both.',
-    'Mark every item that matches the rule exactly, then press Check.',
-    'Look-alikes share only part of the rule: a blue heart is not a blue triangle.',
-    'From level 7 the count is not given; from level 8 one slip is allowed.',
+    msg('attention:distractorFiltering.instructions.1'),
+    msg('attention:distractorFiltering.instructions.2'),
+    msg('attention:distractorFiltering.instructions.3'),
+    msg('attention:distractorFiltering.instructions.4'),
   ],
-  simpleInstructions: 'Tap all the shapes that match the rule, and only those.',
+  simpleInstructions: msg('attention:distractorFiltering.simpleInstructions'),
   levels: DISTRACTOR_FILTERING_LEVELS,
   generate({ identity, profile, random }) {
     const count = profile.columns * profile.rows;
@@ -135,18 +135,23 @@ export const distractorFilteringGame: GameDefinition<
     });
     const solution = indicesWhere(items, (m) => isTarget(profile.kind, target, m));
     const phrase = targetPhrase(profile.kind, target);
-    const slack = profile.maxErrors > 0 ? ` One slip is allowed.` : '';
     return {
       ...identity,
       prompt: profile.exact
-        ? `Mark all ${solution.length} ${phrase}.`
-        : `Mark every one of the ${phrase} — you decide how many there are.${slack}`,
+        ? msg('attention:distractorFiltering.prompt.exact', { count: solution.length, phrase })
+        : msg(
+            `attention:distractorFiltering.prompt.${profile.maxErrors > 0 ? 'freeWithSlip' : 'free'}`,
+            { phrase },
+          ),
       content: { kind: profile.kind, columns: profile.columns, items, target },
       response: multiSelectResponse(count, solution, {
         exact: profile.exact,
         maxErrors: profile.maxErrors,
       }),
-      explanation: `There ${solution.length === 1 ? 'was' : 'were'} ${solution.length} ${phrase}.`,
+      explanation: msg('attention:distractorFiltering.explanation', {
+        count: solution.length,
+        phrase,
+      }),
       skills:
         profile.kind === 'conjunction'
           ? ['selective-attention', 'concentration']

@@ -1,9 +1,16 @@
+import { useTranslation } from 'react-i18next';
 import type { FlowNode, RichBlock } from '@/domain/learning';
+import { textId, type Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { CodeBlock } from '@/components/code/CodeBlock';
 
-/** Renders `inline code` between backticks; everything else is plain text (never HTML). */
-export function InlineText({ text }: { text: string }) {
-  const parts = text.split(/(`[^`]+`)/g);
+/**
+ * Renders a text in the reader's language: `inline code` between backticks becomes code;
+ * everything else is plain text (never HTML).
+ */
+export function InlineText({ text }: { text: Text }) {
+  const tx = useText();
+  const parts = tx(text).split(/(`[^`]+`)/g);
   return (
     <>
       {parts.map((part, i) =>
@@ -23,12 +30,14 @@ export function InlineText({ text }: { text: string }) {
 }
 
 const CALLOUT = {
-  key: { label: 'Key idea', tone: 'border-sky-400/40 bg-sky-400/5', icon: '◆' },
-  tip: { label: 'Tip', tone: 'border-emerald-400/40 bg-emerald-400/5', icon: '✦' },
-  warning: { label: 'Watch out', tone: 'border-amber-400/40 bg-amber-400/5', icon: '!' },
+  key: { tone: 'border-sky-400/40 bg-sky-400/5', icon: '◆' },
+  tip: { tone: 'border-emerald-400/40 bg-emerald-400/5', icon: '✦' },
+  warning: { tone: 'border-amber-400/40 bg-amber-400/5', icon: '!' },
 } as const;
 
-function FlowChart({ nodes, caption }: { nodes: readonly FlowNode[]; caption?: string }) {
+function FlowChart({ nodes, caption }: { nodes: readonly FlowNode[]; caption?: Text }) {
+  const { t } = useTranslation('learn');
+  const tx = useText();
   const byId = new Map(nodes.map((n) => [n.id, n]));
   const shape = (node: FlowNode) =>
     node.kind === 'decision'
@@ -40,7 +49,7 @@ function FlowChart({ nodes, caption }: { nodes: readonly FlowNode[]; caption?: s
     <figure className="flex flex-col items-start gap-2">
       <ol
         className="flex flex-col items-center gap-1 self-center font-mono text-sm"
-        aria-label="Flowchart"
+        aria-label={t('blocks.flowchart')}
       >
         {nodes.map((node, i) => (
           <li key={node.id} className="flex flex-col items-center gap-1">
@@ -50,15 +59,17 @@ function FlowChart({ nodes, caption }: { nodes: readonly FlowNode[]; caption?: s
               </span>
             )}
             <span className={`border px-4 py-1.5 text-center text-slate-100 ${shape(node)}`}>
-              {node.kind === 'decision' && <span className="sr-only">Decision: </span>}
-              {node.label}
+              {node.kind === 'decision' && <span className="sr-only">{t('blocks.decision')} </span>}
+              {tx(node.label)}
             </span>
             {node.kind === 'decision' && (
               <span className="flex gap-4 text-xs">
                 <span className="text-emerald-300">
-                  YES → {byId.get(node.yes)?.label ?? node.yes}
+                  {t('blocks.yes')} → {tx(byId.get(node.yes)?.label ?? node.yes)}
                 </span>
-                <span className="text-rose-300">NO → {byId.get(node.no)?.label ?? node.no}</span>
+                <span className="text-rose-300">
+                  {t('blocks.no')} → {tx(byId.get(node.no)?.label ?? node.no)}
+                </span>
               </span>
             )}
           </li>
@@ -74,6 +85,7 @@ function FlowChart({ nodes, caption }: { nodes: readonly FlowNode[]; caption?: s
 }
 
 export function RichBlocks({ blocks }: { blocks: readonly RichBlock[] }) {
+  const { t } = useTranslation(['learn', 'lessons']);
   return (
     <div className="flex max-w-3xl flex-col gap-4 leading-relaxed text-slate-200">
       {blocks.map((block, i) => {
@@ -100,7 +112,7 @@ export function RichBlocks({ blocks }: { blocks: readonly RichBlock[] }) {
               <aside key={i} className={`rounded-lg border p-3 text-sm ${meta.tone}`}>
                 <p className="mb-1 text-xs font-semibold tracking-wide text-slate-300 uppercase">
                   <span aria-hidden="true">{meta.icon} </span>
-                  {meta.label}
+                  {t(`blocks.callout.${block.tone}`)}
                 </p>
                 <p>
                   <InlineText text={block.text} />
@@ -112,7 +124,7 @@ export function RichBlocks({ blocks }: { blocks: readonly RichBlock[] }) {
             return (
               <ul key={i} className="list-disc space-y-1 pl-5">
                 {block.items.map((item) => (
-                  <li key={item}>
+                  <li key={textId(item)}>
                     <InlineText text={item} />
                   </li>
                 ))}

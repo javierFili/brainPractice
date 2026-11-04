@@ -13,6 +13,7 @@ import { poolSymbols, spokenString, symbolsOf } from './content/symbols';
 import { POOL_ORDER } from './content/types';
 import { rapidSymbolMatchingModule } from './index';
 import { SymbolMatchView } from './ui/SymbolMatchView';
+import { en } from '@/test/i18n';
 
 describeGameContract(rapidSymbolMatchingModule);
 
@@ -26,7 +27,9 @@ describe('Rapid Symbol Matching content', () => {
       if (response.format !== 'single-choice') throw new Error('choice expected');
       expect(response.question.options.map((o) => o.label)).toEqual([...SAME_DIFFERENT]);
       const picked = response.question.options.find((o) => o.id === response.solution.optionId);
-      expect(picked?.label).toBe(content.other === content.reference ? 'Same' : 'Different');
+      expect(en(picked?.label ?? '')).toBe(
+        content.other === content.reference ? 'Same' : 'Different',
+      );
     }
   });
 
@@ -42,7 +45,7 @@ describe('Rapid Symbol Matching content', () => {
       expect(copies[0]?.id).toBe(response.solution.optionId);
       // Distractors are the same length and built from the same symbols.
       for (const o of options)
-        expect(symbolsOf(o.label)).toHaveLength(symbolsOf(content.reference).length);
+        expect(symbolsOf(en(o.label))).toHaveLength(symbolsOf(content.reference).length);
     }
   });
 
@@ -79,7 +82,7 @@ describe('Rapid Symbol Matching content', () => {
   });
 
   it('spells strings out for screen readers', () => {
-    expect(spokenString('bQ★')).toBe('small b, capital Q, star');
+    expect(en(spokenString('bQ★'))).toBe('small b, capital Q, star');
   });
 
   it('generates quickly', () => {
@@ -102,8 +105,8 @@ describe('Rapid Symbol Matching view', () => {
     );
     expect(screen.getByText('Left')).toBeInTheDocument();
     expect(screen.getByText('Right')).toBeInTheDocument();
-    expect(screen.getAllByText(spokenString(challenge.content.reference)).length).toBeGreaterThan(
-      0,
-    );
+    expect(
+      screen.getAllByText(en(spokenString(challenge.content.reference))).length,
+    ).toBeGreaterThan(0);
   });
 });

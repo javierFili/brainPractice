@@ -1,6 +1,7 @@
+import { msg } from '@/domain/shared';
 import { CellGrid, MultiSelectBoard } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
-import { cellName } from '../content/definition';
+import { cellName } from '../../shared/content';
 import type { PositionMemoryChallenge } from '../content/types';
 
 /** Targets are blue with a dot, distractors orange with stripes: never colour alone. */
@@ -38,7 +39,7 @@ export function PositionMemoryView({
   if (phase === 'study') {
     return (
       <CellGrid
-        label="Grid to remember"
+        label={msg('memory:positionMemory.view.toRemember')}
         columns={size}
         size={gridSize}
         cells={Array.from({ length: count }, (_, i) => {
@@ -49,7 +50,10 @@ export function PositionMemoryView({
               : null;
           return {
             key: String(i),
-            label: `${cellName(i, size)}${tone === 'target' ? ', lit blue' : tone === 'distractor' ? ', lit orange' : ''}`,
+            label:
+              tone === null
+                ? cellName(i, size)
+                : msg(`memory:positionMemory.view.${tone}`, { cell: cellName(i, size) }),
             content: tone === null ? null : <Lit tone={tone} />,
           };
         })}
@@ -59,7 +63,7 @@ export function PositionMemoryView({
   return (
     <MultiSelectBoard
       response={response}
-      label="Mark the cells"
+      label={msg('memory:positionMemory.view.markCells')}
       columns={size}
       size={gridSize}
       respond={respond}

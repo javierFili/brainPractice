@@ -1,8 +1,8 @@
 import { multiSelectResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { COLORS, type ColorName } from '@/games/kit/content';
+import { gameIdOf, joinText, msg, type Text } from '@/domain/shared';
+import { COLORS, colorLabel, type ColorName } from '@/games/kit/content';
 import {
   NEAR_COLORS,
   canonicalMark,
@@ -11,6 +11,7 @@ import {
   mark,
   poseWords,
   shapePlural,
+  turnWord,
   type Mark,
 } from '../../shared/content';
 import { INSPECTION_LEVELS } from './levels';
@@ -33,10 +34,15 @@ export function isTarget(rule: InspectionRule, m: Mark): boolean {
 }
 
 /** "blue triangles, turned right" · "L shapes, mirrored, upright, in any colour except red". */
-export function ruleText(rule: InspectionRule): string {
+export function ruleText(rule: InspectionRule): Text {
   const pose = poseWords(ruleMark(rule));
-  const posed = `${shapePlural(rule.shape)}, ${pose === '' ? 'upright' : pose}`;
-  return rule.negated ? `${posed}, in any colour except ${rule.color}` : `${rule.color} ${posed}`;
+  const posed = pose.length === 0 ? [turnWord(0)] : pose;
+  return rule.negated
+    ? msg('attention:complexVisualInspection.rule.negated', {
+        shapes: joinText([shapePlural(rule.shape), ...posed], ', '),
+        color: colorLabel(rule.color),
+      })
+    : joinText([shapePlural(rule.shape, rule.color), ...posed], ', ');
 }
 
 function randomMark(
@@ -94,10 +100,9 @@ function lure(
 
 export const complexVisualInspectionGame: GameDefinition<InspectionChallenge, InspectionProfile> = {
   id: INSPECTION_ID,
-  name: 'Complex Visual Inspection',
-  tagline: 'Three features must all match.',
-  description:
-    'Inspect a dense grid and mark every item that matches a rule on three features at once — shape, colour and direction (later also mirroring and “any colour except…”). Most distractors break just one feature.',
+  name: msg('attention:complexVisualInspection.name'),
+  tagline: msg('attention:complexVisualInspection.tagline'),
+  description: msg('attention:complexVisualInspection.description'),
   area: 'attention',
   skills: [
     'selective-attention',
@@ -113,19 +118,17 @@ export const complexVisualInspectionGame: GameDefinition<InspectionChallenge, In
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A grid counts as correct when your marks match the targets (missed targets and wrong marks are errors); from level 8 one error is tolerated. Your result is the share of grids solved; answering is not timed.',
+    scoringSummary: msg('attention:complexVisualInspection.scoringSummary'),
     feedback: 'explain',
-    accessibilityNotes:
-      'Rules name a colour, so playing visually needs colour vision; every item is also named with colour, shape and pose ("green L shape, mirrored, turned left") for screen readers. Direction is judged on the drawn shape, which takes careful looking.',
+    accessibilityNotes: msg('attention:complexVisualInspection.accessibilityNotes'),
   },
   instructions: [
-    'Read the rule: a shape, a direction and a colour must ALL match.',
-    'Most items break only one part of the rule — check each feature.',
-    '“Mirrored” means flipped left-to-right; “turned right” means a quarter turn clockwise.',
-    'Mark every match, then press Check. From level 7 you decide how many there are.',
+    msg('attention:complexVisualInspection.instructions.1'),
+    msg('attention:complexVisualInspection.instructions.2'),
+    msg('attention:complexVisualInspection.instructions.3'),
+    msg('attention:complexVisualInspection.instructions.4'),
   ],
-  simpleInstructions: 'Tap the shapes that match the rule in every way.',
+  simpleInstructions: msg('attention:complexVisualInspection.simpleInstructions'),
   levels: INSPECTION_LEVELS,
   generate({ identity, profile, random }) {
     const cells = profile.columns * profile.rows;
@@ -170,8 +173,14 @@ export const complexVisualInspectionGame: GameDefinition<InspectionChallenge, In
     return {
       ...identity,
       prompt: profile.exact
-        ? `Mark all ${solution.length}: ${text}.`
-        : `Mark every match: ${text}. You decide how many.${profile.maxErrors > 0 ? ' One slip is allowed.' : ''}`,
+        ? msg('attention:complexVisualInspection.prompt.exact', {
+            count: solution.length,
+            rule: text,
+          })
+        : msg(
+            `attention:complexVisualInspection.prompt.${profile.maxErrors > 0 ? 'freeWithSlip' : 'free'}`,
+            { rule: text },
+          ),
       content: {
         kind: rule.negated ? 'negated' : 'positive',
         columns: profile.columns,
@@ -182,7 +191,10 @@ export const complexVisualInspectionGame: GameDefinition<InspectionChallenge, In
         exact: profile.exact,
         maxErrors: profile.maxErrors,
       }),
-      explanation: `${solution.length} items matched all features (${text}). The rest differed in shape, colour or direction.`,
+      explanation: msg('attention:complexVisualInspection.explanation', {
+        count: solution.length,
+        rule: text,
+      }),
       skills: ['selective-attention', 'visual-orientation'],
       timing: profile.timing,
     };

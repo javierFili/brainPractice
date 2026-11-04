@@ -1,4 +1,6 @@
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useText } from '@/i18n';
 import type { ContentViewProps } from '@/games/types';
 import { rowTexts, ruleText } from '../content/format';
 import type { ErrorDetectionChallenge } from '../content/types';
@@ -8,24 +10,30 @@ export function ErrorDetectionView({
   challenge,
   locate,
 }: ContentViewProps<ErrorDetectionChallenge>) {
+  const { t } = useTranslation('attention');
+  const tx = useText();
   const { content } = challenge;
   const ruleId = useId();
-  const rows = rowTexts(content);
+  const rows = rowTexts(content).map(tx);
   const solution = locate?.solutionIndex ?? null;
   const picked = solution === null ? null : (locate?.selectedIndex ?? null);
   const interactive = locate !== null && !locate.disabled;
   return (
     <div className="flex flex-col gap-4">
       <p id={ruleId} className="rounded-lg border border-line bg-raised p-3 text-sm text-ink-soft">
-        {ruleText(content)}
+        {tx(ruleText(content))}
       </p>
       <ol aria-describedby={ruleId} className="flex flex-col gap-1.5">
         {rows.map((text, i) => {
           const isError = i === solution;
           const isPick = i === picked;
           const marks = [
-            isError ? '✗ wrong row' : null,
-            isPick ? (isError ? '✓ your pick' : 'your pick') : null,
+            isError ? `✗ ${t('errorDetection.view.wrongRow')}` : null,
+            isPick
+              ? isError
+                ? `✓ ${t('errorDetection.view.yourPick')}`
+                : t('errorDetection.view.yourPick')
+              : null,
           ].filter((m): m is string => m !== null);
           const tone = isError
             ? 'border-success bg-success/10'
@@ -38,7 +46,9 @@ export function ErrorDetectionView({
               <button
                 type="button"
                 disabled={!interactive}
-                aria-label={[`Row ${i + 1}: ${text}`, ...marks].join(' — ')}
+                aria-label={[t('errorDetection.view.row', { row: i + 1, text }), ...marks].join(
+                  ' — ',
+                )}
                 onClick={() => {
                   locate?.onLocate(i);
                 }}
@@ -50,9 +60,9 @@ export function ErrorDetectionView({
                 <span className="min-w-0 flex-1 break-words whitespace-pre-wrap text-ink">
                   {text}
                 </span>
-                {marks.map((m) => (
+                {marks.map((m, k) => (
                   <span
-                    key={m}
+                    key={k}
                     aria-hidden="true"
                     className={`font-sans text-xs font-semibold ${isError ? 'text-success' : 'text-danger'}`}
                   >

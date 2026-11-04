@@ -1,6 +1,6 @@
 import type { GameDefinition } from '@/domain/game';
 import { chance, pick, randomInt } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, type Message, type Text } from '@/domain/shared';
 import { OBJECTS, type EverydayObject, type ObjectCategory } from '@/games/kit/content';
 import { fixedChoice, SPEED_SCORING } from '@/games/speed/shared/content';
 import { RAPID_CLASSIFICATION_LEVELS } from './levels';
@@ -22,28 +22,50 @@ export const CLASSIFIABLE: readonly EverydayObject[] = OBJECTS.filter(
 
 export const LETTER_OPTIONS = ['A–M', 'N–Z'] as const;
 
-export const categoryLabel = (category: ObjectCategory) =>
-  category.charAt(0).toUpperCase() + category.slice(1);
+/**
+ * Objects whose name falls in the same half of the alphabet (A–M or N–Z) in every supported
+ * language (en, es, it, fr, de; accents ignored). The first-letter rule only uses these, so its
+ * answer never changes when the player switches language mid-trial (checked against the locale
+ * files by the tests). Turtle (N–Z) is in every switch level's groups.
+ */
+export const LETTER_SAFE_OBJECTS: ReadonlySet<string> = new Set([
+  'cherries',
+  'cat',
+  'turtle',
+  'elephant',
+  'giraffe',
+  'bee',
+  'bus',
+  'airplane',
+  'train',
+  'hammer',
+  'magnet',
+  'cap',
+  'gloves',
+  'moon',
+  'cactus',
+  'pizza',
+  'cookie',
+]);
+
+export const categoryLabel = (category: ObjectCategory): Message =>
+  msg(`speed:rapidClassification.groups.${category}`);
 
 /** 0 for A–M, 1 for N–Z. */
 export const letterHalf = (name: string): 0 | 1 => (name.toLowerCase().charAt(0) <= 'm' ? 0 : 1);
 
 export const RAPID_CLASSIFICATION_ID = gameIdOf('rapid-classification');
 
-const promptOf = (rule: ClassRule) =>
-  rule === 'category'
-    ? 'Which group does it belong to?'
-    : 'Does its name start with a letter from A–M or N–Z?';
+const promptOf = (rule: ClassRule) => msg(`speed:rapidClassification.prompt.${rule}`);
 
 export const rapidClassificationGame: GameDefinition<
   RapidClassificationChallenge,
   RapidClassificationProfile
 > = {
   id: RAPID_CLASSIFICATION_ID,
-  name: 'Rapid Classification',
-  tagline: 'Fruit or animal? Decide fast.',
-  description:
-    'An everyday object appears: put it in its group as fast as you can. Later levels show only the word, add more groups and finally switch rules: a cue says whether to sort by group or by the first letter of the name.',
+  name: msg('speed:rapidClassification.name'),
+  tagline: msg('speed:rapidClassification.tagline'),
+  description: msg('speed:rapidClassification.description'),
   area: 'speed',
   skills: ['processing-speed', 'cognitive-flexibility', 'selective-attention'],
   meta: {
@@ -54,17 +76,16 @@ export const rapidClassificationGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time'],
-    scoringSummary:
-      'Each object is right or wrong; accuracy is always reported. Correct answers earn extra points the faster they come, wrong answers cost points, and your response time per answer is shown. Relaxed mode removes the time limit.',
+    scoringSummary: msg('speed:rapidClassification.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'An object appears. Choose its group with a click or the number keys.',
-    'The groups stay in the same place for the whole session, so you can keep your fingers ready.',
-    'From level 5 you see only the word: read it, then decide.',
-    'From level 7 a cue says the rule: CATEGORY (its group) or FIRST LETTER (A–M or N–Z).',
+    msg('speed:rapidClassification.instructions.object'),
+    msg('speed:rapidClassification.instructions.groups'),
+    msg('speed:rapidClassification.instructions.words'),
+    msg('speed:rapidClassification.instructions.rule'),
   ],
-  simpleInstructions: 'Say which group the picture belongs to, as fast as you can.',
+  simpleInstructions: msg('speed:rapidClassification.simpleInstructions'),
   levels: RAPID_CLASSIFICATION_LEVELS,
   scoring: SPEED_SCORING,
   generate({ identity, profile, random }) {
@@ -72,7 +93,7 @@ export const rapidClassificationGame: GameDefinition<
       profile.kind === 'switch' && chance(random, profile.letterShare) ? 'letter' : 'category';
     const pool = CLASSIFIABLE.filter((item) => profile.categories.includes(item.category));
     let item: EverydayObject;
-    let labels: readonly string[];
+    let labels: readonly Text[];
     let correct: number;
     if (rule === 'category') {
       labels = profile.categories.map(categoryLabel);
@@ -87,10 +108,10 @@ export const rapidClassificationGame: GameDefinition<
       correct = randomInt(random, 0, 1);
       item = pick(
         random,
-        pool.filter((o) => letterHalf(o.name) === correct),
+        pool.filter((o) => LETTER_SAFE_OBJECTS.has(o.id) && letterHalf(o.name) === correct),
       );
     }
-    const answer = labels[correct] as string;
+    const answer = labels[correct] as Text;
     return {
       ...identity,
       prompt: promptOf(rule),
@@ -98,8 +119,15 @@ export const rapidClassificationGame: GameDefinition<
       response: fixedChoice(labels, correct),
       explanation:
         rule === 'category'
-          ? `“${item.name}” belongs to the group “${answer}”.`
-          : `“${item.name}” starts with “${item.name.charAt(0).toUpperCase()}”, which is in ${answer}.`,
+          ? msg('speed:rapidClassification.explanation.category', {
+              item: item.label,
+              group: answer,
+            })
+          : msg('speed:rapidClassification.explanation.letter', {
+              item: item.label,
+              letter: msg(`speed:rapidClassification.initials.${item.id}`),
+              range: answer,
+            }),
       skills:
         profile.kind === 'switch'
           ? ['processing-speed', 'cognitive-flexibility']

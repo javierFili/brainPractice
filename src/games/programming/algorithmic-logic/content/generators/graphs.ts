@@ -1,6 +1,7 @@
-import { numericResponse, singleChoice } from '@/domain/challenge';
+import { numericResponse, singleChoice, type ResponseOf } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
+import { joinText, msg, type Message } from '@/domain/shared';
 import {
   ancestors,
   criticalPath,
@@ -91,6 +92,14 @@ export function generateGraph(
 const formatOrder = (order: readonly string[]) => order.join(' → ');
 const formatEdge = ([from, to]: Edge) => `${from} → ${to}`;
 
+const KEY = 'programming:algorithmicLogic';
+
+/** Numeric answer with a translated unit (the builder only takes literal units). */
+const numericWithUnit = (value: number, unit: Message): ResponseOf<'numeric'> => ({
+  ...numericResponse(value),
+  question: { unit },
+});
+
 /**
  * Four options that are all one swap away from the same hidden valid order, exactly one of which
  * still respects every dependency. Because every option is a neighbour of the same base, none of
@@ -129,16 +138,20 @@ export function dependencyOrder(random: RandomGenerator, profile: LogicProfile):
     const options = orderOptions(random, graph, violation === 'subtle');
     if (options === null) return null;
     const { valid, wrong } = options;
-    const broken = wrong.map(
-      (order) =>
-        `${formatOrder(order)} breaks ${violatedEdges(graph, order).map(formatEdge).join(', ')}`,
+    const broken = wrong.map((order) =>
+      msg(`${KEY}.dependencyOrder.breaks`, {
+        order: formatOrder(order),
+        edges: violatedEdges(graph, order).map(formatEdge).join(', '),
+      }),
     );
     return {
-      prompt:
-        'Each arrow means the left module must run before the right one. Which execution order is valid?',
+      prompt: msg(`${KEY}.dependencyOrder.prompt`),
       content: { kind: 'dependency-order', graph },
       response: singleChoice(random, formatOrder(valid), wrong.map(formatOrder)),
-      explanation: `${formatOrder(valid)} runs every module after all of its dependencies (other valid orders may exist, but none of them was offered). ${broken.join('; ')}.`,
+      explanation: msg(`${KEY}.dependencyOrder.explanation`, {
+        order: formatOrder(valid),
+        reasons: joinText(broken, '; '),
+      }),
       skills: ['algorithmic-thinking', 'logical-reasoning'],
     };
   });
@@ -154,10 +167,14 @@ export function dependencyCount(random: RandomGenerator, profile: LogicProfile):
     const target = pick(random, deep);
     const required = [...ancestors(graph, target)].sort();
     return {
-      prompt: `How many modules must finish (directly or indirectly) before ${target} can start?`,
+      prompt: msg(`${KEY}.dependencyCount.prompt`, { target }),
       content: { kind: 'dependency-count', graph, target },
-      response: numericResponse(required.length, 'modules'),
-      explanation: `${target} transitively depends on ${required.join(', ')} — ${required.length} modules.`,
+      response: numericWithUnit(required.length, msg(`${KEY}.units.modules`)),
+      explanation: msg(`${KEY}.dependencyCount.explanation`, {
+        target,
+        modules: required.join(', '),
+        count: required.length,
+      }),
       skills: ['decomposition', 'algorithmic-thinking'],
     };
   });
@@ -172,14 +189,14 @@ export function criticalPathChallenge(random: RandomGenerator, profile: LogicPro
     if (length === graph.nodes.reduce((sum, node) => sum + (graph.durations?.[node] ?? 1), 0))
       return null;
     const path = criticalPath(graph);
-    const unit = weighted
-      ? 'rounds (each module takes the rounds shown)'
-      : 'rounds (each module takes one round)';
     return {
-      prompt: `Independent modules can run in parallel. What is the minimum number of ${unit} to finish everything?`,
+      prompt: msg(`${KEY}.criticalPath.prompt.${weighted ? 'weighted' : 'unweighted'}`),
       content: { kind: 'critical-path', graph },
-      response: numericResponse(length, 'rounds'),
-      explanation: `The longest dependency chain is ${formatOrder(path)}, which takes ${length} rounds; everything else fits in parallel alongside it.`,
+      response: numericWithUnit(length, msg(`${KEY}.units.rounds`)),
+      explanation: msg(`${KEY}.criticalPath.explanation`, {
+        path: formatOrder(path),
+        count: length,
+      }),
       skills: ['algorithmic-thinking', 'decomposition'],
     };
   });

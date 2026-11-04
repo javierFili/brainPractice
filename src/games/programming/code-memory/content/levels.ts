@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import type { LevelTable } from '@/domain/difficulty';
 import type { CodeMemoryProfile } from './types';
 
@@ -42,7 +43,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   1: {
     level: 1,
     tier: 'fundamentals',
-    objective: 'Hold a few fields, calls and positions in mind for a few seconds.',
+    objective: msg('programming:codeMemory.levels.1'),
     challengeCount: 6,
     timing: seconds(15, 60, 10),
     kinds: { 'record-recall': 1, 'sequence-recall': 1, 'position-recall': 1 },
@@ -57,7 +58,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   2: {
     level: 2,
     tier: 'fundamentals',
-    objective: 'Keep two records apart and track a variable through an update.',
+    objective: msg('programming:codeMemory.levels.2'),
     challengeCount: 6,
     timing: seconds(15, 60, 10),
     kinds: BASIC_KINDS,
@@ -72,7 +73,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   3: {
     level: 3,
     tier: 'fundamentals',
-    objective: 'Remember what followed what, and positions on a larger grid.',
+    objective: msg('programming:codeMemory.levels.3'),
     challengeCount: 6,
     timing: seconds(16, 60, 12),
     kinds: BASIC_KINDS,
@@ -87,7 +88,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   4: {
     level: 4,
     tier: 'intermediate',
-    objective: 'Exact answers: compute and hold three variables with no options to lean on.',
+    objective: msg('programming:codeMemory.levels.4'),
     challengeCount: 8,
     timing: seconds(18, 75, 14),
     kinds: BASIC_KINDS,
@@ -108,7 +109,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   5: {
     level: 5,
     tier: 'intermediate',
-    objective: 'Interference: look-alike ids and keywords, and rebuilding a full call order.',
+    objective: msg('programming:codeMemory.levels.5'),
     challengeCount: 8,
     timing: seconds(18, 75, 15),
     kinds: BASIC_KINDS,
@@ -129,7 +130,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   6: {
     level: 6,
     tier: 'intermediate',
-    objective: 'Similar calls on the same resources: encode the exact order, not the gist.',
+    objective: msg('programming:codeMemory.levels.6'),
     challengeCount: 8,
     timing: seconds(20, 90, 18),
     kinds: BASIC_KINDS,
@@ -150,7 +151,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   7: {
     level: 7,
     tier: 'advanced',
-    objective: 'Look records up by another field and recall state at a given line.',
+    objective: msg('programming:codeMemory.levels.7'),
     challengeCount: 8,
     timing: seconds(20, 90, 20),
     kinds: ADVANCED_KINDS,
@@ -171,7 +172,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   8: {
     level: 8,
     tier: 'advanced',
-    objective: 'Four records, four variables and eight similar calls held at once.',
+    objective: msg('programming:codeMemory.levels.8'),
     challengeCount: 8,
     timing: seconds(22, 90, 22),
     kinds: ADVANCED_KINDS,
@@ -192,7 +193,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   9: {
     level: 9,
     tier: 'expert',
-    objective: 'Joins: follow a foreign key between two tables you can no longer see.',
+    objective: msg('programming:codeMemory.levels.9'),
     challengeCount: 8,
     timing: seconds(22, 120, 24),
     kinds: EXPERT_KINDS,
@@ -213,7 +214,7 @@ export const CODE_MEMORY_LEVELS: LevelTable<CodeMemoryProfile> = {
   10: {
     level: 10,
     tier: 'expert',
-    objective: 'Maximum load and interference with the shortest study time per item.',
+    objective: msg('programming:codeMemory.levels.10'),
     challengeCount: 8,
     timing: seconds(24, 120, 25),
     kinds: EXPERT_KINDS,

@@ -1,7 +1,7 @@
 import { sequenceResponse } from '@/domain/challenge';
 import type { GameDefinition } from '@/domain/game';
 import { pick, sample, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SEQUENCE_RECALL_LEVELS } from './levels';
 import { paletteSymbols } from './symbols';
 import type { SequenceRecallChallenge, SequenceRecallProfile } from './types';
@@ -25,10 +25,9 @@ export const SEQUENCE_RECALL_ID = gameIdOf('sequence-recall');
 
 export const sequenceRecallGame: GameDefinition<SequenceRecallChallenge, SequenceRecallProfile> = {
   id: SEQUENCE_RECALL_ID,
-  name: 'Sequence Recall',
-  tagline: 'Watch the sequence, then rebuild it.',
-  description:
-    'Colours, digits or shapes appear one after another. When they are gone, rebuild the sequence on the answer pad — in the same order, or from last to first when asked.',
+  name: msg('memory:sequenceRecall.name'),
+  tagline: msg('memory:sequenceRecall.tagline'),
+  description: msg('memory:sequenceRecall.description'),
   area: 'memory',
   skills: ['short-term-memory', 'working-memory', 'sequential-thinking'],
   meta: {
@@ -39,17 +38,16 @@ export const sequenceRecallGame: GameDefinition<SequenceRecallChallenge, Sequenc
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'streak'],
-    scoringSummary:
-      'A sequence counts as correct only when every position matches. Your result is the share of sequences rebuilt exactly; answering is not timed.',
+    scoringSummary: msg('memory:sequenceRecall.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Watch the symbols appear one at a time. Press “I’m ready” if you want to answer early.',
-    'Rebuild the sequence by pressing the symbols in order (or the number keys shown on them).',
-    'Some sequences ask for reverse order: start with the last symbol you saw.',
-    'Undo (or Backspace) removes the last symbol; submit when every slot is filled.',
+    msg('memory:sequenceRecall.instructions.watch'),
+    msg('memory:sequenceRecall.instructions.rebuild'),
+    msg('memory:sequenceRecall.instructions.reverse'),
+    msg('memory:sequenceRecall.instructions.undo'),
   ],
-  simpleInstructions: 'Watch the colours, then press them in the same order.',
+  simpleInstructions: msg('memory:sequenceRecall.simpleInstructions'),
   levels: SEQUENCE_RECALL_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);
@@ -65,20 +63,11 @@ export const sequenceRecallGame: GameDefinition<SequenceRecallChallenge, Sequenc
     const solution = kind === 'forward' ? items : [...items].reverse();
     return {
       ...identity,
-      prompt:
-        kind === 'forward'
-          ? `Rebuild the ${items.length} symbols in the order you saw them.`
-          : `Rebuild the ${items.length} symbols in reverse order — last one first.`,
-      studyPrompt:
-        kind === 'forward'
-          ? 'Watch the sequence.'
-          : 'Watch the sequence — you will repeat it backwards.',
+      prompt: msg(`memory:sequenceRecall.prompt.${kind}`, { count: items.length }),
+      studyPrompt: msg(`memory:sequenceRecall.studyPrompt.${kind}`),
       content: { kind, palette: profile.palette, items, itemMs: profile.itemMs },
       response: sequenceResponse(pad, solution),
-      explanation:
-        kind === 'forward'
-          ? 'The sequence had to be repeated exactly as shown.'
-          : 'The sequence had to be repeated from the last symbol back to the first.',
+      explanation: msg(`memory:sequenceRecall.explanation.${kind}`),
       skills: kind === 'forward' ? ['short-term-memory'] : ['working-memory', 'short-term-memory'],
       timing: profile.timing,
     };

@@ -1,0 +1,276 @@
+{
+  "loadError": "Dein Lernfortschritt konnte nicht geladen werden.",
+  "learningPath": "Lernpfad",
+  "blocks": {
+    "flowchart": "Flussdiagramm",
+    "decision": "Entscheidung:",
+    "yes": "JA",
+    "no": "NEIN",
+    "callout": {
+      "key": "Kernidee",
+      "tip": "Tipp",
+      "warning": "Vorsicht"
+    }
+  },
+  "feedbackPanel": {
+    "solution": "Hier ist die Lösung.",
+    "correctAnswer": "Richtige Antwort:",
+    "hint": "Hinweis:",
+    "tryAgain": "Nochmal versuchen",
+    "tryAgainLeft_one": "Nochmal versuchen (noch {{count}})",
+    "tryAgainLeft_other": "Nochmal versuchen (noch {{count}})",
+    "showSolution": "Lösung zeigen",
+    "skip": "Überspringen"
+  },
+  "player": {
+    "phase": {
+      "guided": {
+        "label": "Angeleitet",
+        "note": "Hinweise verfügbar · bis zu 3 Versuche"
+      },
+      "practice": {
+        "label": "Übung",
+        "note": "Hinweise verfügbar · bis zu 2 Versuche"
+      },
+      "checkpoint": {
+        "label": "Prüfpunkt",
+        "note": "Ein Versuch, keine Hinweise – hier zeigst du, dass du es kannst"
+      }
+    },
+    "hintNumber": "Hinweis {{number}}:",
+    "showHint": "Hinweis zeigen",
+    "finish": "Abschließen",
+    "continue": "Weiter",
+    "step": "Schritt {{number}} / {{total}}",
+    "progress": "Lektionsfortschritt"
+  },
+  "playground": {
+    "slider": "Schieberegler für {{name}}",
+    "loadError": "Dieses Beispiel konnte nicht geladen werden.",
+    "changeValues": "Ändere die Werte",
+    "program": "Beispielprogramm",
+    "caption": "▸ markiert die ausgeführten Zeilen. Die ersten Zeilen sind die Werte, die du steuerst.",
+    "results": "Was das Programm getan hat",
+    "output": "Ausgabe",
+    "nothingPrinted": "(nichts ausgegeben)",
+    "errorLine": "Zeile {{line}}: {{message}}",
+    "variablesAfter": "Variablen nach Zeile {{line}}",
+    "variablesEnd": "Variablen am Ende",
+    "stepThrough": "Schritt für Schritt",
+    "stepLabel": "Schritt",
+    "endOfProgram": "Programmende",
+    "stepOf": "Schritt {{number}} von {{total}}",
+    "endSteps_one": "Ende · {{count}} Schritt",
+    "endSteps_other": "Ende · {{count}} Schritte",
+    "tryThis": "Probier das aus"
+  },
+  "mastery": {
+    "understanding": "Verständnis",
+    "application": "Anwendung",
+    "debugging": "Fehlersuche",
+    "mastered": "beherrscht"
+  },
+  "path": {
+    "eyebrow": "Lernen",
+    "start": "Erste Lektion beginnen",
+    "continue": "Weiter: {{lesson}}",
+    "progress": "Dein Fortschritt",
+    "lessonsCompleted": "Abgeschlossene Lektionen",
+    "summary": "{{lessons}} / {{totalLessons}} Lektionen abgeschlossen · {{concepts}} / {{totalConcepts}} Konzepte beherrscht",
+    "best": "Bestwert {{score}}",
+    "lessonLabel": "{{number}}. {{title}}, {{status}}",
+    "lessonLabelBest": "{{number}}. {{title}}, {{status}}, Bestwert {{score}}",
+    "status": {
+      "completed": "abgeschlossen",
+      "available": "offen",
+      "locked": "gesperrt"
+    },
+    "aside": "Wiederholung und Beherrschung",
+    "review": "Wiederholung",
+    "due_one": "{{count}} Konzept ist bereit für eine kurze Wiederholung. Dinge genau dann abzurufen, wenn du sie zu vergessen beginnst, sorgt dafür, dass sie bleiben.",
+    "due_other": "{{count}} Konzepte sind bereit für eine kurze Wiederholung. Dinge genau dann abzurufen, wenn du sie zu vergessen beginnst, sorgt dafür, dass sie bleiben.",
+    "reviewNow": "Jetzt wiederholen (≈ {{duration}})",
+    "nothingDue": "Nichts fällig. Nächste Wiederholung: {{when}}.",
+    "noReviews": "Wiederholungen erscheinen hier, sobald du eine Lektion abgeschlossen hast.",
+    "masteryByConcept": "Beherrschung nach Konzept",
+    "masteryEmpty": "Beherrschung wächst mit Übungen, die du ohne Hilfe richtig löst – bloßes Durchklicken zählt nicht."
+  },
+  "lesson": {
+    "notFound": "Diese Lektion gibt es nicht.",
+    "locked": "„{{title}}“ ist noch nicht freigeschaltet",
+    "finishPrevious": "Jede Lektion baut auf der vorherigen auf. Schließe „{{title}}“ ab, um diese freizuschalten.",
+    "finishPreviousLesson": "Jede Lektion baut auf der vorherigen auf. Schließe die vorherige Lektion ab, um diese freizuschalten.",
+    "goTo": "Zu „{{title}}“"
+  },
+  "summary": {
+    "complete": "Lektion abgeschlossen",
+    "notPassed": "Noch nicht bestanden",
+    "passedNext": "Bestanden. „{{title}}“ ist jetzt freigeschaltet.",
+    "passedLast": "Du hast die letzte Lektion dieses Moduls bestanden.",
+    "failed": "Zum Bestehen brauchst du {{score}}. Die Lektion zu wiederholen ist der schnellste Weg, die Lücke zu schließen – beim zweiten Mal ergeben die Erklärungen mehr Sinn.",
+    "score": "Lektionspunktzahl",
+    "scoreHint": "Der Prüfpunkt zählt doppelt",
+    "checkpoint": "Prüfpunkt",
+    "firstTime": "Beim ersten Mal richtig",
+    "solutionsShown": "Gezeigte Lösungen",
+    "solutionsHint": "Aufgedeckte Antworten zählen als noch nicht gelernt",
+    "keyPoints": "Kernpunkte",
+    "mastery": "Beherrschung",
+    "reviewNote": "Eine kurze Wiederholung von {{concepts}} kommt morgen wieder, dann in wachsenden Abständen – so bleibt es hängen.",
+    "nextLesson": "Nächste Lektion: {{title}}",
+    "replay": "Lektion wiederholen",
+    "saveFailed": "Dein Fortschritt konnte auf diesem Gerät nicht gespeichert werden."
+  },
+  "review": {
+    "eyebrow": "Wiederholung",
+    "done": "Wiederholung abgeschlossen",
+    "score": "Abrufwert: {{score}}.",
+    "next": "nächste Wiederholung: {{when}} (Fach {{box}} von {{boxes}})",
+    "saving": "wird gespeichert…",
+    "back": "Zurück zum Lernpfad",
+    "empty": "Gerade gibt es nichts zu wiederholen",
+    "emptyNote": "Konzepte kommen einen Tag nach dem Lernen zur Wiederholung zurück, danach in wachsenden Abständen.",
+    "title": "Wiederholung · {{concepts}}"
+  },
+  "training": {
+    "title": "Trainiere die Fähigkeiten dahinter",
+    "note": "Optional, jeweils ein paar Minuten. Übung, keine Pflicht.",
+    "gameLevel": "{{game}} · Stufe {{level}}"
+  },
+  "thinking": {
+    "eyebrow": "Lernen",
+    "title": "Informatisches Denken",
+    "description": "Vier Denkweisen, die Programmierer nutzen – und die auch ohne Code nützlich sind. Jede verweist auf Lektionen des Kurses und auf Spiele, die dieselbe Idee nutzen.",
+    "openCourse": "Kurs öffnen",
+    "lessons": "Lektionen",
+    "practise": "Ohne Code üben",
+    "ideas": {
+      "decomposition": {
+        "title": "Zerlegung",
+        "text": "Teile ein großes Problem in kleine Schritte, die du einzeln lösen kannst."
+      },
+      "patterns": {
+        "title": "Mustererkennung",
+        "text": "Achte darauf, was sich wiederholt, damit eine Lösung für viele Fälle taugt."
+      },
+      "abstraction": {
+        "title": "Abstraktion",
+        "text": "Behalte das Wesentliche und lass Details weg, die die Antwort nicht ändern."
+      },
+      "algorithms": {
+        "title": "Algorithmen",
+        "text": "Schreibe genaue, geordnete Anweisungen, die immer zum Ergebnis führen."
+      }
+    }
+  },
+  "exercise": {
+    "check": "Antwort prüfen",
+    "options": "Optionen",
+    "correctAnswer": "Richtige Antwort",
+    "yourAnswer": "Deine Antwort",
+    "predictOutput": "Was wird ausgegeben? Eine Zeile pro print.",
+    "predictValue": "Wert von {{name}}",
+    "quotes": "Text kann mit oder ohne Anführungszeichen geschrieben werden.",
+    "blank": "Lücke {{number}}",
+    "yourOrder": "Deine Reihenfolge",
+    "correctOrder": "Richtige Reihenfolge: {{order}}",
+    "moveUp": "{{item}} nach oben",
+    "moveDown": "{{item}} nach unten",
+    "remove": "{{item}} entfernen",
+    "blocks": "Bausteine",
+    "add": "{{item}} hinzufügen",
+    "allBlocksUsed": "Alle Bausteine verwendet.",
+    "yourAlgorithm": "Dein Algorithmus",
+    "addBlocks": "Füge Bausteine aus der Liste hinzu und ordne sie dann.",
+    "solution": "Lösung: {{solution}}",
+    "choose": "Auswählen…",
+    "bugLine": "1. Klicke auf die Zeile mit dem Fehler.",
+    "buggyCode": "Code mit einem Fehler",
+    "why": "2. Warum ist es falsch?",
+    "reason": "Grund"
+  },
+  "feedback": {
+    "headline": {
+      "correct": "Richtig.",
+      "partial": "Teilweise richtig.",
+      "incorrect": "Nicht ganz."
+    },
+    "youChose": "Du hast „{{option}}“ gewählt.",
+    "youAnswered": "Du hast {{value}} geantwortet.",
+    "youFilledIn": "Du hast {{value}} eingesetzt.",
+    "blanksRight_one": "{{right}} von {{count}} Lücke ist richtig.",
+    "blanksRight_other": "{{right}} von {{count}} Lücken sind richtig.",
+    "stepsInPlace_one": "{{right}} von {{count}} Schritt steht an der richtigen Stelle.",
+    "stepsInPlace_other": "{{right}} von {{count}} Schritten stehen an der richtigen Stelle.",
+    "stepShouldBe": "Schritt {{step}} sollte „{{item}}“ sein.",
+    "notNeeded": "„{{block}}“ wird nicht gebraucht.",
+    "missing": "Es fehlt: {{blocks}}.",
+    "quoted": "„{{text}}“",
+    "wrongOrder": "Die richtigen Bausteine, aber nicht in der richtigen Reihenfolge.",
+    "blocksUsed_one": "Du hast {{count}} Baustein verwendet.",
+    "blocksUsed_other": "Du hast {{count}} Bausteine verwendet.",
+    "matchesRight_one": "{{right}} von {{count}} Zuordnung ist richtig.",
+    "matchesRight_other": "{{right}} von {{count}} Zuordnungen sind richtig.",
+    "goesWith": "„{{left}}“ gehört zu „{{right}}“.",
+    "pointedAt": "Du hast Zeile {{line}} gewählt: „{{cause}}“.",
+    "notOnLine": "Das Problem liegt nicht in Zeile {{line}}.",
+    "reasonRight": "Dein Grund stimmt aber.",
+    "lineCause": "Zeile {{line}}: {{cause}}"
+  },
+  "pseudocode": {
+    "types": {
+      "list": "Liste",
+      "text": "Text",
+      "number": "Zahl"
+    },
+    "what": {
+      "index": "Ein Index",
+      "negation": "Die Negation"
+    },
+    "run": {
+      "isFunction": "\"{{name}}\" ist eine Funktion: rufe sie mit {{name}}(…) auf",
+      "unset": "\"{{name}}\" hat noch keinen Wert – sie wird benutzt, bevor sie gesetzt wird",
+      "needsNumber": "{{what}} braucht eine Zahl, erhalten: {{type}} {{value}}",
+      "condition": "Eine Bedingung muss true oder false sein, erhalten: {{type}} {{value}}",
+      "notIndexable": "Nur Listen und Texte können indiziert werden, erhalten: {{type}}",
+      "indexNotWhole": "Index {{index}} ist keine ganze Zahl",
+      "indexOutsideList": "Index {{index}} liegt außerhalb der Liste (gültig: 0 bis {{last}})",
+      "indexOutsideText": "Index {{index}} liegt außerhalb des Texts (gültig: 0 bis {{last}})",
+      "lenType": "len() braucht eine Liste oder einen Text, erhalten: {{type}}",
+      "rangeTooLarge": "range() ist zu groß",
+      "appendList": "append() braucht zuerst eine Liste",
+      "noValues": "{{fn}} braucht mindestens einen Wert",
+      "cannotAdd": "{{left}} und {{right}} können nicht addiert werden: wandle zuerst mit str() um",
+      "divisionByZero": "Division durch null",
+      "cannotCompare": "{{left}} kann nicht mit {{right}} verglichen werden",
+      "noFunction": "Es gibt keine Funktion namens \"{{name}}\"",
+      "arity_one": "{{name}}() nimmt {{count}} Wert, erhalten: {{got}}",
+      "arity_other": "{{name}}() nimmt {{count}} Werte, erhalten: {{got}}",
+      "tooDeep": "Zu viele verschachtelte Aufrufe (endlose Rekursion?)",
+      "tooManySteps": "Nach {{steps}} Schritten angehalten – die Schleife endet vielleicht nie",
+      "notAList": "\"{{name}}\" ist keine Liste",
+      "returnOutside": "\"return\" funktioniert nur innerhalb einer Funktion",
+      "forIterable": "\"for\" braucht eine Liste, einen Text oder range(), erhalten: {{type}}"
+    },
+    "parse": {
+      "missingQuote": "Dem Text fehlt das schließende Anführungszeichen (\")",
+      "unexpectedChar": "Unerwartetes Zeichen \"{{char}}\"",
+      "trailing": "Unerwarteter Text nach dem Ausdruck",
+      "endsEarly": "Die Zeile endet zu früh",
+      "expected": "\"{{value}}\" erwartet",
+      "chainedComparison": "Verbinde Vergleiche mit \"and\" / \"or\"",
+      "keywordHere": "\"{{word}}\" kann hier nicht verwendet werden",
+      "unexpected": "Unerwartetes \"{{token}}\"",
+      "tabs": "Rücke mit Leerzeichen ein, nicht mit Tabs",
+      "indentation": "Unerwartete Einrückung",
+      "needsBlock": "Diese Zeile braucht darunter einen eingerückten Block",
+      "needsColon": "Zeilen mit \"{{keyword}}\" enden mit \":\"",
+      "mustFollowIf": "\"{{word}}\" muss auf einen \"if\"-Block folgen",
+      "forSyntax": "Schreibe Schleifen als \"for item in list:\"",
+      "functionSyntax": "Schreibe Funktionen als \"function name(a, b):\"",
+      "paramNames": "Parameternamen müssen einfache Namen sein",
+      "badTarget": "\"{{target}}\" kann kein Variablenname sein",
+      "elseCondition": "\"else\" hat keine Bedingung (meintest du \"elif\"?)"
+    }
+  }
+}

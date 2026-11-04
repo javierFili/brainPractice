@@ -1,4 +1,5 @@
 import { chooseStore, debugTotal, fixtureCourse, predictAge } from '@/test/fixtures/learningCourse';
+import { en } from '@/test/i18n';
 import { canonicalValue, evaluateExercise, predictionMatches } from './evaluate';
 import { exercisesOf, findLesson } from './content';
 import type { Exercise, ExerciseOf } from './exercise';
@@ -20,17 +21,17 @@ describe('Feedback Engine — multiple choice', () => {
       optionId: 'b',
     });
     expect({ verdict, credit }).toEqual({ verdict: 'incorrect', credit: 0 });
-    expect(feedback.yourAnswer).toBe('You chose “It prints text”.');
-    expect(feedback.diagnosis).toEqual(['Printing shows a value; it does not keep one.']);
-    expect(feedback.correctAnswer).toBe('It stores a value under a name');
-    expect(feedback.explanation).toMatch(/name that refers/);
+    expect(en(feedback.yourAnswer)).toBe('You chose “It prints text”.');
+    expect(feedback.diagnosis.map(en)).toEqual(['Printing shows a value; it does not keep one.']);
+    expect(en(feedback.correctAnswer)).toBe('It stores a value under a name');
+    expect(en(feedback.explanation)).toMatch(/name that refers/);
   });
 
   it('confirms a correct answer without a diagnosis', () => {
     const { verdict, feedback } = evaluate(chooseStore, { kind: 'multiple-choice', optionId: 'a' });
     expect(verdict).toBe('correct');
-    expect(feedback.headline).toBe('Correct.');
-    expect(feedback.diagnosis).toEqual([]);
+    expect(en(feedback.headline)).toBe('Correct.');
+    expect(feedback.diagnosis.map(en)).toEqual([]);
   });
 
   it('rejects unknown options and mismatched answer kinds', () => {
@@ -55,7 +56,7 @@ describe('Feedback Engine — prediction', () => {
 
   it('names the reasoning slip behind a known wrong answer', () => {
     const { feedback } = evaluate(predictAge, { kind: 'prediction', value: '25' });
-    expect(feedback.diagnosis[0]).toMatch(/That is age itself/);
+    expect(en(feedback.diagnosis[0] ?? '')).toMatch(/That is age itself/);
     expect(evaluate(predictAge, { kind: 'prediction', value: '31' }).feedback.diagnosis).toEqual(
       [],
     );
@@ -94,7 +95,7 @@ describe('Feedback Engine — structured answers', () => {
     expect(evaluate(exercise, { kind: 'code-completion', blanks: { op: '+' } }).credit).toBe(1);
     const wrong = evaluate(exercise, { kind: 'code-completion', blanks: { op: '*' } });
     expect(wrong.verdict).toBe('incorrect');
-    expect(wrong.feedback.diagnosis).toEqual(['5 * 7 is 35.']);
+    expect(wrong.feedback.diagnosis.map(en)).toEqual(['5 * 7 is 35.']);
     expect(evaluateExercise(exercise, { kind: 'code-completion', blanks: {} }).ok).toBe(false);
   });
 
@@ -105,7 +106,7 @@ describe('Feedback Engine — structured answers', () => {
     );
     const swapped = evaluate(exercise, { kind: 'ordering', order: ['double', 'set', 'show'] });
     expect(swapped.credit).toBe(0);
-    expect(swapped.feedback.diagnosis[0]).toBe('Step 1 should be “n = 4”.');
+    expect(en(swapped.feedback.diagnosis[0] ?? '')).toBe('Step 1 should be “n = 4”.');
     expect(evaluateExercise(exercise, { kind: 'ordering', order: ['set', 'set', 'show'] }).ok).toBe(
       false,
     );
@@ -118,7 +119,7 @@ describe('Feedback Engine — structured answers', () => {
     );
     const distractor = evaluate(exercise, { kind: 'block-builder', order: ['wrong', 'say'] });
     expect(distractor.verdict).toBe('incorrect');
-    expect(distractor.feedback.diagnosis[0]).toMatch(/exactly 18/);
+    expect(en(distractor.feedback.diagnosis[0] ?? '')).toMatch(/exactly 18/);
     expect(evaluate(exercise, { kind: 'block-builder', order: ['say', 'ask'] })).toMatchObject({
       verdict: 'partial',
       credit: 0.5,
@@ -140,11 +141,11 @@ describe('Feedback Engine — structured answers', () => {
     expect(both.verdict).toBe('correct');
     const lineOnly = evaluate(debugTotal, { kind: 'debugging', line: 2, causeId: 'order' });
     expect(lineOnly).toMatchObject({ verdict: 'partial', credit: 0.5 });
-    expect(lineOnly.feedback.diagnosis).toEqual([
+    expect(lineOnly.feedback.diagnosis.map(en)).toEqual([
       'Swapping the lines would still lose one of the values.',
     ]);
     const reasonOnly = evaluate(debugTotal, { kind: 'debugging', line: 1, causeId: 'overwrite' });
-    expect(reasonOnly.feedback.diagnosis).toEqual([
+    expect(reasonOnly.feedback.diagnosis.map(en)).toEqual([
       'The problem is not on line 1.',
       'Your reason is right, though.',
     ]);

@@ -1,0 +1,512 @@
+{
+  "sequenceRecall": {
+    "name": "Folgen merken",
+    "tagline": "Sieh dir die Folge an und baue sie dann nach.",
+    "description": "Farben, Ziffern oder Formen erscheinen nacheinander. Sobald sie verschwunden sind, baust du die Folge auf dem Antwortfeld nach – in derselben Reihenfolge oder, wenn verlangt, vom letzten zum ersten.",
+    "scoringSummary": "Eine Folge zählt nur als richtig, wenn jede Position stimmt. Dein Ergebnis ist der Anteil exakt nachgebauter Folgen; für die Antwort gibt es kein Zeitlimit.",
+    "instructions": {
+      "watch": "Sieh zu, wie die Symbole einzeln erscheinen. Drücke „Ich bin bereit“, wenn du früher antworten willst.",
+      "rebuild": "Baue die Folge nach, indem du die Symbole der Reihe nach drückst (oder die darauf angezeigten Zifferntasten).",
+      "reverse": "Manche Folgen sind rückwärts gefragt: Beginne mit dem letzten Symbol, das du gesehen hast.",
+      "undo": "Rückgängig (oder die Rücktaste) entfernt das letzte Symbol; sende ab, wenn alle Felder gefüllt sind."
+    },
+    "simpleInstructions": "Schau dir die Farben an und drücke sie dann in derselben Reihenfolge.",
+    "prompt": {
+      "forward_one": "Baue das Symbol nach, das du gesehen hast.",
+      "forward_other": "Baue die {{count}} Symbole in der Reihenfolge nach, in der du sie gesehen hast.",
+      "backward_one": "Baue das Symbol nach, das du gesehen hast.",
+      "backward_other": "Baue die {{count}} Symbole in umgekehrter Reihenfolge nach – das letzte zuerst."
+    },
+    "studyPrompt": {
+      "forward": "Sieh dir die Folge an.",
+      "backward": "Sieh dir die Folge an – du wirst sie rückwärts wiederholen."
+    },
+    "explanation": {
+      "forward": "Die Folge musste genau so wiederholt werden, wie sie gezeigt wurde.",
+      "backward": "Die Folge musste vom letzten Symbol bis zum ersten wiederholt werden."
+    },
+    "kinds": {
+      "forward": "Vorwärts",
+      "backward": "Rückwärts"
+    },
+    "levels": {
+      "1": "Wiederhole 3 Farben in der richtigen Reihenfolge.",
+      "2": "Wiederhole 4 Farben in der richtigen Reihenfolge.",
+      "3": "Wiederhole 4 Formen; Symbole können wiederkommen.",
+      "4": "Wiederhole 5 Ziffern – manchmal rückwärts.",
+      "5": "Merke dir 5 Formen vorwärts oder rückwärts.",
+      "6": "Merke dir 6 Ziffern vorwärts oder rückwärts.",
+      "7": "Merke dir 6 gemischte Farben und Ziffern.",
+      "8": "Merke dir 7 gemischte Symbole, schneller.",
+      "9": "Kehre 8 schnell gezeigte Ziffern um.",
+      "10": "Kehre 9 schnell gezeigte gemischte Symbole um."
+    },
+    "view": {
+      "done": "Fertig – mach dich bereit",
+      "youSaw": "Du hast gesehen:",
+      "sequenceShown": "Die gezeigte Folge",
+      "hint": {
+        "forward_one": "Gleiche Reihenfolge wie gezeigt. {{count}} Symbol.",
+        "forward_other": "Gleiche Reihenfolge wie gezeigt. {{count}} Symbole.",
+        "backward_one": "Umgekehrte Reihenfolge: Beginne mit dem letzten Symbol. {{count}} Symbol.",
+        "backward_other": "Umgekehrte Reihenfolge: Beginne mit dem letzten Symbol. {{count}} Symbole."
+      }
+    }
+  },
+  "associationMemory": {
+    "name": "Assoziationsgedächtnis",
+    "tagline": "Was gehörte zu was?",
+    "description": "Lerne ein paar Paare – einen Gegenstand und eine Farbe, eine Form und einen Gegenstand, ein Wort und eine Zahl. Beantworte dann, was zu einem von ihnen gehörte. Höhere Stufen bringen mehr Paare, ähnlichere Elemente und Fragen in die andere Richtung.",
+    "scoringSummary": "Eine Antwort zählt, wenn du das Element wählst, das mit dem gefragten ein Paar bildete. Jede Option stammt aus den gelernten Paaren. Dein Ergebnis ist der Anteil der erinnerten Paare; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "study": "Präge dir die Paare ein. Eine kleine Geschichte oder ein Bild kann helfen („ein roter Apfel“).",
+      "pick": "Wenn sie verdeckt sind, wähle, was zum Element in der Frage gehörte.",
+      "exact": "Alle Optionen stammen aus den Paaren, die du gesehen hast – sei also genau.",
+      "reversed": "Ab Stufe 6 kann die Frage auch andersherum kommen (vom zweiten Element zum ersten)."
+    },
+    "simpleInstructions": "Merk dir, was zusammengehört, und wähle dann das fehlende Teil.",
+    "prompt": {
+      "object-color": {
+        "forward": "Welche Farbe gehörte zu „{{item}}“?",
+        "reversed": "Welcher Gegenstand gehörte zur Farbe „{{item}}“?"
+      },
+      "glyph-object": {
+        "forward": "Welcher Gegenstand gehörte zur Form „{{item}}“?",
+        "reversed": "Welche Form gehörte zu „{{item}}“?"
+      },
+      "word-number": {
+        "forward": "Welche Zahl gehörte zu „{{item}}“?",
+        "reversed": "Welches Wort gehörte zur Zahl {{item}}?"
+      }
+    },
+    "studyPrompt_one": "Lerne dieses Paar.",
+    "studyPrompt_other": "Lerne diese {{count}} Paare.",
+    "explanation": "„{{cue}}“ gehörte zu „{{partner}}“.",
+    "kinds": {
+      "objectColor": "Gegenstände und Farben",
+      "glyphObject": "Formen und Gegenstände",
+      "wordNumber": "Wörter und Zahlen"
+    },
+    "levels": {
+      "1": "Lerne, welche Farbe zu jedem von 3 Gegenständen gehört.",
+      "2": "Lerne 4 Paare aus Gegenstand und Farbe.",
+      "3": "Lerne, welcher Gegenstand zu jeder von 4 Formen gehört.",
+      "4": "Lerne 4 Paare aus Wort und Zahl.",
+      "5": "Lerne die Farben von 5 Gegenständen derselben Familie.",
+      "6": "Lerne 5 Paare aus Wort und Zahl und erinnere dich an das Wort zur Zahl.",
+      "7": "Lerne 6 ähnliche Formen mit Gegenständen; gefragt wird in beide Richtungen.",
+      "8": "Lerne 6 Wörter mit Zahlen aus denselben Ziffern, in beide Richtungen.",
+      "9": "Lerne 7 ähnliche Paare jeder Art, in beide Richtungen.",
+      "10": "Lerne 8 ähnliche Paare mit kürzerem Blick, in beide Richtungen."
+    },
+    "view": {
+      "whatWent": "Was gehörte hierzu?",
+      "pairs": "Paare",
+      "pair": "{{cue}} gehört zu {{partner}}",
+      "pairAsked": "{{cue}} gehört zu {{partner}}, gefragt"
+    }
+  },
+  "shared": {
+    "ordinal": {
+      "1": "an erster Stelle",
+      "2": "an zweiter Stelle",
+      "3": "an dritter Stelle",
+      "4": "an vierter Stelle",
+      "5": "an fünfter Stelle",
+      "6": "an sechster Stelle",
+      "7": "an siebter Stelle",
+      "8": "an achter Stelle",
+      "9": "an neunter Stelle",
+      "10": "an zehnter Stelle"
+    }
+  },
+  "dualMemoryChallenge": {
+    "name": "Doppelte Gedächtnisprobe",
+    "tagline": "Was, wo und wann – alles auf einmal.",
+    "description": "Gegenstände erscheinen nacheinander, jeder in einem eigenen Feld. Behalte beides im Kopf – wo jeder Gegenstand war und in welcher Reihenfolge sie kamen –, denn die Frage kann sich auf eines davon oder auf beides beziehen.",
+    "scoringSummary": "Eine Antwort zählt, wenn du auf das richtige Feld zeigst oder den richtigen Gegenstand wählst. Fragen zum Ort und zur Reihenfolge werden zufällig gemischt, das Ergebnis spiegelt also beides wider. Beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "watch": "Gegenstände erscheinen nacheinander, jeder in einem Feld des Rasters.",
+      "remember": "Merk dir, wo jeder war und in welcher Reihenfolge sie kamen.",
+      "question": "Du bekommst eine Frage: wo etwas war, welcher Gegenstand in einer bestimmten Runde kam oder welcher Gegenstand in einem markierten Feld lag.",
+      "keyboard": "Tastatur: Pfeiltasten wechseln zwischen Feldern, Enter wählt; Zifferntasten wählen eine Option."
+    },
+    "simpleInstructions": "Achte darauf, wo jedes Bild erscheint und in welcher Reihenfolge.",
+    "studyPrompt": "Merk dir, wo jeder Gegenstand erscheint und in welcher Reihenfolge.",
+    "prompt": {
+      "where": "Wo war der Gegenstand „{{name}}“?",
+      "whereNth": "Wo war der Gegenstand, der {{turn}} kam?",
+      "whichNth": "Welcher Gegenstand kam {{turn}}?",
+      "whichHere": "Welcher Gegenstand war im markierten Feld?"
+    },
+    "explanation": "„{{name}}“ kam {{turn}}, bei {{where}}.",
+    "kinds": {
+      "where": "Wo war er?",
+      "whichNth": "Welcher kam in einer bestimmten Runde?",
+      "whichHere": "Welcher war in diesem Feld?",
+      "whereNth": "Wo war der n-te Gegenstand?"
+    },
+    "levels": {
+      "1": "Merk dir, wo und in welcher Reihenfolge 3 Gegenstände erschienen.",
+      "2": "Merk dir Ort und Reihenfolge von 4 Gegenständen.",
+      "3": "Sag auch, welcher Gegenstand in einem markierten Feld lag.",
+      "4": "Ort und Reihenfolge von 5 Gegenständen auf einem 4×4-Raster.",
+      "5": "Dazu kommt die schwerste Frage: Wo war der Gegenstand aus einer bestimmten Runde?",
+      "6": "Sechs Gegenstände derselben Familie, beliebige Frage.",
+      "7": "Sechs Gegenstände in schnellerem Tempo.",
+      "8": "Sieben Gegenstände einer Familie auf einem 4×4-Raster.",
+      "9": "Sieben Gegenstände verteilt auf einem 5×5-Raster.",
+      "10": "Acht Gegenstände einer Familie, schnell, auf einem 5×5-Raster."
+    },
+    "view": {
+      "grid": "Raster",
+      "cellWith": "{{cell}}, {{name}}",
+      "done": "Fertig – mach dich bereit",
+      "appeared": "{{turn}}: {{name}} bei {{cell}}",
+      "hidden": "Verdeckt – wähle den Gegenstand aus dem Gedächtnis.",
+      "gridMarked": "Raster mit dem markierten Feld",
+      "pointSquare": "Zeig auf das Feld",
+      "cellMarked": "{{cell}}, markiert",
+      "whatShown": "Was gezeigt wurde",
+      "cellShown": "{{cell}}, {{name}}, Runde {{turn}}"
+    }
+  },
+  "memoryCards": {
+    "name": "Memory-Karten",
+    "tagline": "Zwei Karten umdrehen, Zwillinge finden.",
+    "description": "Verdeckte Karten verbergen Paare gleicher Bilder. Drehe immer zwei Karten um und merk dir, wo welches Bild liegt, um alle Paare mit möglichst wenigen Fehlversuchen zu finden.",
+    "scoringSummary": "Ein Spielfeld gilt als gelöst, wenn du alle Paare innerhalb der erlaubten Fehlversuche findest. Die Genauigkeit ist der Anteil gelöster Spielfelder; es gibt kein Zeitlimit.",
+    "instructions": {
+      "preview": "Manche Stufen zeigen anfangs kurz alle Karten: Schau dir an, wo was liegt.",
+      "turn": "Dreh zwei Karten um. Passen sie zusammen, bleiben sie offen; sonst werden sie wieder umgedreht.",
+      "misses": "Finde alle Paare, bevor deine Fehlversuche aufgebraucht sind (unter dem Spielfeld angezeigt).",
+      "keyboard": "Tastatur: Mit den Pfeiltasten zwischen den Karten wechseln, mit Enter eine umdrehen."
+    },
+    "simpleInstructions": "Dreh immer zwei Karten um und finde die gleichen Bilder.",
+    "prompt_one": "Finde das Paar.",
+    "prompt_other": "Finde alle {{count}} Paare.",
+    "studyPrompt": "Schau dir die Karten an – gleich werden sie verdeckt.",
+    "explanation_one": "Jedes Bild war auf genau zwei Karten. Auf diesem Spielfeld war höchstens {{count}} Fehlversuch erlaubt.",
+    "explanation_other": "Jedes Bild war auf genau zwei Karten. Auf diesem Spielfeld waren höchstens {{count}} Fehlversuche erlaubt.",
+    "kinds": {
+      "objects": "Alltagsgegenstände",
+      "family": "Gegenstände einer Familie",
+      "glyphs": "Farbige Formen",
+      "nearGlyphs": "Ähnliche Formen"
+    },
+    "levels": {
+      "1": "Finde 3 Paare nach einem Blick auf das Spielfeld.",
+      "2": "Finde 4 Paare nach einem kürzeren Blick.",
+      "3": "Finde 5 Paare von Gegenständen derselben Familie.",
+      "4": "Finde 6 Paare nach nur einem kurzen Blick.",
+      "5": "Finde 6 Paare ohne Vorschau: Merk dir jede Karte, die du umdrehst.",
+      "6": "Finde 8 Formenpaare ohne Vorschau.",
+      "7": "Finde 8 Paare unter ähnlichen Formen.",
+      "8": "Finde 10 Paare unter ähnlichen Formen.",
+      "9": "Finde 10 Paare mit weniger erlaubten Fehlversuchen.",
+      "10": "Finde 12 ähnliche Paare mit sehr wenigen erlaubten Fehlversuchen."
+    }
+  },
+  "numberRecall": {
+    "name": "Zahlen merken",
+    "tagline": "Codes, Telefonnummern, Tickets: kurz im Kopf behalten.",
+    "description": "Eine Zahl erscheint in Blöcken, wie eine Telefonnummer oder ein Türcode. Wenn sie verdeckt ist, tippe sie ein, sag, welcher Block an einer bestimmten Stelle stand, oder – bei zwei Zahlen auf dem Bildschirm – erinnere dich an die gefragte.",
+    "scoringSummary": "Eine Antwort zählt, wenn die ganze Zahl exakt eingetippt oder der richtige Block gewählt wird. Dein Ergebnis ist der Anteil der erinnerten Zahlen; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "read": "Lies die Zahl. Die Lücken teilen sie in Blöcke, die man sich leichter merkt.",
+      "answer": "Wenn sie verdeckt ist, beantworte die Frage: Tippe die Zahl ohne Leerzeichen ein oder wähle einen Block.",
+      "two": "Manche Stufen zeigen zwei Zahlen mit Namen: Merk dir beide, gefragt wird nur eine."
+    },
+    "simpleInstructions": "Schau dir die Zahl an und tippe sie dann ein.",
+    "names": {
+      "phone": "Telefon",
+      "doorCode": "Türcode",
+      "locker": "Schließfach",
+      "ticket": "Ticket",
+      "order": "Bestellung",
+      "flight": "Flug",
+      "room": "Zimmer",
+      "account": "Konto"
+    },
+    "studyPrompt": {
+      "one": "Merk dir die Zahl.",
+      "chunks": "Merk dir die Blöcke und ihre Reihenfolge.",
+      "both": "Merk dir beide Zahlen."
+    },
+    "prompt": {
+      "whichGroup": "Welcher Block kam {{turn}}?",
+      "typeBack": "Tippe die Nummer „{{name}}“ ohne Leerzeichen ein.",
+      "twoNumbers": "Tippe die Nummer „{{name}}“ ein (nicht „{{other}}“)."
+    },
+    "explanation": {
+      "whichGroup": "Die Nummer „{{name}}“ war {{number}}; Block {{position}} war {{chunk}}.",
+      "typeBack": "Die Nummer „{{name}}“ war {{number}}.",
+      "twoNumbers": "{{numbers}}. Gefragt war die Nummer „{{name}}“."
+    },
+    "entry": "{{name}}: {{number}}",
+    "kinds": {
+      "typeBack": "Zahl eintippen",
+      "whichGroup": "Block an einer Stelle",
+      "twoNumbers": "Zwei Zahlen gleichzeitig"
+    },
+    "levels": {
+      "1": "Tippe einen 4-stelligen Code ein, gezeigt als zwei Paare.",
+      "2": "Tippe eine 5-stellige Zahl in zwei Blöcken ein.",
+      "3": "Tippe eine 6-stellige Zahl in zwei Blöcken ein.",
+      "4": "Merk dir drei Ziffernpaare und ihre Reihenfolge.",
+      "5": "Tippe eine 7-stellige Telefonnummer ein.",
+      "6": "Behalte zwei 4-stellige Zahlen; eine davon wird gefragt.",
+      "7": "Merk dir drei Blöcke mit je drei Ziffern in der richtigen Reihenfolge.",
+      "8": "Tippe eine 9-stellige Zahl ein oder behalte zwei 5-stellige Zahlen.",
+      "9": "Behalte zwei 6-stellige Zahlen gleichzeitig.",
+      "10": "Vier Blöcke in Reihenfolge oder zwei 6-stellige Zahlen: Alles kann gefragt werden."
+    },
+    "view": {
+      "hiddenChunk": "Verdeckt – wähle den Block aus dem Gedächtnis.",
+      "hiddenDigits": "Verdeckt – tippe die Ziffern aus dem Gedächtnis ein, ohne Leerzeichen.",
+      "numbers": "Zahlen",
+      "card": "{{name}}: {{digits}}",
+      "cardAsked": "{{name}}: {{digits}}, gefragt"
+    }
+  },
+  "objectRecall": {
+    "name": "Gegenstände merken",
+    "tagline": "Welche davon hast du gesehen?",
+    "description": "Schau dir ein paar Alltagsgegenstände an. Danach mischt ein größeres Feld sie mit neuen: Markiere die Gegenstände, die du gesehen hast. Auf höheren Stufen gehören die neuen Gegenstände zu denselben Familien wie die gelernten.",
+    "scoringSummary": "Ein Feld gilt als richtig, wenn jeder markierte Gegenstand zu den gelernten gehört. Dein Ergebnis ist der Anteil exakt erkannter Felder; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "look": "Schau dir die Gegenstände an. Drück „Ich bin bereit“, wenn du sie dir gemerkt hast.",
+      "board": "Ein größeres Feld erscheint mit denselben Gegenständen und einigen neuen.",
+      "mark": "Markiere genau die Gegenstände, die du gesehen hast (der Zähler zeigt, wie viele), und drück dann Prüfen.",
+      "keyboard": "Tastatur: Pfeiltasten wechseln zwischen Gegenständen, Enter markiert oder entfernt die Markierung."
+    },
+    "simpleInstructions": "Schau dir die Bilder an und finde sie dann unter neuen wieder.",
+    "prompt_one": "Markiere den Gegenstand, den du gesehen hast.",
+    "prompt_other": "Markiere die {{count}} Gegenstände, die du gesehen hast.",
+    "studyPrompt_one": "Merk dir diesen Gegenstand.",
+    "studyPrompt_other": "Merk dir diese {{count}} Gegenstände.",
+    "explanation": "Du hast gesehen: {{objects}}.",
+    "kinds": {
+      "mixed": "Gegenstände jeder Art",
+      "family": "Ähnliche Familien"
+    },
+    "levels": {
+      "1": "Erkenne 3 Gegenstände unter 6.",
+      "2": "Erkenne 4 Gegenstände unter 8.",
+      "3": "Erkenne 5 Gegenstände unter 10.",
+      "4": "Erkenne 5 Gegenstände, wenn die neuen von derselben Art sind.",
+      "5": "Erkenne 6 Gegenstände unter 12.",
+      "6": "Erkenne 6 Gegenstände unter 12 ähnlichen aus denselben Familien.",
+      "7": "Erkenne 7 Gegenstände unter 14 aus denselben Familien.",
+      "8": "Erkenne 8 Gegenstände unter 16 nach einem kürzeren Blick.",
+      "9": "Erkenne 9 Gegenstände unter 18 aus drei Familien.",
+      "10": "Erkenne 10 Gegenstände unter 20 nach einem kurzen Blick."
+    },
+    "view": {
+      "toRemember": "Gegenstände zum Merken",
+      "youSaw": "Gegenstände, die du gesehen hast"
+    }
+  },
+  "positionMemory": {
+    "name": "Positionen merken",
+    "tagline": "Wo sind die Lichter aufgetaucht?",
+    "description": "Einige Felder eines Rasters leuchten kurz auf. Wenn sie erlöschen, markiere dieselben Felder. Höhere Stufen bringen mehr Felder, größere Raster und Lockfelder in einer anderen Farbe, die du ignorieren musst.",
+    "scoringSummary": "Ein Raster gilt als richtig, wenn jedes markierte Feld aufgeleuchtet hat. Dein Ergebnis ist der Anteil exakt erinnerter Raster; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "watch": "Achte darauf, welche Felder aufleuchten. Drück „Ich bin bereit“, um sie früher auszublenden.",
+      "mark": "Markiere dieselben Felder und drück dann Prüfen. Der Zähler zeigt, wie viele du markieren sollst.",
+      "filter": "Ab Stufe 5 merkst du dir nur die blauen Felder (mit Punkt) und ignorierst die orangefarbenen (gestreift).",
+      "keyboard": "Tastatur: Pfeiltasten wechseln zwischen Feldern, Enter markiert ein Feld oder hebt die Markierung auf."
+    },
+    "simpleInstructions": "Merk dir, wo die Lichter waren, und tippe dann auf dieselben Felder.",
+    "prompt": {
+      "plain_one": "Markiere das Feld, das aufgeleuchtet hat.",
+      "plain_other": "Markiere die {{count}} Felder, die aufgeleuchtet haben.",
+      "filtered_one": "Markiere das blaue Feld. Ignoriere die orangefarbenen.",
+      "filtered_other": "Markiere die {{count}} blauen Felder. Ignoriere die orangefarbenen."
+    },
+    "studyPrompt": {
+      "plain": "Merk dir die leuchtenden Felder.",
+      "filtered": "Merk dir nur die blauen Felder."
+    },
+    "explanation": "Aufgeleuchtet haben: {{cells}}.",
+    "kinds": {
+      "plain": "Leuchtende Felder",
+      "filtered": "Blaue Felder zwischen Lockfeldern"
+    },
+    "levels": {
+      "1": "Merk dir 2 leuchtende Felder auf einem 3×3-Raster.",
+      "2": "Merk dir 3 leuchtende Felder auf einem 3×3-Raster.",
+      "3": "Merk dir 3 Felder auf einem größeren 4×4-Raster.",
+      "4": "Merk dir 4 Felder auf einem 4×4-Raster.",
+      "5": "Merk dir 4 blaue Felder und ignoriere 2 orangefarbene.",
+      "6": "Merk dir 5 Felder auf einem 5×5-Raster.",
+      "7": "Merk dir 5 blaue Felder zwischen 3 Ablenkern.",
+      "8": "Merk dir 6 Felder nach einem kurzen Blick.",
+      "9": "Merk dir 7 blaue Felder zwischen 3 Ablenkern auf 6×6.",
+      "10": "Merk dir 8 blaue Felder zwischen 4 Ablenkern auf 6×6."
+    },
+    "view": {
+      "toRemember": "Raster zum Merken",
+      "target": "{{cell}}, blau leuchtend",
+      "distractor": "{{cell}}, orange leuchtend",
+      "markCells": "Markiere die Felder"
+    }
+  },
+  "visualChanges": {
+    "name": "Veränderungen sehen",
+    "tagline": "Etwas ist anders. Was?",
+    "description": "Schau dir ein Raster mit Formen an. Es verschwindet und kommt mit einem Unterschied zurück: Eine Form hat Farbe oder Gestalt geändert, oder – auf höheren Stufen – zwei Formen haben die Plätze getauscht. Zeig auf das, was sich geändert hat.",
+    "scoringSummary": "Eine Antwort zählt, wenn du auf die veränderte Form (oder beide getauschten Formen) zeigst. Dein Ergebnis ist der Anteil gefundener Veränderungen; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "look": "Schau dir die Formen und ihre Plätze an. Drück „Ich bin bereit“, wenn du sie dir gemerkt hast.",
+      "tap": "Das Raster kommt mit genau einer Veränderung zurück: Tippe auf die veränderte Form.",
+      "swap": "Ab Stufe 7 können stattdessen zwei Formen die Plätze tauschen: Markiere beide und drück dann Prüfen.",
+      "keyboard": "Tastatur: Pfeiltasten wechseln zwischen Feldern, Enter wählt eines."
+    },
+    "simpleInstructions": "Merk dir das Bild und tippe dann auf das, was sich geändert hat.",
+    "prompt": {
+      "swap": "Zwei Formen haben die Plätze getauscht. Markiere beide.",
+      "change": "Eine Form hat sich verändert. Welche?"
+    },
+    "studyPrompt": "Merk dir die Formen und ihre Plätze.",
+    "explanation": {
+      "swap": "Getauscht wurden „{{first}}“ ({{firstCell}}) und „{{second}}“ ({{secondCell}}).",
+      "change": "Bei {{cell}}: {{before}} → {{after}}."
+    },
+    "kinds": {
+      "color": "Farbwechsel",
+      "shape": "Formwechsel",
+      "swap": "Zwei Formen getauscht"
+    },
+    "levels": {
+      "1": "Finde heraus, welche von 4 Formen die Farbe gewechselt hat.",
+      "2": "Entdecke einen Farb- oder Formwechsel unter 5 Elementen.",
+      "3": "Entdecke die Veränderung unter 6 Elementen auf einem 4×4-Raster.",
+      "4": "Entdecke die Veränderung unter 7 Elementen nach einem kürzeren Blick.",
+      "5": "Entdecke die Veränderung unter 8 ähnlichen Elementen.",
+      "6": "Entdecke die Veränderung unter 9 ähnlichen Elementen auf einem 5×5-Raster.",
+      "7": "Entdecke eine Veränderung oder finde zwei Elemente, die getauscht wurden.",
+      "8": "Entdecke Veränderungen und Tausche unter 12 ähnlichen Elementen.",
+      "9": "Entdecke Veränderungen und Tausche unter 14 Elementen auf einem 6×6-Raster.",
+      "10": "Entdecke Veränderungen und Tausche unter 16 ähnlichen Elementen nach einem kurzen Blick."
+    },
+    "view": {
+      "cell": "{{cell}}, {{content}}",
+      "empty": "leer",
+      "toRemember": "Formen zum Merken",
+      "markSwapped": "Markiere die zwei getauschten Formen",
+      "whichChanged": "Welche Form hat sich verändert?",
+      "wasBefore": "Vorher: {{glyph}}."
+    }
+  },
+  "wordRecall": {
+    "name": "Wörter merken",
+    "tagline": "Lies eine Wortliste und finde die Wörter dann wieder.",
+    "description": "Wörter erscheinen nacheinander. Danach suchst du sie auf einem Feld, das auch neue Wörter enthält – später aus denselben Themen, sodass „es war ein Küchenwort“ nicht reicht. Manche Listen höherer Stufen musst du wieder in die richtige Reihenfolge bringen.",
+    "scoringSummary": "Ein Feld zählt, wenn deine Markierungen innerhalb der erlaubten Ausrutscher (vergessene Wörter plus falsche Markierungen) zur Liste passen; eine Reihenfolge zählt, wenn jedes Wort an seinem Platz ist. Dein Ergebnis ist der Anteil erinnerter Listen; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "read": "Lies jedes Wort, sobald es erscheint. Es leise vor dich hin zu sagen, kann helfen.",
+      "mark": "Markiere dann auf dem Feld die Wörter, die du gesehen hast, und drück Prüfen.",
+      "variants": "Auf manchen Stufen ist ein Ausrutscher erlaubt; auf anderen bringst du die Wörter wieder in die gezeigte Reihenfolge.",
+      "keyboard": "Tastatur: Pfeiltasten wechseln zwischen Wörtern, Enter markiert eines."
+    },
+    "simpleInstructions": "Lies die Wörter und finde sie dann wieder.",
+    "prompt": {
+      "order_one": "Bring das Wort in die Reihenfolge, in der es erschien.",
+      "order_other": "Bring die {{count}} Wörter in die Reihenfolge, in der sie erschienen.",
+      "exact_one": "Markiere das Wort, das du gesehen hast.",
+      "exact_other": "Markiere die {{count}} Wörter, die du gesehen hast.",
+      "tolerant_one": "Markiere die Wörter, die du gesehen hast (es war {{count}}; ein Ausrutscher ist erlaubt).",
+      "tolerant_other": "Markiere die Wörter, die du gesehen hast (es waren {{count}}; ein Ausrutscher ist erlaubt)."
+    },
+    "studyPrompt": {
+      "order": "Lies die Wörter und merk dir ihre Reihenfolge.",
+      "recognise": "Lies die Wörter."
+    },
+    "explanation": {
+      "order": "Die Reihenfolge war: {{words}}.",
+      "list": "Die Liste war: {{words}}."
+    },
+    "kinds": {
+      "recognise": "Wörter unter neuen Wörtern",
+      "similar": "Wörter unter Wörtern gleichen Themas",
+      "order": "Wörter in Reihenfolge"
+    },
+    "levels": {
+      "1": "Erkenne 4 Wörter unter 8.",
+      "2": "Erkenne 5 Wörter unter 10.",
+      "3": "Erkenne 6 Wörter unter 12.",
+      "4": "Erkenne 6 Wörter, wenn die neuen dasselbe Thema haben.",
+      "5": "Erkenne 7 Wörter unter 14 aus denselben Themen.",
+      "6": "Markiere die 8 gesehenen Wörter unter 16 (ein Ausrutscher erlaubt).",
+      "7": "Erkenne 8 Wörter oder bring 5 Wörter wieder in Reihenfolge.",
+      "8": "Erkenne 9 Wörter unter 16 oder ordne 6 Wörter.",
+      "9": "Erkenne 10 Wörter unter 18 oder ordne 6 Wörter.",
+      "10": "Erkenne 10 Wörter unter 20 aus drei Themen oder ordne 7 Wörter."
+    },
+    "view": {
+      "done": "Fertig – mach dich bereit",
+      "hiddenOrder": "Verdeckt – ordne die Wörter mit den Pfeilen unten.",
+      "orderShown": "Die Wörter erschienen in dieser Reihenfolge:",
+      "listShown": "Die gezeigte Liste",
+      "board": "Wörter",
+      "boardSimilar": "Wörter, manche aus denselben Themen"
+    }
+  },
+  "workingMemoryGrid": {
+    "name": "Arbeitsgedächtnis-Raster",
+    "tagline": "Behalte die neuesten Lichter im Blick.",
+    "description": "Lichter erscheinen nacheinander auf einem Raster, und du weißt nicht, wie viele noch kommen. Behalte die jüngsten im Kopf und aktualisiere bei jedem neuen Licht: Markiere dann die letzten oder zeig auf das Licht einige Schritte davor.",
+    "scoringSummary": "Eine Antwort zählt, wenn du genau die gefragten letzten Lichter markierst oder auf das richtige frühere Licht zeigst. Dein Ergebnis ist der Anteil richtig beantworteter Folgen; beim Antworten läuft keine Zeit.",
+    "instructions": {
+      "watch": "Beobachte die Lichter. Jedes neue verdrängt das älteste aus dem, was du behalten musst.",
+      "update": "Die Länge der Folge ändert sich, also aktualisiere weiter, bis sie endet.",
+      "answer": "Antworte dann: Markiere die letzten Lichter oder zeig auf das Licht eine bestimmte Anzahl Schritte vor dem letzten.",
+      "keyboard": "Tastatur: Pfeiltasten wechseln zwischen Feldern, Enter wählt oder markiert eines."
+    },
+    "simpleInstructions": "Beobachte die Lichter und merk dir die letzten.",
+    "steps_one": "direkt vor dem letzten",
+    "steps_other": "{{count}} Schritte vor dem letzten",
+    "prompt": {
+      "lastK_one": "Markiere das Feld des letzten Lichts.",
+      "lastK_other": "Markiere die Felder der letzten {{count}} Lichter.",
+      "nBack": "Wo war das Licht {{steps}}?"
+    },
+    "studyPrompt": {
+      "lastK_one": "Behalte das letzte Licht im Kopf.",
+      "lastK_other": "Behalte die letzten {{count}} Lichter im Kopf.",
+      "nBack": "Beobachte die Lichter: Gefragt wird nach dem Licht {{steps}}."
+    },
+    "explanation": {
+      "lastK_one": "Es gab {{length}} Lichter; das letzte war bei {{cells}}.",
+      "lastK_other": "Es gab {{length}} Lichter; die letzten {{count}} waren bei {{cells}}.",
+      "nBack": "Es gab {{length}} Lichter; das Licht {{steps}} war bei {{cell}}."
+    },
+    "kinds": {
+      "lastK": "Letzte Lichter",
+      "nBack": "Licht einige Schritte zurück"
+    },
+    "levels": {
+      "1": "Behalte die letzten 2 Lichter einer kurzen Folge auf einem 3×3-Raster.",
+      "2": "Behalte die letzten 2 Lichter einer längeren Folge.",
+      "3": "Zeig auf das Licht direkt vor dem letzten.",
+      "4": "Behalte die letzten 3 Lichter auf einem 4×4-Raster.",
+      "5": "Zeig auf das Licht 2 Schritte vor dem letzten.",
+      "6": "Beide Fragen: die letzten 3 Lichter oder 2 Schritte vor dem letzten.",
+      "7": "Behalte die letzten 4 Lichter einer langen Folge.",
+      "8": "Auf einem 5×5-Raster: die letzten 4 Lichter oder 3 Schritte vor dem letzten.",
+      "9": "Schnellere Lichter: die letzten 4 oder 3 Schritte zurück, in Folgen bis 10.",
+      "10": "Die letzten 5 Lichter oder 4 Schritte vor dem letzten, in Folgen bis 11."
+    },
+    "view": {
+      "lights": "Lichter",
+      "cellLit": "{{cell}}, leuchtet",
+      "done": "Fertig – mach dich bereit",
+      "lightAt": "Licht bei {{cell}}",
+      "markLast": "Markiere die letzten Lichter",
+      "pointLight": "Zeig auf das Licht",
+      "orderShown": "Gezeigte Reihenfolge: {{order}}"
+    }
+  }
+}

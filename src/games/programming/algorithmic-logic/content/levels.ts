@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import type { LevelTable } from '@/domain/difficulty';
 import type { LogicProfile } from './types';
 
@@ -16,7 +17,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   1: {
     level: 1,
     tier: 'fundamentals',
-    objective: 'Follow simple dependencies and straight-line assignments.',
+    objective: msg('programming:algorithmicLogic.levels.1'),
     challengeCount: 6,
     timing: seconds(90, 30),
     kinds: { 'dependency-order': 1, 'program-trace': 1 },
@@ -27,7 +28,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   2: {
     level: 2,
     tier: 'fundamentals',
-    objective: 'Branching: evaluate a condition and follow only the branch it selects.',
+    objective: msg('programming:algorithmicLogic.levels.2'),
     challengeCount: 6,
     timing: seconds(90, 35),
     kinds: { 'dependency-order': 1, 'program-trace': 1 },
@@ -38,7 +39,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   3: {
     level: 3,
     tier: 'fundamentals',
-    objective: 'Near-miss orders and your first constraint puzzles: verify every rule.',
+    objective: msg('programming:algorithmicLogic.levels.3'),
     challengeCount: 6,
     timing: seconds(120, 45),
     kinds: { 'dependency-order': 1, 'program-trace': 1, 'constraint-arrangement': 1 },
@@ -58,7 +59,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   4: {
     level: 4,
     tier: 'intermediate',
-    objective: 'Compound conditions and exact answers: no options to lean on.',
+    objective: msg('programming:algorithmicLogic.levels.4'),
     challengeCount: 8,
     timing: seconds(120, 50),
     kinds: { 'dependency-order': 1, 'program-trace': 1.5, 'constraint-arrangement': 1 },
@@ -78,8 +79,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   5: {
     level: 5,
     tier: 'intermediate',
-    objective:
-      'Loops and transitive dependencies: reason about what happens repeatedly and indirectly.',
+    objective: msg('programming:algorithmicLogic.levels.5'),
     challengeCount: 8,
     timing: seconds(150, 55),
     kinds: {
@@ -104,7 +104,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   6: {
     level: 6,
     tier: 'intermediate',
-    objective: 'Conditions inside loops: state changes the path on every iteration.',
+    objective: msg('programming:algorithmicLogic.levels.6'),
     challengeCount: 8,
     timing: seconds(150, 65),
     kinds: {
@@ -129,7 +129,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   7: {
     level: 7,
     tier: 'advanced',
-    objective: 'Open-ended loops and deduction chains across six services.',
+    objective: msg('programming:algorithmicLogic.levels.7'),
     challengeCount: 8,
     timing: seconds(180, 75),
     kinds: {
@@ -154,7 +154,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   8: {
     level: 8,
     tier: 'advanced',
-    objective: 'Parallel scheduling: find the chain that bounds the whole build.',
+    objective: msg('programming:algorithmicLogic.levels.8'),
     challengeCount: 8,
     timing: seconds(180, 85),
     kinds: {
@@ -179,7 +179,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   9: {
     level: 9,
     tier: 'expert',
-    objective: 'Weighted schedules, nested loops and seven-service deductions with weak clues.',
+    objective: msg('programming:algorithmicLogic.levels.9'),
     challengeCount: 8,
     timing: seconds(210, 95),
     kinds: {
@@ -204,7 +204,7 @@ export const LOGIC_LEVELS: LevelTable<LogicProfile> = {
   10: {
     level: 10,
     tier: 'expert',
-    objective: 'Everything at once: large weighted graphs, long traces and only relative clues.',
+    objective: msg('programming:algorithmicLogic.levels.10'),
     challengeCount: 8,
     timing: seconds(240, 110),
     kinds: {

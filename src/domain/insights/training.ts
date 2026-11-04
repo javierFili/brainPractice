@@ -10,11 +10,12 @@ import { mulberry32 } from '../random/mulberry32';
 import type { Seed } from '../random/seed';
 import { shuffle } from '../random/sampling';
 import { stepLevel, type DifficultyLevel } from '../shared/difficultyLevel';
+import { msg, type Text } from '../shared/text';
 
 /** What the insights need to know about a game (a projection of its definition). */
 export interface CatalogEntry {
   readonly id: string;
-  readonly name: string;
+  readonly name: Text;
   readonly category: GameCategory;
   readonly audiences: readonly Audience[];
   readonly estimatedMinutes: number;
@@ -61,7 +62,7 @@ export interface TrainingSuggestion {
   readonly gameId: string;
   readonly level: DifficultyLevel;
   /** Always explains itself in terms of the person's own activity, never a diagnosis. */
-  readonly reason: string;
+  readonly reason: Text;
 }
 
 export interface TrainingInput {
@@ -75,14 +76,12 @@ export interface TrainingInput {
   readonly freePlay?: boolean;
 }
 
-export const CATEGORY_NAMES: Readonly<Record<GameCategory, string>> = {
-  memory: 'memory',
-  logic: 'logic',
-  speed: 'mental speed',
-  attention: 'attention',
-  patterns: 'patterns and spatial reasoning',
-  programming: 'programming',
-};
+/**
+ * One sentence per category (not a category name inserted into a sentence): articles and cases
+ * change with the category in Spanish, French, Italian and German.
+ */
+const categoryReason = (sentence: string, category: GameCategory): Text =>
+  msg(`progress:training.${sentence}.${category}`);
 
 /**
  * Up to three suggestions, each for a different game: a level that just opened, a category not
@@ -110,8 +109,8 @@ export function recommendTraining(input: TrainingInput): TrainingSuggestion[] {
         gameId: game.id,
         level: 1,
         reason: featured.includes(game.id)
-          ? 'A good first activity for the route you chose.'
-          : `A gentle start with ${CATEGORY_NAMES[game.category]}.`,
+          ? msg('progress:training.startRoute')
+          : categoryReason('gentleStart', game.category),
       });
     }
     return suggestions;
@@ -128,7 +127,7 @@ export function recommendTraining(input: TrainingInput): TrainingSuggestion[] {
       kind: 'level-up',
       gameId: session.gameId,
       level: next,
-      reason: `You cleared level ${session.level}. Level ${next} adds a new difficulty step.`,
+      reason: msg('progress:training.levelUp', { cleared: session.level, next }),
     });
     break;
   }
@@ -154,8 +153,8 @@ export function recommendTraining(input: TrainingInput): TrainingSuggestion[] {
         level: suggestedLevel(progress.games[game.id]),
         reason:
           count === 0
-            ? `You have not practised ${CATEGORY_NAMES[category]} in the last two weeks — a change of task keeps practice varied.`
-            : `${CATEGORY_NAMES[category][0]?.toUpperCase()}${CATEGORY_NAMES[category].slice(1)} is the area you practised least lately.`,
+            ? categoryReason('notPractised', category)
+            : categoryReason('leastPractised', category),
       });
     }
   }
@@ -170,8 +169,8 @@ export function recommendTraining(input: TrainingInput): TrainingSuggestion[] {
       gameId: fresh.id,
       level: 1,
       reason: featured.includes(fresh.id)
-        ? 'Part of your route that you have not tried yet.'
-        : 'A game you have not tried yet.',
+        ? msg('progress:training.discoverRoute')
+        : msg('progress:training.discover'),
     });
   }
   return suggestions;

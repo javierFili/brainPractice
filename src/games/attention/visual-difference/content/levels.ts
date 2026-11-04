@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { VisualDifferenceProfile } from './types';
 
@@ -10,7 +11,7 @@ const look = (cells: number, differences: number) =>
  */
 export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
   {
-    objective: 'Find 1 difference between two 3×3 pictures.',
+    objective: msg('attention:visualDifference.levels.1'),
     challengeCount: 5,
     columns: 3,
     differences: 1,
@@ -20,7 +21,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(9, 1),
   },
   {
-    objective: 'Find 2 differences in 3×3 pictures.',
+    objective: msg('attention:visualDifference.levels.2'),
     challengeCount: 5,
     columns: 3,
     differences: 2,
@@ -30,7 +31,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(9, 2),
   },
   {
-    objective: 'Find 2 differences in bigger 4×4 pictures.',
+    objective: msg('attention:visualDifference.levels.3'),
     challengeCount: 5,
     columns: 4,
     differences: 2,
@@ -40,7 +41,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(16, 2),
   },
   {
-    objective: 'Find 3 differences in 4×4 pictures.',
+    objective: msg('attention:visualDifference.levels.4'),
     challengeCount: 5,
     columns: 4,
     differences: 3,
@@ -50,7 +51,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(16, 3),
   },
   {
-    objective: 'Shapes can now be turned, too: 3 differences.',
+    objective: msg('attention:visualDifference.levels.5'),
     challengeCount: 5,
     columns: 4,
     differences: 3,
@@ -60,7 +61,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(16, 3),
   },
   {
-    objective: 'Find 3 fine differences in 5×5 pictures.',
+    objective: msg('attention:visualDifference.levels.6'),
     challengeCount: 5,
     columns: 5,
     differences: 3,
@@ -70,7 +71,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(25, 3),
   },
   {
-    objective: 'Find 4 differences, including mirrored L shapes.',
+    objective: msg('attention:visualDifference.levels.7'),
     challengeCount: 5,
     columns: 5,
     differences: 4,
@@ -80,7 +81,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(25, 4),
   },
   {
-    objective: 'Find 4 fine differences of any kind.',
+    objective: msg('attention:visualDifference.levels.8'),
     challengeCount: 5,
     columns: 5,
     differences: 4,
@@ -90,7 +91,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(25, 4),
   },
   {
-    objective: 'Find 5 fine differences in 6×6 pictures.',
+    objective: msg('attention:visualDifference.levels.9'),
     challengeCount: 5,
     columns: 6,
     differences: 5,
@@ -100,7 +101,7 @@ export const VISUAL_DIFFERENCE_LEVELS = defineLevels<VisualDifferenceProfile>([
     timing: look(36, 5),
   },
   {
-    objective: 'Find 6 fine differences in busy 6×6 pictures.',
+    objective: msg('attention:visualDifference.levels.10'),
     challengeCount: 5,
     columns: 6,
     differences: 6,

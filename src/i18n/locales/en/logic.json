@@ -1,0 +1,1101 @@
+{
+  "logicalDeduction": {
+    "name": "Logical Deduction",
+    "tagline": "Use the clues to work out who has what.",
+    "description": "Each person has exactly one item from every list, and no two people share an item. Read the clues, rule out what cannot be true, and answer one question. Higher levels add people, more lists to match and clues that only say what is not true.",
+    "scoringSummary": "Each puzzle has exactly one answer. Your result is the share of puzzles answered correctly; there is no time limit.",
+    "instructions": {
+      "items": "Each person has exactly one item from each list, and no two people have the same item.",
+      "clues": "Read every clue. Clues are always true.",
+      "ruleOut": "Rule out what cannot be true until only one answer is left, then answer the question.",
+      "tip": "Tip: “not” clues are useful — if someone does not have two of three items, they have the third."
+    },
+    "simpleInstructions": "Read the clues and find out who has what.",
+    "kinds": {
+      "single": "One list to match",
+      "multi": "Several lists to match"
+    },
+    "levels": {
+      "1": "Three people, one list, simple clues.",
+      "2": "Three people, one list, “not” and “either” clues.",
+      "3": "Four people and “either … or” clues.",
+      "4": "Match two lists for three people.",
+      "5": "Three lists for three people.",
+      "6": "Two lists for four people, linked clues.",
+      "7": "Two lists for four people with no direct answers.",
+      "8": "Three lists for four people.",
+      "9": "Five people and two lists.",
+      "10": "Five people, two lists, only indirect clues."
+    },
+    "view": {
+      "people": "People",
+      "person": "Person"
+    },
+    "titles": {
+      "pet": "Pets",
+      "colour": "Favourite colours",
+      "drink": "Drinks",
+      "hobby": "Hobbies"
+    },
+    "row": "{{person}}: {{values}}",
+    "explanation_one": "Only one way to share out the items fits the clue: {{rows}}. Every other way breaks it. So {{fact}}",
+    "explanation_other": "Only one way to share out the items fits all {{count}} clues: {{rows}}. Every other way breaks at least one clue. So {{fact}}",
+    "values": {
+      "pet": {
+        "cat": "cat",
+        "dog": "dog",
+        "fish": "fish",
+        "bird": "bird",
+        "rabbit": "rabbit"
+      },
+      "colour": {
+        "red": "red",
+        "blue": "blue",
+        "green": "green",
+        "yellow": "yellow",
+        "purple": "purple"
+      },
+      "drink": {
+        "tea": "tea",
+        "milk": "milk",
+        "juice": "juice",
+        "water": "water",
+        "cocoa": "cocoa"
+      },
+      "hobby": {
+        "painting": "painting",
+        "chess": "chess",
+        "music": "music",
+        "reading": "reading",
+        "dancing": "dancing"
+      }
+    },
+    "forms": {
+      "pet": {
+        "cat": {
+          "obj": "the cat",
+          "dat": "the cat"
+        },
+        "dog": {
+          "obj": "the dog",
+          "dat": "the dog"
+        },
+        "fish": {
+          "obj": "the fish",
+          "dat": "the fish"
+        },
+        "bird": {
+          "obj": "the bird",
+          "dat": "the bird"
+        },
+        "rabbit": {
+          "obj": "the rabbit",
+          "dat": "the rabbit"
+        }
+      },
+      "colour": {
+        "red": {
+          "obj": "red"
+        },
+        "blue": {
+          "obj": "blue"
+        },
+        "green": {
+          "obj": "green"
+        },
+        "yellow": {
+          "obj": "yellow"
+        },
+        "purple": {
+          "obj": "purple"
+        }
+      },
+      "drink": {
+        "tea": {
+          "obj": "tea",
+          "neg": "tea"
+        },
+        "milk": {
+          "obj": "milk",
+          "neg": "milk"
+        },
+        "juice": {
+          "obj": "juice",
+          "neg": "juice"
+        },
+        "water": {
+          "obj": "water",
+          "neg": "water"
+        },
+        "cocoa": {
+          "obj": "cocoa",
+          "neg": "cocoa"
+        }
+      },
+      "hobby": {
+        "painting": {
+          "obj": "painting"
+        },
+        "chess": {
+          "obj": "chess"
+        },
+        "music": {
+          "obj": "music"
+        },
+        "reading": {
+          "obj": "reading"
+        },
+        "dancing": {
+          "obj": "dancing"
+        }
+      }
+    },
+    "is": {
+      "pet": "{{subject}} has $t(logic:logicalDeduction.forms.pet.{{value}}.obj).",
+      "colour": "{{subject}} likes $t(logic:logicalDeduction.forms.colour.{{value}}.obj) best.",
+      "drink": "{{subject}} drinks $t(logic:logicalDeduction.forms.drink.{{value}}.obj).",
+      "hobby": "{{subject}} enjoys $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)."
+    },
+    "isNot": {
+      "pet": "{{subject}} does not have $t(logic:logicalDeduction.forms.pet.{{value}}.obj).",
+      "colour": "{{subject}} does not like $t(logic:logicalDeduction.forms.colour.{{value}}.obj) best.",
+      "drink": "{{subject}} does not drink $t(logic:logicalDeduction.forms.drink.{{value}}.neg).",
+      "hobby": "{{subject}} does not enjoy $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)."
+    },
+    "either": {
+      "pet": "{{subject}} has either $t(logic:logicalDeduction.forms.pet.{{a}}.obj) or $t(logic:logicalDeduction.forms.pet.{{b}}.obj).",
+      "colour": "{{subject}} likes either $t(logic:logicalDeduction.forms.colour.{{a}}.obj) or $t(logic:logicalDeduction.forms.colour.{{b}}.obj) best.",
+      "drink": "{{subject}} drinks either $t(logic:logicalDeduction.forms.drink.{{a}}.obj) or $t(logic:logicalDeduction.forms.drink.{{b}}.obj).",
+      "hobby": "{{subject}} enjoys either $t(logic:logicalDeduction.forms.hobby.{{a}}.obj) or $t(logic:logicalDeduction.forms.hobby.{{b}}.obj)."
+    },
+    "askWho": {
+      "pet": "Who has $t(logic:logicalDeduction.forms.pet.{{value}}.obj)?",
+      "colour": "Who likes $t(logic:logicalDeduction.forms.colour.{{value}}.obj) best?",
+      "drink": "Who drinks $t(logic:logicalDeduction.forms.drink.{{value}}.obj)?",
+      "hobby": "Who enjoys $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)?"
+    },
+    "askWhat": {
+      "pet": "Which pet does {{person}} have?",
+      "colour": "Which colour does {{person}} like best?",
+      "drink": "What does {{person}} drink?",
+      "hobby": "Which hobby does {{person}} enjoy?"
+    },
+    "subject": {
+      "pet": "The person with $t(logic:logicalDeduction.forms.pet.{{value}}.dat)",
+      "colour": "The person who likes $t(logic:logicalDeduction.forms.colour.{{value}}.obj) best",
+      "drink": "The person who drinks $t(logic:logicalDeduction.forms.drink.{{value}}.obj)",
+      "hobby": "The person who enjoys $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)"
+    }
+  },
+  "shared": {
+    "or": "{{head}} or {{last}}",
+    "sentence": "{{text}}.",
+    "cluesTitle": "Clues · all of them are true",
+    "clues": "Clues",
+    "solution": "Solution",
+    "rules": "Rules"
+  },
+  "numberSequences": {
+    "name": "Number Sequences",
+    "tagline": "Find the rule, then the number.",
+    "description": "A row of numbers follows a hidden rule. Work out the rule and type the next number, or the one that is missing. Higher levels use rules that alternate, grow, or mix two sequences together.",
+    "scoringSummary": "Each sequence has one answer that every simple rule agrees on. Your result is the share of numbers typed exactly right; there is no time limit.",
+    "simpleInstructions": "Find the pattern and type the missing number.",
+    "instructions": {
+      "1": "Look at how each number changes into the next one.",
+      "2": "Try simple rules first: adding, subtracting, multiplying.",
+      "3": "If the change is not the same each time, look at how the changes themselves change, or at every second number.",
+      "4": "Type the number that replaces the question mark."
+    },
+    "levels": {
+      "1": "Add the same small number each time.",
+      "2": "Steps that go up or down.",
+      "3": "Adding or multiplying.",
+      "4": "Find a missing number in the middle.",
+      "5": "Two steps that take turns.",
+      "6": "Steps that grow each time.",
+      "7": "Two sequences mixed together.",
+      "8": "Multiply, then add: two-step rules.",
+      "9": "Each number built from the two before it.",
+      "10": "Any rule, often with a gap in the middle."
+    },
+    "kinds": {
+      "add": "Constant steps",
+      "multiply": "Multiplying",
+      "alternating-add": "Alternating steps",
+      "growing-add": "Growing steps",
+      "interleaved": "Two mixed sequences",
+      "two-step": "Two-step rules",
+      "sum-of-two": "Sum of the two before"
+    },
+    "prompt": {
+      "missing": "Which number replaces the question mark?",
+      "next": "What number comes next?"
+    },
+    "explanation": "The rule is: {{rule}}. That gives {{shown}}, so the answer is {{answer}}. No other simple rule fits all the numbers shown.",
+    "rule": {
+      "add": "add {{n}}",
+      "subtract": "subtract {{n}}",
+      "termsAdd": "add {{n}}",
+      "termsSubtract": "subtract {{n}}",
+      "constant": "{{step}} each time",
+      "multiply": "multiply by {{r}} each time",
+      "alternate": "{{a}}, then {{b}}, and repeat",
+      "growing": "the amount added grows by {{dd}} each time (add {{a}}, then {{b}}, then {{c}}, …)",
+      "interleaved": "two sequences take turns: the 1st, 3rd, 5th … terms {{a}} each time, and the 2nd, 4th, 6th … terms {{b}} each time",
+      "multiplyThenAdd": "multiply by {{r}}, then {{step}}, and repeat",
+      "addThenMultiply": "{{step}}, then multiply by {{r}}, and repeat",
+      "sumOfTwo": "each term is the sum of the two terms before it"
+    },
+    "view": {
+      "sequence": "Sequence",
+      "term": "Term {{n}}: {{text}}",
+      "answer": "{{value}}, the answer",
+      "missing": "missing"
+    }
+  },
+  "ruleDiscovery": {
+    "name": "Rule Discovery",
+    "tagline": "Spot the hidden rule from examples.",
+    "description": "Some items fit a secret rule and some do not. Compare the two groups, work out the rule, and choose the new item that fits it. Higher levels use rules with “not”, “or” and “and”, and give fewer examples.",
+    "scoringSummary": "Exactly one option fits every rule that matches the examples. Your result is the share of puzzles answered correctly; there is no time limit.",
+    "simpleInstructions": "Find what the “yes” items share and pick the new one that matches.",
+    "instructions": {
+      "1": "The items under “Fits the rule” all follow one secret rule. The items under “Does not fit” break it.",
+      "2": "Look for what every item that fits has in common — and what the others lack.",
+      "3": "Then choose the one option that fits the same rule.",
+      "4": "Shapes are named by colour and shape, so you never need to tell colours apart by sight alone."
+    },
+    "levels": {
+      "1": "The rule is about colour.",
+      "2": "Colour or shape: which one matters?",
+      "3": "Rules about numbers: even, odd, big or small.",
+      "4": "Rules that say what something is not.",
+      "5": "Times tables and ranges.",
+      "6": "“Or” rules: one of two features is enough.",
+      "7": "Shapes and numbers, every simple rule.",
+      "8": "“And” rules: two things must both be true.",
+      "9": "Any shape rule, fewer examples.",
+      "10": "Any rule, more options to check."
+    },
+    "kinds": {
+      "glyphs": "Shape rules",
+      "numbers": "Number rules"
+    },
+    "prompt": {
+      "numbers": "Which number fits the rule?",
+      "glyphs": "Which shape fits the rule?"
+    },
+    "explanation_one": "The rule is: {{rule}}. The answer, {{answer}}, fits it; {{wrong}} does not. Every other simple rule either breaks one of the examples or picks the same answer.",
+    "explanation_other": "The rule is: {{rule}}. The answer, {{answer}}, fits it; {{wrong}} do not. Every other simple rule either breaks one of the examples or picks the same answer.",
+    "test": {
+      "even": "even",
+      "odd": "odd",
+      "multiple": "in the {{of}} times table",
+      "greater": "greater than {{than}}",
+      "less": "less than {{than}}",
+      "endsIn": "ending in {{digit}}"
+    },
+    "rule": {
+      "color": "the shape is $t(kit:color.{{color}})",
+      "notColor": "the shape is not $t(kit:color.{{color}})",
+      "shape": "the shape is $t(logic:ruleDiscovery.aShape.{{shape}})",
+      "notShape": "the shape is not $t(logic:ruleDiscovery.noShape.{{shape}})",
+      "colorOrShape": "the shape is $t(kit:color.{{color}}), or it is $t(logic:ruleDiscovery.aShape.{{shape}}) (or both)",
+      "number": "the number is {{test}}",
+      "and": "the number is {{a}} and {{b}}"
+    },
+    "view": {
+      "fits": "Fits the rule",
+      "misses": "Does not fit",
+      "rule": "The rule:"
+    },
+    "aShape": {
+      "circle": "a circle",
+      "square": "a square",
+      "triangle": "a triangle",
+      "diamond": "a diamond",
+      "star": "a star",
+      "hexagon": "a hexagon",
+      "heart": "a heart",
+      "cross": "a cross"
+    },
+    "noShape": {
+      "circle": "a circle",
+      "square": "a square",
+      "triangle": "a triangle",
+      "diamond": "a diamond",
+      "star": "a star",
+      "hexagon": "a hexagon",
+      "heart": "a heart",
+      "cross": "a cross"
+    }
+  },
+  "conditionalReasoning": {
+    "name": "Conditional Reasoning",
+    "tagline": "If this, then that — what really follows?",
+    "description": "Read a few “if … then …” statements and facts, then decide whether a sentence must be true, must be false, or cannot be decided. Higher levels chain rules together and use “unless” and “only if”.",
+    "scoringSummary": "Each answer is checked against every situation that fits the statements. Your result is the share of answers that are correct; there is no time limit.",
+    "simpleInstructions": "Use only the rules to decide: yes for sure, no for sure, or can’t tell.",
+    "instructions": {
+      "1": "Treat every statement as true, even if it sounds unusual.",
+      "2": "Use only what the statements say — nothing else.",
+      "3": "“Must be true” or “must be false” means no other situation is possible. Otherwise choose “Can’t tell”.",
+      "4": "Careful: “if A, then B” does not mean “if B, then A”."
+    },
+    "levels": {
+      "1": "One rule, and its “if” part is true.",
+      "2": "Work backwards: the result did not happen.",
+      "3": "Spot the traps where you can’t tell.",
+      "4": "Rules with “not” inside them.",
+      "5": "Chains: two rules in a row.",
+      "6": "Longer chains, with “not”.",
+      "7": "Rules that say “unless”.",
+      "8": "Rules that say “only if”.",
+      "9": "Mixed rules, including “either … or”.",
+      "10": "Several mixed rules about four things."
+    },
+    "kinds": {
+      "basic": "One if-then rule",
+      "chain": "Chains of rules",
+      "unless": "“Unless” rules",
+      "only-if": "“Only if” rules",
+      "mixed": "Mixed rule sets"
+    },
+    "verdict": {
+      "true": "Must be true",
+      "false": "Must be false",
+      "unknown": "Can't tell"
+    },
+    "notes": {
+      "affirm-antecedent": "The rule applies, because its “if” part is true, so its “then” part follows.",
+      "deny-consequent": "If the “if” part were true, the “then” part would be true too — but it is not, so the “if” part cannot be true.",
+      "affirm-consequent": "Knowing the “then” part is a common trap: it could be true for some other reason, so the “if” part is not settled.",
+      "deny-antecedent": "The rule only says what happens when its “if” part is true. Here it is not, so the rule tells us nothing.",
+      "unless": "“X unless Y” means: if Y is not true, then X is true.",
+      "onlyIf": "“X only if Y” means: if X is true, then Y is true."
+    },
+    "view": {
+      "title": "Statements · treat them all as true",
+      "statements": "Statements"
+    },
+    "premise": {
+      "fact": "$t(logic:conditionalReasoning.atoms.{{a}}.Main).",
+      "if": "If $t(logic:conditionalReasoning.atoms.{{a}}.main), then $t(logic:conditionalReasoning.atoms.{{b}}.main).",
+      "unless": "$t(logic:conditionalReasoning.atoms.{{a}}.Main) unless $t(logic:conditionalReasoning.atoms.{{b}}.main).",
+      "onlyIf": "$t(logic:conditionalReasoning.atoms.{{a}}.Main) only if $t(logic:conditionalReasoning.atoms.{{b}}.main).",
+      "or": "Either $t(logic:conditionalReasoning.atoms.{{a}}.main) or $t(logic:conditionalReasoning.atoms.{{b}}.main), or both."
+    },
+    "prompt": "Is this true? “$t(logic:conditionalReasoning.atoms.{{a}}.Main).”",
+    "atom": "$t(logic:conditionalReasoning.atoms.{{a}}.main)",
+    "because": {
+      "true": "Every situation that fits all the statements has “$t(logic:conditionalReasoning.atoms.{{a}}.main)” true, so it must be true.",
+      "false": "Every situation that fits all the statements has “$t(logic:conditionalReasoning.atoms.{{a}}.main)” false, so it must be false.",
+      "unknown": "Both are possible: “$t(logic:conditionalReasoning.atoms.{{a}}.main)” is true if {{yes}}, and false if {{no}}. So you can't tell."
+    },
+    "atoms": {
+      "lamp": {
+        "yes": {
+          "main": "the lamp is on",
+          "Main": "The lamp is on",
+          "cond": "if the lamp is on",
+          "Cond": "If the lamp is on",
+          "inv": "the lamp is on"
+        },
+        "no": {
+          "main": "the lamp is not on",
+          "Main": "The lamp is not on",
+          "cond": "if the lamp is not on",
+          "Cond": "If the lamp is not on",
+          "inv": "the lamp is not on"
+        }
+      },
+      "door": {
+        "yes": {
+          "main": "the door is open",
+          "Main": "The door is open",
+          "cond": "if the door is open",
+          "Cond": "If the door is open",
+          "inv": "the door is open"
+        },
+        "no": {
+          "main": "the door is not open",
+          "Main": "The door is not open",
+          "cond": "if the door is not open",
+          "Cond": "If the door is not open",
+          "inv": "the door is not open"
+        }
+      },
+      "bell": {
+        "yes": {
+          "main": "the bell rings",
+          "Main": "The bell rings",
+          "cond": "if the bell rings",
+          "Cond": "If the bell rings",
+          "inv": "the bell rings"
+        },
+        "no": {
+          "main": "the bell does not ring",
+          "Main": "The bell does not ring",
+          "cond": "if the bell does not ring",
+          "Cond": "If the bell does not ring",
+          "inv": "the bell does not ring"
+        }
+      },
+      "flag": {
+        "yes": {
+          "main": "the flag is up",
+          "Main": "The flag is up",
+          "cond": "if the flag is up",
+          "Cond": "If the flag is up",
+          "inv": "the flag is up"
+        },
+        "no": {
+          "main": "the flag is not up",
+          "Main": "The flag is not up",
+          "cond": "if the flag is not up",
+          "Cond": "If the flag is not up",
+          "inv": "the flag is not up"
+        }
+      },
+      "train": {
+        "yes": {
+          "main": "the train is late",
+          "Main": "The train is late",
+          "cond": "if the train is late",
+          "Cond": "If the train is late",
+          "inv": "the train is late"
+        },
+        "no": {
+          "main": "the train is not late",
+          "Main": "The train is not late",
+          "cond": "if the train is not late",
+          "Cond": "If the train is not late",
+          "inv": "the train is not late"
+        }
+      },
+      "box": {
+        "yes": {
+          "main": "the box is full",
+          "Main": "The box is full",
+          "cond": "if the box is full",
+          "Cond": "If the box is full",
+          "inv": "the box is full"
+        },
+        "no": {
+          "main": "the box is not full",
+          "Main": "The box is not full",
+          "cond": "if the box is not full",
+          "Cond": "If the box is not full",
+          "inv": "the box is not full"
+        }
+      },
+      "rain": {
+        "yes": {
+          "main": "it is raining",
+          "Main": "It is raining",
+          "cond": "if it is raining",
+          "Cond": "If it is raining",
+          "inv": "it is raining"
+        },
+        "no": {
+          "main": "it is not raining",
+          "Main": "It is not raining",
+          "cond": "if it is not raining",
+          "Cond": "If it is not raining",
+          "inv": "it is not raining"
+        }
+      },
+      "shop": {
+        "yes": {
+          "main": "the shop is open",
+          "Main": "The shop is open",
+          "cond": "if the shop is open",
+          "Cond": "If the shop is open",
+          "inv": "the shop is open"
+        },
+        "no": {
+          "main": "the shop is not open",
+          "Main": "The shop is not open",
+          "cond": "if the shop is not open",
+          "Cond": "If the shop is not open",
+          "inv": "the shop is not open"
+        }
+      },
+      "dog": {
+        "yes": {
+          "main": "the dog barks",
+          "Main": "The dog barks",
+          "cond": "if the dog barks",
+          "Cond": "If the dog barks",
+          "inv": "the dog barks"
+        },
+        "no": {
+          "main": "the dog does not bark",
+          "Main": "The dog does not bark",
+          "cond": "if the dog does not bark",
+          "Cond": "If the dog does not bark",
+          "inv": "the dog does not bark"
+        }
+      },
+      "kettle": {
+        "yes": {
+          "main": "the kettle is hot",
+          "Main": "The kettle is hot",
+          "cond": "if the kettle is hot",
+          "Cond": "If the kettle is hot",
+          "inv": "the kettle is hot"
+        },
+        "no": {
+          "main": "the kettle is not hot",
+          "Main": "The kettle is not hot",
+          "cond": "if the kettle is not hot",
+          "Cond": "If the kettle is not hot",
+          "inv": "the kettle is not hot"
+        }
+      },
+      "gate": {
+        "yes": {
+          "main": "the gate is locked",
+          "Main": "The gate is locked",
+          "cond": "if the gate is locked",
+          "Cond": "If the gate is locked",
+          "inv": "the gate is locked"
+        },
+        "no": {
+          "main": "the gate is not locked",
+          "Main": "The gate is not locked",
+          "cond": "if the gate is not locked",
+          "Cond": "If the gate is not locked",
+          "inv": "the gate is not locked"
+        }
+      },
+      "radio": {
+        "yes": {
+          "main": "the radio is playing",
+          "Main": "The radio is playing",
+          "cond": "if the radio is playing",
+          "Cond": "If the radio is playing",
+          "inv": "the radio is playing"
+        },
+        "no": {
+          "main": "the radio is not playing",
+          "Main": "The radio is not playing",
+          "cond": "if the radio is not playing",
+          "Cond": "If the radio is not playing",
+          "inv": "the radio is not playing"
+        }
+      }
+    }
+  },
+  "constraintSolver": {
+    "name": "Constraint Solver",
+    "tagline": "Fill the grid in your head and find one number.",
+    "description": "Each row and each column holds every number once. Use the numbers already given — and, at higher levels, boxes and “smaller than” signs — to work out the number in the highlighted cell.",
+    "scoringSummary": "Each grid has exactly one solution. Your result is the share of highlighted cells you work out correctly; there is no time limit.",
+    "simpleInstructions": "No number twice in a row or column — find the missing one.",
+    "instructions": {
+      "1": "Every row and every column must contain each number exactly once.",
+      "2": "When boxes are drawn, each box must also contain each number once.",
+      "3": "A clue like “A1 < B1” means the number in A1 is smaller than the number in B1.",
+      "4": "Type the number that belongs in the highlighted cell (marked “?”)."
+    },
+    "levels": {
+      "1": "A 3×3 grid with most numbers given.",
+      "2": "A 3×3 grid with fewer numbers.",
+      "3": "A 4×4 grid.",
+      "4": "A 4×4 grid with boxes.",
+      "5": "A 4×4 grid with “smaller than” clues.",
+      "6": "A 5×5 grid.",
+      "7": "A 5×5 grid with “smaller than” clues.",
+      "8": "A 6×6 grid with boxes.",
+      "9": "A 6×6 grid with boxes and few numbers.",
+      "10": "A 6×6 grid with boxes and “smaller than” clues."
+    },
+    "kinds": {
+      "latin": "Rows and columns",
+      "boxes": "Grids with boxes",
+      "inequalities": "“Smaller than” grids"
+    },
+    "prompt": "Which number goes in cell {{cell}}?",
+    "explanation": {
+      "plain": "The grid has only one solution that keeps every rule. In it, row {{row}} reads {{values}}, so {{cell}} is {{answer}}.",
+      "inequalities": "The grid has only one solution that keeps every rule, including the “smaller than” clues. In it, row {{row}} reads {{values}}, so {{cell}} is {{answer}}."
+    },
+    "view": {
+      "rowsRule": "Each row and each column holds 1 to {{size}} once.",
+      "boxRule": "Each {{h}}×{{w}} box (thick borders) also holds 1 to {{size}} once.",
+      "grid": "{{size}} by {{size}} grid",
+      "cell": "{{cell}}: {{value}}",
+      "askedValue": "{{value}}, the asked cell",
+      "asked": "the asked cell",
+      "empty": "empty",
+      "smallerTitle": "“Smaller than” clues",
+      "smallerLabel": "Smaller than clues"
+    }
+  },
+  "sequenceOrdering": {
+    "name": "Sequence Ordering",
+    "tagline": "Put everyone in the right order.",
+    "description": "Use clues such as “Ana finished ahead of Ben” or “exactly one person stands between them” to work out the full order. Higher levels add people and clues that only rule things out.",
+    "scoringSummary": "Exactly one order fits all the clues. An answer counts when every position is right. Your result is the share of puzzles ordered correctly; there is no time limit.",
+    "simpleInstructions": "Use the clues to put the names in order.",
+    "instructions": {
+      "1": "Read every clue. Exactly one order fits all of them.",
+      "2": "Start with clues that fix a position (“first”, “last”), then place the others around them.",
+      "3": "Use the arrow buttons to move names up or down, then submit your order."
+    },
+    "levels": {
+      "1": "Order three people with simple clues.",
+      "2": "Three people, “just ahead” clues.",
+      "3": "Order four people.",
+      "4": "Four people, clues about who is not where.",
+      "5": "Four people, “between” clues.",
+      "6": "Order five people.",
+      "7": "Five people, mostly relative clues.",
+      "8": "Five people, nobody’s place given.",
+      "9": "Order six people.",
+      "10": "Six people, only relative clues."
+    },
+    "kinds": {
+      "race": "Race results",
+      "queue": "People in a line"
+    },
+    "prompt": {
+      "race": "Put the runners in finishing order, first at the top.",
+      "queue": "Put the people in line order, front of the line at the top."
+    },
+    "explanation_one": "Only one order fits the clue: {{order}}. Check the clue against it; moving anyone breaks it.",
+    "explanation_other": "Only one order fits all {{count}} clues: {{order}}. Check each clue against it; moving anyone breaks at least one clue.",
+    "place": {
+      "race": {
+        "1": "first",
+        "2": "second",
+        "3": "third",
+        "4": "fourth",
+        "5": "fifth",
+        "6": "sixth",
+        "last": "last"
+      },
+      "queue": {
+        "1": "first",
+        "2": "second",
+        "3": "third",
+        "4": "fourth",
+        "5": "fifth",
+        "6": "sixth",
+        "last": "last"
+      }
+    },
+    "clue": {
+      "race": {
+        "before": "{{a}} finished ahead of {{b}}.",
+        "rightBefore": "{{a}} finished just ahead of {{b}}, with nobody in between.",
+        "at": "{{a}} finished {{place}}.",
+        "notAt": "{{a}} did not finish {{place}}.",
+        "gap_one": "Exactly one runner finished between {{a}} and {{b}}.",
+        "gap_other": "Exactly {{count}} runners finished between {{a}} and {{b}}.",
+        "nextTo": "{{a}} and {{b}} finished one right after the other.",
+        "notNextTo": "{{a}} and {{b}} did not finish one right after the other."
+      },
+      "queue": {
+        "before": "{{a}} stands somewhere in front of {{b}}.",
+        "rightBefore": "{{a}} stands directly in front of {{b}}.",
+        "at": "{{a}} is {{place}} in the line.",
+        "notAt": "{{a}} is not {{place}} in the line.",
+        "gap_one": "There is exactly one person between {{a}} and {{b}}.",
+        "gap_other": "There are exactly {{count}} people between {{a}} and {{b}}.",
+        "nextTo": "{{a}} and {{b}} stand next to each other.",
+        "notNextTo": "{{a}} and {{b}} do not stand next to each other."
+      }
+    },
+    "view": {
+      "entities": {
+        "race": "Runners",
+        "queue": "People in the line"
+      },
+      "names": "Names",
+      "correctOrder": "Correct order"
+    }
+  },
+  "truthAndFalsehood": {
+    "name": "Truth and Falsehood",
+    "tagline": "Some always tell the truth, some always lie.",
+    "description": "Each character is either a truth-teller, who only says true things, or a liar, who only says false things. Test each possibility against what they say to find the only one that works. Higher levels add characters and statements about the whole group.",
+    "scoringSummary": "Exactly one way of sorting truth-tellers and liars fits what everyone says. Your result is the share of puzzles answered correctly; there is no time limit.",
+    "simpleInstructions": "Truth-tellers never lie, liars never tell the truth — find out who is who.",
+    "instructions": {
+      "1": "A truth-teller only says true things. A liar only says false things.",
+      "2": "Pick one character and suppose they tell the truth. Does everything else still fit? If not, they must be lying.",
+      "3": "Exactly one way of sorting everyone works. Use it to answer the question."
+    },
+    "levels": {
+      "1": "Two characters talk about each other.",
+      "2": "Two characters: “we are the same” or “different”.",
+      "3": "Three characters.",
+      "4": "Three characters comparing each other.",
+      "5": "Statements about the whole group.",
+      "6": "Three characters, every kind of statement.",
+      "7": "Four characters.",
+      "8": "Four characters, “at least one of” statements.",
+      "9": "Four characters counting each other.",
+      "10": "Four characters, every kind of statement."
+    },
+    "kinds": {
+      "one": "One character",
+      "who": "Who tells the truth",
+      "count": "How many tell the truth"
+    },
+    "claim": {
+      "is": {
+        "honest": "{{name}} is a truth-teller",
+        "liar": "{{name}} is a liar"
+      },
+      "same": {
+        "pair": "{{a}} and {{b}} are the same: both truth-tellers or both liars",
+        "withMe": "{{other}} and I are the same: both truth-tellers or both liars"
+      },
+      "different": {
+        "pair": "{{a}} and {{b}} are different: one truth-teller and one liar",
+        "withMe": "{{other}} and I are different: one truth-teller and one liar"
+      },
+      "either": {
+        "honest": {
+          "pair": "At least one of {{a}} and {{b}} is a truth-teller",
+          "withMe": "At least one of {{other}} and me is a truth-teller"
+        },
+        "liar": {
+          "pair": "At least one of {{a}} and {{b}} is a liar",
+          "withMe": "At least one of {{other}} and me is a liar"
+        }
+      },
+      "count": {
+        "atLeast": {
+          "honest_one": "At least one of us is a truth-teller",
+          "honest_other": "At least {{number}} of us are truth-tellers",
+          "liar_one": "At least one of us is a liar",
+          "liar_other": "At least {{number}} of us are liars"
+        },
+        "exactly": {
+          "honest_one": "Exactly one of us is a truth-teller",
+          "honest_other": "Exactly {{number}} of us are truth-tellers",
+          "liar_one": "Exactly one of us is a liar",
+          "liar_other": "Exactly {{number}} of us are liars"
+        },
+        "atMost": {
+          "honest_one": "At most one of us is a truth-teller",
+          "honest_other": "At most {{number}} of us are truth-tellers",
+          "liar_one": "At most one of us is a liar",
+          "liar_other": "At most {{number}} of us are liars"
+        }
+      }
+    },
+    "numbers": {
+      "1": "one",
+      "2": "two",
+      "3": "three",
+      "4": "four"
+    },
+    "group": {
+      "nobody": "Nobody",
+      "everyone": "Everyone",
+      "only": "Only {{name}}"
+    },
+    "who": {
+      "nobody": "nobody tells the truth",
+      "everyone": "everyone tells the truth",
+      "only": "only {{name}} tells the truth",
+      "many": "{{names}} tell the truth"
+    },
+    "role": {
+      "honest": "Truth-teller",
+      "liar": "Liar"
+    },
+    "roleLower": {
+      "honest": "truth-teller",
+      "liar": "liar"
+    },
+    "check": {
+      "true": "{{name}} ({{role}}) says “{{said}}” — that is true",
+      "false": "{{name}} ({{role}}) says “{{said}}” — that is false"
+    },
+    "explanation": "Only one way works: {{who}}. {{checks}}. Every other way makes someone break their rule.",
+    "prompt": {
+      "one": "Is {{name}} a truth-teller or a liar?",
+      "count": "How many of them are truth-tellers?",
+      "who": "Who is telling the truth?"
+    },
+    "view": {
+      "title": "What they say",
+      "statements": "Statements",
+      "says": "says:"
+    }
+  },
+  "strategyPuzzle": {
+    "name": "Strategy Puzzle",
+    "tagline": "Plan ahead: find the best move or the shortest way.",
+    "description": "Coin games where you must find the move that guarantees a win, water jugs to measure an exact amount, and sliding tiles to put back in place. Every answer is checked by searching all possibilities, so the best move or the smallest number of moves is certain.",
+    "scoringSummary": "Answers are checked against an exhaustive search. Your result is the share of puzzles answered correctly; there is no time limit.",
+    "instructions": {
+      "1": "Coin games: you and a friend take turns. Whoever takes the last coin wins. Your friend always plays the best move.",
+      "2": "Water jugs: fill a jug from the tap, empty it, or pour one jug into another until it is full or the first is empty. Each counts as one move.",
+      "3": "Sliding tiles: slide a tile next to the gap into the gap. Each slide counts as one move.",
+      "4": "Plan in your head, then answer. Use paper if it helps."
+    },
+    "simpleInstructions": "Think a few moves ahead to find the best move or the fewest moves.",
+    "kinds": {
+      "take-away": "Coin game, one pile",
+      "piles": "Coin game, several piles",
+      "jugs": "Water jugs",
+      "sliding": "Sliding tiles"
+    },
+    "levels": {
+      "1": "Take 1 or 2 coins: find the winning move.",
+      "2": "Slide tiles on a small board.",
+      "3": "Measure water with two jugs.",
+      "4": "Take 1 to 3 coins from a bigger pile.",
+      "5": "Slide tiles on a 2×3 board.",
+      "6": "Harder jug puzzles.",
+      "7": "Two piles of coins.",
+      "8": "Longer sliding puzzles.",
+      "9": "Three jugs and no tap: pour only.",
+      "10": "Three piles, long slides and three jugs."
+    },
+    "take": "Take {{n}}",
+    "takeFromPile": "Take {{n}} from pile {{pile}}",
+    "then": "{{head}}, then {{last}}",
+    "prompt": {
+      "takeAway_one": "It is your turn. There is {{count}} coin. Which move makes sure you take the last coin?",
+      "takeAway_other": "It is your turn. There are {{count}} coins. Which move makes sure you take the last coin?",
+      "piles": "It is your turn. Which move makes sure you take the last coin?",
+      "jugs_one": "What is the smallest number of moves to get exactly {{count}} litre in one jug?",
+      "jugs_other": "What is the smallest number of moves to get exactly {{count}} litres in one jug?",
+      "sliding": "What is the smallest number of slides to reach the goal picture?"
+    },
+    "explanation": {
+      "takeAway": "Take {{take}}, leaving {{left}}. Positions with {{losing}} coins lose for the player whose turn it is: whatever your friend takes (1 to {{max}}), you take the rest of {{group}} and reach the next one, until you take the last coin. Any other move leaves a number your friend can use the same way.",
+      "piles": "{{move}}, leaving piles of {{after}}. Checking every possible game from there, each reply your friend makes leaves you a move that keeps you winning, until you take the last coin. Every other move gives your friend such a winning reply.",
+      "pilesEqual": "{{move}}, leaving piles of {{after}}. Checking every possible game from there, each reply your friend makes leaves you a move that keeps you winning, until you take the last coin. With two equal piles, you can copy every move your friend makes on the other pile. Every other move gives your friend such a winning reply.",
+      "jugs_one": "A search through every possible sequence of moves finds no way shorter than {{count}} move. One shortest way: {{steps}}.",
+      "jugs_other": "A search through every possible sequence of moves finds no way shorter than {{count}} moves. One shortest way: {{steps}}.",
+      "sliding_one": "A search through every reachable board shows the goal is {{count}} slide away and no fewer. One shortest way: slide tile {{tiles}}.",
+      "sliding_other": "A search through every reachable board shows the goal is {{count}} slides away and no fewer. One shortest way: slide tile {{tiles}}."
+    },
+    "jug": {
+      "fill": "fill the {{jug}}-litre jug",
+      "empty": "empty the {{jug}}-litre jug",
+      "pour": "pour the {{from}}-litre jug into the {{to}}-litre jug",
+      "step": "{{n}}. {{action}} ({{state}})"
+    },
+    "units": {
+      "moves": "moves",
+      "slides": "slides"
+    },
+    "rules": {
+      "takeAway": "On each turn, take 1 to {{max}} coins.",
+      "lastCoin": "Whoever takes the last coin wins. Your friend always plays the best move.",
+      "piles": "On each turn, take any number of coins (at least one) from one pile.",
+      "tap": "Fill a jug to the top from the tap, or empty a jug completely.",
+      "noTap": "There is no tap: you can only pour.",
+      "pour": "Pour one jug into another until the second is full or the first is empty.",
+      "goal_one": "Goal: exactly {{count}} litre in any one jug.",
+      "goal_other": "Goal: exactly {{count}} litres in any one jug.",
+      "slide": "Slide a tile that is next to the gap into the gap.",
+      "reach": "Reach the goal picture."
+    },
+    "view": {
+      "coins_one": "{{label}}: {{count}} coin",
+      "coins_other": "{{label}}: {{count}} coins",
+      "pile": "Pile",
+      "namedPile": "Pile {{name}}",
+      "jugs": "Jugs",
+      "jug": "{{cap}}-litre jug",
+      "empty": "empty",
+      "full": "full ({{amount}} L)",
+      "litres": "{{amount}} L",
+      "now": "Now",
+      "goal": "Goal",
+      "currentBoard": "Current board",
+      "goalBoard": "Goal board",
+      "gap": "{{cell}}: gap",
+      "tile": "{{cell}}: tile {{tile}}"
+    }
+  },
+  "algorithmicReasoning": {
+    "name": "Algorithmic Reasoning",
+    "tagline": "Follow the robot’s instructions step by step.",
+    "description": "A robot follows a list of plain instructions: move forward, turn, do something several times, or check for a wall. Follow it in your head and point to the square where it stops. Higher levels add repeats, repeats inside repeats and checks for walls.",
+    "scoringSummary": "The robot’s path is simulated exactly. Your result is the share of end squares found correctly; there is no time limit.",
+    "accessibilityNotes": "Each square is named by row and column, and the robot’s start and direction are spoken, so the path can be followed without seeing the grid.",
+    "simpleInstructions": "Follow the arrows in your head and tap where the robot ends up.",
+    "instructions": {
+      "1": "The arrow shows where the robot starts and which way it faces.",
+      "2": "“Turn left” and “turn right” change the direction it faces; they do not move it.",
+      "3": "Walls (striped squares) and the edge block the way. The robot never walks into them.",
+      "4": "Follow every instruction in order, then press the square where the robot stops."
+    },
+    "levels": {
+      "1": "Move and turn on a small grid.",
+      "2": "A few more steps, and walls.",
+      "3": "Do the same thing several times.",
+      "4": "Keep going until something blocks the way.",
+      "5": "Check for a wall before moving.",
+      "6": "Repeats and wall checks together.",
+      "7": "Repeats inside repeats.",
+      "8": "Longer programs on a 6×6 grid.",
+      "9": "A 7×7 grid with many walls.",
+      "10": "Long programs mixing everything."
+    },
+    "kinds": {
+      "straight": "Moves and turns",
+      "loops": "Repeated steps",
+      "conditions": "Wall checks"
+    },
+    "facing": {
+      "up": "up",
+      "right": "right",
+      "down": "down",
+      "left": "left"
+    },
+    "trace": {
+      "move": "move {{n}} to {{cell}}",
+      "turn": {
+        "left": "turn left, now facing {{facing}}",
+        "right": "turn right, now facing {{facing}}",
+        "around": "turn around, now facing {{facing}}"
+      },
+      "blocked": "the way is blocked",
+      "clear": "the way is clear",
+      "untilBlocked_one": "move until blocked ({{count}} square) to {{cell}}",
+      "untilBlocked_other": "move until blocked ({{count}} squares) to {{cell}}"
+    },
+    "program": {
+      "forward_one": "Move forward {{count}} square.",
+      "forward_other": "Move forward {{count}} squares.",
+      "turn": {
+        "left": "Turn left.",
+        "right": "Turn right.",
+        "around": "Turn around."
+      },
+      "repeat_one": "Do this {{count}} time:",
+      "repeat_other": "Do this {{count}} times:",
+      "ifBlocked": "If the square in front is a wall or the edge:",
+      "otherwise": "Otherwise:",
+      "untilBlocked": "Keep moving forward until the square in front is a wall or the edge."
+    },
+    "prompt": "Where does the robot stop? Press that square.",
+    "explanation": "The robot starts at {{start}} facing {{facing}}. Then: {{steps}}. It stops at {{end}}.",
+    "view": {
+      "instructions": "Instructions",
+      "grid": "Robot grid",
+      "wall": "{{cell}}, wall",
+      "start": "{{cell}}, robot start, facing {{facing}}"
+    }
+  },
+  "multiStepLogic": {
+    "name": "Multi-Step Logic Challenge",
+    "tagline": "Chain several facts together to reach the answer.",
+    "description": "Facts link people together: who is older, who has more, who is taller. No single fact gives the answer — you must combine them step by step. Higher levels add people, “twice as many” and totals, and mix numbers with comparisons.",
+    "scoringSummary": "Every answer is checked by trying all possible numbers or orders. Your result is the share of answers that are correct; there is no time limit.",
+    "simpleInstructions": "Put the facts together, one at a time, to find the answer.",
+    "instructions": {
+      "1": "Every fact is true. No single fact gives the answer on its own.",
+      "2": "Start from what you know for sure (a known age or a total) and work outwards one fact at a time.",
+      "3": "“Twice as many” means double; “half as many” means divide by two.",
+      "4": "Some questions ask for a number, others ask for a name."
+    },
+    "levels": {
+      "1": "One step: from a known number to the next.",
+      "2": "Two steps along a chain.",
+      "3": "Who is tallest? Chain the comparisons.",
+      "4": "“Twice as many” and “half as many”.",
+      "5": "Four people to compare.",
+      "6": "Use a total instead of a known number.",
+      "7": "Differences between people never compared directly.",
+      "8": "Five people, numbers and comparisons.",
+      "9": "Five people with totals.",
+      "10": "Five people, every kind of fact."
+    },
+    "kinds": {
+      "numbers": "Chained numbers",
+      "compare": "Chained comparisons"
+    },
+    "fact": {
+      "ages": {
+        "value_one": "{{a}} is {{count}} year old",
+        "value_other": "{{a}} is {{count}} years old",
+        "more_one": "{{a}} is {{count}} year older than {{b}}",
+        "more_other": "{{a}} is {{count}} years older than {{b}}",
+        "less_one": "{{b}} is {{count}} year younger than {{a}}",
+        "less_other": "{{b}} is {{count}} years younger than {{a}}",
+        "times2": "{{a}} is twice as old as {{b}}",
+        "times3": "{{a}} is three times as old as {{b}}",
+        "fraction2": "{{b}} is half as old as {{a}}",
+        "fraction3": "{{b}} is a third as old as {{a}}",
+        "sum_one": "{{names}} are {{count}} year old in total",
+        "sum_other": "{{names}} are {{count}} years old in total"
+      },
+      "marbles": {
+        "value_one": "{{a}} has {{count}} marble",
+        "value_other": "{{a}} has {{count}} marbles",
+        "more_one": "{{a}} has {{count}} more marble than {{b}}",
+        "more_other": "{{a}} has {{count}} more marbles than {{b}}",
+        "less_one": "{{b}} has {{count}} fewer marble than {{a}}",
+        "less_other": "{{b}} has {{count}} fewer marbles than {{a}}",
+        "times2": "{{a}} has twice as many marbles as {{b}}",
+        "times3": "{{a}} has three times as many marbles as {{b}}",
+        "fraction2": "{{b}} has half as many marbles as {{a}}",
+        "fraction3": "{{b}} has a third as many marbles as {{a}}",
+        "sum_one": "{{names}} have {{count}} marble in total",
+        "sum_other": "{{names}} have {{count}} marbles in total"
+      }
+    },
+    "question": {
+      "ages": {
+        "value": "How old is {{a}}?",
+        "difference": "How many years older is {{a}} than {{b}}?",
+        "most": "Who is the oldest?",
+        "least": "Who is the youngest?"
+      },
+      "marbles": {
+        "value": "How many marbles does {{a}} have?",
+        "difference": "How many more marbles does {{a}} have than {{b}}?",
+        "most": "Who has the most marbles?",
+        "least": "Who has the fewest marbles?"
+      }
+    },
+    "compare": {
+      "taller": "{{a}} is taller than {{b}}.",
+      "shorter": "{{a}} is shorter than {{b}}.",
+      "tallest": "Who is the tallest?",
+      "shortest": "Who is the shortest?",
+      "explanation": {
+        "most": "Writing “taller than” as “>”: {{chains}}. So {{name}} is taller than everyone else.",
+        "least": "Writing “taller than” as “>”: {{chains}}. So {{name}} is shorter than everyone else."
+      }
+    },
+    "explanation": {
+      "step": {
+        "ages": "{{fact}}, so {{name}} is {{count}}.",
+        "marbles_one": "{{fact}}, so {{name}} has {{count}} marble.",
+        "marbles_other": "{{fact}}, so {{name}} has {{count}} marbles."
+      },
+      "chain": "{{lines}} So the answer is {{answer}}.",
+      "entry": {
+        "ages": "{{name}} {{count}}",
+        "marbles_one": "{{name}} {{count}} marble",
+        "marbles_other": "{{name}} {{count}} marbles"
+      },
+      "total": "Only one set of numbers fits every fact, including the total: {{table}}. Check each fact against it. So the answer is {{answer}}.",
+      "free": "The facts do not fix the exact numbers, but every set that fits gives the same answer. One example: {{table}}. So the answer is {{answer}}."
+    },
+    "units": {
+      "years": "years",
+      "marbles": "marbles"
+    },
+    "view": {
+      "title": "Facts · all of them are true",
+      "facts": "Facts"
+    }
+  }
+}

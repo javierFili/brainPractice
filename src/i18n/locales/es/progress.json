@@ -1,0 +1,170 @@
+{
+  "page": {
+    "eyebrow": "General",
+    "title": "Mi progreso",
+    "description": "Datos reales de tus sesiones, guardados solo en este navegador. Las puntuaciones describen estas actividades, no tu capacidad general.",
+    "manageData": "Gestionar datos",
+    "empty": "Aún no hay sesiones. Aquí aparecerán tu historial, tus récords y tus logros.",
+    "browse": "Explorar actividades"
+  },
+  "stats": {
+    "sessions": "Sesiones completadas",
+    "practiceTime": "Tiempo de práctica",
+    "gamesExplored": "Juegos explorados",
+    "levels": "Niveles abiertos / superados",
+    "activeDays": "Días activos",
+    "activeDaysHint": "días con algo de práctica",
+    "daily": "Retos diarios",
+    "assessments": "Evaluaciones",
+    "milestones": "Logros"
+  },
+  "distribution": {
+    "title": "A qué dedicaste tu práctica",
+    "note": "Sesiones de tu historial reciente (hasta 200)."
+  },
+  "mostPlayed": {
+    "title": "Lo más jugado",
+    "empty": "Nada todavía."
+  },
+  "records": {
+    "title": "Récords personales y tendencias",
+    "note": "Los récords solo cuentan sesiones completadas sin tiempo relajado. Las tendencias comparan sesiones del mismo juego y nivel: la única comparación justa.",
+    "trend": "Tendencia de rendimiento en el nivel {{level}}: {{values}}",
+    "best": "Mejor: nivel {{level}} · rendimiento {{performance}} · precisión {{accuracy}} · {{points}} pts",
+    "median": "mediana {{time}}",
+    "none": "Aún no hay ninguna sesión completada.",
+    "cleared": "Niveles superados: {{levels}}",
+    "clearedNone": "ninguno todavía"
+  },
+  "milestonesTitle": "Logros",
+  "milestoneAchieved": ", conseguido",
+  "milestoneNotYet": ", pendiente",
+  "history": {
+    "title": "Historial",
+    "game": "Juego",
+    "allGames": "Todos los juegos",
+    "caption": "Sesiones, de la más reciente a la más antigua",
+    "date": "Fecha",
+    "level": "Nivel",
+    "accuracy": "Precisión",
+    "performance": "Rendimiento",
+    "duration": "Duración",
+    "relaxed": "relajado",
+    "endedEarly": "terminada antes",
+    "showingLatest": "Se muestran las últimas {{shown}} de {{total}}."
+  },
+  "milestones": {
+    "first-session": {
+      "title": "Primera sesión",
+      "description": "Completa cualquier actividad."
+    },
+    "ten-sessions": {
+      "title": "Diez sesiones",
+      "description": "Practica diez veces, a tu ritmo."
+    },
+    "fifty-sessions": {
+      "title": "Cincuenta sesiones",
+      "description": "Un hábito de práctica a largo plazo."
+    },
+    "half-hour": {
+      "title": "30 minutos de práctica",
+      "description": "Tiempo total de práctica en todas las actividades."
+    },
+    "five-hours": {
+      "title": "5 horas de práctica",
+      "description": "Tiempo total de práctica en todas las actividades."
+    },
+    "explorer": {
+      "title": "Explorador",
+      "description": "Prueba cinco juegos distintos."
+    },
+    "collector": {
+      "title": "Gran explorador",
+      "description": "Prueba veinte juegos distintos."
+    },
+    "all-areas": {
+      "title": "Todoterreno",
+      "description": "Practica memoria, lógica, velocidad, atención y patrones."
+    },
+    "first-clear": {
+      "title": "Primer nivel superado",
+      "description": "Alcanza un rendimiento de 70 en cualquier nivel."
+    },
+    "advanced": {
+      "title": "Avanzado",
+      "description": "Supera el nivel 7 o superior en cualquier juego."
+    },
+    "master": {
+      "title": "Nivel maestro",
+      "description": "Supera el nivel 10 en cualquier juego."
+    },
+    "daily-three": {
+      "title": "Retador diario",
+      "description": "Completa tres retos diarios (cualquier día)."
+    },
+    "assessment": {
+      "title": "Autoevaluación",
+      "description": "Completa una evaluación cognitiva."
+    },
+    "active-days": {
+      "title": "Siete días activos",
+      "description": "Practica en siete días distintos, no necesariamente seguidos."
+    }
+  },
+  "training": {
+    "startRoute": "Una buena primera actividad para la ruta que elegiste.",
+    "levelUp": "Superaste el nivel {{cleared}}. El nivel {{next}} añade un nuevo paso de dificultad.",
+    "discoverRoute": "Parte de tu ruta que aún no has probado.",
+    "discover": "Un juego que aún no has probado.",
+    "gentleStart": {
+      "memory": "Un comienzo suave con la memoria.",
+      "logic": "Un comienzo suave con la lógica.",
+      "speed": "Un comienzo suave con la velocidad mental.",
+      "attention": "Un comienzo suave con la atención.",
+      "patterns": "Un comienzo suave con los patrones y el razonamiento espacial.",
+      "programming": "Un comienzo suave con la programación."
+    },
+    "notPractised": {
+      "memory": "No has practicado la memoria en las dos últimas semanas: cambiar de tarea mantiene la práctica variada.",
+      "logic": "No has practicado la lógica en las dos últimas semanas: cambiar de tarea mantiene la práctica variada.",
+      "speed": "No has practicado la velocidad mental en las dos últimas semanas: cambiar de tarea mantiene la práctica variada.",
+      "attention": "No has practicado la atención en las dos últimas semanas: cambiar de tarea mantiene la práctica variada.",
+      "patterns": "No has practicado los patrones ni el razonamiento espacial en las dos últimas semanas: cambiar de tarea mantiene la práctica variada.",
+      "programming": "No has practicado la programación en las dos últimas semanas: cambiar de tarea mantiene la práctica variada."
+    },
+    "leastPractised": {
+      "memory": "La memoria es el área que menos has practicado últimamente.",
+      "logic": "La lógica es el área que menos has practicado últimamente.",
+      "speed": "La velocidad mental es el área que menos has practicado últimamente.",
+      "attention": "La atención es el área que menos has practicado últimamente.",
+      "patterns": "Los patrones y el razonamiento espacial son el área que menos has practicado últimamente.",
+      "programming": "La programación es el área que menos has practicado últimamente."
+    }
+  },
+  "recommend": {
+    "review": {
+      "title": "Repaso: {{concepts}}",
+      "reason": "Los aprendiste hace un tiempo. Recordarlos ahora, justo cuando empiezan a olvidarse, es lo que hace que perduren."
+    },
+    "lesson": {
+      "title": "Lección: {{lesson}}",
+      "start": "Empieza {{course}} desde el principio. {{objective}}",
+      "continue_one": "Continúa {{course}}: {{completed}} de {{count}} lección hecha.",
+      "continue_other": "Continúa {{course}}: {{completed}} de {{count}} lecciones hechas."
+    },
+    "daily": {
+      "title": "Reto diario · {{game}}",
+      "reason": "Cinco problemas rápidos, los mismos hoy para todo el mundo, a tu nivel."
+    },
+    "train": {
+      "title": "{{game}} · nivel {{level}}",
+      "learning": "Estás aprendiendo: {{concept}}. {{why}}",
+      "untrained": "Aún no has entrenado esta área.",
+      "leastPractised": "Tu área menos practicada últimamente (rendimiento reciente {{performance}})."
+    },
+    "assessment": {
+      "title": "Haz la evaluación",
+      "reason": "Ya has entrenado unas cuantas veces: una referencia en las cinco áreas muestra dónde centrarte ahora."
+    }
+  }
+}

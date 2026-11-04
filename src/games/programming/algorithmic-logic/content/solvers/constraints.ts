@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import type { ConstraintRule } from '../types';
 
 export function satisfies(rule: ConstraintRule, arrangement: readonly string[]): boolean {
@@ -51,17 +52,19 @@ export function solutions(
   return permutations(entities).filter((arrangement) => satisfiesAll(rules, arrangement));
 }
 
-export function describeRule(rule: ConstraintRule): string {
+/** The rule in words; entity names stay literal (they are identifiers). */
+export function describeRule(rule: ConstraintRule): Message {
+  const key = 'programming:algorithmicLogic.rules';
   switch (rule.type) {
     case 'before':
-      return `${rule.a} is deployed before ${rule.b}`;
+      return msg(`${key}.before`, { a: rule.a, b: rule.b });
     case 'immediately-before':
-      return `${rule.a} is deployed immediately before ${rule.b}`;
+      return msg(`${key}.immediatelyBefore`, { a: rule.a, b: rule.b });
     case 'not-adjacent':
-      return `${rule.a} and ${rule.b} are not deployed next to each other`;
+      return msg(`${key}.notAdjacent`, { a: rule.a, b: rule.b });
     case 'at':
-      return `${rule.a} is deployed in slot ${rule.position}`;
+      return msg(`${key}.at`, { a: rule.a, slot: rule.position });
     case 'not-at':
-      return `${rule.a} is not deployed in slot ${rule.position}`;
+      return msg(`${key}.notAt`, { a: rule.a, slot: rule.position });
   }
 }

@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "BrainPractice — Allenamento mentale per tutte le età"
+  },
+  "skipToContent": "Vai al contenuto",
+  "landmarks": {
+    "main": "Principale",
+    "navigation": "Navigazione",
+    "sidebar": "Barra laterale"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Chiudi navigazione"
+  },
+  "sidebar": {
+    "expand": "Espandi barra laterale",
+    "collapse": "Comprimi barra laterale"
+  },
+  "language": {
+    "label": "Lingua"
+  },
+  "storageBlocked": "Questo browser blocca l’archiviazione locale: i progressi andranno persi alla chiusura della scheda.",
+  "disclaimer": "Allenamento mentale ricreativo. I risultati descrivono solo la prestazione in queste attività: non è una valutazione medica, psicologica né del QI e non diagnostica, cura o previene alcuna condizione.",
+  "sections": {
+    "general": "Generale",
+    "training": "Allenamento",
+    "routes": "Percorsi",
+    "assessment": "Valutazione",
+    "learning": "Apprendimento",
+    "settings": "Impostazioni"
+  },
+  "items": {
+    "home": "Home",
+    "continue": "Continua ad allenarti",
+    "daily": "Sfida del giorno",
+    "progress": "I miei progressi",
+    "games": "Tutte le attività",
+    "quick": "Sessione rapida",
+    "trainMemory": "Memoria",
+    "trainLogic": "Logica",
+    "trainAttention": "Attenzione",
+    "trainSpeed": "Velocità mentale",
+    "trainPatterns": "Schemi",
+    "trainSpatial": "Ragionamento spaziale",
+    "trainConcentration": "Concentrazione",
+    "pathsKids": "Bambini",
+    "pathsTeens": "Ragazzi",
+    "pathsAdults": "Adulti",
+    "pathsSeniors": "Over 65",
+    "pathsProgrammers": "Programmatori",
+    "assessment": "Valutazione cognitiva",
+    "assessmentHistory": "Risultati precedenti",
+    "assessmentProfile": "Il mio profilo di prestazione",
+    "learn": "Logica di programmazione",
+    "learnThinking": "Pensiero computazionale",
+    "trainProgramming": "Sfide di algoritmi",
+    "settings": "Preferenze",
+    "settingsAccessibility": "Accessibilità",
+    "settingsData": "Reimposta dati demo"
+  }
+}

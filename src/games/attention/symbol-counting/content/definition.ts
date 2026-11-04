@@ -1,7 +1,7 @@
 import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SHAPES } from '@/games/kit/content';
 import {
   ROTATIONS,
@@ -46,10 +46,9 @@ function unrelated(random: RandomGenerator, target: Mark): Mark {
 
 export const symbolCountingGame: GameDefinition<SymbolCountingChallenge, SymbolCountingProfile> = {
   id: SYMBOL_COUNTING_ID,
-  name: 'Symbol Counting',
-  tagline: 'How many are there — exactly?',
-  description:
-    'Count how many times one symbol appears in a field of shapes. Look-alikes that differ only in colour, outline, direction or mirroring must not be counted. Fields grow to 48 items.',
+  name: msg('attention:symbolCounting.name'),
+  tagline: msg('attention:symbolCounting.tagline'),
+  description: msg('attention:symbolCounting.description'),
   area: 'attention',
   skills: ['concentration', 'selective-attention', 'sustained-attention'],
   meta: {
@@ -60,19 +59,17 @@ export const symbolCountingGame: GameDefinition<SymbolCountingChallenge, SymbolC
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A field counts as correct when your number is exactly right. Your result is the share of fields counted exactly; answering is not timed.',
+    scoringSummary: msg('attention:symbolCounting.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Some look-alikes differ only in colour. The field is also a list of named items ("blue triangle, turned left"), so a screen reader can count by name.',
+    accessibilityNotes: msg('attention:symbolCounting.accessibilityNotes'),
   },
   instructions: [
-    'The symbol to count is shown above the field.',
-    'Count every exact copy: same shape, same colour, same direction.',
-    'Look-alikes do not count. Type the number and press Enter.',
-    'Tip: go row by row so you do not count anything twice.',
+    msg('attention:symbolCounting.instructions.1'),
+    msg('attention:symbolCounting.instructions.2'),
+    msg('attention:symbolCounting.instructions.3'),
+    msg('attention:symbolCounting.instructions.4'),
   ],
-  simpleInstructions: 'Count how many times you see the symbol at the top.',
+  simpleInstructions: msg('attention:symbolCounting.simpleInstructions'),
   levels: SYMBOL_COUNTING_LEVELS,
   generate({ identity, profile, random }) {
     const cells = profile.columns * profile.rows;
@@ -104,7 +101,7 @@ export const symbolCountingGame: GameDefinition<SymbolCountingChallenge, SymbolC
     const answer = countWhere(items, (m) => sameLook(m, target));
     return {
       ...identity,
-      prompt: `How many ${markLabel(target)} symbols are there?`,
+      prompt: msg('attention:symbolCounting.prompt', { mark: markLabel(target) }),
       content: {
         kind:
           profile.lures.length === 0
@@ -117,7 +114,10 @@ export const symbolCountingGame: GameDefinition<SymbolCountingChallenge, SymbolC
         target,
       },
       response: numericResponse(answer),
-      explanation: `There ${answer === 1 ? 'is' : 'are'} ${answer} exact ${answer === 1 ? 'copy' : 'copies'} of the ${markLabel(target)} (highlighted).`,
+      explanation: msg('attention:symbolCounting.explanation', {
+        count: answer,
+        mark: markLabel(target),
+      }),
       skills: ['concentration', 'selective-attention'],
       timing: profile.timing,
     };

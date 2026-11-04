@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useText } from '@/i18n';
 import { executeOrThrow, type Variables } from '@/domain/pseudocode';
 import { traceChanges } from '../content/explain';
 
@@ -14,6 +16,8 @@ interface Props {
  * Shown after answering so the player can see where their trace diverged.
  */
 export function TraceTable({ source, inputs = {}, limit = 40 }: Props) {
+  const { t } = useTranslation('programming');
+  const tx = useText();
   const { rows, output, error } = useMemo(() => {
     const result = executeOrThrow(source, inputs);
     return {
@@ -26,48 +30,50 @@ export function TraceTable({ source, inputs = {}, limit = 40 }: Props) {
   return (
     <details className="rounded-lg border border-line bg-surface text-sm" open>
       <summary className="cursor-pointer px-3 py-2 font-medium text-ink-soft hover:text-ink">
-        Step-by-step trace
+        {t('shared.trace.title')}
       </summary>
       <div className="max-w-full overflow-x-auto px-3 pb-3">
-        <table className="w-full min-w-max border-collapse font-mono text-xs">
-          <caption className="sr-only">Each step that changed a variable</caption>
+        <table className="w-full min-w-max border-collapse text-xs">
+          <caption className="sr-only">{t('shared.trace.caption')}</caption>
           <thead>
             <tr className="text-left text-ink-muted">
               <th scope="col" className="py-1 pr-3 font-normal">
-                Line
+                {t('shared.trace.line')}
               </th>
               <th scope="col" className="py-1 pr-3 font-normal">
-                Code
+                {t('shared.trace.code')}
               </th>
               <th scope="col" className="py-1 font-normal">
-                After it runs
+                {t('shared.trace.after')}
               </th>
             </tr>
           </thead>
           <tbody>
             {shown.map((row, i) => (
               <tr key={i} className="border-t border-line">
-                <td className="py-1 pr-3 text-ink-muted">{row.line}</td>
-                <td className="py-1 pr-3 whitespace-pre text-ink-soft">{row.code}</td>
-                <td className="py-1 text-ink">{row.changes.join(', ')}</td>
+                <td className="py-1 pr-3 font-mono text-ink-muted">{row.line}</td>
+                <td className="py-1 pr-3 font-mono whitespace-pre text-ink-soft">{row.code}</td>
+                <td className="py-1 font-mono text-ink">{row.changes.join(', ')}</td>
               </tr>
             ))}
           </tbody>
         </table>
         {rows.length > shown.length && (
           <p className="mt-2 text-xs text-ink-muted">
-            … {rows.length - shown.length} more steps follow the same pattern.
+            {t('shared.trace.more', { count: rows.length - shown.length })}
           </p>
         )}
         <p className="mt-2 text-xs text-ink-muted">
-          Output:{' '}
-          <span className="font-mono text-ink">
-            {output.length === 0 ? '(nothing printed)' : output.join(' · ')}
-          </span>
+          {t('shared.trace.output')}{' '}
+          {output.length === 0 ? (
+            <span className="text-ink">{t('shared.trace.nothingPrinted')}</span>
+          ) : (
+            <span className="font-mono text-ink">{output.join(' · ')}</span>
+          )}
           {error !== null && (
             <span className="text-danger">
               {' '}
-              · stopped on line {error.line}: {error.message}
+              · {t('shared.trace.stopped', { line: error.line, message: tx(error.message) })}
             </span>
           )}
         </p>

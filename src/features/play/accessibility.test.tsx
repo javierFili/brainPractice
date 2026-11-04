@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { defaultPreferences } from '@/domain/preferences';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -69,8 +70,8 @@ describe('game accessibility', () => {
   });
 
   it('reads symbol options as words', () => {
-    expect(describeLabel('▲▲▲')).toBe('3 triangles');
-    expect(describeLabel('★')).toBe('1 star');
+    expect(en(describeLabel('▲▲▲') ?? '')).toBe('3 triangles');
+    expect(en(describeLabel('★') ?? '')).toBe('1 star');
     expect(describeLabel('▲■')).toBeUndefined();
     expect(describeLabel('42')).toBeUndefined();
   });

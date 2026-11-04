@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, timed } from '@/games/kit/content';
 import type { ColorShapeProfile, ValuePair } from './types';
 
@@ -14,7 +15,7 @@ const THREE: readonly ValuePair[] = [...TWO, { color: 'yellow', shape: 'triangle
  */
 export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
   {
-    objective: 'Colour only: say the colour of each shape.',
+    objective: msg('speed:colorAndShapeDecisions.levels.1'),
     mapping: 'single',
     pairs: TWO,
     shapeShare: 0,
@@ -23,7 +24,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(1800, 5000),
   },
   {
-    objective: 'Shape only: say the shape, whatever its colour.',
+    objective: msg('speed:colorAndShapeDecisions.levels.2'),
     mapping: 'single',
     pairs: TWO,
     shapeShare: 1,
@@ -32,7 +33,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(1800, 4500),
   },
   {
-    objective: 'Follow the cue: COLOUR or SHAPE, each with its own answers.',
+    objective: msg('speed:colorAndShapeDecisions.levels.3'),
     mapping: 'separate',
     pairs: TWO,
     shapeShare: 0.25,
@@ -41,7 +42,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2200, 4500),
   },
   {
-    objective: 'Cued rules, mixed half and half.',
+    objective: msg('speed:colorAndShapeDecisions.levels.4'),
     mapping: 'separate',
     pairs: TWO,
     shapeShare: 0.5,
@@ -50,7 +51,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2200, 4200),
   },
   {
-    objective: 'Shared keys: each answer means a colour and a shape.',
+    objective: msg('speed:colorAndShapeDecisions.levels.5'),
     mapping: 'shared',
     pairs: TWO,
     shapeShare: 0.35,
@@ -59,7 +60,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2200, 4200),
   },
   {
-    objective: 'Shared keys, rules mixed half and half, more conflicting shapes.',
+    objective: msg('speed:colorAndShapeDecisions.levels.6'),
     mapping: 'shared',
     pairs: TWO,
     shapeShare: 0.5,
@@ -68,7 +69,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2100, 4000),
   },
   {
-    objective: 'Most shapes now conflict: colour and shape point to different keys.',
+    objective: msg('speed:colorAndShapeDecisions.levels.7'),
     mapping: 'shared',
     pairs: TWO,
     shapeShare: 0.5,
@@ -77,7 +78,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2000, 3800),
   },
   {
-    objective: 'Three colours and three shapes.',
+    objective: msg('speed:colorAndShapeDecisions.levels.8'),
     mapping: 'shared',
     pairs: THREE,
     shapeShare: 0.5,
@@ -86,7 +87,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2300, 3800),
   },
   {
-    objective: 'Three values, more conflict, less time.',
+    objective: msg('speed:colorAndShapeDecisions.levels.9'),
     mapping: 'shared',
     pairs: THREE,
     shapeShare: 0.5,
@@ -95,7 +96,7 @@ export const COLOR_SHAPE_LEVELS = defineLevels<ColorShapeProfile>([
     timing: timed(2200, 3500),
   },
   {
-    objective: 'Master: three values, nearly every shape conflicts, short limit.',
+    objective: msg('speed:colorAndShapeDecisions.levels.10'),
     mapping: 'shared',
     pairs: THREE,
     shapeShare: 0.5,

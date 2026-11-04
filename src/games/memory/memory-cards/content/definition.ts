@@ -1,7 +1,7 @@
 import { pairsResponse } from '@/domain/challenge';
 import type { GameDefinition } from '@/domain/game';
 import { pick, sample, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import {
   ALL_GLYPHS,
   COLORS,
@@ -66,10 +66,9 @@ export const MEMORY_CARDS_ID = gameIdOf('memory-cards');
 
 export const memoryCardsGame: GameDefinition<MemoryCardsChallenge, MemoryCardsProfile> = {
   id: MEMORY_CARDS_ID,
-  name: 'Memory Cards',
-  tagline: 'Turn two cards, find the twins.',
-  description:
-    'A board of face-down cards hides pairs of identical pictures. Turn two cards at a time and remember where each picture is, to find every pair with as few misses as possible.',
+  name: msg('memory:memoryCards.name'),
+  tagline: msg('memory:memoryCards.tagline'),
+  description: msg('memory:memoryCards.description'),
   area: 'memory',
   skills: ['visual-memory', 'short-term-memory', 'concentration'],
   meta: {
@@ -80,17 +79,16 @@ export const memoryCardsGame: GameDefinition<MemoryCardsChallenge, MemoryCardsPr
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'completion-time'],
-    scoringSummary:
-      'A board counts as solved when you find every pair within the allowed number of misses. Accuracy is the share of boards solved; there is no time limit.',
+    scoringSummary: msg('memory:memoryCards.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Some levels start by showing every card for a moment: look at where things are.',
-    'Turn over two cards. If they match, they stay face up; if not, they turn back.',
-    'Find every pair before you run out of misses (shown under the board).',
-    'Keyboard: move between cards with the arrow keys and press Enter to turn one over.',
+    msg('memory:memoryCards.instructions.preview'),
+    msg('memory:memoryCards.instructions.turn'),
+    msg('memory:memoryCards.instructions.misses'),
+    msg('memory:memoryCards.instructions.keyboard'),
   ],
-  simpleInstructions: 'Turn two cards at a time and find the matching pictures.',
+  simpleInstructions: msg('memory:memoryCards.simpleInstructions'),
   levels: MEMORY_CARDS_LEVELS,
   generate({ identity, profile, random }) {
     const faces = facesFor(random, profile);
@@ -101,15 +99,15 @@ export const memoryCardsGame: GameDefinition<MemoryCardsChallenge, MemoryCardsPr
     const pairs = positions.map(([a, b]) => [a as number, b as number] as const);
     return {
       ...identity,
-      prompt: `Find all ${profile.pairs} pairs.`,
-      studyPrompt: 'Look at the cards — they will turn face down.',
+      prompt: msg('memory:memoryCards.prompt', { count: profile.pairs }),
+      studyPrompt: msg('memory:memoryCards.studyPrompt'),
       content: {
         kind: profile.kind,
         faces: order.map((face) => faces[face] as CardFace),
         columns: profile.columns,
       },
       response: pairsResponse(pairs, profile.maxMisses),
-      explanation: `Every picture appeared on exactly two cards. Up to ${profile.maxMisses} mismatched turns were allowed on this board.`,
+      explanation: msg('memory:memoryCards.explanation', { count: profile.maxMisses }),
       skills: ['visual-memory', 'short-term-memory'],
       timing: profile.timing,
     };

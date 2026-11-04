@@ -1,0 +1,591 @@
+{
+  "shared": {
+    "ell": "L-Form",
+    "colouredEll": "$t(kit:colorForm.f.{{color}}) L-Form",
+    "mirrored": "gespiegelt",
+    "turn": {
+      "0": "aufrecht",
+      "90": "nach rechts gedreht",
+      "180": "auf dem Kopf",
+      "270": "nach links gedreht"
+    },
+    "inLanguage": "{{de}}",
+    "colorPlural": {
+      "red": "rote",
+      "orange": "orange",
+      "yellow": "gelbe",
+      "green": "grüne",
+      "blue": "blaue",
+      "purple": "violette"
+    },
+    "shapes": {
+      "circle": "Kreise",
+      "square": "Quadrate",
+      "triangle": "Dreiecke",
+      "diamond": "Rauten",
+      "star": "Sterne",
+      "hexagon": "Sechsecke",
+      "heart": "Herzen",
+      "cross": "Kreuze",
+      "ell": "L-Formen"
+    },
+    "colouredShapes": {
+      "circle": "$t(attention:shared.colorPlural.{{color}}) Kreise",
+      "square": "$t(attention:shared.colorPlural.{{color}}) Quadrate",
+      "triangle": "$t(attention:shared.colorPlural.{{color}}) Dreiecke",
+      "diamond": "$t(attention:shared.colorPlural.{{color}}) Rauten",
+      "star": "$t(attention:shared.colorPlural.{{color}}) Sterne",
+      "hexagon": "$t(attention:shared.colorPlural.{{color}}) Sechsecke",
+      "heart": "$t(attention:shared.colorPlural.{{color}}) Herzen",
+      "cross": "$t(attention:shared.colorPlural.{{color}}) Kreuze",
+      "ell": "$t(attention:shared.colorPlural.{{color}}) L-Formen"
+    },
+    "shapeCount": {
+      "circle_one": "{{count}} Kreis",
+      "circle_other": "{{count}} Kreise",
+      "square_one": "{{count}} Quadrat",
+      "square_other": "{{count}} Quadrate",
+      "triangle_one": "{{count}} Dreieck",
+      "triangle_other": "{{count}} Dreiecke",
+      "diamond_one": "{{count}} Raute",
+      "diamond_other": "{{count}} Rauten",
+      "star_one": "{{count}} Stern",
+      "star_other": "{{count}} Sterne",
+      "hexagon_one": "{{count}} Sechseck",
+      "hexagon_other": "{{count}} Sechsecke",
+      "heart_one": "{{count}} Herz",
+      "heart_other": "{{count}} Herzen",
+      "cross_one": "{{count}} Kreuz",
+      "cross_other": "{{count}} Kreuze",
+      "ell_one": "{{count}} L-Form",
+      "ell_other": "{{count}} L-Formen"
+    },
+    "colouredShapeCount": {
+      "circle_one": "{{count}} $t(kit:colorForm.m.{{color}}) Kreis",
+      "circle_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Kreise",
+      "square_one": "{{count}} $t(kit:colorForm.n.{{color}}) Quadrat",
+      "square_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Quadrate",
+      "triangle_one": "{{count}} $t(kit:colorForm.n.{{color}}) Dreieck",
+      "triangle_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Dreiecke",
+      "diamond_one": "{{count}} $t(kit:colorForm.f.{{color}}) Raute",
+      "diamond_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Rauten",
+      "star_one": "{{count}} $t(kit:colorForm.m.{{color}}) Stern",
+      "star_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Sterne",
+      "hexagon_one": "{{count}} $t(kit:colorForm.n.{{color}}) Sechseck",
+      "hexagon_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Sechsecke",
+      "heart_one": "{{count}} $t(kit:colorForm.n.{{color}}) Herz",
+      "heart_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Herzen",
+      "cross_one": "{{count}} $t(kit:colorForm.n.{{color}}) Kreuz",
+      "cross_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) Kreuze",
+      "ell_one": "{{count}} $t(kit:colorForm.f.{{color}}) L-Form",
+      "ell_other": "{{count}} $t(attention:shared.colorPlural.{{color}}) L-Formen"
+    }
+  },
+  "changeDetection": {
+    "name": "Veränderungen erkennen",
+    "tagline": "Dieselbe Szene … oder nicht?",
+    "description": "Sieh dir eine kleine Szene aus Formen an. Sie verschwindet kurz und kommt zurück. Hat sich etwas verändert? Etwa in der Hälfte der Fälle nicht. Die Veränderungen werden feiner und die Szenen voller, je weiter du kommst.",
+    "scoringSummary": "Ein Durchgang zählt als richtig, wenn du bei einer veränderten Szene „Ja“ und bei einer unveränderten „Nein“ antwortest; etwa die Hälfte ist unverändert, Raten ergibt also rund 50 %. Für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Manche Veränderungen betreffen nur die Farbe (ab Stufe 6 zu einer ähnlichen Farbe). Die Szene ist eine Liste benannter Felder, sodass ein Screenreader beide Ansichten vergleichen kann; die erste Ansicht ist jedoch zeitlich begrenzt (im entspannten Modus doppelt so lang).",
+    "instructions": {
+      "look": "Sieh dir die ganze Szene an, solange sie angezeigt wird (drücke „Ich bin bereit“, um früher weiterzumachen).",
+      "blank": "Nach einer kurzen leeren Pause kommt die Szene zurück.",
+      "answer": "Antworte „Ja“, wenn sich etwas verändert hat (Farbe, Form, Richtung, Position, ein Element erscheint oder verschwindet), sonst „Nein“.",
+      "keys": "Tasten: 1 = Ja, 2 = Nein. Etwa die Hälfte der Szenen verändert sich nicht."
+    },
+    "simpleInstructions": "Schau hin, warte, schau noch einmal: Hat sich etwas verändert?",
+    "levels": {
+      "1": "3 Elemente: Ist eines erschienen, verschwunden oder hat es die Farbe gewechselt?",
+      "2": "4 Elemente; auch Formen können sich ändern.",
+      "3": "5 Elemente auf einem größeren Brett: Farb- oder Formwechsel.",
+      "4": "6 Elemente; eines kann sich auch bewegen.",
+      "5": "6 zeigende Formen: Eine kann sich drehen.",
+      "6": "7 Elemente mit feinen Veränderungen (ähnliche Farbe, ähnlicher Umriss).",
+      "7": "8 Elemente; jede feine Veränderung.",
+      "8": "9 Elemente, längere Pause dazwischen.",
+      "9": "10 Elemente, kürzere erste Ansicht.",
+      "10": "12 Elemente, kurze Ansicht, feinste Veränderungen."
+    },
+    "kinds": {
+      "none": "Keine Veränderung",
+      "appear": "Element erschienen oder verschwunden",
+      "move": "Element verschoben",
+      "color": "Farbwechsel",
+      "shape": "Formwechsel",
+      "turn": "Gedrehtes Element"
+    },
+    "options": {
+      "yes": "Ja, etwas hat sich verändert",
+      "no": "Nein, es ist gleich"
+    },
+    "prompt": "Hat sich etwas verändert?",
+    "studyPrompt": "Sieh dir die Szene an – sie verschwindet gleich kurz.",
+    "explanation": {
+      "changed": "Ja: {{changes}}.",
+      "unchanged": "Nein: Die zweite Ansicht war identisch mit der ersten."
+    },
+    "change": "{{cell}}: {{before}} → {{after}}",
+    "empty": "leer",
+    "view": {
+      "firstLook": "Erste Ansicht",
+      "secondLook": "Zweite Ansicht",
+      "noChange": "(keine Veränderung)",
+      "wait": "Warte …",
+      "blankBoard": "Leeres Brett",
+      "changed": "verändert"
+    }
+  },
+  "oddOneOut": {
+    "name": "Der Ausreißer",
+    "tagline": "Alle gleich … bis auf eine.",
+    "description": "Ein Raster gleicher Formen versteckt genau eine, die anders ist. Finde sie. Anfangs ist es ein deutlicher Farbunterschied, später ein ähnlicher Umriss, eine gedrehte Form oder ein gespiegeltes L in größeren Rastern.",
+    "scoringSummary": "Ein Raster zählt als richtig, wenn du auf die eine abweichende Form zeigst. Dein Ergebnis ist der Anteil gelöster Raster; für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "In den Stufen 1, 2 und 6 unterscheidet sich nur die Farbe; jedes Feld hat auch einen Namen (z. B. „roter Kreis“), sodass Screenreader Namen vergleichen können. Stufen mit Ausrichtung nennen die Lage („nach rechts gedreht“, „gespiegelt“).",
+    "instructions": {
+      "1": "Alle Formen im Raster sehen gleich aus – bis auf eine.",
+      "2": "Finde die abweichende und drücke darauf. Es gibt immer genau eine.",
+      "3": "Sie kann sich in Farbe, Umriss oder Richtung unterscheiden oder gespiegelt sein.",
+      "4": "Tastatur: Pfeiltasten wechseln zwischen Feldern, Enter wählt aus."
+    },
+    "simpleInstructions": "Finde die Form, die anders ist, und tippe sie an.",
+    "levels": {
+      "1": "Finde die Form in einer anderen Farbe (3×3).",
+      "2": "Finde die andere Farbe in einem größeren 4×4-Raster.",
+      "3": "Jetzt hat der Ausreißer eine andere Form, aber dieselbe Farbe.",
+      "4": "Finde eine Form mit ähnlichem Umriss (Quadrat oder Raute …).",
+      "5": "Gleiche Form, gleiche Farbe – eine zeigt in eine andere Richtung.",
+      "6": "Finde eine ähnliche Farbe (Rot oder Orange …) unter 30.",
+      "7": "Eine Form ist nur um eine Vierteldrehung gedreht (6×6).",
+      "8": "Ein L ist gespiegelt.",
+      "9": "Jedes Merkmal kann sich fein unterscheiden: Farbe, Umriss, Drehung oder Spiegelung.",
+      "10": "Jeder feine Unterschied unter 48 Formen."
+    },
+    "kinds": {
+      "color": "Andere Farbe",
+      "shape": "Andere Form",
+      "turn": "Gedrehte Form",
+      "mirror": "Gespiegelte Form"
+    },
+    "prompt": "Finde die eine Form, die anders ist.",
+    "explanation": "Bei {{cell}} ist die abweichende Form: {{odd}}. Die anderen: {{base}}. Unterschied: {{feature}}.",
+    "feature": {
+      "color": "Farbe",
+      "shape": "Form",
+      "turn": "Ausrichtung",
+      "mirror": "Spiegelung"
+    },
+    "view": {
+      "shapes": "Formen"
+    }
+  },
+  "visualDifference": {
+    "name": "Unterschiede finden",
+    "tagline": "Finde die Unterschiede, Feld für Feld.",
+    "description": "Zwei Bilder aus Formen sehen gleich aus, aber einige Felder des rechten sind anders. Markiere jeden Unterschied im rechten Bild. Der Zähler sagt dir, wie viele es sind.",
+    "scoringSummary": "Ein Bilderpaar zählt als richtig, wenn jedes markierte Feld ein echter Unterschied ist. Dein Ergebnis ist der Anteil exakt gelöster Paare; für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Manche Unterschiede betreffen nur die Farbe (ab Stufe 6 ähnliche Farben wie Rot und Orange). Jedes Feld wird mit Farbe, Form und Lage benannt, sodass Screenreader die beiden Bilder Feld für Feld vergleichen können.",
+    "instructions": {
+      "1": "Vergleiche die beiden Bilder Feld für Feld (auf kleinen Bildschirmen steht das rechte darunter).",
+      "2": "Markiere jedes abweichende Feld im rechten Bild und drücke dann auf Prüfen.",
+      "3": "Ein Unterschied ist eine andere Farbe, Form oder Richtung oder ein gespiegeltes L.",
+      "4": "Der Zähler zeigt, wie viele Unterschiede zu finden sind."
+    },
+    "simpleInstructions": "Finde, was im zweiten Bild anders ist, und tippe es an.",
+    "levels": {
+      "1": "Finde 1 Unterschied zwischen zwei 3×3-Bildern.",
+      "2": "Finde 2 Unterschiede in 3×3-Bildern.",
+      "3": "Finde 2 Unterschiede in größeren 4×4-Bildern.",
+      "4": "Finde 3 Unterschiede in 4×4-Bildern.",
+      "5": "Formen können jetzt auch gedreht sein: 3 Unterschiede.",
+      "6": "Finde 3 feine Unterschiede in 5×5-Bildern.",
+      "7": "Finde 4 Unterschiede, auch gespiegelte L-Formen.",
+      "8": "Finde 4 feine Unterschiede jeder Art.",
+      "9": "Finde 5 feine Unterschiede in 6×6-Bildern.",
+      "10": "Finde 6 feine Unterschiede in vollen 6×6-Bildern."
+    },
+    "kinds": {
+      "plain": "Farbe und Form",
+      "oriented": "Mit Drehungen und Spiegelungen"
+    },
+    "prompt_one": "Markiere das eine Feld des rechten Bildes, das abweicht.",
+    "prompt_other": "Markiere die {{count}} Felder des rechten Bildes, die abweichen.",
+    "explanation": "Unterschiede: {{differences}}.",
+    "difference": "{{cell}} ({{before}} → {{after}})",
+    "view": {
+      "leftPicture": "Linkes Bild",
+      "rightPicture": "Rechtes Bild",
+      "left": "Links",
+      "rightHeading": "Rechts – markiere die Unterschiede",
+      "leftCell": "links",
+      "rightCell": "rechts"
+    }
+  },
+  "targetTracking": {
+    "name": "Karte verfolgen",
+    "tagline": "Behalte die Karte im Blick.",
+    "description": "Einige Karten liegen offen, und eine (später zwei) ist markiert. Die Karten werden verdeckt und tauschen paarweise die Plätze; jeder Tausch wird mit einem Pfeil gezeigt. Zeige danach, wo die Karte gelandet ist.",
+    "scoringSummary": "Eine Runde zählt als richtig, wenn du auf die gefragte Karte zeigst. Dein Ergebnis ist der Anteil richtiger Runden; die Tausche laufen in einem festen, ruhigen Tempo, und für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Jeder Tausch wird auch als Text angesagt („Karten 2 und 4 tauschen die Plätze“), höchstens einer pro Sekunde; im entspannten Modus wird das Tempo langsamer. Nichts bewegt sich oder blinkt.",
+    "instructions": {
+      "1": "Sieh dir die markierte Karte an, bevor die Karten verdeckt werden.",
+      "2": "Bei jedem Schritt zeigt ein Pfeil zwei Karten, die die Plätze tauschen. Verfolge die markierte Karte.",
+      "3": "Wenn die Tausche vorbei sind, drücke auf die Karte dort, wo sie jetzt liegt.",
+      "4": "Ab Stufe 7 verfolgst du zwei markierte Karten: Erst am Ende wird nach einer davon gefragt."
+    },
+    "simpleInstructions": "Sieh zu, wie die Karten tauschen, und finde die markierte.",
+    "levels": {
+      "1": "Verfolge eine Karte über 2 Tausche bei 3 Karten.",
+      "2": "Verfolge eine Karte über 3 Tausche.",
+      "3": "Vier Karten, 4 Tausche.",
+      "4": "Vier Karten, 5 schnellere Tausche.",
+      "5": "Fünf Karten, 5 Tausche.",
+      "6": "Fünf Karten, 6 Tausche.",
+      "7": "Verfolge zwei Karten gleichzeitig: Nach einer wirst du gefragt.",
+      "8": "Zwei Karten über 7 Tausche.",
+      "9": "Zwei Karten unter 6, 8 Tausche.",
+      "10": "Zwei Karten unter 6, 10 Tausche in zügigem Tempo."
+    },
+    "kinds": {
+      "single": "Eine Karte",
+      "double": "Zwei Karten"
+    },
+    "prompt": {
+      "single": "Verfolge die markierte Karte und drücke dann dort, wo sie landet.",
+      "double": "Verfolge beide markierten Karten. Am Ende wirst du nach einer davon gefragt."
+    },
+    "explanation": "Die Karte ({{item}}) ging über {{path}} und landete also auf Platz {{position}}.",
+    "view": {
+      "position": "Platz {{position}}",
+      "followThis": "diese Karte verfolgen",
+      "follow": "verfolgen",
+      "covered": "verdeckte Karte",
+      "swapping": "wird getauscht",
+      "remember_one": "Merk dir die markierte Karte: {{cards}}.",
+      "remember_other": "Merk dir die markierten Karten: {{cards}}.",
+      "cardAt": "{{item}} auf Platz {{position}}",
+      "swap": "Tausch {{step}} von {{total}}: Karten {{a}} und {{b}} tauschen die Plätze.",
+      "swapDone": "Tausch {{step}} von {{total}} erledigt.",
+      "ended": "Wo die Karten gelandet sind.",
+      "where": "Wo ist diese Karte jetzt: {{item}}?",
+      "cards": "Karten"
+    }
+  },
+  "distractorFiltering": {
+    "name": "Ablenkungen filtern",
+    "tagline": "Nur die blauen Dreiecke. Ignoriere den Rest.",
+    "description": "Markiere jedes Element, das zu einer Regel wie „blaue Dreiecke“ passt, während Doppelgänger die Farbe oder die Form teilen. Die Ablenkungen werden dem Ziel immer ähnlicher, und auf höheren Stufen entscheidest du selbst, wann du alle gefunden hast.",
+    "scoringSummary": "Ein Raster zählt als richtig, wenn deine Markierungen den Zielen entsprechen: übersehene Ziele und falsche Markierungen sind Fehler. Ab Stufe 8 wird ein Fehler toleriert. Dein Ergebnis ist der Anteil gelöster Raster; für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Regeln mit einer Farbe erfordern zum visuellen Spielen Farbsehen; jedes Element ist auch benannt („violettes Dreieck“), sodass ein Screenreader nach Namen filtern kann. Formen unterscheiden sich immer auch im Umriss.",
+    "instructions": {
+      "1": "Lies die Regel über dem Raster: Sie nennt eine Form, eine Farbe oder beides.",
+      "2": "Markiere jedes Element, das genau zur Regel passt, und drücke dann auf Prüfen.",
+      "3": "Doppelgänger erfüllen nur einen Teil der Regel: Ein blaues Herz ist kein blaues Dreieck.",
+      "4": "Ab Stufe 7 wird die Anzahl nicht genannt; ab Stufe 8 ist ein Ausrutscher erlaubt."
+    },
+    "simpleInstructions": "Tippe alle Formen an, die zur Regel passen – und nur diese.",
+    "levels": {
+      "1": "Markiere jedes Element einer Form.",
+      "2": "Markiere jedes Element einer Farbe.",
+      "3": "Zwei Merkmale zugleich: richtige Form UND richtige Farbe.",
+      "4": "Mehr Doppelgänger teilen ein Merkmal mit dem Ziel.",
+      "5": "Fast jede Ablenkung teilt ein Merkmal.",
+      "6": "Köder in der nächstliegenden Farbe oder Form.",
+      "7": "Die Zahl der Ziele wird nicht genannt: Entscheide, wann du fertig bist.",
+      "8": "7 Ziele zwischen ähnlichen Ködern (ein Ausrutscher erlaubt).",
+      "9": "8 Ziele unter 42 Elementen (ein Ausrutscher erlaubt).",
+      "10": "9 Ziele unter 48 ähnlichen Ködern (ein Ausrutscher erlaubt)."
+    },
+    "kinds": {
+      "shape": "Eine Form",
+      "color": "Eine Farbe",
+      "conjunction": "Form und Farbe"
+    },
+    "phrase": {
+      "shape": "{{shapes}} (beliebige Farbe)",
+      "color": "$t(attention:shared.colorPlural.{{color}}) Formen (beliebige Form)"
+    },
+    "prompt": {
+      "exact_one": "Markiere das einzige passende Element: {{phrase}}.",
+      "exact_other": "Markiere alle {{count}} passenden Elemente: {{phrase}}.",
+      "free": "Markiere alle passenden Elemente: {{phrase}}. Du entscheidest, wie viele es sind.",
+      "freeWithSlip": "Markiere alle passenden Elemente: {{phrase}}. Du entscheidest, wie viele es sind. Ein Ausrutscher ist erlaubt."
+    },
+    "explanation_one": "Es gab {{count}}: {{phrase}}.",
+    "explanation_other": "Es gab {{count}}: {{phrase}}.",
+    "view": {
+      "rule": "Regel:",
+      "items": "Elemente"
+    }
+  },
+  "symbolCounting": {
+    "name": "Symbole zählen",
+    "tagline": "Wie viele sind es – genau?",
+    "description": "Zähle, wie oft ein Symbol in einem Feld aus Formen vorkommt. Doppelgänger, die sich nur in Farbe, Umriss, Richtung oder Spiegelung unterscheiden, zählen nicht. Die Felder wachsen auf 48 Elemente.",
+    "scoringSummary": "Ein Feld zählt als richtig, wenn deine Zahl genau stimmt. Dein Ergebnis ist der Anteil exakt gezählter Felder; für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Manche Doppelgänger unterscheiden sich nur in der Farbe. Das Feld ist auch eine Liste benannter Elemente („blaues Dreieck, nach links gedreht“), sodass ein Screenreader nach Namen zählen kann.",
+    "instructions": {
+      "1": "Das zu zählende Symbol steht über dem Feld.",
+      "2": "Zähle jede exakte Kopie: gleiche Form, gleiche Farbe, gleiche Richtung.",
+      "3": "Doppelgänger zählen nicht. Gib die Zahl ein und drücke Enter.",
+      "4": "Tipp: Geh Zeile für Zeile vor, damit du nichts doppelt zählst."
+    },
+    "simpleInstructions": "Zähle, wie oft du das Symbol oben siehst.",
+    "levels": {
+      "1": "Zähle ein Symbol zwischen deutlich anderen.",
+      "2": "Dieselbe Form in anderen Farben zählt nicht.",
+      "3": "Doppelgänger in Farbe oder Form, 25 Elemente.",
+      "4": "Ähnliche Doppelgänger: nahe Farbe, ähnlicher Umriss.",
+      "5": "Zähle nur die Formen, die in die richtige Richtung zeigen.",
+      "6": "Ein 6×6-Feld mit ähnlichen Doppelgängern.",
+      "7": "Richtung und ähnliche Farben, 36 Elemente.",
+      "8": "Zähle ein L zwischen gedrehten und gespiegelten L.",
+      "9": "48 Elemente, Doppelgänger jeder Art.",
+      "10": "48 Elemente, nur Doppelgänger, bis zu 15 Ziele."
+    },
+    "kinds": {
+      "plain": "Deutlich andere Füller",
+      "lookalike": "Doppelgänger in Farbe und Form",
+      "oriented": "Doppelgänger in Richtung"
+    },
+    "prompt": "Wie oft kommt dieses Symbol vor: {{mark}}?",
+    "explanation_one": "Es gibt {{count}} exakte Kopie dieses Symbols: {{mark}} (hervorgehoben).",
+    "explanation_other": "Es gibt {{count}} exakte Kopien dieses Symbols: {{mark}} (hervorgehoben).",
+    "view": {
+      "count": "Zähle:",
+      "field": "Feld"
+    }
+  },
+  "sustainedAttention": {
+    "name": "Daueraufmerksamkeit",
+    "tagline": "Bleib beim Strom.",
+    "description": "Buchstaben erscheinen einzeln in gleichmäßigem Tempo. Drücke „Jetzt!“ (oder die Leertaste), sobald das Ziel erscheint – später nur, wenn ein X direkt nach einem A kommt. Die Folgen wachsen von 15 auf 45 Buchstaben.",
+    "scoringSummary": "Jede Folge wird nach verpassten Zielen plus falschen Drücken bewertet; sie zählt als richtig, wenn diese Summe innerhalb der genannten Toleranz liegt (0 bis 2, je nach Stufe). Dein Ergebnis ist der Anteil der Folgen innerhalb der Toleranz.",
+    "accessibilityNotes": "Die Buchstaben wechseln in festem Tempo (0,8–1,5 s pro Buchstabe, im entspannten Modus 50 % langsamer) und werden Screenreadern angesagt; nichts blinkt. Ein Druck zählt für den Buchstaben, der in diesem Moment zu sehen ist.",
+    "instructions": {
+      "1": "Buchstaben erscheinen einzeln im Kasten. Schau hin, bis die Folge endet.",
+      "2": "Drücke „Jetzt!“ oder die Leertaste, solange der Zielbuchstabe zu sehen ist.",
+      "3": "Ab Stufe 5: Drücke nur bei einem X, das direkt nach einem A kommt.",
+      "4": "Die Folge wird am Ende automatisch abgegeben. Ein Druck zählt für den Buchstaben, der gerade angezeigt wird."
+    },
+    "simpleInstructions": "Drücke den Knopf jedes Mal, wenn du das X siehst.",
+    "levels": {
+      "1": "Drücke bei jedem X in einer Folge von 15 Buchstaben.",
+      "2": "20 Buchstaben, etwas schneller.",
+      "3": "Ähnliche Buchstaben (K, Y) kommen dazu.",
+      "4": "30 Buchstaben mit ähnlichen Buchstaben.",
+      "5": "Drücke bei einem X nur, wenn es direkt nach einem A kommt.",
+      "6": "A, dann X – mit mehr Ködern.",
+      "7": "A, dann X – 35 Buchstaben.",
+      "8": "A, dann X – zwischen ähnlichen Buchstaben.",
+      "9": "40 Buchstaben, zügiges Tempo.",
+      "10": "45 Buchstaben, die längste Wache."
+    },
+    "kinds": {
+      "single": "Einzelnes Ziel",
+      "sequence": "Ziel nach Hinweis"
+    },
+    "prompt": {
+      "single": "Drücke „Jetzt!“ bei jedem {{target}}.",
+      "sequence": "Drücke „Jetzt!“ bei einem {{target}} direkt nach einem {{cue}}."
+    },
+    "slips_one": "Bis zu {{count}} Ausrutscher ist erlaubt.",
+    "slips_other": "Bis zu {{count}} Ausrutscher sind erlaubt.",
+    "explanation": "Es gab {{count}} Ziele, an den Positionen {{positions}}.",
+    "view": {
+      "rule": {
+        "single": "Drücke bei jedem {{target}}.",
+        "sequence": "Drücke bei einem {{target}} direkt nach einem {{cue}}."
+      },
+      "legend": "Die Folge: ✓ gedrücktes Ziel · • verpasstes Ziel · ✗ falscher Druck",
+      "stream": "Die Folge",
+      "letter": "Buchstabe {{position}}, {{letter}}",
+      "target": "Ziel",
+      "pressed": "gedrückt",
+      "done": "Fertig",
+      "getReady": "Mach dich bereit …",
+      "letters_one": "{{count}} Buchstabe",
+      "letters_other": "{{count}} Buchstaben",
+      "recorded": "Druck erfasst",
+      "now": "Jetzt! (Leertaste)"
+    }
+  },
+  "dualTask": {
+    "name": "Doppelaufgabe",
+    "tagline": "Zwei Zählungen zugleich.",
+    "description": "Paare aus einer Zahl und einer Form erscheinen nacheinander. Führe zwei Zählungen gleichzeitig – zum Beispiel gerade Zahlen und Sterne – und wähle dann die Option, bei der beide stimmen.",
+    "scoringSummary": "Eine Folge zählt als richtig, wenn die gewählte Option beide Zählungen richtig hat. Jede Zählung hat zwei mögliche Werte; wer nur eine richtig hat, rät also zu 50 %. Für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Ab Stufe 6 nennt die Formzählung eine Farbe. Jedes Paar wird Screenreadern angesagt („7, blauer Stern“); das Tempo (0,9–1,6 s pro Paar) verdoppelt sich im entspannten Modus.",
+    "instructions": {
+      "1": "Lies beide Regeln, bevor die Folge beginnt: eine zu Zahlen, eine zu Formen.",
+      "2": "Die Paare erscheinen nacheinander. Behalte zwei Zählungen im Kopf.",
+      "3": "Ein Paar kann für beide Regeln zählen, für eine oder für keine.",
+      "4": "Wähle am Ende die Option, bei der beide Zählungen stimmen (Tasten 1–4)."
+    },
+    "simpleInstructions": "Zähle zwei Dinge gleichzeitig und wähle dann das richtige Zahlenpaar.",
+    "levels": {
+      "1": "Zähle gerade Zahlen und Sterne in 6 Paaren.",
+      "2": "Zwei Zählungen über 8 Paare.",
+      "3": "10 Paare; die Optionen unterscheiden sich jetzt um eins.",
+      "4": "Ähnliche Formen kommen dazu.",
+      "5": "Neue Zahlenregel: Zähle die Zahlen über 5.",
+      "6": "Nur Formen einer Farbe zählen.",
+      "7": "Zweistellige Zahlen über 50, farbige Formen.",
+      "8": "Gerade zweistellige Zahlen, 16 Paare.",
+      "9": "18 Paare in zügigem Tempo.",
+      "10": "20 Paare, ungerade zweistellige Zahlen."
+    },
+    "kinds": {
+      "parity": "Gerade/ungerade + Formen",
+      "threshold": "Große Zahlen + Formen"
+    },
+    "numbers": {
+      "even": "gerade Zahlen",
+      "odd": "ungerade Zahlen",
+      "above": "Zahlen über {{threshold}}"
+    },
+    "numberCount": {
+      "even_one": "{{count}} gerade Zahl",
+      "even_other": "{{count}} gerade Zahlen",
+      "odd_one": "{{count}} ungerade Zahl",
+      "odd_other": "{{count}} ungerade Zahlen",
+      "above_one": "{{count}} Zahl über {{threshold}}",
+      "above_other": "{{count}} Zahlen über {{threshold}}"
+    },
+    "prompt": "Bei welcher Option stimmen beide Zählungen?",
+    "studyPrompt": "Zähle zwei Dinge: {{numbers}} und {{shapes}}.",
+    "explanation": "Es gab {{numbers}} und {{shapes}}.",
+    "view": {
+      "rules": "Zähle: {{numbers}} · {{shapes}}",
+      "getReady": "Mach dich bereit …",
+      "done": "Fertig – mach dich bereit zu antworten",
+      "pairs_one": "{{count}} Paar",
+      "pairs_other": "{{count}} Paare",
+      "legend": "Die Folge (# = gezählte Zahl, ★ = gezählte Form):",
+      "stream": "Die Folge",
+      "counted": "(gezählt)"
+    }
+  },
+  "complexVisualInspection": {
+    "name": "Komplexe Sichtprüfung",
+    "tagline": "Alle drei Merkmale müssen passen.",
+    "description": "Prüfe ein dichtes Raster und markiere jedes Element, das eine Regel mit drei Merkmalen zugleich erfüllt – Form, Farbe und Richtung (später auch Spiegelung und „jede Farbe außer …“). Die meisten Ablenkungen weichen nur in einem Merkmal ab.",
+    "scoringSummary": "Ein Raster zählt als richtig, wenn deine Markierungen den Zielen entsprechen (übersehene Ziele und falsche Markierungen sind Fehler); ab Stufe 8 wird ein Fehler toleriert. Dein Ergebnis ist der Anteil gelöster Raster; für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Die Regeln nennen eine Farbe, visuelles Spielen erfordert also Farbsehen; jedes Element ist für Screenreader auch mit Farbe, Form und Lage benannt („grüne L-Form, gespiegelt, nach links gedreht“). Die Richtung wird an der gezeichneten Form beurteilt, was genaues Hinsehen verlangt.",
+    "instructions": {
+      "1": "Lies die Regel: Form, Richtung und Farbe müssen ALLE passen.",
+      "2": "Die meisten Elemente verletzen nur einen Teil der Regel – prüfe jedes Merkmal.",
+      "3": "„Gespiegelt“ heißt von links nach rechts umgeklappt; „nach rechts gedreht“ heißt eine Vierteldrehung im Uhrzeigersinn.",
+      "4": "Markiere jeden Treffer und drücke dann auf Prüfen. Ab Stufe 7 entscheidest du, wie viele es sind."
+    },
+    "simpleInstructions": "Tippe die Formen an, die in allem zur Regel passen.",
+    "levels": {
+      "1": "Form, Farbe und Richtung: Dreiecke nach oben oder unten.",
+      "2": "Drei Formen, zwei Richtungen.",
+      "3": "Alle vier Richtungen.",
+      "4": "Mehr Farben, mehr Doppelgänger.",
+      "5": "L-Formen: Auch gespiegelt oder nicht zählt.",
+      "6": "Köder in der nächstliegenden Farbe, 6×6.",
+      "7": "Die Zahl der Ziele wird nicht mehr genannt.",
+      "8": "Verneinte Farbe: jede Farbe außer einer (ein Ausrutscher erlaubt).",
+      "9": "Verneinte Regel mit gespiegelten L-Formen überall.",
+      "10": "Das dichteste Raster: 48 Elemente, jede Regel."
+    },
+    "kinds": {
+      "positive": "Form, Farbe und Richtung",
+      "negated": "Jede Farbe außer einer"
+    },
+    "rule": {
+      "negated": "{{shapes}}, in jeder Farbe außer {{color}}"
+    },
+    "prompt": {
+      "exact_one": "Markiere den einzigen Treffer: {{rule}}.",
+      "exact_other": "Markiere alle {{count}} Treffer: {{rule}}.",
+      "free": "Markiere jeden Treffer: {{rule}}. Du entscheidest, wie viele es sind.",
+      "freeWithSlip": "Markiere jeden Treffer: {{rule}}. Du entscheidest, wie viele es sind. Ein Ausrutscher ist erlaubt."
+    },
+    "explanation": "{{count}} Elemente erfüllten alle Merkmale ({{rule}}). Die übrigen wichen in Form, Farbe oder Richtung ab.",
+    "view": {
+      "rule": "Regel:",
+      "ruleExample": "Regel (Beispiel):",
+      "items": "Elemente"
+    }
+  },
+  "errorDetection": {
+    "name": "Fehler finden",
+    "tagline": "Korrekturlesen: Genau eine Sache ist falsch.",
+    "description": "Lies Alltagslisten Korrektur – eine sortierte Liste, einen Kassenbon, einen Tagesplan, eine Wortliste, abgeschriebene Codes – und zeige auf die eine falsche Zeile. Die Fehler werden kleiner und die Listen länger.",
+    "scoringSummary": "Eine Liste zählt als richtig, wenn du auf die eine falsche Zeile zeigst. Dein Ergebnis ist der Anteil gelöster Listen; für die Antwort gibt es kein Zeitlimit.",
+    "accessibilityNotes": "Kassenbons und Tagespläne erfordern einfaches Rechnen (kleine Mengen multiplizieren, Preise addieren, Uhrzeiten subtrahieren). Wortlisten verwenden gängige deutsche Wörter.",
+    "instructions": {
+      "1": "Lies die Regel über der Liste: Sie sagt, was jede Zeile erfüllen muss.",
+      "2": "Prüfe die Zeilen nacheinander. Genau eine verletzt die Regel.",
+      "3": "Drücke auf diese Zeile (oder bewege dich mit den Pfeiltasten und drücke Enter).",
+      "4": "Ab Stufe 7 sind die Fehler klein: 10 Cent, 5 Minuten, eine 0 statt eines O."
+    },
+    "simpleInstructions": "Eine Zeile der Liste ist falsch. Finde sie und tippe sie an.",
+    "levels": {
+      "1": "Finde die Zahl, die in einer kurzen Liste nicht in der Reihe ist.",
+      "2": "Finde das falsch geschriebene Wort.",
+      "3": "Prüfe einen Kassenbon: Eine Zeilensumme ist falsch.",
+      "4": "Prüfe abgeschriebene Codes.",
+      "5": "Prüfe einen Tagesplan: Eine Dauer ist falsch.",
+      "6": "Gemischte Listen, 7 Zeilen.",
+      "7": "Kassenbons mit Gesamtsumme; kleine Fehler.",
+      "8": "Codes mit ähnlichen Zeichen (0 und O, 8 und B).",
+      "9": "Gemischte Listen mit kleinen Fehlern, 9 Zeilen.",
+      "10": "Gemischte Listen mit kleinen Fehlern, 10 Zeilen."
+    },
+    "kinds": {
+      "sorted": "Sortierte Liste",
+      "receipt": "Kassenbon",
+      "schedule": "Tagesplan",
+      "spelling": "Rechtschreibung",
+      "copy": "Abgeschriebene Codes"
+    },
+    "prompt": "Welche Zeile ist falsch?",
+    "rule": {
+      "sortedNumbers": "Die Zahlen sollten von der kleinsten zur größten gehen. Eine steht an der falschen Stelle.",
+      "sortedWords": "Die Wörter sollten alphabetisch geordnet sein. Eines steht an der falschen Stelle.",
+      "receipt": "Jede Zeile: Menge × Preis = Zeilensumme. Eine Zeile ist falsch.",
+      "receiptWithTotal": "Jede Zeile: Menge × Preis = Zeilensumme, und SUMME ist die Summe der Zeilen. Eine Zeile ist falsch.",
+      "schedule": "Jeder Zeitraum nennt seine Dauer in Minuten. Eine Dauer passt nicht zu ihren Uhrzeiten.",
+      "spelling": "Jedes Wort ist ein gängiges deutsches Wort. Eines ist falsch geschrieben.",
+      "copy": "Jeder Code rechts sollte eine exakte Kopie des Codes links sein. Eine Kopie ist falsch."
+    },
+    "row": {
+      "receipt": "{{quantity}} × {{item}} à {{price}} = {{total}}",
+      "total": "SUMME = {{total}}",
+      "schedule": "{{start}}–{{end}}  {{activity}} ({{minutes}} Min.)"
+    },
+    "activity": {
+      "reading": "Lesen",
+      "maths": "Mathe",
+      "lunch": "Mittagessen",
+      "music": "Musik",
+      "walk": "Spaziergang",
+      "art": "Kunst",
+      "break": "Pause",
+      "science": "Naturwissenschaften",
+      "meeting": "Besprechung",
+      "emails": "E-Mails",
+      "gym": "Sport",
+      "cooking": "Kochen",
+      "phoneCall": "Telefonat",
+      "shopping": "Einkaufen"
+    },
+    "explanation": {
+      "sorted": "„{{value}}“ steht an der falschen Stelle: Ohne diesen Eintrag ist die Liste geordnet.",
+      "total": "Die Zeilen ergeben zusammen {{sum}}, aber bei SUMME steht {{total}}.",
+      "line": "{{quantity}} × {{price}} = {{right}}, nicht {{wrong}}.",
+      "schedule_one": "{{start}}–{{end}} ist {{count}} Minute, nicht {{stated}}.",
+      "schedule_other": "{{start}}–{{end}} sind {{count}} Minuten, nicht {{stated}}.",
+      "spelling": "„{{wrong}}“ schreibt man „{{right}}“.",
+      "copy": "{{wrong}} ist nicht {{original}}: Zeichen {{position}} ist „{{replacement}}“ statt „{{char}}“."
+    },
+    "view": {
+      "row": "Zeile {{row}}: {{text}}",
+      "wrongRow": "falsche Zeile",
+      "yourPick": "deine Wahl"
+    }
+  }
+}

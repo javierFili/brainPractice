@@ -1,6 +1,7 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
+import { msg } from '@/domain/shared';
 import { fieldValue, formatRecord } from '../format';
 import type { CodeMemoryProfile, DataRecord, Field } from '../types';
 import { RELATIONS, SCHEMAS, type EntitySchema, type FieldSpec } from '../vocabulary';
@@ -84,10 +85,15 @@ export function recordRecall(random: RandomGenerator, profile: CodeMemoryProfile
     if (distractors === null) return null;
 
     return {
-      prompt: `What was the ${asked.name} of the ${record.type} record?`,
+      prompt: msg('programming:codeMemory.record.prompt', { field: asked.name, type: record.type }),
       content: { kind: 'record-recall', records, ask: { recordIndex, field: asked.name } },
       response: singleChoice(random, asked.value, distractors),
-      explanation: `The ${record.type} record was ${formatRecord(record)}, so its ${asked.name} was ${asked.value}.`,
+      explanation: msg('programming:codeMemory.record.explanation', {
+        type: record.type,
+        record: formatRecord(record),
+        field: asked.name,
+        value: asked.value,
+      }),
       skills: ['working-memory', 'attention'],
     };
   });
@@ -124,14 +130,26 @@ export function crossReference(random: RandomGenerator, profile: CodeMemoryProfi
     if (distractors === null) return null;
 
     return {
-      prompt: `The ${schema.type} whose ${key.name} was ${keyValue} — what was its ${target.name}?`,
+      prompt: msg('programming:codeMemory.crossReference.prompt', {
+        type: schema.type,
+        key: key.name,
+        keyValue,
+        field: target.name,
+      }),
       content: {
         kind: 'cross-reference',
         records,
         ask: { keyField: key.name, keyValue, targetField: target.name, recordIndex },
       },
       response: singleChoice(random, answer, distractors),
-      explanation: `Only one ${schema.type} had ${key.name} ${keyValue}: ${formatRecord(record)}. Its ${target.name} was ${answer}.`,
+      explanation: msg('programming:codeMemory.crossReference.explanation', {
+        type: schema.type,
+        key: key.name,
+        keyValue,
+        record: formatRecord(record),
+        field: target.name,
+        value: answer,
+      }),
       skills: ['working-memory', 'logical-reasoning'],
     };
   });
@@ -209,7 +227,14 @@ export function foreignKeyJoin(random: RandomGenerator, profile: CodeMemoryProfi
     if (distractors === null) return null;
 
     return {
-      prompt: `The ${parent.type} whose ${key.name} was ${keyValue} has one ${child.type} (linked by ${relation.foreignKey}). What was that ${child.type}'s ${target.name}?`,
+      prompt: msg('programming:codeMemory.join.prompt', {
+        parent: parent.type,
+        key: key.name,
+        keyValue,
+        child: child.type,
+        foreignKey: relation.foreignKey,
+        field: target.name,
+      }),
       content: {
         kind: 'foreign-key-join',
         parents,
@@ -218,7 +243,17 @@ export function foreignKeyJoin(random: RandomGenerator, profile: CodeMemoryProfi
         ask: { keyField: key.name, keyValue, targetField: target.name, parentIndex, childIndex },
       },
       response: singleChoice(random, answer, distractors),
-      explanation: `The ${parent.type} with ${key.name} ${keyValue} had id ${parentId}; the ${child.type} with ${relation.foreignKey}: ${parentId} was ${formatRecord(child)}, so its ${target.name} was ${answer}.`,
+      explanation: msg('programming:codeMemory.join.explanation', {
+        parent: parent.type,
+        key: key.name,
+        keyValue,
+        parentId,
+        child: child.type,
+        link: `${relation.foreignKey}: ${parentId}`,
+        record: formatRecord(child),
+        field: target.name,
+        value: answer,
+      }),
       skills: ['working-memory', 'logical-reasoning', 'decomposition'],
     };
   });

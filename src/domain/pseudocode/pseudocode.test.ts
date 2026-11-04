@@ -1,4 +1,5 @@
-import { parseExpression, parseProgram } from './parse';
+import { en } from '@/test/i18n';
+import { parseExpression, parseProgram, SyntaxProblem } from './parse';
 import { display, literal } from './run';
 import { execute, executeOrThrow } from './source';
 
@@ -35,14 +36,19 @@ describe('pseudocode — values and expressions', () => {
   });
 
   it('rejects chained comparisons instead of misreading them', () => {
-    expect(() => parseExpression('1 < x < 5')).toThrow(/and/);
+    expect(() => parseExpression('1 < x < 5')).toThrow(SyntaxProblem);
+    try {
+      parseExpression('1 < x < 5');
+    } catch (problem) {
+      expect(en((problem as SyntaxProblem).text)).toMatch(/and/);
+    }
   });
 
   it('concatenates text and refuses to mix text and numbers', () => {
     expect(vars('s = "Hi " + "Ada"')).toEqual({ s: 'Hi Ada' });
     const result = run('n = 3\ns = "n = " + n');
     expect(result.error).toMatchObject({ line: 2, kind: 'type' });
-    expect(result.error?.message).toMatch(/str\(\)/);
+    expect(en(result.error?.message ?? '')).toMatch(/str\(\)/);
     expect(vars('n = 3\ns = "n = " + str(n)')).toMatchObject({ s: 'n = 3' });
   });
 
@@ -52,11 +58,9 @@ describe('pseudocode — values and expressions', () => {
       b: 6,
       c: 'b',
     });
-    expect(run('xs = [4, 5, 6]\nv = xs[3]').error).toMatchObject({
-      line: 2,
-      kind: 'index',
-      message: expect.stringMatching(/0 to 2/) as unknown,
-    });
+    const outside = run('xs = [4, 5, 6]\nv = xs[3]').error;
+    expect(outside).toMatchObject({ line: 2, kind: 'index' });
+    expect(en(outside?.message ?? '')).toMatch(/0 to 2/);
   });
 
   it('reports variables used before being set, with the line', () => {
@@ -154,7 +158,7 @@ describe('pseudocode — trace, inputs and syntax errors', () => {
     expect(parsed.ok).toBe(false);
     if (!parsed.ok) {
       expect(parsed.error.line).toBe(line);
-      expect(parsed.error.message).toMatch(message);
+      expect(en(parsed.error.message)).toMatch(message);
     }
   });
 

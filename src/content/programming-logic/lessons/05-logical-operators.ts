@@ -1,58 +1,55 @@
 import { exerciseId, lessonId, type Lesson } from '@/domain/learning';
+import { msg, type Message } from '@/domain/shared';
 import { C } from '../concepts';
 
 const code = (...lines: string[]) => lines.join('\n');
 
+/** Every prose text of this lesson lives in the `lessons` namespace; code stays literal. */
+const t = (key: string): Message => msg(`lessons:logicalOperators.${key}`);
+
 export const lesson: Lesson = {
   id: lessonId('logical-operators'),
-  title: 'Logical Operators',
-  objective:
-    'You will be able to combine true/false questions with and, or and not, and translate a rule written in words into a condition.',
-  summary:
-    'and needs both sides true, or needs at least one, not flips the answer. With them a single condition can express rules like "between 13 and 19" or "free if under 5 or over 65".',
+  title: t('title'),
+  objective: t('objective'),
+  summary: t('summary'),
   minutes: 11,
   concepts: [C.booleanLogic],
-  keyPoints: [
-    '`a and b` is true only when both are true; `a or b` is true when at least one is true.',
-    '`not` flips true and false. `not x > 3` means `not (x > 3)`.',
-    'A range like "13 to 19" is two comparisons joined with and: `age >= 13 and age <= 19`.',
-    'Read the rule aloud: "either … or …" needs or, "both … and …" needs and.',
-  ],
+  keyPoints: [t('keyPoints.1'), t('keyPoints.2'), t('keyPoints.3'), t('keyPoints.4')],
   steps: [
     {
       kind: 'explain',
       id: 'intro',
-      title: 'Combining questions',
+      title: t('steps.intro.title'),
       blocks: [
         {
           kind: 'paragraph',
-          text: 'Real rules often have more than one part: "a teenager is at least 13 and at most 19". Logical operators join several true/false answers into one.',
+          text: t('steps.intro.blocks.b1'),
         },
         {
           kind: 'list',
           items: [
-            '`a and b`: true only if both a and b are true',
-            '`a or b`: true if at least one of them is true (also when both are)',
-            '`not a`: the opposite of a',
+            t('steps.intro.blocks.b2.1'),
+            t('steps.intro.blocks.b2.2'),
+            t('steps.intro.blocks.b2.3'),
           ],
         },
         {
           kind: 'code',
-          caption: 'Each side is a full comparison; and joins the two answers.',
+          caption: t('steps.intro.blocks.b3'),
           source: code('age = 15', 'teen = age >= 13 and age <= 19'),
         },
         {
           kind: 'callout',
           tone: 'warning',
-          text: 'You cannot write `13 <= age <= 19`. Write both comparisons in full and join them: `age >= 13 and age <= 19`.',
+          text: t('steps.intro.blocks.b4'),
         },
       ],
     },
     {
       kind: 'playground',
       id: 'play-ages',
-      title: 'Two rules, one age',
-      intro: 'Change the age and the ticket, and watch each combined answer.',
+      title: t('steps.playAges.title'),
+      intro: t('steps.playAges.intro'),
       playground: {
         inputs: [
           { name: 'age', type: 'number', initial: 15, min: 0, max: 99 },
@@ -68,9 +65,9 @@ export const lesson: Lesson = {
         ),
         watch: ['age', 'has_ticket', 'teen', 'free', 'can_enter'],
         prompts: [
-          'Try ages 12, 13, 19 and 20. For which ones is teen true?',
-          'Find two different ages that make free true.',
-          'Turn has_ticket off. Which ages can still enter, and why?',
+          t('steps.playAges.prompts.1'),
+          t('steps.playAges.prompts.2'),
+          t('steps.playAges.prompts.3'),
         ],
       },
     },
@@ -81,23 +78,22 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-when-is-and-true'),
         kind: 'multiple-choice',
-        prompt: 'When is `a and b` true?',
+        prompt: t('exercises.whenIsAndTrue.prompt'),
         concept: C.booleanLogic,
         dimension: 'understanding',
-        hints: ['"I need a ticket and an ID": when do you get in?'],
-        explanation:
-          'and is strict: one false side is enough to make the whole thing false. Only true and true gives true.',
+        hints: [t('exercises.whenIsAndTrue.hints.1')],
+        explanation: t('exercises.whenIsAndTrue.explanation'),
         options: [
-          { id: 'one', label: 'When at least one of them is true' },
-          { id: 'exactly', label: 'When exactly one of them is true' },
-          { id: 'both', label: 'Only when both are true' },
-          { id: 'neither', label: 'When both are false' },
+          { id: 'one', label: t('exercises.whenIsAndTrue.options.one') },
+          { id: 'exactly', label: t('exercises.whenIsAndTrue.options.exactly') },
+          { id: 'both', label: t('exercises.whenIsAndTrue.options.both') },
+          { id: 'neither', label: t('exercises.whenIsAndTrue.options.neither') },
         ],
         correctOptionId: 'both',
         misconceptions: {
-          one: 'That is or. With and, a single false side makes the whole condition false.',
-          exactly: 'If only one side is true, the other is false, and and then gives false.',
-          neither: 'false and false is false. and never turns false answers into true.',
+          one: t('exercises.whenIsAndTrue.misconceptions.one'),
+          exactly: t('exercises.whenIsAndTrue.misconceptions.exactly'),
+          neither: t('exercises.whenIsAndTrue.misconceptions.neither'),
         },
       },
     },
@@ -108,18 +104,16 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-predict-or'),
         kind: 'prediction',
-        prompt: 'What is the value of outside?',
+        prompt: t('exercises.predictOr.prompt'),
         concept: C.booleanLogic,
         dimension: 'application',
-        hints: ['Answer each side separately: is 3 < 5? Is 3 > 10? Then join them with or.'],
-        explanation:
-          '3 < 5 is true and 3 > 10 is false. or needs only one true side, so outside is true.',
+        hints: [t('exercises.predictOr.hints.1')],
+        explanation: t('exercises.predictOr.explanation'),
         code: { source: code('x = 3', 'outside = x < 5 or x > 10') },
         target: { kind: 'variable', name: 'outside' },
         expected: 'true',
         commonMistakes: {
-          false:
-            'One side (3 > 10) is false, but or is true as soon as one side is true, and 3 < 5 is true.',
+          false: t('exercises.predictOr.mistakes.m1'),
         },
       },
     },
@@ -130,43 +124,42 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-predict-not'),
         kind: 'prediction',
-        prompt: 'What is the value of small?',
+        prompt: t('exercises.predictNot.prompt'),
         concept: C.booleanLogic,
         dimension: 'application',
-        hints: ['`not` applies to the whole comparison: first work out 8 > 10, then flip it.'],
-        explanation: '`not n > 10` means `not (n > 10)`. 8 > 10 is false, and not false is true.',
+        hints: [t('exercises.predictNot.hints.1')],
+        explanation: t('exercises.predictNot.explanation'),
         code: { source: code('n = 8', 'small = not n > 10') },
         target: { kind: 'variable', name: 'small' },
         expected: 'true',
         commonMistakes: {
-          false: '8 > 10 is false; not flips it, so the result is true.',
+          false: t('exercises.predictNot.mistakes.m1'),
         },
       },
     },
     {
       kind: 'explain',
       id: 'translate',
-      title: 'From words to conditions',
+      title: t('steps.translate.title'),
       blocks: [
         {
           kind: 'paragraph',
-          text: 'To turn a rule into code, find the small questions first, then decide how they join. "Free if under 5 or over 65" has two questions: `age < 5` and `age > 65`.',
+          text: t('steps.translate.blocks.b1'),
         },
         {
           kind: 'code',
-          caption:
-            'Nobody is both under 5 and over 65, so and here would make the rule never true.',
+          caption: t('steps.translate.blocks.b2'),
           source: code('free = age < 5 or age > 65'),
         },
         {
           kind: 'callout',
           tone: 'tip',
-          text: 'Check your condition with one example that should pass and one that should fail. If no value at all can make it true, you probably used and where or was meant.',
+          text: t('steps.translate.blocks.b3'),
         },
         {
           kind: 'callout',
           tone: 'key',
-          text: '`not (a and b)` means "not both": at least one is false, which is `not a or not b`. Flipping a combined question also flips and into or.',
+          text: t('steps.translate.blocks.b4'),
         },
       ],
     },
@@ -177,15 +170,11 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-complete-comfortable'),
         kind: 'code-completion',
-        prompt:
-          'A room is comfortable when the temperature is from 18 to 24, both included. Complete the condition (for temp = 30 it must be false).',
+        prompt: t('exercises.completeComfortable.prompt'),
         concept: C.booleanLogic,
         dimension: 'application',
-        hints: [
-          'The temperature must pass both tests at the same time: not too cold and not too hot.',
-        ],
-        explanation:
-          '"From 18 to 24" means at least 18 and at most 24: `temp >= 18 and temp <= 24`. 30 fails the second test, so the result is false.',
+        hints: [t('exercises.completeComfortable.hints.1')],
+        explanation: t('exercises.completeComfortable.explanation'),
         template: code('temp = 30', 'comfortable = temp >= 18 [[join]] temp [[upper]] 24'),
         blanks: [
           { id: 'join', options: ['and', 'or'], correct: 'and' },
@@ -193,9 +182,8 @@ export const lesson: Lesson = {
         ],
         check: { variable: 'comfortable', expected: 'false' },
         misconceptions: {
-          'join:or':
-            'With or, any temperature of 18 or more passes, so 30 would count as comfortable.',
-          'upper:>=': 'The upper limit must keep values at most 24, so it needs `<=`.',
+          'join:or': t('exercises.completeComfortable.misconceptions.m1'),
+          'upper:>=': t('exercises.completeComfortable.misconceptions.m2'),
         },
       },
     },
@@ -206,13 +194,11 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-build-ticket-price'),
         kind: 'block-builder',
-        prompt:
-          'Build a program that sets price to 0 for children under 5 or seniors over 65, and to 8 for everyone else.',
+        prompt: t('exercises.buildTicketPrice.prompt'),
         concept: C.booleanLogic,
         dimension: 'application',
-        hints: ['Start with the question, then the yes branch, then else.'],
-        explanation:
-          'The rule is "under 5 or over 65", so the condition joins `age < 5` and `age > 65` with or. The else branch covers everyone else.',
+        hints: [t('exercises.buildTicketPrice.hints.1')],
+        explanation: t('exercises.buildTicketPrice.explanation'),
         blocks: [
           { id: 'ask', label: 'if age < 5 or age > 65:' },
           { id: 'free', label: '    price = 0' },
@@ -223,9 +209,8 @@ export const lesson: Lesson = {
         ],
         solution: ['ask', 'free', 'else', 'pay'],
         misconceptions: {
-          and: 'Nobody is under 5 and over 65 at the same time, so with and nobody would ever get in free.',
-          flipped:
-            'The comparisons point the wrong way: every age is either over 5 or under 65, so everyone would be free.',
+          and: t('exercises.buildTicketPrice.misconceptions.and'),
+          flipped: t('exercises.buildTicketPrice.misconceptions.flipped'),
         },
       },
     },
@@ -236,27 +221,26 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-match-rules'),
         kind: 'matching',
-        prompt: 'Match each rule with the condition that expresses it.',
+        prompt: t('exercises.matchRules.prompt'),
         concept: C.booleanLogic,
         dimension: 'understanding',
-        hints: ['"Between" needs both tests; "either" needs one of them.'],
-        explanation:
-          'A range is two tests joined by and; "either" joins with or; "not both" is not around an and.',
+        hints: [t('exercises.matchRules.hints.1')],
+        explanation: t('exercises.matchRules.explanation'),
         pairs: [
           {
-            left: { id: 'teen', label: 'Age is from 13 to 19' },
+            left: { id: 'teen', label: t('exercises.matchRules.pairs.teen') },
             right: { id: 'range', label: '`age >= 13 and age <= 19`' },
           },
           {
-            left: { id: 'free', label: 'Under 5 or over 65' },
+            left: { id: 'free', label: t('exercises.matchRules.pairs.free') },
             right: { id: 'either', label: '`age < 5 or age > 65`' },
           },
           {
-            left: { id: 'notboth', label: 'Not both raining and cold' },
+            left: { id: 'notboth', label: t('exercises.matchRules.pairs.notboth') },
             right: { id: 'notand', label: '`not (raining and cold)`' },
           },
           {
-            left: { id: 'adultticket', label: 'An adult who has a ticket' },
+            left: { id: 'adultticket', label: t('exercises.matchRules.pairs.adultticket') },
             right: { id: 'both', label: '`age >= 18 and has_ticket`' },
           },
         ],
@@ -269,13 +253,11 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-debug-weekend'),
         kind: 'debugging',
-        prompt:
-          'The shop is closed on day 6 and day 7. For day 7 the program says "open". Which line is wrong, and why?',
+        prompt: t('exercises.debugWeekend.prompt'),
         concept: C.booleanLogic,
         dimension: 'debugging',
         hints: [],
-        explanation:
-          'Line 2 asks whether day is 6 and 7 at the same time, which is never true. The rule is "day 6 or day 7", so it needs or.',
+        explanation: t('exercises.debugWeekend.explanation'),
         code: {
           source: code(
             'day = 7',
@@ -287,15 +269,14 @@ export const lesson: Lesson = {
         },
         bugLine: 2,
         causes: [
-          { id: 'boundary', label: 'It should use `>=` instead of `==`' },
-          { id: 'never', label: 'and asks for both at once, which can never be true' },
-          { id: 'else', label: 'The else branch catches day 7' },
+          { id: 'boundary', label: t('exercises.debugWeekend.causes.boundary') },
+          { id: 'never', label: t('exercises.debugWeekend.causes.never') },
+          { id: 'else', label: t('exercises.debugWeekend.causes.else') },
         ],
         correctCauseId: 'never',
         misconceptions: {
-          boundary:
-            'The `==` tests are right: day 7 should match 7 exactly. The problem is how the two tests are joined.',
-          else: 'else only runs because the condition is false. Fix the condition and else is right again.',
+          boundary: t('exercises.debugWeekend.misconceptions.boundary'),
+          else: t('exercises.debugWeekend.misconceptions.else'),
         },
         fix: {
           source: code(
@@ -317,12 +298,11 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-not-both'),
         kind: 'multiple-choice',
-        prompt: 'Which condition means the same as `not (hungry and tired)`?',
+        prompt: t('exercises.notBoth.prompt'),
         concept: C.booleanLogic,
         dimension: 'understanding',
         hints: [],
-        explanation:
-          '"Not both hungry and tired" is true as soon as one of them is false: `not hungry or not tired`.',
+        explanation: t('exercises.notBoth.explanation'),
         options: [
           { id: 'andnot', label: '`not hungry and not tired`' },
           { id: 'ornot', label: '`not hungry or not tired`' },
@@ -330,9 +310,8 @@ export const lesson: Lesson = {
         ],
         correctOptionId: 'ornot',
         misconceptions: {
-          andnot:
-            'That means "neither hungry nor tired". Being hungry but not tired is also "not both", and this option says false for it.',
-          or: 'This is true when you are hungry and tired, exactly the case `not (hungry and tired)` rules out.',
+          andnot: t('exercises.notBoth.misconceptions.andnot'),
+          or: t('exercises.notBoth.misconceptions.or'),
         },
       },
     },
@@ -343,12 +322,11 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l05-predict-price'),
         kind: 'prediction',
-        prompt: 'What is the value of price?',
+        prompt: t('exercises.predictPrice.prompt'),
         concept: C.booleanLogic,
         dimension: 'application',
         hints: [],
-        explanation:
-          '70 < 12 is false and member is false, so the first condition is false. 70 >= 65 is true and not member is true, so price is 7.',
+        explanation: t('exercises.predictPrice.explanation'),
         code: {
           source: code(
             'age = 70',
@@ -364,8 +342,8 @@ export const lesson: Lesson = {
         target: { kind: 'variable', name: 'price' },
         expected: '7',
         commonMistakes: {
-          '10': 'Both parts of the elif are true: 70 >= 65, and member is false so not member is true.',
-          '5': 'or needs at least one true side, but 70 < 12 is false and member is false.',
+          '10': t('exercises.predictPrice.mistakes.m1'),
+          '5': t('exercises.predictPrice.mistakes.m2'),
         },
       },
     },

@@ -1,21 +1,29 @@
+import { useTranslation } from 'react-i18next';
 import { continueTarget } from '@/domain/insights';
 import { useServices } from '@/app/providers/servicesContext';
 import { usePreferences } from '@/app/providers/preferencesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
-import { formatDate, formatPercent } from '@/features/shared/format';
 import { LoadError } from '@/features/shared/LoadError';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { useAppData } from '@/features/shared/useAppData';
+import { useFormat, useText } from '@/i18n';
 
 /** Pick up where you left off: the last game, and the last few different games played. */
 export function ContinuePage() {
   const data = useAppData();
   const { getModule } = useServices();
   const { preferences } = usePreferences();
+  const { t } = useTranslation('home');
+  const tx = useText();
+  const format = useFormat();
   if (data.status === 'loading') return <PageLoading />;
   if (data.status === 'error') return <LoadError onRetry={data.reload} />;
   const exists = (id: string) => getModule(id) !== undefined;
+  const name = (id: string) => {
+    const definition = getModule(id)?.definition;
+    return definition ? tx(definition.name) : id;
+  };
   const target = continueTarget(data.progress, exists, preferences.freePlay);
   // Most recent session of each game, latest first.
   const latestFirst = data.progress.recentSessions
@@ -28,35 +36,35 @@ export function ContinuePage() {
 
   return (
     <>
-      <PageHeader eyebrow="General" title="Continue training" />
+      <PageHeader eyebrow={t('continue.eyebrow')} title={t('continue.title')} />
       {target ? (
         <div className="flex flex-col gap-6">
           <section className="rounded-2xl border border-brand/40 bg-brand/10 p-6">
-            <p className="text-sm text-brand-strong">Last activity</p>
-            <h2 className="mt-1 text-2xl font-semibold text-ink">
-              {getModule(target.gameId)?.definition.name}
-            </h2>
+            <p className="text-sm text-brand-strong">{t('continue.last')}</p>
+            <h2 className="mt-1 text-2xl font-semibold text-ink">{name(target.gameId)}</h2>
             <p className="mt-2 text-ink-soft">
-              Level {target.session.level} on {formatDate(target.session.endedAt)} ·{' '}
-              {formatPercent(target.session.accuracy)} accuracy · performance{' '}
-              {target.session.performanceIndex}/100
-              {target.session.completed ? '' : ' · ended early'}
+              {t(target.session.completed ? 'continue.summary' : 'continue.summaryEarly', {
+                level: target.session.level,
+                date: format.date(target.session.endedAt),
+                accuracy: format.percent(target.session.accuracy),
+                performance: target.session.performanceIndex,
+              })}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <ButtonLink to={`/games/${target.gameId}/play/${target.level}`}>
                 {target.level === target.session.level
-                  ? `Repeat level ${target.level}`
-                  : `Go to level ${target.level}`}
+                  ? t('continue.repeat', { level: target.level })
+                  : t('continue.goTo', { level: target.level })}
               </ButtonLink>
               <ButtonLink to={`/games/${target.gameId}`} variant="secondary">
-                Choose another level
+                {t('continue.another')}
               </ButtonLink>
             </div>
           </section>
           {latestFirst.length > 1 && (
             <section aria-labelledby="recent-games">
               <h2 id="recent-games" className="mb-3 text-lg font-semibold text-ink">
-                Recently played
+                {t('continue.recent')}
               </h2>
               <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {latestFirst.slice(1).map((s) => (
@@ -66,8 +74,10 @@ export function ContinuePage() {
                       variant="secondary"
                       className="w-full justify-between"
                     >
-                      <span>{getModule(s.gameId)?.definition.name}</span>
-                      <span className="text-xs text-ink-muted">level {s.level}</span>
+                      <span>{name(s.gameId)}</span>
+                      <span className="text-xs text-ink-muted">
+                        {t('continue.level', { level: s.level })}
+                      </span>
                     </ButtonLink>
                   </li>
                 ))}
@@ -77,11 +87,11 @@ export function ContinuePage() {
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-line p-6 text-ink-soft">
-          <p>You have not played anything yet, so there is nothing to continue.</p>
+          <p>{t('continue.empty')}</p>
           <div className="mt-4 flex gap-2">
-            <ButtonLink to="/games">Browse activities</ButtonLink>
+            <ButtonLink to="/games">{t('continue.browse')}</ButtonLink>
             <ButtonLink to="/quick" variant="secondary">
-              Try a quick session
+              {t('continue.tryQuick')}
             </ButtonLink>
           </div>
         </div>

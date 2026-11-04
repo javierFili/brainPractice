@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ASSESSMENT_PROTOCOLS, type AssessmentProtocol } from '@/games/assessment';
 import { useServices } from '@/app/providers/servicesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { AREAS } from '@/features/shared/areas';
+import { useText } from '@/i18n';
 import { AssessmentDisclaimer } from './AssessmentDisclaimer';
 import { AssessmentFlow } from './AssessmentFlow';
 
@@ -11,6 +13,8 @@ const totalOf = ({ definition }: AssessmentProtocol) =>
   definition.sections.reduce((sum, s) => sum + s.levels.length * s.challengesPerLevel, 0);
 
 export function AssessmentPage() {
+  const { t } = useTranslation('assessment');
+  const tx = useText();
   const { getModule } = useServices();
   const [attempt, setAttempt] = useState(0);
   const [chosen, setChosen] = useState<AssessmentProtocol>(
@@ -34,17 +38,19 @@ export function AssessmentPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Assessment"
-        title="Cognitive Assessment"
-        description="A structured run through several kinds of task that produces a recreational performance profile. Compare it only with your own earlier runs of the same protocol."
+        eyebrow={t('page.eyebrow')}
+        title={t('page.title')}
+        description={t('page.description')}
       />
       <div className="grid gap-8 lg:grid-cols-[1fr_22rem]">
         <div className="flex flex-col gap-6">
           <fieldset>
-            <legend className="mb-3 text-lg font-semibold text-ink">Choose a length</legend>
+            <legend className="mb-3 text-lg font-semibold text-ink">
+              {t('page.chooseLength')}
+            </legend>
             <div
               role="radiogroup"
-              aria-label="Assessment protocol"
+              aria-label={t('page.protocol')}
               className="grid gap-3 sm:grid-cols-3"
             >
               {ASSESSMENT_PROTOCOLS.map((protocol) => {
@@ -64,10 +70,13 @@ export function AssessmentPage() {
                         : 'border-line bg-surface hover:bg-raised'
                     }`}
                   >
-                    <span className="font-semibold text-ink">{protocol.title}</span>
-                    <span className="text-sm text-ink-soft">{protocol.summary}</span>
+                    <span className="font-semibold text-ink">{tx(protocol.title)}</span>
+                    <span className="text-sm text-ink-soft">{tx(protocol.summary)}</span>
                     <span className="mt-1 text-xs text-ink-muted">
-                      {totalOf(protocol)} challenges · {protocol.minutes} min
+                      {t('page.length', {
+                        count: totalOf(protocol),
+                        minutes: protocol.minutes,
+                      })}
                     </span>
                   </button>
                 );
@@ -76,7 +85,7 @@ export function AssessmentPage() {
           </fieldset>
           <section aria-labelledby="structure-title" className="flex flex-col gap-3">
             <h2 id="structure-title" className="text-lg font-semibold text-ink">
-              How it works
+              {t('page.howItWorks')}
             </h2>
             <ol className="grid gap-2 sm:grid-cols-2">
               {definition.sections.map((section, i) => {
@@ -87,24 +96,23 @@ export function AssessmentPage() {
                     className={`rounded-lg border ${meta.ring} ${meta.soft} p-3 text-sm`}
                   >
                     <span className="font-mono text-xs text-ink-muted">{i + 1}.</span>{' '}
-                    <span className={`font-semibold ${meta.accent}`}>{meta.label}</span>
+                    <span className={`font-semibold ${meta.accent}`}>{tx(meta.label)}</span>
                     <span className="text-ink-soft">
                       {' '}
-                      · {getModule(section.gameId)?.definition.name ?? section.gameId} · levels{' '}
-                      {section.levels.join(', ')}
+                      ·{' '}
+                      {t('page.section', {
+                        game: tx(getModule(section.gameId)?.definition.name ?? section.gameId),
+                        levels: section.levels.join(', '),
+                      })}
                     </span>
                   </li>
                 );
               })}
             </ol>
-            <p className="text-sm text-ink-muted">
-              The same games, levels and number of challenges every time, so runs of one protocol
-              can be compared. Harder levels weigh more. Each round explains its rules; rounds do
-              not count toward level records.
-            </p>
+            <p className="text-sm text-ink-muted">{t('page.structureNote')}</p>
             {missing.length > 0 ? (
               <p role="alert" className="text-sm text-danger">
-                Not available: missing games {missing.map((s) => s.gameId).join(', ')}.
+                {t('page.missing', { games: missing.map((s) => s.gameId).join(', ') })}
               </p>
             ) : (
               <div>
@@ -113,7 +121,7 @@ export function AssessmentPage() {
                     setAttempt(1);
                   }}
                 >
-                  Start {chosen.title.toLowerCase()} assessment
+                  {tx(chosen.start)}
                 </Button>
               </div>
             )}

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SequenceRecallProfile } from './types';
 
@@ -11,7 +12,7 @@ const study = (length: number, itemMs: number) =>
  */
 export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
   {
-    objective: 'Repeat 3 colours in order.',
+    objective: msg('memory:sequenceRecall.levels.1'),
     challengeCount: 5,
     kinds: { forward: 1 },
     palette: 'colors',
@@ -22,7 +23,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(3, 1100),
   },
   {
-    objective: 'Repeat 4 colours in order.',
+    objective: msg('memory:sequenceRecall.levels.2'),
     challengeCount: 5,
     kinds: { forward: 1 },
     palette: 'colors',
@@ -33,7 +34,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(4, 1000),
   },
   {
-    objective: 'Repeat 4 shapes; symbols can come back.',
+    objective: msg('memory:sequenceRecall.levels.3'),
     challengeCount: 5,
     kinds: { forward: 1 },
     palette: 'shapes',
@@ -44,7 +45,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(4, 1000),
   },
   {
-    objective: 'Repeat 5 digits — sometimes backwards.',
+    objective: msg('memory:sequenceRecall.levels.4'),
     challengeCount: 6,
     kinds: { forward: 3, backward: 1 },
     palette: 'digits',
@@ -55,7 +56,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(5, 900),
   },
   {
-    objective: 'Hold 5 shapes forwards or backwards.',
+    objective: msg('memory:sequenceRecall.levels.5'),
     challengeCount: 6,
     kinds: { forward: 1, backward: 1 },
     palette: 'shapes',
@@ -66,7 +67,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(5, 850),
   },
   {
-    objective: 'Hold 6 digits forwards or backwards.',
+    objective: msg('memory:sequenceRecall.levels.6'),
     challengeCount: 6,
     kinds: { forward: 1, backward: 1 },
     palette: 'digits',
@@ -77,7 +78,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(6, 800),
   },
   {
-    objective: 'Hold 6 mixed colours and digits.',
+    objective: msg('memory:sequenceRecall.levels.7'),
     challengeCount: 6,
     kinds: { forward: 1, backward: 1 },
     palette: 'mixed',
@@ -88,7 +89,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(6, 750),
   },
   {
-    objective: 'Hold 7 mixed symbols, faster.',
+    objective: msg('memory:sequenceRecall.levels.8'),
     challengeCount: 6,
     kinds: { forward: 1, backward: 1 },
     palette: 'mixed',
@@ -99,7 +100,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(7, 700),
   },
   {
-    objective: 'Reverse 8 digits shown quickly.',
+    objective: msg('memory:sequenceRecall.levels.9'),
     challengeCount: 6,
     kinds: { forward: 1, backward: 2 },
     palette: 'digits',
@@ -110,7 +111,7 @@ export const SEQUENCE_RECALL_LEVELS = defineLevels<SequenceRecallProfile>([
     timing: study(8, 650),
   },
   {
-    objective: 'Reverse 9 mixed symbols shown quickly.',
+    objective: msg('memory:sequenceRecall.levels.10'),
     challengeCount: 6,
     kinds: { forward: 1, backward: 2 },
     palette: 'mixed',

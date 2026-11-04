@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import type {
   BugHunterContent,
   CodeExpr,
@@ -74,48 +75,69 @@ export function itemTexts(content: BugHunterContent): string[] {
 
 // ── Rules ─────────────────────────────────────────────────────────────────────────────────────────
 
-const range = (field: FieldName, min: number, max: number) =>
-  min === max ? `${field} is ${min}` : `${field} is a whole number from ${min} to ${max}`;
+const RULE = 'programming:bugHunter.rule';
 
-export function describeRecordRule(rule: RecordRule): string {
+/** Field names and values are code and stay literal; numbers are passed as text for that reason. */
+export function describeRecordRule(rule: RecordRule): Message {
   switch (rule.type) {
     case 'consecutive':
-      return `Each ${rule.field} is exactly 1 more than the ${rule.field} on the item above.`;
+      return msg(`${RULE}.consecutive`, { field: rule.field });
     case 'ascending-time':
-      return `Each ${rule.field} is the same as or later than the ${rule.field} on the item above.`;
+      return msg(`${RULE}.ascendingTime`, { field: rule.field });
     case 'unique':
-      return `No ${rule.field} repeats a ${rule.field} used on an earlier item.`;
+      return msg(`${RULE}.unique`, { field: rule.field });
     case 'one-of':
-      return `${rule.field} is one of: ${rule.values.join(', ')}.`;
+      return msg(`${RULE}.oneOf`, { field: rule.field, values: rule.values.join(', ') });
     case 'range':
-      return `${range(rule.field, rule.min, rule.max)}.`;
+      return rule.min === rule.max
+        ? msg(`${RULE}.exact`, { field: rule.field, value: String(rule.min) })
+        : msg(`${RULE}.range`, {
+            field: rule.field,
+            min: String(rule.min),
+            max: String(rule.max),
+          });
     case 'digits':
-      return `${rule.field} is a whole number with exactly ${rule.count} digits.`;
+      return msg(`${RULE}.digits`, { field: rule.field, count: rule.count });
     case 'email':
-      return `${rule.field} has exactly one "@", a name before it and a dotted domain after it (name@domain.tld).`;
+      return msg(`${RULE}.email`, { field: rule.field });
     case 'semver':
-      return `${rule.field} is three whole numbers separated by dots (major.minor.patch).`;
+      return msg(`${RULE}.semver`, { field: rule.field });
     case 'multiple-of':
-      return `${rule.field} is a multiple of ${rule.step}.`;
-    case 'implies':
-      return `When ${rule.when.field} is ${rule.when.equals}, ${range(rule.then.field, rule.then.min, rule.then.max)}.`;
+      return msg(`${RULE}.multipleOf`, { field: rule.field, step: String(rule.step) });
+    case 'implies': {
+      const { when, then } = rule;
+      return then.min === then.max
+        ? msg(`${RULE}.impliesExact`, {
+            when: when.field,
+            equals: when.equals,
+            field: then.field,
+            value: String(then.min),
+          })
+        : msg(`${RULE}.impliesRange`, {
+            when: when.field,
+            equals: when.equals,
+            field: then.field,
+            min: String(then.min),
+            max: String(then.max),
+          });
+    }
   }
 }
 
-export function describeCodeRule(rule: CodeRule): string {
+export function describeCodeRule(rule: CodeRule): Message {
   switch (rule.type) {
     case 'defined-before-use':
-      return 'Every variable is assigned with “set” on an earlier line before it is read.';
+      return msg(`${RULE}.definedBeforeUse`);
     case 'close-opened':
-      return 'Every “open x” is followed by a “close x” on a later line.';
+      return msg(`${RULE}.closeOpened`);
     case 'write-while-open':
-      return '“write … to x” only happens while x is open (after “open x”, before “close x”).';
+      return msg(`${RULE}.writeWhileOpen`);
     case 'camel-case':
-      return 'Every name is camelCase: it starts with a lower-case letter and uses only letters and digits (no “_”).';
+      return msg(`${RULE}.camelCase`);
   }
 }
 
-export const ruleTexts = (content: BugHunterContent): string[] =>
+export const ruleTexts = (content: BugHunterContent): Message[] =>
   content.kind === 'code-rule'
     ? content.rules.map(describeCodeRule)
     : content.rules.map(describeRecordRule);

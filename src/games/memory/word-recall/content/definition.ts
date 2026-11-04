@@ -1,8 +1,8 @@
 import { multiSelectResponse } from '@/domain/challenge';
 import type { GameDefinition } from '@/domain/game';
 import { pick, sample, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { ALL_WORDS, untimed, WORD_GROUPS, type WordGroup } from '@/games/kit/content';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
+import { ALL_WORDS, untimed, WORD_GROUPS, wordLabel, type WordGroup } from '@/games/kit/content';
 import { orderingResponse } from '../../shared/content';
 import { WORD_RECALL_LEVELS } from './levels';
 import type { WordRecallChallenge, WordRecallProfile, WordRecallVariant } from './types';
@@ -19,10 +19,9 @@ export const WORD_RECALL_ID = gameIdOf('word-recall');
 
 export const wordRecallGame: GameDefinition<WordRecallChallenge, WordRecallProfile> = {
   id: WORD_RECALL_ID,
-  name: 'Word Recall',
-  tagline: 'Read a list of words, then find them again.',
-  description:
-    'Words appear one at a time. Then pick them out on a board that also has new words — later from the same themes, so “it was a kitchen word” is not enough. Some higher-level lists must be put back in order.',
+  name: msg('memory:wordRecall.name'),
+  tagline: msg('memory:wordRecall.tagline'),
+  description: msg('memory:wordRecall.description'),
   area: 'memory',
   skills: ['short-term-memory', 'auditory-memory', 'sequential-thinking'],
   meta: {
@@ -33,17 +32,16 @@ export const wordRecallGame: GameDefinition<WordRecallChallenge, WordRecallProfi
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A board counts when your marks match the list within the allowed slips (missed words plus wrong marks); an order counts when every word is in place. Your result is the share of lists recalled; answering is not timed.',
+    scoringSummary: msg('memory:wordRecall.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Read each word as it appears. Saying it quietly to yourself can help.',
-    'Then mark the words you saw on the board and press Check.',
-    'On some levels one slip is allowed; on others, put the words back in the order shown.',
-    'Keyboard: arrow keys move between words, Enter marks one.',
+    msg('memory:wordRecall.instructions.read'),
+    msg('memory:wordRecall.instructions.mark'),
+    msg('memory:wordRecall.instructions.variants'),
+    msg('memory:wordRecall.instructions.keyboard'),
   ],
-  simpleInstructions: 'Read the words, then find them again.',
+  simpleInstructions: msg('memory:wordRecall.simpleInstructions'),
   levels: WORD_RECALL_LEVELS,
   generate({ identity, profile, random }) {
     const variant = pick(random, profile.variants);
@@ -59,14 +57,16 @@ export const wordRecallGame: GameDefinition<WordRecallChallenge, WordRecallProfi
       const studied = sample(random, pool, variant.words);
       return {
         ...base,
-        prompt: `Put the ${variant.words} words in the order they appeared.`,
-        studyPrompt: 'Read the words and remember their order.',
+        prompt: msg('memory:wordRecall.prompt.order', { count: variant.words }),
+        studyPrompt: msg('memory:wordRecall.studyPrompt.order'),
         content: { kind: variant.kind, studied, board: [], itemMs: profile.itemMs },
         response: orderingResponse(
           random,
-          studied.map((word) => ({ id: word, label: word })),
+          studied.map((word) => ({ id: word, label: wordLabel(word) })),
         ),
-        explanation: `The order was: ${studied.join(', ')}.`,
+        explanation: msg('memory:wordRecall.explanation.order', {
+          words: joinText(studied.map(wordLabel), ', '),
+        }),
         skills: ['short-term-memory', 'sequential-thinking'],
       };
     }
@@ -77,16 +77,18 @@ export const wordRecallGame: GameDefinition<WordRecallChallenge, WordRecallProfi
     const exact = variant.maxErrors === 0;
     return {
       ...base,
-      prompt: exact
-        ? `Mark the ${variant.words} words you saw.`
-        : `Mark the words you saw (there were ${variant.words}; one slip is allowed).`,
-      studyPrompt: 'Read the words.',
+      prompt: msg(`memory:wordRecall.prompt.${exact ? 'exact' : 'tolerant'}`, {
+        count: variant.words,
+      }),
+      studyPrompt: msg('memory:wordRecall.studyPrompt.recognise'),
       content: { kind: variant.kind, studied, board, itemMs: profile.itemMs },
       response: multiSelectResponse(board.length, targets, {
         exact,
         maxErrors: variant.maxErrors,
       }),
-      explanation: `The list was: ${studied.join(', ')}.`,
+      explanation: msg('memory:wordRecall.explanation.list', {
+        words: joinText(studied.map(wordLabel), ', '),
+      }),
     };
   },
 };

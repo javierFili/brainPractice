@@ -16,6 +16,9 @@ export function execute(
 /** Like `execute`, but for content known to be valid: a syntax error is a bug in the content. */
 export function executeOrThrow(source: string, inputs: Variables = {}): RunResult {
   const result = execute(source, inputs);
-  if (!result.ok) throw new Error(`Line ${result.error.line}: ${result.error.message}\n${source}`);
+  if (!result.ok)
+    throw new Error(
+      `Line ${result.error.line}: ${JSON.stringify(result.error.message)}\n${source}`,
+    );
   return result.value;
 }

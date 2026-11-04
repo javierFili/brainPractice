@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { GridPathProfile } from './types';
 
@@ -10,7 +11,7 @@ const base = { exits: 3, marks: 3, multiplePaths: false } as const;
 export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   {
     ...base,
-    objective: 'Count the steps to the star on a small, open grid.',
+    objective: msg('patterns:gridAndPathReasoning.levels.1'),
     challengeCount: 5,
     kinds: { 'shortest-length': 1 },
     size: 5,
@@ -21,7 +22,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Find the one exit the turtle can reach.',
+    objective: msg('patterns:gridAndPathReasoning.levels.2'),
     challengeCount: 5,
     kinds: { 'reachable-exit': 1 },
     size: 5,
@@ -32,7 +33,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Count steps when walls force a detour.',
+    objective: msg('patterns:gridAndPathReasoning.levels.3'),
     challengeCount: 5,
     kinds: { 'shortest-length': 1 },
     size: 6,
@@ -43,7 +44,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Find the cell every shortest route crosses.',
+    objective: msg('patterns:gridAndPathReasoning.levels.4'),
     challengeCount: 6,
     kinds: { 'must-pass': 2, 'shortest-length': 1 },
     size: 6,
@@ -54,7 +55,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Bigger 7×7 mazes: exits and step counts.',
+    objective: msg('patterns:gridAndPathReasoning.levels.5'),
     challengeCount: 6,
     kinds: { 'reachable-exit': 1, 'shortest-length': 1 },
     size: 7,
@@ -65,7 +66,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Longer detours and cells that must be crossed.',
+    objective: msg('patterns:gridAndPathReasoning.levels.6'),
     challengeCount: 6,
     kinds: { 'shortest-length': 1, 'must-pass': 1 },
     size: 7,
@@ -76,7 +77,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Several shortest routes, one cell they all share.',
+    objective: msg('patterns:gridAndPathReasoning.levels.7'),
     challengeCount: 6,
     kinds: { 'must-pass': 2, 'reachable-exit': 1 },
     size: 7,
@@ -89,7 +90,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: '8×8 mazes with four exits.',
+    objective: msg('patterns:gridAndPathReasoning.levels.8'),
     challengeCount: 6,
     kinds: { 'reachable-exit': 1, 'shortest-length': 1, 'must-pass': 1 },
     size: 8,
@@ -103,7 +104,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: '9×9 mazes with long detours.',
+    objective: msg('patterns:gridAndPathReasoning.levels.9'),
     challengeCount: 6,
     kinds: { 'shortest-length': 1, 'must-pass': 1 },
     size: 9,
@@ -117,7 +118,7 @@ export const GRID_PATH_LEVELS = defineLevels<GridPathProfile>([
   },
   {
     ...base,
-    objective: 'Every question on dense 9×9 mazes.',
+    objective: msg('patterns:gridAndPathReasoning.levels.10'),
     challengeCount: 6,
     kinds: { 'shortest-length': 1, 'reachable-exit': 1, 'must-pass': 1 },
     size: 9,

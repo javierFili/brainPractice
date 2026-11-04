@@ -1,5 +1,5 @@
 import type { GameCategory, GameDefinition } from '@/domain/game';
-import type { Skill } from '@/domain/shared';
+import { msg, type Skill, type Text } from '@/domain/shared';
 import type { IconName } from '@/components/ui/Icon';
 import { CATEGORIES } from '@/features/shared/categories';
 
@@ -9,8 +9,8 @@ import { CATEGORIES } from '@/features/shared/categories';
  */
 export interface Collection {
   readonly id: string;
-  readonly title: string;
-  readonly description: string;
+  readonly title: Text;
+  readonly description: Text;
   readonly icon: IconName;
   readonly category: GameCategory | null;
   readonly includes: (game: GameDefinition) => boolean;
@@ -38,8 +38,8 @@ export const COLLECTIONS: readonly Collection[] = [
   categoryCollection('patterns'),
   {
     id: 'spatial',
-    title: 'Spatial reasoning',
-    description: 'Rotate, mirror, place and navigate: games that ask you to picture space.',
+    title: msg('catalog:collections.spatial.title'),
+    description: msg('catalog:collections.spatial.description'),
     icon: 'spatial',
     category: null,
     includes: (game) =>
@@ -48,8 +48,8 @@ export const COLLECTIONS: readonly Collection[] = [
   },
   {
     id: 'concentration',
-    title: 'Concentration',
-    description: 'Longer, steady tasks where keeping focus is the challenge.',
+    title: msg('catalog:collections.concentration.title'),
+    description: msg('catalog:collections.concentration.description'),
     icon: 'focus',
     category: null,
     includes: (game) =>

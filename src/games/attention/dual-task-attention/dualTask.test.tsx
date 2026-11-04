@@ -3,6 +3,8 @@ import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { choiceItems, centroidRate, chanceRate } from '@/test/guessability';
+import { en } from '@/test/i18n';
+import type { Text } from '@/domain/shared';
 import { contractSeeds, describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import { dualTaskGame } from './content/definition';
 import { DUAL_TASK_LEVELS } from './content/levels';
@@ -11,7 +13,10 @@ import { DualTaskView } from './ui/DualTaskView';
 
 describeGameContract(dualTaskModule);
 
-const counts = (label: string) => label.split(' · ').map((part) => Number.parseInt(part, 10));
+const counts = (label: Text) =>
+  (typeof label === 'string' ? label : en(label))
+    .split(' · ')
+    .map((part) => Number.parseInt(part, 10));
 
 describe('Dual-Task Attention', () => {
   const all = DIFFICULTY_LEVELS.flatMap((level) =>

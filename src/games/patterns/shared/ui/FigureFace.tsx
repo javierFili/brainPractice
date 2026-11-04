@@ -1,3 +1,4 @@
+import { useText } from '@/i18n';
 import type { ColorName } from '@/games/kit/content';
 import { Glyph } from '@/games/kit/ui';
 import { figureLabel, type Figure } from '../content/figures';
@@ -55,6 +56,7 @@ export function FigureFace({
   /** False when the name is already given by the surrounding element. */
   readonly label?: boolean;
 }) {
+  const tx = useText();
   const shapeSize =
     size === 'sm'
       ? 'h-5 w-5'
@@ -64,7 +66,9 @@ export function FigureFace({
   return (
     <span
       className="inline-flex max-w-24 flex-wrap items-center justify-center gap-0.5"
-      {...(label ? { role: 'img', 'aria-label': figureLabel(figure) } : { 'aria-hidden': true })}
+      {...(label
+        ? { role: 'img', 'aria-label': tx(figureLabel(figure)) }
+        : { 'aria-hidden': true })}
     >
       {Array.from({ length: figure.count }, (_, i) => (
         <Shape key={i} figure={figure} className={shapeSize} />

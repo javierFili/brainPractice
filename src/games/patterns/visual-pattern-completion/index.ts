@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { renderPatternOption } from '../shared/ui';
 import { visualPatternGame } from './content/definition';
@@ -8,9 +9,9 @@ export const visualPatternModule = defineGameModule<VisualPatternChallenge>({
   definition: visualPatternGame,
   ContentView: VisualPatternView,
   kindLabels: {
-    repeat: 'Repeating blocks',
-    'two-rules': 'Two separate cycles',
-    growing: 'Growing and turning',
+    repeat: msg('patterns:visualPatternCompletion.kinds.repeat'),
+    'two-rules': msg('patterns:visualPatternCompletion.kinds.two-rules'),
+    growing: msg('patterns:visualPatternCompletion.kinds.growing'),
   },
   renderOption: renderPatternOption,
 });

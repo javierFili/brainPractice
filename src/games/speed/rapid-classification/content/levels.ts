@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, timed } from '@/games/kit/content';
 import type { RapidClassificationProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { RapidClassificationProfile } from './types';
  */
 export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfile>([
   {
-    objective: 'Sort pictures into two groups: fruit or animal.',
+    objective: msg('speed:rapidClassification.levels.1'),
     kind: 'picture',
     categories: ['fruit', 'animal'],
     showPicture: true,
@@ -17,7 +18,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(2000, 5000),
   },
   {
-    objective: 'Two new groups: vehicle or clothing.',
+    objective: msg('speed:rapidClassification.levels.2'),
     kind: 'picture',
     categories: ['vehicle', 'clothing'],
     showPicture: true,
@@ -26,7 +27,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(1800, 4500),
   },
   {
-    objective: 'Three groups to choose from.',
+    objective: msg('speed:rapidClassification.levels.3'),
     kind: 'picture',
     categories: ['fruit', 'animal', 'vehicle'],
     showPicture: true,
@@ -35,7 +36,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(1900, 4500),
   },
   {
-    objective: 'Four groups to choose from.',
+    objective: msg('speed:rapidClassification.levels.4'),
     kind: 'picture',
     categories: ['animal', 'vehicle', 'tool', 'clothing'],
     showPicture: true,
@@ -44,7 +45,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(2000, 4200),
   },
   {
-    objective: 'Words only: read the name, then sort it (fruit or tool).',
+    objective: msg('speed:rapidClassification.levels.5'),
     kind: 'word',
     categories: ['fruit', 'tool'],
     showPicture: false,
@@ -53,7 +54,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(1800, 4000),
   },
   {
-    objective: 'Words only, four groups.',
+    objective: msg('speed:rapidClassification.levels.6'),
     kind: 'word',
     categories: ['fruit', 'animal', 'tool', 'clothing'],
     showPicture: false,
@@ -62,7 +63,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(2000, 3800),
   },
   {
-    objective: 'Follow the cue: sort by group, or by first letter (A–M or N–Z).',
+    objective: msg('speed:rapidClassification.levels.7'),
     kind: 'switch',
     categories: ['fruit', 'animal'],
     showPicture: true,
@@ -71,7 +72,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(2000, 3800),
   },
   {
-    objective: 'More letter trials, three groups.',
+    objective: msg('speed:rapidClassification.levels.8'),
     kind: 'switch',
     categories: ['animal', 'vehicle', 'tool'],
     showPicture: true,
@@ -80,7 +81,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(2000, 3600),
   },
   {
-    objective: 'Cued switching with words only.',
+    objective: msg('speed:rapidClassification.levels.9'),
     kind: 'switch',
     categories: ['fruit', 'animal', 'vehicle'],
     showPicture: false,
@@ -89,7 +90,7 @@ export const RAPID_CLASSIFICATION_LEVELS = defineLevels<RapidClassificationProfi
     timing: timed(2000, 3400),
   },
   {
-    objective: 'Master: words only, four groups, rule changes at random.',
+    objective: msg('speed:rapidClassification.levels.10'),
     kind: 'switch',
     categories: ['animal', 'vehicle', 'tool', 'clothing'],
     showPicture: false,

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { numberRecallGame } from './content/definition';
 import type { NumberRecallChallenge } from './content/types';
@@ -7,9 +8,9 @@ export const numberRecallModule = defineGameModule<NumberRecallChallenge>({
   definition: numberRecallGame,
   ContentView: NumberRecallView,
   kindLabels: {
-    'type-back': 'Type the number back',
-    'which-group': 'Chunk in a given place',
-    'two-numbers': 'Two numbers at once',
+    'type-back': msg('memory:numberRecall.kinds.typeBack'),
+    'which-group': msg('memory:numberRecall.kinds.whichGroup'),
+    'two-numbers': msg('memory:numberRecall.kinds.twoNumbers'),
   },
   describeOption: (label) => label.split('').join(' '),
 });

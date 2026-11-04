@@ -1,5 +1,6 @@
 import { generateChallenge } from '@/domain/game';
-import { DIFFICULTY_LEVELS } from '@/domain/shared';
+import { DIFFICULTY_LEVELS, textId } from '@/domain/shared';
+import { en } from '@/test/i18n';
 import { contractSeeds, describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import { pileMoveLabel, strategyPuzzleGame } from './content/definition';
 import { STRATEGY_LEVELS } from './content/levels';
@@ -88,7 +89,7 @@ describe('Strategy Puzzle', () => {
           case 'take-away': {
             const k = content.maxTake + 1;
             expect(content.pile % k).not.toBe(0);
-            expect(chosen).toBe(`Take ${content.pile % k}`);
+            expect(chosen && en(chosen)).toBe(`Take ${content.pile % k}`);
             break;
           }
           case 'piles': {
@@ -96,11 +97,13 @@ describe('Strategy Puzzle', () => {
               (m) => !nimWins(applyPileMove(content.piles, m)),
             );
             expect(winners).toHaveLength(1);
-            expect(chosen).toBe(pileMoveLabel(winners[0] as never));
+            expect(chosen).toEqual(pileMoveLabel(winners[0] as never));
             if (response.format !== 'single-choice') throw new Error('choice expected');
             for (const o of response.question.options) {
-              if (o.label === chosen) continue;
-              const m = pileMoves(content.piles).find((x) => pileMoveLabel(x) === o.label);
+              if (chosen !== undefined && textId(o.label) === textId(chosen)) continue;
+              const m = pileMoves(content.piles).find(
+                (x) => textId(pileMoveLabel(x)) === textId(o.label),
+              );
               expect(m).toBeDefined();
               expect(nimWins(applyPileMove(content.piles, m as never))).toBe(true);
             }

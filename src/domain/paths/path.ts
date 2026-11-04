@@ -1,4 +1,5 @@
 import type { Audience, GameCategory } from '../game/catalog';
+import type { Text } from '../shared/text';
 
 /**
  * A route is configuration over the shared catalog: copy, a curated order of games and suggested
@@ -6,10 +7,10 @@ import type { Audience, GameCategory } from '../game/catalog';
  */
 export interface PathDefinition {
   readonly id: Audience;
-  readonly name: string;
-  readonly tagline: string;
-  readonly intro: string;
-  readonly goals: readonly string[];
+  readonly name: Text;
+  readonly tagline: Text;
+  readonly intro: Text;
+  readonly goals: readonly Text[];
   /** Curated games, best first. Must all exist in the catalog (checked by tests). */
   readonly featured: readonly string[];
   /** Categories this route leans on, for variety suggestions. */
@@ -17,7 +18,7 @@ export interface PathDefinition {
   /** How sessions are offered on the route page. */
   readonly suggestedMinutes: number;
   /** Notes shown on the route page (privacy for kids, pacing for seniors…). */
-  readonly notes: readonly string[];
+  readonly notes: readonly Text[];
 }
 
 export function validatePaths(

@@ -1,58 +1,43 @@
-import { capitalize } from '@/games/logic/shared/content';
+import { msg, type Message, type Text } from '@/domain/shared';
+import { listText, sentenceText } from '@/games/logic/shared/content';
 import type { Comparison, Fact, MultiStepContent, Question, Theme } from './types';
 
-const TIMES = ['', '', 'twice', 'three times'] as const;
-const FRACTION = ['', '', 'half', 'a third'] as const;
+const key = (path: string) => `logic:multiStepLogic.${path}`;
 
-export function describeFact(f: Fact, theme: Theme, names: readonly string[]): string {
+/**
+ * A fact as a clause without its full stop (the view adds it; the explanation builds on it).
+ * Numbers go in as `count`, so "1 year" / "3 years" is chosen per language.
+ */
+export function describeFact(f: Fact, theme: Theme, names: readonly string[]): Message {
   const n = (i: number) => names[i] as string;
-  const ages = theme === 'ages';
+  const t = (path: string) => key(`fact.${theme}.${path}`);
   switch (f.type) {
     case 'value':
-      return ages ? `${n(f.a)} is ${f.v} years old.` : `${n(f.a)} has ${f.v} marbles.`;
+      return msg(t('value'), { a: n(f.a), count: f.v });
     case 'diff':
-      if (ages)
-        return f.flip
-          ? `${n(f.b)} is ${f.k} ${f.k === 1 ? 'year' : 'years'} younger than ${n(f.a)}.`
-          : `${n(f.a)} is ${f.k} ${f.k === 1 ? 'year' : 'years'} older than ${n(f.b)}.`;
-      return f.flip
-        ? `${n(f.b)} has ${f.k} fewer ${f.k === 1 ? 'marble' : 'marbles'} than ${n(f.a)}.`
-        : `${n(f.a)} has ${f.k} more ${f.k === 1 ? 'marble' : 'marbles'} than ${n(f.b)}.`;
+      return msg(t(f.flip ? 'less' : 'more'), { a: n(f.a), b: n(f.b), count: f.k });
     case 'times':
-      if (ages)
-        return f.flip
-          ? `${n(f.b)} is ${FRACTION[f.k] as string} as old as ${n(f.a)}.`
-          : `${n(f.a)} is ${TIMES[f.k] as string} as old as ${n(f.b)}.`;
-      return f.flip
-        ? `${n(f.b)} has ${FRACTION[f.k] as string} as many marbles as ${n(f.a)}.`
-        : `${n(f.a)} has ${TIMES[f.k] as string} as many marbles as ${n(f.b)}.`;
-    case 'sum': {
-      const who = f.people.map(n);
-      const list =
-        who.length === 2
-          ? `${who[0] as string} and ${who[1] as string}`
-          : `${who.slice(0, -1).join(', ')} and ${who.at(-1) as string}`;
-      return ages
-        ? `${capitalize(list)} are ${f.total} years old in total.`
-        : `${capitalize(list)} have ${f.total} marbles in total.`;
-    }
+      return msg(t(f.flip ? `fraction${f.k}` : `times${f.k}`), { a: n(f.a), b: n(f.b) });
+    case 'sum':
+      return msg(t('sum'), { names: listText(f.people.map(n)), count: f.total });
   }
 }
 
-export function describeQuestion(q: Question, theme: Theme, names: readonly string[]): string {
+/** The fact as a sentence on its own. */
+export const factSentence = (f: Fact, theme: Theme, names: readonly string[]): Text =>
+  sentenceText(describeFact(f, theme, names));
+
+export function describeQuestion(q: Question, theme: Theme, names: readonly string[]): Message {
   const n = (i: number) => names[i] as string;
-  const ages = theme === 'ages';
+  const t = (path: string) => key(`question.${theme}.${path}`);
   switch (q.type) {
     case 'value':
-      return ages ? `How old is ${n(q.a)}?` : `How many marbles does ${n(q.a)} have?`;
+      return msg(t('value'), { a: n(q.a) });
     case 'difference':
-      return ages
-        ? `How many years older is ${n(q.a)} than ${n(q.b)}?`
-        : `How many more marbles does ${n(q.a)} have than ${n(q.b)}?`;
+      return msg(t('difference'), { a: n(q.a), b: n(q.b) });
     case 'most':
-      return ages ? 'Who is the oldest?' : 'Who has the most marbles?';
     case 'least':
-      return ages ? 'Who is the youngest?' : 'Who has the fewest marbles?';
+      return msg(t(q.type));
   }
 }
 
@@ -60,10 +45,10 @@ export const describeComparison = (
   { a, b }: Comparison,
   names: readonly string[],
   flip: boolean,
-) =>
+): Message =>
   flip
-    ? `${names[b] as string} is shorter than ${names[a] as string}.`
-    : `${names[a] as string} is taller than ${names[b] as string}.`;
+    ? msg(key('compare.shorter'), { a: names[b] as string, b: names[a] as string })
+    : msg(key('compare.taller'), { a: names[a] as string, b: names[b] as string });
 
 export const comparisonTexts = (content: Extract<MultiStepContent, { kind: 'compare' }>) =>
   content.comparisons.map((c, i) =>

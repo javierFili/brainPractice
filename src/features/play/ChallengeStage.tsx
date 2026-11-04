@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Answer, Challenge } from '@/domain/challenge';
 import type { ChallengeRecord, SessionStatus } from '@/domain/session';
 import type { ChallengePhase, GameModule } from '@/games/types';
@@ -7,6 +8,7 @@ import { NumericResponse } from '@/components/response/NumericResponse';
 import { OrderingResponse } from '@/components/response/OrderingResponse';
 import { SequenceResponse } from '@/components/response/SequenceResponse';
 import { Button } from '@/components/ui/Button';
+import { useText } from '@/i18n';
 import { AnswerFeedback } from './AnswerFeedback';
 import { BriefFeedback } from './BriefFeedback';
 
@@ -46,6 +48,8 @@ export function ChallengeStage({
   onEndStudy,
   onNext,
 }: Props) {
+  const { t } = useTranslation('play');
+  const tx = useText();
   const { meta } = module.definition;
   const phase = phaseOf(status, challenge);
   const { ContentView } = module;
@@ -114,15 +118,15 @@ export function ChallengeStage({
           tabIndex={-1}
           className="text-lg font-medium text-white outline-none sm:text-xl"
         >
-          {challenge.prompt}
+          {tx(challenge.prompt)}
         </h2>
       ) : (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 id="challenge-prompt" className="text-lg font-medium text-white sm:text-xl">
-            {challenge.studyPrompt ?? 'Memorise this — it will be hidden.'}
+            {challenge.studyPrompt ? tx(challenge.studyPrompt) : t('stage.memorise')}
           </h2>
           <Button variant="secondary" onClick={onEndStudy} disabled={status !== 'studying'}>
-            I&apos;m ready
+            {t('stage.ready')}
           </Button>
         </div>
       )}
@@ -146,17 +150,17 @@ export function ChallengeStage({
       {touch && pending !== null && answering && (
         <div
           role="group"
-          aria-label="Confirm your answer"
+          aria-label={t('stage.confirmAnswer')}
           className="flex flex-wrap items-center gap-3 rounded-lg border border-sky-400/40 bg-sky-400/5 p-3 text-sm"
         >
-          <span className="text-sky-100">Selected item {pending + 1}</span>
+          <span className="text-sky-100">{t('stage.selectedItem', { position: pending + 1 })}</span>
           <Button
             onClick={() => {
               onAnswer({ format: 'locate', index: pending });
               setPending(null);
             }}
           >
-            Confirm
+            {t('common:actions.confirm')}
           </Button>
           <Button
             variant="ghost"
@@ -164,7 +168,7 @@ export function ChallengeStage({
               setPending(null);
             }}
           >
-            Cancel
+            {t('common:actions.cancel')}
           </Button>
         </div>
       )}

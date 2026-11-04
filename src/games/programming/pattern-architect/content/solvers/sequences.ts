@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import type { SequenceFamily, SequenceRule } from '../types';
 
 /**
@@ -143,34 +144,48 @@ export function determinedNext(terms: readonly number[]): number | null {
   return predictions.size === 1 ? ([...predictions][0] as number) : null;
 }
 
-const signed = (n: number) => (n < 0 ? `subtract ${-n}` : `add ${n}`);
 const step = (n: number) => (n < 0 ? `−${-n}` : `+${n}`);
+/** `add` or `subtract` variant of a rule key, with the absolute amount. */
+const sign = (n: number) => (n < 0 ? 'Subtract' : 'Add');
 
-/** The rule in plain words. */
-export function describeSequenceRule(rule: SequenceRule): string {
+const RULE = 'programming:patternArchitect.sequenceRule';
+
+/** The rule in plain words; numbers and steps (`+3`, `−2`) are literal. */
+export function describeSequenceRule(rule: SequenceRule): Message {
   switch (rule.family) {
     case 'constant-step':
-      return `${signed(rule.step)} each time`;
+      return msg(`${RULE}.constant${sign(rule.step)}`, { n: String(Math.abs(rule.step)) });
     case 'alternating-steps':
-      return `the steps alternate: ${step(rule.steps[0])}, ${step(rule.steps[1])}, ${step(rule.steps[0])}, ${step(rule.steps[1])}, …`;
+      return msg(`${RULE}.alternatingSteps`, {
+        steps: `${step(rule.steps[0])}, ${step(rule.steps[1])}, ${step(rule.steps[0])}, ${step(rule.steps[1])}`,
+      });
     case 'growing-step': {
       const s = [0, 1, 2].map((k) => step(rule.firstStep + k * rule.growth));
-      const change = rule.growth < 0 ? `shrinks by ${-rule.growth}` : `grows by ${rule.growth}`;
-      return `the step ${change} every time (${s.join(', ')}, …)`;
+      return msg(`${RULE}.${rule.growth < 0 ? 'shrinkingStep' : 'growingStep'}`, {
+        n: String(Math.abs(rule.growth)),
+        steps: s.join(', '),
+      });
     }
     case 'multiply':
-      return `multiply by ${rule.factor} each time`;
+      return msg(`${RULE}.multiply`, { factor: String(rule.factor) });
     case 'interleaved':
-      return `two sequences take turns: the 1st, 3rd, 5th… terms go ${step(rule.steps[0])}, the 2nd, 4th, 6th… terms go ${step(rule.steps[1])}`;
+      return msg(`${RULE}.interleaved`, {
+        odd: step(rule.steps[0]),
+        even: step(rule.steps[1]),
+      });
     case 'step-cycle':
-      return `the steps repeat in a cycle of three: ${rule.steps.map(step).join(', ')}`;
+      return msg(`${RULE}.stepCycle`, { steps: rule.steps.map(step).join(', ') });
     case 'multiply-add':
-      return `multiply by ${rule.factor}, then ${signed(rule.add)}`;
+      return msg(`${RULE}.multiply${sign(rule.add)}`, {
+        factor: String(rule.factor),
+        n: String(Math.abs(rule.add)),
+      });
     case 'sum-of-previous-two':
-      return 'each term is the sum of the two before it';
+      return msg(`${RULE}.sumOfPreviousTwo`);
     case 'alternating-ops':
-      return rule.multiplyFirst
-        ? `alternately multiply by ${rule.factor} and ${signed(rule.add)}`
-        : `alternately ${signed(rule.add)} and multiply by ${rule.factor}`;
+      return msg(
+        `${RULE}.alternating${rule.multiplyFirst ? 'MultiplyFirst' : 'MultiplyLast'}${sign(rule.add)}`,
+        { factor: String(rule.factor), n: String(Math.abs(rule.add)) },
+      );
   }
 }

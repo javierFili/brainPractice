@@ -1,5 +1,5 @@
 import { permutations } from '@/games/logic/shared/content';
-import { ordinal } from '@/games/logic/shared/content';
+import { msg, type Message } from '@/domain/shared';
 import type { OrderClue, OrderingContent } from './types';
 
 export function clueHolds(clue: OrderClue, order: readonly string[]): boolean {
@@ -26,50 +26,30 @@ export function clueHolds(clue: OrderClue, order: readonly string[]): boolean {
 export const solveOrders = (entities: readonly string[], clues: readonly OrderClue[]) =>
   permutations(entities).filter((order) => clues.every((c) => clueHolds(c, order)));
 
-const WORDS = {
-  race: {
-    before: (a: string, b: string) => `${a} finished ahead of ${b}.`,
-    rightBefore: (a: string, b: string) =>
-      `${a} finished just ahead of ${b}, with nobody in between.`,
-    at: (a: string, p: number, n: number) => `${a} finished ${p === n ? 'last' : ordinal(p)}.`,
-    notAt: (a: string, p: number, n: number) =>
-      `${a} did not finish ${p === n ? 'last' : ordinal(p)}.`,
-    gap: (a: string, b: string, k: number) =>
-      `Exactly ${k === 1 ? 'one runner' : `${k} runners`} finished between ${a} and ${b}.`,
-    nextTo: (a: string, b: string) => `${a} and ${b} finished one right after the other.`,
-    notNextTo: (a: string, b: string) => `${a} and ${b} did not finish one right after the other.`,
-  },
-  queue: {
-    before: (a: string, b: string) => `${a} stands somewhere in front of ${b}.`,
-    rightBefore: (a: string, b: string) => `${a} stands directly in front of ${b}.`,
-    at: (a: string, p: number, n: number) =>
-      `${a} is ${p === n ? 'last' : ordinal(p)} in the line.`,
-    notAt: (a: string, p: number, n: number) =>
-      `${a} is not ${p === n ? 'last' : ordinal(p)} in the line.`,
-    gap: (a: string, b: string, k: number) =>
-      `There ${k === 1 ? 'is exactly one person' : `are exactly ${k} people`} between ${a} and ${b}.`,
-    nextTo: (a: string, b: string) => `${a} and ${b} stand next to each other.`,
-    notNextTo: (a: string, b: string) => `${a} and ${b} do not stand next to each other.`,
-  },
-};
+/** "first" … or "last": the place wording depends on the story (race or line) and the language. */
+const place = (kind: OrderingContent['kind'], p: number, n: number) =>
+  msg(`logic:sequenceOrdering.place.${kind}.${p === n ? 'last' : String(p)}`);
 
-export function describeClue(clue: OrderClue, content: Pick<OrderingContent, 'kind' | 'entities'>) {
-  const w = WORDS[content.kind];
+export function describeClue(
+  clue: OrderClue,
+  content: Pick<OrderingContent, 'kind' | 'entities'>,
+): Message {
   const n = content.entities.length;
+  const key = (type: string) => `logic:sequenceOrdering.clue.${content.kind}.${type}`;
   switch (clue.type) {
     case 'before':
-      return w.before(clue.a, clue.b);
+      return msg(key('before'), { a: clue.a, b: clue.b });
     case 'right-before':
-      return w.rightBefore(clue.a, clue.b);
+      return msg(key('rightBefore'), { a: clue.a, b: clue.b });
     case 'at':
-      return w.at(clue.a, clue.position, n);
+      return msg(key('at'), { a: clue.a, place: place(content.kind, clue.position, n) });
     case 'not-at':
-      return w.notAt(clue.a, clue.position, n);
+      return msg(key('notAt'), { a: clue.a, place: place(content.kind, clue.position, n) });
     case 'gap':
-      return w.gap(clue.a, clue.b, clue.between);
+      return msg(key('gap'), { a: clue.a, b: clue.b, count: clue.between });
     case 'next-to':
-      return w.nextTo(clue.a, clue.b);
+      return msg(key('nextTo'), { a: clue.a, b: clue.b });
     case 'not-next-to':
-      return w.notNextTo(clue.a, clue.b);
+      return msg(key('notNextTo'), { a: clue.a, b: clue.b });
   }
 }

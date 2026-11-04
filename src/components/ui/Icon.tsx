@@ -48,6 +48,8 @@ const PATHS = {
     'M8 4h8v5a4 4 0 0 1-8 0Zm0 1.5H4.5A3.5 3.5 0 0 0 8 10m8-4.5h3.5A3.5 3.5 0 0 1 16 10m-4 3v4m-3.5 3h7',
   search: 'M10.5 17.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20.5 20.5l-5-5',
   arrowRight: 'M4.5 12h14m-5-5 5 5-5 5',
+  globe:
+    'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-8.5-9h17M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9Z',
 } as const;
 
 export type IconName = keyof typeof PATHS;

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { joinText } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { plainText } from '../text';
 import { stableShuffle } from '../shuffle';
 import { CheckButton } from './CheckButton';
@@ -12,20 +15,31 @@ export function OrderingView({
   showSolution,
   onSubmit,
 }: ExerciseViewProps<'ordering'>) {
+  const { t } = useTranslation('learn');
+  const tx = useText();
   const [order, setOrder] = useState(() => stableShuffle(exercise.items, exercise.id));
   return (
     <div className="flex flex-col gap-4">
       <ReorderList
         items={order}
         locked={locked}
-        label="Your order"
+        label={t('exercise.yourOrder')}
         onMove={(i, d) => {
           setOrder((o) => moveItem(o, i, d));
         }}
       />
       {showSolution && (
         <p className="text-sm text-emerald-300">
-          Correct order: {exercise.items.map((i) => plainText(i.label).trim()).join(' → ')}
+          {t('exercise.correctOrder', {
+            order: plainText(
+              tx(
+                joinText(
+                  exercise.items.map((i) => i.label),
+                  ' → ',
+                ),
+              ),
+            ),
+          })}
         </p>
       )}
       {!locked && (

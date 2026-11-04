@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { numberPatternGame } from './content/definition';
 import type { NumberPatternChallenge } from './content/types';
@@ -7,9 +8,9 @@ export const numberPatternModule = defineGameModule<NumberPatternChallenge>({
   definition: numberPatternGame,
   ContentView: NumberPatternView,
   kindLabels: {
-    grid: 'Number grids',
-    pyramid: 'Number pyramids',
-    wheel: 'Number wheels',
-    cross: 'Number crosses',
+    grid: msg('patterns:numberPatternCompletion.kinds.grid'),
+    pyramid: msg('patterns:numberPatternCompletion.kinds.pyramid'),
+    wheel: msg('patterns:numberPatternCompletion.kinds.wheel'),
+    cross: msg('patterns:numberPatternCompletion.kinds.cross'),
   },
 });

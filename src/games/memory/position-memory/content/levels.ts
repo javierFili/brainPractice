@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { PositionMemoryProfile } from './types';
 
@@ -9,7 +10,7 @@ const show = (ms: number, targets: number) => untimed(targets * 2500 + 2000, ms)
  */
 export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
   {
-    objective: 'Remember 2 lit cells on a 3×3 grid.',
+    objective: msg('memory:positionMemory.levels.1'),
     challengeCount: 5,
     kind: 'plain',
     size: 3,
@@ -18,7 +19,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(3000, 2),
   },
   {
-    objective: 'Remember 3 lit cells on a 3×3 grid.',
+    objective: msg('memory:positionMemory.levels.2'),
     challengeCount: 5,
     kind: 'plain',
     size: 3,
@@ -27,7 +28,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(3000, 3),
   },
   {
-    objective: 'Remember 3 cells on a bigger 4×4 grid.',
+    objective: msg('memory:positionMemory.levels.3'),
     challengeCount: 5,
     kind: 'plain',
     size: 4,
@@ -36,7 +37,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2500, 3),
   },
   {
-    objective: 'Remember 4 cells on a 4×4 grid.',
+    objective: msg('memory:positionMemory.levels.4'),
     challengeCount: 6,
     kind: 'plain',
     size: 4,
@@ -45,7 +46,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2500, 4),
   },
   {
-    objective: 'Remember 4 blue cells and ignore 2 orange ones.',
+    objective: msg('memory:positionMemory.levels.5'),
     challengeCount: 6,
     kind: 'filtered',
     size: 4,
@@ -54,7 +55,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2500, 4),
   },
   {
-    objective: 'Remember 5 cells on a 5×5 grid.',
+    objective: msg('memory:positionMemory.levels.6'),
     challengeCount: 6,
     kind: 'plain',
     size: 5,
@@ -63,7 +64,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2500, 5),
   },
   {
-    objective: 'Remember 5 blue cells among 3 distractors.',
+    objective: msg('memory:positionMemory.levels.7'),
     challengeCount: 6,
     kind: 'filtered',
     size: 5,
@@ -72,7 +73,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2500, 5),
   },
   {
-    objective: 'Remember 6 cells with a short look.',
+    objective: msg('memory:positionMemory.levels.8'),
     challengeCount: 6,
     kind: 'plain',
     size: 5,
@@ -81,7 +82,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2000, 6),
   },
   {
-    objective: 'Remember 7 blue cells among 3 distractors on 6×6.',
+    objective: msg('memory:positionMemory.levels.9'),
     challengeCount: 6,
     kind: 'filtered',
     size: 6,
@@ -90,7 +91,7 @@ export const POSITION_MEMORY_LEVELS = defineLevels<PositionMemoryProfile>([
     timing: show(2500, 7),
   },
   {
-    objective: 'Remember 8 blue cells among 4 distractors on 6×6.',
+    objective: msg('memory:positionMemory.levels.10'),
     challengeCount: 6,
     kind: 'filtered',
     size: 6,

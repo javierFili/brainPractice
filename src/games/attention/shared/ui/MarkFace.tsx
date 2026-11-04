@@ -1,5 +1,6 @@
 import type { ColorName } from '@/games/kit/content';
 import { Glyph } from '@/games/kit/ui';
+import { useText } from '@/i18n';
 import { markLabel, type Mark } from '../content/marks';
 
 const FILL: Record<ColorName, string> = {
@@ -23,6 +24,7 @@ interface Props {
 
 /** Draws a mark: kit glyphs with their pose, or the asymmetric L shape. */
 export function MarkFace({ mark, className = 'h-4/5 w-4/5', labelled = false }: Props) {
+  const tx = useText();
   const pose = { rotation: mark.rotation, mirrored: mark.mirrored };
   const face =
     mark.shape === 'ell' ? (
@@ -47,7 +49,7 @@ export function MarkFace({ mark, className = 'h-4/5 w-4/5', labelled = false }: 
   return (
     <span
       role="img"
-      aria-label={markLabel(mark)}
+      aria-label={tx(markLabel(mark))}
       className="inline-flex items-center justify-center"
     >
       {face}

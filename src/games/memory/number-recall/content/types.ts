@@ -1,9 +1,10 @@
 import type { Challenge } from '@/domain/challenge';
 import type { DifficultyProfile } from '@/domain/difficulty';
 
-/** A labelled number shown in chunks, e.g. Phone: 482 6193. Every chunk starts with 1–9. */
+/** A named number shown in chunks, e.g. Phone: 482 6193. Every chunk starts with 1–9. */
 export interface ChunkedNumber {
-  readonly label: string;
+  /** Stable id of the number's name (`phone`, `doorCode`…), translated by `numberName`. */
+  readonly name: string;
   readonly groups: readonly string[];
 }
 

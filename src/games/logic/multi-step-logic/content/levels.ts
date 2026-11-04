@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { MultiStepProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { MultiStepProfile } from './types';
  */
 export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
   {
-    objective: 'One step: from a known number to the next.',
+    objective: msg('logic:multiStepLogic.levels.1'),
     challengeCount: 5,
     timing: untimed(25_000),
     kinds: { numbers: 1 },
@@ -19,7 +20,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 20,
   },
   {
-    objective: 'Two steps along a chain.',
+    objective: msg('logic:multiStepLogic.levels.2'),
     challengeCount: 5,
     timing: untimed(35_000),
     kinds: { numbers: 1 },
@@ -30,7 +31,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 30,
   },
   {
-    objective: 'Who is tallest? Chain the comparisons.',
+    objective: msg('logic:multiStepLogic.levels.3'),
     challengeCount: 5,
     timing: untimed(40_000),
     kinds: { compare: 2, numbers: 1 },
@@ -41,7 +42,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 30,
   },
   {
-    objective: '“Twice as many” and “half as many”.',
+    objective: msg('logic:multiStepLogic.levels.4'),
     challengeCount: 5,
     timing: untimed(45_000),
     kinds: { numbers: 1 },
@@ -52,7 +53,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 40,
   },
   {
-    objective: 'Four people to compare.',
+    objective: msg('logic:multiStepLogic.levels.5'),
     challengeCount: 5,
     timing: untimed(50_000),
     kinds: { compare: 2, numbers: 1 },
@@ -63,7 +64,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 40,
   },
   {
-    objective: 'Use a total instead of a known number.',
+    objective: msg('logic:multiStepLogic.levels.6'),
     challengeCount: 5,
     timing: untimed(60_000),
     kinds: { numbers: 1 },
@@ -74,7 +75,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 40,
   },
   {
-    objective: 'Differences between people never compared directly.',
+    objective: msg('logic:multiStepLogic.levels.7'),
     challengeCount: 5,
     timing: untimed(70_000),
     kinds: { numbers: 3, compare: 1 },
@@ -85,7 +86,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 50,
   },
   {
-    objective: 'Five people, numbers and comparisons.',
+    objective: msg('logic:multiStepLogic.levels.8'),
     challengeCount: 5,
     timing: untimed(80_000),
     kinds: { numbers: 2, compare: 1 },
@@ -96,7 +97,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 50,
   },
   {
-    objective: 'Five people with totals.',
+    objective: msg('logic:multiStepLogic.levels.9'),
     challengeCount: 5,
     timing: untimed(90_000),
     kinds: { numbers: 2, compare: 1 },
@@ -107,7 +108,7 @@ export const MULTI_STEP_LEVELS = defineLevels<MultiStepProfile>([
     maxValue: 60,
   },
   {
-    objective: 'Five people, every kind of fact.',
+    objective: msg('logic:multiStepLogic.levels.10'),
     challengeCount: 6,
     timing: untimed(100_000),
     kinds: { numbers: 2, compare: 1 },

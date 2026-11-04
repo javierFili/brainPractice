@@ -7,14 +7,16 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { COLORS, SHAPES, type ColorName } from '@/games/kit/content';
+import { gameIdOf, joinText, msg, type Message, type Text } from '@/domain/shared';
+
+const T = 'patterns:abstractPatternChallenge';
+import { colorLabel, COLORS, SHAPES, type ColorName } from '@/games/kit/content';
 import {
   DIRECTION,
   FIGURE_SHAPES,
   figure,
+  figureKey,
   figureLabel,
-  listWords,
   orderedChoice,
   ROTATION_VALUES,
   type Draft,
@@ -167,7 +169,7 @@ function panelFor(
         random,
         p.shapes
           .flatMap((sh) => p.colors.map((c) => figure(sh, c)))
-          .filter((f) => figureLabel(f) !== figureLabel(a)),
+          .filter((f) => figureKey(f) !== figureKey(a)),
       );
       const pal = size === 3 ? [a, b, a] : [a, b, b, a];
       if (valid) return pal;
@@ -180,42 +182,54 @@ function panelFor(
   }
 }
 
-const RULE_TEXT: Record<PanelRule, (target: FigureShape, count: number) => string> = {
-  'same-colour': () => 'all figures in a panel are the same colour',
-  'same-shape': () => 'all figures in a panel are the same shape',
-  'different-shapes': () => 'no two figures in a panel share a shape',
-  'different-colours': () => 'no two figures in a panel share a colour',
-  'same-count': (_t, n) => `every panel has ${n} figures`,
-  'contains-shape': (t) => `every panel contains at least one ${t}`,
-  'same-direction': () => 'all arrows in a panel point the same way',
-  'one-odd-colour': () => 'exactly one figure in each panel has a different colour from the rest',
-  'mirror-order': () => 'each panel reads the same from left to right and from right to left',
-};
+/** "every panel contains at least one circle": per-shape keys keep articles and gender right. */
+const ruleText = (rule: PanelRule, target: FigureShape, count: number): Message =>
+  rule === 'contains-shape'
+    ? msg(`${T}.rule.contains-shape.${target}`)
+    : rule === 'same-count'
+      ? msg(`${T}.rule.same-count`, { count })
+      : msg(`${T}.rule.${rule}`);
 
 const unique = <V>(values: readonly V[]) => [...new Set(values)];
 
-function breakText(rule: PanelRule, panel: readonly Figure[], target: FigureShape, n: number) {
+function breakText(
+  rule: PanelRule,
+  panel: readonly Figure[],
+  target: FigureShape,
+  n: number,
+): Message {
+  const B = `${T}.break`;
   switch (rule) {
     case 'same-colour':
-      return `it mixes ${listWords(unique(panel.map((f) => f.color)))}`;
+      return msg(`${B}.mixes`, {
+        list: joinText(unique(panel.map((f) => f.color)).map(colorLabel)),
+      });
     case 'same-shape':
-      return `it mixes ${listWords(unique(panel.map((f) => `${f.shape}s`)))}`;
+      return msg(`${B}.mixes`, {
+        list: joinText(
+          unique(panel.map((f) => f.shape)).map((s) => msg(`patterns:shared.shapes.${s}`)),
+        ),
+      });
     case 'different-shapes':
-      return 'two of its figures have the same shape';
+      return msg(`${B}.sameShape`);
     case 'different-colours':
-      return 'two of its figures have the same colour';
+      return msg(`${B}.sameColour`);
     case 'same-count':
-      return `it has ${panel.length} figures instead of ${n}`;
+      return msg(`${B}.count`, { count: panel.length, expected: n });
     case 'contains-shape':
-      return `it has no ${target}`;
+      return msg(`${B}.contains.${target}`);
     case 'same-direction':
-      return `its arrows point ${listWords(unique(panel.map((f) => DIRECTION[f.rotation])))}`;
+      return msg(`${B}.directions`, {
+        list: joinText(
+          unique(panel.map((f) => DIRECTION[f.rotation])).map((d) =>
+            msg(`patterns:shared.direction.${d}`),
+          ),
+        ),
+      });
     case 'one-odd-colour':
-      return sameColour(panel)
-        ? 'all its figures are the same colour'
-        : 'more than one of its figures has a different colour';
+      return sameColour(panel) ? msg(`${B}.allSame`) : msg(`${B}.severalOdd`);
     case 'mirror-order':
-      return 'read backwards, its figures come in a different order';
+      return msg(`${B}.order`);
   }
 }
 
@@ -295,12 +309,16 @@ export function candidate(
     if (!panels.every((p, i) => follows(rule, p, target, n) === (i !== answer))) return 'rule';
     const odd = oddPanels(panels, signatures);
     if (odd.size !== 1 || !odd.has(answer)) return `other:${odd.size}`;
-    const labels = panels.map((_, i) => `Panel ${i + 1}`);
+    const labels = panels.map((_, i) => msg(`${T}.panel`, { index: i + 1 }));
     return {
-      prompt: 'Which panel breaks the rule that all the others follow?',
+      prompt: msg(`${T}.prompt`),
       content: { kind: KIND[rule], panels },
       response: orderedChoice(labels, answer),
-      explanation: `In every other panel, ${RULE_TEXT[rule](target, n)}. Panel ${answer + 1} breaks it: ${breakText(rule, panels[answer] as Figure[], target, n)}.`,
+      explanation: msg(`${T}.explanation`, {
+        rule: ruleText(rule, target, n),
+        index: answer + 1,
+        reason: breakText(rule, panels[answer] as Figure[], target, n),
+      }),
       skills: ['abstraction', 'pattern-recognition', 'logical-reasoning'],
     };
   }
@@ -313,15 +331,17 @@ function draft(random: RandomGenerator, profile: AbstractProfile): Draft<Abstrac
   });
 }
 
-export const panelText = (panel: readonly Figure[]) =>
-  panel.map((f) => figureLabel(f, { withCount: false })).join(', ');
+export const panelText = (panel: readonly Figure[]): Text =>
+  joinText(
+    panel.map((f) => figureLabel(f, { withCount: false })),
+    ', ',
+  );
 
 export const abstractPatternGame: GameDefinition<AbstractChallenge, AbstractProfile> = {
   id: ABSTRACT_ID,
-  name: 'Abstract Pattern Challenge',
-  tagline: 'One panel breaks the rule. Which one?',
-  description:
-    'Several panels of figures share a hidden rule — about colour, shape, number, direction or order — while other features change freely. Find the rule and spot the one panel that breaks it.',
+  name: msg('patterns:abstractPatternChallenge.name'),
+  tagline: msg('patterns:abstractPatternChallenge.tagline'),
+  description: msg('patterns:abstractPatternChallenge.description'),
   area: 'patterns',
   skills: ['abstraction', 'pattern-recognition', 'logical-reasoning', 'cognitive-flexibility'],
   meta: {
@@ -332,16 +352,15 @@ export const abstractPatternGame: GameDefinition<AbstractChallenge, AbstractProf
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each set counts as correct when you pick the panel that breaks the shared rule. Your result is the share of sets solved; there is no time limit.',
+    scoringSummary: msg('patterns:abstractPatternChallenge.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'All panels but one follow the same rule. Some features change just to distract you.',
-    'Rules can be about colour, shape, how many figures, which way arrows point, or the order of the figures.',
-    'Only one panel can be the odd one out under any rule. Keys 1 to 6 pick a panel.',
+    msg('patterns:abstractPatternChallenge.instructions.1'),
+    msg('patterns:abstractPatternChallenge.instructions.2'),
+    msg('patterns:abstractPatternChallenge.instructions.3'),
   ],
-  simpleInstructions: 'Find the panel that does not fit with the others.',
+  simpleInstructions: msg('patterns:abstractPatternChallenge.simpleInstructions'),
   levels: ABSTRACT_LEVELS,
   generate({ identity, profile, random }) {
     return { ...identity, ...draft(random, profile), timing: profile.timing };

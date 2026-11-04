@@ -1,7 +1,9 @@
-import { glyphLabel, type Glyph } from '@/games/kit/content';
+import { useTranslation } from 'react-i18next';
+import { glyphKey, glyphLabel, type Glyph } from '@/games/kit/content';
 import { Glyph as GlyphIcon } from '@/games/kit/ui';
 import { Panel } from '@/games/logic/shared/ui';
 import type { ContentViewProps } from '@/games/types';
+import { useText } from '@/i18n';
 import { describeRule } from '../content/rules';
 import type { RuleChallenge } from '../content/types';
 
@@ -14,6 +16,7 @@ function Group({
   readonly mark: '✓' | '✗';
   readonly items: readonly (Glyph | number)[];
 }) {
+  const tx = useText();
   return (
     <Panel title={`${mark} ${title}`}>
       <ul
@@ -30,11 +33,11 @@ function Group({
             </li>
           ) : (
             <li
-              key={glyphLabel(item)}
+              key={glyphKey(item)}
               className="flex flex-col items-center rounded-md border border-line bg-raised p-1.5"
             >
               <GlyphIcon glyph={item} />
-              <span className="text-xs text-ink-muted">{glyphLabel(item)}</span>
+              <span className="text-xs text-ink-muted">{tx(glyphLabel(item))}</span>
             </li>
           ),
         )}
@@ -44,16 +47,19 @@ function Group({
 }
 
 export function RuleDiscoveryView({ challenge, phase }: ContentViewProps<RuleChallenge>) {
+  const { t } = useTranslation('logic');
+  const tx = useText();
   const { content } = challenge;
   return (
     <div className="flex flex-col gap-4">
       <div className="grid gap-4 sm:grid-cols-2">
-        <Group title="Fits the rule" mark="✓" items={content.fits} />
-        <Group title="Does not fit" mark="✗" items={content.misses} />
+        <Group title={t('ruleDiscovery.view.fits')} mark="✓" items={content.fits} />
+        <Group title={t('ruleDiscovery.view.misses')} mark="✗" items={content.misses} />
       </div>
       {phase === 'review' && (
         <p className="text-sm text-ink-soft">
-          The rule: <span className="font-semibold text-ink">{describeRule(content.rule)}</span>.
+          {t('ruleDiscovery.view.rule')}{' '}
+          <span className="font-semibold text-ink">{tx(describeRule(content.rule))}</span>.
         </p>
       )}
     </div>

@@ -1,7 +1,7 @@
 import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, randomInt, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg, type Text } from '@/domain/shared';
 import type { Draft } from '@/games/logic/shared/content';
 import { NUMBER_SEQUENCES_LEVELS } from './levels';
 import { uniqueHiddenTerm } from './rules';
@@ -14,7 +14,7 @@ const LENGTH = 7;
 interface Built {
   readonly terms: number[];
   /** Why the rule produces these terms, in plain words. */
-  readonly rule: string;
+  readonly rule: Text;
 }
 
 const step = (random: RandomGenerator, min: number, max: number, negative: boolean) => {
@@ -22,7 +22,13 @@ const step = (random: RandomGenerator, min: number, max: number, negative: boole
   return negative && chance(random, 0.4) ? -size : size;
 };
 
-const signed = (d: number) => (d >= 0 ? `add ${d}` : `subtract ${-d}`);
+const R = (path: string, values?: Record<string, Text | number>) =>
+  msg(`logic:numberSequences.rule.${path}`, values);
+/** "add 3" / "subtract 3". */
+const signed = (d: number) => (d >= 0 ? R('add', { n: d }) : R('subtract', { n: -d }));
+/** "(the terms) add 3" / "(the terms) subtract 3", as said of several terms. */
+const signedTerms = (d: number) =>
+  d >= 0 ? R('termsAdd', { n: d }) : R('termsSubtract', { n: -d });
 
 function makeTerms(
   random: RandomGenerator,
@@ -41,7 +47,7 @@ function makeTerms(
       const a = d < 0 ? randomInt(random, 40, 90) : randomInt(random, 0, 20);
       return {
         terms: seq([a], (s, i) => (s[i - 1] as number) + d),
-        rule: `${signed(d)} each time`,
+        rule: R('constant', { step: signed(d) }),
       };
     }
     case 'multiply': {
@@ -49,7 +55,7 @@ function makeTerms(
       const a = randomInt(random, 1, r === 2 ? 6 : 2);
       return {
         terms: seq([a], (s, i) => (s[i - 1] as number) * r),
-        rule: `multiply by ${r} each time`,
+        rule: R('multiply', { r }),
       };
     }
     case 'alternating-add': {
@@ -59,7 +65,7 @@ function makeTerms(
       const a = randomInt(random, 0, 20);
       return {
         terms: seq([a], (s, i) => (s[i - 1] as number) + (i % 2 === 1 ? d0 : d1)),
-        rule: `${signed(d0)}, then ${signed(d1)}, and repeat`,
+        rule: R('alternate', { a: signed(d0), b: signed(d1) }),
       };
     }
     case 'growing-add': {
@@ -68,7 +74,7 @@ function makeTerms(
       const a = randomInt(random, 0, 10);
       return {
         terms: seq([a], (s, i) => (s[i - 1] as number) + d0 + (i - 1) * dd),
-        rule: `the amount added grows by ${dd} each time (add ${d0}, then ${d0 + dd}, then ${d0 + 2 * dd}, …)`,
+        rule: R('growing', { dd, a: d0, b: d0 + dd, c: d0 + 2 * dd }),
       };
     }
     case 'interleaved': {
@@ -79,7 +85,7 @@ function makeTerms(
       const b = randomInt(random, db < 0 ? 30 : 0, db < 0 ? 50 : 20);
       return {
         terms: seq([a, b], (s, i) => (s[i - 2] as number) + (i % 2 === 0 ? da : db)),
-        rule: `two sequences take turns: the 1st, 3rd, 5th … terms ${signed(da)} each time, and the 2nd, 4th, 6th … terms ${signed(db)} each time`,
+        rule: R('interleaved', { a: signedTerms(da), b: signedTerms(db) }),
       };
     }
     case 'two-step': {
@@ -93,8 +99,8 @@ function makeTerms(
           return (i % 2 === 1) === multiplyFirst ? prev * r : prev + b;
         }),
         rule: multiplyFirst
-          ? `multiply by ${r}, then ${signed(b)}, and repeat`
-          : `${signed(b)}, then multiply by ${r}, and repeat`,
+          ? R('multiplyThenAdd', { r, step: signed(b) })
+          : R('addThenMultiply', { r, step: signed(b) }),
       };
     }
     case 'sum-of-two': {
@@ -102,7 +108,7 @@ function makeTerms(
       const b = randomInt(random, 1, 6);
       return {
         terms: seq([a, b], (s, i) => (s[i - 1] as number) + (s[i - 2] as number)),
-        rule: 'each term is the sum of the two terms before it',
+        rule: R('sumOfTwo'),
       };
     }
   }
@@ -125,10 +131,9 @@ function buildSequence(random: RandomGenerator, profile: SequenceProfile) {
 
 export const numberSequencesGame: GameDefinition<SequenceChallenge, SequenceProfile> = {
   id: NUMBER_SEQUENCES_ID,
-  name: 'Number Sequences',
-  tagline: 'Find the rule, then the number.',
-  description:
-    'A row of numbers follows a hidden rule. Work out the rule and type the next number, or the one that is missing. Higher levels use rules that alternate, grow, or mix two sequences together.',
+  name: msg('logic:numberSequences.name'),
+  tagline: msg('logic:numberSequences.tagline'),
+  description: msg('logic:numberSequences.description'),
   area: 'logic',
   skills: ['pattern-recognition', 'logical-reasoning', 'working-memory'],
   meta: {
@@ -139,29 +144,31 @@ export const numberSequencesGame: GameDefinition<SequenceChallenge, SequenceProf
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each sequence has one answer that every simple rule agrees on. Your result is the share of numbers typed exactly right; there is no time limit.',
+    scoringSummary: msg('logic:numberSequences.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Look at how each number changes into the next one.',
-    'Try simple rules first: adding, subtracting, multiplying.',
-    'If the change is not the same each time, look at how the changes themselves change, or at every second number.',
-    'Type the number that replaces the question mark.',
+    msg('logic:numberSequences.instructions.1'),
+    msg('logic:numberSequences.instructions.2'),
+    msg('logic:numberSequences.instructions.3'),
+    msg('logic:numberSequences.instructions.4'),
   ],
-  simpleInstructions: 'Find the pattern and type the missing number.',
+  simpleInstructions: msg('logic:numberSequences.simpleInstructions'),
   levels: NUMBER_SEQUENCES_LEVELS,
   generate({ identity, profile, random }) {
     const { rule, built, hidden, answer, missing } = retryGeneration('number sequence', () =>
       buildSequence(random, profile),
     );
     const terms = built.terms.map((v, i) => (i === hidden ? null : v));
-    const shown = built.terms.map((v, i) => (i === hidden ? `[${v}]` : String(v))).join(', ');
+    const shown = joinText(
+      built.terms.map((v, i) => (i === hidden ? `[${v}]` : String(v))),
+      ', ',
+    );
     const draft: Draft<SequenceChallenge> = {
-      prompt: missing ? 'Which number replaces the question mark?' : 'What number comes next?',
+      prompt: msg(`logic:numberSequences.prompt.${missing ? 'missing' : 'next'}`),
       content: { kind: rule, terms, hiddenIndex: hidden },
       response: numericResponse(answer),
-      explanation: `The rule is: ${built.rule}. That gives ${shown}, so the answer is ${answer}. No other simple rule fits all the numbers shown.`,
+      explanation: msg('logic:numberSequences.explanation', { rule: built.rule, shown, answer }),
       skills: ['pattern-recognition', 'logical-reasoning'],
     };
     return { ...identity, ...draft, timing: profile.timing };

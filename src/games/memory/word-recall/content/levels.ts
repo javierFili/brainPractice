@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { WordRecallProfile, WordRecallVariant } from './types';
 
@@ -29,70 +30,70 @@ const timing = (words: number, itemMs: number) =>
  */
 export const WORD_RECALL_LEVELS = defineLevels<WordRecallProfile>([
   {
-    objective: 'Recognise 4 words among 8.',
+    objective: msg('memory:wordRecall.levels.1'),
     challengeCount: 4,
     variants: [recognise(4)],
     itemMs: 1500,
     timing: timing(4, 1500),
   },
   {
-    objective: 'Recognise 5 words among 10.',
+    objective: msg('memory:wordRecall.levels.2'),
     challengeCount: 4,
     variants: [recognise(5)],
     itemMs: 1400,
     timing: timing(5, 1400),
   },
   {
-    objective: 'Recognise 6 words among 12.',
+    objective: msg('memory:wordRecall.levels.3'),
     challengeCount: 4,
     variants: [recognise(6)],
     itemMs: 1300,
     timing: timing(6, 1300),
   },
   {
-    objective: 'Recognise 6 words when the new ones share their theme.',
+    objective: msg('memory:wordRecall.levels.4'),
     challengeCount: 4,
     variants: [similar(6, 12, 2, 0)],
     itemMs: 1300,
     timing: timing(6, 1300),
   },
   {
-    objective: 'Recognise 7 words among 14 of the same themes.',
+    objective: msg('memory:wordRecall.levels.5'),
     challengeCount: 4,
     variants: [similar(7, 14, 2, 0)],
     itemMs: 1200,
     timing: timing(7, 1200),
   },
   {
-    objective: 'Mark the 8 words you saw among 16 (one slip allowed).',
+    objective: msg('memory:wordRecall.levels.6'),
     challengeCount: 4,
     variants: [similar(8, 16, 2, 1)],
     itemMs: 1200,
     timing: timing(8, 1200),
   },
   {
-    objective: 'Recognise 8 words, or put 5 words back in order.',
+    objective: msg('memory:wordRecall.levels.7'),
     challengeCount: 4,
     variants: [similar(8, 16, 2, 1), order(5)],
     itemMs: 1150,
     timing: timing(8, 1150),
   },
   {
-    objective: 'Recognise 9 words among 16, or order 6 words.',
+    objective: msg('memory:wordRecall.levels.8'),
     challengeCount: 4,
     variants: [similar(9, 16, 2, 1), order(6)],
     itemMs: 1100,
     timing: timing(9, 1100),
   },
   {
-    objective: 'Recognise 10 words among 18, or order 6 words.',
+    objective: msg('memory:wordRecall.levels.9'),
     challengeCount: 4,
     variants: [similar(10, 18, 2, 1), order(6)],
     itemMs: 1050,
     timing: timing(10, 1050),
   },
   {
-    objective: 'Recognise 10 words among 20 from three themes, or order 7 words.',
+    objective: msg('memory:wordRecall.levels.10'),
     challengeCount: 4,
     variants: [similar(10, 20, 3, 1), order(7)],
     itemMs: 1000,

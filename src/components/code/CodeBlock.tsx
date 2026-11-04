@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { highlightLine, type TokenKind } from './highlight';
 
 const TONE: Readonly<Record<TokenKind, string>> = {
@@ -45,13 +46,14 @@ export function CodeBlock({
   selection,
   label,
 }: Props) {
+  const { t } = useTranslation('home');
   const lines = source.split('\n');
   return (
     <figure className="flex flex-col gap-2">
       <div
         className="overflow-x-auto rounded-lg border border-slate-800 bg-slate-950 py-2 font-mono text-sm leading-6"
         role="group"
-        aria-label={label ?? 'Code'}
+        aria-label={label ?? t('ui.code.label')}
       >
         <ol className="min-w-max">
           {lines.map((line, i) => {
@@ -81,7 +83,7 @@ export function CodeBlock({
                 <span
                   aria-hidden="true"
                   className={`w-3 shrink-0 ${ran ? 'text-sky-400' : 'text-transparent'}`}
-                  title={ran ? 'This line ran' : undefined}
+                  title={ran ? t('ui.code.ran') : undefined}
                 >
                   ▸
                 </span>
@@ -95,14 +97,22 @@ export function CodeBlock({
                       ))}
                 </span>
                 {isSolution && (
-                  <span className="ml-3 text-xs font-semibold text-emerald-300">← the bug</span>
+                  <span className="ml-3 text-xs font-semibold text-emerald-300">
+                    {t('ui.code.bug')}
+                  </span>
                 )}
                 {picked && !isSolution && (
-                  <span className="ml-3 text-xs font-semibold text-rose-300">← your pick</span>
+                  <span className="ml-3 text-xs font-semibold text-rose-300">
+                    {t('ui.code.pick')}
+                  </span>
                 )}
               </>
             );
-            const sr = `Line ${number}${ran ? ', ran' : ''}${isCurrent ? ', current' : ''}: `;
+            const sr = `${[
+              t('ui.code.line', { number }),
+              ...(ran ? [t('ui.code.lineRan')] : []),
+              ...(isCurrent ? [t('ui.code.lineCurrent')] : []),
+            ].join(t('ui.code.separator'))}: `;
             return (
               <li key={number} className={`flex pr-4 ${background}`}>
                 {selection ? (

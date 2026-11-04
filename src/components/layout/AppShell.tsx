@@ -1,8 +1,10 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet, useLocation } from 'react-router';
 import { useServices } from '@/app/providers/servicesContext';
 import { PreferencesProvider } from '@/app/providers/PreferencesProvider';
 import { usePreferences } from '@/app/providers/preferencesContext';
+import { LanguageSelector } from '@/components/navigation/LanguageSelector';
 import { Sidebar } from '@/components/navigation/Sidebar';
 import { Icon } from '@/components/ui/Icon';
 
@@ -27,15 +29,16 @@ function Brand({ compact = false }: { compact?: boolean }) {
 
 /** Mobile navigation drawer: a modal dialog with focus kept inside and Escape to close. */
 function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t } = useTranslation('nav');
   const panel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return undefined;
-    panel.current?.querySelector<HTMLElement>('a, button')?.focus();
+    panel.current?.querySelector<HTMLElement>('a, button, select')?.focus();
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
       if (event.key !== 'Tab' || !panel.current) return;
-      const focusable = [...panel.current.querySelectorAll<HTMLElement>('a, button')];
+      const focusable = [...panel.current.querySelectorAll<HTMLElement>('a, button, select')];
       const first = focusable[0];
       const last = focusable.at(-1);
       if (event.shiftKey && document.activeElement === first) {
@@ -64,7 +67,7 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
         ref={panel}
         role="dialog"
         aria-modal="true"
-        aria-label="Navigation"
+        aria-label={t('landmarks.navigation')}
         className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] animate-fade-in flex-col gap-4 overflow-y-auto border-r border-line bg-surface p-4"
       >
         <div className="flex items-center justify-between">
@@ -74,9 +77,10 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
             onClick={onClose}
             className="rounded-lg p-2 text-ink-muted hover:bg-raised hover:text-ink focus-visible:outline-2 focus-visible:outline-brand"
           >
-            <Icon name="close" label="Close navigation" />
+            <Icon name="close" label={t('menu.close')} />
           </button>
         </div>
+        <LanguageSelector />
         <Sidebar onNavigate={onClose} />
       </div>
     </div>
@@ -84,12 +88,18 @@ function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
 }
 
 function Shell() {
+  const { t, i18n } = useTranslation('nav');
   const { persistence } = useServices();
   const { preferences, update } = usePreferences();
   const collapsed = preferences.sidebarCollapsed;
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
+
+  // The tab title follows the interface language.
+  useEffect(() => {
+    document.title = t('app.title');
+  }, [t, i18n.language]);
 
   // A new screen starts at the top.
   useEffect(() => {
@@ -107,11 +117,11 @@ function Shell() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-brand focus:px-3 focus:py-1 focus:text-brand-ink"
       >
-        Skip to content
+        {t('skipToContent')}
       </a>
 
       <aside
-        aria-label="Sidebar"
+        aria-label={t('landmarks.sidebar')}
         className={`sticky top-0 hidden h-screen shrink-0 flex-col border-r border-line bg-surface/60 transition-[width] duration-200 lg:flex ${
           collapsed ? 'w-[4.5rem]' : 'w-64'
         }`}
@@ -135,15 +145,20 @@ function Shell() {
           >
             <Icon name={collapsed ? 'chevronRight' : 'chevronLeft'} />
             <span className={collapsed ? 'sr-only' : ''}>
-              {collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              {collapsed ? t('sidebar.expand') : t('sidebar.collapse')}
             </span>
           </button>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-canvas/90 px-4 py-3 backdrop-blur lg:hidden">
-          <Brand />
+        {/* Top navbar: brand and menu on small screens, the language selector on large ones
+            (on small screens it lives in the menu drawer, where there is room for it). */}
+        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-canvas/90 px-4 py-3 backdrop-blur lg:justify-end lg:px-10 lg:py-2">
+          <div className="lg:hidden">
+            <Brand />
+          </div>
+          <LanguageSelector className="hidden lg:flex" />
           <button
             ref={menuButton}
             type="button"
@@ -151,10 +166,10 @@ function Shell() {
             onClick={() => {
               setMobileOpen(true);
             }}
-            className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm text-ink-soft hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand"
+            className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm text-ink-soft hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand lg:hidden"
           >
             <Icon name="menu" />
-            Menu
+            {t('menu.open')}
           </button>
         </header>
         <MobileNav open={mobileOpen} onClose={closeMobile} />
@@ -164,7 +179,7 @@ function Shell() {
             role="status"
             className="border-b border-warning/30 bg-warning/10 px-4 py-2 text-center text-sm text-warning"
           >
-            This browser blocks local storage, so progress will be lost when you close the tab.
+            {t('storageBlocked')}
           </p>
         )}
         <main
@@ -174,7 +189,7 @@ function Shell() {
           <Suspense
             fallback={
               <p role="status" className="p-8 text-sm text-ink-muted">
-                Loading…
+                {t('common:loading')}
               </p>
             }
           >
@@ -183,9 +198,7 @@ function Shell() {
         </main>
         <footer className="border-t border-line">
           <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-ink-muted sm:px-6 lg:px-10">
-            Recreational mental practice. Results describe performance on these activities only —
-            this is not a medical, psychological or IQ assessment, and it does not diagnose, treat
-            or prevent any condition.
+            {t('disclaimer')}
           </p>
         </footer>
       </div>

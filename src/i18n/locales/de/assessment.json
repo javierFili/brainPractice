@@ -1,0 +1,95 @@
+{
+  "protocols": {
+    "quick": {
+      "name": "Kognitive Einschätzung · kurz",
+      "title": "Kurz",
+      "summary": "Ein kurzer Durchgang durch Gedächtnis, Logik, Aufmerksamkeit, Tempo und Muster.",
+      "start": "Kurze Einschätzung starten"
+    },
+    "standard": {
+      "name": "Kognitive Einschätzung · Standard",
+      "title": "Standard",
+      "summary": "Mehr Aufgaben pro Bereich, inklusive räumlicher Rotation und Positionsgedächtnis: ein stabileres Ergebnis.",
+      "start": "Standard-Einschätzung starten"
+    },
+    "programming": {
+      "name": "Kognitive Einschätzung Programmieren",
+      "title": "Programmieren",
+      "summary": "Die fünf Bereiche, gemessen mit Code-Aufgaben – für den Programmier-Weg.",
+      "start": "Programmier-Einschätzung starten"
+    }
+  },
+  "page": {
+    "eyebrow": "Einschätzung",
+    "title": "Kognitive Einschätzung",
+    "description": "Ein strukturierter Durchgang durch verschiedene Aufgabentypen, der ein spielerisches Leistungsprofil ergibt. Vergleiche es nur mit deinen eigenen früheren Durchgängen desselben Protokolls.",
+    "chooseLength": "Wähle eine Länge",
+    "protocol": "Einschätzungsprotokoll",
+    "length_one": "{{count}} Aufgabe · {{minutes}} Min.",
+    "length_other": "{{count}} Aufgaben · {{minutes}} Min.",
+    "howItWorks": "So funktioniert es",
+    "section": "{{game}} · Stufen {{levels}}",
+    "structureNote": "Jedes Mal dieselben Spiele, Stufen und Aufgabenzahl, damit Durchgänge eines Protokolls vergleichbar sind. Schwierigere Stufen zählen mehr. Jede Runde erklärt ihre Regeln; Runden zählen nicht für Stufenrekorde.",
+    "missing": "Nicht verfügbar: fehlende Spiele {{games}}."
+  },
+  "flow": {
+    "unavailable": "Dieser Schritt der Einschätzung ist nicht verfügbar.",
+    "area": "{{area}} · Stufe {{level}}",
+    "round": "Runde {{round}} von {{total}}",
+    "progress": "Fortschritt der Einschätzung",
+    "skipRound": "Runde überspringen (zählt als ungelöst)"
+  },
+  "disclaimer": {
+    "title": "Was das ist – und was nicht",
+    "what": "Dies ist ein spielerisches Werkzeug zur Selbsteinschätzung. Die Werte beschreiben, wie du bei genau diesen Übungen abgeschnitten hast: Genauigkeit und Tempo, wobei schwierigere Stufen mehr zählen. Sie beruhen auf wenigen Aufgaben, haben eine große Schwankungsbreite und werden nicht mit Bevölkerungsnormen verglichen.",
+    "not": "Es ist <strong>kein</strong> IQ-Test, kein psychometrisches Instrument und keine klinische oder professionelle Diagnose und sollte weder für Personalentscheidungen noch für andere folgenreiche Entscheidungen verwendet werden."
+  },
+  "history": {
+    "earlierProtocol": "Früheres Protokoll",
+    "empty": "Noch keine Einschätzung.",
+    "take": "Einschätzung machen",
+    "title": "Frühere Ergebnisse",
+    "description": "Jeder Durchgang wird nur mit deinem vorherigen Durchgang desselben Protokolls verglichen.",
+    "same": "wie beim letzten Mal",
+    "delta": "{{delta}} gegenüber dem letzten Mal"
+  },
+  "profilePage": {
+    "title": "Mein Leistungsprofil",
+    "description": "Deine letzte Einschätzung, Bereich für Bereich. Ein spielerisches Profil dieser Aktivitäten – kein Maß für Intelligenz oder Gesundheit.",
+    "index": "Index {{value}}/100",
+    "keepPractising": "Ein Bereich, den du weiter üben kannst:",
+    "seeGames": "Passende Spiele ansehen"
+  },
+  "result": {
+    "eyebrow": "Leistungsprofil",
+    "index": "Leistungsindex:",
+    "summary_one": "Gesamt: {{band}} · ±{{margin}} Punkte · {{answered}} von {{count}} Aufgabe beantwortet · {{duration}}",
+    "summary_other": "Gesamt: {{band}} · ±{{margin}} Punkte · {{answered}} von {{count}} Aufgaben beantwortet · {{duration}}",
+    "caveat_one": "Bei {{count}} Aufgabe ist die Schwankungsbreite groß: Sieh diese Zahlen als groben Ausgangspunkt für die Wahl deines Trainings, nicht als genaue Messung. Übersprungene Aufgaben zählen als ungelöst. Dies ist ein interner Index dieser Plattform – kein IQ-Wert, kein klinisches Maß und mit keiner Bevölkerungsgruppe verglichen.",
+    "caveat_other": "Bei {{count}} Aufgaben ist die Schwankungsbreite groß: Sieh diese Zahlen als groben Ausgangspunkt für die Wahl deines Trainings, nicht als genaue Messung. Übersprungene Aufgaben zählen als ungelöst. Dies ist ein interner Index dieser Plattform – kein IQ-Wert, kein klinisches Maß und mit keiner Bevölkerungsgruppe verglichen.",
+    "byArea": "Nach Bereich",
+    "caption": "Kognitiver Wert pro Bereich, 0 bis 100",
+    "columns": {
+      "area": "Bereich",
+      "score": "Wert",
+      "band": "Einstufung",
+      "evidence": "Datenbasis"
+    },
+    "notMeasured": "Nicht gemessen",
+    "skipped": "Übersprungen – zählt als 0",
+    "bands": {
+      "developing": "Raum zum Üben",
+      "solid": "Stabil",
+      "strong": "Stark",
+      "exceptional": "Sehr stark"
+    },
+    "evidence": "±{{margin}} · {{answered}}/{{items}} beantwortet",
+    "next": {
+      "title": "Was du als Nächstes trainieren kannst",
+      "areas": "Dein stärkster Bereich war <strong>{{strongest}}</strong>. Die größte Chance liegt bei <strong>{{weakest}}</strong>.",
+      "train": "{{game}} trainieren",
+      "browse": "Spiele ansehen",
+      "retake": "Einschätzung wiederholen"
+    }
+  }
+}

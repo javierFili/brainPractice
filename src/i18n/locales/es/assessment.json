@@ -1,0 +1,95 @@
+{
+  "protocols": {
+    "quick": {
+      "name": "Evaluación cognitiva · rápida",
+      "title": "Rápida",
+      "summary": "Un repaso breve por memoria, lógica, atención, velocidad y patrones.",
+      "start": "Empezar la evaluación rápida"
+    },
+    "standard": {
+      "name": "Evaluación cognitiva · estándar",
+      "title": "Estándar",
+      "summary": "Más retos por área, con rotación espacial y memoria de posiciones: un resultado más estable.",
+      "start": "Empezar la evaluación estándar"
+    },
+    "programming": {
+      "name": "Evaluación cognitiva de programación",
+      "title": "Programación",
+      "summary": "Las cinco áreas medidas con tareas de código, para la ruta de programación.",
+      "start": "Empezar la evaluación de programación"
+    }
+  },
+  "page": {
+    "eyebrow": "Evaluación",
+    "title": "Evaluación cognitiva",
+    "description": "Un recorrido estructurado por varios tipos de tarea que genera un perfil de rendimiento recreativo. Compáralo solo con tus propias evaluaciones anteriores del mismo protocolo.",
+    "chooseLength": "Elige una duración",
+    "protocol": "Protocolo de evaluación",
+    "length_one": "{{count}} reto · {{minutes}} min",
+    "length_other": "{{count}} retos · {{minutes}} min",
+    "howItWorks": "Cómo funciona",
+    "section": "{{game}} · niveles {{levels}}",
+    "structureNote": "Siempre los mismos juegos, niveles y número de retos, para que las evaluaciones de un mismo protocolo se puedan comparar. Los niveles más difíciles pesan más. Cada ronda explica sus reglas; las rondas no cuentan para los récords de nivel.",
+    "missing": "No disponible: faltan los juegos {{games}}."
+  },
+  "flow": {
+    "unavailable": "Este paso de la evaluación no está disponible.",
+    "area": "{{area}} · nivel {{level}}",
+    "round": "Ronda {{round}} de {{total}}",
+    "progress": "Progreso de la evaluación",
+    "skipRound": "Saltar ronda (cuenta como no resuelta)"
+  },
+  "disclaimer": {
+    "title": "Qué es y qué no es",
+    "what": "Es una herramienta recreativa de autoevaluación. Las puntuaciones describen cómo te fue en estos ejercicios concretos: precisión y ritmo, con más peso para los niveles difíciles. Se basan en pocos retos, tienen un margen amplio y no se comparan con normas de población.",
+    "not": "<strong>No</strong> es un test de CI, ni un instrumento psicométrico, ni un diagnóstico clínico o profesional, y no debe usarse para contratar a nadie ni para ninguna decisión importante."
+  },
+  "history": {
+    "earlierProtocol": "Protocolo anterior",
+    "empty": "Aún no hay ninguna evaluación.",
+    "take": "Hacer la evaluación",
+    "title": "Resultados anteriores",
+    "description": "Cada evaluación se compara solo con la anterior del mismo protocolo.",
+    "same": "igual que la última vez",
+    "delta": "{{delta}} respecto a la última vez"
+  },
+  "profilePage": {
+    "title": "Mi perfil de rendimiento",
+    "description": "Tu evaluación más reciente, área por área. Un perfil recreativo de estas actividades, no una medida de inteligencia ni de salud.",
+    "index": "índice {{value}}/100",
+    "keepPractising": "Un área que puedes seguir practicando:",
+    "seeGames": "Ver sus juegos"
+  },
+  "result": {
+    "eyebrow": "Perfil de rendimiento",
+    "index": "Índice de rendimiento:",
+    "summary_one": "En conjunto: {{band}} · ±{{margin}} puntos · {{answered}} de {{count}} reto respondido · {{duration}}",
+    "summary_other": "En conjunto: {{band}} · ±{{margin}} puntos · {{answered}} de {{count}} retos respondidos · {{duration}}",
+    "caveat_one": "Con {{count}} reto el margen es amplio: toma estas cifras como un punto de partida orientativo para elegir qué entrenar, no como una medida precisa. Los retos saltados cuentan como no resueltos. Es un índice interno de esta plataforma: no es una puntuación de CI ni una medida clínica, y no se compara con ninguna población.",
+    "caveat_other": "Con {{count}} retos el margen es amplio: toma estas cifras como un punto de partida orientativo para elegir qué entrenar, no como una medida precisa. Los retos saltados cuentan como no resueltos. Es un índice interno de esta plataforma: no es una puntuación de CI ni una medida clínica, y no se compara con ninguna población.",
+    "byArea": "Por área",
+    "caption": "Puntuación cognitiva por área, de 0 a 100",
+    "columns": {
+      "area": "Área",
+      "score": "Puntuación",
+      "band": "Franja",
+      "evidence": "Evidencia"
+    },
+    "notMeasured": "Sin medir",
+    "skipped": "Saltada: cuenta como 0",
+    "bands": {
+      "developing": "Margen para practicar",
+      "solid": "Estable",
+      "strong": "Fuerte",
+      "exceptional": "Muy fuerte"
+    },
+    "evidence": "±{{margin}} · {{answered}}/{{items}} respondidos",
+    "next": {
+      "title": "Qué entrenar ahora",
+      "areas": "Tu área más fuerte fue <strong>{{strongest}}</strong>. La mayor oportunidad está en <strong>{{weakest}}</strong>.",
+      "train": "Entrenar {{game}}",
+      "browse": "Ver juegos",
+      "retake": "Repetir la evaluación"
+    }
+  }
+}

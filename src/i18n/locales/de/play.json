@@ -1,0 +1,118 @@
+{
+  "stage": {
+    "memorise": "Präge es dir ein – es wird gleich verdeckt.",
+    "ready": "Ich bin bereit",
+    "confirmAnswer": "Bestätige deine Antwort",
+    "selectedItem": "Element {{position}} ausgewählt"
+  },
+  "header": {
+    "relaxed": "Entspanntes Tempo",
+    "challenge": "Aufgabe",
+    "score": "Punkte",
+    "streak": "Serie",
+    "studyLeft": "Verbleibende Einprägezeit",
+    "timeLeft": "Verbleibende Zeit",
+    "progress": "Fortschritt der Runde"
+  },
+  "feedback": {
+    "notThisTime": "Diesmal nicht",
+    "points": "{{points}} Pkt.",
+    "yourAnswer": "Deine Antwort:",
+    "correctAnswer": "Richtig:",
+    "answer": "Antwort: {{answer}}",
+    "seeResults": "Ergebnisse ansehen",
+    "nextChallenge": "Nächste Aufgabe"
+  },
+  "page": {
+    "notFound": "Dieses Spiel, diese Stufe oder dieser Seed existiert nicht.",
+    "lockedTitle": "Stufe {{level}} ist noch nicht freigeschaltet",
+    "lockedDescription": "Jede Stufe wird nach einer Runde der Stufe darunter mit einer Leistung von 50 oder mehr freigeschaltet oder nach drei abgeschlossenen Runden dieser Stufe. Freies Spiel in den Einstellungen schaltet alle Stufen frei.",
+    "playLevel": "Stufe {{level}} spielen",
+    "settings": "Einstellungen"
+  },
+  "runner": {
+    "endSession": "Runde beenden",
+    "hideInstructions": "Anleitung ausblenden",
+    "howToPlay": "So wird gespielt"
+  },
+  "results": {
+    "label": {
+      "endedEarly": "Runde vorzeitig beendet",
+      "excellent": "Hervorragende Runde",
+      "cleared": "Stufe geschafft",
+      "gettingThere": "Fast geschafft",
+      "keepGoing": "Gutes Training – bleib dran"
+    },
+    "reasons": {
+      "notEnough": "Noch nicht genug Antworten, um diese Stufe zu beurteilen.",
+      "topMastered": "Höchste Stufe gemeistert – arbeite weiter an deinem Tempo.",
+      "ready": "Genau und im Tempo: bereit für die nächste Stufe.",
+      "fundamentals": "Übe weiter die Grundlagen.",
+      "consolidate": "Festige zuerst die vorherige Stufe.",
+      "pace": "Genau – jetzt arbeite an deinem Tempo.",
+      "keepPractising": "Übe diese Stufe weiter."
+    },
+    "direction": {
+      "up": "↑ Stufe höher",
+      "stay": "→ Bleiben",
+      "down": "↓ Stufe zurück"
+    },
+    "comparison": {
+      "title": "Im Vergleich zum letzten Mal:",
+      "first": "Das ist deine erste abgeschlossene Runde auf Stufe {{level}} in diesem Modus, daher gibt es noch nichts Vergleichbares.",
+      "higher": "In diesem Spiel war deine Genauigkeit höher als in deiner letzten vergleichbaren Runde (Stufe {{level}}): {{before}} → {{after}}.",
+      "lower": "Deine Genauigkeit war niedriger als in deiner letzten vergleichbaren Runde ({{before}} → {{after}}). Ergebnisse schwanken von Runde zu Runde; das ist normal.",
+      "same": "Deine Genauigkeit war genauso hoch wie in deiner letzten vergleichbaren Runde ({{after}}); Leistung {{delta}}."
+    },
+    "related": {
+      "title": "Wo diese Fähigkeit beim Programmieren vorkommt",
+      "lesson": "Lektion: {{lesson}}"
+    },
+    "endedEarlyNote": "Unbeantwortete Aufgaben wurden übersprungen, und die Runde zählt nicht für Rekorde.",
+    "relaxedNote": "Runde mit entspanntem Tempo – im Verlauf gespeichert, nicht in den Rekorden.",
+    "stats": {
+      "performance": "Leistung",
+      "performanceHint": "{{accuracy}} Genauigkeit · {{pace}} Tempo",
+      "score": "Punktzahl",
+      "scoreHint": "von {{max}} möglichen",
+      "accuracy": "Genauigkeit",
+      "accuracyHint": "{{correct}} von {{attempted}} richtig",
+      "medianReaction": "Reaktion (Median)",
+      "medianReactionHint": "vom Signal bis zum Tippen, nur richtige Tipper",
+      "medianTime": "Zeit (Median)",
+      "medianAnswerTime": "Antwortzeit (Median)",
+      "timeHint": "Ø {{average}} · beste {{best}}",
+      "untimedHint": "Spiel ohne Zeitlimit: nur zur Information",
+      "longestStreak": "Längste Serie",
+      "timeouts": "Zeit abgelaufen",
+      "duration": "Dauer",
+      "seed": "Seed",
+      "seedHint": "Genau dieselben Aufgaben noch einmal spielen"
+    },
+    "recommendation": {
+      "title": "Empfehlung: {{direction}} (Stufe {{level}})"
+    },
+    "actions": {
+      "repeat": "Stufe wiederholen",
+      "nextLevel": "Nächste Stufe",
+      "replaySeed": "Diesen Seed erneut spielen",
+      "backToGame": "Zurück zum Spiel"
+    },
+    "practise": {
+      "title": "Zum Üben:",
+      "detail": "{{kind}} ({{correct}}/{{total}} in dieser Runde)."
+    },
+    "breakdown": "Nach Aufgabentyp",
+    "review": {
+      "none": "Rückblick – keine Fehler 🎯",
+      "count": "Rückblick ({{total}})",
+      "timedOut": "Zeit abgelaufen",
+      "youAnswered": "Deine Antwort:"
+    },
+    "save": {
+      "saving": "Fortschritt wird gespeichert …",
+      "saved": "Fortschritt auf diesem Gerät gespeichert.",
+      "failed": "Der Fortschritt konnte auf diesem Gerät nicht gespeichert werden."
+    }
+  }
+}

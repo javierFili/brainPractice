@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { MemoryCardsProfile } from './types';
 
@@ -10,7 +11,7 @@ const blind = (pairs: number) => untimed(pairs * 6000);
  */
 export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
   {
-    objective: 'Find 3 pairs after a look at the board.',
+    objective: msg('memory:memoryCards.levels.1'),
     challengeCount: 3,
     kind: 'objects',
     pairs: 3,
@@ -19,7 +20,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: preview(4000, 3),
   },
   {
-    objective: 'Find 4 pairs after a shorter look.',
+    objective: msg('memory:memoryCards.levels.2'),
     challengeCount: 3,
     kind: 'objects',
     pairs: 4,
@@ -28,7 +29,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: preview(3000, 4),
   },
   {
-    objective: 'Find 5 pairs of objects from the same family.',
+    objective: msg('memory:memoryCards.levels.3'),
     challengeCount: 3,
     kind: 'family',
     pairs: 5,
@@ -37,7 +38,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: preview(3000, 5),
   },
   {
-    objective: 'Find 6 pairs with only a brief look.',
+    objective: msg('memory:memoryCards.levels.4'),
     challengeCount: 2,
     kind: 'objects',
     pairs: 6,
@@ -46,7 +47,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: preview(2000, 6),
   },
   {
-    objective: 'Find 6 pairs with no preview: remember every card you turn.',
+    objective: msg('memory:memoryCards.levels.5'),
     challengeCount: 2,
     kind: 'family',
     pairs: 6,
@@ -55,7 +56,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: blind(6),
   },
   {
-    objective: 'Find 8 pairs of shapes with no preview.',
+    objective: msg('memory:memoryCards.levels.6'),
     challengeCount: 2,
     kind: 'glyphs',
     pairs: 8,
@@ -64,7 +65,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: blind(8),
   },
   {
-    objective: 'Find 8 pairs among look-alike shapes.',
+    objective: msg('memory:memoryCards.levels.7'),
     challengeCount: 2,
     kind: 'near-glyphs',
     pairs: 8,
@@ -73,7 +74,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: blind(8),
   },
   {
-    objective: 'Find 10 pairs among look-alike shapes.',
+    objective: msg('memory:memoryCards.levels.8'),
     challengeCount: 2,
     kind: 'near-glyphs',
     pairs: 10,
@@ -82,7 +83,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: blind(10),
   },
   {
-    objective: 'Find 10 pairs with fewer misses allowed.',
+    objective: msg('memory:memoryCards.levels.9'),
     challengeCount: 2,
     kind: 'near-glyphs',
     pairs: 10,
@@ -91,7 +92,7 @@ export const MEMORY_CARDS_LEVELS = defineLevels<MemoryCardsProfile>([
     timing: blind(10),
   },
   {
-    objective: 'Find 12 look-alike pairs with a tight miss budget.',
+    objective: msg('memory:memoryCards.levels.10'),
     challengeCount: 2,
     kind: 'near-glyphs',
     pairs: 12,

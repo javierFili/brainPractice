@@ -1,7 +1,7 @@
 import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
 import type { Draft } from '../../shared/content';
 import { NUMBER_PATTERN_LEVELS } from './levels';
 import {
@@ -28,20 +28,7 @@ type Line = [number, number, number];
 
 const transpose = (g: number[][]) => g.map((_, r) => g.map((row) => row[r] as number));
 
-const GRID_TEXT: Record<GridRuleName, string> = {
-  'row-sum': 'In each row, the first number plus the second gives the third.',
-  'column-sum': 'In each column, the top number plus the middle one gives the bottom one.',
-  'row-difference': 'In each row, the first number minus the second gives the third.',
-  'column-difference': 'In each column, the top number minus the middle one gives the bottom one.',
-  'row-step': 'Each row goes up or down by its own fixed step from left to right.',
-  'column-step': 'Each column goes up or down by its own fixed step from top to bottom.',
-  'row-product': 'In each row, the first number times the second gives the third.',
-  'column-product': 'In each column, the top number times the middle one gives the bottom one.',
-  'add-table':
-    'Moving from one column to another adds the same amount in every row (and moving between rows adds the same amount in every column).',
-  'row-total': 'Every row adds up to the same total.',
-  'column-total': 'Every column adds up to the same total.',
-};
+const T = 'patterns:numberPatternCompletion';
 
 /** Builds one line (three numbers, left to right or top to bottom) for a line rule. */
 function line(random: RandomGenerator, rule: GridRuleName, max: number): Line {
@@ -116,18 +103,32 @@ function gridDraft(random: RandomGenerator, profile: NumberPatternProfile): Numb
   if (predicted.size !== 1 || !predicted.has(answer)) return null;
   const lineValues = columnRule ? full.map((row) => row[c] as number) : (full[r] as number[]);
   const shown = lineValues.map((v, i) => ((columnRule ? i === r : i === c) ? `?` : String(v)));
-  const where = columnRule ? `column ${c + 1}` : `row ${r + 1}`;
   const working =
     rule === 'add-table'
-      ? `so the missing number is ${answer}`
-      : rule === 'row-total' || rule === 'column-total'
-        ? `the total is ${lineValues.reduce((a, b) => a + b, 0)}, so in ${rule === 'row-total' ? `row ${r + 1}` : `column ${c + 1}`} the missing number is ${answer}`
-        : `in ${where} (${shown.join(', ')}) the missing number is ${answer}`;
+      ? msg(`${T}.grid.working.table`, { answer })
+      : rule === 'row-total'
+        ? msg(`${T}.grid.working.rowTotal`, {
+            total: lineValues.reduce((a, b) => a + b, 0),
+            row: r + 1,
+            answer,
+          })
+        : rule === 'column-total'
+          ? msg(`${T}.grid.working.columnTotal`, {
+              total: lineValues.reduce((a, b) => a + b, 0),
+              column: c + 1,
+              answer,
+            })
+          : columnRule
+            ? msg(`${T}.grid.working.column`, { column: c + 1, shown: shown.join(', '), answer })
+            : msg(`${T}.grid.working.row`, { row: r + 1, shown: shown.join(', '), answer });
   return {
-    prompt: 'Find the rule in the rows or columns. Which number is missing?',
+    prompt: msg(`${T}.grid.prompt`),
     content: { kind: 'grid', cells },
     response: numericResponse(answer),
-    explanation: `${GRID_TEXT[rule]} Here ${working}.`,
+    explanation: msg(`${T}.grid.explanation`, {
+      rule: msg(`${T}.grid.rule.${rule}`),
+      working,
+    }),
     skills: ['pattern-recognition', 'logical-reasoning'],
   };
 }
@@ -157,11 +158,10 @@ function pyramidDraft(random: RandomGenerator, profile: NumberPatternProfile): N
   const last = solved.steps.findIndex((s) => s.at[0] === ask[0] && s.at[1] === ask[1]);
   const steps = solved.steps.slice(0, last + 1).map((s) => s.text);
   return {
-    prompt:
-      'Each brick is the sum of the two bricks below it. What number goes in the brick marked “?”',
+    prompt: msg(`${T}.pyramid.prompt`),
     content: { kind: 'pyramid', rows: shown, ask },
     response: numericResponse(answer),
-    explanation: `Each brick is the sum of the two below it. Working it out: ${steps.join('; ')}. So “?” is ${answer}.`,
+    explanation: msg(`${T}.pyramid.explanation`, { steps: joinText(steps, '; '), answer }),
     skills: ['logical-reasoning', 'problem-solving'],
   };
 }
@@ -185,23 +185,22 @@ function wheelDraft(random: RandomGenerator, profile: NumberPatternProfile): Num
   const partner = full[(missing + half) % n] as number;
   const text =
     rule === 'opposite-sum'
-      ? `Opposite segments always add up to ${k}. The segment opposite the gap is ${partner}, so the missing number is ${k} − ${partner} = ${answer}.`
-      : `Each of the first ${half} segments (clockwise from the top) is ${k} more than the segment opposite it. The segment opposite the gap is ${partner}, so the missing number is ${missing < half ? `${partner} + ${k}` : `${partner} − ${k}`} = ${answer}.`;
+      ? msg(`${T}.wheel.explanation.sum`, { k, partner, answer })
+      : msg(`${T}.wheel.explanation.difference`, {
+          count: half,
+          k,
+          partner,
+          working: missing < half ? `${partner} + ${k}` : `${partner} − ${k}`,
+          answer,
+        });
   return {
-    prompt: 'Find how opposite numbers on the wheel are linked. Which number is missing?',
+    prompt: msg(`${T}.wheel.prompt`),
     content: { kind: 'wheel', segments },
     response: numericResponse(answer),
     explanation: text,
     skills: ['pattern-recognition', 'spatial-reasoning'],
   };
 }
-
-const CROSS_TEXT: Record<CrossRuleName, string> = {
-  sum: 'The centre is the sum of the four arms',
-  'vertical-minus-horizontal': 'The centre is (top + bottom) − (left + right)',
-  'product-sum': 'The centre is top × bottom + left × right',
-  'product-difference': 'The centre is top × bottom − left × right',
-};
 
 const crossWorking = (rule: CrossRuleName, c: NumberCross) => {
   const { top, bottom, left, right } = c;
@@ -237,11 +236,14 @@ function crossDraft(random: RandomGenerator, profile: NumberPatternProfile): Num
   const predicted = crossPredictions(shown);
   if (predicted.size !== 1 || !predicted.has(answer)) return null;
   return {
-    prompt:
-      'The centre of each cross comes from its four arms in the same way. What is the missing centre?',
+    prompt: msg(`${T}.cross.prompt`),
     content: { kind: 'cross', crosses: shown },
     response: numericResponse(answer),
-    explanation: `${CROSS_TEXT[rule]}. In the last cross: ${crossWorking(rule, last)} = ${answer}.`,
+    explanation: msg(`${T}.cross.explanation`, {
+      rule: msg(`${T}.cross.rule.${rule}`),
+      working: crossWorking(rule, last),
+      answer,
+    }),
     skills: ['abstraction', 'logical-reasoning'],
   };
 }
@@ -253,10 +255,9 @@ const GENERATORS: Record<
 
 export const numberPatternGame: GameDefinition<NumberPatternChallenge, NumberPatternProfile> = {
   id: NUMBER_PATTERN_ID,
-  name: 'Number Pattern Completion',
-  tagline: 'Find the missing number in grids, pyramids, wheels and crosses.',
-  description:
-    'Numbers are laid out in grids, pyramids, wheels and crosses, and each layout follows a rule: rows that add up, bricks that sum the two below, opposite segments that match, centres made from their arms. Find the rule and type the missing number.',
+  name: msg('patterns:numberPatternCompletion.name'),
+  tagline: msg('patterns:numberPatternCompletion.tagline'),
+  description: msg('patterns:numberPatternCompletion.description'),
   area: 'patterns',
   skills: ['pattern-recognition', 'logical-reasoning', 'problem-solving', 'abstraction'],
   meta: {
@@ -267,17 +268,16 @@ export const numberPatternGame: GameDefinition<NumberPatternChallenge, NumberPat
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each layout counts as correct when you type the exact missing number. Your result is the share of layouts completed correctly; there is no time limit.',
+    scoringSummary: msg('patterns:numberPatternCompletion.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Each layout hides one number, marked “?”. Find the rule the other numbers follow.',
-    'Grids: compare rows and columns. Pyramids: each brick is the sum of the two below it.',
-    'Wheels: look at numbers on opposite sides. Crosses: the centre comes from the four arms, the same way in every cross.',
-    'Type the missing number and press Enter.',
+    msg('patterns:numberPatternCompletion.instructions.1'),
+    msg('patterns:numberPatternCompletion.instructions.2'),
+    msg('patterns:numberPatternCompletion.instructions.3'),
+    msg('patterns:numberPatternCompletion.instructions.4'),
   ],
-  simpleInstructions: 'Find the rule and type the missing number.',
+  simpleInstructions: msg('patterns:numberPatternCompletion.simpleInstructions'),
   levels: NUMBER_PATTERN_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);

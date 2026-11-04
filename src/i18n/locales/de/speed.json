@@ -1,0 +1,561 @@
+{
+  "reactionTest": {
+    "name": "Reaktionstest",
+    "tagline": "Warte… jetzt!",
+    "description": "Warte, bis eine Form erscheint, und tippe so schnell du kannst. Spätere Stufen bringen Stopp-Formen, die du nicht antippen darfst, und einen Hinweis, der die Go-Form bei jedem Durchgang ändert – Tempo zählt nur, wenn die Entscheidung stimmt.",
+    "scoringSummary": "Ein Durchgang ist richtig, wenn du bei einem Go-Durchgang während des Signals tippst oder dich bei einem Stopp-Durchgang zurückhältst. Tippen vor dem Signal ist ein Fehlstart. Die Reaktionszeit (vom Signal bis zum Tippen) wird getrennt von der Genauigkeit angezeigt.",
+    "accessibilityNotes": "Erfordert eine schnelle Reaktion; entspanntes Tempo verlängert das Signal nicht. Funktioniert mit Leertaste, Eingabetaste, Klick, Tippen oder einem Taster, der auf die Leertaste gelegt ist.",
+    "simpleInstructions": "Wenn die Form erscheint, tippe so schnell du kannst.",
+    "instructions": {
+      "watch": "Behalte das Feld im Blick. Nach einer zufälligen Wartezeit erscheint eine Form.",
+      "tap": "Tippe auf das Feld (oder drücke die Leertaste), solange die Form sichtbar ist. Tippen vor ihrem Erscheinen ist ein Fehlstart.",
+      "goNoGo": "Ab Stufe 4: Tippe nur bei der Go-Form (grüner Kreis) und halte dich bei der Stopp-Form zurück.",
+      "cued": "Ab Stufe 7: Ein Hinweis oben zeigt, bei welcher Form du tippen sollst – er wechselt bei jedem Durchgang."
+    },
+    "levels": {
+      "1": "Tippe, wenn die Form erscheint.",
+      "2": "Tippe schneller: Die Form bleibt etwas kürzer.",
+      "3": "Unvorhersehbare Wartezeiten: Tippe nicht zu früh.",
+      "4": "Tippe nur bei der Go-Form (1 von 5 ist eine Stopp-Form).",
+      "5": "Mehr Stopp-Formen: Halte dich zurück, wenn es nicht die Go-Form ist.",
+      "6": "Stopp-Formen sehen jetzt der Go-Form ähnlich.",
+      "7": "Folge dem Hinweis: Die Go-Form wechselt bei jedem Durchgang.",
+      "8": "Durchgänge mit Hinweis und ähnlichen Formen.",
+      "9": "Ähnliche Formen mit Hinweis, kürzeres Zeitfenster.",
+      "10": "Meister: ähnliche Formen mit Hinweis, kurzes Zeitfenster, lange unvorhersehbare Wartezeiten."
+    },
+    "prompt": {
+      "simple": "Tippe, sobald die Form erscheint.",
+      "target": "Tippe nur bei dieser Form: „{{target}}“."
+    },
+    "explanation": {
+      "go": "Es war „{{target}}“: ein Go-Durchgang.",
+      "stop": "Es war „{{stimulus}}“, nicht „{{target}}“: Zurückhalten war richtig."
+    },
+    "kinds": {
+      "simple": "Einfache Reaktion",
+      "goNoGo": "Go / Stopp",
+      "cued": "Go / Stopp mit Hinweis"
+    },
+    "view": {
+      "goShape": "Go-Form:"
+    }
+  },
+  "rapidSymbolMatching": {
+    "name": "Schneller Symbolvergleich",
+    "tagline": "Gleich oder verschieden? Genau hinsehen, schnell antworten.",
+    "description": "Vergleiche kurze Folgen aus Buchstaben und Symbolen: Sind beide gleich, oder welcher Kandidat ist eine exakte Kopie? Die Folgen werden länger, die Symbole ähnlicher (b, d, p, q) und die Änderungen feiner – bis hin zu zwei vertauschten Nachbarn.",
+    "scoringSummary": "Jeder Vergleich ist richtig oder falsch; ein Fehler kostet Punkte. Eine richtige Antwort bringt umso mehr, je schneller sie kommt, aber die Genauigkeit zählt am meisten. Entspanntes Tempo hebt das Zeitlimit auf.",
+    "accessibilityNotes": "Die Aufgabe ist visuell. Die Folgen werden auch Symbol für Symbol angesagt („kleines b, großes Q…“), sodass der Vergleich durch Zuhören möglich ist, aber viel langsamer.",
+    "simpleInstructions": "Sind beide gleich? Antworte so schnell du kannst.",
+    "instructions": {
+      "sameDifferent": "Gleich oder verschieden: Drücke 1, wenn beide Folgen identisch sind, und 2, wenn sich etwas unterscheidet.",
+      "findCopy": "Finde die Kopie: Wähle den Kandidaten, der genau der Vorlage entspricht.",
+      "checkEvery": "Prüfe jedes Symbol und seine Position – vertauschte Nachbarn zählen als Unterschied."
+    },
+    "levels": {
+      "1": "Gleich oder verschieden? Drei Buchstaben.",
+      "2": "Vier Buchstaben, nur einer kann sich ändern.",
+      "3": "Vier Symbole, nur eines kann sich ändern.",
+      "4": "Finde die exakte Kopie unter dreien.",
+      "5": "Ähnliche Buchstaben: b, d, p, q…",
+      "6": "Fünf ähnliche Zeichen, drei Kandidaten.",
+      "7": "Vertauschte Nachbarn zählen als Unterschied.",
+      "8": "Sechs ähnliche Zeichen, vier Kandidaten.",
+      "9": "Sechs ähnliche Zeichen, gleich oder verschieden – schneller.",
+      "10": "Meister: sieben ähnliche Zeichen, vier Kandidaten."
+    },
+    "same": "Gleich",
+    "different": "Verschieden",
+    "prompt": {
+      "sameDifferent": "Gleich oder verschieden?",
+      "findMatch": "Welche ist eine exakte Kopie?"
+    },
+    "explanation": {
+      "same": "Beide Folgen sind identisch.",
+      "different": "Sie unterscheiden sich: {{reference}} gegenüber {{other}}.",
+      "findMatch": "{{reference}} ist die einzige exakte Kopie; jeder andere Kandidat ändert ein Symbol oder dessen Position."
+    },
+    "spoken": {
+      "upTriangle": "Dreieck nach oben",
+      "square": "Quadrat",
+      "circle": "Kreis",
+      "diamond": "Raute",
+      "star": "Stern",
+      "heart": "Herz",
+      "downTriangle": "Dreieck nach unten",
+      "small": "kleines {{letter}}",
+      "capital": "großes {{letter}}"
+    },
+    "view": {
+      "left": "Links",
+      "right": "Rechts",
+      "reference": "Vorlage"
+    },
+    "kinds": {
+      "sameDifferent": "Gleich oder verschieden",
+      "findMatch": "Kopie finden"
+    }
+  },
+  "numberComparison": {
+    "name": "Zahlenvergleich",
+    "tagline": "Welche ist größer? Schnell!",
+    "description": "Wähle den größten (oder kleinsten) Wert so schnell du kannst. Die Zahlen rücken näher zusammen, es werden mehr, und später kommen Dezimalzahlen, Brüche und kleine Rechnungen.",
+    "scoringSummary": "Jede Wahl ist richtig oder falsch; ein Fehler kostet Punkte. Eine richtige Wahl bringt umso mehr, je schneller sie kommt, aber die Genauigkeit zählt am meisten. Entspanntes Tempo hebt das Zeitlimit auf.",
+    "simpleInstructions": "Wähle schnell die größte Zahl.",
+    "instructions": {
+      "question": "Lies die Frage: größter oder kleinster Wert.",
+      "pick": "Wähle diesen Wert per Klick oder mit seiner Zifferntaste (1–4).",
+      "decimals": "Dezimalzahlen: Vergleiche Ziffer für Ziffer nach dem Punkt – 0.5 ist größer als 0.45.",
+      "fractions": "Brüche und Rechnungen: Bestimme den Wert, bevor du vergleichst."
+    },
+    "levels": {
+      "1": "Wähle die größere von zwei Zahlen.",
+      "2": "Zweistellige Zahlen, näher beieinander.",
+      "3": "Drei zweistellige Zahlen: Wähle die größte.",
+      "4": "Dreistellige Zahlen mit gleichem Anfang; manchmal die kleinste wählen.",
+      "5": "Vier nahe beieinanderliegende vierstellige Zahlen.",
+      "6": "Dezimalzahlen: länger heißt nicht immer größer.",
+      "7": "Nahe Dezimalzahlen.",
+      "8": "Brüche mit verschiedenen Nennern.",
+      "9": "Rechne jeden Ausdruck aus, dann vergleiche.",
+      "10": "Meister: eine Mischung aus nahen ganzen Zahlen, Dezimalzahlen, Brüchen und Ausdrücken."
+    },
+    "prompt": {
+      "integers": {
+        "largest": "Welche Zahl ist die größte?",
+        "smallest": "Welche Zahl ist die kleinste?"
+      },
+      "decimals": {
+        "largest": "Welche Dezimalzahl ist die größte?",
+        "smallest": "Welche Dezimalzahl ist die kleinste?"
+      },
+      "fractions": {
+        "largest": "Welcher Bruch ist der größte?",
+        "smallest": "Welcher Bruch ist der kleinste?"
+      },
+      "expressions": {
+        "largest": "Welches Ergebnis ist das größte?",
+        "smallest": "Welches Ergebnis ist das kleinste?"
+      }
+    },
+    "explanation": {
+      "expression": {
+        "largest": "{{expression}} = {{value}}, das größte Ergebnis.",
+        "smallest": "{{expression}} = {{value}}, das kleinste Ergebnis."
+      },
+      "value": {
+        "largest": "{{value}} ist der größte Wert.",
+        "smallest": "{{value}} ist der kleinste Wert."
+      }
+    },
+    "spoken": {
+      "fraction": "{{num}} durch {{den}}",
+      "minus": "{{a}} minus {{b}}",
+      "times": "{{a}} mal {{b}}"
+    },
+    "view": {
+      "ask": {
+        "largest": "größter Wert",
+        "smallest": "kleinster Wert"
+      },
+      "summary": {
+        "largest_one": "{{count}} Wert · wähle den größten",
+        "largest_other": "{{count}} Werte · wähle den größten",
+        "smallest_one": "{{count}} Wert · wähle den kleinsten",
+        "smallest_other": "{{count}} Werte · wähle den kleinsten"
+      },
+      "values": "Werte"
+    },
+    "kinds": {
+      "integers": "Ganze Zahlen",
+      "decimals": "Dezimalzahlen",
+      "fractions": "Brüche",
+      "expressions": "Rechnungen"
+    }
+  },
+  "visualSearchSprint": {
+    "name": "Visueller Such-Sprint",
+    "tagline": "Ein Ziel, viele Ablenker – finde es schnell.",
+    "description": "Ein Raster aus Formen versteckt genau ein Ziel. Anfangs unterscheidet es sich durch die Form und springt ins Auge; später teilt jeder Ablenker seine Farbe oder seine Form, sodass du die Kombination prüfen musst. Die Raster wachsen von 9 auf 36 Felder.",
+    "scoringSummary": "Ein Durchgang ist richtig, wenn du das Zielfeld drückst. Richtige Antworten bringen umso mehr Punkte, je schneller sie sind; ein falsches Feld kostet Punkte, und wenn die Zeit abläuft, gibt es nichts. Genauigkeit und durchschnittliche Antwortzeit werden getrennt angezeigt; entspanntes Tempo hebt das Limit auf.",
+    "accessibilityNotes": "Die Stufen 1–4 lassen sich allein über die Form lösen. Konjunktionsstufen (5–10) erfordern Farbunterscheidung: Die Hälfte der Ablenker hat die Form des Ziels in einer anderen Farbe. Der barrierefreie Name jedes Feldes nennt Zeile, Spalte, Farbe und Form, sodass mit Screenreader nach Namen gesucht werden kann (eine andere, langsamere Aufgabe).",
+    "simpleInstructions": "Finde die Form, die der oben gezeigten gleicht, und drücke sie.",
+    "instructions": {
+      "target": "Das Ziel wird über dem Raster gezeigt und in der Frage genannt.",
+      "press": "Drücke das eine Feld, das genau diese Form in dieser Farbe zeigt.",
+      "conjunction": "Ab Stufe 5 teilen die anderen Felder entweder seine Farbe oder seine Form – prüfe beides.",
+      "keyboard": "Tastatur: Mit Tab ins Raster, mit den Pfeiltasten bewegen, Eingabetaste drücken."
+    },
+    "levels": {
+      "1": "Finde die eine abweichende Form in einem 3 × 3-Raster.",
+      "2": "Ein größeres Raster: 12 Felder.",
+      "3": "Ähnliche Formen: Das Ziel ist schwerer zu unterscheiden.",
+      "4": "Einfache und ähnliche Formen gemischt.",
+      "5": "Konjunktionssuche: Ablenker teilen Farbe oder Form.",
+      "6": "Konjunktionssuche in 25 Feldern.",
+      "7": "Konjunktionen gemischt mit ähnlichen Formen, 25 Felder.",
+      "8": "Konjunktionssuche in 30 Feldern.",
+      "9": "Konjunktionssuche in einem vollen 6 × 6-Raster.",
+      "10": "Meister: 36 Felder, Konjunktionen mit ähnlichen Formen."
+    },
+    "prompt": "Finde: „{{target}}“.",
+    "explanation": "„{{target}}“ war in {{cell}}.",
+    "view": {
+      "find": "Suche:",
+      "grid_one": "Suchraster, {{count}} Feld",
+      "grid_other": "Suchraster, {{count}} Felder",
+      "cell": "{{cell}}, {{glyph}}",
+      "cellTarget": "{{cell}}, {{glyph}}, Ziel",
+      "cellPick": "{{cell}}, {{glyph}}, deine Wahl"
+    },
+    "kinds": {
+      "feature": "Form springt ins Auge",
+      "similar": "Ähnliche Formen",
+      "conjunction": "Farbe und Form kombiniert"
+    }
+  },
+  "rapidClassification": {
+    "name": "Schnelles Einordnen",
+    "tagline": "Obst oder Tier? Entscheide schnell.",
+    "description": "Ein Alltagsgegenstand erscheint: Ordne ihn so schnell du kannst seiner Gruppe zu. Spätere Stufen zeigen nur das Wort, bringen mehr Gruppen und wechseln schließlich die Regel: Ein Hinweis sagt, ob nach Gruppe oder nach dem Anfangsbuchstaben des Namens sortiert wird.",
+    "scoringSummary": "Jeder Gegenstand ist richtig oder falsch; die Genauigkeit wird immer angezeigt. Richtige Antworten bringen Extrapunkte, je schneller sie kommen, Fehler kosten Punkte, und deine Antwortzeit wird angezeigt. Der entspannte Modus hebt das Zeitlimit auf.",
+    "simpleInstructions": "Sag so schnell du kannst, zu welcher Gruppe das Bild gehört.",
+    "instructions": {
+      "object": "Ein Gegenstand erscheint. Wähle seine Gruppe per Klick oder mit den Zifferntasten.",
+      "groups": "Die Gruppen bleiben die ganze Sitzung am selben Platz, so kannst du die Finger bereithalten.",
+      "words": "Ab Stufe 5 siehst du nur das Wort: Lies es, dann entscheide.",
+      "rule": "Ab Stufe 7 nennt ein Hinweis die Regel: KATEGORIE (seine Gruppe) oder ANFANGSBUCHSTABE (A–M oder N–Z)."
+    },
+    "levels": {
+      "1": "Sortiere Bilder in zwei Gruppen: Obst oder Tier.",
+      "2": "Zwei neue Gruppen: Fahrzeug oder Kleidung.",
+      "3": "Drei Gruppen zur Auswahl.",
+      "4": "Vier Gruppen zur Auswahl.",
+      "5": "Nur Wörter: Lies den Namen, dann ordne ihn ein (Obst oder Werkzeug).",
+      "6": "Nur Wörter, vier Gruppen.",
+      "7": "Folge dem Hinweis: nach Gruppe oder nach Anfangsbuchstabe (A–M oder N–Z).",
+      "8": "Mehr Buchstaben-Durchgänge, drei Gruppen.",
+      "9": "Regelwechsel mit Hinweis, nur Wörter.",
+      "10": "Meister: nur Wörter, vier Gruppen, die Regel wechselt zufällig."
+    },
+    "prompt": {
+      "category": "Zu welcher Gruppe gehört es?",
+      "letter": "Beginnt sein Name mit einem Buchstaben von A–M oder von N–Z?"
+    },
+    "explanation": {
+      "category": "„{{item}}“ gehört zur Gruppe „{{group}}“.",
+      "letter": "„{{item}}“ beginnt mit „{{letter}}“, das liegt in {{range}}."
+    },
+    "groups": {
+      "fruit": "Obst",
+      "animal": "Tier",
+      "vehicle": "Fahrzeug",
+      "tool": "Werkzeug",
+      "clothing": "Kleidung",
+      "nature": "Natur",
+      "food": "Essen"
+    },
+    "view": {
+      "ruleCategory": "Regel: KATEGORIE",
+      "ruleLetter": "Regel: ANFANGSBUCHSTABE"
+    },
+    "kinds": {
+      "picture": "Bilder",
+      "word": "Nur Wörter",
+      "switch": "Regelwechsel mit Hinweis"
+    },
+    "initials": {
+      "cherries": "K",
+      "cat": "K",
+      "turtle": "S",
+      "elephant": "E",
+      "giraffe": "G",
+      "bee": "B",
+      "bus": "B",
+      "airplane": "F",
+      "train": "Z",
+      "hammer": "H",
+      "magnet": "M",
+      "cap": "K",
+      "gloves": "H",
+      "moon": "M",
+      "cactus": "K",
+      "pizza": "P",
+      "cookie": "K"
+    }
+  },
+  "colorAndShapeDecisions": {
+    "name": "Farb- und Formentscheidungen",
+    "tagline": "Farbe oder Form? Der Hinweis entscheidet.",
+    "description": "Eine farbige Form erscheint mit einem Hinweis: FARBE oder FORM. Nenne das Merkmal, nach dem der Hinweis fragt. Später steht dieselbe Taste zugleich für eine Farbe und eine Form, sodass ein rotes Quadrat je nach Regel unterschiedliche Antworten verlangt – nur der Hinweis verrät, welche.",
+    "scoringSummary": "Jede Antwort ist richtig oder falsch; die Genauigkeit wird immer angezeigt. Richtige Antworten bringen Extrapunkte, je schneller sie kommen, Fehler kosten Punkte, und deine Antwortzeit wird angezeigt. Der entspannte Modus hebt das Zeitlimit auf.",
+    "accessibilityNotes": "Farbdurchgänge fragen nach der Farbe selbst und erfordern daher Farbsehen; die Palette vermeidet Rot/Grün. Jede Form wird mit Farbe und Namen angesagt (z. B. „rotes Quadrat“), und der Hinweis steht als Wort da.",
+    "simpleInstructions": "Schau auf das Wort oben: Nenne die Farbe oder die Form, nach der es fragt.",
+    "instructions": {
+      "cue": "Lies den Hinweis: FARBE heißt, die Farbe zu nennen, FORM heißt, die Form zu nennen.",
+      "keys": "Antworte per Klick oder mit den Zifferntasten; jede Taste behält die ganze Sitzung ihre Bedeutung.",
+      "shared": "Ab Stufe 5 steht jede Taste für eine Farbe und eine Form („rot / Kreis“).",
+      "check": "Ein rotes Quadrat ist bei FARBE „rot“, bei FORM aber „Quadrat“: Prüfe immer den Hinweis."
+    },
+    "levels": {
+      "1": "Nur Farbe: Nenne die Farbe jeder Form.",
+      "2": "Nur Form: Nenne die Form, egal welche Farbe.",
+      "3": "Folge dem Hinweis: FARBE oder FORM, jeweils mit eigenen Antworten.",
+      "4": "Regeln mit Hinweis, halb und halb gemischt.",
+      "5": "Geteilte Tasten: Jede Antwort steht für eine Farbe und eine Form.",
+      "6": "Geteilte Tasten, Regeln halb und halb, mehr widersprüchliche Formen.",
+      "7": "Die meisten Formen widersprechen sich: Farbe und Form zeigen auf verschiedene Tasten.",
+      "8": "Drei Farben und drei Formen.",
+      "9": "Drei Werte, mehr Widerspruch, weniger Zeit.",
+      "10": "Meister: drei Werte, fast jede Form widersprüchlich, kurzes Limit."
+    },
+    "prompt": {
+      "colour": "FARBE: Welche Farbe hat sie?",
+      "shape": "FORM: Welche Form ist es?"
+    },
+    "explanation": {
+      "colour": "Der Hinweis war FARBE und die Figur war „{{glyph}}“: Die Antwort ist {{value}}.",
+      "shape": "Der Hinweis war FORM und die Figur war „{{glyph}}“: Die Antwort ist {{value}}.",
+      "colourShared": "Der Hinweis war FARBE und die Figur war „{{glyph}}“: Die Antwort ist {{value}} ({{option}}).",
+      "shapeShared": "Der Hinweis war FORM und die Figur war „{{glyph}}“: Die Antwort ist {{value}} ({{option}})."
+    },
+    "view": {
+      "cueColour": "FARBE",
+      "cueShape": "FORM",
+      "itWas": "Es war: {{glyph}}."
+    },
+    "kinds": {
+      "colour": "Farbhinweis",
+      "shape": "Formhinweis"
+    }
+  },
+  "fastSequenceRecognition": {
+    "name": "Schnelles Folgen-Erkennen",
+    "tagline": "Ein Blick – welche war es?",
+    "description": "Eine kurze Folge aus Ziffern, Buchstaben oder Formen wird kurz gezeigt und dann verdeckt. Finde sie so schnell du kannst unter ähnlichen Folgen wieder. Die Folgen werden länger, die Blicke kürzer, und ganz oben unterscheiden sich die Kandidaten nur in der Reihenfolge.",
+    "scoringSummary": "Jede Wahl ist richtig oder falsch; ein Fehler kostet Punkte. Eine richtige Wahl bringt umso mehr, je schneller sie nach dem Verdecken kommt, aber die Genauigkeit zählt am meisten. Entspanntes Tempo verdoppelt den Blick und hebt das Antwortlimit auf.",
+    "accessibilityNotes": "Der Blick ist eine einzige, ruhige Anzeige (kein Blinken). Screenreader sagen die Folge einmal an, wenn sie erscheint; ein kurzer Blick kann enden, bevor sie vorgelesen ist, daher wird mit Screenreader entspanntes Tempo empfohlen.",
+    "simpleInstructions": "Schau dir die Reihe an und finde dann dieselbe Reihe.",
+    "instructions": {
+      "glimpse": "Eine Folge erscheint kurz. Erfasse sie als Ganzes – drücke „Ich bin bereit“, wenn du früher fertig bist.",
+      "pick": "Wenn sie verschwindet, wähle dieselbe Folge unter den Kandidaten (Klick oder Zifferntasten).",
+      "differ": "Die Kandidaten unterscheiden sich in einem Symbol oder durch zwei vertauschte Nachbarn."
+    },
+    "levels": {
+      "1": "Ein Blick auf 3 Ziffern, dann unter 2 wiederfinden.",
+      "2": "4 Ziffern, 3 Kandidaten.",
+      "3": "4 Buchstaben, 3 Kandidaten.",
+      "4": "4 Formen, 3 Kandidaten.",
+      "5": "5 Ziffern, 4 Kandidaten.",
+      "6": "5 Buchstaben, kürzerer Blick.",
+      "7": "5 Formen, kürzerer Blick.",
+      "8": "6 Ziffern: Nur die Reihenfolge ist anders.",
+      "9": "6 Buchstaben: Nur die Reihenfolge ist anders.",
+      "10": "Meister: 7 Ziffern oder Formen, Blick von einer Sekunde, nur die Reihenfolge."
+    },
+    "prompt": "Welche Folge hast du gesehen?",
+    "studyPrompt": {
+      "digits_one": "Präge dir diese Ziffer ein.",
+      "digits_other": "Präge dir diese {{count}} Ziffern ein.",
+      "letters_one": "Präge dir diesen Buchstaben ein.",
+      "letters_other": "Präge dir diese {{count}} Buchstaben ein.",
+      "shapes_one": "Präge dir diese Form ein.",
+      "shapes_other": "Präge dir diese {{count}} Formen ein."
+    },
+    "explanation": "Die Folge war {{sequence}}.",
+    "view": {
+      "sequence": "Folge: {{sequence}}",
+      "hidden_one": "Verdeckt. Wähle die Folge aus {{count}} Symbol, die du eben gesehen hast.",
+      "hidden_other": "Verdeckt. Wähle die Folge aus {{count}} Symbolen, die du eben gesehen hast.",
+      "youSaw": "Du hast gesehen:"
+    },
+    "kinds": {
+      "digits": "Ziffern",
+      "letters": "Buchstaben",
+      "shapes": "Formen"
+    }
+  },
+  "mentalArithmeticSprint": {
+    "name": "Kopfrechen-Sprint",
+    "tagline": "Schnelle Rechnungen, prüfen oder lösen.",
+    "description": "Kurze Rechnungen gegen die Uhr. Entscheide zuerst, ob eine Gleichung wahr oder falsch ist, dann tippe die Ergebnisse selbst ein – von einstelligen Summen bis zu zweistelligen Produkten und Ausdrücken mit drei Zahlen.",
+    "scoringSummary": "Jede Rechnung ist richtig oder falsch; ein Fehler kostet Punkte. Eine richtige Antwort bringt umso mehr, je schneller sie kommt, aber die Genauigkeit zählt am meisten. Entspanntes Tempo hebt das Zeitlimit auf, die Aufgabe bleibt gleich.",
+    "simpleInstructions": "Stimmt die Rechnung? Oder tippe das Ergebnis ein – so schnell du kannst.",
+    "instructions": {
+      "verify": "Wahr oder falsch: Drücke 1, wenn die Gleichung stimmt, und 2, wenn nicht.",
+      "solve": "Ergebnis eintippen: Gib das fehlende Ergebnis ein und drücke die Eingabetaste.",
+      "precedence": "Punkt vor Strich: erst multiplizieren und dividieren, dann addieren und subtrahieren – außer Klammern sagen etwas anderes.",
+      "time": "Antworte, bevor die Zeit abläuft – Genauigkeit zählt mehr als Tempo."
+    },
+    "levels": {
+      "1": "Wahr oder falsch: einstellige Summen.",
+      "2": "Wahr oder falsch: Plus und Minus bis 20.",
+      "3": "Ergebnis eintippen: Plus und Minus bis 20.",
+      "4": "Wahr oder falsch: Einmaleins und Division.",
+      "5": "Ergebnis eintippen: Einmaleins und Division.",
+      "6": "Gemischte Prüf- und Rechenaufgaben mit zweistelligen Zahlen.",
+      "7": "Ergebnis eintippen: zweistelliges Plus und Minus.",
+      "8": "Ergebnis eintippen: zweistellig × einstellig.",
+      "9": "Wahr oder falsch: drei Zahlen – Punkt vor Strich.",
+      "10": "Meister: Ergebnisse von Ausdrücken mit drei Zahlen und zweistelligen Produkten eintippen."
+    },
+    "true": "Wahr",
+    "false": "Falsch",
+    "prompt": {
+      "solve": "Tippe das Ergebnis ein.",
+      "verify": "Wahr oder falsch?"
+    },
+    "explanation": {
+      "solve": "{{expression}} = {{value}}.",
+      "true": "Wahr: {{expression}} = {{value}}.",
+      "false": "Falsch: {{expression}} = {{value}}, nicht {{shown}}."
+    },
+    "spoken": {
+      "plus": "plus",
+      "minus": "minus",
+      "times": "mal",
+      "dividedBy": "geteilt durch",
+      "openBracket": "Klammer auf",
+      "closeBracket": "Klammer zu"
+    },
+    "view": {
+      "spoken": "{{expression}} ergibt {{result}}",
+      "spokenUnknown": "{{expression}} ergibt wie viel?"
+    },
+    "kinds": {
+      "verify": "Wahr oder falsch",
+      "solve": "Ergebnis eintippen"
+    }
+  },
+  "codeScanSprint": {
+    "name": "Code-Scan",
+    "tagline": "Ein Listing auf einen Blick lesen und auf die Zeile zeigen.",
+    "description": "Ein kurzes Stück Pseudocode und eine Frage: Welche Zeile ruft print auf, verwendet die Zahl 7 oder gibt total zum ersten Mal einen Wert? Finde diese Zeile so schnell du kannst. Frühe Stufen haben wenige einfache Zeilen; spätere verschachteln Blöcke und wiederholen Namen, um einen flüchtigen Blick zu täuschen.",
+    "scoringSummary": "Ein Durchgang ist richtig, wenn du die eine Zeile drückst, die die Frage beantwortet. Richtige Antworten bringen umso mehr Punkte, je schneller sie sind; eine falsche Zeile kostet Punkte, und wenn die Zeit abläuft, gibt es nichts. Genauigkeit und durchschnittliche Antwortzeit werden getrennt angezeigt; entspanntes Tempo hebt das Limit auf.",
+    "accessibilityNotes": "Jede Zeile ist eine Schaltfläche mit ihrer Nummer und ihrem Text, sodass Screenreader das Listing Zeile für Zeile durchgehen können. „←“ bedeutet „erhält den Wert“.",
+    "simpleInstructions": "Lies die Frage und drücke die passende Zeile.",
+    "instructions": {
+      "read": "Lies die Frage und drücke dann die Zeile im Listing, die sie beantwortet.",
+      "syntax": "„total ← 5“ gibt total einen Wert; „print(total)“ ruft print auf; „if score > 3:“ prüft score.",
+      "unique": "Genau eine Zeile beantwortet jede Frage.",
+      "keyboard": "Tastatur: Mit Tab zum Listing, mit den Pfeiltasten bewegen, Eingabetaste drücken."
+    },
+    "levels": {
+      "1": "Finde die Zeile, die eine Routine aufruft, in 4 Zeilen.",
+      "2": "Aufrufe oder Zahlen, in 5 Zeilen.",
+      "3": "Blöcke kommen hinzu: Zeilen innerhalb von if und repeat.",
+      "4": "Wo bekommt eine Variable zum ersten Mal einen Wert?",
+      "5": "Bedingungen: Welche Zeile prüft eine Variable?",
+      "6": "Zweimal zugewiesene Variablen: erstes oder letztes Mal?",
+      "7": "Verschachtelte Blöcke, alle Fragearten.",
+      "8": "Vier Variablen, 10 Zeilen.",
+      "9": "Vor allem Fragen zu Zuweisungen und Bedingungen, 11 Zeilen.",
+      "10": "Meister: 12 verschachtelte Zeilen, alle Fragearten."
+    },
+    "question": {
+      "call": "Welche Zeile ruft {{subject}} auf?",
+      "number": "Welche Zeile verwendet die Zahl {{subject}}?",
+      "firstAssign": "Wo bekommt {{subject}} zum ersten Mal einen Wert?",
+      "lastAssign": "Wo bekommt {{subject}} zum letzten Mal einen Wert?",
+      "condition": "Welche Zeile prüft {{subject}} in einer Bedingung?"
+    },
+    "reason": {
+      "call": "Sie ist die einzige Zeile, die {{subject}} aufruft.",
+      "number": "Sie ist die einzige Zeile mit der Zahl {{subject}}.",
+      "firstAssign": "Sie ist die erste Zeile der Form „{{subject}} ← …“.",
+      "lastAssign": "Sie ist die letzte Zeile der Form „{{subject}} ← …“.",
+      "condition": "Sie ist die einzige if- / while-Zeile, deren Bedingung {{subject}} nennt."
+    },
+    "explanation": "Zeile {{line}} („{{text}}“): {{reason}}",
+    "view": {
+      "listing": "Code-Listing",
+      "badge": {
+        "answer": "✓ Lösung",
+        "pick": "✗ deine Wahl"
+      },
+      "marker": {
+        "answer": "Lösung",
+        "pick": "deine Wahl"
+      },
+      "line": "Zeile {{line}}: {{text}}",
+      "lineMarked": "Zeile {{line}}: {{text}} ({{markers}})"
+    },
+    "kinds": {
+      "call": "Aufruf finden",
+      "number": "Zahl finden",
+      "firstAssign": "Erste Zuweisung",
+      "lastAssign": "Letzte Zuweisung",
+      "condition": "Bedingung finden"
+    }
+  },
+  "multiChoiceProcessing": {
+    "name": "Mehrfachwahl-Verarbeitung",
+    "tagline": "Ignoriere die Menge: Wohin zeigt der mittlere Pfeil?",
+    "description": "Eine Reihe von Pfeilen erscheint. Nenne die Richtung des mittleren Pfeils, während die Pfeile drumherum in dieselbe Richtung, in eine andere oder nirgendwohin zeigen. Spätere Stufen bringen oben und unten, längere Reihen und einen Hinweis, der manchmal nach den äußeren Pfeilen fragt.",
+    "scoringSummary": "Jede Antwort ist richtig oder falsch; ein Fehler kostet Punkte. Eine richtige Antwort bringt umso mehr, je schneller sie kommt, aber die Genauigkeit zählt am meisten. Entspanntes Tempo hebt das Zeitlimit auf; der Widerspruch zwischen den Pfeilen muss trotzdem aufgelöst werden.",
+    "accessibilityNotes": "Richtungen werden durch die Pfeilform angegeben, nie durch Farbe. Screenreader sagen die Reihe als Liste von Richtungen an; der visuelle Widerspruch, der die Aufgabe schwer macht, geht beim Zuhören größtenteils verloren.",
+    "simpleInstructions": "Wohin zeigt der Pfeil in der Mitte?",
+    "instructions": {
+      "centre": "Schau auf den Pfeil in der Mitte der Reihe und nenne seine Richtung (Klick oder Zifferntasten).",
+      "ignore": "Ignoriere die Pfeile drumherum – sie können woandershin zeigen.",
+      "vertical": "Ab Stufe 5 können Pfeile auch nach oben oder unten zeigen.",
+      "cue": "Ab Stufe 7 sagt ein Hinweis MITTE (der mittlere Pfeil) oder AUSSEN (die Pfeile drumherum)."
+    },
+    "levels": {
+      "1": "Wohin zeigt der Pfeil?",
+      "2": "Nenne den mittleren Pfeil; die anderen stimmen überein oder sind Balken.",
+      "3": "Einige äußere Pfeile zeigen jetzt in die andere Richtung.",
+      "4": "Die Hälfte der Reihen widerspricht sich.",
+      "5": "Vier Richtungen: links, rechts, oben, unten.",
+      "6": "Sieben Pfeile in einer Reihe, mehr Widerspruch.",
+      "7": "Folge dem Hinweis: MITTLERER Pfeil oder ÄUSSERE Pfeile.",
+      "8": "Häufiger Durchgänge mit äußeren Pfeilen.",
+      "9": "Regeln halb und halb gemischt.",
+      "10": "Meister: gemischte Regeln, meist widersprüchliche Reihen, weniger Zeit."
+    },
+    "directions": {
+      "left": "Links",
+      "right": "Rechts",
+      "up": "Oben",
+      "down": "Unten"
+    },
+    "pointing": {
+      "left": "nach links",
+      "right": "nach rechts",
+      "up": "nach oben",
+      "down": "nach unten"
+    },
+    "prompt": {
+      "single": "Wohin zeigt der Pfeil?",
+      "centre": "Wohin zeigt der mittlere Pfeil?",
+      "outer": "Wohin zeigen die äußeren Pfeile?"
+    },
+    "explanation": {
+      "single": "Der Pfeil zeigte {{direction}}.",
+      "centre": "Der mittlere Pfeil zeigte {{direction}}.",
+      "outer": "Die äußeren Pfeile zeigten {{direction}}.",
+      "centreConflict": "Der mittlere Pfeil zeigte {{direction}}; die äußeren Pfeile zeigten {{other}}.",
+      "outerConflict": "Die äußeren Pfeile zeigten {{direction}}; der mittlere Pfeil zeigte {{other}}."
+    },
+    "spoken": {
+      "left": "links",
+      "right": "rechts",
+      "up": "oben",
+      "down": "unten",
+      "none": "Balken"
+    },
+    "view": {
+      "cueCentre": "MITTE",
+      "cueOuter": "AUSSEN",
+      "single": "Ein Pfeil, der {{direction}} zeigt.",
+      "row_one": "Reihe aus {{count}}: {{items}}.",
+      "row_other": "Reihe aus {{count}}: {{items}}."
+    },
+    "kinds": {
+      "single": "Einzelner Pfeil",
+      "flanker": "Mittlerer Pfeil",
+      "cued": "Regel mit Hinweis"
+    }
+  }
+}

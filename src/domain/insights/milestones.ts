@@ -2,6 +2,7 @@ import type { GameCategory } from '../game/catalog';
 import type { UserProfile } from '../profile/profile';
 import { isLevelCleared, type UserProgress } from '../progress/progress';
 import { DIFFICULTY_LEVELS } from '../shared/difficultyLevel';
+import { msg, type Text } from '../shared/text';
 
 /**
  * Milestones reward real activity only, and are computed from stored data every time (nothing is
@@ -10,8 +11,8 @@ import { DIFFICULTY_LEVELS } from '../shared/difficultyLevel';
  */
 export interface Milestone {
   readonly id: string;
-  readonly title: string;
-  readonly description: string;
+  readonly title: Text;
+  readonly description: Text;
   readonly achieved: boolean;
   /** Progress towards the milestone, for display. */
   readonly current: number;
@@ -40,88 +41,28 @@ export function milestones({ progress, profile, categoryOf }: MilestoneInput): M
   const highest = cleared.length === 0 ? 0 : Math.max(...cleared);
   const minutes = Math.floor(progress.totals.practiceMs / MINUTE);
   const dailies = Object.keys(profile.daily).length;
-  const make = (
-    id: string,
-    title: string,
-    description: string,
-    current: number,
-    target: number,
-  ): Milestone => ({
+  const make = (id: string, current: number, target: number): Milestone => ({
     id,
-    title,
-    description,
+    title: msg(`progress:milestones.${id}.title`),
+    description: msg(`progress:milestones.${id}.description`),
     current: Math.min(current, target),
     target,
     achieved: current >= target,
   });
   return [
-    make('first-session', 'First session', 'Complete any activity.', progress.totals.sessions, 1),
-    make(
-      'ten-sessions',
-      'Ten sessions',
-      'Practise ten times, at any pace.',
-      progress.totals.sessions,
-      10,
-    ),
-    make(
-      'fifty-sessions',
-      'Fifty sessions',
-      'A long-term practice habit.',
-      progress.totals.sessions,
-      50,
-    ),
-    make(
-      'half-hour',
-      '30 minutes of practice',
-      'Total practice time across all activities.',
-      minutes,
-      30,
-    ),
-    make(
-      'five-hours',
-      '5 hours of practice',
-      'Total practice time across all activities.',
-      minutes,
-      300,
-    ),
-    make('explorer', 'Explorer', 'Try five different games.', gamesPlayed.size, 5),
-    make('collector', 'Wide explorer', 'Try twenty different games.', gamesPlayed.size, 20),
-    make(
-      'all-areas',
-      'All-rounder',
-      'Practise memory, logic, speed, attention and patterns.',
-      categories.size,
-      5,
-    ),
-    make(
-      'first-clear',
-      'First level cleared',
-      'Reach a performance of 70 on any level.',
-      cleared.length,
-      1,
-    ),
-    make('advanced', 'Advanced', 'Clear level 7 or higher in any game.', highest >= 7 ? 1 : 0, 1),
-    make('master', 'Master level', 'Clear level 10 in any game.', highest >= 10 ? 1 : 0, 1),
-    make(
-      'daily-three',
-      'Daily challenger',
-      'Complete three daily challenges (any days).',
-      dailies,
-      3,
-    ),
-    make(
-      'assessment',
-      'Self-check',
-      'Complete a cognitive assessment.',
-      progress.assessments?.length ?? 0,
-      1,
-    ),
-    make(
-      'active-days',
-      'Seven active days',
-      'Practise on seven different days — not necessarily in a row.',
-      profile.activeDays.length,
-      7,
-    ),
+    make('first-session', progress.totals.sessions, 1),
+    make('ten-sessions', progress.totals.sessions, 10),
+    make('fifty-sessions', progress.totals.sessions, 50),
+    make('half-hour', minutes, 30),
+    make('five-hours', minutes, 300),
+    make('explorer', gamesPlayed.size, 5),
+    make('collector', gamesPlayed.size, 20),
+    make('all-areas', categories.size, 5),
+    make('first-clear', cleared.length, 1),
+    make('advanced', highest >= 7 ? 1 : 0, 1),
+    make('master', highest >= 10 ? 1 : 0, 1),
+    make('daily-three', dailies, 3),
+    make('assessment', progress.assessments?.length ?? 0, 1),
+    make('active-days', profile.activeDays.length, 7),
   ];
 }

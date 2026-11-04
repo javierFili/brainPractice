@@ -1,9 +1,10 @@
+import { useTranslation } from 'react-i18next';
+import { useText } from '@/i18n';
 import { useStepper } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
 import type { SequenceRecallChallenge } from '../content/types';
+import { paletteSymbols } from '../content/symbols';
 import { SymbolFace } from './SymbolFace';
-
-const spoken = (id: string) => id.split(':')[1] ?? id;
 
 /** Plays the sequence one item at a time during the study phase; afterwards shows the pad hint. */
 export function SequenceRecallView({
@@ -11,7 +12,11 @@ export function SequenceRecallView({
   phase,
   assisted,
 }: ContentViewProps<SequenceRecallChallenge>) {
-  const { items, itemMs, kind } = challenge.content;
+  const { t } = useTranslation('memory');
+  const tx = useText();
+  const { items, itemMs, kind, palette } = challenge.content;
+  const labels = new Map(paletteSymbols(palette).map((symbol) => [symbol.id, symbol.label]));
+  const spoken = (id: string) => tx(labels.get(id) ?? id);
   const step = useStepper(
     items.length,
     assisted ? itemMs * 1.5 : itemMs,
@@ -28,7 +33,7 @@ export function SequenceRecallView({
           className="flex h-36 w-36 items-center justify-center rounded-2xl border border-line bg-raised"
         >
           {current === undefined ? (
-            <span className="text-sm text-ink-muted">Done — get ready</span>
+            <span className="text-sm text-ink-muted">{t('sequenceRecall.view.done')}</span>
           ) : (
             <span
               key={`${step}`}
@@ -53,8 +58,11 @@ export function SequenceRecallView({
   if (phase === 'review') {
     return (
       <div className="flex flex-col items-center gap-2">
-        <p className="text-sm text-ink-muted">You saw:</p>
-        <ol className="flex flex-wrap justify-center gap-2" aria-label="The sequence shown">
+        <p className="text-sm text-ink-muted">{t('sequenceRecall.view.youSaw')}</p>
+        <ol
+          className="flex flex-wrap justify-center gap-2"
+          aria-label={t('sequenceRecall.view.sequenceShown')}
+        >
           {items.map((id, i) => (
             <li
               key={`${id}-${i}`}
@@ -70,8 +78,7 @@ export function SequenceRecallView({
   }
   return (
     <p className="text-center text-ink-soft">
-      {kind === 'forward' ? 'Same order as shown.' : 'Reverse order: begin with the last symbol.'}{' '}
-      {items.length} symbols.
+      {t(`sequenceRecall.view.hint.${kind}`, { count: items.length })}
     </p>
   );
 }

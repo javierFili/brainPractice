@@ -92,6 +92,8 @@ y [ARCHITECTURE.md](ARCHITECTURE.md).
 - **Modificar un perfil/ruta**: edita `src/content/paths.ts` (textos, juegos destacados, foco) y
   los ajustes sugeridos en `routeDefaults` (`src/domain/preferences/preferences.ts`). Un test
   comprueba que todos los juegos citados existen.
+- **Traducir textos o añadir un idioma**: los textos viven en `src/i18n/locales/<idioma>/*.json`
+  (es, en, it, fr, de); los juegos devuelven claves con `msg(...)`. Ver [docs/i18n.md](docs/i18n.md).
 - **Restablecer el progreso local**: Ajustes → _Reset demo data_ (`/settings/data`), con
   confirmación. También: borrar las claves `brain-practice:*` del localStorage.
 
@@ -110,6 +112,7 @@ y [ARCHITECTURE.md](ARCHITECTURE.md).
 | [docs/difficulty-system.md](docs/difficulty-system.md)                             | Niveles, desbloqueo, modo relajado   |
 | [docs/scoring-system.md](docs/scoring-system.md)                                   | Fórmulas y métricas                  |
 | [docs/accessibility.md](docs/accessibility.md)                                     | Accesibilidad y limitaciones         |
+| [docs/i18n.md](docs/i18n.md)                                                       | Idiomas, traducciones y formatos     |
 | [docs/testing.md](docs/testing.md), [TESTING.md](TESTING.md)                       | Estrategia de tests                  |
 | [docs/privacy.md](docs/privacy.md)                                                 | Datos, menores, personas vulnerables |
 | [docs/future-saas.md](docs/future-saas.md)                                         | Evolución a producto                 |
@@ -120,4 +123,4 @@ y [ARCHITECTURE.md](ARCHITECTURE.md).
 - **Terminado**: todo lo listado en "Qué incluye" (ver tests).
 - **Experimental**: los protocolos de evaluación (pocos ítems, margen amplio, sin normas).
 - **Pendiente**: carga diferida por juego, tema claro, estímulos auditivos, pausa en
-  presentaciones, i18n, backend. Ver [roadmap](docs/improvement-roadmap.md).
+  presentaciones, backend. Ver [roadmap](docs/improvement-roadmap.md).

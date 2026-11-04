@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { DualTaskProfile } from './types';
 
@@ -10,7 +11,7 @@ const watch = (length: number, itemMs: number) => untimed(8000, (length + 1) * i
  */
 export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
   {
-    objective: 'Count even numbers and stars in 6 pairs.',
+    objective: msg('attention:dualTask.levels.1'),
     challengeCount: 5,
     numberRule: 'even',
     twoDigits: false,
@@ -22,7 +23,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(6, 1600),
   },
   {
-    objective: 'Two counts over 8 pairs.',
+    objective: msg('attention:dualTask.levels.2'),
     challengeCount: 5,
     numberRule: 'even',
     twoDigits: false,
@@ -34,7 +35,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(8, 1500),
   },
   {
-    objective: '10 pairs; options now differ by one.',
+    objective: msg('attention:dualTask.levels.3'),
     challengeCount: 5,
     numberRule: 'even',
     twoDigits: false,
@@ -46,7 +47,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(10, 1400),
   },
   {
-    objective: 'Look-alike shapes join the stream.',
+    objective: msg('attention:dualTask.levels.4'),
     challengeCount: 5,
     numberRule: 'even',
     twoDigits: false,
@@ -58,7 +59,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(12, 1300),
   },
   {
-    objective: 'New number rule: count the numbers above 5.',
+    objective: msg('attention:dualTask.levels.5'),
     challengeCount: 5,
     numberRule: 'above',
     twoDigits: false,
@@ -70,7 +71,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(12, 1300),
   },
   {
-    objective: 'Only shapes of one colour count.',
+    objective: msg('attention:dualTask.levels.6'),
     challengeCount: 5,
     numberRule: 'odd',
     twoDigits: false,
@@ -82,7 +83,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(14, 1200),
   },
   {
-    objective: 'Two-digit numbers above 50, coloured shapes.',
+    objective: msg('attention:dualTask.levels.7'),
     challengeCount: 5,
     numberRule: 'above',
     twoDigits: true,
@@ -94,7 +95,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(14, 1200),
   },
   {
-    objective: 'Even two-digit numbers, 16 pairs.',
+    objective: msg('attention:dualTask.levels.8'),
     challengeCount: 4,
     numberRule: 'even',
     twoDigits: true,
@@ -106,7 +107,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(16, 1100),
   },
   {
-    objective: '18 pairs at a brisk pace.',
+    objective: msg('attention:dualTask.levels.9'),
     challengeCount: 4,
     numberRule: 'above',
     twoDigits: true,
@@ -118,7 +119,7 @@ export const DUAL_TASK_LEVELS = defineLevels<DualTaskProfile>([
     timing: watch(18, 1000),
   },
   {
-    objective: '20 pairs, odd two-digit numbers.',
+    objective: msg('attention:dualTask.levels.10'),
     challengeCount: 4,
     numberRule: 'odd',
     twoDigits: true,

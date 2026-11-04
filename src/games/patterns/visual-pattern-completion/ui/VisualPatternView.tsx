@@ -1,12 +1,14 @@
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps } from '@/games/types';
 import { FigureFace, Missing } from '../../shared/ui';
 import type { VisualPatternChallenge } from '../content/types';
 
 export function VisualPatternView({ challenge }: ContentViewProps<VisualPatternChallenge>) {
+  const { t } = useTranslation('patterns');
   const { items } = challenge.content;
   return (
     <ol
-      aria-label="Pattern row, left to right"
+      aria-label={t('visualPatternCompletion.view.row')}
       className="flex flex-wrap items-center justify-center gap-2"
     >
       {items.map((item, i) => (
@@ -18,7 +20,10 @@ export function VisualPatternView({ challenge }: ContentViewProps<VisualPatternC
         </li>
       ))}
       <li>
-        <Missing label="Next figure (unknown)" className="h-14 w-14 sm:h-16 sm:w-16" />
+        <Missing
+          label={t('visualPatternCompletion.view.next')}
+          className="h-14 w-14 sm:h-16 sm:w-16"
+        />
       </li>
     </ol>
   );

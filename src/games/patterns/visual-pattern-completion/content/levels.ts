@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { VisualPatternProfile } from './types';
 
@@ -16,7 +17,7 @@ const base = {
 export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   {
     ...base,
-    objective: 'Continue a pattern of two figures that take turns.',
+    objective: msg('patterns:visualPatternCompletion.levels.1'),
     challengeCount: 5,
     kind: 'repeat',
     units: ['AB'],
@@ -26,7 +27,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Continue a block of three figures.',
+    objective: msg('patterns:visualPatternCompletion.levels.2'),
     challengeCount: 5,
     kind: 'repeat',
     units: ['ABC'],
@@ -36,7 +37,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Blocks with repeats inside, like AABB.',
+    objective: msg('patterns:visualPatternCompletion.levels.3'),
     challengeCount: 6,
     kind: 'repeat',
     units: ['AAB', 'ABB', 'AABB'],
@@ -46,7 +47,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'A pattern that grows: one more each time.',
+    objective: msg('patterns:visualPatternCompletion.levels.4'),
     challengeCount: 6,
     kind: 'growing',
     growth: 'count',
@@ -56,7 +57,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Longer blocks that may start in the middle.',
+    objective: msg('patterns:visualPatternCompletion.levels.5'),
     challengeCount: 6,
     kind: 'repeat',
     units: ['ABCD', 'ABAC', 'AABC', 'ABCB'],
@@ -67,7 +68,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Shapes and colours follow two separate cycles.',
+    objective: msg('patterns:visualPatternCompletion.levels.6'),
     challengeCount: 6,
     kind: 'two-rules',
     shapePeriods: [2],
@@ -78,7 +79,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Arrows turn by the same step while colours repeat.',
+    objective: msg('patterns:visualPatternCompletion.levels.7'),
     challengeCount: 6,
     kind: 'growing',
     growth: 'rotation',
@@ -89,7 +90,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Two cycles of different lengths, with more options.',
+    objective: msg('patterns:visualPatternCompletion.levels.8'),
     challengeCount: 6,
     kind: 'two-rules',
     shapePeriods: [2, 3, 4],
@@ -100,7 +101,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Counts change step by step while shapes cycle.',
+    objective: msg('patterns:visualPatternCompletion.levels.9'),
     challengeCount: 6,
     kind: 'growing',
     growth: 'count',
@@ -111,7 +112,7 @@ export const VISUAL_PATTERN_LEVELS = defineLevels<VisualPatternProfile>([
   },
   {
     ...base,
-    objective: 'Three features change at once: shape, colour and count.',
+    objective: msg('patterns:visualPatternCompletion.levels.10'),
     challengeCount: 6,
     kind: 'growing',
     growth: 'count',

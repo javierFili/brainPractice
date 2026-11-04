@@ -1,0 +1,561 @@
+{
+  "reactionTest": {
+    "name": "Test de réaction",
+    "tagline": "Attendez… maintenant !",
+    "description": "Attendez qu’une forme apparaisse et touchez le plus vite possible. Les niveaux avancés ajoutent des formes d’arrêt à ne pas toucher et un signal qui change la forme valide à chaque essai : la vitesse ne compte que si la décision est juste.",
+    "scoringSummary": "Un essai est réussi si vous touchez pendant le signal lors d’un essai « go », ou si vous vous retenez lors d’un essai « stop ». Toucher avant le signal est un faux départ. Le temps de réaction (du signal au toucher) est indiqué séparément de la précision.",
+    "accessibilityNotes": "Demande une réponse rapide ; le temps détendu n’allonge pas le signal. Fonctionne avec Espace, Entrée, un clic, un toucher ou un contacteur associé à Espace.",
+    "simpleInstructions": "Quand la forme apparaît, touchez le plus vite possible.",
+    "instructions": {
+      "watch": "Gardez les yeux sur le cadre. Après une attente aléatoire, une forme apparaît.",
+      "tap": "Touchez le cadre (ou appuyez sur Espace) tant que la forme est visible. Toucher avant son apparition est un faux départ.",
+      "goNoGo": "À partir du niveau 4 : touchez seulement pour la forme valide (cercle vert) et retenez-vous pour la forme d’arrêt.",
+      "cued": "À partir du niveau 7 : un signal en haut indique pour quelle forme toucher ; il change à chaque essai."
+    },
+    "levels": {
+      "1": "Touchez quand la forme apparaît.",
+      "2": "Touchez plus vite : la forme reste un peu moins longtemps.",
+      "3": "Attentes imprévisibles : ne touchez pas trop tôt.",
+      "4": "Touchez seulement pour la forme valide (1 sur 5 est une forme d’arrêt).",
+      "5": "Plus de formes d’arrêt : retenez-vous si ce n’est pas la forme valide.",
+      "6": "Les formes d’arrêt ressemblent maintenant à la forme valide.",
+      "7": "Suivez le signal : la forme valide change à chaque essai.",
+      "8": "Essais avec signal et formes ressemblantes.",
+      "9": "Formes ressemblantes avec signal, moins de temps pour toucher.",
+      "10": "Maître : formes ressemblantes avec signal, peu de temps, attentes longues et imprévisibles."
+    },
+    "prompt": {
+      "simple": "Touchez dès que la forme apparaît.",
+      "target": "Touchez seulement pour : « {{target}} »."
+    },
+    "explanation": {
+      "go": "C’était « {{target}} » : il fallait toucher.",
+      "stop": "C’était « {{stimulus}} », pas « {{target}} » : il fallait se retenir."
+    },
+    "kinds": {
+      "simple": "Réaction simple",
+      "goNoGo": "Go / stop",
+      "cued": "Go / stop avec signal"
+    },
+    "view": {
+      "goShape": "Forme valide :"
+    }
+  },
+  "rapidSymbolMatching": {
+    "name": "Correspondance rapide de symboles",
+    "tagline": "Identiques ou différentes ? Regardez bien, répondez vite.",
+    "description": "Comparez de courtes chaînes de lettres et de symboles : les deux sont-elles identiques, ou quelle candidate est une copie exacte ? Les chaînes s’allongent, les symboles se ressemblent (b, d, p, q) et les changements deviennent plus subtils, jusqu’à deux voisins inversés.",
+    "scoringSummary": "Chaque comparaison est juste ou fausse ; une erreur coûte des points. Une bonne réponse rapporte d’autant plus qu’elle est rapide, mais la précision compte le plus dans le résultat. Le temps détendu supprime la limite de temps.",
+    "accessibilityNotes": "La tâche est visuelle. Les chaînes sont aussi annoncées symbole par symbole (« b minuscule, Q majuscule… »), ce qui permet de comparer à l’écoute, mais beaucoup plus lentement.",
+    "simpleInstructions": "Les deux sont-elles identiques ? Répondez le plus vite possible.",
+    "instructions": {
+      "sameDifferent": "Identiques ou différentes : appuyez sur 1 si les deux chaînes sont identiques, sur 2 si quelque chose change.",
+      "findCopy": "Trouvez la copie : choisissez la candidate exactement identique à la référence.",
+      "checkEvery": "Vérifiez chaque symbole et sa position : deux voisins inversés comptent comme une différence."
+    },
+    "levels": {
+      "1": "Identiques ou différentes ? Trois lettres.",
+      "2": "Quatre lettres, une seule peut changer.",
+      "3": "Quatre symboles, un seul peut changer.",
+      "4": "Trouvez la copie exacte parmi trois.",
+      "5": "Lettres ressemblantes : b, d, p, q…",
+      "6": "Cinq symboles ressemblants, trois candidates.",
+      "7": "Les voisins inversés comptent comme une différence.",
+      "8": "Six symboles ressemblants, quatre candidates.",
+      "9": "Six symboles ressemblants, identiques ou différentes, plus vite.",
+      "10": "Maître : sept symboles ressemblants, quatre candidates."
+    },
+    "same": "Identiques",
+    "different": "Différentes",
+    "prompt": {
+      "sameDifferent": "Identiques ou différentes ?",
+      "findMatch": "Laquelle est une copie exacte ?"
+    },
+    "explanation": {
+      "same": "Les deux chaînes sont identiques.",
+      "different": "Elles diffèrent : {{reference}} contre {{other}}.",
+      "findMatch": "{{reference}} est la seule copie exacte ; chaque autre candidate change un symbole ou sa position."
+    },
+    "spoken": {
+      "upTriangle": "triangle vers le haut",
+      "square": "carré",
+      "circle": "cercle",
+      "diamond": "losange",
+      "star": "étoile",
+      "heart": "cœur",
+      "downTriangle": "triangle vers le bas",
+      "small": "{{letter}} minuscule",
+      "capital": "{{letter}} majuscule"
+    },
+    "view": {
+      "left": "Gauche",
+      "right": "Droite",
+      "reference": "Référence"
+    },
+    "kinds": {
+      "sameDifferent": "Identiques ou différentes",
+      "findMatch": "Trouver la copie"
+    }
+  },
+  "numberComparison": {
+    "name": "Comparaison de nombres",
+    "tagline": "Lequel est le plus grand ? Vite !",
+    "description": "Choisissez la plus grande (ou la plus petite) valeur le plus vite possible. Les nombres se rapprochent, ils sont plus nombreux, puis arrivent sous forme de décimaux, de fractions et de petits calculs.",
+    "scoringSummary": "Chaque choix est juste ou faux ; une erreur coûte des points. Un bon choix rapporte d’autant plus qu’il est rapide, mais la précision compte le plus dans le résultat. Le temps détendu supprime la limite de temps.",
+    "simpleInstructions": "Choisissez le plus grand nombre, vite.",
+    "instructions": {
+      "question": "Lisez la question : le plus grand ou le plus petit.",
+      "pick": "Choisissez cette valeur d’un clic ou avec sa touche numérique (1–4).",
+      "decimals": "Décimaux : comparez chiffre par chiffre après le point ; 0.5 est plus grand que 0.45.",
+      "fractions": "Fractions et calculs : trouvez la valeur avant de comparer."
+    },
+    "levels": {
+      "1": "Choisissez le plus grand de deux nombres.",
+      "2": "Nombres à deux chiffres, plus proches.",
+      "3": "Trois nombres à deux chiffres : choisissez le plus grand.",
+      "4": "Nombres à trois chiffres qui commencent pareil ; parfois, choisissez le plus petit.",
+      "5": "Quatre nombres proches à quatre chiffres.",
+      "6": "Décimaux : plus long ne veut pas dire plus grand.",
+      "7": "Décimaux proches.",
+      "8": "Fractions de dénominateurs différents.",
+      "9": "Calculez chaque expression, puis comparez.",
+      "10": "Maître : un mélange d’entiers, de décimaux, de fractions et d’expressions proches."
+    },
+    "prompt": {
+      "integers": {
+        "largest": "Quel nombre est le plus grand ?",
+        "smallest": "Quel nombre est le plus petit ?"
+      },
+      "decimals": {
+        "largest": "Quel décimal est le plus grand ?",
+        "smallest": "Quel décimal est le plus petit ?"
+      },
+      "fractions": {
+        "largest": "Quelle fraction est la plus grande ?",
+        "smallest": "Quelle fraction est la plus petite ?"
+      },
+      "expressions": {
+        "largest": "Quel résultat est le plus grand ?",
+        "smallest": "Quel résultat est le plus petit ?"
+      }
+    },
+    "explanation": {
+      "expression": {
+        "largest": "{{expression}} = {{value}}, le plus grand résultat.",
+        "smallest": "{{expression}} = {{value}}, le plus petit résultat."
+      },
+      "value": {
+        "largest": "{{value}} est le plus grand.",
+        "smallest": "{{value}} est le plus petit."
+      }
+    },
+    "spoken": {
+      "fraction": "{{num}} sur {{den}}",
+      "minus": "{{a}} moins {{b}}",
+      "times": "{{a}} fois {{b}}"
+    },
+    "view": {
+      "ask": {
+        "largest": "le plus grand",
+        "smallest": "le plus petit"
+      },
+      "summary": {
+        "largest_one": "{{count}} valeur · choisissez la plus grande",
+        "largest_other": "{{count}} valeurs · choisissez la plus grande",
+        "smallest_one": "{{count}} valeur · choisissez la plus petite",
+        "smallest_other": "{{count}} valeurs · choisissez la plus petite"
+      },
+      "values": "Valeurs"
+    },
+    "kinds": {
+      "integers": "Nombres entiers",
+      "decimals": "Décimaux",
+      "fractions": "Fractions",
+      "expressions": "Calculs"
+    }
+  },
+  "visualSearchSprint": {
+    "name": "Sprint de recherche visuelle",
+    "tagline": "Une cible, beaucoup de distracteurs : trouvez-la vite.",
+    "description": "Une grille de formes cache une seule cible. D’abord, elle se distingue par sa forme et saute aux yeux ; ensuite, chaque distracteur partage sa couleur ou sa forme, il faut donc vérifier la combinaison. Les grilles passent de 9 à 36 cases.",
+    "scoringSummary": "Un essai est réussi si vous appuyez sur la case de la cible. Les bonnes réponses rapportent d’autant plus qu’elles sont rapides ; une mauvaise case coûte des points et le temps écoulé ne rapporte rien. Précision et temps de réponse moyen sont indiqués séparément ; le temps détendu supprime la limite.",
+    "accessibilityNotes": "Les niveaux 1–4 se résolvent par la forme seule. Les niveaux de conjonction (5–10) demandent de distinguer les couleurs : la moitié des distracteurs ont la forme de la cible dans une autre couleur. Le nom accessible de chaque case donne sa ligne, sa colonne, sa couleur et sa forme : avec un lecteur d’écran, on peut chercher par nom (une tâche différente et plus lente).",
+    "simpleInstructions": "Trouvez la forme identique à celle du haut et appuyez dessus.",
+    "instructions": {
+      "target": "La cible est montrée au-dessus de la grille et nommée dans la question.",
+      "press": "Appuyez sur la seule case qui montre exactement cette forme dans cette couleur.",
+      "conjunction": "À partir du niveau 5, les autres cases partagent sa couleur ou sa forme : vérifiez les deux.",
+      "keyboard": "Clavier : entrez dans la grille avec Tab, déplacez-vous avec les flèches, appuyez sur Entrée."
+    },
+    "levels": {
+      "1": "Repérez la seule forme différente dans une grille 3 × 3.",
+      "2": "Une grille plus grande : 12 cases.",
+      "3": "Formes ressemblantes : la cible est plus difficile à distinguer.",
+      "4": "Formes simples et ressemblantes mélangées.",
+      "5": "Recherche de conjonction : les distracteurs partagent la couleur ou la forme.",
+      "6": "Recherche de conjonction sur 25 cases.",
+      "7": "Conjonctions mêlées de formes ressemblantes, 25 cases.",
+      "8": "Recherche de conjonction sur 30 cases.",
+      "9": "Recherche de conjonction dans une grille complète 6 × 6.",
+      "10": "Maître : 36 cases, conjonctions avec formes ressemblantes."
+    },
+    "prompt": "Trouvez : « {{target}} ».",
+    "explanation": "« {{target}} » se trouvait en {{cell}}.",
+    "view": {
+      "find": "Cherchez :",
+      "grid_one": "Grille de recherche, {{count}} case",
+      "grid_other": "Grille de recherche, {{count}} cases",
+      "cell": "{{cell}}, {{glyph}}",
+      "cellTarget": "{{cell}}, {{glyph}}, cible",
+      "cellPick": "{{cell}}, {{glyph}}, votre choix"
+    },
+    "kinds": {
+      "feature": "La forme saute aux yeux",
+      "similar": "Formes ressemblantes",
+      "conjunction": "Couleur et forme combinées"
+    }
+  },
+  "rapidClassification": {
+    "name": "Classement rapide",
+    "tagline": "Fruit ou animal ? Décidez vite.",
+    "description": "Un objet du quotidien apparaît : rangez-le dans son groupe le plus vite possible. Les niveaux avancés n’affichent que le mot, ajoutent des groupes et finissent par changer de règle : un signal indique s’il faut classer par groupe ou par la première lettre du nom.",
+    "scoringSummary": "Chaque objet est juste ou faux ; la précision est toujours indiquée. Les bonnes réponses rapportent des points en plus si elles sont rapides, les erreurs coûtent des points, et votre temps par réponse est affiché. Le mode détendu supprime la limite de temps.",
+    "simpleInstructions": "Dites à quel groupe appartient l’image, le plus vite possible.",
+    "instructions": {
+      "object": "Un objet apparaît. Choisissez son groupe d’un clic ou avec les touches numériques.",
+      "groups": "Les groupes restent à la même place toute la séance : vous pouvez garder les doigts prêts.",
+      "words": "À partir du niveau 5, vous ne voyez que le mot : lisez-le, puis décidez.",
+      "rule": "À partir du niveau 7, un signal indique la règle : CATÉGORIE (son groupe) ou PREMIÈRE LETTRE (A–M ou N–Z)."
+    },
+    "levels": {
+      "1": "Classez des images en deux groupes : fruit ou animal.",
+      "2": "Deux nouveaux groupes : véhicule ou vêtement.",
+      "3": "Trois groupes au choix.",
+      "4": "Quatre groupes au choix.",
+      "5": "Mots seuls : lisez le nom, puis classez-le (fruit ou outil).",
+      "6": "Mots seuls, quatre groupes.",
+      "7": "Suivez le signal : classez par groupe ou par première lettre (A–M ou N–Z).",
+      "8": "Plus d’essais sur la lettre, trois groupes.",
+      "9": "Changement de règle avec signal, mots seuls.",
+      "10": "Maître : mots seuls, quatre groupes, la règle change au hasard."
+    },
+    "prompt": {
+      "category": "À quel groupe appartient-il ?",
+      "letter": "Son nom commence-t-il par une lettre de A–M ou de N–Z ?"
+    },
+    "explanation": {
+      "category": "« {{item}} » appartient au groupe « {{group}} ».",
+      "letter": "« {{item}} » commence par « {{letter}} », qui est dans {{range}}."
+    },
+    "groups": {
+      "fruit": "Fruit",
+      "animal": "Animal",
+      "vehicle": "Véhicule",
+      "tool": "Outil",
+      "clothing": "Vêtement",
+      "nature": "Nature",
+      "food": "Aliment"
+    },
+    "view": {
+      "ruleCategory": "Règle : CATÉGORIE",
+      "ruleLetter": "Règle : PREMIÈRE LETTRE"
+    },
+    "kinds": {
+      "picture": "Images",
+      "word": "Mots seuls",
+      "switch": "Changement de règle avec signal"
+    },
+    "initials": {
+      "cherries": "C",
+      "cat": "C",
+      "turtle": "T",
+      "elephant": "É",
+      "giraffe": "G",
+      "bee": "A",
+      "bus": "B",
+      "airplane": "A",
+      "train": "T",
+      "hammer": "M",
+      "magnet": "A",
+      "cap": "C",
+      "gloves": "G",
+      "moon": "L",
+      "cactus": "C",
+      "pizza": "P",
+      "cookie": "B"
+    }
+  },
+  "colorAndShapeDecisions": {
+    "name": "Décisions couleur et forme",
+    "tagline": "Couleur ou forme ? Le signal décide.",
+    "description": "Une forme colorée apparaît avec un signal : COULEUR ou FORME. Répondez la caractéristique demandée par le signal. Plus tard, une même touche représente à la fois une couleur et une forme : un carré rouge appelle des réponses différentes selon la règle, et seul le signal permet de savoir laquelle.",
+    "scoringSummary": "Chaque réponse est juste ou fausse ; la précision est toujours indiquée. Les bonnes réponses rapportent des points en plus si elles sont rapides, les erreurs coûtent des points, et votre temps par réponse est affiché. Le mode détendu supprime la limite de temps.",
+    "accessibilityNotes": "Les essais de couleur portent sur la couleur elle-même et demandent donc la vision des couleurs ; la palette évite rouge/vert. Chaque forme est annoncée avec sa couleur et son nom (par ex. « carré rouge »), et le signal est écrit en toutes lettres.",
+    "simpleInstructions": "Regardez le mot en haut : donnez la couleur ou la forme demandée.",
+    "instructions": {
+      "cue": "Lisez le signal : COULEUR veut dire répondre la couleur, FORME répondre la forme.",
+      "keys": "Répondez d’un clic ou avec les touches numériques ; chaque touche garde le même sens toute la séance.",
+      "shared": "À partir du niveau 5, chaque touche désigne une couleur et une forme (« rouge / cercle »).",
+      "check": "Un carré rouge est « rouge » avec COULEUR mais « carré » avec FORME : vérifiez toujours le signal."
+    },
+    "levels": {
+      "1": "Couleur seulement : donnez la couleur de chaque forme.",
+      "2": "Forme seulement : donnez la forme, quelle que soit sa couleur.",
+      "3": "Suivez le signal : COULEUR ou FORME, chacun avec ses réponses.",
+      "4": "Règles avec signal, moitié-moitié.",
+      "5": "Touches partagées : chaque réponse désigne une couleur et une forme.",
+      "6": "Touches partagées, règles moitié-moitié, plus de formes en conflit.",
+      "7": "La plupart des formes sont en conflit : couleur et forme désignent des touches différentes.",
+      "8": "Trois couleurs et trois formes.",
+      "9": "Trois valeurs, plus de conflit, moins de temps.",
+      "10": "Maître : trois valeurs, presque toutes les formes en conflit, limite courte."
+    },
+    "prompt": {
+      "colour": "COULEUR : de quelle couleur est-elle ?",
+      "shape": "FORME : quelle forme a-t-elle ?"
+    },
+    "explanation": {
+      "colour": "Le signal était COULEUR et la figure était « {{glyph}} » : la réponse est {{value}}.",
+      "shape": "Le signal était FORME et la figure était « {{glyph}} » : la réponse est {{value}}.",
+      "colourShared": "Le signal était COULEUR et la figure était « {{glyph}} » : la réponse est {{value}} ({{option}}).",
+      "shapeShared": "Le signal était FORME et la figure était « {{glyph}} » : la réponse est {{value}} ({{option}})."
+    },
+    "view": {
+      "cueColour": "COULEUR",
+      "cueShape": "FORME",
+      "itWas": "C’était : {{glyph}}."
+    },
+    "kinds": {
+      "colour": "Signal couleur",
+      "shape": "Signal forme"
+    }
+  },
+  "fastSequenceRecognition": {
+    "name": "Reconnaissance rapide de séquences",
+    "tagline": "Un coup d’œil : laquelle était-ce ?",
+    "description": "Une courte séquence de chiffres, de lettres ou de formes s’affiche un instant, puis disparaît. Retrouvez-la parmi des séquences semblables le plus vite possible. Les séquences s’allongent, les coups d’œil raccourcissent et, au sommet, les candidates ne diffèrent que par l’ordre.",
+    "scoringSummary": "Chaque choix est juste ou faux ; une erreur coûte des points. Un bon choix rapporte d’autant plus qu’il arrive vite après la disparition de la séquence, mais la précision compte le plus dans le résultat. Le temps détendu double le coup d’œil et supprime la limite de réponse.",
+    "accessibilityNotes": "Le coup d’œil est un affichage unique et fixe (sans clignotement). Les lecteurs d’écran annoncent la séquence une fois à son apparition ; un coup d’œil court peut finir avant la lecture, le temps détendu est donc conseillé avec un lecteur d’écran.",
+    "simpleInstructions": "Regardez la rangée, puis trouvez la même rangée.",
+    "instructions": {
+      "glimpse": "Une séquence apparaît brièvement. Saisissez-la d’un seul regard ; appuyez sur « Je suis prêt » si vous avez fini avant.",
+      "pick": "Quand elle disparaît, choisissez la même séquence parmi les candidates (clic ou touches numériques).",
+      "differ": "Les candidates diffèrent d’un symbole ou de deux voisins inversés."
+    },
+    "levels": {
+      "1": "Un coup d’œil sur 3 chiffres, puis retrouvez-les parmi 2.",
+      "2": "4 chiffres, 3 candidates.",
+      "3": "4 lettres, 3 candidates.",
+      "4": "4 formes, 3 candidates.",
+      "5": "5 chiffres, 4 candidates.",
+      "6": "5 lettres, coup d’œil plus court.",
+      "7": "5 formes, coup d’œil plus court.",
+      "8": "6 chiffres : seul l’ordre change.",
+      "9": "6 lettres : seul l’ordre change.",
+      "10": "Maître : 7 chiffres ou formes, coup d’œil d’une seconde, ordre seulement."
+    },
+    "prompt": "Quelle séquence avez-vous vue ?",
+    "studyPrompt": {
+      "digits_one": "Mémorisez ce chiffre.",
+      "digits_other": "Mémorisez ces {{count}} chiffres.",
+      "letters_one": "Mémorisez cette lettre.",
+      "letters_other": "Mémorisez ces {{count}} lettres.",
+      "shapes_one": "Mémorisez cette forme.",
+      "shapes_other": "Mémorisez ces {{count}} formes."
+    },
+    "explanation": "La séquence était {{sequence}}.",
+    "view": {
+      "sequence": "Séquence : {{sequence}}",
+      "hidden_one": "Masquée. Choisissez la séquence de {{count}} symbole que vous venez de voir.",
+      "hidden_other": "Masquée. Choisissez la séquence de {{count}} symboles que vous venez de voir.",
+      "youSaw": "Vous avez vu :"
+    },
+    "kinds": {
+      "digits": "Chiffres",
+      "letters": "Lettres",
+      "shapes": "Formes"
+    }
+  },
+  "mentalArithmeticSprint": {
+    "name": "Sprint de calcul mental",
+    "tagline": "Des calculs rapides, à vérifier ou à résoudre.",
+    "description": "De courts calculs contre la montre. D’abord, décidez si une égalité est vraie ou fausse, puis tapez vous-même les résultats : des additions à un chiffre jusqu’aux produits à deux chiffres et aux expressions à trois nombres.",
+    "scoringSummary": "Chaque calcul est juste ou faux ; une erreur coûte des points. Une bonne réponse rapporte d’autant plus qu’elle est rapide, mais la précision compte le plus dans le résultat. Le temps détendu supprime la limite de temps et la tâche reste la même.",
+    "simpleInstructions": "Le calcul est-il juste ? Ou tapez le résultat, le plus vite possible.",
+    "instructions": {
+      "verify": "Vrai ou faux : appuyez sur 1 si l’égalité est juste, sur 2 si elle est fausse.",
+      "solve": "Tapez le résultat : saisissez le nombre manquant et appuyez sur Entrée.",
+      "precedence": "Multipliez et divisez avant d’additionner et de soustraire, sauf si des parenthèses indiquent autre chose.",
+      "time": "Répondez avant la fin du temps : la précision compte plus que la vitesse."
+    },
+    "levels": {
+      "1": "Vrai ou faux : additions à un chiffre.",
+      "2": "Vrai ou faux : additions et soustractions jusqu’à 20.",
+      "3": "Tapez le résultat : additions et soustractions jusqu’à 20.",
+      "4": "Vrai ou faux : tables de multiplication et divisions.",
+      "5": "Tapez le résultat : tables de multiplication et divisions.",
+      "6": "Vérifications et réponses mêlées avec des nombres à deux chiffres.",
+      "7": "Tapez le résultat : additions et soustractions à deux chiffres.",
+      "8": "Tapez le résultat : deux chiffres × un chiffre.",
+      "9": "Vrai ou faux : trois nombres, multipliez avant d’additionner.",
+      "10": "Maître : tapez le résultat d’expressions à trois nombres et de produits à deux chiffres."
+    },
+    "true": "Vrai",
+    "false": "Faux",
+    "prompt": {
+      "solve": "Tapez le résultat.",
+      "verify": "Vrai ou faux ?"
+    },
+    "explanation": {
+      "solve": "{{expression}} = {{value}}.",
+      "true": "Vrai : {{expression}} = {{value}}.",
+      "false": "Faux : {{expression}} = {{value}}, pas {{shown}}."
+    },
+    "spoken": {
+      "plus": "plus",
+      "minus": "moins",
+      "times": "fois",
+      "dividedBy": "divisé par",
+      "openBracket": "parenthèse ouvrante",
+      "closeBracket": "parenthèse fermante"
+    },
+    "view": {
+      "spoken": "{{expression}} égale {{result}}",
+      "spokenUnknown": "{{expression}} égale combien ?"
+    },
+    "kinds": {
+      "verify": "Vrai ou faux",
+      "solve": "Taper le résultat"
+    }
+  },
+  "codeScanSprint": {
+    "name": "Balayage de code",
+    "tagline": "Lisez un listing d’un coup d’œil et désignez la ligne.",
+    "description": "Un court extrait de pseudo-code et une question : quelle ligne appelle print, utilise le nombre 7 ou donne pour la première fois une valeur à total ? Trouvez cette ligne le plus vite possible. Les premiers niveaux comptent quelques lignes simples ; les suivants imbriquent des blocs et répètent des noms pour tromper un regard rapide.",
+    "scoringSummary": "Un essai est réussi si vous appuyez sur la seule ligne qui répond à la question. Les bonnes réponses rapportent d’autant plus qu’elles sont rapides ; une mauvaise ligne coûte des points et le temps écoulé ne rapporte rien. Précision et temps de réponse moyen sont indiqués séparément ; le temps détendu supprime la limite.",
+    "accessibilityNotes": "Chaque ligne est un bouton nommé avec son numéro et son texte : les lecteurs d’écran peuvent parcourir le listing ligne par ligne. « ← » signifie « reçoit la valeur ».",
+    "simpleInstructions": "Lisez la question et appuyez sur la ligne qui y correspond.",
+    "instructions": {
+      "read": "Lisez la question, puis appuyez sur la ligne du listing qui y répond.",
+      "syntax": "« total ← 5 » donne une valeur à total ; « print(total) » appelle print ; « if score > 3: » teste score.",
+      "unique": "Une seule ligne répond à chaque question.",
+      "keyboard": "Clavier : atteignez le listing avec Tab, déplacez-vous avec les flèches, appuyez sur Entrée."
+    },
+    "levels": {
+      "1": "Trouvez la ligne qui appelle une routine, sur 4 lignes.",
+      "2": "Appels ou nombres, sur 5 lignes.",
+      "3": "Des blocs apparaissent : lignes dans if et repeat.",
+      "4": "Où une variable reçoit-elle sa première valeur ?",
+      "5": "Conditions : quelle ligne teste une variable ?",
+      "6": "Variables affectées deux fois : première ou dernière fois ?",
+      "7": "Blocs imbriqués, tous les types de questions.",
+      "8": "Quatre variables, 10 lignes.",
+      "9": "Surtout des questions d’affectation et de condition, 11 lignes.",
+      "10": "Maître : 12 lignes imbriquées, tous les types de questions."
+    },
+    "question": {
+      "call": "Quelle ligne appelle {{subject}} ?",
+      "number": "Quelle ligne utilise le nombre {{subject}} ?",
+      "firstAssign": "Où {{subject}} reçoit-il sa première valeur ?",
+      "lastAssign": "Où {{subject}} reçoit-il une valeur pour la dernière fois ?",
+      "condition": "Quelle ligne teste {{subject}} dans une condition ?"
+    },
+    "reason": {
+      "call": "c’est la seule ligne qui appelle {{subject}}.",
+      "number": "c’est la seule ligne avec le nombre {{subject}}.",
+      "firstAssign": "c’est la première ligne de la forme « {{subject}} ← … ».",
+      "lastAssign": "c’est la dernière ligne de la forme « {{subject}} ← … ».",
+      "condition": "c’est la seule ligne if / while dont la condition mentionne {{subject}}."
+    },
+    "explanation": "Ligne {{line}} (« {{text}} ») : {{reason}}",
+    "view": {
+      "listing": "Listing de code",
+      "badge": {
+        "answer": "✓ réponse",
+        "pick": "✗ votre choix"
+      },
+      "marker": {
+        "answer": "réponse",
+        "pick": "votre choix"
+      },
+      "line": "Ligne {{line}} : {{text}}",
+      "lineMarked": "Ligne {{line}} : {{text}} ({{markers}})"
+    },
+    "kinds": {
+      "call": "Trouver l’appel",
+      "number": "Trouver le nombre",
+      "firstAssign": "Première affectation",
+      "lastAssign": "Dernière affectation",
+      "condition": "Trouver la condition"
+    }
+  },
+  "multiChoiceProcessing": {
+    "name": "Défi de traitement à choix multiples",
+    "tagline": "Ignorez la foule : où pointe celle du centre ?",
+    "description": "Une rangée de flèches apparaît. Répondez la direction de la flèche centrale pendant que celles qui l’entourent pointent dans le même sens, dans un autre ou nulle part. Les niveaux avancés ajoutent le haut et le bas, des rangées plus longues et un signal qui demande parfois les flèches extérieures.",
+    "scoringSummary": "Chaque réponse est juste ou fausse ; une erreur coûte des points. Une bonne réponse rapporte d’autant plus qu’elle est rapide, mais la précision compte le plus dans le résultat. Le temps détendu supprime la limite de temps ; le conflit entre les flèches reste à résoudre.",
+    "accessibilityNotes": "Les directions sont données par la forme de la flèche, jamais par la couleur. Les lecteurs d’écran annoncent la rangée comme une liste de directions ; le conflit visuel qui rend la tâche difficile se perd en grande partie à l’écoute.",
+    "simpleInstructions": "Où pointe la flèche du milieu ?",
+    "instructions": {
+      "centre": "Regardez la flèche au milieu de la rangée et répondez sa direction (clic ou touches numériques).",
+      "ignore": "Ignorez les flèches autour : elles peuvent pointer ailleurs.",
+      "vertical": "À partir du niveau 5, les flèches peuvent aussi pointer vers le haut ou le bas.",
+      "cue": "À partir du niveau 7, un signal indique CENTRE (la flèche du milieu) ou EXTÉRIEUR (les flèches autour)."
+    },
+    "levels": {
+      "1": "Où pointe la flèche ?",
+      "2": "Répondez la flèche centrale ; les autres concordent ou sont des barres.",
+      "3": "Certaines flèches extérieures pointent maintenant de l’autre côté.",
+      "4": "La moitié des rangées sont en conflit.",
+      "5": "Quatre directions : gauche, droite, haut, bas.",
+      "6": "Sept flèches en rangée, plus de conflit.",
+      "7": "Suivez le signal : flèche du CENTRE ou flèches EXTÉRIEURES.",
+      "8": "Essais sur les flèches extérieures plus fréquents.",
+      "9": "Règles mélangées moitié-moitié.",
+      "10": "Maître : règles mélangées, rangées presque toutes en conflit, moins de temps."
+    },
+    "directions": {
+      "left": "Gauche",
+      "right": "Droite",
+      "up": "Haut",
+      "down": "Bas"
+    },
+    "pointing": {
+      "left": "vers la gauche",
+      "right": "vers la droite",
+      "up": "vers le haut",
+      "down": "vers le bas"
+    },
+    "prompt": {
+      "single": "Où pointe la flèche ?",
+      "centre": "Où pointe la flèche centrale ?",
+      "outer": "Où pointent les flèches extérieures ?"
+    },
+    "explanation": {
+      "single": "La flèche pointait {{direction}}.",
+      "centre": "La flèche centrale pointait {{direction}}.",
+      "outer": "Les flèches extérieures pointaient {{direction}}.",
+      "centreConflict": "La flèche centrale pointait {{direction}} ; les flèches extérieures, {{other}}.",
+      "outerConflict": "Les flèches extérieures pointaient {{direction}} ; la flèche centrale, {{other}}."
+    },
+    "spoken": {
+      "left": "gauche",
+      "right": "droite",
+      "up": "haut",
+      "down": "bas",
+      "none": "barre"
+    },
+    "view": {
+      "cueCentre": "CENTRE",
+      "cueOuter": "EXTÉRIEUR",
+      "single": "Une flèche qui pointe {{direction}}.",
+      "row_one": "Rangée de {{count}} : {{items}}.",
+      "row_other": "Rangée de {{count}} : {{items}}."
+    },
+    "kinds": {
+      "single": "Flèche seule",
+      "flanker": "Flèche centrale",
+      "cued": "Règle avec signal"
+    }
+  }
+}

@@ -1,5 +1,8 @@
 import { useCourse } from '@/app/providers/useCourse';
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { joinText, msg } from '@/domain/shared';
+import { useFormat, useText } from '@/i18n';
 import {
   applyReviewResult,
   conceptOf,
@@ -13,7 +16,6 @@ import { useServices } from '@/app/providers/servicesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { formatPercent } from '@/features/shared/format';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { useRecordActivity } from '@/features/shared/useProfile';
 import { relativeDay } from './dates';
@@ -22,6 +24,9 @@ import { useLearning } from './useLearning';
 
 /** A few minutes of retrieval practice on concepts whose review is due (spaced repetition). */
 export function ReviewPage() {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
+  const format = useFormat();
   const { clock } = useServices();
   const course = useCourse();
   const { state, update } = useLearning();
@@ -61,7 +66,7 @@ export function ReviewPage() {
   if (state.status === 'error')
     return (
       <p role="alert" className="text-rose-300">
-        Your learning progress could not be loaded.
+        {t('loadError')}
       </p>
     );
 
@@ -78,9 +83,9 @@ export function ReviewPage() {
     return (
       <>
         <PageHeader
-          eyebrow="Review"
-          title="Review done"
-          description={`Recall score ${formatPercent(done.credit)}.`}
+          eyebrow={t('review.eyebrow')}
+          title={t('review.done')}
+          description={t('review.score', { score: format.percent(done.credit) })}
         />
         <Card>
           <ul className="flex flex-col gap-2 text-sm">
@@ -88,11 +93,15 @@ export function ReviewPage() {
               const item = done.after?.reviews[id];
               return (
                 <li key={id} className="flex flex-wrap justify-between gap-2">
-                  <span className="text-white">{conceptOf(course, id)?.name ?? id}</span>
+                  <span className="text-white">{tx(conceptOf(course, id)?.name ?? id)}</span>
                   <span className="text-slate-400">
                     {item
-                      ? `next review ${relativeDay(item.dueAt, now)} (box ${item.box} of 5)`
-                      : 'saving…'}
+                      ? t('review.next', {
+                          when: relativeDay(item.dueAt, now, format.language),
+                          box: item.box,
+                          boxes: 5,
+                        })
+                      : t('review.saving')}
                   </span>
                 </li>
               );
@@ -100,7 +109,7 @@ export function ReviewPage() {
           </ul>
         </Card>
         <div className="mt-6 flex gap-2">
-          <ButtonLink to="/learn">Back to the learning path</ButtonLink>
+          <ButtonLink to="/learn">{t('review.back')}</ButtonLink>
         </div>
       </>
     );
@@ -109,19 +118,22 @@ export function ReviewPage() {
   if (plan.steps.length === 0)
     return (
       <div className="py-12 text-center">
-        <h1 className="text-2xl font-semibold text-white">Nothing to review right now</h1>
-        <p className="mt-2 text-slate-400">
-          Concepts come back for review a day after you learn them, then at growing intervals.
-        </p>
+        <h1 className="text-2xl font-semibold text-white">{t('review.empty')}</h1>
+        <p className="mt-2 text-slate-400">{t('review.emptyNote')}</p>
         <ButtonLink to="/learn" className="mt-6">
-          Learning path
+          {t('learningPath')}
         </ButtonLink>
       </div>
     );
 
   return (
     <LessonPlayer
-      title={`Review · ${plan.concepts.map((id) => conceptOf(course, id)?.name ?? id).join(', ')}`}
+      title={msg('learn:review.title', {
+        concepts: joinText(
+          plan.concepts.map((id) => conceptOf(course, id)?.name ?? id),
+          ', ',
+        ),
+      })}
       lessonId={null}
       steps={plan.steps}
       onFinished={onFinished}

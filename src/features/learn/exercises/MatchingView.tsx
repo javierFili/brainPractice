@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useText } from '@/i18n';
 import { InlineText } from '../RichBlocks';
 import { plainText } from '../text';
 import { stableShuffle } from '../shuffle';
@@ -11,6 +13,8 @@ export function MatchingView({
   showSolution,
   onSubmit,
 }: ExerciseViewProps<'matching'>) {
+  const { t } = useTranslation('learn');
+  const tx = useText();
   const [rights] = useState(() =>
     stableShuffle(
       exercise.pairs.map((p) => p.right),
@@ -45,11 +49,11 @@ export function MatchingView({
                 className="rounded border border-slate-600 bg-slate-950 px-2 py-1 text-sm focus-visible:outline-2 focus-visible:outline-sky-400"
               >
                 <option value="" disabled>
-                  Choose…
+                  {t('exercise.choose')}
                 </option>
                 {rights.map((option) => (
                   <option key={option.id} value={option.id}>
-                    {plainText(option.label)}
+                    {plainText(tx(option.label))}
                   </option>
                 ))}
               </select>

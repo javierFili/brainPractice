@@ -1,7 +1,7 @@
 import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
 import type { Draft } from '@/games/logic/shared/content';
 import { CONSTRAINT_LEVELS } from './levels';
 import { cellName, solveGrid } from './solver';
@@ -54,10 +54,9 @@ function buildGrid(random: RandomGenerator, profile: ConstraintProfile): Constra
 
 export const constraintSolverGame: GameDefinition<ConstraintChallenge, ConstraintProfile> = {
   id: CONSTRAINT_SOLVER_ID,
-  name: 'Constraint Solver',
-  tagline: 'Fill the grid in your head and find one number.',
-  description:
-    'Each row and each column holds every number once. Use the numbers already given — and, at higher levels, boxes and “smaller than” signs — to work out the number in the highlighted cell.',
+  name: msg('logic:constraintSolver.name'),
+  tagline: msg('logic:constraintSolver.tagline'),
+  description: msg('logic:constraintSolver.description'),
   area: 'logic',
   skills: ['logical-reasoning', 'problem-solving', 'working-memory', 'spatial-reasoning'],
   meta: {
@@ -68,29 +67,34 @@ export const constraintSolverGame: GameDefinition<ConstraintChallenge, Constrain
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each grid has exactly one solution. Your result is the share of highlighted cells you work out correctly; there is no time limit.',
+    scoringSummary: msg('logic:constraintSolver.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Every row and every column must contain each number exactly once.',
-    'When boxes are drawn, each box must also contain each number once.',
-    'A clue like “A1 < B1” means the number in A1 is smaller than the number in B1.',
-    'Type the number that belongs in the highlighted cell (marked “?”).',
+    msg('logic:constraintSolver.instructions.1'),
+    msg('logic:constraintSolver.instructions.2'),
+    msg('logic:constraintSolver.instructions.3'),
+    msg('logic:constraintSolver.instructions.4'),
   ],
-  simpleInstructions: 'No number twice in a row or column — find the missing one.',
+  simpleInstructions: msg('logic:constraintSolver.simpleInstructions'),
   levels: CONSTRAINT_LEVELS,
   generate({ identity, profile, random }) {
     const content = retryGeneration('constraint grid', () => buildGrid(random, profile));
     const answer = content.solution[content.asked] as number;
     const { size, asked } = content;
     const row = Math.floor(asked / size);
-    const rowValues = content.solution.slice(row * size, row * size + size).join(' ');
+    const rowValues = joinText(
+      content.solution.slice(row * size, row * size + size).map(String),
+      ' ',
+    );
     const draft: Draft<ConstraintChallenge> = {
-      prompt: `Which number goes in cell ${cellName(asked, size)}?`,
+      prompt: msg('logic:constraintSolver.prompt', { cell: cellName(asked, size) }),
       content,
       response: numericResponse(answer),
-      explanation: `The grid has only one solution that keeps every rule${content.inequalities.length > 0 ? ', including the “smaller than” clues' : ''}. In it, row ${row + 1} reads ${rowValues}, so ${cellName(asked, size)} is ${answer}.`,
+      explanation: msg(
+        `logic:constraintSolver.explanation.${content.inequalities.length > 0 ? 'inequalities' : 'plain'}`,
+        { row: row + 1, values: rowValues, cell: cellName(asked, size), answer },
+      ),
       skills: ['logical-reasoning', 'problem-solving'],
     };
     return { ...identity, ...draft, timing: profile.timing };

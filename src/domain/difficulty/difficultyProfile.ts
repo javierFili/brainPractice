@@ -6,6 +6,7 @@ import {
   type DifficultyLevel,
   type DifficultyTier,
 } from '../shared/difficultyLevel';
+import { isBlankText, type Text } from '../shared/text';
 
 /**
  * Common part of every level design. Games extend it with their own typed parameters, using the
@@ -17,7 +18,7 @@ export interface DifficultyProfile {
   readonly level: DifficultyLevel;
   readonly tier: DifficultyTier;
   /** Cognitive purpose of the level, shown to the player. */
-  readonly objective: string;
+  readonly objective: Text;
   readonly challengeCount: number;
   readonly timing: ChallengeTiming;
 }
@@ -34,7 +35,7 @@ export function validateLevelTable(table: LevelTable): string[] {
     const issues: string[] = [];
     if (profile.level !== level) issues.push(at(`profile declares level ${profile.level}`));
     if (profile.tier !== tierOf(level)) issues.push(at(`tier must be "${tierOf(level)}"`));
-    if (profile.objective.trim() === '') issues.push(at('objective is empty'));
+    if (isBlankText(profile.objective)) issues.push(at('objective is empty'));
     if (!Number.isInteger(profile.challengeCount) || profile.challengeCount < 1) {
       issues.push(at('challengeCount must be a positive integer'));
     }

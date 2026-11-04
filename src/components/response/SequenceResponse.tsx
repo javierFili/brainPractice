@@ -1,6 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import type { ChoiceOption, ResponseOf } from '@/domain/challenge';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
+import { useText } from '@/i18n';
 
 interface Props {
   readonly response: ResponseOf<'sequence'>;
@@ -16,6 +18,8 @@ interface Props {
  * the player can check before submitting.
  */
 export function SequenceResponse({ response, disabled, onSubmit, renderOption }: Props) {
+  const { t } = useTranslation();
+  const tx = useText();
   const { symbols, length } = response.question;
   const [entered, setEntered] = useState<readonly string[]>([]);
   const full = entered.length === length;
@@ -52,11 +56,11 @@ export function SequenceResponse({ response, disabled, onSubmit, renderOption }:
     };
   });
 
-  const face = (option: ChoiceOption) => renderOption?.(option) ?? option.label;
+  const face = (option: ChoiceOption) => renderOption?.(option) ?? tx(option.label);
   return (
     <div className="flex flex-col gap-4">
       <ol
-        aria-label={`Your sequence, ${entered.length} of ${length}`}
+        aria-label={t('response.yourSequence', { entered: entered.length, total: length })}
         className="flex flex-wrap justify-center gap-2"
       >
         {Array.from({ length }, (_, i) => {
@@ -64,7 +68,11 @@ export function SequenceResponse({ response, disabled, onSubmit, renderOption }:
           return (
             <li
               key={i}
-              aria-label={symbol ? `${i + 1}: ${symbol.label}` : `${i + 1}: empty`}
+              aria-label={
+                symbol
+                  ? t('response.slot', { position: i + 1, item: tx(symbol.label) })
+                  : t('response.emptySlot', { position: i + 1 })
+              }
               className={`flex h-14 min-w-14 items-center justify-center rounded-lg border px-2 text-lg font-semibold ${
                 symbol
                   ? 'animate-pop border-brand bg-brand/15 text-ink'
@@ -77,13 +85,13 @@ export function SequenceResponse({ response, disabled, onSubmit, renderOption }:
         })}
       </ol>
       <fieldset disabled={disabled}>
-        <legend className="sr-only">Symbols</legend>
+        <legend className="sr-only">{t('response.symbols')}</legend>
         <ul className="flex flex-wrap justify-center gap-2">
           {symbols.map((symbol, i) => (
             <li key={symbol.id}>
               <button
                 type="button"
-                aria-label={symbol.label}
+                aria-label={tx(symbol.label)}
                 disabled={full}
                 onClick={() => {
                   add(symbol.id);
@@ -106,7 +114,7 @@ export function SequenceResponse({ response, disabled, onSubmit, renderOption }:
       </fieldset>
       <div className="flex flex-wrap justify-center gap-3">
         <Button variant="secondary" onClick={undo} disabled={disabled || entered.length === 0}>
-          Undo
+          {t('actions.undo')}
         </Button>
         <Button
           disabled={disabled || !full}
@@ -114,7 +122,7 @@ export function SequenceResponse({ response, disabled, onSubmit, renderOption }:
             onSubmit(entered);
           }}
         >
-          Submit sequence
+          {t('response.submitSequence')}
         </Button>
       </div>
     </div>

@@ -1,0 +1,1839 @@
+{
+  "whatIsAProgram": {
+    "title": "What is a Program?",
+    "objective": "You will be able to explain what a program is and predict what a tiny program prints.",
+    "summary": "A program is a precise recipe: the computer follows each instruction literally, in order, turning input into output.",
+    "keyPoints": {
+      "1": "A program is a list of precise instructions; the computer does exactly what they say, nothing more.",
+      "2": "Most programs follow the same shape: input → processing → output.",
+      "3": "An instruction that is vague or incomplete gives the wrong result, even if a person would \"know what you meant\".",
+      "4": "`print(...)` shows a value; text in quotes is shown as written."
+    },
+    "steps": {
+      "recipe": {
+        "title": "A program is a precise recipe",
+        "blocks": {
+          "b1": "A program is a list of instructions for a computer. The computer follows them literally: it never guesses what you meant.",
+          "b2": "\"Make tea\" is fine for a person, but far too vague for a computer. It needs every step spelled out:",
+          "b3": {
+            "1": "Fill the kettle with water.",
+            "2": "Switch the kettle on and wait until it boils.",
+            "3": "Put a tea bag in the cup.",
+            "4": "Pour the hot water into the cup."
+          },
+          "b4": "If a step is missing or unclear, the computer will not fill the gap. Precision is your job.",
+          "b5": "A tiny program: four exact instructions. `*` means multiply; `print` shows a result."
+        }
+      },
+      "playShop": {
+        "title": "Run a real program",
+        "intro": "Change the input values and run the program. The instructions stay the same; only the data changes.",
+        "prompts": {
+          "1": "Set quantity to 5. Before running, predict what the program prints.",
+          "2": "Set price to 0. What is the output, and why?",
+          "3": "Set quantity to 0. Did any instruction change, or only the data?"
+        }
+      },
+      "ipo": {
+        "title": "Input → processing → output",
+        "blocks": {
+          "b1": "Almost every program takes some data (input), works with it (processing) and shows a result (output).",
+          "b2": {
+            "caption": "The shape of a small shopping program.",
+            "nodes": {
+              "start": "Start",
+              "in": "Input: price = 4, quantity = 3",
+              "work": "Processing: total = price * quantity",
+              "out": "Output: print(total) shows 12",
+              "end": "End"
+            }
+          }
+        }
+      }
+    },
+    "exercises": {
+      "mcPreciseInstruction": {
+        "prompt": "A robot must water a plant. Which instruction could it follow without guessing?",
+        "hints": {
+          "1": "Ask yourself: does the robot know exactly what to do, how much, and where?"
+        },
+        "explanation": "Only this instruction says what to use, how much and where to put it. The others rely on the robot guessing what \"some\", \"properly\" or \"when needed\" mean.",
+        "options": {
+          "some": "Give the plant some water.",
+          "properly": "Look after the plant properly.",
+          "exact": "Pour 200 ml of water into the pot.",
+          "needed": "Water the plant when it needs it."
+        },
+        "misconceptions": {
+          "some": "\"Some\" is not an amount. A computer cannot decide between a drop and a bucket.",
+          "properly": "\"Properly\" makes sense to a person, but it does not say a single action the robot can carry out.",
+          "needed": "This hides the hard part: how does the robot know when the plant needs water? That rule is missing."
+        }
+      },
+      "predictFirstPrint": {
+        "prompt": "What does this program print? Write one line per print.",
+        "hints": {
+          "1": "The computer runs the lines from top to bottom.",
+          "2": "Text in quotes is printed exactly as written, without the quotes."
+        },
+        "explanation": "The first line prints `Hello`, then the second line prints `World`. Each `print` shows its text on its own line, in the order the lines appear.",
+        "mistakes": {
+          "m1": "Each `print` writes its own line, so the two words appear on separate lines.",
+          "m2": "The computer starts at the top: `Hello` is printed first."
+        }
+      },
+      "matchInputProcessingOutput": {
+        "prompt": "Match each line of the shopping program with its role.",
+        "hints": {
+          "1": "Input is the starting data, processing works with it, output shows the result."
+        },
+        "explanation": "`price = 4` gives the program its data, `total = price * 3` calculates with it, and `print(total)` shows the result to the user.",
+        "pairs": {
+          "input": "Input: the data the program starts with",
+          "processing": "Processing: working out something new",
+          "output": "Output: showing the result"
+        }
+      },
+      "orderMakeTea": {
+        "prompt": "Put the precise \"make tea\" instructions in an order a machine could follow.",
+        "hints": {
+          "1": "A step can only happen once the thing it needs is ready."
+        },
+        "explanation": "Each step needs the one before it: water must be in the kettle before it boils, it must boil before it is poured, and the tea needs time to brew before the bag comes out.",
+        "items": {
+          "fill": "Fill the kettle with water",
+          "boil": "Switch the kettle on and wait until it boils",
+          "pour": "Pour the boiling water over the tea bag in the cup",
+          "wait": "Wait 3 minutes",
+          "remove": "Take the tea bag out"
+        }
+      },
+      "predictSumPrint": {
+        "prompt": "What does this program print?",
+        "hints": {
+          "1": "`print(a + b)` works out `a + b` first, then shows the result."
+        },
+        "explanation": "`a` holds 3 and `b` holds 4. The computer calculates `a + b` = 7 and prints the number, not the formula.",
+        "mistakes": {
+          "m1": "Without quotes, `a + b` is a calculation, not text. The computer prints its result.",
+          "m2": "`+` between two numbers adds them; it does not stick the digits together."
+        }
+      },
+      "debugIncompleteInstruction": {
+        "prompt": "This program should work out the cost of 3 items at 4 each (12), but it gives 4. Which line is wrong, and why?",
+        "hints": {
+          "1": "Follow the program line by line and write down what `total` holds.",
+          "2": "Is `quantity` ever used?"
+        },
+        "explanation": "Line 3 only copies the price into `total`; it never says to multiply by the quantity. The computer does exactly what the line says, so the fix is `total = price * quantity`.",
+        "causes": {
+          "order": "print runs before total is calculated",
+          "incomplete": "The instruction never says to use the quantity",
+          "guess": "The computer forgot what quantity means"
+        },
+        "misconceptions": {
+          "order": "`print(total)` is the last line, so `total` is already set when it runs.",
+          "guess": "The computer still has `quantity = 3` stored. It simply was never told to use it."
+        }
+      },
+      "mcFollowsLiterally": {
+        "prompt": "A program should print the total of a bill, but one instruction forgets to add the tip. What does the computer do?",
+        "explanation": "A computer follows the instructions literally. It has no idea a tip was intended, so it calculates and prints the total without it.",
+        "options": {
+          "fixes": "It notices the tip is missing and adds it",
+          "literal": "It prints the total without the tip",
+          "refuses": "It stops because the instructions are incomplete"
+        },
+        "misconceptions": {
+          "fixes": "The computer does not know what you intended; it only knows what the instructions say.",
+          "refuses": "The instructions are complete from the computer's point of view: each line is valid, so it runs them. Only you know a step is missing."
+        }
+      },
+      "predictStartEnd": {
+        "prompt": "What does this program print? Write one line per print.",
+        "explanation": "The lines run in order: `Start` is printed, `x` is set to 2 * 5 = 10, `print(x)` shows the value 10, then `End` is printed.",
+        "mistakes": {
+          "m1": "`x` has no quotes, so `print(x)` shows the value stored in `x`, not the letter x.",
+          "m2": "Line 2 calculates `2 * 5` and stores the result, 10.",
+          "m3": "Line 2 prints nothing, but line 3 does: it shows the value of `x`."
+        }
+      }
+    }
+  },
+  "instructionsAndSequences": {
+    "title": "Instructions and Sequences",
+    "objective": "You will be able to trace a short program line by line and explain why changing the order of its lines changes the result.",
+    "summary": "Programs run from top to bottom, one line at a time. Each line works with what the lines before it left behind, so order matters.",
+    "keyPoints": {
+      "1": "The computer runs lines from top to bottom, each line once.",
+      "2": "Each line works with the values the previous lines left behind.",
+      "3": "Swapping two lines can change the result, even if every line is correct on its own.",
+      "4": "To trace a program, write down the values after every line."
+    },
+    "steps": {
+      "topToBottom": {
+        "title": "One line at a time, top to bottom",
+        "blocks": {
+          "b1": "A sequence is a list of instructions that run one after another. The computer starts at the first line, finishes it, then moves to the next one.",
+          "b2": "Trace: after line 1, x is 1. After line 2, x is 4. After line 3, x is 8.",
+          "b3": "Tracing means acting like the computer: go line by line and write down every value as it changes. Do not jump ahead to the end."
+        }
+      },
+      "playAddThenDouble": {
+        "title": "Add, then double",
+        "intro": "This program adds 3 and then doubles. Change the starting number and watch each line.",
+        "prompts": {
+          "1": "Set start to 2. Before running, trace it on paper: what does it print?",
+          "2": "Set start to 0. Why is the result 6 and not 0?"
+        }
+      },
+      "orderMatters": {
+        "title": "Order changes the result",
+        "blocks": {
+          "b1": "Here are the same two instructions as before, swapped. Every line is still correct, but the program now doubles first and adds 3 afterwards.",
+          "b2": "Trace: 1, then 2, then 5. The other order gave 8.",
+          "b3": "A line uses the values that exist at the moment it runs. Move it, and it sees different values."
+        }
+      },
+      "playDoubleThenAdd": {
+        "title": "Double, then add",
+        "intro": "Same instructions, opposite order. Try the same starting numbers as in the first playground and compare.",
+        "prompts": {
+          "1": "Set start to 2. The other order printed 10. What does this one print?",
+          "2": "Set start to 0. Why does this order give 3 instead of 6?"
+        }
+      }
+    },
+    "exercises": {
+      "mcRunOrder": {
+        "prompt": "A program has five lines and no special instructions. How does the computer run it?",
+        "hints": {
+          "1": "Think of reading a recipe: where do you start, and how often do you do each step?"
+        },
+        "explanation": "Without special instructions, a program is a plain sequence: the computer runs line 1, then line 2, and so on, each line exactly once.",
+        "options": {
+          "important": "The most important line first, then the rest",
+          "sequence": "From top to bottom, each line once",
+          "together": "All five lines at the same moment",
+          "bottom": "From the last line up to the first"
+        },
+        "misconceptions": {
+          "important": "The computer has no idea which line matters most. It only follows the order you wrote.",
+          "together": "Lines run one after another. That is why a line can use a value that an earlier line produced.",
+          "bottom": "The last line often shows the result, but it runs last, after everything it depends on."
+        }
+      },
+      "predictTraceX": {
+        "prompt": "Trace the program. What is the value of x at the end?",
+        "hints": {
+          "1": "Write down x after each line.",
+          "2": "Line 3 doubles whatever x holds after line 2."
+        },
+        "explanation": "x starts at 5, line 2 makes it 6, and line 3 doubles that 6 into 12.",
+        "mistakes": {
+          "m1": "That is 5 * 2 + 1: doubling first. But the + 1 line comes first, so it runs first.",
+          "m2": "You stopped after line 2. Line 3 still runs and doubles x.",
+          "m3": "Line 3 doubles the current x (6), not the starting value 5."
+        }
+      },
+      "orderBrushTeeth": {
+        "prompt": "Put the steps for brushing your teeth in an order that works.",
+        "hints": {
+          "1": "Which step needs another step to be done first?"
+        },
+        "explanation": "You must hold the brush before you can put toothpaste on it, and it needs toothpaste before brushing. The brush is rinsed after brushing, and only a clean brush goes back.",
+        "items": {
+          "pick": "Pick up the toothbrush",
+          "paste": "Put toothpaste on the brush",
+          "brush": "Brush for two minutes",
+          "rinse": "Rinse the toothbrush under the tap",
+          "back": "Put the clean toothbrush back in its cup"
+        }
+      },
+      "orderCodeChain": {
+        "prompt": "Put these lines in an order that runs without errors and prints 20.",
+        "hints": {
+          "1": "A variable must be set before a line can read it.",
+          "2": "Find the line that uses no other variable: it must come first."
+        },
+        "explanation": "`b` needs `a`, and `c` needs `b`, so they must be set in that order. Printing comes last: (2 + 3) * 4 = 20."
+      },
+      "buildCelsiusToFahrenheit": {
+        "prompt": "Build a program that converts 20 °C to Fahrenheit and prints it. The rule: multiply by 9, divide by 5, then add 32. Not every block belongs.",
+        "hints": {
+          "1": "Follow the rule in its order: first the multiply-and-divide step, then the + 32 step.",
+          "2": "Two blocks are not part of the rule."
+        },
+        "explanation": "Set the temperature, apply the rule in its order (20 * 9 / 5 = 36, then 36 + 32 = 68), and print the result last.",
+        "misconceptions": {
+          "minus": "Subtracting 32 is the rule for the other direction (Fahrenheit to Celsius).",
+          "early": "This prints the starting temperature, 20, not the converted result."
+        }
+      },
+      "debugSkipsStep": {
+        "prompt": "A shirt costs 50. A coupon takes off 10, then shipping adds 5, so total should be 45. The program gives 55. Which line is wrong, and why?",
+        "hints": {
+          "1": "Trace: what does price hold after line 2?",
+          "2": "Does line 3 use that result?"
+        },
+        "explanation": "Line 2 leaves price at 40, but line 3 starts again from 50 and ignores that result. It must build on the previous step: `total = price + 5`.",
+        "causes": {
+          "ignores": "It ignores the result of the coupon step",
+          "coupon": "The coupon line runs too late",
+          "shipping": "Shipping should be subtracted, not added"
+        },
+        "misconceptions": {
+          "coupon": "The coupon line runs before line 3 and works: price becomes 40. Line 3 just never reads it.",
+          "shipping": "Shipping really does add to the cost. The problem is what it is added to."
+        }
+      },
+      "predictPrintMoments": {
+        "prompt": "What does this program print? Write one line per print.",
+        "explanation": "Each `print` shows n at the moment it runs: 1 first, then 2 after adding 1, then 20 after multiplying by 10.",
+        "mistakes": {
+          "m1": "A print does not wait for the end. It shows the value n has when that line runs.",
+          "m2": "There are three print lines, and each one runs once, so three lines appear.",
+          "m3": "The last step multiplies the current n (2) by 10, giving 20."
+        }
+      },
+      "mcSwappedLines": {
+        "prompt": "Program B is program A with its last two lines swapped. What value does each one end with?",
+        "explanation": "A multiplies first: 2 * 3 = 6, then 6 + 1 = 7. B adds first: 2 + 1 = 3, then 3 * 3 = 9. Same lines, different order, different result.",
+        "options": {
+          "same": "Both end with 7",
+          "reversed": "A ends with 9, B ends with 7",
+          "error": "B stops with an error",
+          "right": "A ends with 7, B ends with 9"
+        },
+        "misconceptions": {
+          "same": "The lines are the same, but each one sees different values when the order changes.",
+          "reversed": "Trace A again: it multiplies first (6), then adds 1, so it ends with 7.",
+          "error": "Every line in B reads a value that is already set, so nothing goes wrong. Only the result changes."
+        }
+      },
+      "predictNoRecalculation": {
+        "prompt": "Trace carefully. What is the value of c at the end?",
+        "explanation": "Line 2 runs once, while a is 3, so b becomes 6. Line 3 changes a to 10 but does not rerun line 2. So c = 10 + 6 = 16.",
+        "mistakes": {
+          "m1": "b was calculated once on line 2, when a was 3. Changing a later does not update b.",
+          "m2": "Line 3 sets a to 10 before line 4 runs, so line 4 uses 10, not 3."
+        }
+      }
+    }
+  },
+  "valuesAndVariables": {
+    "title": "Values and Variables",
+    "objective": "You will be able to track the value of each variable through several assignments and tell numbers, text and true/false apart.",
+    "summary": "A variable is a name for a stored value. Assigning replaces the old value, and the kind of value (number, text, true/false) decides what you can do with it.",
+    "keyPoints": {
+      "1": "`x = 5` stores the value 5 under the name x; a new assignment replaces the old value.",
+      "2": "`x = x + 1` first reads x, works out the right side, then stores the result back in x.",
+      "3": "5 is a number, \"5\" is text: `\"5\" + \"5\"` is \"55\". Use `str()` to join a number to text.",
+      "4": "Swapping two variables needs a temporary variable, or one value is lost."
+    },
+    "steps": {
+      "namesAndValues": {
+        "title": "A name for a value",
+        "blocks": {
+          "b1": "A variable is a name that holds a value. `score = 10` means \"store 10 under the name score\". It is an instruction, not a question about whether score equals 10.",
+          "b2": "After line 1: 10. Line 2 replaces it: 25. Line 3 reads 25, adds 5, stores 30.",
+          "b3": {
+            "1": "A variable holds one value at a time. Assigning again throws the old value away.",
+            "2": "In `score = score + 5`, the right side is worked out first with the current value, then the result is stored.",
+            "3": "Reading a variable that was never set is an error: the computer has nothing to read."
+          }
+        }
+      },
+      "playUpdate": {
+        "title": "Watch a value change",
+        "intro": "Change the starting score and watch how each line reads and replaces values.",
+        "prompts": {
+          "1": "Set score to 20. Predict bonus before running.",
+          "2": "Line 3 sets score to 0. Why does bonus keep its value?"
+        }
+      },
+      "kindsOfValues": {
+        "title": "Numbers, text and true/false",
+        "blocks": {
+          "b1": "Values come in kinds. `7` is a number, `\"7\"` is text (the quotes make it text), and `true` / `false` answer yes-or-no questions.",
+          "b2": "`+` adds numbers but joins text.",
+          "b3": "`\"Age: \" + 30` is an error: text and a number cannot be joined. Turn the number into text first with `str(30)`.",
+          "b4": "To swap a and b, keep a copy first: `temp = a`, then `a = b`, then `b = temp`. Without temp, the old a is lost when line `a = b` runs."
+        }
+      },
+      "playKinds": {
+        "title": "Text and numbers together",
+        "intro": "Change the name and age. Notice where `str()` is needed and where it is not.",
+        "prompts": {
+          "1": "Set age to 17. What is next_year, and what is message?",
+          "2": "next_year is a number but message is text. Which part of line 2 turns the number into text?"
+        }
+      }
+    },
+    "exercises": {
+      "mcAssignmentReplaces": {
+        "prompt": "After these two lines, what does x hold?",
+        "hints": {
+          "1": "A variable holds one value at a time."
+        },
+        "explanation": "The second assignment replaces the first: 5 is thrown away and x holds 8.",
+        "options": {
+          "both": "Both 5 and 8"
+        },
+        "misconceptions": {
+          "thirteen": "Assigning does not add. To add you would write `x = x + 8`.",
+          "both": "A variable is not a list. A new value replaces the old one.",
+          "five": "The first value does not stay. The later line runs after it and overwrites it."
+        }
+      },
+      "predictReadThenWrite": {
+        "prompt": "What is the value of points at the end?",
+        "hints": {
+          "1": "Work out the right side of line 2 first, using the value points has right now."
+        },
+        "explanation": "Line 2 reads points (10), adds 5, and stores 15 back in points.",
+        "mistakes": {
+          "m1": "Line 2 also runs: it stores a new value in points.",
+          "m2": "The right side is `points + 5`, so the old value is used, not thrown away."
+        }
+      },
+      "matchValueKinds": {
+        "prompt": "Match each piece of code with what it is.",
+        "hints": {
+          "1": "Look for quotes: they make text. A word without quotes is a name."
+        },
+        "explanation": "`7` is a number, `\"7\"` is text because of the quotes, `true` is a true/false value, and `total` without quotes is the name of a variable.",
+        "pairs": {
+          "number": "A number",
+          "text": "Text",
+          "boolean": "A true/false value",
+          "variable": "The name of a variable"
+        }
+      },
+      "completeLoseALife": {
+        "prompt": "A player starts with 3 lives and loses one. Complete line 2 so that lives ends at 2.",
+        "hints": {
+          "1": "Read the current value, then take one away."
+        },
+        "explanation": "`lives - 1` reads the current value (3) and subtracts 1; the result 2 is stored back in lives.",
+        "misconceptions": {
+          "m1": "With quotes, \"lives\" is just the word, not the stored value, and text minus a number is an error.",
+          "m2": "There is no variable called life. Reading a name that was never set is an error.",
+          "m3": "Adding 1 gives 4 lives: the player gains a life instead of losing one.",
+          "m4": "lives * 1 is still 3: multiplying by 1 changes nothing."
+        }
+      },
+      "predictTextPlusText": {
+        "prompt": "What is the value of b?",
+        "hints": {
+          "1": "Look at the quotes. Is this a sum of numbers or text being joined?"
+        },
+        "explanation": "\"5\" is text, not a number. `+` between two pieces of text joins them, so b is \"55\".",
+        "mistakes": {
+          "m1": "That is a, where 5 and 5 are numbers. In b the quotes make them text, which is joined.",
+          "m2": "Text is never added up. \"5\" + \"5\" glues the two characters together."
+        }
+      },
+      "mcTextPlusNumber": {
+        "prompt": "What happens when this program runs?",
+        "hints": {
+          "1": "What kind of value is age? What kind is \" is \"?"
+        },
+        "explanation": "Line 3 tries to join text with the number 30, which is an error. Writing `str(age)` would turn it into the text \"30\" first.",
+        "options": {
+          "works": "line becomes \"Ana is 30\"",
+          "name": "line becomes \"Ana is age\"",
+          "error": "Error on line 3: text and a number cannot be joined",
+          "quotes": "Error on line 2: 30 needs quotes"
+        },
+        "misconceptions": {
+          "works": "A person would read it that way, but the computer refuses to join text and a number without `str()`.",
+          "name": "age has no quotes, so it means the variable. The problem is its kind of value (a number).",
+          "quotes": "Line 2 is fine: storing a number is allowed. The problem only appears when it is joined to text."
+        }
+      },
+      "debugSwapWithoutTemp": {
+        "prompt": "This program should swap a and b, so that a ends as 2 and b ends as 1. But b ends as 2. Which line is wrong, and why?",
+        "explanation": "By line 5, a was already replaced by 2 on line 4. The old value of a only survives in temp, so the line must be `b = temp`.",
+        "causes": {
+          "tempUnused": "It copies the new a instead of the saved old value",
+          "noTemp": "The temporary variable is not needed",
+          "order": "Line 3 should come after line 4"
+        },
+        "misconceptions": {
+          "noTemp": "Without temp, the original 1 would be lost when `a = b` runs. temp is the only copy of it.",
+          "order": "temp must save a before line 4 replaces it, so line 3 is in the right place."
+        }
+      },
+      "predictTraceTwoVariables": {
+        "prompt": "Keep track of both variables. What is the value of x at the end?",
+        "explanation": "x = 3, then y = 5, then x = 10, then y = 9. The last line adds the current values: 10 + 9 = 19.",
+        "mistakes": {
+          "m1": "That is x after line 3. The last line adds y to it once more.",
+          "m2": "That uses the first values (3 + 5). By the last line, x and y have both been replaced.",
+          "m3": "That adds the current x (10) to an old y (5). Line 4 already changed y to 9."
+        }
+      },
+      "mcCountPlusOne": {
+        "prompt": "What does the line `count = count + 1` do?",
+        "explanation": "`=` means \"store\". The right side is worked out first with the current count, and the result replaces the old value.",
+        "options": {
+          "check": "It checks whether count equals count + 1",
+          "second": "It creates a second variable named count",
+          "never": "Nothing, because a number can never equal itself plus 1",
+          "update": "It reads count, adds 1 and stores the result in count"
+        },
+        "misconceptions": {
+          "check": "In code, `=` is an instruction to store, not a question. Comparing uses `==`.",
+          "second": "There is only one count. The new value replaces the old one under the same name.",
+          "never": "That is true in maths, but here `=` means \"store\", so the line is a valid update."
+        }
+      }
+    }
+  },
+  "conditions": {
+    "title": "Conditions",
+    "objective": "You will be able to predict which branch of an if / elif / else runs for a given value, including values right on the boundary.",
+    "summary": "Programs make decisions by asking true/false questions. if / else picks exactly one path, elif chains are checked from top to bottom, and boundaries (>= vs >) decide the edge cases.",
+    "keyPoints": {
+      "1": "A condition is a question whose answer is true or false, such as `age >= 18`.",
+      "2": "if / else runs exactly one of its branches, never both and never neither.",
+      "3": "In an elif chain the conditions are checked top to bottom and the first true one wins, so order matters.",
+      "4": "Check the boundary value: `>` leaves it out, `>=` includes it."
+    },
+    "steps": {
+      "intro": {
+        "title": "A program that decides",
+        "blocks": {
+          "b1": "So far every line ran, top to bottom. A condition lets a program ask a question and choose what to do next. The answer to that question is always `true` or `false`.",
+          "b2": {
+            "caption": "One question, two possible paths. Only one of them is taken.",
+            "nodes": {
+              "start": "START",
+              "get": "GET AGE",
+              "ask": "AGE >= 18?",
+              "end": "END"
+            }
+          },
+          "b3": "The same decision as code. The indented lines belong to their branch.",
+          "b4": {
+            "1": "`==` equal to (one `=` stores a value, two `==` ask a question)",
+            "2": "`!=` not equal to",
+            "3": "`<` less than, `<=` less than or equal to",
+            "4": "`>` greater than, `>=` greater than or equal to"
+          }
+        }
+      },
+      "playAge": {
+        "title": "Try the decision",
+        "intro": "Change the age and watch which branch runs. Exactly one of the two lines inside runs.",
+        "prompts": {
+          "1": "Set age to 18 exactly. Which branch runs, and why?",
+          "2": "Set age to 17. What changed in the answer to the question `age >= 18`?",
+          "3": "Is there any age that makes both branches run?"
+        }
+      },
+      "chains": {
+        "title": "More than two paths: elif",
+        "blocks": {
+          "b1": "When there are more than two cases, add `elif` (\"else if\"). The program checks the conditions from top to bottom and runs only the first one that is true. The rest are skipped, even if they would also be true.",
+          "b2": "With score = 95 every condition is true, but only \"A\" is given.",
+          "b3": "Order matters: put the strictest condition first. If `score >= 50` came first, a score of 95 would get \"C\".",
+          "b4": "The most common bug is the boundary. Always test the value right on the edge: does 90 get \"A\" or \"B\"?"
+        }
+      },
+      "playGrade": {
+        "title": "Walk down the chain",
+        "intro": "Change the score and see which line of the chain is the first true one.",
+        "prompts": {
+          "1": "Set score to 90 exactly, then to 89. Which grade does each get?",
+          "2": "Set score to 95. `score >= 70` is also true, so why is the grade not \"B\"?",
+          "3": "Find the highest score that still gets \"D\"."
+        }
+      }
+    },
+    "exercises": {
+      "whichIsAQuestion": {
+        "prompt": "Which line asks a true/false question?",
+        "hints": {
+          "1": "A question can be answered with true or false. Which line has such an answer?"
+        },
+        "explanation": "`score == 50` compares two values and gives true or false. The other lines store, change or show a value without asking anything.",
+        "misconceptions": {
+          "assign": "A single `=` stores 50 in score. It is an instruction, not a question; asking needs `==`.",
+          "print": "print shows the value of score, but it does not compare it with anything.",
+          "update": "This changes score by adding 1. Nothing is compared, so there is no true/false answer."
+        }
+      },
+      "predictOutfit": {
+        "prompt": "What is the value of outfit after this program runs?",
+        "hints": {
+          "1": "Replace temperature by 12 and answer the question: is 12 > 20?"
+        },
+        "explanation": "temperature is 12, so `temperature > 20` is false. The if branch is skipped and the else branch sets outfit to \"jacket\".",
+        "mistakes": {
+          "m1": "The if branch only runs when its condition is true. 12 > 20 is false, so the program jumps to else."
+        }
+      },
+      "matchOperators": {
+        "prompt": "Match each comparison with its meaning.",
+        "hints": {
+          "1": "The `=` in `>=` and `<=` means the value itself is included."
+        },
+        "explanation": "`==` asks \"the same?\", `!=` asks \"different?\". With `>=` and `<=` the boundary counts; with `>` it does not.",
+        "pairs": {
+          "same": "a is equal to b",
+          "differ": "a is different from b",
+          "least": "a is b or more",
+          "more": "a is more than b, b itself not included",
+          "most": "a is b or less"
+        }
+      },
+      "predictChain": {
+        "prompt": "What is the value of grade?",
+        "hints": {
+          "1": "Check the conditions one by one from the top. Stop at the first one that is true."
+        },
+        "explanation": "70 >= 90 is false, then 70 >= 70 is true, so grade becomes \"B\" and the rest of the chain is skipped.",
+        "mistakes": {
+          "m1": "`>=` includes the boundary: 70 >= 70 is true, so the chain stops at \"B\" before reaching \"C\".",
+          "m2": "70 >= 90 is false, so the first branch is skipped."
+        }
+      },
+      "orderTrap": {
+        "prompt": "The conditions here are in a different order. What is the value of label?",
+        "hints": {
+          "1": "Which condition is checked first, and is it true for 95?"
+        },
+        "explanation": "The first condition, 95 >= 50, is already true, so label becomes \"pass\" and the elif is never checked. The stricter test must come first.",
+        "mistakes": {
+          "m1": "95 >= 90 is true, but the chain never gets there: the first true condition wins, and 95 >= 50 is checked first.",
+          "m2": "else only runs when every condition above it is false. Here the first one is true."
+        }
+      },
+      "completeSenior": {
+        "prompt": "People aged 65 or older pay 5; everyone else pays 10. Complete the condition.",
+        "hints": {
+          "1": "\"65 or older\" must include 65 itself. Which operator includes the boundary?"
+        },
+        "explanation": "\"65 or older\" means 65 counts, so the test is `age >= 65`. For age 65 it is true and price becomes 5.",
+        "misconceptions": {
+          "m1": "`>` leaves out 65 itself, so a 65-year-old would pay 10.",
+          "m2": "`<` asks \"younger than 65\", the opposite of the rule.",
+          "m3": "`!=` is true for every age except 65, which is the opposite of what we want here."
+        }
+      },
+      "debugShipping": {
+        "prompt": "Shipping should be free (0) for orders of 50 or more. An order of exactly 50 is charged 5. Which line is wrong, and why?",
+        "hints": {
+          "1": "Test the boundary: what is 50 > 50?"
+        },
+        "explanation": "Line 2 uses `>`, so 50 > 50 is false and the order of 50 falls into else. `total >= 50` includes the boundary.",
+        "causes": {
+          "else": "The else branch should not be there",
+          "boundary": "The comparison leaves out the boundary value 50",
+          "equal": "It should be `total == 50`",
+          "swapped": "The values 0 and 5 are swapped"
+        },
+        "misconceptions": {
+          "else": "Without else, orders under 50 would get no shipping value at all. The else is fine.",
+          "equal": "`==` would make only orders of exactly 50 free; an order of 80 would pay.",
+          "swapped": "Swapping them would charge big orders and make small ones free. The values are right; the question is wrong."
+        }
+      },
+      "predictWeather": {
+        "prompt": "What does this program print?",
+        "explanation": "30 < 10 and 30 < 25 are both false, so else prints \"hot\". The last line is not indented, so it runs after the decision whatever the branch.",
+        "mistakes": {
+          "m1": "The last line is not indented, so it is not part of any branch: it always runs.",
+          "m2": "30 < 25 is false, so the elif branch is skipped."
+        }
+      },
+      "separateIfs": {
+        "prompt": "These are two separate if statements, not an elif chain. How many lines are printed?",
+        "explanation": "Each if is its own question. 15 > 10 is true and 15 > 5 is true, so both print. Only elif makes later checks depend on earlier ones.",
+        "options": {
+          "zero": "None",
+          "one": "One: \"big\"",
+          "two": "Two: \"big\" and \"medium\"",
+          "error": "An error: two ifs cannot follow each other"
+        },
+        "misconceptions": {
+          "zero": "Both conditions are true for 15, so at least one line is printed.",
+          "one": "That is how an elif chain behaves. Separate ifs are checked independently, so the second one is checked too.",
+          "error": "A program can have as many if statements in a row as it needs; each is a new decision."
+        }
+      }
+    }
+  },
+  "logicalOperators": {
+    "title": "Logical Operators",
+    "objective": "You will be able to combine true/false questions with and, or and not, and translate a rule written in words into a condition.",
+    "summary": "and needs both sides true, or needs at least one, not flips the answer. With them a single condition can express rules like \"between 13 and 19\" or \"free if under 5 or over 65\".",
+    "keyPoints": {
+      "1": "`a and b` is true only when both are true; `a or b` is true when at least one is true.",
+      "2": "`not` flips true and false. `not x > 3` means `not (x > 3)`.",
+      "3": "A range like \"13 to 19\" is two comparisons joined with and: `age >= 13 and age <= 19`.",
+      "4": "Read the rule aloud: \"either … or …\" needs or, \"both … and …\" needs and."
+    },
+    "steps": {
+      "intro": {
+        "title": "Combining questions",
+        "blocks": {
+          "b1": "Real rules often have more than one part: \"a teenager is at least 13 and at most 19\". Logical operators join several true/false answers into one.",
+          "b2": {
+            "1": "`a and b`: true only if both a and b are true",
+            "2": "`a or b`: true if at least one of them is true (also when both are)",
+            "3": "`not a`: the opposite of a"
+          },
+          "b3": "Each side is a full comparison; and joins the two answers.",
+          "b4": "You cannot write `13 <= age <= 19`. Write both comparisons in full and join them: `age >= 13 and age <= 19`."
+        }
+      },
+      "playAges": {
+        "title": "Two rules, one age",
+        "intro": "Change the age and the ticket, and watch each combined answer.",
+        "prompts": {
+          "1": "Try ages 12, 13, 19 and 20. For which ones is teen true?",
+          "2": "Find two different ages that make free true.",
+          "3": "Turn has_ticket off. Which ages can still enter, and why?"
+        }
+      },
+      "translate": {
+        "title": "From words to conditions",
+        "blocks": {
+          "b1": "To turn a rule into code, find the small questions first, then decide how they join. \"Free if under 5 or over 65\" has two questions: `age < 5` and `age > 65`.",
+          "b2": "Nobody is both under 5 and over 65, so and here would make the rule never true.",
+          "b3": "Check your condition with one example that should pass and one that should fail. If no value at all can make it true, you probably used and where or was meant.",
+          "b4": "`not (a and b)` means \"not both\": at least one is false, which is `not a or not b`. Flipping a combined question also flips and into or."
+        }
+      }
+    },
+    "exercises": {
+      "whenIsAndTrue": {
+        "prompt": "When is `a and b` true?",
+        "hints": {
+          "1": "\"I need a ticket and an ID\": when do you get in?"
+        },
+        "explanation": "and is strict: one false side is enough to make the whole thing false. Only true and true gives true.",
+        "options": {
+          "one": "When at least one of them is true",
+          "exactly": "When exactly one of them is true",
+          "both": "Only when both are true",
+          "neither": "When both are false"
+        },
+        "misconceptions": {
+          "one": "That is or. With and, a single false side makes the whole condition false.",
+          "exactly": "If only one side is true, the other is false, and and then gives false.",
+          "neither": "false and false is false. and never turns false answers into true."
+        }
+      },
+      "predictOr": {
+        "prompt": "What is the value of outside?",
+        "hints": {
+          "1": "Answer each side separately: is 3 < 5? Is 3 > 10? Then join them with or."
+        },
+        "explanation": "3 < 5 is true and 3 > 10 is false. or needs only one true side, so outside is true.",
+        "mistakes": {
+          "m1": "One side (3 > 10) is false, but or is true as soon as one side is true, and 3 < 5 is true."
+        }
+      },
+      "predictNot": {
+        "prompt": "What is the value of small?",
+        "hints": {
+          "1": "`not` applies to the whole comparison: first work out 8 > 10, then flip it."
+        },
+        "explanation": "`not n > 10` means `not (n > 10)`. 8 > 10 is false, and not false is true.",
+        "mistakes": {
+          "m1": "8 > 10 is false; not flips it, so the result is true."
+        }
+      },
+      "completeComfortable": {
+        "prompt": "A room is comfortable when the temperature is from 18 to 24, both included. Complete the condition (for temp = 30 it must be false).",
+        "hints": {
+          "1": "The temperature must pass both tests at the same time: not too cold and not too hot."
+        },
+        "explanation": "\"From 18 to 24\" means at least 18 and at most 24: `temp >= 18 and temp <= 24`. 30 fails the second test, so the result is false.",
+        "misconceptions": {
+          "m1": "With or, any temperature of 18 or more passes, so 30 would count as comfortable.",
+          "m2": "The upper limit must keep values at most 24, so it needs `<=`."
+        }
+      },
+      "buildTicketPrice": {
+        "prompt": "Build a program that sets price to 0 for children under 5 or seniors over 65, and to 8 for everyone else.",
+        "hints": {
+          "1": "Start with the question, then the yes branch, then else."
+        },
+        "explanation": "The rule is \"under 5 or over 65\", so the condition joins `age < 5` and `age > 65` with or. The else branch covers everyone else.",
+        "misconceptions": {
+          "and": "Nobody is under 5 and over 65 at the same time, so with and nobody would ever get in free.",
+          "flipped": "The comparisons point the wrong way: every age is either over 5 or under 65, so everyone would be free."
+        }
+      },
+      "matchRules": {
+        "prompt": "Match each rule with the condition that expresses it.",
+        "hints": {
+          "1": "\"Between\" needs both tests; \"either\" needs one of them."
+        },
+        "explanation": "A range is two tests joined by and; \"either\" joins with or; \"not both\" is not around an and.",
+        "pairs": {
+          "teen": "Age is from 13 to 19",
+          "free": "Under 5 or over 65",
+          "notboth": "Not both raining and cold",
+          "adultticket": "An adult who has a ticket"
+        }
+      },
+      "debugWeekend": {
+        "prompt": "The shop is closed on day 6 and day 7. For day 7 the program says \"open\". Which line is wrong, and why?",
+        "explanation": "Line 2 asks whether day is 6 and 7 at the same time, which is never true. The rule is \"day 6 or day 7\", so it needs or.",
+        "causes": {
+          "boundary": "It should use `>=` instead of `==`",
+          "never": "and asks for both at once, which can never be true",
+          "else": "The else branch catches day 7"
+        },
+        "misconceptions": {
+          "boundary": "The `==` tests are right: day 7 should match 7 exactly. The problem is how the two tests are joined.",
+          "else": "else only runs because the condition is false. Fix the condition and else is right again."
+        }
+      },
+      "notBoth": {
+        "prompt": "Which condition means the same as `not (hungry and tired)`?",
+        "explanation": "\"Not both hungry and tired\" is true as soon as one of them is false: `not hungry or not tired`.",
+        "misconceptions": {
+          "andnot": "That means \"neither hungry nor tired\". Being hungry but not tired is also \"not both\", and this option says false for it.",
+          "or": "This is true when you are hungry and tired, exactly the case `not (hungry and tired)` rules out."
+        }
+      },
+      "predictPrice": {
+        "prompt": "What is the value of price?",
+        "explanation": "70 < 12 is false and member is false, so the first condition is false. 70 >= 65 is true and not member is true, so price is 7.",
+        "mistakes": {
+          "m1": "Both parts of the elif are true: 70 >= 65, and member is false so not member is true.",
+          "m2": "or needs at least one true side, but 70 < 12 is false and member is false."
+        }
+      }
+    }
+  },
+  "loops": {
+    "title": "Loops",
+    "objective": "You will be able to trace a while or for loop pass by pass, predict the values it leaves behind, and spot loops that never stop or run one time too few.",
+    "summary": "A loop repeats a block. while repeats as long as a condition is true, so something must change for it to stop. for repeats once per item of a list or range. Accumulators collect a result across the passes.",
+    "keyPoints": {
+      "1": "A while loop needs a variable that changes inside the loop and a condition that eventually becomes false.",
+      "2": "`for item in list:` runs the block once for each item; `len(list)` tells how many items there are.",
+      "3": "`range(1, 5)` gives 1, 2, 3, 4: the end is not included. Use `range(1, 6)` to reach 5.",
+      "4": "Accumulator pattern: start with `total = 0` before the loop, then `total = total + x` inside it."
+    },
+    "steps": {
+      "intro": {
+        "title": "Doing it again",
+        "blocks": {
+          "p1": "Writing `print(1)`, `print(2)`, `print(3)` … works for three lines, not for a thousand. A loop says \"repeat this block\" once, and the computer does the repeating.",
+          "code1": {
+            "caption": "Ask the question, run the block, ask again. Stop when the answer is false."
+          },
+          "list1": {
+            "1": "A starting value: `count = 1`",
+            "2": "A stop condition, checked before every pass: `count <= 3`",
+            "3": "A change inside the loop that moves toward the stop: `count = count + 1`"
+          },
+          "callout1": "If nothing inside the loop changes the condition, it stays true forever: an infinite loop. Here the program stops it after 5000 steps."
+        }
+      },
+      "play-laps": {
+        "title": "Change the limit",
+        "intro": "Change the limit and watch how many times the loop body runs.",
+        "prompts": {
+          "1": "Set limit to 5. Predict the last \"lap\" line before you look.",
+          "2": "Set limit to 0. Why does the loop body never run?",
+          "3": "After the loop, count is always one more than limit. Why?"
+        }
+      },
+      "for-loops": {
+        "title": "for: one pass per item",
+        "blocks": {
+          "p1": "When you already know what to go through, use `for`. It takes each item in turn, puts it in the loop variable and runs the block. A list holds several values in order: `prices = [4, 10, 6]`, and `len(prices)` is 3.",
+          "code1": {
+            "caption": "Accumulator: total starts at 0 and grows by one price on each pass."
+          },
+          "p2": "`range(a, b)` makes the numbers from a up to, but not including, b. `range(1, 5)` is 1, 2, 3, 4, and `range(4)` is 0, 1, 2, 3.",
+          "callout1": "Off by one is the classic loop bug: one pass too many or too few. Check the first and last value the loop variable takes."
+        }
+      },
+      "play-sum": {
+        "title": "Sum up to n",
+        "intro": "Change n and watch total grow pass by pass.",
+        "prompts": {
+          "1": "Set n to 1. How many passes does the loop make?",
+          "2": "Set n to 5. Predict total before running: 1 + 2 + 3 + 4 + 5.",
+          "3": "What is i after the loop? Why is it n and not n + 1?"
+        }
+      }
+    },
+    "exercises": {
+      "trace-doubling": {
+        "prompt": "What is the value of n after the loop?",
+        "hints": {
+          "1": "Write a small table: n before each check, and whether n < 20 is true. 1, 2, 4, …"
+        },
+        "explanation": "n goes 1, 2, 4, 8, 16. 16 < 20 is still true, so one more pass makes n 32. Then 32 < 20 is false and the loop stops.",
+        "commonMistakes": {
+          "16": "With n = 16 the condition 16 < 20 is still true, so the loop runs once more.",
+          "20": "n only takes the values 1, 2, 4, 8, 16, 32. It never equals 20; the loop stops at the first value that is not below 20."
+        }
+      },
+      "never-stops": {
+        "prompt": "What happens when this program runs?",
+        "hints": {
+          "1": "Which line inside the loop changes n?"
+        },
+        "explanation": "Nothing inside the loop changes n, so `n > 0` stays true forever. The loop prints 5 again and again and never ends.",
+        "options": {
+          "countdown": "It prints 5, 4, 3, 2, 1",
+          "once": "It prints 5 once and stops",
+          "error": "It shows an error before printing anything",
+          "forever": "It prints 5 over and over and never stops"
+        },
+        "misconceptions": {
+          "countdown": "A loop does not count down by itself. Only a line like `n = n - 1` would change n.",
+          "once": "while is not if: after the body it checks the condition again, and 5 > 0 is still true.",
+          "error": "Every line is valid code. The problem is not the syntax; it is that the loop has no way to stop."
+        }
+      },
+      "range-values": {
+        "prompt": "What does this program print?",
+        "hints": {
+          "1": "range(1, 4) starts at 1. Is 4 included?"
+        },
+        "explanation": "`range(1, 4)` gives 1, 2 and 3: the end value 4 is not included.",
+        "commonMistakes": {
+          "k1": "The end of a range is not included: range(1, 4) stops before 4.",
+          "k2": "range(1, 4) starts at its first value, 1. Only range(4) starts at 0."
+        }
+      },
+      "complete-average": {
+        "prompt": "Complete the program so that average is the average of the numbers (4).",
+        "hints": {
+          "1": "An average is the sum divided by how many values there are."
+        },
+        "explanation": "total starts at 0 and adds each number: 3 + 5 + 2 + 6 = 16. `len(numbers)` is 4, so the average is 16 / 4 = 4.",
+        "misconceptions": {
+          "k1": "Starting at 1 adds an extra 1 that is not in the list.",
+          "k2": "Starting at 3 counts the first number twice: the loop adds it again on its first pass.",
+          "k3": "`total = n` replaces total on every pass, so only the last number is kept.",
+          "k4": "`total + 1` counts the numbers instead of adding them up.",
+          "k5": "There are four numbers, and `len(numbers)` stays correct if the list changes.",
+          "k6": "After the loop n is the last number (6), not how many numbers there are."
+        }
+      },
+      "count-passed": {
+        "prompt": "What is the value of passed after the loop?",
+        "hints": {
+          "1": "Go through the list one score at a time and ask: is it >= 5?"
+        },
+        "explanation": "7, 9 and 5 are at least 5, and 3 is not. passed starts at 0 and goes up by 1 three times.",
+        "commonMistakes": {
+          "2": "`>=` includes 5, so the last score counts too.",
+          "4": "The if inside the loop skips 3: only scores of 5 or more are counted.",
+          "21": "passed goes up by 1 each time, it does not add the scores themselves."
+        }
+      },
+      "debug-never-ends": {
+        "prompt": "This should add 1 + 2 + 3 + 4 + 5 into total (15), but it never finishes. Which line is wrong, and why?",
+        "hints": {
+          "1": "Follow n: 1, then 0, then …. Does `n <= 5` ever become false?"
+        },
+        "explanation": "Line 5 makes n smaller, so `n <= 5` stays true forever. Changing it to `n = n + 1` moves n toward the stop condition.",
+        "causes": {
+          "start": "total should start at 1",
+          "away": "n moves away from the stop condition, so the loop never ends",
+          "condition": "The condition should be `n < 5`"
+        },
+        "misconceptions": {
+          "start": "The start value changes the sum, but it cannot make the loop stop.",
+          "condition": "With n going 1, 0, -1, … `n < 5` is just as true forever. The change to n is what is wrong."
+        }
+      },
+      "debug-off-by-one": {
+        "prompt": "total should be 1 + 2 + 3 + 4 + 5 = 15, but it is 10. Which line is wrong, and why?",
+        "explanation": "`range(1, 5)` stops before 5, so 5 is never added and total is 10. `range(1, 6)` includes 5.",
+        "causes": {
+          "start": "total should start at 1",
+          "replace": "It should be `total = i`",
+          "end": "The range stops one number too early",
+          "print": "print should be inside the loop"
+        },
+        "misconceptions": {
+          "start": "Starting at 1 would give 11, still not 15. The missing 5 is the problem.",
+          "replace": "`total = i` keeps only the last number and throws the sum away.",
+          "print": "Printing inside the loop shows the steps, but the final total is still 10."
+        }
+      },
+      "trace-steps": {
+        "prompt": "What is the value of count after the loop?",
+        "explanation": "n goes 10, 7, 4, 1, -2. The loop runs while n > 0, and 1 > 0 is true, so there are 4 passes before n becomes -2.",
+        "commonMistakes": {
+          "3": "At n = 1 the condition 1 > 0 is still true, so there is a fourth pass.",
+          "-2": "That is n after the loop. count goes up by 1 on every pass."
+        }
+      },
+      "pick-range": {
+        "prompt": "You want to print the numbers 1 to 5. Which loop header is right?",
+        "explanation": "A range stops before its end value, so to include 5 the end must be 6: `range(1, 6)` gives 1, 2, 3, 4, 5.",
+        "misconceptions": {
+          "five": "The end is not included: range(1, 5) gives 1, 2, 3, 4 and misses 5.",
+          "zero": "This also makes five passes, but the numbers are 0 to 4, not 1 to 5.",
+          "short": "range(5) is the same as range(0, 5): 0, 1, 2, 3, 4."
+        }
+      }
+    }
+  },
+  "functions": {
+    "title": "Functions",
+    "objective": "You will be able to define a function, call it with arguments, and use the value it returns.",
+    "summary": "A function gives a name to a group of steps. You define it once, call it with values, and it hands a result back with return.",
+    "keyPoints": {
+      "1": "Defining a function runs nothing; its steps run only when it is called.",
+      "2": "Arguments fill the parameters in order: the first value goes to the first parameter.",
+      "3": "`return` hands a value back to the caller; `print` only shows it, and the call gives `none`.",
+      "4": "Variables set inside a function are local: they do not change top-level variables."
+    },
+    "steps": {
+      "why-functions": {
+        "title": "Naming a group of steps",
+        "blocks": {
+          "p1": "When the same steps are needed in several places, you can give them a name once and reuse that name. The name also says what the steps are for, so the main program reads like a plan.",
+          "code1": {
+            "caption": "Lines 1–3 define the function. Line 5 calls it and stores the result, 12."
+          },
+          "callout1": "Defining is not running. The `function` line only remembers the steps; they run when a line calls `total_price(…)`, with `price` set to 4 and `quantity` set to 3."
+        }
+      },
+      "play-call": {
+        "title": "Call it with different values",
+        "intro": "The function is fixed. You choose the arguments, and the call hands back a different result each time.",
+        "prompts": {
+          "1": "Set quantity to 0. What does the call return now?",
+          "2": "Look at which lines ran: the function body runs only after line 5 calls it.",
+          "3": "Set price to 10 and quantity to 2. Predict bill before you run it."
+        }
+      },
+      "return-vs-print": {
+        "title": "Giving a value back",
+        "blocks": {
+          "p1": "`return` ends the function and hands a value to the line that called it, which can store it or compute with it. `print` only shows a value on the screen; the caller gets nothing back.",
+          "code1": {
+            "caption": "Both calls work out 9, but only given stores it. shown is none."
+          },
+          "callout1": "A function without `return` gives back `none`. Variables set inside a function are local: they disappear when it ends and never change a top-level variable with the same name."
+        }
+      },
+      "play-print-return": {
+        "title": "Print or return?",
+        "intro": "Both functions compute the same square. Watch which variable actually receives the value.",
+        "prompts": {
+          "1": "Run it with n = 3. The square is printed once, yet only one variable holds 9. Which one?",
+          "2": "Change n to -4. Does shown ever get a value?"
+        }
+      }
+    },
+    "exercises": {
+      "mc-define-runs-nothing": {
+        "prompt": "What does this program print?",
+        "hints": {
+          "1": "Is there any line that calls `greet(…)`?"
+        },
+        "explanation": "The `function` block only defines `greet`; nothing ever calls it. The only line that runs a print is `print(\"Start\")`.",
+        "options": {
+          "hello-start": "Hello name, then Start",
+          "start-hello": "Start, then Hello",
+          "error": "An error, because name has no value"
+        },
+        "misconceptions": {
+          "hello-start": "That treats the definition as if it ran. The body of a function runs only when it is called.",
+          "start-hello": "A function does not run by itself after the program ends; some line has to call it.",
+          "error": "name only needs a value when the function runs. It never runs here, so nothing reads name."
+        }
+      },
+      "predict-return": {
+        "prompt": "What is the value of b?",
+        "hints": {
+          "1": "Work out a first: `double(4)` returns 4 * 2.",
+          "2": "Then `double(a)` uses the value stored in a."
+        },
+        "explanation": "`double(4)` returns 8, so a is 8. `double(a)` returns 16, and adding 1 gives 17.",
+        "commonMistakes": {
+          "9": "That doubles 4 again. The second call receives a, which already holds 8.",
+          "16": "That is what `double(a)` returns; the + 1 still applies to the returned value.",
+          "18": "The + 1 is added after the call returns, not to n inside the function."
+        }
+      },
+      "match-params": {
+        "prompt": "A function starts with `function describe(name, age, city):` and is called as `describe(\"Lima\", 30, \"Ana\")`. Match each parameter with the value it receives.",
+        "hints": {
+          "1": "Arguments are matched by position, not by what they look like."
+        },
+        "explanation": "The first argument goes to the first parameter, the second to the second, and so on. The function cannot know that \"Lima\" looks like a city."
+      },
+      "predict-print-vs-return": {
+        "prompt": "What does this program print? Write one line per print.",
+        "hints": {
+          "1": "What does `half` give back to the line that called it?"
+        },
+        "explanation": "Inside the call, `print(n / 2)` shows 5. The function has no return, so result is none, and the last line prints none.",
+        "commonMistakes": {
+          "k1": "Printing inside the function does not hand the value back, so result does not hold 5.",
+          "5": "The last line also prints: it shows the value of result, which is none.",
+          "none": "The call still runs the function body, and that body prints 5 first."
+        }
+      },
+      "complete-return": {
+        "prompt": "Complete the return so that avg is the average of the two numbers (8).",
+        "hints": {
+          "1": "What has to be done to total to turn a sum of two numbers into their average?"
+        },
+        "explanation": "total holds 16, the sum of the two parameters. Returning `total / 2` hands 8 back to the caller.",
+        "misconceptions": {
+          "k1": "That returns the sum, 16. The division never happens.",
+          "k2": "Division runs before addition, so this is 6 + 5 = 11.",
+          "k3": "avg is the top-level variable that will receive the result; inside the function it has no value yet."
+        }
+      },
+      "debug-print-not-return": {
+        "prompt": "cost should be 60, but it ends up as none even though 60 appears on screen. Which line is wrong, and why?",
+        "hints": {
+          "1": "What does the function hand back to line 5?"
+        },
+        "explanation": "Line 3 shows taxed but does not give it back, so the call returns none. `return taxed` hands 60 to cost.",
+        "causes": {
+          "name": "The parameter should be called cost so the result reaches cost",
+          "prints": "The function prints the result instead of returning it",
+          "math": "The tax calculation multiplies by the wrong number",
+          "order": "The function is called before its steps have run"
+        },
+        "misconceptions": {
+          "name": "Parameter names are local; renaming one does not send a value back to the caller.",
+          "math": "50 * 1.2 is 60, which is exactly what is printed. The value is right; it just never comes back.",
+          "order": "The function is defined on lines 1–3 and called on line 5, which is the correct order."
+        }
+      },
+      "predict-nested-call": {
+        "prompt": "What is the value of r?",
+        "explanation": "`sum_of_squares(2, 3)` calls `square(2)`, which returns 4, and `square(3)`, which returns 9. It returns 4 + 9 = 13.",
+        "commonMistakes": {
+          "25": "That squares the sum (2 + 3). Each number is squared separately, then the results are added.",
+          "5": "That only adds the arguments; each one passes through square first.",
+          "10": "That doubles instead of squaring: x * x is 2 * 2 and 3 * 3."
+        }
+      },
+      "mc-local": {
+        "prompt": "What does the last line print?",
+        "explanation": "The assignment `count = 0` inside `reset` creates a local variable that disappears when the function ends. The top-level count still holds 10.",
+        "options": {
+          "error": "An error, because count is set twice"
+        },
+        "misconceptions": {
+          "zero": "value is 0, but count inside the function is local. The top-level count is untouched.",
+          "none": "The function returns 0, so nothing here is none, and count was set to 10 at the top.",
+          "error": "Setting a variable again is allowed; here the two counts are even separate variables."
+        }
+      },
+      "debug-return-in-loop": {
+        "prompt": "cart should be 12, the sum of the prices, but it is 3. Which line is wrong, and why?",
+        "explanation": "`return` ends the function immediately. Indented inside the loop, it runs on the first pass with only 3 added; moved out of the loop, it runs after every price is added.",
+        "causes": {
+          "start": "amount should start at the first price, not 0",
+          "early": "It returns inside the loop, on the first pass",
+          "add": "The loop adds p to the wrong variable"
+        },
+        "misconceptions": {
+          "start": "Starting at 0 is right for a sum; the problem is that the loop stops after one price.",
+          "add": "amount = amount + p is correct; it just only gets to run once."
+        }
+      }
+    }
+  },
+  "problemDecomposition": {
+    "title": "Problem Decomposition",
+    "objective": "You will be able to split a problem into sub-problems with clear inputs and outputs, and connect them as small functions.",
+    "summary": "Big problems become manageable when you split them into small steps. Each step takes an input and produces an output, and the output of one step feeds the next.",
+    "keyPoints": {
+      "1": "Describe each sub-problem by its input and its output before writing any code.",
+      "2": "Order the sub-problems so each one has the inputs it needs from the earlier ones.",
+      "3": "Each sub-problem becomes a small function; the main program connects their results.",
+      "4": "A step that solves a different problem is a distraction, and a missing step gives a wrong result."
+    },
+    "steps": {
+      "break-it-down": {
+        "title": "One problem, several small ones",
+        "blocks": {
+          "p1": "\"Calculate the price of an order with a discount\" is too big to solve in one go. Split it into smaller questions, each with something that goes in and something that comes out.",
+          "list1": {
+            "1": "Subtotal: price and quantity in → the amount before discount out.",
+            "2": "Discount: the subtotal and whether the buyer is a member in → the amount to take off out.",
+            "3": "Final price: the subtotal and the discount in → what the buyer pays out."
+          },
+          "callout1": "The output of one sub-problem is the input of the next. If you can say what goes in and what comes out, you are ready to write that step."
+        }
+      },
+      "play-order": {
+        "title": "An order, step by step",
+        "intro": "Each sub-problem is a small function. `final_price` connects them: the subtotal goes into the discount step.",
+        "prompts": {
+          "1": "Set member to false. Which sub-problem gives a different output now?",
+          "2": "Set quantity to 5. Which functions see the new value, and which only see its result?"
+        }
+      },
+      "inputs-outputs-first": {
+        "title": "Inputs and outputs before code",
+        "blocks": {
+          "p1": "Take \"grade a list of scores\". Before any code, write each step as a name with what it takes and what it gives back. Then each line of the plan becomes one small function.",
+          "code1": {
+            "caption": "The plan already shows how the steps connect: avg flows from one into the other."
+          },
+          "callout1": "If a step is missing, the program still runs, but the next step receives the wrong kind of value, such as a total where an average was expected."
+        }
+      },
+      "play-grade": {
+        "title": "Grading in two steps",
+        "intro": "Three scores go into `average`; its output goes into `label`. Change the inputs and see which step reacts.",
+        "prompts": {
+          "1": "Set pass_mark to 60. Does avg change, or only result?",
+          "2": "Set s2 to 10. Which step gives a new output first?",
+          "3": "Find scores that make result \"pass\" with pass_mark 60."
+        }
+      }
+    },
+    "exercises": {
+      "mc-sub-problem-io": {
+        "prompt": "One sub-problem of the order is \"work out the discount\". What are its input and its output?",
+        "hints": {
+          "1": "What do you need to know before you can compute a discount?"
+        },
+        "explanation": "A discount is a share of the amount being paid, so it needs the subtotal as input and produces the amount to take off. The final price is a later step that uses this output.",
+        "options": {
+          "final-in": "In: the final price · Out: the subtotal",
+          "names": "In: the names of the items · Out: a printed receipt",
+          "subtotal-in": "In: the subtotal · Out: the amount to take off",
+          "nothing": "In: nothing · Out: the final price"
+        },
+        "misconceptions": {
+          "final-in": "That runs the steps backwards: the final price is only known after the discount is.",
+          "names": "Item names do not affect the discount; a receipt is a different sub-problem.",
+          "nothing": "A step with no input cannot depend on the order. And the final price is the job of the last step."
+        }
+      },
+      "build-order-plan": {
+        "prompt": "Build the plan for \"the price of an order with a 10% discount\". Use only the steps that solve this problem, in order.",
+        "hints": {
+          "1": "Start from what you have: each item with its price and quantity.",
+          "2": "One step answers a question nobody asked."
+        },
+        "explanation": "Each step uses the output of the previous one: line totals make the subtotal, the subtotal gives the discount, and both give the final price.",
+        "blocks": {
+          "lines": "Multiply each price by its quantity → line totals",
+          "sum": "Add up the line totals → subtotal",
+          "cheapest": "Find the most expensive item → highest price",
+          "discount": "Take 10% of the subtotal → discount",
+          "final": "Subtract the discount from the subtotal → final price",
+          "per-item": "Lower each quantity by 10% → new quantities"
+        },
+        "misconceptions": {
+          "cheapest": "The highest price is never used by any later step. It solves a different problem.",
+          "per-item": "The discount reduces the price, not how many items are bought. It changes the wrong value."
+        }
+      },
+      "predict-composed": {
+        "prompt": "Each sub-problem is a function. What is the value of final?",
+        "hints": {
+          "1": "Work out subtotal first: it is the input of the next step.",
+          "2": "apply_discount returns the amount minus the discount, not the discount itself."
+        },
+        "explanation": "line_total gives 8 * 5 = 40. apply_discount takes 25% of 40, which is 10, and returns 40 - 10 = 30.",
+        "commonMistakes": {
+          "40": "That is the subtotal. The second step still takes the discount off it.",
+          "10": "That is the discount itself; the function subtracts it from the amount.",
+          "15": "The discount is a share of the subtotal (40), not the subtotal minus 25."
+        }
+      },
+      "order-grade-steps": {
+        "prompt": "Put the sub-problems of \"grade a list of scores\" in an order that works.",
+        "hints": {
+          "1": "For each step, ask: which earlier output does it need?"
+        },
+        "explanation": "Each step needs the output of the step before it: the total gives the average, the average is compared with the pass mark, and that comparison becomes the label.",
+        "items": {
+          "total": "Add up the scores → total",
+          "average": "Divide the total by the number of scores → average",
+          "compare": "Compare the average with 50 → passed (true/false)",
+          "label": "Turn passed into a word → \"pass\" or \"fail\""
+        }
+      },
+      "complete-compose": {
+        "prompt": "Connect the sub-problems so that pay is the subtotal plus shipping (40). Shipping is free from 50.",
+        "hints": {
+          "1": "What does shipping expect as its input: a list of prices or an amount?"
+        },
+        "explanation": "shipping takes an amount, so it must receive the output of subtotal, which is stored in base. 35 is below 50, so shipping returns 5 and pay is 40.",
+        "misconceptions": {
+          "k1": "shipping expects an amount, but this gives it the list of prices. Its input is the output of subtotal.",
+          "k2": "That works out the subtotal again and adds it twice: 35 + 35 = 70. No shipping is computed.",
+          "k3": "pay is the value being computed on this line, so it has no value yet."
+        }
+      },
+      "debug-missing-step": {
+        "prompt": "The scores 30, 40 and 50 average 40, so result should be \"fail\". It is \"pass\". Which line is wrong, and why?",
+        "hints": {
+          "1": "Check each function: does its output match what the plan says it gives back?"
+        },
+        "explanation": "average skips the step that divides by the number of scores, so it hands 120 to label. With `return total / len(scores)` it outputs 40, which fails.",
+        "causes": {
+          "mark": "label compares with the wrong pass mark",
+          "nested": "Passing one call as the argument of another loses the value",
+          "missing": "A step is missing: the total is never divided into an average",
+          "loop": "The loop skips the last score"
+        },
+        "misconceptions": {
+          "mark": "50 is the intended pass mark; the problem is the value label receives.",
+          "nested": "The inner call runs first and its returned value becomes the argument. That part works.",
+          "loop": "The loop visits all three scores; total really is 120."
+        }
+      },
+      "mc-best-split": {
+        "prompt": "Problem: \"Does a shopping cart get free delivery? It does when the total is at least 50.\" Which split works?",
+        "explanation": "The question needs the total first, then a yes/no decision about it. Each step has a clear input and output, and the first output is exactly what the second needs.",
+        "options": {
+          "one-step": "One step: look at the cart and decide",
+          "total-then-check": "1. total(prices) → number   2. is_free(total) → true/false",
+          "cheapest": "1. cheapest(prices) → number   2. is_free(cheapest) → true/false",
+          "backwards": "1. is_free(prices) → true/false   2. total(is_free) → number"
+        },
+        "misconceptions": {
+          "one-step": "That restates the problem without splitting it; it names no inputs or outputs.",
+          "cheapest": "The rule is about the total, so the cheapest item solves a different problem.",
+          "backwards": "The decision needs the total, but the total is computed after it, from a true/false value."
+        }
+      },
+      "predict-report": {
+        "prompt": "What does this program print?",
+        "explanation": "count_above counts scores strictly above 80: 90 and 85, so high is 2. report uses that output to get low = 4 - 2 = 2 and builds the text.",
+        "commonMistakes": {
+          "k1": "80 is not greater than 80, so it is not counted as high.",
+          "k2": "low is the number of scores minus the high ones: 4 - 2.",
+          "2": "report returns the whole sentence, and that sentence is what gets printed."
+        }
+      },
+      "match-outputs": {
+        "prompt": "Match each sub-problem of a checkout with the output it should give back.",
+        "explanation": "Knowing the output of each step tells you how the next step can use it: numbers can be added, true/false drives a decision, text is shown.",
+        "pairs": {
+          "sum": "A number: the sum of the prices",
+          "off": "A number: how much to take off",
+          "bool": "true or false",
+          "text": "Text to show the buyer"
+        }
+      }
+    }
+  },
+  "algorithms": {
+    "title": "Algorithms",
+    "objective": "You will be able to describe an algorithm as a precise recipe, trace the classic list algorithms (sum, count, largest, search) and estimate how much work they do.",
+    "summary": "An algorithm is a finite, precise recipe that solves every problem of one kind. You meet four classic shapes over lists and see how their work grows with the size of the list.",
+    "keyPoints": {
+      "1": "An algorithm is precise, finite and works for every input of its kind, not just one example.",
+      "2": "Most list algorithms share one shape: set a starting value, visit each item, update the value.",
+      "3": "To find the largest item, start from the first item, not from 0 — the list might be all negative.",
+      "4": "A linear search checks items one by one, so its work grows with the length of the list."
+    },
+    "steps": {
+      "recipe": {
+        "title": "A recipe for a whole class of problems",
+        "blocks": {
+          "p1": "An algorithm is a precise, finite list of steps that solves a whole kind of problem. \"Add up 4, 7 and 2\" is one problem; \"add up any list of numbers\" is the kind an algorithm solves.",
+          "code1": {
+            "caption": "Sum: works for any list, short or long."
+          },
+          "p2": "Most list algorithms have the same shape: set a starting value, visit each item, update the value. Only the starting value and the update change.",
+          "list1": {
+            "1": "Sum: start at `0`, add each item.",
+            "2": "Count matching: start at `0`, add `1` when an item passes a test.",
+            "3": "Largest: start at the first item, replace it when an item is bigger."
+          }
+        }
+      },
+      "play-shapes": {
+        "title": "Three algorithms, one loop",
+        "intro": "The same loop runs three algorithms at once: sum, count above a limit, and largest. Change the numbers and watch each result.",
+        "prompts": {
+          "1": "Make every number negative. Is largest still right? Why does it start at numbers[0]?",
+          "2": "Set limit to 20. Why does above become 0 while total does not change?",
+          "3": "Make b the same as d. Does largest change on the last item?"
+        }
+      },
+      "search-cost": {
+        "title": "Searching, and counting the work",
+        "blocks": {
+          "p1": "A linear search asks \"is this item the one?\" for each item in turn. A `found` flag starts `false` and becomes `true` on a match.",
+          "code1": {
+            "caption": "Linear search with a found flag."
+          },
+          "p2": "Each `==` is one comparison. If the target is missing, every item is checked: 10 items cost 10 comparisons, 1000 items cost 1000. The work grows with n, the length of the list.",
+          "callout1": "A search that stops at the first match is faster when the target is near the front, but in the worst case it still checks all n items."
+        }
+      },
+      "play-search": {
+        "title": "Count the comparisons",
+        "intro": "This search stops as soon as it finds the target and counts each comparison. Change the target.",
+        "prompts": {
+          "1": "Set target to 4. Why is one comparison enough, and why is the index 0?",
+          "2": "Set target to 3, then to 6. Both need 8 comparisons. Why?",
+          "3": "Which target gives the most work, and what does that depend on?"
+        }
+      }
+    },
+    "exercises": {
+      "what-is-algorithm": {
+        "prompt": "Which of these is an algorithm?",
+        "hints": {
+          "1": "An algorithm must work for every input of its kind and must finish."
+        },
+        "explanation": "Comparing each item with the best so far is precise, always finishes, and works for any list. The other options either solve only one case, are vague, or never end.",
+        "options": {
+          "one": "The answer for [3, 8, 5] is 8",
+          "vague": "Look at the list and pick a big number",
+          "recipe": "Keep the first number; compare each next one and keep the bigger",
+          "forever": "Keep checking numbers until you feel sure"
+        },
+        "misconceptions": {
+          "one": "That is one answer to one problem. It tells you nothing about the next list.",
+          "vague": "\"A big number\" is not precise: two people following it could give different answers.",
+          "forever": "\"Until you feel sure\" has no clear end, and an algorithm must finish."
+        }
+      },
+      "count-adults": {
+        "prompt": "This counts the matching items. What is adults at the end?",
+        "hints": {
+          "1": "Check each age against the test `a >= 18` and add 1 only when it passes.",
+          "2": "Is 18 itself included by `>=`?"
+        },
+        "explanation": "19, 30 and 18 pass `a >= 18`, so adults goes up three times. Counting adds 1 per match, not the item itself.",
+        "commonMistakes": {
+          "2": "`>=` includes 18 itself, so the last age counts too.",
+          "67": "That adds the ages. Counting adds 1 for each match, not the matching value.",
+          "5": "That is the length of the list. Only items that pass the test are counted."
+        }
+      },
+      "build-max": {
+        "prompt": "Algorithm Builder: arrange the blocks into an algorithm that finds the largest number in a list. Leave out blocks that do not belong.",
+        "hints": {
+          "1": "Before comparing anything, max needs a starting value taken from the list.",
+          "2": "Comparing and updating happen for each number, then the loop repeats."
+        },
+        "explanation": "Start max at the first number, then for each next number compare and update when it is bigger, repeating until the list ends. Only then is max known, so it is returned last.",
+        "blocks": {
+          "start": "Start",
+          "set": "Set max to the first number",
+          "read": "Read the next number",
+          "compare": "Compare it with max",
+          "update": "If it is bigger, update max",
+          "repeat": "Repeat until no numbers are left",
+          "return": "Return max",
+          "zero": "Set max to 0",
+          "last": "Return the last number read"
+        },
+        "misconceptions": {
+          "zero": "Starting at 0 fails when every number is negative: max would stay 0, which is not in the list.",
+          "last": "The last number read is just the end of the list, not necessarily the largest."
+        }
+      },
+      "search-position": {
+        "prompt": "This search remembers where it found the target. What is position at the end?",
+        "hints": {
+          "1": "Indexes start at 0: items[0] is 3.",
+          "2": "The loop does not stop at the first match. What happens at the second 8?"
+        },
+        "explanation": "8 sits at index 1 and at index 3. The loop keeps going after the first match, so position is overwritten with 3.",
+        "commonMistakes": {
+          "1": "That is the first match, but the loop does not stop there: the second 8 overwrites position.",
+          "4": "Indexes start at 0, so the fourth item is at index 3.",
+          "2": "Counting from 1, the first 8 is item 2, but indexes start at 0 and the loop keeps going.",
+          "-1": "-1 only stays when nothing matches; 8 is in the list."
+        }
+      },
+      "search-cost": {
+        "prompt": "A linear search looks for a name in a list of 1000 names. The name is not in the list. How many comparisons does it make?",
+        "hints": {
+          "1": "To be sure a name is missing, which items must have been checked?"
+        },
+        "explanation": "A missing item can only be ruled out by checking every item, so the search makes 1000 comparisons. Its work grows with the length of the list.",
+        "options": {
+          "ten": "About 10"
+        },
+        "misconceptions": {
+          "one": "One comparison only checks the first name; the missing name could still be further on.",
+          "half": "About half is the typical cost when the name is present. When it is missing, every name is checked.",
+          "ten": "A linear search cannot skip items: it has no way to jump over the ones it has not checked."
+        }
+      },
+      "count-passed": {
+        "prompt": "Complete the count-matching algorithm so passed is the number of scores of 50 or more.",
+        "hints": {
+          "1": "Should a score of exactly 50 count?",
+          "2": "A counter grows by one per match, whatever the score is."
+        },
+        "explanation": "`>=` includes 50 itself, and the counter grows by 1 per match: 72, 50 and 90 pass, so passed is 3.",
+        "misconceptions": {
+          "k1": "`>` leaves out a score of exactly 50, so passed would be 2.",
+          "k2": "`<` counts the scores below 50, the opposite of what is asked.",
+          "k3": "That adds the scores (a sum), not the number of them (a count).",
+          "k4": "That sets passed to 1 on every match instead of adding to it."
+        }
+      },
+      "debug-max-start": {
+        "prompt": "largest should be the warmest temperature, -2. The program gives 0. Which line is wrong, and why?",
+        "hints": {
+          "1": "Trace largest: does any temperature ever beat its starting value?"
+        },
+        "explanation": "Every temperature is below 0, so none beats the starting value and largest stays 0, a number not even in the list. Starting from `temps[0]` makes the start a real candidate.",
+        "causes": {
+          "start": "The starting value is not taken from the list, so it can beat every item",
+          "compare": "The comparison should be < because the numbers are negative",
+          "skip": "The loop skips the first temperature",
+          "update": "largest should be updated with largest + t"
+        },
+        "misconceptions": {
+          "compare": "`<` would find the coldest temperature (-9), not the warmest.",
+          "skip": "`for t in temps` visits every item, including the first.",
+          "update": "Adding would turn the largest-value algorithm into a sum."
+        }
+      },
+      "range-sum": {
+        "prompt": "What does this program print?",
+        "explanation": "`range(1, 4)` gives the indexes 1, 2 and 3, so prices[0] is skipped: 3 + 8 + 4 = 15.",
+        "commonMistakes": {
+          "20": "That adds every price, but the range starts at index 1, so prices[0] is skipped.",
+          "16": "That adds indexes 0 to 2. The range is 1, 2, 3: it starts at 1 and stops before 4.",
+          "11": "range(1, 4) includes index 3, so the last price counts."
+        }
+      },
+      "match-shapes": {
+        "prompt": "Match each problem with the algorithm shape that solves it.",
+        "explanation": "Adding values is a sum, counting items that pass a test is count matching, keeping the best so far finds the largest, and checking each item for one value is a search.",
+        "pairs": {
+          "spend": "Total money spent this month",
+          "sum": "Sum: start at 0, add each item",
+          "unread": "How many emails are unread",
+          "count": "Count: start at 0, add 1 per match",
+          "best": "The highest score in a game",
+          "largest": "Largest: start at the first item, keep the bigger",
+          "guest": "Is \"Ana\" on the guest list?",
+          "search": "Search: a found flag set on a match"
+        }
+      }
+    }
+  },
+  "debugging": {
+    "title": "Debugging",
+    "objective": "You will be able to find and explain bugs with a method: reproduce, read the message, trace values, form a hypothesis, change one thing and re-test.",
+    "summary": "Debugging is a method, not luck. You practise it on the bug families met in this module: off-by-one, boundaries, overwriting, uninitialised variables, type errors, endless loops and misplaced returns.",
+    "keyPoints": {
+      "1": "Reproduce the bug first: know the input, the result you expected and the result you got.",
+      "2": "The error line is where the program noticed the problem, which is not always where the mistake is.",
+      "3": "Trace the values line by line, then test one hypothesis by changing one thing at a time.",
+      "4": "Most bugs belong to a few families: off-by-one, boundary, overwrite, missing start value, type mix, endless loop, misplaced return."
+    },
+    "steps": {
+      "method": {
+        "title": "A method, not luck",
+        "blocks": {
+          "p1": "A bug is a difference between what you expected and what the program does. Guessing and changing lines at random can hide one bug and add two more.",
+          "list1": {
+            "1": "Reproduce: find an input that shows the bug every time.",
+            "2": "Read the error message and the line it names.",
+            "3": "Trace the values: write down each variable after each line.",
+            "4": "Form a hypothesis: \"I think the loop stops one step early.\"",
+            "5": "Change one thing, then re-test with the same input."
+          },
+          "callout1": "The bug is where your expectation and the trace first disagree. That line is your suspect."
+        }
+      },
+      "play-trace": {
+        "title": "Reproduce and trace",
+        "intro": "This program should add up every whole number from 1 to n. For n = 3 the right answer is 1 + 2 + 3 = 6. Reproduce the bug and trace i and total.",
+        "prompts": {
+          "1": "With n = 3, what is the last value of i? Is n ever added?",
+          "2": "Try n = 1. The answer should be 1. What do you get, and why?",
+          "3": "Form a hypothesis: which single change to line 2 would fix every n?"
+        }
+      },
+      "families": {
+        "title": "Bug families",
+        "blocks": {
+          "p1": "Most bugs belong to a few families. Recognising the family turns \"something is wrong\" into a concrete hypothesis.",
+          "list1": {
+            "1": "Off-by-one or wrong boundary: `<` instead of `<=`, or `len(xs)` used as an index.",
+            "2": "Overwrite instead of accumulate: `total = x` instead of `total = total + x`.",
+            "3": "Wrong variable updated, or a variable used before it has a value.",
+            "4": "Type mix: `\"Score: \" + 5` needs `str(5)`.",
+            "5": "Endless loop: the loop variable never moves towards the stop condition.",
+            "6": "Return in the wrong place: inside the loop, so the function stops after one item."
+          },
+          "callout1": "An error message names the line where the program could not go on. The real mistake is often earlier, for example a variable that was never set."
+        }
+      },
+      "play-error": {
+        "title": "Read the error message",
+        "intro": "Turn useStr off to make the program fail. Read the message and the line it names, then turn it back on.",
+        "prompts": {
+          "1": "Turn useStr off. Which line does the message name, and what does it say to do?",
+          "2": "Why does the program not print anything after the error?"
+        }
+      }
+    },
+    "exercises": {
+      "order-method": {
+        "prompt": "Put the debugging method in order.",
+        "hints": {
+          "1": "You cannot study a bug you cannot make happen.",
+          "2": "A change only proves something once you test it again."
+        },
+        "explanation": "First make the bug happen reliably, then gather evidence (message, trace), then explain it with a hypothesis, test it with one change, and confirm by re-testing.",
+        "items": {
+          "reproduce": "Reproduce the bug with a known input",
+          "read": "Read the error message and its line",
+          "trace": "Trace the values line by line",
+          "hypothesis": "Form a hypothesis about the cause",
+          "change": "Change one thing",
+          "retest": "Re-test with the same input"
+        }
+      },
+      "debug-off-by-one": {
+        "prompt": "total should be 1 + 2 + 3 + 4 = 10, but the program gives 6. Which line is wrong, and why?",
+        "hints": {
+          "1": "Trace i: which values does it take inside the loop?",
+          "2": "When i is 4, is the condition true or false?"
+        },
+        "explanation": "When i reaches 4, `i < n` is false, so 4 is never added. `<=` keeps the last number inside the loop: a classic off-by-one.",
+        "causes": {
+          "boundary": "The loop stops one step early, so the last number is never added",
+          "start": "i should start at 0 so that more numbers are added",
+          "overwrite": "total is overwritten on every pass instead of growing",
+          "step": "i grows too fast and skips numbers"
+        },
+        "misconceptions": {
+          "start": "Starting at 0 adds 0, which changes nothing: the loop would still stop before 4.",
+          "overwrite": "`total = total + i` keeps the old total and adds to it, so it does grow.",
+          "step": "i goes 1, 2, 3: it grows by one and skips nothing. It just stops too soon."
+        }
+      },
+      "test-hypothesis": {
+        "prompt": "Your hypothesis: \"the loop runs one time too few.\" Which next step tests it best?",
+        "hints": {
+          "1": "A good test gives clear evidence and changes as little as possible."
+        },
+        "explanation": "Printing i on every pass shows exactly how many times the loop runs, with nothing else changed. The evidence confirms or rejects the hypothesis.",
+        "options": {
+          "rewrite": "Rewrite the whole loop in a different way",
+          "many": "Change the condition, the start value and the update together",
+          "trace": "Print i on every pass and count the passes",
+          "rerun": "Run it a few more times without changes"
+        },
+        "misconceptions": {
+          "rewrite": "A rewrite may hide the bug without telling you what it was, and can add new ones.",
+          "many": "If three changes fix it, you do not know which one mattered, or whether two of them cancel out.",
+          "rerun": "The same program with the same input gives the same result: rerunning adds no evidence."
+        }
+      },
+      "debug-overwrite": {
+        "prompt": "total should be 15, the sum of the prices. It is 5. Which line is wrong, and why?",
+        "hints": {
+          "1": "Trace total after each pass: 4, then …?"
+        },
+        "explanation": "total goes 4, 6, 5: each pass replaces it with the current price. Adding to the old total keeps what was already summed.",
+        "causes": {
+          "start": "total should start at the first price instead of 0",
+          "overwrite": "Each pass replaces total instead of adding to it",
+          "loop": "The loop only visits the last price"
+        },
+        "misconceptions": {
+          "start": "The start value is fine for a sum; it is lost anyway because line 4 replaces total.",
+          "loop": "The loop visits all three prices; the trace shows total taking each one in turn."
+        }
+      },
+      "debug-return": {
+        "prompt": "count_even should count the even numbers: result should be 3. It is 1. Which line is wrong, and why?",
+        "hints": {
+          "1": "Look at the indentation of each line: which block is it part of?",
+          "2": "What does `return` do to the loop?"
+        },
+        "explanation": "The `return` is indented inside the loop, so the function ends after the first number. Moved out to the function level, it runs once the loop has finished.",
+        "causes": {
+          "test": "`n % 2 == 0` is the wrong test for even numbers",
+          "reset": "count is reset to 0 on every pass",
+          "return": "The return is inside the loop, so the function stops after one number",
+          "local": "count is local, so result cannot see it"
+        },
+        "misconceptions": {
+          "test": "An even number leaves remainder 0 when divided by 2, so the test is right.",
+          "reset": "`count = 0` is before the loop, so it runs only once.",
+          "local": "count is local, but `return` sends its value out; that is exactly how result gets it."
+        }
+      },
+      "trace-wrong-variable": {
+        "prompt": "The author meant count to count the items (3). Trace the program as it is: what is count at the end?",
+        "hints": {
+          "1": "Make a trace table with columns x, total and count.",
+          "2": "Line 5 reads total, not count."
+        },
+        "explanation": "Line 5 builds count from total instead of from count: after the last pass total is 9, so count is 10. Tracing the real values reveals the wrong variable.",
+        "commonMistakes": {
+          "3": "That is what the author meant. The question is what the program actually does: line 5 uses total.",
+          "9": "That is total. count is total + 1.",
+          "4": "count is not increased by 1 each time; it is replaced by total + 1."
+        }
+      },
+      "debug-endless-loop": {
+        "prompt": "The program should count steps of 2 from 10 down to 0 (steps should be 5). It stops with \"Stopped after 5000 steps\". Which line is wrong, and why?",
+        "explanation": "n starts at 10 and grows, so `n > 0` stays true forever. Each pass must move n towards the stop condition, which means subtracting.",
+        "causes": {
+          "condition": "The condition should be n >= 0",
+          "away": "n moves away from the stop condition, so it is never reached",
+          "steps": "steps is never updated inside the loop",
+          "limit": "5000 steps is too few for this loop"
+        },
+        "misconceptions": {
+          "condition": "With n growing, `n >= 0` is just as true forever; it also would add an extra pass.",
+          "steps": "steps does go up on line 4; the problem is what happens to n.",
+          "limit": "No limit is enough: n grows without end, so the loop never finishes."
+        }
+      },
+      "debug-last-index": {
+        "prompt": "last should be the last name, \"Cai\". The program stops with \"Index 3 is outside the list (valid: 0 to 2)\". Which line is wrong, and why?",
+        "explanation": "A list of 3 items has indexes 0, 1 and 2, so the last one is `len(names) - 1`. Using the length itself goes one past the end.",
+        "causes": {
+          "short": "The list needs a fourth name",
+          "len": "len() counts from 0, so it gives the wrong length",
+          "zero": "Indexes start at 0, so the last index is the length minus 1"
+        },
+        "misconceptions": {
+          "short": "Adding a name would hide the bug: the code would then return the new name, not \"Cai\".",
+          "len": "len() is right: there are 3 names. It is the indexes that start at 0."
+        }
+      },
+      "match-families": {
+        "prompt": "Match each symptom with the most likely bug family.",
+        "explanation": "Each symptom points to a family: an endless loop hits the step limit, overwriting keeps only the last item, a missing boundary loses one value, mixing text and numbers needs str(), and an unset variable cannot be read.",
+        "pairs": {
+          "limit": "\"Stopped after 5000 steps\"",
+          "endless": "The loop variable never moves towards the stop",
+          "last": "The total always equals the last item",
+          "overwrite": "Overwrite instead of accumulate",
+          "sum": "Adding 1 to 5 gives 10 instead of 15",
+          "offbyone": "Off-by-one: the boundary is left out",
+          "type": "\"Cannot add text and number\"",
+          "str": "Type mix: convert with str()",
+          "unset": "\"count has no value yet\"",
+          "init": "Variable used before it is given a start value"
+        }
+      }
+    }
+  },
+  "course": {
+    "title": "Programming Logic",
+    "summary": "Learn how programs think — values, decisions, repetition, functions and algorithms — in a language-neutral pseudocode, before any specific syntax.",
+    "modules": {
+      "how-programs-think": {
+        "title": "How Programs Think",
+        "summary": "From what a program is to designing and debugging your first algorithms."
+      }
+    }
+  },
+  "concepts": {
+    "programs": {
+      "name": "Programs",
+      "summary": "A program is a precise list of instructions that a computer follows literally.",
+      "why": {
+        "bug-hunter": "Computers act on every detail, so reading instructions precisely matters."
+      }
+    },
+    "sequence": {
+      "name": "Sequence",
+      "summary": "Instructions run one after another, top to bottom; order changes the result.",
+      "why": {
+        "algorithmic-logic": "Ordering tasks by their dependencies is the same skill as ordering instructions.",
+        "code-memory": "Remembering what happened in which order is how you follow a sequence."
+      }
+    },
+    "variables": {
+      "name": "Variables",
+      "summary": "Names that hold values; assignment stores a new value and replaces the old one.",
+      "why": {
+        "code-memory": "Tracing code means holding the current value of each variable in mind.",
+        "code-scan": "Spotting which value changed between two lines quickly."
+      }
+    },
+    "conditions": {
+      "name": "Conditions",
+      "summary": "if / elif / else choose exactly one path depending on a true/false question.",
+      "why": {
+        "algorithmic-logic": "Predicting which branch a program takes is trained directly there.",
+        "bug-hunter": "Boundary values (>= vs >) are exactly the details that hide bugs."
+      }
+    },
+    "boolean-logic": {
+      "name": "Logical operators",
+      "summary": "and, or and not combine true/false questions into one.",
+      "why": {
+        "algorithmic-logic": "Constraint puzzles are combinations of and / or / not rules.",
+        "pattern-architect": "Seeing which rule fits all the examples is how you design a condition."
+      }
+    },
+    "loops": {
+      "name": "Loops",
+      "summary": "while and for repeat a block; a loop needs a way to stop.",
+      "why": {
+        "code-memory": "Following a loop means updating values in your head on every pass.",
+        "pattern-architect": "A loop is a repeated pattern; spotting the rule tells you the body."
+      }
+    },
+    "lists": {
+      "name": "Lists",
+      "summary": "Ordered collections of values, read by position starting at 0.",
+      "why": {
+        "code-memory": "Remembering positions in a structure is the core of indexing.",
+        "bug-hunter": "Off-by-one positions are the classic list mistake."
+      }
+    },
+    "functions": {
+      "name": "Functions",
+      "summary": "Named, reusable steps with parameters in and a return value out.",
+      "why": {
+        "pattern-architect": "Inferring a transformation from input/output examples is what a function is.",
+        "algorithmic-logic": "Tracing a call means following values into and out of a block."
+      }
+    },
+    "decomposition": {
+      "name": "Decomposition",
+      "summary": "Breaking a problem into smaller steps with clear inputs and outputs.",
+      "why": {
+        "algorithmic-logic": "Dependency graphs show which sub-task must be done before which."
+      }
+    },
+    "algorithms": {
+      "name": "Algorithms",
+      "summary": "Step-by-step recipes such as counting, summing, finding the largest, searching.",
+      "why": {
+        "pattern-architect": "Recognising a familiar algorithmic shape (accumulate, search, compare) in new code.",
+        "algorithmic-logic": "Reasoning about the minimum steps needed is the start of complexity."
+      }
+    },
+    "debugging": {
+      "name": "Debugging",
+      "summary": "Finding why a program does not do what it should: trace, compare, form a hypothesis.",
+      "why": {
+        "bug-hunter": "Finding the one line that breaks a rule is debugging in miniature.",
+        "code-scan": "Comparing what the code does with what it should do, quickly."
+      }
+    }
+  }
+}

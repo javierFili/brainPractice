@@ -1,6 +1,7 @@
 import type { Challenge } from '@/domain/challenge';
 import { generateChallenge, type GameDefinition } from '@/domain/game';
 import { contractSeeds } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { centroidRate, chanceRate, choiceItems } from '@/test/guessability';
 import { DIFFICULTY_LEVELS, type DifficultyLevel } from '@/domain/shared';
 import { parseFigure, parseGrid } from './content';
@@ -18,18 +19,20 @@ export function generateMany<C extends Challenge>(
   );
 }
 
+/** The correct option as an English reader sees it. */
 export function solutionLabel(challenge: Challenge): string {
   const { response } = challenge;
   if (response.format !== 'single-choice') throw new Error('single-choice expected');
   const option = response.question.options.find((o) => o.id === response.solution.optionId);
   if (!option) throw new Error('solution not among options');
-  return option.label;
+  return en(option.label);
 }
 
+/** Every option as an English reader sees it. */
 export function optionLabels(challenge: Challenge): string[] {
   const { response } = challenge;
   if (response.format !== 'single-choice') throw new Error('single-choice expected');
-  return response.question.options.map((o) => o.label);
+  return response.question.options.map((o) => en(o.label));
 }
 
 /** Number of differing features between two figure labels. */

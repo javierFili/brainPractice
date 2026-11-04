@@ -1,9 +1,8 @@
-import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, type Text } from '@/domain/shared';
 import { glyphKey, glyphLabel, type Glyph } from '@/games/kit/content';
-import { capitalize, listJoin, type Draft } from '@/games/logic/shared/content';
+import { listText, textChoice, type Draft } from '@/games/logic/shared/content';
 import { RULE_DISCOVERY_LEVELS } from './levels';
 import {
   describeRule,
@@ -92,10 +91,9 @@ const byKey = (a: Glyph, b: Glyph) => glyphKey(a).localeCompare(glyphKey(b));
 
 export const ruleDiscoveryGame: GameDefinition<RuleChallenge, RuleProfile> = {
   id: RULE_DISCOVERY_ID,
-  name: 'Rule Discovery',
-  tagline: 'Spot the hidden rule from examples.',
-  description:
-    'Some items fit a secret rule and some do not. Compare the two groups, work out the rule, and choose the new item that fits it. Higher levels use rules with “not”, “or” and “and”, and give fewer examples.',
+  name: msg('logic:ruleDiscovery.name'),
+  tagline: msg('logic:ruleDiscovery.tagline'),
+  description: msg('logic:ruleDiscovery.description'),
   area: 'logic',
   skills: ['abstraction', 'pattern-recognition', 'logical-reasoning'],
   meta: {
@@ -106,25 +104,24 @@ export const ruleDiscoveryGame: GameDefinition<RuleChallenge, RuleProfile> = {
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Exactly one option fits every rule that matches the examples. Your result is the share of puzzles answered correctly; there is no time limit.',
+    scoringSummary: msg('logic:ruleDiscovery.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'The items under “Fits the rule” all follow one secret rule. The items under “Does not fit” break it.',
-    'Look for what every item that fits has in common — and what the others lack.',
-    'Then choose the one option that fits the same rule.',
-    'Shapes are named by colour and shape, so you never need to tell colours apart by sight alone.',
+    msg('logic:ruleDiscovery.instructions.1'),
+    msg('logic:ruleDiscovery.instructions.2'),
+    msg('logic:ruleDiscovery.instructions.3'),
+    msg('logic:ruleDiscovery.instructions.4'),
   ],
-  simpleInstructions: 'Find what the “yes” items share and pick the new one that matches.',
+  simpleInstructions: msg('logic:ruleDiscovery.simpleInstructions'),
   levels: RULE_DISCOVERY_LEVELS,
   generate({ identity, profile, random }) {
     const useNumbers =
       profile.glyph.hidden.length === 0 ||
       (profile.number.hidden.length > 0 && chance(random, profile.numberShare));
     let content: RuleContent;
-    let answer: string;
-    let wrong: string[];
+    let answer: Text;
+    let wrong: Text[];
     if (useNumbers) {
       const p = numberPuzzle(random, profile);
       content = {
@@ -148,10 +145,15 @@ export const ruleDiscoveryGame: GameDefinition<RuleChallenge, RuleProfile> = {
     }
     const rule = describeRule(content.rule);
     const draft: Draft<RuleChallenge> = {
-      prompt: `Which ${content.kind === 'numbers' ? 'number' : 'shape'} fits the rule?`,
+      prompt: msg(`logic:ruleDiscovery.prompt.${content.kind}`),
       content,
-      response: singleChoice(random, answer, wrong),
-      explanation: `The rule is: ${rule}. ${capitalize(answer)} fits it; ${listJoin(wrong)} do not. Every other simple rule either breaks one of the examples or picks the same answer.`,
+      response: textChoice(random, answer, wrong),
+      explanation: msg('logic:ruleDiscovery.explanation', {
+        rule,
+        answer,
+        wrong: listText(wrong),
+        count: wrong.length,
+      }),
       skills: ['abstraction', 'pattern-recognition'],
     };
     return { ...identity, ...draft, timing: profile.timing };

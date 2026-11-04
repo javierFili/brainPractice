@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 /** Game and search solvers. Every answer of Strategy Puzzle comes from one of these. */
 
 // ── Take-away and piles: win/lose by exhaustive game search ─────────────────────────────────────
@@ -44,26 +45,29 @@ export function pilesWin(piles: readonly number[], memo = new Map<string, boolea
 // ── Jugs: breadth-first search over water levels ────────────────────────────────────────────────
 
 export interface JugStep {
-  readonly action: string;
+  readonly action: Message;
   readonly state: readonly number[];
 }
 
 function jugNext(state: readonly number[], caps: readonly number[], tap: boolean): JugStep[] {
   const out: JugStep[] = [];
-  const name = (i: number) => `the ${caps[i]}-litre jug`;
+  const jug = (i: number) => caps[i] as number;
   state.forEach((v, i) => {
     if (tap && v < (caps[i] as number))
       out.push({
-        action: `fill ${name(i)}`,
+        action: msg('logic:strategyPuzzle.jug.fill', { jug: jug(i) }),
         state: state.map((x, k) => (k === i ? (caps[i] as number) : x)),
       });
     if (tap && v > 0)
-      out.push({ action: `empty ${name(i)}`, state: state.map((x, k) => (k === i ? 0 : x)) });
+      out.push({
+        action: msg('logic:strategyPuzzle.jug.empty', { jug: jug(i) }),
+        state: state.map((x, k) => (k === i ? 0 : x)),
+      });
     state.forEach((w, j) => {
       if (i === j || v === 0 || w === caps[j]) return;
       const amount = Math.min(v, (caps[j] as number) - w);
       out.push({
-        action: `pour ${name(i)} into ${name(j)}`,
+        action: msg('logic:strategyPuzzle.jug.pour', { from: jug(i), to: jug(j) }),
         state: state.map((x, k) => (k === i ? x - amount : k === j ? x + amount : x)),
       });
     });

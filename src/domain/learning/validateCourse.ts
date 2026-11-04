@@ -1,4 +1,5 @@
 import { execute } from '../pseudocode/source';
+import { isBlankText, textId, type Text } from '../shared/text';
 import { literal } from '../pseudocode/run';
 import type { Variables } from '../pseudocode/run';
 import {
@@ -43,7 +44,7 @@ export function validateCourse(course: Course): string[] {
 
 export function validateLesson(lesson: Lesson, conceptIds: ReadonlySet<string>): string[] {
   const issues: string[] = [];
-  if (lesson.objective.trim() === '') issues.push('objective is empty');
+  if (isBlankText(lesson.objective)) issues.push('objective is empty');
   if (lesson.keyPoints.length === 0) issues.push('no key points');
   if (lesson.concepts.length === 0) issues.push('teaches no concept');
   for (const concept of lesson.concepts)
@@ -88,7 +89,7 @@ export function validateLesson(lesson: Lesson, conceptIds: ReadonlySet<string>):
       issues.push(`${exercise.id}: concept ${exercise.concept} is not one of the lesson's`);
     if (step.phase === 'guided' && exercise.hints.length === 0)
       issues.push(`${exercise.id}: guided exercises need a hint`);
-    if (exercise.explanation.trim() === '') issues.push(`${exercise.id}: no explanation`);
+    if (isBlankText(exercise.explanation)) issues.push(`${exercise.id}: no explanation`);
     issues.push(...validateExercise(exercise).map((i) => `${exercise.id}: ${i}`));
   }
   return issues;
@@ -101,12 +102,15 @@ function validatePlayground(playground: Playground): string[] {
       issues.push(`input ${input.name} starts outside its range`);
   if (playground.prompts.length === 0) issues.push('needs at least one thing to try');
   const run = execute(playground.source, playgroundInitial(playground));
-  if (!run.ok) return [...issues, `syntax error line ${run.error.line}: ${run.error.message}`];
-  if (run.value.error) issues.push(`fails with the initial inputs: ${run.value.error.message}`);
+  if (!run.ok)
+    return [...issues, `syntax error line ${run.error.line}: ${textId(run.error.message)}`];
+  if (run.value.error)
+    issues.push(`fails with the initial inputs: ${textId(run.value.error.message)}`);
   return issues;
 }
 
-const distinct = (values: readonly string[]) => new Set(values).size === values.length;
+/** Issues are for content authors (tests), so they stay English; texts compare by identity. */
+const distinct = (values: readonly Text[]) => new Set(values.map(textId)).size === values.length;
 
 /** Literal value of `variable` after running `source`, or the error. */
 function valueAfter(
@@ -115,8 +119,9 @@ function valueAfter(
   inputs: Variables = {},
 ): { value?: string; error?: string } {
   const run = execute(source, inputs);
-  if (!run.ok) return { error: `syntax error line ${run.error.line}: ${run.error.message}` };
-  if (run.value.error) return { error: run.value.error.message };
+  if (!run.ok)
+    return { error: `syntax error line ${run.error.line}: ${textId(run.error.message)}` };
+  if (run.value.error) return { error: textId(run.value.error.message) };
   const value = run.value.variables[variable];
   return value === undefined ? { error: `${variable} is never set` } : { value: literal(value) };
 }
@@ -139,11 +144,11 @@ export function validateExercise(exercise: Exercise): string[] {
     case 'prediction': {
       const run = execute(exercise.code.source);
       if (!run.ok) {
-        issues.push(`syntax error line ${run.error.line}: ${run.error.message}`);
+        issues.push(`syntax error line ${run.error.line}: ${textId(run.error.message)}`);
         break;
       }
       if (run.value.error) {
-        issues.push(`program fails: ${run.value.error.message}`);
+        issues.push(`program fails: ${textId(run.value.error.message)}`);
         break;
       }
       const actual =
@@ -268,5 +273,5 @@ export function validateExercise(exercise: Exercise): string[] {
 
 function parses(source: string): string[] {
   const run = execute(source);
-  return run.ok ? [] : [`syntax error line ${run.error.line}: ${run.error.message}`];
+  return run.ok ? [] : [`syntax error line ${run.error.line}: ${textId(run.error.message)}`];
 }

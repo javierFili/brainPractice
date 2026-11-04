@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { TrackingProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { TrackingProfile } from './types';
  */
 export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
   {
-    objective: 'Two variables, two updates: follow each assignment in order.',
+    objective: msg('programming:variableTracking.levels.1'),
     challengeCount: 5,
     timing: untimed(25_000),
     kinds: { 'final-value': 1 },
@@ -18,7 +19,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'choice',
   },
   {
-    objective: 'Updates that read another variable.',
+    objective: msg('programming:variableTracking.levels.2'),
     challengeCount: 5,
     timing: untimed(30_000),
     kinds: { 'final-value': 1 },
@@ -28,7 +29,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'choice',
   },
   {
-    objective: 'Copies keep the value they were given: later changes do not follow them.',
+    objective: msg('programming:variableTracking.levels.3'),
     challengeCount: 6,
     timing: untimed(35_000),
     kinds: { 'final-value': 2, largest: 1 },
@@ -38,7 +39,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'choice',
   },
   {
-    objective: 'Swaps through a helper variable; type the exact value.',
+    objective: msg('programming:variableTracking.levels.4'),
     challengeCount: 6,
     timing: untimed(40_000),
     kinds: { 'final-value': 2, largest: 1 },
@@ -48,7 +49,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Stop in the middle: the value right after a given line.',
+    objective: msg('programming:variableTracking.levels.5'),
     challengeCount: 6,
     timing: untimed(45_000),
     kinds: { 'final-value': 2, 'after-line': 1, largest: 1 },
@@ -58,7 +59,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Four variables and updates that combine several of them.',
+    objective: msg('programming:variableTracking.levels.6'),
     challengeCount: 6,
     timing: untimed(55_000),
     kinds: { 'final-value': 2, 'after-line': 1, largest: 1 },
@@ -68,7 +69,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Longer programs: six updates over four variables.',
+    objective: msg('programming:variableTracking.levels.7'),
     challengeCount: 6,
     timing: untimed(65_000),
     kinds: { 'final-value': 2, 'after-line': 1, largest: 1 },
@@ -78,7 +79,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Seven updates; most of them read the variable they overwrite.',
+    objective: msg('programming:variableTracking.levels.8'),
     challengeCount: 7,
     timing: untimed(75_000),
     kinds: { 'final-value': 2, 'after-line': 1, largest: 1 },
@@ -88,7 +89,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Five variables, chained swaps and nested expressions.',
+    objective: msg('programming:variableTracking.levels.9'),
     challengeCount: 7,
     timing: untimed(85_000),
     kinds: { 'final-value': 2, 'after-line': 2, largest: 1 },
@@ -98,7 +99,7 @@ export const TRACKING_LEVELS = defineLevels<TrackingProfile>([
     answer: 'numeric',
   },
   {
-    objective: 'Everything at once: eight updates over five variables.',
+    objective: msg('programming:variableTracking.levels.10'),
     challengeCount: 7,
     timing: untimed(95_000),
     kinds: { 'final-value': 2, 'after-line': 2, largest: 1 },

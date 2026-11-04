@@ -8,8 +8,10 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { listWords, orderedChoice, type Draft } from '../../shared/content';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
+
+const T = 'patterns:gridAndPathReasoning';
+import { orderedChoice, type Draft } from '../../shared/content';
 import { GRID_PATH_LEVELS } from './levels';
 import {
   distances,
@@ -71,10 +73,13 @@ function shortestLength(random: RandomGenerator, profile: GridPathProfile): Path
   if (found === null) return null;
   const { start, goal, maze, fromStart, steps } = found;
   return {
-    prompt: 'How many steps is the shortest route from the turtle to the star?',
+    prompt: msg(`${T}.prompt.shortest`),
     content: content('shortest-length', maze, { start, goal, exits: [], marks: [] }),
-    response: numericResponse(steps, 'steps'),
-    explanation: `The shortest route takes ${steps} steps, for example: ${routeWords(fromStart.parent, goal)}. No route avoids the walls with fewer steps.`,
+    response: { ...numericResponse(steps), question: { unit: msg(`${T}.unit`) } },
+    explanation: msg(`${T}.explanation.shortest`, {
+      count: steps,
+      route: routeWords(fromStart.parent, goal),
+    }),
     skills: ['spatial-reasoning', 'planning'],
   };
 }
@@ -102,11 +107,15 @@ function reachableExit(random: RandomGenerator, profile: GridPathProfile): PathD
   const labels = exits.map((_, i) => exitLabel(i));
   const others = labels.filter((_, i) => i !== index);
   return {
-    prompt:
-      'Which exit can the turtle reach? It moves up, down, left or right, never through walls.',
+    prompt: msg(`${T}.prompt.exit`),
     content: content('reachable-exit', maze, { start, goal: null, exits, marks: [] }),
     response: orderedChoice(labels, index),
-    explanation: `${labels[index] ?? ''} can be reached, for example: ${routeWords(parent, right)}. ${listWords(others)} ${others.length === 1 ? 'is' : 'are'} cut off by walls: no route leads there.`,
+    explanation: msg(`${T}.explanation.exit`, {
+      exit: labels[index] ?? '',
+      route: routeWords(parent, right),
+      others: joinText(others),
+      count: others.length,
+    }),
     skills: ['spatial-reasoning', 'visual-orientation'],
   };
 }
@@ -155,11 +164,15 @@ function mustPass(random: RandomGenerator, profile: GridPathProfile): PathDraft 
   const labels = marks.map((_, i) => markLabel(i));
   const others = labels.filter((_, i) => i !== index);
   return {
-    prompt:
-      'Every shortest route from the turtle to the star passes through one of the numbered cells. Which one?',
+    prompt: msg(`${T}.prompt.mustPass`),
     content: content('must-pass', maze, { start, goal, exits: [], marks }),
     response: orderedChoice(labels, index),
-    explanation: `The shortest routes take ${steps} steps${total > 1 ? ` (there are ${total} of them)` : ''}, and every one passes through ${labels[index] ?? ''}. Going through ${listWords(others)} makes the route longer.`,
+    explanation: msg(`${T}.explanation.${total > 1 ? 'mustPassMany' : 'mustPass'}`, {
+      steps,
+      total,
+      cell: labels[index] ?? '',
+      others: joinText(others),
+    }),
     skills: ['spatial-reasoning', 'planning', 'problem-solving'],
   };
 }
@@ -172,10 +185,9 @@ const GENERATORS = {
 
 export const gridPathGame: GameDefinition<GridPathChallenge, GridPathProfile> = {
   id: GRID_PATH_ID,
-  name: 'Grid and Path Reasoning',
-  tagline: 'Find your way through the maze.',
-  description:
-    'A turtle moves through a grid maze, one square at a time, up, down, left or right, never through walls. Count the steps of the shortest route, find the only exit it can reach, or spot the cell every shortest route must cross.',
+  name: msg('patterns:gridAndPathReasoning.name'),
+  tagline: msg('patterns:gridAndPathReasoning.tagline'),
+  description: msg('patterns:gridAndPathReasoning.description'),
   area: 'patterns',
   skills: ['spatial-reasoning', 'planning', 'visual-orientation', 'problem-solving'],
   meta: {
@@ -186,18 +198,16 @@ export const gridPathGame: GameDefinition<GridPathChallenge, GridPathProfile> = 
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each maze counts as correct when your number or choice is right. Your result is the share of mazes solved; there is no time limit.',
+    scoringSummary: msg('patterns:gridAndPathReasoning.scoringSummary'),
     feedback: 'explain',
-    accessibilityNotes:
-      'Each maze is also described row by row for screen readers, but following routes by ear is demanding on the larger mazes.',
+    accessibilityNotes: msg('patterns:gridAndPathReasoning.accessibilityNotes'),
   },
   instructions: [
-    'The turtle moves one square at a time: up, down, left or right. It cannot cross walls (striped squares) or move diagonally.',
-    'A step is one move to the next square. Count the steps of the shortest route when asked.',
-    'Exits are lettered; numbered cells are the candidates when you must find the cell every shortest route crosses.',
+    msg('patterns:gridAndPathReasoning.instructions.1'),
+    msg('patterns:gridAndPathReasoning.instructions.2'),
+    msg('patterns:gridAndPathReasoning.instructions.3'),
   ],
-  simpleInstructions: 'Help the turtle find its way around the walls.',
+  simpleInstructions: msg('patterns:gridAndPathReasoning.simpleInstructions'),
   levels: GRID_PATH_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);

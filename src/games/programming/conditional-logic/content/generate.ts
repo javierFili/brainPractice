@@ -9,6 +9,7 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
+import { joinText, msg, type Text } from '@/domain/shared';
 import { compile, describeVariables, indent, runQuick, type DraftOf } from '../../shared/content';
 import type {
   ConditionalChallenge,
@@ -19,7 +20,9 @@ import type {
 
 type Draft = DraftOf<ConditionalChallenge>;
 
+/** Outcome id of a run that fails; shown to players through `ERROR_LABEL`. */
 export const ERROR_OUTCOME = 'Stops with an error (division by zero)';
+const ERROR_LABEL = msg('programming:conditionalLogic.errorOutcome');
 const LABELS = ['A', 'B', 'C', 'D', 'E'];
 const COMPARISONS = ['<', '<=', '>', '>=', '==', '!='] as const;
 const FLAG = 'ready';
@@ -304,20 +307,21 @@ function build(random: RandomGenerator, profile: ConditionalProfile, kind: Condi
 const literalInputs = (inputs: Variables) =>
   Object.entries(inputs).map(([name, value]) => `${name} = ${String(value)}`);
 
-function explain(built: Built, inputs: Variables, offset: number): string {
+function explain(built: Built, inputs: Variables, offset: number): Text {
   const { steps, outcome } = walk(built, inputs);
   const condLines = render(built.tree, offset).condLines;
   const parts = steps.map(({ cond, value }) => {
     const line = condLines.get(cond) as number;
     return value === 'error'
-      ? `line ${line}: “${cond}” evaluates the division first, with y = 0 → error`
-      : `line ${line}: “${cond}” is ${String(value)}`;
+      ? msg('programming:conditionalLogic.explanation.stepError', { line, cond })
+      : msg('programming:conditionalLogic.explanation.step', { line, cond, value: String(value) });
   });
-  const end =
+  return msg(
     outcome === ERROR_OUTCOME
-      ? 'so the program stops with an error. “and” / “or” only skip the right side when the left side already decides the result.'
-      : `so it prints ${outcome}.`;
-  return `With ${describeVariables(inputs)}: ${parts.join('; ')} — ${end}`;
+      ? 'programming:conditionalLogic.explanation.runError'
+      : 'programming:conditionalLogic.explanation.runPrints',
+    { inputs: describeVariables(inputs), steps: joinText(parts, '; '), outcome },
+  );
 }
 
 // ── Kinds ──────────────────────────────────────────────────────────────────────────────────────
@@ -351,16 +355,24 @@ function forwardQuestion(
   const optionLabels = kind === 'short-circuit' ? [...labels, ERROR_OUTCOME] : labels;
   const prompt =
     kind === 'short-circuit'
-      ? 'What happens when this program runs?'
-      : 'Which letter does this program print?';
+      ? msg('programming:conditionalLogic.prompt.happens')
+      : msg('programming:conditionalLogic.prompt.letter');
+  const response = singleChoice(
+    random,
+    target,
+    optionLabels.filter((l) => l !== target),
+  );
   return {
     prompt,
     content: { kind, source, inputs, target: null },
-    response: singleChoice(
-      random,
-      target,
-      optionLabels.filter((l) => l !== target),
-    ),
+    response: {
+      ...response,
+      question: {
+        options: response.question.options.map((o) =>
+          o.label === ERROR_OUTCOME ? { ...o, label: ERROR_LABEL } : o,
+        ),
+      },
+    },
     explanation: explain(built, inputs, inputLines.length),
     skills:
       kind === 'short-circuit'
@@ -385,14 +397,23 @@ function findInput(random: RandomGenerator, profile: ConditionalProfile): Draft 
   const wrong = misses.slice(0, 3);
   const label = (p: Variables) => describeVariables(p);
   const source = built.bodyLines.join('\n');
-  const missesExplained = wrong
-    .map((p) => `${label(p)} prints ${walk(built, p).outcome}`)
-    .join('; ');
+  const missesExplained = joinText(
+    wrong.map((p) =>
+      msg('programming:conditionalLogic.explanation.miss', {
+        inputs: label(p),
+        outcome: walk(built, p).outcome,
+      }),
+    ),
+    '; ',
+  );
   return {
-    prompt: `Which input makes this program print ${target}?`,
+    prompt: msg('programming:conditionalLogic.prompt.findInput', { target }),
     content: { kind: 'find-input', source, inputs: null, target },
     response: singleChoice(random, label(answer), wrong.map(label)),
-    explanation: `${explain(built, answer, 0)} The others: ${missesExplained}.`,
+    explanation: msg('programming:conditionalLogic.explanation.findInput', {
+      run: explain(built, answer, 0),
+      others: missesExplained,
+    }),
     skills: ['logical-reasoning', 'problem-solving'],
   };
 }

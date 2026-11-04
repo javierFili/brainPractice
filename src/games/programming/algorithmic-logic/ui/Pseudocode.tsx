@@ -1,11 +1,16 @@
+import { useTranslation } from 'react-i18next';
 import type { Stmt } from '../content/types';
 import { toLines } from './formatPseudocode';
 
 /** Language-neutral pseudocode listing with line numbers and indentation guides. */
 export function Pseudocode({ program }: { program: readonly Stmt[] }) {
+  const { t } = useTranslation('programming');
   const lines = toLines(program);
   return (
-    <pre className="overflow-x-auto font-mono text-sm leading-7" aria-label="Pseudocode program">
+    <pre
+      className="overflow-x-auto font-mono text-sm leading-7"
+      aria-label={t('algorithmicLogic.view.program')}
+    >
       <code>
         {lines.map((line, i) => (
           <div key={i} className="flex">

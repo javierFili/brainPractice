@@ -1,4 +1,5 @@
 import { useCourse } from '@/app/providers/useCourse';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import {
   courseProgress,
@@ -12,19 +13,23 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { formatPercent } from '@/features/shared/format';
+import { useFormat, useText } from '@/i18n';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { relativeDay } from './dates';
 import { MasteryMeter } from './MasteryMeter';
 import { useLearning } from './useLearning';
 
-const STATUS: Readonly<Record<LessonStatus, { icon: string; label: string; tone: string }>> = {
-  completed: { icon: '✓', label: 'Completed', tone: 'text-emerald-300' },
-  available: { icon: '→', label: 'Open', tone: 'text-sky-300' },
-  locked: { icon: '🔒', label: 'Locked', tone: 'text-slate-500' },
+/** Labels: `learn:path.status.<status>`. */
+const STATUS: Readonly<Record<LessonStatus, { icon: string; tone: string }>> = {
+  completed: { icon: '✓', tone: 'text-emerald-300' },
+  available: { icon: '→', tone: 'text-sky-300' },
+  locked: { icon: '🔒', tone: 'text-slate-500' },
 };
 
 export function LearnPage() {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
+  const format = useFormat();
   const { clock } = useServices();
   const course = useCourse();
   const { state } = useLearning();
@@ -32,7 +37,7 @@ export function LearnPage() {
   if (state.status === 'error')
     return (
       <p role="alert" className="text-rose-300">
-        Your learning progress could not be loaded.
+        {t('loadError')}
       </p>
     );
   const progress = state.value;
@@ -45,15 +50,15 @@ export function LearnPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Learn"
-        title={course.title}
-        description={course.summary}
+        eyebrow={t('path.eyebrow')}
+        title={tx(course.title)}
+        description={tx(course.summary)}
         actions={
           next ? (
             <ButtonLink to={`/learn/${next.id}`}>
               {summary.completedLessons === 0
-                ? 'Start the first lesson'
-                : `Continue: ${next.title}`}
+                ? t('path.start')
+                : t('path.continue', { lesson: tx(next.title) })}
             </ButtonLink>
           ) : undefined
         }
@@ -62,20 +67,24 @@ export function LearnPage() {
         <div className="flex flex-col gap-6">
           <Card>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="font-semibold text-white">Your progress</h2>
-              <p className="font-mono text-sm text-slate-300">{formatPercent(summary.ratio)}</p>
+              <h2 className="font-semibold text-white">{t('path.progress')}</h2>
+              <p className="font-mono text-sm text-slate-300">{format.percent(summary.ratio)}</p>
             </div>
             <div className="mt-3">
               <ProgressBar
                 value={summary.completedLessons}
                 max={summary.totalLessons}
-                label="Lessons completed"
+                label={t('path.lessonsCompleted')}
                 tone="bg-violet-400"
               />
             </div>
             <p className="mt-2 text-sm text-slate-400">
-              {summary.completedLessons} / {summary.totalLessons} lessons completed ·{' '}
-              {summary.masteredConcepts} / {summary.totalConcepts} concepts mastered
+              {t('path.summary', {
+                lessons: summary.completedLessons,
+                totalLessons: summary.totalLessons,
+                concepts: summary.masteredConcepts,
+                totalConcepts: summary.totalConcepts,
+              })}
             </p>
           </Card>
 
@@ -87,9 +96,9 @@ export function LearnPage() {
             >
               <div>
                 <h2 id={`module-${module.id}`} className="text-lg font-semibold text-white">
-                  {module.title}
+                  {tx(module.title)}
                 </h2>
-                <p className="text-sm text-slate-400">{module.summary}</p>
+                <p className="text-sm text-slate-400">{tx(module.summary)}</p>
               </div>
               <ol className="flex flex-col gap-2">
                 {module.lessons.map((lesson, i) => {
@@ -103,16 +112,16 @@ export function LearnPage() {
                       </span>
                       <span className="flex flex-1 flex-col">
                         <span className="font-medium text-white">
-                          {i + 1}. {lesson.title}
+                          {i + 1}. {tx(lesson.title)}
                         </span>
-                        <span className="text-sm text-slate-400">{lesson.objective}</span>
+                        <span className="text-sm text-slate-400">{tx(lesson.objective)}</span>
                       </span>
                       <span className="text-right font-mono text-xs text-slate-400">
-                        {lesson.minutes} min
+                        {format.duration(lesson.minutes * 60_000)}
                         {record && (
                           <>
                             <br />
-                            best {formatPercent(record.bestScore)}
+                            {t('path.best', { score: format.percent(record.bestScore) })}
                           </>
                         )}
                       </span>
@@ -123,7 +132,18 @@ export function LearnPage() {
                       ? 'border-slate-800 bg-slate-950 opacity-70'
                       : 'border-slate-800 bg-slate-900/40 transition-colors hover:border-slate-600 focus-visible:outline-2 focus-visible:outline-sky-400'
                   } ${next?.id === lesson.id ? 'border-sky-400/50' : ''}`;
-                  const name = `${i + 1}. ${lesson.title}, ${meta.label.toLowerCase()}${record ? `, best ${formatPercent(record.bestScore)}` : ''}`;
+                  const name = record
+                    ? t('path.lessonLabelBest', {
+                        number: i + 1,
+                        title: tx(lesson.title),
+                        status: t(`path.status.${status}`),
+                        score: format.percent(record.bestScore),
+                      })
+                    : t('path.lessonLabel', {
+                        number: i + 1,
+                        title: tx(lesson.title),
+                        status: t(`path.status.${status}`),
+                      });
                   return (
                     <li key={lesson.id}>
                       {status === 'locked' ? (
@@ -143,29 +163,32 @@ export function LearnPage() {
           ))}
         </div>
 
-        <aside className="flex flex-col gap-4" aria-label="Review and mastery">
+        <aside className="flex flex-col gap-4" aria-label={t('path.aside')}>
           <Card className={due.length > 0 ? 'border-amber-400/40' : ''}>
-            <h2 className="font-semibold text-white">Review</h2>
+            <h2 className="font-semibold text-white">{t('path.review')}</h2>
             {due.length > 0 ? (
               <>
                 <p className="mt-1 text-sm text-slate-300">
-                  {due.length} concept{due.length === 1 ? '' : 's'} ready for a short review.
-                  Recalling things just as you start to forget them is what makes them last.
+                  {t('path.due', { count: due.length })}
                 </p>
                 <ButtonLink to="/learn/review" className="mt-3">
-                  Review now (≈{Math.min(4, due.length) * 2} min)
+                  {t('path.reviewNow', {
+                    duration: format.duration(Math.min(4, due.length) * 2 * 60_000),
+                  })}
                 </ButtonLink>
               </>
             ) : (
               <p className="mt-1 text-sm text-slate-400">
                 {upcoming
-                  ? `Nothing due. Next review ${relativeDay(upcoming.dueAt, now)}.`
-                  : 'Reviews appear here after you complete a lesson.'}
+                  ? t('path.nothingDue', {
+                      when: relativeDay(upcoming.dueAt, now, format.language),
+                    })
+                  : t('path.noReviews')}
               </p>
             )}
           </Card>
           <Card>
-            <h2 className="mb-3 font-semibold text-white">Mastery by concept</h2>
+            <h2 className="mb-3 font-semibold text-white">{t('path.masteryByConcept')}</h2>
             <div className="flex flex-col gap-4">
               {course.concepts
                 .filter((concept) => progress.mastery[concept.id] !== undefined)
@@ -177,10 +200,7 @@ export function LearnPage() {
                   />
                 ))}
               {Object.keys(progress.mastery).length === 0 && (
-                <p className="text-sm text-slate-400">
-                  Mastery grows from exercises you get right without help — clicking through does
-                  not count.
-                </p>
+                <p className="text-sm text-slate-400">{t('path.masteryEmpty')}</p>
               )}
             </div>
           </Card>

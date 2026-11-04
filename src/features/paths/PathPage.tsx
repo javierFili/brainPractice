@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { pathById, PATHS } from '@/content/paths';
 import { routeDefaults } from '@/domain/preferences';
@@ -10,12 +11,14 @@ import { Icon } from '@/components/ui/Icon';
 import { GameCard } from '@/features/catalog/GameCard';
 import { NotFound } from '@/features/shared/NotFound';
 import { useProgress } from '@/features/shared/useProgress';
+import { joinText, msg, type Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 
-const SETTING_WORDS: Readonly<Record<string, string>> = {
-  textSize: 'larger text',
-  comfort: 'comfortable controls',
-  relaxedByDefault: 'relaxed timing',
-  freePlay: 'every level open',
+const SETTING_WORDS: Readonly<Record<string, Text>> = {
+  textSize: msg('catalog:path.settings.textSize'),
+  comfort: msg('catalog:path.settings.comfort'),
+  relaxedByDefault: msg('catalog:path.settings.relaxedByDefault'),
+  freePlay: msg('catalog:path.settings.freePlay'),
 };
 
 /** A route: goals, curated games from the shared catalog, and optional suggested settings. */
@@ -25,7 +28,9 @@ export function PathPage() {
   const { getModule, progress } = useServices();
   const { preferences, update } = usePreferences();
   const { state } = useProgress(progress);
-  if (!path) return <NotFound message="This route does not exist." />;
+  const { t } = useTranslation('catalog');
+  const tx = useText();
+  if (!path) return <NotFound message={t('path.notFound')} />;
 
   const games = path.featured.flatMap((id) => {
     const module = getModule(id);
@@ -43,9 +48,9 @@ export function PathPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Route"
-        title={path.name}
-        description={path.intro}
+        eyebrow={t('path.eyebrow')}
+        title={tx(path.name)}
+        description={tx(path.intro)}
         actions={
           chosen ? (
             <Button
@@ -54,7 +59,7 @@ export function PathPage() {
                 update({ path: null });
               }}
             >
-              Leave this route
+              {t('path.leave')}
             </Button>
           ) : (
             <Button
@@ -62,7 +67,7 @@ export function PathPage() {
                 update({ path: path.id, ...defaults });
               }}
             >
-              Make this my route
+              {t('path.choose')}
             </Button>
           )
         }
@@ -73,13 +78,13 @@ export function PathPage() {
           className="rounded-2xl border border-line bg-surface p-5"
         >
           <h2 id="goals-title" className="mb-3 font-semibold text-ink">
-            What this route offers
+            {t('path.offers')}
           </h2>
           <ul className="flex flex-col gap-2">
-            {path.goals.map((goal) => (
-              <li key={goal} className="flex items-start gap-2 text-ink-soft">
+            {path.goals.map((goal, i) => (
+              <li key={i} className="flex items-start gap-2 text-ink-soft">
                 <Icon name="check" className="mt-0.5 h-5 w-5 text-success" />
-                {goal}
+                {tx(goal)}
               </li>
             ))}
           </ul>
@@ -88,39 +93,40 @@ export function PathPage() {
               <ButtonLink
                 to={`/games/${firstGame.id}/play/${suggestedLevel(state.status === 'ready' ? state.progress.games[firstGame.id] : undefined)}`}
               >
-                <Icon name="play" /> Start with {firstGame.name}
+                <Icon name="play" /> {t('path.startWith', { game: tx(firstGame.name) })}
               </ButtonLink>
               <ButtonLink to="/quick" variant="secondary">
-                {path.suggestedMinutes}-minute mixed session
+                {t('path.mixed', { count: path.suggestedMinutes })}
               </ButtonLink>
             </div>
           )}
         </section>
         <aside
-          aria-label="About this route"
+          aria-label={t('path.about')}
           className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-5 text-sm"
         >
-          <p className="font-semibold text-ink">{chosen ? 'This is your route' : 'Good to know'}</p>
-          {path.notes.map((note) => (
-            <p key={note} className="text-ink-soft">
-              {note}
+          <p className="font-semibold text-ink">
+            {chosen ? t('path.yours') : t('path.goodToKnow')}
+          </p>
+          {path.notes.map((note, i) => (
+            <p key={i} className="text-ink-soft">
+              {tx(note)}
             </p>
           ))}
           {settingNames.length > 0 && (
             <p className="text-ink-muted">
-              Choosing it turns on: {settingNames.join(', ')}. You can change each one in{' '}
-              <Link to="/settings" className="text-brand underline">
-                Settings
-              </Link>
-              .
+              <Trans
+                t={t}
+                i18nKey="path.turnsOn"
+                values={{ settings: tx(joinText(settingNames, ', ')) }}
+                components={{ link: <Link to="/settings" className="text-brand underline" /> }}
+              />
             </p>
           )}
-          <p className="text-ink-muted">
-            A route only suggests games. Every game and level of the catalog stays available.
-          </p>
+          <p className="text-ink-muted">{t('path.onlySuggests')}</p>
         </aside>
       </div>
-      <h2 className="mb-3 text-lg font-semibold text-ink">Activities in this route</h2>
+      <h2 className="mb-3 text-lg font-semibold text-ink">{t('path.activities')}</h2>
       <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {games.map((d, i) => (
           <li key={d.id}>
@@ -128,7 +134,7 @@ export function PathPage() {
               definition={d}
               progress={state.status === 'ready' ? state.progress.games[d.id] : undefined}
               freePlay={preferences.freePlay}
-              {...(i < 3 ? { badge: 'Start here' } : {})}
+              {...(i < 3 ? { badge: t('path.startHere') } : {})}
             />
           </li>
         ))}
@@ -139,12 +145,14 @@ export function PathPage() {
 
 export function PathsIndexPage() {
   const { preferences } = usePreferences();
+  const { t } = useTranslation('catalog');
+  const tx = useText();
   return (
     <>
       <PageHeader
-        eyebrow="Routes"
-        title="Choose a route"
-        description="Routes pick games and settings for different ages and interests. They are optional, can be changed any time, and never limit what you can play."
+        eyebrow={t('paths.eyebrow')}
+        title={t('paths.title')}
+        description={t('paths.description')}
       />
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {PATHS.map((p) => (
@@ -154,12 +162,12 @@ export function PathsIndexPage() {
               className="flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-5 hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand"
             >
               <span className="text-lg font-semibold text-ink">
-                {p.name}{' '}
+                {tx(p.name)}{' '}
                 {preferences.path === p.id && (
-                  <span className="text-sm text-brand">· your route</span>
+                  <span className="text-sm text-brand">{t('paths.yours')}</span>
                 )}
               </span>
-              <span className="text-ink-soft">{p.tagline}</span>
+              <span className="text-ink-soft">{tx(p.tagline)}</span>
             </Link>
           </li>
         ))}

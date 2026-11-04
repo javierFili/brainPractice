@@ -1,3 +1,4 @@
+export * from './grid';
 export * from './levels';
 export * from './objects';
 export * from './options';

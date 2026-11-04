@@ -1,6 +1,6 @@
 import type { GameDefinition } from '@/domain/game';
 import { weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { classifyTheChange, findTheChange, sameOrDifferent } from './generators/challenges';
 import type { CodeScanDraft } from './generators/draft';
 import { CODE_SCAN_LEVELS } from './levels';
@@ -19,10 +19,9 @@ export const CODE_SCAN_GAME_ID = gameIdOf('code-scan');
 
 export const codeScanGame: GameDefinition<SpeedChallenge, CodeScanProfile> = {
   id: CODE_SCAN_GAME_ID,
-  name: 'Code Comparison',
-  tagline: 'Spot the one token that changed.',
-  description:
-    'Compare an original pseudocode snippet with its copy and spot the single changed token — an operator, a swapped variable, an off-by-one number, a misspelled name or a negated condition. Trains processing speed, rapid comparison and fast error detection.',
+  name: msg('programming:codeScan.name'),
+  tagline: msg('programming:codeScan.tagline'),
+  description: msg('programming:codeScan.description'),
   area: 'speed',
   skills: ['attention', 'debugging', 'pattern-recognition'],
   meta: {
@@ -33,16 +32,15 @@ export const codeScanGame: GameDefinition<SpeedChallenge, CodeScanProfile> = {
     keyboard: 'full',
     relaxedFriendly: false,
     measures: ['accuracy', 'response-time', 'streak'],
-    scoringSummary:
-      'Speed is the trained ability: the pace bonus is doubled and pace is 40% of the performance index, but a wrong answer costs points.',
+    scoringSummary: msg('programming:codeScan.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'The original is on the left (or on top), the copy on the right (or below).',
-    'When the snippets differ, exactly one token of one line changed; everything else is identical.',
-    'To point at a changed line, click it (or focus it with Tab and press Enter) in the copy.',
-    'Change kinds: operator (< → <=, + → -, and → or), variable swapped for another one in the snippet, number changed, name misspelled, or “not” added to a condition.',
-    'Speed counts more than in other games — but a wrong answer costs points, so stay precise.',
+    msg('programming:codeScan.instructions.layout'),
+    msg('programming:codeScan.instructions.oneToken'),
+    msg('programming:codeScan.instructions.point'),
+    msg('programming:codeScan.instructions.kinds'),
+    msg('programming:codeScan.instructions.speed'),
   ],
   levels: CODE_SCAN_LEVELS,
   // Speed is the trained ability: double the default speed bonus and give pace 40% of the index.

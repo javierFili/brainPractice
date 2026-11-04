@@ -1,10 +1,10 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
 import type { Draft } from '@/games/logic/shared/content';
 import { ROBOT_LEVELS } from './levels';
-import { cellLabel, FACING_WORDS, run } from './robot';
+import { cellLabel, facingLabel, run } from './robot';
 import type {
   Block,
   Facing,
@@ -91,16 +91,15 @@ function build(random: RandomGenerator, profile: RobotProfile): RobotContent | n
   const end = (trace.at(-1) as (typeof trace)[number]).state.cell;
   if (end === startCell) return null;
   // Conditions must matter: an "until blocked" that never moves is pointless.
-  if (trace.some((t) => t.text.startsWith('move until blocked (0'))) return null;
+  if (trace.some((t) => t.moved === 0)) return null;
   return content;
 }
 
 export const algorithmicReasoningGame: GameDefinition<RobotChallenge, RobotProfile> = {
   id: ALGORITHMIC_REASONING_ID,
-  name: 'Algorithmic Reasoning',
-  tagline: 'Follow the robot’s instructions step by step.',
-  description:
-    'A robot follows a list of plain instructions: move forward, turn, do something several times, or check for a wall. Follow it in your head and point to the square where it stops. Higher levels add repeats, repeats inside repeats and checks for walls.',
+  name: msg('logic:algorithmicReasoning.name'),
+  tagline: msg('logic:algorithmicReasoning.tagline'),
+  description: msg('logic:algorithmicReasoning.description'),
   area: 'logic',
   skills: ['algorithmic-thinking', 'sequential-thinking', 'spatial-reasoning', 'working-memory'],
   meta: {
@@ -111,30 +110,36 @@ export const algorithmicReasoningGame: GameDefinition<RobotChallenge, RobotProfi
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'The robot’s path is simulated exactly. Your result is the share of end squares found correctly; there is no time limit.',
+    scoringSummary: msg('logic:algorithmicReasoning.scoringSummary'),
     feedback: 'explain',
-    accessibilityNotes:
-      'Each square is named by row and column, and the robot’s start and direction are spoken, so the path can be followed without seeing the grid.',
+    accessibilityNotes: msg('logic:algorithmicReasoning.accessibilityNotes'),
   },
   instructions: [
-    'The arrow shows where the robot starts and which way it faces.',
-    '“Turn left” and “turn right” change the direction it faces; they do not move it.',
-    'Walls (striped squares) and the edge block the way. The robot never walks into them.',
-    'Follow every instruction in order, then press the square where the robot stops.',
+    msg('logic:algorithmicReasoning.instructions.1'),
+    msg('logic:algorithmicReasoning.instructions.2'),
+    msg('logic:algorithmicReasoning.instructions.3'),
+    msg('logic:algorithmicReasoning.instructions.4'),
   ],
-  simpleInstructions: 'Follow the arrows in your head and tap where the robot ends up.',
+  simpleInstructions: msg('logic:algorithmicReasoning.simpleInstructions'),
   levels: ROBOT_LEVELS,
   generate({ identity, profile, random }) {
     const content = retryGeneration('robot program', () => build(random, profile));
     const trace = run(content) ?? [];
     const end = (trace.at(-1) as (typeof trace)[number]).state.cell;
-    const start = `${cellLabel(content.start.cell, content.size)} facing ${FACING_WORDS[content.start.facing]}`;
+
     const draft: Draft<RobotChallenge> = {
-      prompt: 'Where does the robot stop? Press that square.',
+      prompt: msg('logic:algorithmicReasoning.prompt'),
       content,
       response: locateResponse(content.size * content.size, end),
-      explanation: `The robot starts at ${start}. Then: ${trace.map((t) => t.text).join('; ')}. It stops at ${cellLabel(end, content.size)}.`,
+      explanation: msg('logic:algorithmicReasoning.explanation', {
+        start: cellLabel(content.start.cell, content.size),
+        facing: facingLabel(content.start.facing),
+        steps: joinText(
+          trace.map((t) => t.text),
+          '; ',
+        ),
+        end: cellLabel(end, content.size),
+      }),
       skills: ['algorithmic-thinking', 'sequential-thinking', 'spatial-reasoning'],
     };
     return { ...identity, ...draft, timing: profile.timing };

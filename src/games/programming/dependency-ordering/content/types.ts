@@ -8,9 +8,9 @@ export type Need = readonly [string, string];
 
 export interface DependencyContent {
   readonly kind: DependencyKind;
-  /** What the tasks are (heading): "Monorepo build", "Kitchen prep", … */
+  /** Theme id (`monorepo`, `kitchen`, `release`); the heading is shown with `themeLabel`. */
   readonly theme: string;
-  /** Tasks in a neutral (alphabetical) order. */
+  /** Task ids in a neutral (alphabetical) order; shown with `taskLabel`. */
   readonly tasks: readonly string[];
   readonly needs: readonly Need[];
   /** Tasks already finished (ready-next); empty otherwise. */

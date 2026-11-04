@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { DualMemoryProfile } from './types';
 
@@ -14,7 +15,7 @@ const FOUR = { where: 1, 'which-nth': 1, 'which-here': 1, 'where-nth': 1 } as co
  */
 export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
   {
-    objective: 'Remember where and in what order 3 objects appeared.',
+    objective: msg('memory:dualMemoryChallenge.levels.1'),
     challengeCount: 5,
     kinds: TWO,
     objects: 3,
@@ -24,7 +25,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(3, 1600),
   },
   {
-    objective: 'Remember the place and order of 4 objects.',
+    objective: msg('memory:dualMemoryChallenge.levels.2'),
     challengeCount: 5,
     kinds: TWO,
     objects: 4,
@@ -34,7 +35,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(4, 1500),
   },
   {
-    objective: 'Also say which object sat in a marked cell.',
+    objective: msg('memory:dualMemoryChallenge.levels.3'),
     challengeCount: 5,
     kinds: THREE,
     objects: 4,
@@ -44,7 +45,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(4, 1500),
   },
   {
-    objective: 'Place and order of 5 objects on a 4×4 grid.',
+    objective: msg('memory:dualMemoryChallenge.levels.4'),
     challengeCount: 5,
     kinds: THREE,
     objects: 5,
@@ -54,7 +55,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(5, 1400),
   },
   {
-    objective: 'Add the hardest question: where was the object shown in a given turn?',
+    objective: msg('memory:dualMemoryChallenge.levels.5'),
     challengeCount: 5,
     kinds: FOUR,
     objects: 5,
@@ -64,7 +65,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(5, 1400),
   },
   {
-    objective: 'Six objects of the same family, any question.',
+    objective: msg('memory:dualMemoryChallenge.levels.6'),
     challengeCount: 5,
     kinds: FOUR,
     objects: 6,
@@ -74,7 +75,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(6, 1300),
   },
   {
-    objective: 'Six objects at a quicker pace.',
+    objective: msg('memory:dualMemoryChallenge.levels.7'),
     challengeCount: 5,
     kinds: FOUR,
     objects: 6,
@@ -84,7 +85,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(6, 1150),
   },
   {
-    objective: 'Seven objects of one family on a 4×4 grid.',
+    objective: msg('memory:dualMemoryChallenge.levels.8'),
     challengeCount: 5,
     kinds: FOUR,
     objects: 7,
@@ -94,7 +95,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(7, 1100),
   },
   {
-    objective: 'Seven objects spread over a 5×5 grid.',
+    objective: msg('memory:dualMemoryChallenge.levels.9'),
     challengeCount: 5,
     kinds: FOUR,
     objects: 7,
@@ -104,7 +105,7 @@ export const DUAL_MEMORY_LEVELS = defineLevels<DualMemoryProfile>([
     timing: timing(7, 1050),
   },
   {
-    objective: 'Eight objects of one family, quickly, on a 5×5 grid.',
+    objective: msg('memory:dualMemoryChallenge.levels.10'),
     challengeCount: 5,
     kinds: FOUR,
     objects: 8,

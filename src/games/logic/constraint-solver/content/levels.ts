@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ConstraintProfile } from './types';
 
@@ -7,7 +8,7 @@ import type { ConstraintProfile } from './types';
  */
 export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
   {
-    objective: 'A 3×3 grid with most numbers given.',
+    objective: msg('logic:constraintSolver.levels.1'),
     challengeCount: 5,
     timing: untimed(20_000),
     size: 3,
@@ -16,7 +17,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 3×3 grid with fewer numbers.',
+    objective: msg('logic:constraintSolver.levels.2'),
     challengeCount: 5,
     timing: untimed(30_000),
     size: 3,
@@ -25,7 +26,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 4×4 grid.',
+    objective: msg('logic:constraintSolver.levels.3'),
     challengeCount: 5,
     timing: untimed(40_000),
     size: 4,
@@ -34,7 +35,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 4×4 grid with boxes.',
+    objective: msg('logic:constraintSolver.levels.4'),
     challengeCount: 5,
     timing: untimed(50_000),
     size: 4,
@@ -43,7 +44,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 4×4 grid with “smaller than” clues.',
+    objective: msg('logic:constraintSolver.levels.5'),
     challengeCount: 4,
     timing: untimed(70_000),
     size: 4,
@@ -52,7 +53,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 4,
   },
   {
-    objective: 'A 5×5 grid.',
+    objective: msg('logic:constraintSolver.levels.6'),
     challengeCount: 4,
     timing: untimed(60_000),
     size: 5,
@@ -61,7 +62,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 5×5 grid with “smaller than” clues.',
+    objective: msg('logic:constraintSolver.levels.7'),
     challengeCount: 4,
     timing: untimed(100_000),
     size: 5,
@@ -70,7 +71,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 6,
   },
   {
-    objective: 'A 6×6 grid with boxes.',
+    objective: msg('logic:constraintSolver.levels.8'),
     challengeCount: 4,
     timing: untimed(90_000),
     size: 6,
@@ -79,7 +80,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 6×6 grid with boxes and few numbers.',
+    objective: msg('logic:constraintSolver.levels.9'),
     challengeCount: 3,
     timing: untimed(120_000),
     size: 6,
@@ -88,7 +89,7 @@ export const CONSTRAINT_LEVELS = defineLevels<ConstraintProfile>([
     inequalities: 0,
   },
   {
-    objective: 'A 6×6 grid with boxes and “smaller than” clues.',
+    objective: msg('logic:constraintSolver.levels.10'),
     challengeCount: 3,
     timing: untimed(150_000),
     size: 6,

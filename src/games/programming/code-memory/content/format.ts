@@ -25,8 +25,3 @@ export const cellPosition = (index: number, cols: number) => ({
   row: Math.floor(index / cols) + 1,
   col: (index % cols) + 1,
 });
-
-export const describeCell = (index: number, cols: number) => {
-  const { row, col } = cellPosition(index, cols);
-  return `row ${row}, column ${col}`;
-};

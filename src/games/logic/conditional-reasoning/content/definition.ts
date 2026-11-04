@@ -8,10 +8,10 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { capitalize, fixedChoice, type Draft } from '@/games/logic/shared/content';
+import { gameIdOf, joinText, msg, type Message, type Text } from '@/domain/shared';
+import { fixedChoice, type Draft } from '@/games/logic/shared/content';
 import { CONDITIONAL_LEVELS } from './levels';
-import { describePremise, describeWorld, models, sentence, verdict } from './logic';
+import { describePremise, describeWorld, literalId, models, verdict } from './logic';
 import type {
   ConditionalChallenge,
   ConditionalContent,
@@ -25,26 +25,26 @@ import type {
 
 export const CONDITIONAL_REASONING_ID = gameIdOf('conditional-reasoning');
 
-/** Neutral everyday sentences with their negations. */
-const ATOMS: readonly (readonly [string, string])[] = [
-  ['the lamp is on', 'the lamp is not on'],
-  ['the door is open', 'the door is not open'],
-  ['the bell rings', 'the bell does not ring'],
-  ['the flag is up', 'the flag is not up'],
-  ['the train is late', 'the train is not late'],
-  ['the box is full', 'the box is not full'],
-  ['it is raining', 'it is not raining'],
-  ['the shop is open', 'the shop is not open'],
-  ['the dog barks', 'the dog does not bark'],
-  ['the kettle is hot', 'the kettle is not hot'],
-  ['the gate is locked', 'the gate is not locked'],
-  ['the radio is playing', 'the radio is not playing'],
+/** Neutral everyday sentences (ids; wording and negation per language in the `logic` namespace). */
+const ATOMS: readonly string[] = [
+  'lamp',
+  'door',
+  'bell',
+  'flag',
+  'train',
+  'box',
+  'rain',
+  'shop',
+  'dog',
+  'kettle',
+  'gate',
+  'radio',
 ];
 
-export const VERDICT_LABELS: Record<Verdict, string> = {
-  true: 'Must be true',
-  false: 'Must be false',
-  unknown: "Can't tell",
+export const VERDICT_LABELS: Record<Verdict, Message> = {
+  true: msg('logic:conditionalReasoning.verdict.true'),
+  false: msg('logic:conditionalReasoning.verdict.false'),
+  unknown: msg('logic:conditionalReasoning.verdict.unknown'),
 };
 
 const lit = (atom: number, value: boolean): Literal => ({ atom, value });
@@ -145,51 +145,42 @@ function mixed(random: RandomGenerator, profile: ConditionalProfile): Candidate 
   };
 }
 
-const PATTERN_NOTES: Record<Exclude<Pattern, 'none'>, string> = {
-  'affirm-antecedent':
-    'The rule applies, because its “if” part is true, so its “then” part follows.',
-  'deny-consequent':
-    'If the “if” part were true, the “then” part would be true too — but it is not, so the “if” part cannot be true.',
-  'affirm-consequent':
-    'Knowing the “then” part is a common trap: it could be true for some other reason, so the “if” part is not settled.',
-  'deny-antecedent':
-    'The rule only says what happens when its “if” part is true. Here it is not, so the rule tells us nothing.',
-};
+const note = (path: string) => msg(`logic:conditionalReasoning.notes.${path}`);
 
-const WORDING_NOTES: Partial<Record<Structure, string>> = {
-  unless: '“X unless Y” means: if Y is not true, then X is true.',
-  'only-if': '“X only if Y” means: if X is true, then Y is true.',
-};
-
-export function explain(content: ConditionalContent, answer: Verdict): string {
+export function explain(content: ConditionalContent, answer: Verdict): Text {
   const atomCount = content.atoms.length;
   const worlds = models(atomCount, content.premises);
-  const asked = `“${sentence(content.atoms, content.question)}”`;
-  const notes = [
+  const asked = literalId(content.atoms, content.question);
+  const notes: Message[] = [
     ...(content.kind === 'mixed'
       ? content.premises.some((p) => p.type === 'unless')
-        ? [WORDING_NOTES.unless as string]
+        ? [note('unless')]
         : []
-      : [WORDING_NOTES[content.kind] ?? '']),
+      : content.kind === 'unless' || content.kind === 'only-if'
+        ? [note(content.kind === 'unless' ? 'unless' : 'onlyIf')]
+        : []),
     ...(content.premises.some((p) => p.type === 'only-if') && content.kind === 'mixed'
-      ? [WORDING_NOTES['only-if'] as string]
+      ? [note('onlyIf')]
       : []),
-    content.pattern === 'none' ? '' : PATTERN_NOTES[content.pattern],
-  ].filter((note) => note !== '');
+    ...(content.pattern === 'none' ? [] : [note(content.pattern)]),
+  ];
   const holds = (w: readonly boolean[]) => w[content.question.atom] === content.question.value;
   const verdictText =
     answer === 'unknown'
-      ? `Both are possible: ${asked} is true if ${describeWorld(content.atoms, worlds.find(holds) as boolean[])}, and false if ${describeWorld(content.atoms, worlds.find((w) => !holds(w)) as boolean[])}. So you can't tell.`
-      : `Every situation that fits all the statements has ${asked} ${answer === 'true' ? 'true' : 'false'}, so it ${answer === 'true' ? 'must be true' : 'must be false'}.`;
-  return [...notes, verdictText].join(' ');
+      ? msg('logic:conditionalReasoning.because.unknown', {
+          a: asked,
+          yes: describeWorld(content.atoms, worlds.find(holds) as boolean[]),
+          no: describeWorld(content.atoms, worlds.find((w) => !holds(w)) as boolean[]),
+        })
+      : msg(`logic:conditionalReasoning.because.${answer}`, { a: asked });
+  return joinText([...notes, verdictText], ' ');
 }
 
 export const conditionalReasoningGame: GameDefinition<ConditionalChallenge, ConditionalProfile> = {
   id: CONDITIONAL_REASONING_ID,
-  name: 'Conditional Reasoning',
-  tagline: 'If this, then that — what really follows?',
-  description:
-    'Read a few “if … then …” statements and facts, then decide whether a sentence must be true, must be false, or cannot be decided. Higher levels chain rules together and use “unless” and “only if”.',
+  name: msg('logic:conditionalReasoning.name'),
+  tagline: msg('logic:conditionalReasoning.tagline'),
+  description: msg('logic:conditionalReasoning.description'),
   area: 'logic',
   skills: ['logical-reasoning', 'instruction-comprehension', 'problem-solving'],
   meta: {
@@ -200,17 +191,16 @@ export const conditionalReasoningGame: GameDefinition<ConditionalChallenge, Cond
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each answer is checked against every situation that fits the statements. Your result is the share of answers that are correct; there is no time limit.',
+    scoringSummary: msg('logic:conditionalReasoning.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Treat every statement as true, even if it sounds unusual.',
-    'Use only what the statements say — nothing else.',
-    '“Must be true” or “must be false” means no other situation is possible. Otherwise choose “Can’t tell”.',
-    'Careful: “if A, then B” does not mean “if B, then A”.',
+    msg('logic:conditionalReasoning.instructions.1'),
+    msg('logic:conditionalReasoning.instructions.2'),
+    msg('logic:conditionalReasoning.instructions.3'),
+    msg('logic:conditionalReasoning.instructions.4'),
   ],
-  simpleInstructions: 'Use only the rules to decide: yes for sure, no for sure, or can’t tell.',
+  simpleInstructions: msg('logic:conditionalReasoning.simpleInstructions'),
   levels: CONDITIONAL_LEVELS,
   generate({ identity, profile, random }) {
     const target = pick(random, profile.verdicts);
@@ -234,7 +224,9 @@ export const conditionalReasoningGame: GameDefinition<ConditionalChallenge, Cond
       pattern: candidate.pattern,
     };
     const draft: Draft<ConditionalChallenge> = {
-      prompt: `Is this true? “${capitalize(sentence(atoms, candidate.question))}.”`,
+      prompt: msg('logic:conditionalReasoning.prompt', {
+        a: literalId(atoms, candidate.question),
+      }),
       content,
       response: fixedChoice(
         ['true', 'false', 'unknown'].map((v) => VERDICT_LABELS[v as Verdict]),

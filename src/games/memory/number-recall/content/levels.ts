@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { NumberRecallProfile } from './types';
 
@@ -11,49 +12,49 @@ const look = (digits: number, msPerDigit: number) =>
  */
 export const NUMBER_RECALL_LEVELS = defineLevels<NumberRecallProfile>([
   {
-    objective: 'Type back a 4-digit code shown as two pairs.',
+    objective: msg('memory:numberRecall.levels.1'),
     challengeCount: 5,
     variants: [{ kind: 'type-back', groups: [2, 2] }],
     timing: look(4, 900),
   },
   {
-    objective: 'Type back a 5-digit number in two chunks.',
+    objective: msg('memory:numberRecall.levels.2'),
     challengeCount: 5,
     variants: [{ kind: 'type-back', groups: [2, 3] }],
     timing: look(5, 850),
   },
   {
-    objective: 'Type back a 6-digit number in two chunks.',
+    objective: msg('memory:numberRecall.levels.3'),
     challengeCount: 5,
     variants: [{ kind: 'type-back', groups: [3, 3] }],
     timing: look(6, 800),
   },
   {
-    objective: 'Remember three pairs of digits and the order they came in.',
+    objective: msg('memory:numberRecall.levels.4'),
     challengeCount: 5,
     variants: [{ kind: 'which-group', groups: [2, 2, 2] }],
     timing: look(6, 800),
   },
   {
-    objective: 'Type back a 7-digit phone number.',
+    objective: msg('memory:numberRecall.levels.5'),
     challengeCount: 5,
     variants: [{ kind: 'type-back', groups: [3, 4] }],
     timing: look(7, 750),
   },
   {
-    objective: 'Hold two 4-digit numbers; one of them will be asked.',
+    objective: msg('memory:numberRecall.levels.6'),
     challengeCount: 5,
     variants: [{ kind: 'two-numbers', groups: [2, 2] }],
     timing: look(8, 750),
   },
   {
-    objective: 'Remember three chunks of three digits in order.',
+    objective: msg('memory:numberRecall.levels.7'),
     challengeCount: 5,
     variants: [{ kind: 'which-group', groups: [3, 3, 3] }],
     timing: look(9, 700),
   },
   {
-    objective: 'Type back a 9-digit number, or hold two 5-digit numbers.',
+    objective: msg('memory:numberRecall.levels.8'),
     challengeCount: 5,
     variants: [
       { kind: 'type-back', groups: [3, 3, 3] },
@@ -62,13 +63,13 @@ export const NUMBER_RECALL_LEVELS = defineLevels<NumberRecallProfile>([
     timing: look(10, 650),
   },
   {
-    objective: 'Hold two 6-digit numbers at once.',
+    objective: msg('memory:numberRecall.levels.9'),
     challengeCount: 4,
     variants: [{ kind: 'two-numbers', groups: [3, 3] }],
     timing: look(12, 600),
   },
   {
-    objective: 'Four chunks in order, or two 6-digit numbers: any can be asked.',
+    objective: msg('memory:numberRecall.levels.10'),
     challengeCount: 4,
     variants: [
       { kind: 'which-group', groups: [3, 3, 3, 3] },

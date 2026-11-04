@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { RobotProfile } from './types';
 
@@ -7,7 +8,7 @@ import type { RobotProfile } from './types';
  */
 export const ROBOT_LEVELS = defineLevels<RobotProfile>([
   {
-    objective: 'Move and turn on a small grid.',
+    objective: msg('logic:algorithmicReasoning.levels.1'),
     challengeCount: 5,
     timing: untimed(20_000),
     size: 4,
@@ -16,7 +17,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 2, turn: 1 },
   },
   {
-    objective: 'A few more steps, and walls.',
+    objective: msg('logic:algorithmicReasoning.levels.2'),
     challengeCount: 5,
     timing: untimed(25_000),
     size: 4,
@@ -25,7 +26,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 2, turn: 1 },
   },
   {
-    objective: 'Do the same thing several times.',
+    objective: msg('logic:algorithmicReasoning.levels.3'),
     challengeCount: 5,
     timing: untimed(30_000),
     size: 5,
@@ -34,7 +35,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 1, turn: 1, repeat: 2 },
   },
   {
-    objective: 'Keep going until something blocks the way.',
+    objective: msg('logic:algorithmicReasoning.levels.4'),
     challengeCount: 5,
     timing: untimed(35_000),
     size: 5,
@@ -43,7 +44,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 1, turn: 2, 'until-blocked': 2 },
   },
   {
-    objective: 'Check for a wall before moving.',
+    objective: msg('logic:algorithmicReasoning.levels.5'),
     challengeCount: 5,
     timing: untimed(40_000),
     size: 5,
@@ -52,7 +53,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 1, turn: 1, 'if-blocked': 2, repeat: 1 },
   },
   {
-    objective: 'Repeats and wall checks together.',
+    objective: msg('logic:algorithmicReasoning.levels.6'),
     challengeCount: 5,
     timing: untimed(45_000),
     size: 6,
@@ -61,7 +62,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 1, turn: 1, repeat: 2, 'if-blocked': 2, 'until-blocked': 1 },
   },
   {
-    objective: 'Repeats inside repeats.',
+    objective: msg('logic:algorithmicReasoning.levels.7'),
     challengeCount: 5,
     timing: untimed(50_000),
     size: 6,
@@ -70,7 +71,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     blocks: { forward: 1, turn: 1, 'nested-repeat': 2, 'if-blocked': 1 },
   },
   {
-    objective: 'Longer programs on a 6×6 grid.',
+    objective: msg('logic:algorithmicReasoning.levels.8'),
     challengeCount: 5,
     timing: untimed(60_000),
     size: 6,
@@ -86,7 +87,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     },
   },
   {
-    objective: 'A 7×7 grid with many walls.',
+    objective: msg('logic:algorithmicReasoning.levels.9'),
     challengeCount: 5,
     timing: untimed(70_000),
     size: 7,
@@ -102,7 +103,7 @@ export const ROBOT_LEVELS = defineLevels<RobotProfile>([
     },
   },
   {
-    objective: 'Long programs mixing everything.',
+    objective: msg('logic:algorithmicReasoning.levels.10'),
     challengeCount: 5,
     timing: untimed(80_000),
     size: 7,

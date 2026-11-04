@@ -33,7 +33,7 @@ describe('Multi-Choice Processing content', () => {
       expect(options.map((o) => o.label)).toEqual(
         directionsOf(FLANKER_LEVELS[level].directionCount).map(directionLabel),
       );
-      expect(options.find((o) => o.id === response.solution.optionId)?.label).toBe(
+      expect(options.find((o) => o.id === response.solution.optionId)?.label).toEqual(
         directionLabel(expected),
       );
       expect(row).toHaveLength(FLANKER_LEVELS[level].rowLength);

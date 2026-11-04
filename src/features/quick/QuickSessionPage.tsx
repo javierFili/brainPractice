@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { pathById } from '@/content/paths';
 import { planQuickSession, type QuickStep } from '@/domain/insights';
@@ -15,11 +16,11 @@ import { SessionRunner } from '@/features/play/SessionRunner';
 import { saveSessionResult } from '@/features/play/usePersistResult';
 import { catalogEntries, categoriesFor } from '@/features/shared/catalog';
 import { CATEGORIES } from '@/features/shared/categories';
-import { formatDuration, formatPercent } from '@/features/shared/format';
 import { LoadError } from '@/features/shared/LoadError';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { useRecordActivity } from '@/features/shared/useProfile';
 import { useProgress } from '@/features/shared/useProgress';
+import { useFormat, useText } from '@/i18n';
 
 const isQuickMinutes = (value: number): value is QuickSessionMinutes =>
   (QUICK_SESSION_MINUTES as readonly number[]).includes(value);
@@ -43,6 +44,8 @@ function QuickRun({
 }) {
   const { engine, getModule, progress } = useServices();
   const recordActivity = useRecordActivity();
+  const { t } = useTranslation('home');
+  const tx = useText();
   const start = useCallback(
     (step: QuickStep) =>
       engine.startSession({
@@ -79,23 +82,23 @@ function QuickRun({
 
   const step = run.steps[run.index] as QuickStep;
   const module = getModule(step.gameId);
-  if (!module) return <p role="alert">This activity is not available.</p>;
+  if (!module) return <p role="alert">{t('quick.unavailable')}</p>;
   const meta = CATEGORIES[module.definition.meta.category];
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <p className="text-sm text-ink-muted">
-          Activity {run.index + 1} of {run.steps.length} ·{' '}
-          <span className={meta.text}>{meta.label}</span>
+          {t('quick.activityOf', { index: run.index + 1, total: run.steps.length })}{' '}
+          <span className={meta.text}>{tx(meta.label)}</span>
         </p>
-        <ProgressBar value={run.index} max={run.steps.length} label="Quick session progress" />
+        <ProgressBar value={run.index} max={run.steps.length} label={t('quick.progress')} />
       </div>
       <SessionRunner
         key={run.index}
         module={module}
         session={run.session}
         onFinished={finished}
-        endLabel="End quick session"
+        endLabel={t('quick.end')}
       />
     </div>
   );
@@ -103,6 +106,13 @@ function QuickRun({
 
 function Summary({ results, onAgain }: { results: readonly GameResult[]; onAgain: () => void }) {
   const { getModule } = useServices();
+  const { t } = useTranslation('home');
+  const tx = useText();
+  const format = useFormat();
+  const name = (id: string) => {
+    const definition = getModule(id)?.definition;
+    return definition ? tx(definition.name) : id;
+  };
   const played = results.filter((r) => r.metrics.attempted > 0);
   const total = played.reduce((s, r) => s + r.metrics.attempted, 0);
   const correct = played.reduce((s, r) => s + r.metrics.correct, 0);
@@ -110,39 +120,45 @@ function Summary({ results, onAgain }: { results: readonly GameResult[]; onAgain
   return (
     <section aria-labelledby="quick-done" className="flex flex-col gap-5">
       <h2 id="quick-done" className="text-2xl font-semibold text-ink">
-        Session complete
+        {t('quick.done')}
       </h2>
       <p className="text-ink-soft">
-        {played.length} {played.length === 1 ? 'activity' : 'activities'} · {formatDuration(time)} ·{' '}
         {total === 0
-          ? 'nothing answered'
-          : `${correct} of ${total} correct (${formatPercent(correct / total)})`}
+          ? t('quick.summaryEmpty', { count: played.length, time: format.duration(time) })
+          : t('quick.summary', {
+              count: played.length,
+              time: format.duration(time),
+              correct,
+              total,
+              percent: format.percent(correct / total),
+            })}
       </p>
       <ul className="grid gap-3 sm:grid-cols-2">
         {results.map((r, i) => (
           <li key={`${r.gameId}-${i}`} className="rounded-xl border border-line bg-surface p-4">
             <p className="font-semibold text-ink">
-              {getModule(r.gameId)?.definition.name} · level {r.level}
+              {t('quick.gameLevel', { game: name(r.gameId), level: r.level })}
             </p>
             <p className="text-sm text-ink-soft">
               {r.metrics.attempted === 0
-                ? 'Not answered'
-                : `${r.metrics.correct}/${r.metrics.attempted} correct · performance ${r.score.performanceIndex}/100`}
-              {r.completed ? '' : ' · ended early'}
+                ? t(r.completed ? 'quick.notAnswered' : 'quick.notAnsweredEarly')
+                : t(r.completed ? 'quick.result' : 'quick.resultEarly', {
+                    correct: r.metrics.correct,
+                    attempted: r.metrics.attempted,
+                    performance: r.score.performanceIndex,
+                  })}
             </p>
           </li>
         ))}
       </ul>
-      <p className="text-sm text-ink-muted">
-        Each activity was saved to its game’s history. Quick blocks are shorter than full sessions.
-      </p>
+      <p className="text-sm text-ink-muted">{t('quick.saved')}</p>
       <div className="flex flex-wrap gap-2">
-        <Button onClick={onAgain}>Another quick session</Button>
+        <Button onClick={onAgain}>{t('quick.again')}</Button>
         <ButtonLink to="/progress" variant="secondary">
-          See my progress
+          {t('quick.seeProgress')}
         </ButtonLink>
         <ButtonLink to="/" variant="ghost">
-          Home
+          {t('quick.home')}
         </ButtonLink>
       </div>
     </section>
@@ -162,6 +178,8 @@ function Planner({ progress }: { progress: UserProgress }) {
     | { kind: 'done'; results: readonly GameResult[] }
   >({ kind: 'choose' });
   const path = pathById(preferences.path);
+  const { t } = useTranslation('home');
+  const tx = useText();
 
   const plan = () =>
     planQuickSession({
@@ -199,10 +217,10 @@ function Planner({ progress }: { progress: UserProgress }) {
   return (
     <div className="flex flex-col gap-6">
       <fieldset className="flex flex-col gap-3">
-        <legend className="mb-2 font-semibold text-ink">How long?</legend>
+        <legend className="mb-2 font-semibold text-ink">{t('quick.howLong')}</legend>
         <div
           role="radiogroup"
-          aria-label="Duration"
+          aria-label={t('quick.duration')}
           className="grid grid-cols-2 gap-3 sm:grid-cols-4"
         >
           {QUICK_SESSION_MINUTES.map((m) => (
@@ -220,9 +238,11 @@ function Planner({ progress }: { progress: UserProgress }) {
                   : 'border-line bg-surface hover:bg-raised'
               }`}
             >
-              <span className="block text-2xl font-semibold text-ink">{m} min</span>
+              <span className="block text-2xl font-semibold text-ink">
+                {t('quick.minutes', { count: m })}
+              </span>
               <span className="text-sm text-ink-muted">
-                about {Math.max(1, Math.round(m / 2.5))} {m <= 3 ? 'activity' : 'activities'}
+                {t('quick.about', { count: Math.max(1, Math.round(m / 2.5)) })}
               </span>
             </button>
           ))}
@@ -237,11 +257,10 @@ function Planner({ progress }: { progress: UserProgress }) {
           }}
           className="h-4 w-4 accent-brand"
         />
-        No time pressure (relaxed timing; only games that work untimed)
+        {t('quick.relaxed')}
       </label>
       <p className="text-sm text-ink-muted">
-        Activities come from different areas{path ? ` and favour your ${path.name} route` : ''}, at
-        the level suggested by your results. The real duration depends on your pace.
+        {path ? t('quick.explainRoute', { route: tx(path.name) }) : t('quick.explain')}
       </p>
       <div>
         <Button
@@ -249,7 +268,7 @@ function Planner({ progress }: { progress: UserProgress }) {
             setStage({ kind: 'run', steps: plan(), key: seeds.next() });
           }}
         >
-          Start {minutes}-minute session
+          {t('quick.start', { count: minutes })}
         </Button>
       </div>
     </div>
@@ -259,12 +278,13 @@ function Planner({ progress }: { progress: UserProgress }) {
 export function QuickSessionPage() {
   const { progress } = useServices();
   const { state, reload } = useProgress(progress);
+  const { t } = useTranslation('home');
   return (
     <>
       <PageHeader
-        eyebrow="Training"
-        title="Quick session"
-        description="Short mixed practice for busy days: 3, 5, 10 or 15 minutes."
+        eyebrow={t('quick.eyebrow')}
+        title={t('quick.title')}
+        description={t('quick.description')}
       />
       {state.status === 'loading' ? (
         <PageLoading />

@@ -1,0 +1,88 @@
+{
+  "eyebrow": "Ajustes",
+  "toggle": {
+    "on": "Activado",
+    "off": "Desactivado"
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "description": "Cómo la app sugiere y marca el ritmo de las actividades. Se guarda solo en este dispositivo.",
+    "language": {
+      "title": "Idioma",
+      "description": "El idioma de toda la app, incluidos juegos y lecciones. Se guarda en este dispositivo."
+    },
+    "route": {
+      "title": "Ruta",
+      "description": "Opcional. Una ruta elige juegos y ajustes sugeridos; nunca limita lo que puedes jugar.",
+      "none": "Sin ruta (general)"
+    },
+    "goal": {
+      "title": "Objetivo diario de práctica",
+      "description": "Un objetivo voluntario que se muestra en la pantalla de inicio. No alcanzarlo no tiene ninguna consecuencia.",
+      "none": "Sin objetivo",
+      "option_one": "{{count}} minuto al día",
+      "option_other": "{{count}} minutos al día"
+    },
+    "relaxed": {
+      "title": "Tiempo relajado por defecto",
+      "description": "Empieza cada juego sin límite para responder y con más tiempo para memorizar. Las sesiones relajadas se guardan, pero no establecen récords."
+    },
+    "freePlay": {
+      "title": "Juego libre",
+      "description": "Abre los diez niveles de todos los juegos. Sin él, el nivel 1 está abierto y cada nivel siguiente se abre tras una sesión con rendimiento de 50 o más, o tras tres sesiones completadas."
+    }
+  },
+  "accessibility": {
+    "title": "Accesibilidad",
+    "description": "Ajusta la lectura, el movimiento y el ritmo. Los cambios se aplican al instante.",
+    "textSize": {
+      "title": "Tamaño del texto",
+      "description": "Escala todo el texto y los controles. El zoom del navegador también funciona.",
+      "normal": "Estándar",
+      "large": "Grande",
+      "xLarge": "Muy grande"
+    },
+    "motion": {
+      "title": "Reducir movimiento",
+      "description": "Desactiva las transiciones y las animaciones decorativas. Por defecto, la app sigue el ajuste de tu sistema."
+    },
+    "comfort": {
+      "title": "Controles cómodos",
+      "description": "Botones y zonas táctiles más grandes."
+    },
+    "noLimits": {
+      "title": "Sin límites de tiempo",
+      "description": "Tiempo relajado en todos los juegos: sin límite para responder, el doble de tiempo para memorizar y avisos que te esperan."
+    },
+    "always": {
+      "title": "Disponible siempre",
+      "keyboard": "Todos los juegos se pueden jugar con el teclado; las opciones de respuesta tienen teclas numéricas.",
+      "howToPlay": "«Cómo se juega» vuelve a mostrar las instrucciones en cualquier momento de la partida.",
+      "shapes": "Las formas siempre se distinguen por su forma además de por su color; los avisos usan texto y símbolos, no solo color.",
+      "reaction": "Los juegos de reacción piden respuestas rápidas, y su página lo indica. Consulta docs/accessibility.md para ver las limitaciones conocidas."
+    }
+  },
+  "data": {
+    "title": "Tus datos",
+    "description": "Esta demo no tiene cuentas ni servidor: todo se guarda en el almacenamiento local de este navegador.",
+    "stored": {
+      "title": "Qué se guarda",
+      "results": "Resultados de los juegos: nivel, puntuación, precisión, tiempos y fecha de cada sesión.",
+      "learning": "Tu progreso en el curso de programación.",
+      "days": "Los días que practicaste, los retos diarios y tu objetivo semanal.",
+      "preferences": "Preferencias (ruta, tamaño del texto, tiempos).",
+      "noPersonal": "No se recoge ningún nombre, correo, ubicación ni otro dato personal."
+    },
+    "showJson": "Mostrar mis datos como JSON",
+    "reset": {
+      "title": "Borrar los datos de la demo",
+      "description": "Elimina todos los resultados, el historial, los logros, el progreso del curso y las preferencias de este dispositivo. No se puede deshacer.",
+      "button": "Borrar todos los datos…",
+      "confirm": "¿Seguro? Se eliminará todo lo que esta app guarda en este dispositivo.",
+      "yes": "Sí, borrar todo",
+      "done": "Se han borrado todos los datos.",
+      "backHome": "Volver al inicio",
+      "failed": "No se pudieron borrar algunos datos. Puede que tu navegador esté bloqueando el almacenamiento."
+    }
+  }
+}

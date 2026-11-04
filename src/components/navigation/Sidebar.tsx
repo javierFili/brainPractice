@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/ui/Icon';
+import { useText } from '@/i18n';
 import { NAV_SECTIONS } from './navigation';
 
 const linkClass =
@@ -25,10 +27,12 @@ export function Sidebar({
   readonly collapsed?: boolean;
   readonly onNavigate?: () => void;
 }) {
+  const { t } = useTranslation('nav');
+  const tx = useText();
   return (
-    <nav aria-label="Main" className="flex flex-col gap-5">
+    <nav aria-label={t('landmarks.main')} className="flex flex-col gap-5">
       {NAV_SECTIONS.map((section) => (
-        <div key={section.title}>
+        <div key={section.id}>
           <h2
             className={
               collapsed
@@ -36,7 +40,7 @@ export function Sidebar({
                 : 'mb-1.5 px-3 text-[11px] font-semibold tracking-widest text-ink-muted uppercase'
             }
           >
-            {section.title}
+            {tx(section.title)}
           </h2>
           <ul className="flex flex-col gap-0.5">
             {section.items.map((item) => (
@@ -48,13 +52,13 @@ export function Sidebar({
                   {...(onNavigate ? { onClick: onNavigate } : {})}
                 >
                   <Icon name={item.icon} />
-                  <span className={collapsed ? 'sr-only' : 'truncate'}>{item.label}</span>
+                  <span className={collapsed ? 'sr-only' : 'truncate'}>{tx(item.label)}</span>
                   {collapsed && (
                     <span
                       aria-hidden="true"
                       className="pointer-events-none absolute left-full z-30 ml-3 rounded-md border border-line bg-raised px-2 py-1 text-xs whitespace-nowrap text-ink opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
                     >
-                      {item.label}
+                      {tx(item.label)}
                     </span>
                   )}
                 </NavLink>

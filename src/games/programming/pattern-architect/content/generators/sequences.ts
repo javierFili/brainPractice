@@ -7,6 +7,7 @@ import {
   determinedNext,
   nextTerm,
 } from '../solvers/sequences';
+import { msg } from '@/domain/shared';
 import type { PatternProfile, SequenceFamily, SequenceRule } from '../types';
 import { pickDistractors, type PatternDraft } from './draft';
 
@@ -119,14 +120,21 @@ export function numberSequence(random: RandomGenerator, profile: PatternProfile)
     if (wrong === null) return null;
     const last = terms.at(-1) as number;
     const repeated = last + (last - (terms.at(-2) as number));
-    const trap = wrong.includes(String(repeated))
-      ? ` Repeating only the last step would give ${repeated}.`
-      : '';
+    const trap = wrong.includes(String(repeated));
+    const values = {
+      rule: describeSequenceRule(rule),
+      last: String(last),
+      answer: String(answer),
+      repeated: String(repeated),
+    };
     return {
-      prompt: 'Which number comes next?',
+      prompt: msg('programming:patternArchitect.sequence.prompt'),
       content: { kind: 'number-sequence', terms },
       response: singleChoice(random, String(answer), wrong),
-      explanation: `Rule: ${describeSequenceRule(rule)}. So after ${last} comes ${answer}.${trap}`,
+      explanation: msg(
+        `programming:patternArchitect.sequence.${trap ? 'explanationTrap' : 'explanation'}`,
+        values,
+      ),
       skills: ['pattern-recognition', 'abstraction'],
     };
   });

@@ -4,6 +4,7 @@ import type { RandomGenerator } from '../random/RandomGenerator';
 import type { ScoringConfig } from '../scoring/scoring';
 import type { GameId } from '../shared/ids';
 import type { Skill } from '../shared/skill';
+import type { Text } from '../shared/text';
 import type { GameMeta } from './catalog';
 
 export interface GenerationParams<C extends Challenge, P extends DifficultyProfile> {
@@ -20,16 +21,16 @@ export interface GameDefinition<
   P extends DifficultyProfile = DifficultyProfile,
 > {
   readonly id: GameId;
-  readonly name: string;
-  readonly tagline: string;
-  readonly description: string;
+  readonly name: Text;
+  readonly tagline: Text;
+  readonly description: Text;
   readonly area: C['area'];
   readonly skills: readonly Skill[];
   /** Catalog placement, audiences, interaction and result semantics. */
   readonly meta: GameMeta;
-  readonly instructions: readonly string[];
+  readonly instructions: readonly Text[];
   /** One-sentence version of the instructions for short-attention routes (kids, quick play). */
-  readonly simpleInstructions?: string;
+  readonly simpleInstructions?: Text;
   readonly levels: LevelTable<P>;
   /** Partial override of the default scoring constants (e.g. Speed weighs time more). */
   readonly scoring?: Partial<ScoringConfig>;

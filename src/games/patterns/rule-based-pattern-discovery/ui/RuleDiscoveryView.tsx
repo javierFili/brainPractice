@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
 import type { ContentViewProps } from '@/games/types';
 import { describeGrid } from '../../shared/content';
 import { Missing, TileGridFigure } from '../../shared/ui';
@@ -12,15 +14,17 @@ function Arrow() {
 }
 
 export function RuleDiscoveryView({ challenge }: ContentViewProps<RuleDiscoveryChallenge>) {
+  const { t } = useTranslation('patterns');
   const { examples, question, steps } = challenge.content;
+  const V = 'patterns:ruleBasedPatternDiscovery.view';
   const size = question.length;
   const figure = size >= 5 ? 'w-24 sm:w-28' : size >= 4 ? 'w-20 sm:w-24' : 'w-16 sm:w-20';
   return (
     <div className="flex flex-col items-center gap-4">
       <p className="text-sm text-ink-muted">
-        {steps === 1 ? 'One hidden change' : 'Two hidden changes, one after the other'}
+        {t(`ruleBasedPatternDiscovery.view.${steps === 1 ? 'one' : 'two'}`)}
       </p>
-      <ol aria-label="Examples" className="flex flex-col gap-2">
+      <ol aria-label={t('ruleBasedPatternDiscovery.view.examples')} className="flex flex-col gap-2">
         {examples.map((example, i) => (
           <li
             key={i}
@@ -30,26 +34,29 @@ export function RuleDiscoveryView({ challenge }: ContentViewProps<RuleDiscoveryC
             <TileGridFigure
               grid={example.input}
               className={figure}
-              label={`Example ${i + 1} input: ${describeGrid(example.input)}`}
+              label={msg(`${V}.input`, { index: i + 1, grid: describeGrid(example.input) })}
             />
             <Arrow />
             <TileGridFigure
               grid={example.output}
               className={figure}
-              label={`Example ${i + 1} output: ${describeGrid(example.output)}`}
+              label={msg(`${V}.output`, { index: i + 1, grid: describeGrid(example.output) })}
             />
           </li>
         ))}
       </ol>
       <div className="flex items-center gap-3 rounded-lg border border-glow/50 bg-glow/5 px-3 py-2">
-        <span className="w-6 text-xs text-glow">New</span>
+        <span className="w-6 text-xs text-glow">{t('ruleBasedPatternDiscovery.view.new')}</span>
         <TileGridFigure
           grid={question}
           className={figure}
-          label={`New input: ${describeGrid(question)}`}
+          label={msg(`${V}.newInput`, { grid: describeGrid(question) })}
         />
         <Arrow />
-        <Missing label="Output of the new input (unknown)" className="h-16 w-16 sm:h-20 sm:w-20" />
+        <Missing
+          label={t('ruleBasedPatternDiscovery.view.newOutput')}
+          className="h-16 w-16 sm:h-20 sm:w-20"
+        />
       </div>
     </div>
   );

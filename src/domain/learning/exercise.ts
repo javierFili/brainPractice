@@ -1,4 +1,5 @@
 import type { ChoiceOption } from '../challenge/responseFormats';
+import type { Text } from '../shared/text';
 import type { ConceptId, ExerciseId } from './ids';
 
 /** The three things we want a learner to be able to do with a concept. */
@@ -14,13 +15,13 @@ export interface CodeSnippet {
 interface ExerciseBase<K extends string> {
   readonly id: ExerciseId;
   readonly kind: K;
-  readonly prompt: string;
+  readonly prompt: Text;
   readonly concept: ConceptId;
   readonly dimension: MasteryDimension;
   /** Revealed one at a time after wrong attempts. */
-  readonly hints: readonly string[];
+  readonly hints: readonly Text[];
   /** Why the correct answer is correct — 1 to 3 short sentences. */
-  readonly explanation: string;
+  readonly explanation: Text;
 }
 
 export interface MultipleChoiceExercise extends ExerciseBase<'multiple-choice'> {
@@ -28,7 +29,7 @@ export interface MultipleChoiceExercise extends ExerciseBase<'multiple-choice'> 
   readonly options: readonly ChoiceOption[];
   readonly correctOptionId: string;
   /** Why each wrong option is tempting and wrong, keyed by option id. Required for every distractor. */
-  readonly misconceptions: Readonly<Record<string, string>>;
+  readonly misconceptions: Readonly<Record<string, Text>>;
 }
 
 /** What a prediction asks about: one variable's final value, or everything printed. */
@@ -44,7 +45,7 @@ export interface PredictionExercise extends ExerciseBase<'prediction'> {
    */
   readonly expected: string;
   /** Specific wrong answers (normalised) and the reasoning slip that produces them. */
-  readonly commonMistakes?: Readonly<Record<string, string>>;
+  readonly commonMistakes?: Readonly<Record<string, Text>>;
 }
 
 export interface CompletionBlank {
@@ -60,7 +61,7 @@ export interface CodeCompletionExercise extends ExerciseBase<'code-completion'> 
   /** Optional proof that the completed code works: the variable and its expected literal. */
   readonly check?: { readonly variable: string; readonly expected: string };
   /** Why a specific wrong choice fails, keyed by `${blankId}:${option}`. */
-  readonly misconceptions?: Readonly<Record<string, string>>;
+  readonly misconceptions?: Readonly<Record<string, Text>>;
 }
 
 export interface OrderingExercise extends ExerciseBase<'ordering'> {
@@ -73,7 +74,7 @@ export interface BlockBuilderExercise extends ExerciseBase<'block-builder'> {
   /** Ordered ids of the blocks that make the algorithm; every other block is a distractor. */
   readonly solution: readonly string[];
   /** Why each distractor block does not belong, keyed by block id. */
-  readonly misconceptions: Readonly<Record<string, string>>;
+  readonly misconceptions: Readonly<Record<string, Text>>;
 }
 
 export interface MatchingExercise extends ExerciseBase<'matching'> {
@@ -88,7 +89,7 @@ export interface DebuggingExercise extends ExerciseBase<'debugging'> {
   /** "Why is it wrong?" — the reasoning matters more than the line. */
   readonly causes: readonly ChoiceOption[];
   readonly correctCauseId: string;
-  readonly misconceptions: Readonly<Record<string, string>>;
+  readonly misconceptions: Readonly<Record<string, Text>>;
   /** The fixed program and what proves both versions: content tests run them. */
   readonly fix: {
     readonly source: string;

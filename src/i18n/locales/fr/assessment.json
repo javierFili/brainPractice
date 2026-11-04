@@ -1,0 +1,95 @@
+{
+  "protocols": {
+    "quick": {
+      "name": "Évaluation cognitive · rapide",
+      "title": "Rapide",
+      "summary": "Un passage rapide sur la mémoire, la logique, l’attention, la vitesse et les motifs.",
+      "start": "Commencer l’évaluation rapide"
+    },
+    "standard": {
+      "name": "Évaluation cognitive · standard",
+      "title": "Standard",
+      "summary": "Plus de défis par domaine, dont la rotation spatiale et la mémoire des positions : un résultat plus stable.",
+      "start": "Commencer l’évaluation standard"
+    },
+    "programming": {
+      "name": "Évaluation cognitive de programmation",
+      "title": "Programmation",
+      "summary": "Les cinq domaines mesurés avec des tâches sur du code, pour le parcours programmation.",
+      "start": "Commencer l’évaluation de programmation"
+    }
+  },
+  "page": {
+    "eyebrow": "Évaluation",
+    "title": "Évaluation cognitive",
+    "description": "Un parcours structuré à travers plusieurs types de tâches qui produit un profil de performance ludique. Comparez-le uniquement à vos propres passages précédents du même protocole.",
+    "chooseLength": "Choisissez une durée",
+    "protocol": "Protocole d’évaluation",
+    "length_one": "{{count}} défi · {{minutes}} min",
+    "length_other": "{{count}} défis · {{minutes}} min",
+    "howItWorks": "Comment ça marche",
+    "section": "{{game}} · niveaux {{levels}}",
+    "structureNote": "Toujours les mêmes jeux, niveaux et nombre de défis, pour pouvoir comparer les passages d’un même protocole. Les niveaux plus difficiles comptent davantage. Chaque manche explique ses règles ; les manches ne comptent pas pour les records de niveau.",
+    "missing": "Indisponible : jeux manquants {{games}}."
+  },
+  "flow": {
+    "unavailable": "Cette étape de l’évaluation n’est pas disponible.",
+    "area": "{{area}} · niveau {{level}}",
+    "round": "Manche {{round}} sur {{total}}",
+    "progress": "Progression de l’évaluation",
+    "skipRound": "Passer la manche (comptée comme non résolue)"
+  },
+  "disclaimer": {
+    "title": "Ce que c’est — et ce que ce n’est pas",
+    "what": "Il s’agit d’un outil ludique d’auto-évaluation. Les scores décrivent vos résultats sur ces exercices précis : précision et rythme, les niveaux difficiles comptant davantage. Ils reposent sur peu de défis, ont une marge large et ne sont pas comparés à des normes de population.",
+    "not": "Ce n’est <strong>pas</strong> un test de QI, ni un instrument psychométrique, ni un diagnostic clinique ou professionnel, et il ne doit pas servir à un recrutement ni à aucune décision importante."
+  },
+  "history": {
+    "earlierProtocol": "Ancien protocole",
+    "empty": "Aucune évaluation pour l’instant.",
+    "take": "Passer l’évaluation",
+    "title": "Résultats précédents",
+    "description": "Chaque passage est comparé uniquement au précédent du même protocole.",
+    "same": "identique au dernier passage",
+    "delta": "{{delta}} par rapport au dernier passage"
+  },
+  "profilePage": {
+    "title": "Mon profil de performance",
+    "description": "Votre évaluation la plus récente, domaine par domaine. Un profil ludique de ces activités — pas une mesure de l’intelligence ni de la santé.",
+    "index": "indice {{value}}/100",
+    "keepPractising": "Un domaine à continuer de travailler :",
+    "seeGames": "Voir ses jeux"
+  },
+  "result": {
+    "eyebrow": "Profil de performance",
+    "index": "Indice de performance :",
+    "summary_one": "Global : {{band}} · ±{{margin}} points · {{answered}} défi répondu sur {{count}} · {{duration}}",
+    "summary_other": "Global : {{band}} · ±{{margin}} points · {{answered}} défis répondus sur {{count}} · {{duration}}",
+    "caveat_one": "Avec {{count}} défi, la marge est large : lisez ces chiffres comme un point de départ approximatif pour choisir quoi entraîner, pas comme une mesure précise. Les défis passés comptent comme non résolus. C’est un indice interne à cette plateforme — pas un score de QI, pas une mesure clinique, et il n’est comparé à aucune population.",
+    "caveat_other": "Avec {{count}} défis, la marge est large : lisez ces chiffres comme un point de départ approximatif pour choisir quoi entraîner, pas comme une mesure précise. Les défis passés comptent comme non résolus. C’est un indice interne à cette plateforme — pas un score de QI, pas une mesure clinique, et il n’est comparé à aucune population.",
+    "byArea": "Par domaine",
+    "caption": "Score cognitif par domaine, de 0 à 100",
+    "columns": {
+      "area": "Domaine",
+      "score": "Score",
+      "band": "Niveau",
+      "evidence": "Données"
+    },
+    "notMeasured": "Non mesuré",
+    "skipped": "Passé — compte pour 0",
+    "bands": {
+      "developing": "Marge de progression",
+      "solid": "Régulier",
+      "strong": "Solide",
+      "exceptional": "Très solide"
+    },
+    "evidence": "±{{margin}} · {{answered}}/{{items}} répondus",
+    "next": {
+      "title": "Que travailler ensuite",
+      "areas": "Votre domaine le plus fort : <strong>{{strongest}}</strong>. La plus grande marge de progression : <strong>{{weakest}}</strong>.",
+      "train": "S’entraîner : {{game}}",
+      "browse": "Parcourir les jeux",
+      "retake": "Refaire l’évaluation"
+    }
+  }
+}

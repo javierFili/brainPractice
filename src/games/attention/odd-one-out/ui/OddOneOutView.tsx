@@ -1,3 +1,4 @@
+import { joinText, msg } from '@/domain/shared';
 import { CellGrid, type CellState } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
 import { cellName, markLabel } from '../../shared/content';
@@ -13,12 +14,12 @@ export function OddOneOutView({ challenge, locate }: ContentViewProps<OddOneOutC
   const interactive = locate !== null && !locate.disabled;
   return (
     <CellGrid
-      label="Shapes"
+      label={msg('attention:oddOneOut.view.shapes')}
       columns={columns}
       size={columns >= 5 ? 'sm' : 'md'}
       cells={items.map((item, i) => ({
         key: String(i),
-        label: `${cellName(i, columns)}, ${markLabel(item)}`,
+        label: joinText([cellName(i, columns), markLabel(item)], ', '),
         content: <MarkFace mark={item} />,
         state: stateOf(i),
       }))}

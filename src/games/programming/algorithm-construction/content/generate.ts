@@ -9,7 +9,8 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { compile, isInteger, narrate, runTraced, type DraftOf } from '../../shared/content';
+import { msg, type Text } from '@/domain/shared';
+import { compile, isInteger, narrateText, runTraced, type DraftOf } from '../../shared/content';
 import {
   arrangements,
   BLOCK_STEP_LIMIT,
@@ -183,16 +184,21 @@ function candidate(
     solution: { order },
   };
   const checked = arrangements(all.length, used.length);
-  const printed = target.join(', then ');
-  const spareNote =
-    kind === 'spare-block'
-      ? ` Block ${idOf(all.at(-1) as string)} is the spare: no order that uses it prints ${printed}.`
-      : '';
+  // "4, then 9, then 12": each printed line in turn.
+  const printed = target
+    .slice(1)
+    .reduce<Text>(
+      (before, after) => msg('programming:algorithmConstruction.then', { before, after }),
+      target[0] as string,
+    );
+  const hasSpare = kind === 'spare-block';
   return {
-    prompt:
-      kind === 'spare-block'
-        ? `Order the blocks so the program prints ${printed}. One block is not needed: put it last.`
-        : `Order the blocks so the program prints ${printed}.`,
+    prompt: msg(
+      hasSpare
+        ? 'programming:algorithmConstruction.prompt.spareBlock'
+        : 'programming:algorithmConstruction.prompt.orderBlocks',
+      { printed },
+    ),
     content: {
       kind,
       blocks: shownCode.map((code, i) => ({ id: ids[i] as string, code })),
@@ -200,7 +206,18 @@ function candidate(
       ordersChecked: checked,
     },
     response,
-    explanation: `Only ${order.slice(0, used.length).join(' → ')} prints ${printed} (all ${checked} possible orders were checked with the interpreter; the others print something else or stop with an error).${spareNote} Step by step — ${narrate(source, run, 16)}.`,
+    explanation: msg(
+      hasSpare
+        ? 'programming:algorithmConstruction.explanation.spareBlock'
+        : 'programming:algorithmConstruction.explanation.orderBlocks',
+      {
+        order: order.slice(0, used.length).join(' → '),
+        printed,
+        count: checked,
+        spare: hasSpare ? idOf(all.at(-1) as string) : '',
+        steps: narrateText(source, run, 16),
+      },
+    ),
     skills: ['algorithmic-thinking', 'decomposition', 'sequential-thinking'],
   };
 }

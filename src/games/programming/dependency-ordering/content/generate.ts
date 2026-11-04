@@ -8,6 +8,7 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
+import { joinText, msg, type Text } from '@/domain/shared';
 import type { DraftOf } from '../../shared/content';
 import {
   brokenNeeds,
@@ -20,7 +21,7 @@ import {
   reaches,
   ready,
 } from './graph';
-import { THEMES } from './themes';
+import { quotedTask, taskLabel, THEMES } from './themes';
 import type { DependencyChallenge, DependencyKind, DependencyProfile, Need } from './types';
 
 type Draft = DraftOf<DependencyChallenge>;
@@ -28,6 +29,33 @@ type Draft = DraftOf<DependencyChallenge>;
 const ITEM_IDS = 'abcdefghijklmnopqrstuvwxyz';
 export const formatOrder = (order: readonly string[]) => order.join(' → ');
 export const formatNeed = ([prerequisite, task]: Need) => `${task} needs ${prerequisite}`;
+
+/** What people read for an order and a need (`formatOrder` / `formatNeed` stay as option ids). */
+const orderText = (order: readonly string[]): Text => joinText(order.map(taskLabel), ' → ');
+const needText = ([prerequisite, task]: Need): Text =>
+  msg('programming:dependencyOrdering.need', {
+    task: quotedTask(task),
+    prerequisite: quotedTask(prerequisite),
+  });
+
+/** Single choice over ids (tasks, orders, needs), each option shown with its own text. */
+function choiceOf(
+  random: RandomGenerator,
+  correct: string,
+  distractors: readonly string[],
+  text: (id: string) => Text,
+): ResponseOf<'single-choice'> {
+  const response = singleChoice(random, correct, distractors);
+  return {
+    ...response,
+    question: {
+      options: response.question.options.map((o) => ({ ...o, label: text(o.label as string) })),
+    },
+  };
+}
+
+/** "a and b" in the reader's language, each task quoted. */
+const taskList = (tasks: readonly string[]): Text => joinText(tasks.map(quotedTask));
 
 interface Setup {
   readonly theme: string;
@@ -50,9 +78,14 @@ const content = (kind: DependencyKind, s: Setup, done: readonly string[] = []) =
   done,
 });
 
-function needsText(needs: readonly Need[], task: string): string {
+function needsText(needs: readonly Need[], task: string): Text {
   const list = needsOf(needs, task);
-  return list.length === 0 ? `${task} needs nothing` : `${task} needs ${list.join(' and ')}`;
+  return list.length === 0
+    ? msg('programming:dependencyOrdering.needsNothing', { task: quotedTask(task) })
+    : msg('programming:dependencyOrdering.need', {
+        task: quotedTask(task),
+        prerequisite: taskList(list),
+      });
 }
 
 /** Exactly one task has no needs. */
@@ -68,12 +101,16 @@ function startFirst(random: RandomGenerator, profile: DependencyProfile): Draft 
     Math.min(3, s.tasks.length - 1),
   );
   return {
-    prompt: 'Which task can start first?',
+    prompt: msg('programming:dependencyOrdering.prompt.startFirst'),
     content: content('start-first', s),
-    response: singleChoice(random, answer, others),
-    explanation: `${answer} is the only task that needs nothing. The others must wait: ${others
-      .map((t) => needsText(s.needs, t))
-      .join('; ')}.`,
+    response: choiceOf(random, answer, others, taskLabel),
+    explanation: msg('programming:dependencyOrdering.explanation.startFirst', {
+      task: quotedTask(answer),
+      others: joinText(
+        others.map((t) => needsText(s.needs, t)),
+        '; ',
+      ),
+    }),
     skills: ['logical-reasoning', 'planning'],
   };
 }
@@ -89,17 +126,28 @@ function readyNext(random: RandomGenerator, profile: DependencyProfile): Draft |
   if (now.length === 0 || waiting.length < 3) return null;
   const answer = pick(random, now);
   const others = sample(random, waiting, 3);
-  const missing = (t: string) =>
-    needsOf(s.needs, t)
-      .filter((p) => !done.has(p))
-      .join(' and ');
+  const missing = (t: string) => taskList(needsOf(s.needs, t).filter((p) => !done.has(p)));
   return {
-    prompt: 'The ticked tasks are done. Which of these can start now?',
+    prompt: msg('programming:dependencyOrdering.prompt.readyNext'),
     content: content('ready-next', s, [...done].sort()),
-    response: singleChoice(random, answer, others),
-    explanation: `${needsText(s.needs, answer)}, and ${needsOf(s.needs, answer).length === 0 ? 'so it was free to start' : 'all of that is done'}. The others still wait: ${others
-      .map((t) => `${t} needs ${missing(t)}`)
-      .join('; ')}.`,
+    response: choiceOf(random, answer, others, taskLabel),
+    explanation: msg(
+      needsOf(s.needs, answer).length === 0
+        ? 'programming:dependencyOrdering.explanation.readyNextFree'
+        : 'programming:dependencyOrdering.explanation.readyNextDone',
+      {
+        needs: needsText(s.needs, answer),
+        others: joinText(
+          others.map((t) =>
+            msg('programming:dependencyOrdering.need', {
+              task: quotedTask(t),
+              prerequisite: missing(t),
+            }),
+          ),
+          '; ',
+        ),
+      },
+    ),
     skills: ['logical-reasoning', 'planning'],
   };
 }
@@ -111,22 +159,29 @@ function fullOrder(random: RandomGenerator, profile: DependencyProfile): Draft |
   const order = randomOrder(random, s.tasks, s.needs);
   const shown = shuffle(random, s.tasks);
   if (shown.every((t, i) => t === order[i])) return null;
-  const items = shown.map((label, i) => ({ id: ITEM_IDS.charAt(i), label }));
-  const idOf = (task: string) => items.find((item) => item.label === task)?.id ?? '';
+  const items = shown.map((task, i) => ({ id: ITEM_IDS.charAt(i), label: taskLabel(task) }));
+  const idOf = (task: string) => ITEM_IDS.charAt(shown.indexOf(task));
   const response: ResponseOf<'ordering'> = {
     format: 'ordering',
     question: { items },
     solution: { order: order.map(idOf) },
   };
-  const steps = order.slice(1).map((t, i) => `${t} needs ${order[i] as string}`);
+  const steps = order.slice(1).map((t, i) => needText([order[i] as string, t]));
+  const extra = s.needs.filter(([p, t]) => order.indexOf(t) - order.indexOf(p) > 1);
   return {
-    prompt: 'There is only one order that respects every need. Put the tasks in that order.',
+    prompt: msg('programming:dependencyOrdering.prompt.fullOrder'),
     content: content('full-order', s),
     response,
-    explanation: `${order[0] as string} needs nothing, then each task needs the one before it: ${steps.join(', ')}. The extra needs (${s.needs
-      .filter(([p, t]) => order.indexOf(t) - order.indexOf(p) > 1)
-      .map(formatNeed)
-      .join('; ')}) are already satisfied by that chain.`,
+    explanation: msg(
+      extra.length === 0
+        ? 'programming:dependencyOrdering.explanation.fullOrder'
+        : 'programming:dependencyOrdering.explanation.fullOrderExtra',
+      {
+        first: quotedTask(order[0] as string),
+        steps: joinText(steps, ', '),
+        extra: joinText(extra.map(needText), '; '),
+      },
+    ),
     skills: ['algorithmic-thinking', 'planning', 'sequential-thinking'],
   };
 }
@@ -158,15 +213,24 @@ function validOrder(random: RandomGenerator, profile: DependencyProfile): Draft 
   const answer = pick(random, valid);
   const wrong = invalid.slice(0, 3);
   return {
-    prompt: 'Which order respects every need?',
+    prompt: msg('programming:dependencyOrdering.prompt.validOrder'),
     content: content('valid-order', s),
-    response: singleChoice(random, formatOrder(answer), wrong.map(formatOrder)),
-    explanation: `Only ${formatOrder(answer)} keeps every task after what it needs: ${wrong
-      .map((o) => {
-        const [p, t] = brokenNeeds(s.needs, o)[0] as Need;
-        return `the order with ${t} before ${p} fails because ${t} needs ${p}`;
-      })
-      .join('; ')}.`,
+    response: choiceOf(random, formatOrder(answer), wrong.map(formatOrder), (id) =>
+      orderText(id.split(' → ')),
+    ),
+    explanation: msg('programming:dependencyOrdering.explanation.validOrder', {
+      order: orderText(answer),
+      others: joinText(
+        wrong.map((o) => {
+          const [p, t] = brokenNeeds(s.needs, o)[0] as Need;
+          return msg('programming:dependencyOrdering.explanation.brokenOrder', {
+            task: quotedTask(t),
+            prerequisite: quotedTask(p),
+          });
+        }),
+        '; ',
+      ),
+    }),
     skills: ['logical-reasoning', 'error-detection'],
   };
 }
@@ -201,10 +265,17 @@ function cycle(random: RandomGenerator, profile: DependencyProfile): Draft | nul
   if (wrong.length < 3) return null;
   const loop = path(s.needs, answer[1], answer[0]) as string[];
   return {
-    prompt: 'Which new need would create a cycle, so that no order could ever work?',
+    prompt: msg('programming:dependencyOrdering.prompt.cycle'),
     content: content('cycle', s),
-    response: singleChoice(random, formatNeed(answer), wrong.map(formatNeed)),
-    explanation: `${loop.join(' → ')} already runs in that order (each one before the next). If ${answer[1]} also needed ${answer[0]}, it would have to come before itself. The other new needs keep at least one valid order.`,
+    response: choiceOf(random, formatNeed(answer), wrong.map(formatNeed), (id) => {
+      const [task, prerequisite] = id.split(' needs ') as [string, string];
+      return needText([prerequisite, task]);
+    }),
+    explanation: msg('programming:dependencyOrdering.explanation.cycle', {
+      loop: orderText(loop),
+      task: quotedTask(answer[1]),
+      prerequisite: quotedTask(answer[0]),
+    }),
     skills: ['logical-reasoning', 'debugging', 'abstraction'],
   };
 }

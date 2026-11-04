@@ -1,4 +1,3 @@
-import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import {
   chance,
@@ -8,9 +7,10 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, textId, type Text } from '@/domain/shared';
 import {
   ALL_WORDS,
+  colorLabel,
   COLORS,
   distinctGlyphs,
   glyphKey,
@@ -20,9 +20,10 @@ import {
   OBJECTS,
   objectsOf,
   sampleObjects,
+  wordLabel,
   type Glyph,
 } from '@/games/kit/content';
-import { objectById, objectByName } from '../../shared/content';
+import { objectById, objectByName, textChoice } from '../../shared/content';
 import { ASSOCIATION_LEVELS } from './levels';
 import type {
   AssocItem,
@@ -32,16 +33,16 @@ import type {
   AssociationProfile,
 } from './types';
 
-export function itemLabel(item: AssocItem): string {
+export function itemLabel(item: AssocItem): Text {
   switch (item.type) {
     case 'object':
-      return objectById(item.id).name;
+      return objectById(item.id).label;
     case 'color':
-      return item.color;
+      return colorLabel(item.color);
     case 'glyph':
       return glyphLabel(item.glyph);
     case 'word':
-      return item.word;
+      return wordLabel(item.word);
     case 'number':
       return String(item.value);
   }
@@ -115,20 +116,13 @@ function pairsFor(
   }
 }
 
-const QUESTION: Record<AssociationContent['kind'], [forward: string, reversed: string]> = {
-  'object-color': ['Which colour went with the %?', 'Which object went with %?'],
-  'glyph-object': ['Which object went with the %?', 'Which shape went with the %?'],
-  'word-number': ['Which number went with “%”?', 'Which word went with %?'],
-};
-
 export const ASSOCIATION_MEMORY_ID = gameIdOf('association-memory');
 
 export const associationMemoryGame: GameDefinition<AssociationChallenge, AssociationProfile> = {
   id: ASSOCIATION_MEMORY_ID,
-  name: 'Association Memory',
-  tagline: 'What went with what?',
-  description:
-    'Learn a few pairs — an object and a colour, a shape and an object, a word and a number. Then answer what went with one of them. Higher levels add pairs, make the items look alike and ask in the other direction.',
+  name: msg('memory:associationMemory.name'),
+  tagline: msg('memory:associationMemory.tagline'),
+  description: msg('memory:associationMemory.description'),
   area: 'memory',
   skills: ['short-term-memory', 'long-term-recall', 'visual-memory'],
   meta: {
@@ -139,23 +133,22 @@ export const associationMemoryGame: GameDefinition<AssociationChallenge, Associa
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'An answer counts when you pick the item that was paired with the one asked about. Every option was part of the pairs you learned. Your result is the share of pairs recalled; answering is not timed.',
+    scoringSummary: msg('memory:associationMemory.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Study the pairs. Linking them in a little story or image can help (“a red apple”).',
-    'When they are hidden, pick what went with the item in the question.',
-    'All options come from the pairs you saw, so be exact.',
-    'From level 6 the question may go the other way round (from the second item to the first).',
+    msg('memory:associationMemory.instructions.study'),
+    msg('memory:associationMemory.instructions.pick'),
+    msg('memory:associationMemory.instructions.exact'),
+    msg('memory:associationMemory.instructions.reversed'),
   ],
-  simpleInstructions: 'Remember what goes together, then pick the missing one.',
+  simpleInstructions: msg('memory:associationMemory.simpleInstructions'),
   levels: ASSOCIATION_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);
     const pairs = retryGeneration('distinct pairs', () => {
       const made = pairsFor(random, kind, profile);
-      const labels = made.flatMap((p) => [itemLabel(p.cue), itemLabel(p.partner)]);
+      const labels = made.flatMap((p) => [itemLabel(p.cue), itemLabel(p.partner)].map(textId));
       return new Set(labels).size === labels.length ? made : null;
     });
     const index = randomInt(random, 0, pairs.length - 1);
@@ -168,11 +161,16 @@ export const associationMemoryGame: GameDefinition<AssociationChallenge, Associa
     const options = Math.min(profile.options, pairs.length);
     return {
       ...identity,
-      prompt: QUESTION[kind][reversed ? 1 : 0].replace('%', shown),
-      studyPrompt: `Learn these ${pairs.length} pairs.`,
+      prompt: msg(`memory:associationMemory.prompt.${kind}.${reversed ? 'reversed' : 'forward'}`, {
+        item: shown,
+      }),
+      studyPrompt: msg('memory:associationMemory.studyPrompt', { count: pairs.length }),
       content: { kind, pairs, ask: { pair: index, reversed } },
-      response: singleChoice(random, correct, sample(random, others, options - 1)),
-      explanation: `${itemLabel(asked.cue)} went with ${itemLabel(asked.partner)}.`,
+      response: textChoice(random, correct, sample(random, others, options - 1)),
+      explanation: msg('memory:associationMemory.explanation', {
+        cue: itemLabel(asked.cue),
+        partner: itemLabel(asked.partner),
+      }),
       skills: profile.similar ? ['short-term-memory', 'visual-memory'] : ['short-term-memory'],
       timing: profile.timing,
     };

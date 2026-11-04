@@ -1,0 +1,175 @@
+{
+  "catalog": {
+    "eyebrow": "Training",
+    "title": "Alle Aktivitäten",
+    "description_one": "{{count}} Spiel in {{areas}} Bereichen. Jedes hat zehn Stufen, erklärt vor dem Start seine Regeln und speichert deine Ergebnisse auf diesem Gerät.",
+    "description_other": "{{count}} Spiele in {{areas}} Bereichen. Jedes hat zehn Stufen, erklärt vor dem Start seine Regeln und speichert deine Ergebnisse auf diesem Gerät.",
+    "filter": "Aktivitäten filtern",
+    "search": "Suche",
+    "searchPlaceholder": "Gedächtnis, Formen, Zahlen…",
+    "area": "Bereich",
+    "allAreas": "Alle Bereiche",
+    "suitedTo": "Geeignet für",
+    "everyone": "Alle",
+    "noRush": "Funktioniert ohne Zeitlimit",
+    "count_one": "{{count}} Spiel",
+    "count_other": "{{count}} Spiele",
+    "countOf_one": "{{shown}} von {{count}} Spiel",
+    "countOf_other": "{{shown}} von {{count}} Spielen",
+    "empty": "Kein Spiel passt zu diesen Filtern. Lösche die Suche oder wähle „Alle Bereiche“."
+  },
+  "card": {
+    "duration": "Dauer",
+    "minutes": "~{{minutes}} Min.",
+    "progress": "Fortschritt",
+    "cleared": "{{cleared}}/10 geschafft · {{open}} offen",
+    "notPlayed": "Noch nicht gespielt",
+    "timing": "Zeit",
+    "noRush": "Ohne-Eile-Modus"
+  },
+  "collections": {
+    "spatial": {
+      "title": "Räumliches Denken",
+      "description": "Drehen, spiegeln, platzieren und orientieren: Spiele, bei denen du dir Räume vorstellst."
+    },
+    "concentration": {
+      "title": "Konzentration",
+      "description": "Längere, gleichmäßige Aufgaben, bei denen es darum geht, konzentriert zu bleiben."
+    }
+  },
+  "collection": {
+    "notFound": "Diesen Bereich gibt es nicht.",
+    "eyebrow": "Trainingsbereich",
+    "all": "Alle Aktivitäten",
+    "empty": "In diesem Bereich gibt es noch keine Spiele.",
+    "count_one": "{{count}} Spiel · jedes Spiel hat zehn Stufen; Stufe 1 ist immer offen.",
+    "count_other": "{{count}} Spiele · jedes Spiel hat zehn Stufen; Stufe 1 ist immer offen."
+  },
+  "intro": {
+    "notFound": "Dieses Spiel gibt es nicht.",
+    "level": "Stufe",
+    "cleared": "geschafft",
+    "locked": "gesperrt",
+    "suggested": "empfohlen",
+    "stateSeparator": ", ",
+    "legendFree": "✓ geschafft (Leistung ≥ 70) · Punkt = empfohlene Stufe · freies Spiel: alle Stufen sind offen.",
+    "legend_one": "✓ geschafft (Leistung ≥ 70) · Punkt = empfohlene Stufe. Stufe 1 ist immer offen; die nächste öffnet sich nach einer Einheit mit Leistung ≥ {{performance}} oder nach {{count}} abgeschlossenen Einheit. Freies Spiel (Einstellungen) öffnet alle.",
+    "legend_other": "✓ geschafft (Leistung ≥ 70) · Punkt = empfohlene Stufe. Stufe 1 ist immer offen; die nächste öffnet sich nach einer Einheit mit Leistung ≥ {{performance}} oder nach {{count}} abgeschlossenen Einheiten. Freies Spiel (Einstellungen) öffnet alle.",
+    "levelTier": "Stufe {{level}} · {{tier}}",
+    "challenges": "Aufgaben",
+    "timeLimit": "Zeitlimit",
+    "none": "Keins",
+    "targetPace": "Zieltempo",
+    "start": "Stufe {{level}} starten",
+    "relaxed": "Entspanntes Timing (kein Antwortlimit, doppelte Merkzeit, zählt nicht für Bestwerte)",
+    "relaxedSpeed": "Entspanntes Timing (kein Antwortlimit, doppelte Merkzeit, zählt nicht für Bestwerte) – in diesem Spiel geht es um Tempo, daher bleiben seine Signale schnell",
+    "howTo": "So wird gespielt",
+    "keyboardFull": "Spielbar mit Maus, Touch oder Tastatur (Tab, Pfeiltasten, Enter; Zifferntasten wählen Optionen). Du kannst diese Anleitung während des Spiels erneut öffnen.",
+    "keyboardPartial": "Manche Schritte brauchen Maus oder Touch; Optionen haben auch Zifferntasten. Du kannst diese Anleitung während des Spiels erneut öffnen.",
+    "scoring": "So wird dein Ergebnis berechnet",
+    "practises": "Trainiert: {{skills}} · etwa {{minutes}} Min. · Ergebnisse werden nur auf diesem Gerät gespeichert.",
+    "accessibility": "Barrierefreiheit: {{notes}}",
+    "record": "Dein Bestwert · Stufe {{level}}",
+    "bestPerformance": "Beste Leistung",
+    "bestScore": "Beste Punktzahl",
+    "bestAccuracy": "Beste Genauigkeit",
+    "bestMedian": "Beste Medianzeit",
+    "plays_one": "{{count}} abgeschlossene Einheit",
+    "plays_other": "{{count}} abgeschlossene Einheiten",
+    "notPlayed": "Noch nicht gespielt. Erfasste Werte: Punktzahl, Genauigkeit, Antwortzeit, Serie und Leistungsindex."
+  },
+  "path": {
+    "notFound": "Diesen Lernweg gibt es nicht.",
+    "eyebrow": "Lernweg",
+    "leave": "Lernweg verlassen",
+    "choose": "Als meinen Lernweg wählen",
+    "offers": "Was dieser Lernweg bietet",
+    "startWith": "Mit {{game}} beginnen",
+    "mixed_one": "Gemischte {{count}}-Minuten-Einheit",
+    "mixed_other": "Gemischte {{count}}-Minuten-Einheit",
+    "about": "Über diesen Lernweg",
+    "yours": "Das ist dein Lernweg",
+    "goodToKnow": "Gut zu wissen",
+    "turnsOn": "Wenn du ihn wählst, wird Folgendes aktiviert: {{settings}}. Du kannst jede Option in den <link>Einstellungen</link> ändern.",
+    "onlySuggests": "Ein Lernweg schlägt nur Spiele vor. Alle Spiele und Stufen des Katalogs bleiben verfügbar.",
+    "activities": "Aktivitäten in diesem Lernweg",
+    "startHere": "Hier anfangen",
+    "settings": {
+      "textSize": "größere Schrift",
+      "comfort": "bequeme Bedienelemente",
+      "relaxedByDefault": "entspanntes Timing",
+      "freePlay": "alle Stufen offen"
+    }
+  },
+  "paths": {
+    "eyebrow": "Lernwege",
+    "title": "Lernweg wählen",
+    "description": "Lernwege stellen Spiele und Einstellungen für verschiedene Altersgruppen und Interessen zusammen. Sie sind optional, jederzeit änderbar und schränken nie ein, was du spielen kannst.",
+    "yours": "· dein Lernweg"
+  },
+  "routes": {
+    "kids": {
+      "tagline": "Kurze, verspielte Rätsel mit Bildern.",
+      "intro": "Bildergedächtnis, einfache Logik und Suchspiele mit kurzen Anleitungen und ohne Eile. Beginne mit Stufe 1 und steig auf, wenn es dir leichtfällt.",
+      "goals": {
+        "1": "Mit Gedächtnis, Mustern und Logik spielen",
+        "2": "Kurze Runden ohne Zeitdruck",
+        "3": "Klare, freundliche Rückmeldung nach jeder Antwort"
+      },
+      "notes": {
+        "1": "Es werden keine Namen, E-Mail-Adressen oder persönlichen Daten abgefragt. Der Fortschritt bleibt auf diesem Gerät.",
+        "2": "Es gibt keine öffentlichen Ranglisten und keine Chats.",
+        "3": "Sollte diese Website jemals öffentlich für Kinder angeboten werden, gelten zuerst die Einwilligung der Eltern und die Datenschutzregeln (siehe docs/privacy.md)."
+      }
+    },
+    "teens": {
+      "tagline": "Visuelle Aufgaben, Strategie und Logik.",
+      "intro": "Schwierigere Bilderrätsel, Strategieprobleme und Aufgaben für das Arbeitsgedächtnis. Übertriff deine eigenen Bestwerte – es gibt keine öffentlichen Ranglisten.",
+      "goals": {
+        "1": "Logik- und Strategierätsel angehen",
+        "2": "Arbeitsgedächtnis und Mustererkennung fordern",
+        "3": "Persönliche Bestwerte Stufe für Stufe verfolgen"
+      },
+      "notes": {
+        "1": "Bestwerte sind persönlich und bleiben auf diesem Gerät."
+      }
+    },
+    "adults": {
+      "tagline": "Gedächtnis, Fokus und Planung im Alltag.",
+      "intro": "Übe, dir Listen und Zahlen zu merken, konzentriert zu bleiben, zwischen Aufgaben zu wechseln und vorauszuplanen – in Einheiten von 3 bis 15 Minuten.",
+      "goals": {
+        "1": "Das Alltagsgedächtnis üben (Wörter, Zahlen, Verknüpfungen)",
+        "2": "Bei anspruchsvollen Aufgaben konzentriert bleiben",
+        "3": "Üben in kurze tägliche Einheiten einbauen"
+      },
+      "notes": {
+        "1": "Die Ergebnisse beschreiben nur deine Leistung bei diesen Aktivitäten; sie sind keine medizinische oder psychologische Bewertung."
+      }
+    },
+    "seniors": {
+      "tagline": "Klare, ruhige Aktivitäten in deinem Tempo.",
+      "intro": "Größere Schrift, größere Schaltflächen und standardmäßig keine Zeitlimits. Die Anleitung lässt sich während eines Spiels jederzeit wieder öffnen.",
+      "goals": {
+        "1": "Eine regelmäßige Routine geistiger Aktivität pflegen",
+        "2": "Gedächtnis und Aufmerksamkeit in angenehmem Tempo üben",
+        "3": "Die eigenen Ergebnisse über die Zeit sehen"
+      },
+      "notes": {
+        "1": "Mit diesem Lernweg werden größere Schrift, bequeme Bedienelemente und entspanntes Timing aktiviert. Du kannst sie jederzeit in den Einstellungen ändern.",
+        "2": "Eine langsame oder falsche Antwort gehört einfach zum Üben dazu; sie sagt nichts über deine Gesundheit aus."
+      }
+    },
+    "programmers": {
+      "tagline": "Logik, Code lesen und Arbeitsgedächtnis.",
+      "intro": "Verfolge Algorithmen, finde Fehler, behalte Variablen im Blick und denke über Abhängigkeiten nach – dazu allgemeine Logik- und Gedächtnisspiele. Kombiniere ihn mit dem Kurs zur Programmierlogik.",
+      "goals": {
+        "1": "Code genau lesen und nachverfolgen",
+        "2": "Den Programmzustand im Arbeitsgedächtnis halten",
+        "3": "Über Bedingungen, Schleifen und Abhängigkeiten nachdenken"
+      },
+      "notes": {
+        "1": "Mit diesem Lernweg werden alle Stufen geöffnet (freies Spiel). Du kannst das in den Einstellungen ausschalten."
+      }
+    }
+  }
+}

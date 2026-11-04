@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { defaultPreferences } from '@/domain/preferences';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -33,7 +34,7 @@ describe('Play screen', () => {
     const clock = new FakeClock();
     const { repository } = renderApp(`${PATH}/1?seed=${choiceSeed}`, { clock });
     const first = sessionChallenge(1, choiceSeed);
-    expect(await screen.findByRole('heading', { name: first.prompt })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: en(first.prompt) })).toBeInTheDocument();
     expect(screen.getByText('1 / 6')).toBeInTheDocument();
     await waitForChallenge();
 
@@ -41,7 +42,7 @@ describe('Play screen', () => {
     await user.click(option(choiceLabels(first).correct));
 
     expect(await screen.findByRole('status', { name: '' })).toHaveTextContent(/Correct/);
-    expect(screen.getByText(first.explanation)).toBeInTheDocument();
+    expect(screen.getByText(en(first.explanation))).toBeInTheDocument();
     const score = within(screen.getByText('Score').parentElement as HTMLElement).getByText(/\d/);
     expect(Number(score.textContent.replace(',', ''))).toBeGreaterThan(0);
 
@@ -79,7 +80,7 @@ describe('Play screen', () => {
     expect(feedback).toBeInTheDocument();
     expect(screen.getByText(/✗ Your answer/)).toBeInTheDocument();
     expect(screen.getByText(/✓ Correct answer/)).toBeInTheDocument();
-    expect(screen.getByText(first.explanation)).toBeInTheDocument();
+    expect(screen.getByText(en(first.explanation))).toBeInTheDocument();
     expect(
       within(screen.getByText('Streak').parentElement as HTMLElement).getByText('0'),
     ).toBeInTheDocument();
@@ -114,7 +115,7 @@ describe('Play screen', () => {
         await vi.advanceTimersByTimeAsync(1);
       expect(screen.getByText('90s')).toBeInTheDocument();
       await vi.advanceTimersByTimeAsync(90_000);
-      expect(screen.getByText("Time's up")).toBeInTheDocument();
+      expect(screen.getByText(/^Time.s up$/)).toBeInTheDocument();
       expect(screen.getByText(/no answer/)).toBeInTheDocument();
     } finally {
       vi.useRealTimers();
@@ -147,7 +148,7 @@ describe('Play screen', () => {
   it('reproduces the same challenge for the same seed', async () => {
     const first = sessionChallenge(7, 1234);
     renderApp(`${PATH}/7?seed=1234`, { preferences: FREE_PLAY });
-    expect(await screen.findByRole('heading', { name: first.prompt })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: en(first.prompt) })).toBeInTheDocument();
   });
 
   it.each([

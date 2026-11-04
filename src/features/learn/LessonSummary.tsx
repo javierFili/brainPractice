@@ -1,4 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { joinText, textId } from '@/domain/shared';
+import { useFormat, useText } from '@/i18n';
 import {
   conceptOf,
   type Course,
@@ -9,7 +12,6 @@ import {
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { StatTile } from '@/components/ui/StatTile';
-import { formatPercent } from '@/features/shared/format';
 import { MasteryMeter } from './MasteryMeter';
 import { InlineText } from './RichBlocks';
 import { TrainingLinks } from './TrainingLinks';
@@ -31,6 +33,9 @@ export function LessonSummary({
   saveFailed: boolean;
   onRetry: () => void;
 }) {
+  const { t } = useTranslation(['learn', 'lessons']);
+  const tx = useText();
+  const format = useFormat();
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     heading.current?.focus();
@@ -49,7 +54,7 @@ export function LessonSummary({
     <article aria-labelledby="summary-title" className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-          {lesson.title}
+          {tx(lesson.title)}
         </p>
         <h1
           id="summary-title"
@@ -57,48 +62,48 @@ export function LessonSummary({
           tabIndex={-1}
           className="text-3xl font-semibold text-white outline-none"
         >
-          {result.passed ? 'Lesson complete' : 'Not passed yet'}
+          {result.passed ? t('summary.complete') : t('summary.notPassed')}
         </h1>
         <p className="max-w-2xl text-slate-300">
           {result.passed
             ? next
-              ? `You passed. “${next.title}” is now open.`
-              : 'You passed the last lesson of this module.'
-            : 'You need 60% to pass. Replaying the lesson is the fastest way to close the gap — the explanations will make more sense the second time.'}
+              ? t('summary.passedNext', { title: tx(next.title) })
+              : t('summary.passedLast')
+            : t('summary.failed', { score: format.percent(0.6) })}
         </p>
       </header>
 
       <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile
-          label="Lesson score"
-          value={formatPercent(result.score)}
-          hint="Checkpoint counts double"
+          label={t('summary.score')}
+          value={format.percent(result.score)}
+          hint={t('summary.scoreHint')}
         />
         <StatTile
-          label="Checkpoint"
-          value={checkpointScore === null ? '—' : formatPercent(checkpointScore)}
+          label={t('summary.checkpoint')}
+          value={checkpointScore === null ? '—' : format.percent(checkpointScore)}
         />
-        <StatTile label="Right first time" value={`${firstTry}/${result.outcomes.length}`} />
+        <StatTile label={t('summary.firstTime')} value={`${firstTry}/${result.outcomes.length}`} />
         <StatTile
-          label="Solutions shown"
+          label={t('summary.solutionsShown')}
           value={result.outcomes.filter((o) => o.revealed).length}
-          hint="Revealed answers count as not yet learned"
+          hint={t('summary.solutionsHint')}
         />
       </dl>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
-          <h2 className="mb-3 text-lg font-semibold text-white">Key points</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">{t('summary.keyPoints')}</h2>
           <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-200">
             {lesson.keyPoints.map((point) => (
-              <li key={point}>
+              <li key={textId(point)}>
                 <InlineText text={point} />
               </li>
             ))}
           </ul>
         </Card>
         <Card>
-          <h2 className="mb-3 text-lg font-semibold text-white">Mastery</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">{t('summary.mastery')}</h2>
           <div className="flex flex-col gap-4">
             {concepts.map((concept) => (
               <MasteryMeter
@@ -110,8 +115,7 @@ export function LessonSummary({
           </div>
           {result.passed && (
             <p className="mt-4 text-xs text-slate-400">
-              A short review of {concepts.map((c) => c.name).join(' and ')} will come back tomorrow,
-              then at growing intervals — that is how it sticks.
+              {t('summary.reviewNote', { concepts: tx(joinText(concepts.map((c) => c.name))) })}
             </p>
           )}
         </Card>
@@ -119,13 +123,15 @@ export function LessonSummary({
 
       <div className="flex flex-wrap gap-2">
         {result.passed && next && (
-          <ButtonLink to={`/learn/${next.id}`}>Next lesson: {next.title} →</ButtonLink>
+          <ButtonLink to={`/learn/${next.id}`}>
+            {t('summary.nextLesson', { title: tx(next.title) })} →
+          </ButtonLink>
         )}
         <Button variant={result.passed ? 'secondary' : 'primary'} onClick={onRetry}>
-          Replay lesson
+          {t('summary.replay')}
         </Button>
         <ButtonLink variant="ghost" to="/learn">
-          Learning path
+          {t('learningPath')}
         </ButtonLink>
       </div>
 
@@ -133,7 +139,7 @@ export function LessonSummary({
 
       {saveFailed && (
         <p role="alert" className="text-sm text-rose-300">
-          Your progress could not be saved on this device.
+          {t('summary.saveFailed')}
         </p>
       )}
     </article>

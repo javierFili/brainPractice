@@ -1,0 +1,192 @@
+{
+  "home": {
+    "welcomeBack": "Welcome back",
+    "welcome": "Welcome",
+    "routeSuffix": " · {{route}} route",
+    "title": "Train your mind at your own pace.",
+    "lead": "Explore challenges of memory, logic, attention and reasoning. Short sessions, ten levels per game, and results you can follow over time.",
+    "continueGame": "Continue {{game}}",
+    "startFirst": "Start your first activity",
+    "quickSession": "Quick session",
+    "chooseRoute": "Choose a route",
+    "continue": {
+      "title": "Continue training",
+      "where": "<b>{{game}}</b> · level {{level}}, {{when}}",
+      "lastCleared": "Last result: {{accuracy}} accuracy · level cleared — level {{level}} is next",
+      "lastRepeat": "Last result: {{accuracy}} accuracy · repeat it to clear the level (performance 70)",
+      "playLevel": "Play level {{level}}",
+      "details": "Details",
+      "empty": "Nothing in progress yet. Pick any activity below — every game starts at level 1 and explains its rules first."
+    },
+    "daily": {
+      "title": "Daily challenge",
+      "today": "Today: <b>{{game}}</b> at level {{level}}. The same set all day.",
+      "done": "Done today — performance {{performance}}/100. Come back tomorrow for a new one.",
+      "pending": "About three minutes. Missing a day costs nothing.",
+      "seeResult": "See today’s result",
+      "play": "Play today’s challenge",
+      "none": "No games are available for the daily challenge."
+    },
+    "quick": {
+      "title": "Quick session",
+      "body": "A mix of short activities from different areas, at your level.",
+      "min": "min"
+    },
+    "recommended": "Recommended for you",
+    "progress": {
+      "title": "Your progress",
+      "seeAll": "See all",
+      "sessions": "Sessions",
+      "practiceTime": "Practice time",
+      "explored": "Games explored",
+      "levelsOpen": "Levels open",
+      "levelsOpenHint": "across the games you played",
+      "today": "Today: {{minutes}} of {{goal}} min",
+      "todayReached": "Today: {{minutes}} of {{goal}} min · goal reached",
+      "empty": "Your sessions, practice time and records will appear here after your first activity. Everything stays on this device."
+    },
+    "areas": {
+      "title": "Explore by area",
+      "all": "All activities",
+      "games_one": "{{count}} game",
+      "games_other": "{{count}} games"
+    },
+    "routes": {
+      "title": "Routes for every age and interest",
+      "yours": "· your route"
+    },
+    "programming": {
+      "title": "Specialisation: programming",
+      "body": "Optional. A 10-lesson course on programming logic and ten coding games (tracing, debugging, variables, loops). Everything else in the app works without any coding.",
+      "course": "Course",
+      "games": "Coding games"
+    },
+    "suggestion": {
+      "levelUp": "Next level",
+      "variety": "For variety",
+      "discover": "Something new",
+      "start": "Good start",
+      "game": "{{game}} · level {{level}}"
+    }
+  },
+  "continue": {
+    "eyebrow": "General",
+    "title": "Continue training",
+    "last": "Last activity",
+    "summary": "Level {{level}} on {{date}} · {{accuracy}} accuracy · performance {{performance}}/100",
+    "summaryEarly": "Level {{level}} on {{date}} · {{accuracy}} accuracy · performance {{performance}}/100 · ended early",
+    "repeat": "Repeat level {{level}}",
+    "goTo": "Go to level {{level}}",
+    "another": "Choose another level",
+    "recent": "Recently played",
+    "level": "level {{level}}",
+    "empty": "You have not played anything yet, so there is nothing to continue.",
+    "browse": "Browse activities",
+    "tryQuick": "Try a quick session"
+  },
+  "daily": {
+    "loadError": "Your progress could not be loaded.",
+    "eyebrow": "Daily challenge",
+    "description": "A new challenge every day, the same for everyone. Five quick problems at your level — about three minutes.",
+    "areaLevel": "{{area}} · level {{level}}",
+    "done": "✓ Done for today — performance {{performance}}/100. A new challenge arrives tomorrow.",
+    "back": "Back to your dashboard",
+    "again": "Play it again (not counted)",
+    "start": "Start today's challenge"
+  },
+  "onboarding": {
+    "eyebrow": "Get started",
+    "title": "What would you like to practise?",
+    "description": "Choose a route to get suggestions that fit you. It is optional, changes nothing about what you can play, and you can switch any time.",
+    "route": "Route",
+    "explore": {
+      "name": "Just explore",
+      "tagline": "No route: suggestions from every area."
+    },
+    "daysQuestion": "How many days a week would you like to practise?",
+    "daysHint": "Your own target. Missing a day costs nothing.",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "week": {
+    "label": "Last seven days",
+    "practised": "{{day}} practised",
+    "notPractised": "{{day}} not practised",
+    "summary_one": "<b>{{active}} of {{count}}</b> days this week",
+    "summary_other": "<b>{{active}} of {{count}}</b> days this week",
+    "summaryReached_one": "<b>{{active}} of {{count}}</b> days this week — target reached",
+    "summaryReached_other": "<b>{{active}} of {{count}}</b> days this week — target reached",
+    "run_one": " · {{count}}-day run",
+    "run_other": " · {{count}}-day run"
+  },
+  "quick": {
+    "eyebrow": "Training",
+    "title": "Quick session",
+    "description": "Short mixed practice for busy days: 3, 5, 10 or 15 minutes.",
+    "unavailable": "This activity is not available.",
+    "activityOf": "Activity {{index}} of {{total}} ·",
+    "progress": "Quick session progress",
+    "end": "End quick session",
+    "done": "Session complete",
+    "summary_one": "{{count}} activity · {{time}} · {{correct}} of {{total}} correct ({{percent}})",
+    "summary_other": "{{count}} activities · {{time}} · {{correct}} of {{total}} correct ({{percent}})",
+    "summaryEmpty_one": "{{count}} activity · {{time}} · nothing answered",
+    "summaryEmpty_other": "{{count}} activities · {{time}} · nothing answered",
+    "gameLevel": "{{game}} · level {{level}}",
+    "notAnswered": "Not answered",
+    "notAnsweredEarly": "Not answered · ended early",
+    "result": "{{correct}}/{{attempted}} correct · performance {{performance}}/100",
+    "resultEarly": "{{correct}}/{{attempted}} correct · performance {{performance}}/100 · ended early",
+    "saved": "Each activity was saved to its game’s history. Quick blocks are shorter than full sessions.",
+    "again": "Another quick session",
+    "seeProgress": "See my progress",
+    "home": "Home",
+    "howLong": "How long?",
+    "duration": "Duration",
+    "minutes_one": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "about_one": "about {{count}} activity",
+    "about_other": "about {{count}} activities",
+    "relaxed": "No time pressure (relaxed timing; only games that work untimed)",
+    "explain": "Activities come from different areas, at the level suggested by your results. The real duration depends on your pace.",
+    "explainRoute": "Activities come from different areas and favour your {{route}} route, at the level suggested by your results. The real duration depends on your pace.",
+    "start_one": "Start {{count}}-minute session",
+    "start_other": "Start {{count}}-minute session"
+  },
+  "errors": {
+    "notFound": {
+      "title": "Nothing here",
+      "message": "This page does not exist.",
+      "browse": "Browse games"
+    },
+    "load": {
+      "title": "Your saved progress could not be read.",
+      "body": "Nothing has been deleted. Try again, or check whether this browser allows site storage."
+    },
+    "route": {
+      "eyebrow": "error",
+      "title": "Something went wrong",
+      "body": "This screen could not be displayed. Your saved progress is not affected.",
+      "reload": "Reload",
+      "home": "Go home",
+      "details": "Technical details"
+    }
+  },
+  "ui": {
+    "countdown": {
+      "short": "{{seconds}}s",
+      "left_one": "{{count}} second left",
+      "left_other": "{{count}} seconds left"
+    },
+    "code": {
+      "label": "Code",
+      "ran": "This line ran",
+      "bug": "← the bug",
+      "pick": "← your pick",
+      "line": "Line {{number}}",
+      "lineRan": "ran",
+      "lineCurrent": "current",
+      "separator": ", "
+    }
+  }
+}

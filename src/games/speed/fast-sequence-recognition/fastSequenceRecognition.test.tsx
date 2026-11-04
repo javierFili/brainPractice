@@ -11,6 +11,7 @@ import { fastSequenceRecognitionGame, sequenceLabel } from './content/definition
 import { FAST_SEQUENCE_LEVELS } from './content/levels';
 import { fastSequenceRecognitionModule } from './index';
 import { FastSequenceView } from './ui/FastSequenceView';
+import { en } from '@/test/i18n';
 
 describeGameContract(fastSequenceRecognitionModule);
 
@@ -28,7 +29,7 @@ describe('Fast Sequence Recognition content', () => {
       const shown = sequenceLabel(kind, items, glyphs);
       const options = optionsOf(challenge);
       expect(options).toHaveLength(FAST_SEQUENCE_LEVELS[level].optionCount);
-      const same = options.filter((o) => o.label === shown);
+      const same = options.filter((o) => en(o.label) === en(shown));
       expect(same).toHaveLength(1);
       if (challenge.response.format === 'single-choice')
         expect(same[0]?.id).toBe(challenge.response.solution.optionId);
@@ -41,10 +42,10 @@ describe('Fast Sequence Recognition content', () => {
     for (const { level, challenge } of all) {
       if (FAST_SEQUENCE_LEVELS[level].changes.includes('substitute')) continue;
       const { kind, items, glyphs } = challenge.content;
-      const sorted = sequenceLabel(kind, [...items].sort(), glyphs);
+      const sorted = en(sequenceLabel(kind, [...items].sort(), glyphs));
       for (const o of optionsOf(challenge)) {
         const sep = kind === 'shapes' ? ' · ' : ' ';
-        expect(o.label.split(sep).sort().join(sep)).toBe(sorted.split(sep).sort().join(sep));
+        expect(en(o.label).split(sep).sort().join(sep)).toBe(sorted.split(sep).sort().join(sep));
       }
     }
   });
@@ -63,7 +64,7 @@ describe('Fast Sequence Recognition content', () => {
     for (const { challenge } of multi) {
       const options = optionsOf(challenge);
       const seqs = options.map((o) =>
-        o.label.split(challenge.content.kind === 'shapes' ? ' · ' : ' '),
+        en(o.label).split(challenge.content.kind === 'shapes' ? ' · ' : ' '),
       );
       // Score each option by how many positions agree with the per-position majority.
       const typicality = seqs.map(
@@ -100,7 +101,7 @@ describe('Fast Sequence Recognition view', () => {
   const props = { challenge, locate: null, respond: null, answer: null, assisted: false };
 
   it('shows the sequence while studying and hides it while answering', () => {
-    const label = `Sequence: ${sequenceLabel(challenge.content.kind, challenge.content.items, challenge.content.glyphs)}`;
+    const label = `Sequence: ${en(sequenceLabel(challenge.content.kind, challenge.content.items, challenge.content.glyphs))}`;
     const view = render(<FastSequenceView {...props} phase="study" />);
     expect(screen.getByRole('list', { name: label })).toBeInTheDocument();
     view.unmount();

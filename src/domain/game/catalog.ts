@@ -1,3 +1,5 @@
+import { isBlankText, type Text } from '../shared/text';
+
 /**
  * Catalog sections. A category groups games by what the player does; it is independent of the
  * assessment `area` a game reports to (a programming game may report to `logic`).
@@ -54,10 +56,10 @@ export interface GameMeta {
   readonly relaxedFriendly: boolean;
   readonly measures: readonly MeasuredMetric[];
   /** Plain-language description of how the result is computed. */
-  readonly scoringSummary: string;
+  readonly scoringSummary: Text;
   readonly feedback: FeedbackStyle;
   /** Known limitations for assistive technologies; shown on the game page. */
-  readonly accessibilityNotes?: string;
+  readonly accessibilityNotes?: Text;
 }
 
 export function validateGameMeta(meta: GameMeta): string[] {
@@ -67,6 +69,6 @@ export function validateGameMeta(meta: GameMeta): string[] {
   if (meta.measures.length === 0) issues.push('measures are empty');
   if (!(meta.estimatedMinutes > 0 && meta.estimatedMinutes <= 30))
     issues.push('estimatedMinutes must be in (0, 30]');
-  if (meta.scoringSummary.trim() === '') issues.push('scoringSummary is empty');
+  if (isBlankText(meta.scoringSummary)) issues.push('scoringSummary is empty');
   return issues;
 }

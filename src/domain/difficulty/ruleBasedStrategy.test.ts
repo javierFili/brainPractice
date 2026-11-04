@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import type { PerformanceMetrics } from '../session/performanceMetrics';
 import type { DifficultyLevel } from '../shared/difficultyLevel';
 import { createRuleBasedDifficulty } from './ruleBasedStrategy';
@@ -35,7 +36,7 @@ describe('RuleBasedDifficultyStrategy', () => {
   it('stays when accurate but slow, or when pace is unknown', () => {
     const slow = next(4, metrics(1, 1.01));
     expect(slow).toMatchObject({ level: 4, direction: 'stay' });
-    expect(slow.reason).toMatch(/pace/);
+    expect(en(slow.reason)).toMatch(/pace/);
     expect(next(4, metrics(1, null))).toMatchObject({ level: 4, direction: 'stay' });
   });
 
@@ -57,7 +58,7 @@ describe('RuleBasedDifficultyStrategy', () => {
   it('does not change level without enough evidence', () => {
     const early = next(4, metrics(1, 0.1, 2));
     expect(early).toMatchObject({ level: 4, direction: 'stay' });
-    expect(early.reason).toMatch(/Not enough/);
+    expect(en(early.reason)).toMatch(/Not enough/);
   });
 
   it('accepts custom thresholds and rejects inconsistent ones', () => {

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { numberComparisonGame } from './content/definition';
 import type { NumberComparisonChallenge } from './content/types';
@@ -8,10 +9,10 @@ export const numberComparisonModule = defineGameModule<NumberComparisonChallenge
   definition: numberComparisonGame,
   ContentView: NumberComparisonView,
   kindLabels: {
-    integers: 'Whole numbers',
-    decimals: 'Decimals',
-    fractions: 'Fractions',
-    expressions: 'Calculations',
+    integers: msg('speed:numberComparison.kinds.integers'),
+    decimals: msg('speed:numberComparison.kinds.decimals'),
+    fractions: msg('speed:numberComparison.kinds.fractions'),
+    expressions: msg('speed:numberComparison.kinds.expressions'),
   },
   renderOption: renderNumberOption,
   describeOption: describeNumberOption,

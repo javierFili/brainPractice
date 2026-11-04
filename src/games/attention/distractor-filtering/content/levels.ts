@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { DistractorFilteringProfile } from './types';
 
@@ -10,7 +11,7 @@ const scan = (cells: number, targets: number) => untimed(4000 + cells * 250 + ta
  */
 export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfile>([
   {
-    objective: 'Mark every item of one shape.',
+    objective: msg('attention:distractorFiltering.levels.1'),
     challengeCount: 5,
     kind: 'shape',
     columns: 4,
@@ -23,7 +24,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(16, 3),
   },
   {
-    objective: 'Mark every item of one colour.',
+    objective: msg('attention:distractorFiltering.levels.2'),
     challengeCount: 5,
     kind: 'color',
     columns: 4,
@@ -36,7 +37,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(16, 4),
   },
   {
-    objective: 'Two features at once: right shape AND right colour.',
+    objective: msg('attention:distractorFiltering.levels.3'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 4,
@@ -49,7 +50,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(16, 3),
   },
   {
-    objective: 'More look-alikes share one feature with the target.',
+    objective: msg('attention:distractorFiltering.levels.4'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 5,
@@ -62,7 +63,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(25, 4),
   },
   {
-    objective: 'Almost every distractor shares a feature.',
+    objective: msg('attention:distractorFiltering.levels.5'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 5,
@@ -75,7 +76,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(25, 5),
   },
   {
-    objective: 'Lures in the nearest colour or outline.',
+    objective: msg('attention:distractorFiltering.levels.6'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 5,
@@ -88,7 +89,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(30, 5),
   },
   {
-    objective: 'The number of targets is not given: decide when you are done.',
+    objective: msg('attention:distractorFiltering.levels.7'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 6,
@@ -101,7 +102,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(36, 6),
   },
   {
-    objective: '7 targets among close lures (one slip allowed).',
+    objective: msg('attention:distractorFiltering.levels.8'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 6,
@@ -114,7 +115,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(36, 7),
   },
   {
-    objective: '8 targets among 42 items (one slip allowed).',
+    objective: msg('attention:distractorFiltering.levels.9'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 6,
@@ -127,7 +128,7 @@ export const DISTRACTOR_FILTERING_LEVELS = defineLevels<DistractorFilteringProfi
     timing: scan(42, 8),
   },
   {
-    objective: '9 targets among 48 close lures (one slip allowed).',
+    objective: msg('attention:distractorFiltering.levels.10'),
     challengeCount: 5,
     kind: 'conjunction',
     columns: 6,

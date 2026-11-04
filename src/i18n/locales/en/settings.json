@@ -1,0 +1,88 @@
+{
+  "eyebrow": "Settings",
+  "toggle": {
+    "on": "On",
+    "off": "Off"
+  },
+  "preferences": {
+    "title": "Preferences",
+    "description": "How the app suggests and paces activities. Saved on this device only.",
+    "language": {
+      "title": "Language",
+      "description": "The language of the whole app, including games and lessons. Saved on this device."
+    },
+    "route": {
+      "title": "Route",
+      "description": "Optional. A route chooses suggested games and settings; it never limits what you can play.",
+      "none": "No route (general)"
+    },
+    "goal": {
+      "title": "Daily practice goal",
+      "description": "A voluntary goal shown on the home screen. Not reaching it has no consequence.",
+      "none": "No goal",
+      "option_one": "{{count}} minute a day",
+      "option_other": "{{count}} minutes a day"
+    },
+    "relaxed": {
+      "title": "Relaxed timing by default",
+      "description": "Start every game without answer limits and with longer memorisation time. Relaxed sessions are saved but do not set records."
+    },
+    "freePlay": {
+      "title": "Free play",
+      "description": "Open all ten levels of every game. Without it, level 1 is open and each next level opens after a session with performance 50+ or after three completed sessions."
+    }
+  },
+  "accessibility": {
+    "title": "Accessibility",
+    "description": "Adjust reading, motion and pace. Changes apply immediately.",
+    "textSize": {
+      "title": "Text size",
+      "description": "Scales all text and controls. Browser zoom also works.",
+      "normal": "Standard",
+      "large": "Large",
+      "xLarge": "Extra large"
+    },
+    "motion": {
+      "title": "Reduce motion",
+      "description": "Turns off transitions and decorative animation. By default the app follows your system setting."
+    },
+    "comfort": {
+      "title": "Comfortable controls",
+      "description": "Larger buttons and touch targets."
+    },
+    "noLimits": {
+      "title": "No time limits",
+      "description": "Relaxed timing for every game: no answer limits, double memorisation time and feedback that waits for you."
+    },
+    "always": {
+      "title": "Also available everywhere",
+      "keyboard": "Every game can be played with the keyboard; answer options have number keys.",
+      "howToPlay": "“How to play” reopens the instructions at any moment during a game.",
+      "shapes": "Shapes always differ in form as well as colour; feedback uses text and symbols, not only colour.",
+      "reaction": "Reaction games need quick responses; their pages say so. See docs/accessibility.md for known limits."
+    }
+  },
+  "data": {
+    "title": "Your data",
+    "description": "This demo has no accounts and no server: everything lives in this browser’s local storage.",
+    "stored": {
+      "title": "What is stored",
+      "results": "Game results: level, score, accuracy, timing and date of each session.",
+      "learning": "Learning progress of the programming course.",
+      "days": "Days you practised, daily challenges and your weekly target.",
+      "preferences": "Preferences (route, text size, timing).",
+      "noPersonal": "No name, email, location or other personal details are collected."
+    },
+    "showJson": "Show my data as JSON",
+    "reset": {
+      "title": "Reset demo data",
+      "description": "Deletes all results, history, milestones, course progress and preferences on this device. This cannot be undone.",
+      "button": "Reset all data…",
+      "confirm": "Are you sure? Everything stored by this app on this device will be deleted.",
+      "yes": "Yes, delete everything",
+      "done": "All data was deleted.",
+      "backHome": "Back to home",
+      "failed": "Some data could not be deleted. Your browser may be blocking storage."
+    }
+  }
+}

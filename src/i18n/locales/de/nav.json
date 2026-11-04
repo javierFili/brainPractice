@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "BrainPractice — Mentales Training für jedes Alter"
+  },
+  "skipToContent": "Zum Inhalt springen",
+  "landmarks": {
+    "main": "Hauptnavigation",
+    "navigation": "Navigation",
+    "sidebar": "Seitenleiste"
+  },
+  "menu": {
+    "open": "Menü",
+    "close": "Navigation schließen"
+  },
+  "sidebar": {
+    "expand": "Seitenleiste ausklappen",
+    "collapse": "Seitenleiste einklappen"
+  },
+  "language": {
+    "label": "Sprache"
+  },
+  "storageBlocked": "Dieser Browser blockiert den lokalen Speicher, daher geht dein Fortschritt beim Schließen des Tabs verloren.",
+  "disclaimer": "Mentales Training zur Freizeitgestaltung. Die Ergebnisse beschreiben nur die Leistung bei diesen Aktivitäten – dies ist keine medizinische, psychologische oder IQ-Bewertung und dient weder der Diagnose noch der Behandlung oder Vorbeugung von Erkrankungen.",
+  "sections": {
+    "general": "Allgemein",
+    "training": "Training",
+    "routes": "Lernwege",
+    "assessment": "Einschätzung",
+    "learning": "Lernen",
+    "settings": "Einstellungen"
+  },
+  "items": {
+    "home": "Start",
+    "continue": "Training fortsetzen",
+    "daily": "Tägliche Herausforderung",
+    "progress": "Mein Fortschritt",
+    "games": "Alle Aktivitäten",
+    "quick": "Kurze Einheit",
+    "trainMemory": "Gedächtnis",
+    "trainLogic": "Logik",
+    "trainAttention": "Aufmerksamkeit",
+    "trainSpeed": "Denkgeschwindigkeit",
+    "trainPatterns": "Muster",
+    "trainSpatial": "Räumliches Denken",
+    "trainConcentration": "Konzentration",
+    "pathsKids": "Kinder",
+    "pathsTeens": "Jugendliche",
+    "pathsAdults": "Erwachsene",
+    "pathsSeniors": "Senioren",
+    "pathsProgrammers": "Programmierer",
+    "assessment": "Kognitive Einschätzung",
+    "assessmentHistory": "Frühere Ergebnisse",
+    "assessmentProfile": "Mein Leistungsprofil",
+    "learn": "Programmierlogik",
+    "learnThinking": "Informatisches Denken",
+    "trainProgramming": "Algorithmus-Aufgaben",
+    "settings": "Einstellungen",
+    "settingsAccessibility": "Barrierefreiheit",
+    "settingsData": "Demodaten zurücksetzen"
+  }
+}

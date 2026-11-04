@@ -1,4 +1,5 @@
 import { stepLevel } from '../shared/difficultyLevel';
+import { msg, type Text } from '../shared/text';
 import type {
   DifficultyContext,
   DifficultyStrategy,
@@ -37,37 +38,37 @@ export function createRuleBasedDifficulty(
 
   return {
     determineNextLevel({ currentLevel, performance }: DifficultyContext): LevelRecommendation {
-      const stay = (reason: string): LevelRecommendation => ({
+      const stay = (reason: Text): LevelRecommendation => ({
         level: currentLevel,
         direction: 'stay',
         reason,
       });
       if (performance.attempted < t.minAttempted)
-        return stay('Not enough answers to judge this level yet.');
+        return stay(msg('play:results.reasons.notEnough'));
 
       const { accuracy, medianPace } = performance;
       if (accuracy >= t.promoteAccuracy && medianPace !== null && medianPace <= t.promoteMaxPace) {
         return currentLevel === 10
-          ? stay('Top level mastered — keep sharpening your speed.')
+          ? stay(msg('play:results.reasons.topMastered'))
           : {
               level: stepLevel(currentLevel, 1),
               direction: 'up',
-              reason: 'Accurate and on pace: ready for the next level.',
+              reason: msg('play:results.reasons.ready'),
             };
       }
       if (accuracy < t.demoteAccuracy) {
         return currentLevel === 1
-          ? stay('Keep practising the fundamentals.')
+          ? stay(msg('play:results.reasons.fundamentals'))
           : {
               level: stepLevel(currentLevel, -1),
               direction: 'down',
-              reason: 'Consolidate the previous level before moving on.',
+              reason: msg('play:results.reasons.consolidate'),
             };
       }
       return stay(
         accuracy >= t.promoteAccuracy
-          ? 'Accurate — now work on your pace.'
-          : 'Keep practising this level.',
+          ? msg('play:results.reasons.pace')
+          : msg('play:results.reasons.keepPractising'),
       );
     },
   };

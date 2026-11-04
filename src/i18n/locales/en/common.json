@@ -1,0 +1,167 @@
+{
+  "loading": "Loading…",
+  "actions": {
+    "back": "Back",
+    "next": "Next",
+    "start": "Start",
+    "continue": "Continue",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "save": "Save",
+    "submit": "Submit",
+    "undo": "Undo",
+    "clear": "Clear",
+    "skip": "Skip",
+    "finish": "Finish",
+    "reload": "Reload the page",
+    "goHome": "Go to home"
+  },
+  "answer": {
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "timedOut": "Time’s up",
+    "skipped": "Skipped"
+  },
+  "level": {
+    "label": "Level {{level}}",
+    "short": "L{{level}}",
+    "locked": "Locked"
+  },
+  "tiers": {
+    "fundamentals": "Fundamentals",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "expert": "Expert"
+  },
+  "areas": {
+    "logic": {
+      "label": "Logic",
+      "summary": "Deduction, dependencies and algorithmic reasoning."
+    },
+    "memory": {
+      "label": "Memory",
+      "summary": "Hold and update information under load."
+    },
+    "speed": {
+      "label": "Speed",
+      "summary": "Compare and decide quickly and accurately."
+    },
+    "attention": {
+      "label": "Attention",
+      "summary": "Find what matters in the noise."
+    },
+    "patterns": {
+      "label": "Patterns",
+      "summary": "Abstract rules from examples and structures."
+    }
+  },
+  "categories": {
+    "memory": {
+      "label": "Memory",
+      "summary": "Hold, recall and update pictures, words, numbers and positions."
+    },
+    "logic": {
+      "label": "Logic",
+      "summary": "Deduce, plan and solve puzzles with one verifiable answer."
+    },
+    "speed": {
+      "label": "Mental speed",
+      "summary": "Quick, accurate decisions: react, compare and classify."
+    },
+    "attention": {
+      "label": "Attention",
+      "summary": "Find targets, ignore distractions and keep focus."
+    },
+    "patterns": {
+      "label": "Patterns & spatial",
+      "summary": "Discover rules, complete patterns and turn shapes in your mind."
+    },
+    "programming": {
+      "label": "Programming",
+      "summary": "Trace code, track variables and hunt bugs — for programmers."
+    }
+  },
+  "audiences": {
+    "kids": "Kids",
+    "teens": "Teens",
+    "adults": "Adults",
+    "seniors": "Seniors",
+    "programmers": "Programmers"
+  },
+  "skills": {
+    "decomposition": "decomposition",
+    "abstraction": "abstraction",
+    "pattern-recognition": "pattern recognition",
+    "logical-reasoning": "logical reasoning",
+    "working-memory": "working memory",
+    "attention": "attention",
+    "debugging": "debugging",
+    "algorithmic-thinking": "algorithmic thinking",
+    "short-term-memory": "short-term memory",
+    "long-term-recall": "long-term recall",
+    "visual-memory": "visual memory",
+    "auditory-memory": "auditory memory",
+    "selective-attention": "selective attention",
+    "sustained-attention": "sustained attention",
+    "concentration": "concentration",
+    "processing-speed": "processing speed",
+    "reaction-time": "reaction time",
+    "problem-solving": "problem solving",
+    "spatial-reasoning": "spatial reasoning",
+    "visual-orientation": "visual orientation",
+    "cognitive-flexibility": "cognitive flexibility",
+    "sequential-thinking": "sequential thinking",
+    "planning": "planning",
+    "error-detection": "error detection",
+    "instruction-comprehension": "instruction comprehension",
+    "mental-agility": "mental agility"
+  },
+  "format": {
+    "noLimit": "No limit"
+  },
+  "errors": {
+    "generic": "Something went wrong."
+  },
+  "response": {
+    "enterNumber": "Enter a number.",
+    "yourAnswer": "Your answer",
+    "yourAnswerUnit": "Your answer ({{unit}})",
+    "toggleSign": "Toggle negative sign",
+    "yourOrder": "Your order",
+    "moveUp": "Move {{item}} up",
+    "moveDown": "Move {{item}} down",
+    "submitOrder": "Submit order",
+    "yourSequence": "Your sequence, {{entered}} of {{total}}",
+    "slot": "{{position}}: {{item}}",
+    "emptySlot": "{{position}}: empty",
+    "symbols": "Symbols",
+    "submitSequence": "Submit sequence",
+    "answerOptions": "Answer options",
+    "spokenCorrect": "{{option}}, correct answer",
+    "spokenYours": "{{option}}, your answer",
+    "correctAnswer": "Correct answer",
+    "yourAnswerMark": "Your answer"
+  },
+  "describe": {
+    "nothingMarked": "nothing marked",
+    "items_one": "item {{positions}}",
+    "items_other": "items {{positions}}",
+    "item": "item {{position}}",
+    "number": "{{value}}",
+    "allPairs_one": "the pair",
+    "allPairs_other": "all {{count}} pairs",
+    "tapDuringSignal": "tap while the signal is shown",
+    "doNotTap": "do not tap",
+    "noAnswer": "no answer",
+    "attempts_one": "{{count}} attempt",
+    "attempts_other": "{{count}} attempts",
+    "pairsFound": "{{found}} of {{total}} pairs, {{misses}}",
+    "misses_one": "{{count}} miss",
+    "misses_other": "{{count}} misses",
+    "noTap": "no tap",
+    "tappedEarly": "tapped before the signal",
+    "tappedAfter": "tapped after {{ms}} ms"
+  }
+}

@@ -9,6 +9,7 @@ import { variableTrackingGame } from './content/definition';
 import { TRACKING_LEVELS } from './content/levels';
 import type { TrackingChallenge } from './content/types';
 import { variableTrackingModule } from './index';
+import { en } from '@/test/i18n';
 
 describeGameContract(variableTrackingModule);
 
@@ -22,7 +23,9 @@ function solution(c: TrackingChallenge): string {
   const { response } = c;
   if (response.format === 'numeric') return String(response.solution.value);
   if (response.format === 'single-choice')
-    return response.question.options.find((o) => o.id === response.solution.optionId)?.label ?? '';
+    return en(
+      response.question.options.find((o) => o.id === response.solution.optionId)?.label ?? '',
+    );
   throw new Error(`unexpected format ${response.format}`);
 }
 

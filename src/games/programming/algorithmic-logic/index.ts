@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { logicGame } from './content/definition';
 import type { LogicChallenge } from './content/types';
@@ -7,10 +8,10 @@ export const logicModule = defineGameModule<LogicChallenge>({
   definition: logicGame,
   ContentView: LogicContentView,
   kindLabels: {
-    'dependency-order': 'Execution order',
-    'dependency-count': 'Transitive dependencies',
-    'critical-path': 'Parallel scheduling',
-    'program-trace': 'Program tracing',
-    'constraint-arrangement': 'Constraint puzzles',
+    'dependency-order': msg('programming:algorithmicLogic.kinds.dependencyOrder'),
+    'dependency-count': msg('programming:algorithmicLogic.kinds.dependencyCount'),
+    'critical-path': msg('programming:algorithmicLogic.kinds.criticalPath'),
+    'program-trace': msg('programming:algorithmicLogic.kinds.programTrace'),
+    'constraint-arrangement': msg('programming:algorithmicLogic.kinds.constraintArrangement'),
   },
 });

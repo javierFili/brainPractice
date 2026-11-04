@@ -1,4 +1,5 @@
 import type { PathDefinition } from '@/domain/paths';
+import { msg } from '@/domain/shared';
 
 /**
  * Routes reuse the one catalog. Age groups describe who a route was designed with in mind; they
@@ -7,14 +8,13 @@ import type { PathDefinition } from '@/domain/paths';
 export const PATHS: readonly PathDefinition[] = [
   {
     id: 'kids',
-    name: 'Kids',
-    tagline: 'Short, playful puzzles with pictures.',
-    intro:
-      'Picture memory, simple logic and spotting games with short instructions and no rush. Start at level 1 and move up when it feels easy.',
+    name: msg('common:audiences.kids'),
+    tagline: msg('catalog:routes.kids.tagline'),
+    intro: msg('catalog:routes.kids.intro'),
     goals: [
-      'Play with memory, patterns and logic',
-      'Short rounds without time pressure',
-      'Clear, friendly feedback after every answer',
+      msg('catalog:routes.kids.goals.1'),
+      msg('catalog:routes.kids.goals.2'),
+      msg('catalog:routes.kids.goals.3'),
     ],
     featured: [
       'memory-cards',
@@ -31,21 +31,20 @@ export const PATHS: readonly PathDefinition[] = [
     focus: ['memory', 'patterns', 'attention', 'logic'],
     suggestedMinutes: 5,
     notes: [
-      'No names, emails or personal details are asked. Progress stays on this device.',
-      'There are no public rankings or chats.',
-      'If this site is ever offered to children publicly, parental consent and data rules apply first (see docs/privacy.md).',
+      msg('catalog:routes.kids.notes.1'),
+      msg('catalog:routes.kids.notes.2'),
+      msg('catalog:routes.kids.notes.3'),
     ],
   },
   {
     id: 'teens',
-    name: 'Teens',
-    tagline: 'Visual challenges, strategy and logic.',
-    intro:
-      'Harder visual puzzles, strategy problems and working-memory challenges. Beat your own records — there are no public leaderboards.',
+    name: msg('common:audiences.teens'),
+    tagline: msg('catalog:routes.teens.tagline'),
+    intro: msg('catalog:routes.teens.intro'),
     goals: [
-      'Take on logic and strategy puzzles',
-      'Push working memory and pattern finding',
-      'Track personal bests level by level',
+      msg('catalog:routes.teens.goals.1'),
+      msg('catalog:routes.teens.goals.2'),
+      msg('catalog:routes.teens.goals.3'),
     ],
     featured: [
       'matrix-reasoning',
@@ -61,18 +60,17 @@ export const PATHS: readonly PathDefinition[] = [
     ],
     focus: ['logic', 'patterns', 'memory', 'speed'],
     suggestedMinutes: 10,
-    notes: ['Records are personal and stay on this device.'],
+    notes: [msg('catalog:routes.teens.notes.1')],
   },
   {
     id: 'adults',
-    name: 'Adults',
-    tagline: 'Everyday memory, focus and planning.',
-    intro:
-      'Practise remembering lists and numbers, staying focused, switching between tasks and planning ahead, in sessions of 3 to 15 minutes.',
+    name: msg('common:audiences.adults'),
+    tagline: msg('catalog:routes.adults.tagline'),
+    intro: msg('catalog:routes.adults.intro'),
     goals: [
-      'Practise everyday memory (words, numbers, associations)',
-      'Keep focus on demanding tasks',
-      'Fit practice into short daily sessions',
+      msg('catalog:routes.adults.goals.1'),
+      msg('catalog:routes.adults.goals.2'),
+      msg('catalog:routes.adults.goals.3'),
     ],
     featured: [
       'word-recall',
@@ -88,20 +86,17 @@ export const PATHS: readonly PathDefinition[] = [
     ],
     focus: ['memory', 'attention', 'logic', 'speed', 'patterns'],
     suggestedMinutes: 10,
-    notes: [
-      'Results describe your performance in these activities only; they are not a medical or psychological evaluation.',
-    ],
+    notes: [msg('catalog:routes.adults.notes.1')],
   },
   {
     id: 'seniors',
-    name: 'Seniors',
-    tagline: 'Clear, calm activities at your own pace.',
-    intro:
-      'Larger text, bigger buttons and no time limits by default. Instructions can be reopened at any moment during a game.',
+    name: msg('common:audiences.seniors'),
+    tagline: msg('catalog:routes.seniors.tagline'),
+    intro: msg('catalog:routes.seniors.intro'),
     goals: [
-      'Keep a regular routine of mental activity',
-      'Practise memory and attention at a comfortable pace',
-      'See your own results over time',
+      msg('catalog:routes.seniors.goals.1'),
+      msg('catalog:routes.seniors.goals.2'),
+      msg('catalog:routes.seniors.goals.3'),
     ],
     featured: [
       'object-recall',
@@ -117,21 +112,17 @@ export const PATHS: readonly PathDefinition[] = [
     ],
     focus: ['memory', 'attention', 'logic', 'patterns'],
     suggestedMinutes: 10,
-    notes: [
-      'Choosing this route turns on larger text, comfortable controls and relaxed timing. Change them any time in Settings.',
-      'A slow or mistaken answer is simply part of practising; it says nothing about your health.',
-    ],
+    notes: [msg('catalog:routes.seniors.notes.1'), msg('catalog:routes.seniors.notes.2')],
   },
   {
     id: 'programmers',
-    name: 'Programmers',
-    tagline: 'Logic, code reading and working memory.',
-    intro:
-      'Trace algorithms, hunt bugs, track variables and reason about dependencies, plus general logic and memory games. Pair it with the programming logic course.',
+    name: msg('common:audiences.programmers'),
+    tagline: msg('catalog:routes.programmers.tagline'),
+    intro: msg('catalog:routes.programmers.intro'),
     goals: [
-      'Read and trace code accurately',
-      'Hold program state in working memory',
-      'Reason about conditions, loops and dependencies',
+      msg('catalog:routes.programmers.goals.1'),
+      msg('catalog:routes.programmers.goals.2'),
+      msg('catalog:routes.programmers.goals.3'),
     ],
     featured: [
       'algorithmic-logic',
@@ -149,7 +140,7 @@ export const PATHS: readonly PathDefinition[] = [
     ],
     focus: ['programming', 'logic', 'memory'],
     suggestedMinutes: 10,
-    notes: ['Choosing this route opens every level (free play). Turn it off in Settings.'],
+    notes: [msg('catalog:routes.programmers.notes.1')],
   },
 ];
 

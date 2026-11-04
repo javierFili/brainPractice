@@ -1,7 +1,7 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SHAPES } from '@/games/kit/content';
 import {
   ROTATIONS,
@@ -48,19 +48,11 @@ export function findOddOne(items: readonly Mark[]): number | null {
   return odd === undefined ? null : items.findIndex((item) => markKey(item) === odd[0]);
 }
 
-const CHANGE_WORDS: Record<Change, string> = {
-  color: 'colour',
-  shape: 'shape',
-  turn: 'orientation',
-  mirror: 'mirroring',
-};
-
 export const oddOneOutGame: GameDefinition<OddOneOutChallenge, OddOneOutProfile> = {
   id: ODD_ONE_OUT_ID,
-  name: 'Odd One Out',
-  tagline: 'All the same… except one.',
-  description:
-    'A grid of identical shapes hides exactly one that is different. Find it. The difference starts as a clear colour change and becomes a similar outline, a turned shape or a mirrored L in bigger grids.',
+  name: msg('attention:oddOneOut.name'),
+  tagline: msg('attention:oddOneOut.tagline'),
+  description: msg('attention:oddOneOut.description'),
   area: 'attention',
   skills: ['selective-attention', 'concentration', 'visual-orientation'],
   meta: {
@@ -71,19 +63,17 @@ export const oddOneOutGame: GameDefinition<OddOneOutChallenge, OddOneOutProfile>
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A grid counts as correct when you point at the one different shape. Your result is the share of grids solved; answering is not timed.',
+    scoringSummary: msg('attention:oddOneOut.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Levels 1, 2 and 6 differ only in colour; every cell is also named (e.g. "red circle"), so screen readers can compare names. Orientation levels name the pose ("turned right", "mirrored").',
+    accessibilityNotes: msg('attention:oddOneOut.accessibilityNotes'),
   },
   instructions: [
-    'Every shape in the grid looks the same except one.',
-    'Find the different one and press it. There is always exactly one.',
-    'It may differ in colour, outline, which way it points, or be mirrored.',
-    'Keyboard: arrow keys move between cells, Enter chooses.',
+    msg('attention:oddOneOut.instructions.1'),
+    msg('attention:oddOneOut.instructions.2'),
+    msg('attention:oddOneOut.instructions.3'),
+    msg('attention:oddOneOut.instructions.4'),
   ],
-  simpleInstructions: 'Find the one shape that is different and tap it.',
+  simpleInstructions: msg('attention:oddOneOut.simpleInstructions'),
   levels: ODD_ONE_OUT_LEVELS,
   generate({ identity, profile, random }) {
     const count = profile.columns * profile.rows;
@@ -102,10 +92,15 @@ export const oddOneOutGame: GameDefinition<OddOneOutChallenge, OddOneOutProfile>
     const different = content.items[odd] as Mark;
     return {
       ...identity,
-      prompt: 'Find the one shape that is different.',
+      prompt: msg('attention:oddOneOut.prompt'),
       content,
       response: locateResponse(count, odd),
-      explanation: `At ${cellName(odd, profile.columns)}: a ${markLabel(different)} among ${markLabel(base)}s — it differs in ${CHANGE_WORDS[content.kind]}.`,
+      explanation: msg('attention:oddOneOut.explanation', {
+        cell: cellName(odd, profile.columns),
+        odd: markLabel(different),
+        base: markLabel(base),
+        feature: msg(`attention:oddOneOut.feature.${content.kind}`),
+      }),
       skills:
         content.kind === 'turn' || content.kind === 'mirror'
           ? ['selective-attention', 'visual-orientation']

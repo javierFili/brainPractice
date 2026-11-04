@@ -1,4 +1,6 @@
 import { useId, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { CodeBlock } from '@/components/code/CodeBlock';
 import { InlineText } from '../RichBlocks';
 import { CheckButton } from './CheckButton';
@@ -10,6 +12,7 @@ export function MultipleChoiceView({
   showSolution,
   onSubmit,
 }: ExerciseViewProps<'multiple-choice'>) {
+  const { t } = useTranslation('learn');
   const [choice, setChoice] = useState<string | null>(null);
   const name = useId();
   return (
@@ -18,7 +21,7 @@ export function MultipleChoiceView({
         <CodeBlock source={exercise.code.source} highlight={exercise.code.highlight ?? []} />
       )}
       <fieldset className="flex flex-col gap-2">
-        <legend className="sr-only">Options</legend>
+        <legend className="sr-only">{t('exercise.options')}</legend>
         {exercise.options.map((option) => {
           const correct = showSolution && option.id === exercise.correctOptionId;
           const wrongPick = locked && option.id === choice && !correct && showSolution;
@@ -48,10 +51,14 @@ export function MultipleChoiceView({
                 <InlineText text={option.label} />
               </span>
               {correct && (
-                <span className="text-xs font-semibold text-emerald-300">✓ Correct answer</span>
+                <span className="text-xs font-semibold text-emerald-300">
+                  ✓ {t('exercise.correctAnswer')}
+                </span>
               )}
               {wrongPick && (
-                <span className="text-xs font-semibold text-rose-300">✗ Your answer</span>
+                <span className="text-xs font-semibold text-rose-300">
+                  ✗ {t('exercise.yourAnswer')}
+                </span>
               )}
             </label>
           );

@@ -1,11 +1,12 @@
 import type { ChoiceOption } from '@/domain/challenge';
-import { spokenString } from '../content/symbols';
+import { isSymbolString, spokenString } from '../content/symbols';
 
-/** Candidates in the same large monospace face as the reference. */
+/** Candidates in the same large monospace face as the reference; Same / Different are words. */
 export const renderSymbolOption = (option: ChoiceOption) =>
-  option.label === 'Same' || option.label === 'Different' ? undefined : (
+  typeof option.label === 'string' && isSymbolString(option.label) ? (
     <span className="block font-mono text-2xl tracking-[0.25em] text-ink">{option.label}</span>
-  );
+  ) : undefined;
 
+/** Receives the label as shown; only symbol strings are spelled out. */
 export const describeSymbolOption = (label: string) =>
-  label === 'Same' || label === 'Different' ? undefined : spokenString(label);
+  isSymbolString(label) ? spokenString(label) : undefined;

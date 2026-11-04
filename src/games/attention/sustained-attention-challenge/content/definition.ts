@@ -1,7 +1,7 @@
 import { multiSelectResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, sample } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
 import { SUSTAINED_ATTENTION_LEVELS } from './levels';
 import type {
   SustainedAttentionChallenge,
@@ -83,10 +83,9 @@ export const sustainedAttentionGame: GameDefinition<
   SustainedAttentionProfile
 > = {
   id: SUSTAINED_ATTENTION_ID,
-  name: 'Sustained Attention Challenge',
-  tagline: 'Stay with the stream.',
-  description:
-    'Letters appear one at a time at a steady pace. Press “Now!” (or Space) each time the target appears — later, only when an X comes right after an A. Streams grow from 15 to 45 letters.',
+  name: msg('attention:sustainedAttention.name'),
+  tagline: msg('attention:sustainedAttention.tagline'),
+  description: msg('attention:sustainedAttention.description'),
   area: 'attention',
   skills: ['sustained-attention', 'concentration', 'selective-attention'],
   meta: {
@@ -97,19 +96,17 @@ export const sustainedAttentionGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each stream is scored on misses plus wrong presses; it counts as correct when that total is within the stated tolerance (0 to 2, depending on the level). Your result is the share of streams within tolerance.',
+    scoringSummary: msg('attention:sustainedAttention.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Letters change at a fixed pace (0.8–1.5 s each, 50% slower in relaxed mode) and are announced to screen readers; nothing flashes. A press counts for the letter on screen at that moment.',
+    accessibilityNotes: msg('attention:sustainedAttention.accessibilityNotes'),
   },
   instructions: [
-    'Letters appear one at a time in the box. Keep watching until the stream ends.',
-    'Press “Now!” or Space while the target letter is on screen.',
-    'From level 5: press only for an X that comes right after an A.',
-    'The stream submits itself at the end. A press counts for the letter shown at that moment.',
+    msg('attention:sustainedAttention.instructions.1'),
+    msg('attention:sustainedAttention.instructions.2'),
+    msg('attention:sustainedAttention.instructions.3'),
+    msg('attention:sustainedAttention.instructions.4'),
   ],
-  simpleInstructions: 'Press the button every time you see the X.',
+  simpleInstructions: msg('attention:sustainedAttention.simpleInstructions'),
   levels: SUSTAINED_ATTENTION_LEVELS,
   generate({ identity, profile, random }) {
     const cue = profile.kind === 'sequence' ? CUE : null;
@@ -121,16 +118,28 @@ export const sustainedAttentionGame: GameDefinition<
         : null;
     });
     const solution = targetPositions({ stream, target: TARGET, cue });
-    const rule = cue === null ? `every ${TARGET}` : `an ${TARGET} right after an ${cue}`;
     return {
       ...identity,
-      prompt: `Press “Now!” for ${rule}.${profile.maxErrors > 0 ? ` Up to ${profile.maxErrors} ${profile.maxErrors === 1 ? 'slip is' : 'slips are'} allowed.` : ''}`,
+      prompt: joinText(
+        [
+          cue === null
+            ? msg('attention:sustainedAttention.prompt.single', { target: TARGET })
+            : msg('attention:sustainedAttention.prompt.sequence', { target: TARGET, cue }),
+          ...(profile.maxErrors > 0
+            ? [msg('attention:sustainedAttention.slips', { count: profile.maxErrors })]
+            : []),
+        ],
+        ' ',
+      ),
       content: { kind: profile.kind, stream, target: TARGET, cue, itemMs: profile.itemMs },
       response: multiSelectResponse(stream.length, solution, {
         exact: false,
         maxErrors: profile.maxErrors,
       }),
-      explanation: `There were ${solution.length} targets, at positions ${solution.map((i) => i + 1).join(', ')}.`,
+      explanation: msg('attention:sustainedAttention.explanation', {
+        count: solution.length,
+        positions: solution.map((i) => i + 1).join(', '),
+      }),
       skills:
         profile.kind === 'single'
           ? ['sustained-attention', 'concentration']

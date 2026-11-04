@@ -1,0 +1,170 @@
+{
+  "page": {
+    "eyebrow": "Général",
+    "title": "Mes progrès",
+    "description": "Données réelles de vos séances, stockées uniquement dans ce navigateur. Les scores décrivent ces activités, pas vos capacités en général.",
+    "manageData": "Gérer les données",
+    "empty": "Aucune séance pour l’instant. Votre historique, vos records et vos étapes apparaîtront ici.",
+    "browse": "Parcourir les activités"
+  },
+  "stats": {
+    "sessions": "Séances terminées",
+    "practiceTime": "Temps d’entraînement",
+    "gamesExplored": "Jeux explorés",
+    "levels": "Niveaux ouverts / réussis",
+    "activeDays": "Jours actifs",
+    "activeDaysHint": "jours avec un peu d’entraînement",
+    "daily": "Défis du jour",
+    "assessments": "Évaluations",
+    "milestones": "Étapes"
+  },
+  "distribution": {
+    "title": "Répartition de votre entraînement",
+    "note": "Séances de votre historique récent (jusqu’à 200)."
+  },
+  "mostPlayed": {
+    "title": "Les plus joués",
+    "empty": "Rien pour l’instant."
+  },
+  "records": {
+    "title": "Records personnels et tendances",
+    "note": "Les records ne comptent que les séances terminées sans temps détendu. Les tendances comparent des séances du même jeu et du même niveau — la seule comparaison équitable.",
+    "trend": "Tendance de performance au niveau {{level}} : {{values}}",
+    "best": "Meilleur : niveau {{level}} · performance {{performance}} · précision {{accuracy}} · {{points}} pts",
+    "median": "médiane {{time}}",
+    "none": "Aucune séance terminée pour l’instant.",
+    "cleared": "Niveaux réussis : {{levels}}",
+    "clearedNone": "aucun pour l’instant"
+  },
+  "milestonesTitle": "Étapes",
+  "milestoneAchieved": ", atteinte",
+  "milestoneNotYet": ", pas encore",
+  "history": {
+    "title": "Historique",
+    "game": "Jeu",
+    "allGames": "Tous les jeux",
+    "caption": "Séances, de la plus récente à la plus ancienne",
+    "date": "Date",
+    "level": "Niveau",
+    "accuracy": "Précision",
+    "performance": "Performance",
+    "duration": "Durée",
+    "relaxed": "détendu",
+    "endedEarly": "terminée avant la fin",
+    "showingLatest": "Affichage des {{shown}} dernières sur {{total}}."
+  },
+  "milestones": {
+    "first-session": {
+      "title": "Première séance",
+      "description": "Terminez n’importe quelle activité."
+    },
+    "ten-sessions": {
+      "title": "Dix séances",
+      "description": "Entraînez-vous dix fois, à votre rythme."
+    },
+    "fifty-sessions": {
+      "title": "Cinquante séances",
+      "description": "Une habitude d’entraînement durable."
+    },
+    "half-hour": {
+      "title": "30 minutes d’entraînement",
+      "description": "Temps d’entraînement total sur toutes les activités."
+    },
+    "five-hours": {
+      "title": "5 heures d’entraînement",
+      "description": "Temps d’entraînement total sur toutes les activités."
+    },
+    "explorer": {
+      "title": "Explorateur",
+      "description": "Essayez cinq jeux différents."
+    },
+    "collector": {
+      "title": "Grand explorateur",
+      "description": "Essayez vingt jeux différents."
+    },
+    "all-areas": {
+      "title": "Polyvalent",
+      "description": "Entraînez la mémoire, la logique, la vitesse, l’attention et les motifs."
+    },
+    "first-clear": {
+      "title": "Premier niveau réussi",
+      "description": "Atteignez une performance de 70 à n’importe quel niveau."
+    },
+    "advanced": {
+      "title": "Avancé",
+      "description": "Réussissez le niveau 7 ou plus dans n’importe quel jeu."
+    },
+    "master": {
+      "title": "Niveau maître",
+      "description": "Réussissez le niveau 10 dans n’importe quel jeu."
+    },
+    "daily-three": {
+      "title": "Défi quotidien",
+      "description": "Terminez trois défis du jour (n’importe quels jours)."
+    },
+    "assessment": {
+      "title": "Auto-évaluation",
+      "description": "Terminez une évaluation cognitive."
+    },
+    "active-days": {
+      "title": "Sept jours actifs",
+      "description": "Entraînez-vous sept jours différents — pas forcément d’affilée."
+    }
+  },
+  "training": {
+    "startRoute": "Une bonne première activité pour le parcours que vous avez choisi.",
+    "levelUp": "Vous avez réussi le niveau {{cleared}}. Le niveau {{next}} ajoute une nouvelle marche de difficulté.",
+    "discoverRoute": "Une partie de votre parcours que vous n’avez pas encore essayée.",
+    "discover": "Un jeu que vous n’avez pas encore essayé.",
+    "gentleStart": {
+      "memory": "Un début en douceur avec la mémoire.",
+      "logic": "Un début en douceur avec la logique.",
+      "speed": "Un début en douceur avec la vitesse mentale.",
+      "attention": "Un début en douceur avec l’attention.",
+      "patterns": "Un début en douceur avec les motifs et le raisonnement spatial.",
+      "programming": "Un début en douceur avec la programmation."
+    },
+    "notPractised": {
+      "memory": "Vous n’avez pas travaillé la mémoire ces deux dernières semaines — changer de tâche garde l’entraînement varié.",
+      "logic": "Vous n’avez pas travaillé la logique ces deux dernières semaines — changer de tâche garde l’entraînement varié.",
+      "speed": "Vous n’avez pas travaillé la vitesse mentale ces deux dernières semaines — changer de tâche garde l’entraînement varié.",
+      "attention": "Vous n’avez pas travaillé l’attention ces deux dernières semaines — changer de tâche garde l’entraînement varié.",
+      "patterns": "Vous n’avez pas travaillé les motifs et le raisonnement spatial ces deux dernières semaines — changer de tâche garde l’entraînement varié.",
+      "programming": "Vous n’avez pas travaillé la programmation ces deux dernières semaines — changer de tâche garde l’entraînement varié."
+    },
+    "leastPractised": {
+      "memory": "La mémoire est le domaine que vous avez le moins travaillé dernièrement.",
+      "logic": "La logique est le domaine que vous avez le moins travaillé dernièrement.",
+      "speed": "La vitesse mentale est le domaine que vous avez le moins travaillé dernièrement.",
+      "attention": "L’attention est le domaine que vous avez le moins travaillé dernièrement.",
+      "patterns": "Les motifs et le raisonnement spatial sont le domaine que vous avez le moins travaillé dernièrement.",
+      "programming": "La programmation est le domaine que vous avez le moins travaillé dernièrement."
+    }
+  },
+  "recommend": {
+    "review": {
+      "title": "Révision : {{concepts}}",
+      "reason": "Vous les avez appris il y a quelque temps. Vous en souvenir maintenant, juste quand ils commencent à s’estomper, est ce qui les fait durer."
+    },
+    "lesson": {
+      "title": "Leçon : {{lesson}}",
+      "start": "Commencez {{course}} depuis le début. {{objective}}",
+      "continue_one": "Continuez {{course}} — {{completed}} leçon terminée sur {{count}}.",
+      "continue_other": "Continuez {{course}} — {{completed}} leçons terminées sur {{count}}."
+    },
+    "daily": {
+      "title": "Défi du jour · {{game}}",
+      "reason": "Cinq problèmes rapides, les mêmes pour tout le monde aujourd’hui, à votre niveau."
+    },
+    "train": {
+      "title": "{{game}} · niveau {{level}}",
+      "learning": "Vous apprenez : {{concept}}. {{why}}",
+      "untrained": "Vous n’avez pas encore entraîné ce domaine.",
+      "leastPractised": "Votre domaine le moins travaillé dernièrement (performance récente {{performance}})."
+    },
+    "assessment": {
+      "title": "Passer l’évaluation",
+      "reason": "Vous vous êtes entraîné plusieurs fois : un point de départ sur les cinq domaines montre où vous concentrer."
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { DeductionProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { DeductionProfile } from './types';
  */
 export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
   {
-    objective: 'Three people, one list, simple clues.',
+    objective: msg('logic:logicalDeduction.levels.1'),
     challengeCount: 4,
     timing: untimed(40_000),
     people: 3,
@@ -16,7 +17,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { is: 1, 'is-not': 2 },
   },
   {
-    objective: 'Three people, one list, “not” and “either” clues.',
+    objective: msg('logic:logicalDeduction.levels.2'),
     challengeCount: 4,
     timing: untimed(45_000),
     people: 3,
@@ -24,7 +25,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { 'is-not': 3, either: 1 },
   },
   {
-    objective: 'Four people and “either … or” clues.',
+    objective: msg('logic:logicalDeduction.levels.3'),
     challengeCount: 4,
     timing: untimed(70_000),
     people: 4,
@@ -32,7 +33,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { 'is-not': 3, either: 2, is: 1 },
   },
   {
-    objective: 'Match two lists for three people.',
+    objective: msg('logic:logicalDeduction.levels.4'),
     challengeCount: 4,
     timing: untimed(60_000),
     people: 3,
@@ -40,7 +41,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { is: 1, 'is-not': 2, link: 2 },
   },
   {
-    objective: 'Three lists for three people.',
+    objective: msg('logic:logicalDeduction.levels.5'),
     challengeCount: 4,
     timing: untimed(100_000),
     people: 3,
@@ -48,7 +49,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { 'is-not': 2, link: 2, 'not-link': 1 },
   },
   {
-    objective: 'Two lists for four people, linked clues.',
+    objective: msg('logic:logicalDeduction.levels.6'),
     challengeCount: 4,
     timing: untimed(90_000),
     people: 4,
@@ -56,7 +57,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { is: 1, 'is-not': 2, link: 2, either: 1 },
   },
   {
-    objective: 'Two lists for four people with no direct answers.',
+    objective: msg('logic:logicalDeduction.levels.7'),
     challengeCount: 4,
     timing: untimed(120_000),
     people: 4,
@@ -64,7 +65,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { 'is-not': 2, link: 2, 'not-link': 1, either: 1 },
   },
   {
-    objective: 'Three lists for four people.',
+    objective: msg('logic:logicalDeduction.levels.8'),
     challengeCount: 3,
     timing: untimed(150_000),
     people: 4,
@@ -72,7 +73,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { is: 1, 'is-not': 2, link: 3, 'not-link': 1, either: 1 },
   },
   {
-    objective: 'Five people and two lists.',
+    objective: msg('logic:logicalDeduction.levels.9'),
     challengeCount: 3,
     timing: untimed(180_000),
     people: 5,
@@ -80,7 +81,7 @@ export const LOGICAL_DEDUCTION_LEVELS = defineLevels<DeductionProfile>([
     clueTypes: { is: 1, 'is-not': 2, link: 2, 'not-link': 1, either: 2 },
   },
   {
-    objective: 'Five people, two lists, only indirect clues.',
+    objective: msg('logic:logicalDeduction.levels.10'),
     challengeCount: 3,
     timing: untimed(210_000),
     people: 5,

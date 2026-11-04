@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { memoryCardsGame } from './content/definition';
 import type { MemoryCardsChallenge } from './content/types';
@@ -7,9 +8,9 @@ export const memoryCardsModule = defineGameModule<MemoryCardsChallenge>({
   definition: memoryCardsGame,
   ContentView: MemoryCardsView,
   kindLabels: {
-    objects: 'Everyday objects',
-    family: 'Objects of one family',
-    glyphs: 'Coloured shapes',
-    'near-glyphs': 'Look-alike shapes',
+    objects: msg('memory:memoryCards.kinds.objects'),
+    family: msg('memory:memoryCards.kinds.family'),
+    glyphs: msg('memory:memoryCards.kinds.glyphs'),
+    'near-glyphs': msg('memory:memoryCards.kinds.nearGlyphs'),
   },
 });

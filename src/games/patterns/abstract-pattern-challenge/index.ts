@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { abstractPatternGame } from './content/definition';
 import type { AbstractChallenge } from './content/types';
@@ -7,10 +8,10 @@ export const abstractPatternModule = defineGameModule<AbstractChallenge>({
   definition: abstractPatternGame,
   ContentView: AbstractView,
   kindLabels: {
-    colour: 'Colour rules',
-    shape: 'Shape rules',
-    count: 'Counting rules',
-    direction: 'Direction rules',
-    order: 'Order rules',
+    colour: msg('patterns:abstractPatternChallenge.kinds.colour'),
+    shape: msg('patterns:abstractPatternChallenge.kinds.shape'),
+    count: msg('patterns:abstractPatternChallenge.kinds.count'),
+    direction: msg('patterns:abstractPatternChallenge.kinds.direction'),
+    order: msg('patterns:abstractPatternChallenge.kinds.order'),
   },
 });

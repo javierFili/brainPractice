@@ -1,4 +1,5 @@
-import { booleanAssignments, listJoin } from '@/games/logic/shared/content';
+import { msg, type Message, type Text } from '@/domain/shared';
+import { booleanAssignments, listText } from '@/games/logic/shared/content';
 import type { Claim } from './types';
 
 export function claimValue(claim: Claim, world: readonly boolean[]): boolean {
@@ -28,39 +29,44 @@ export const consistentWorlds = (claims: readonly Claim[]) =>
     claims.every((claim, i) => claimValue(claim, world) === world[i]),
   );
 
-const kind = (honest: boolean) => (honest ? 'a truth-teller' : 'a liar');
-const kinds = (honest: boolean, many: boolean) =>
-  many ? (honest ? 'truth-tellers' : 'liars') : kind(honest);
+const key = (path: string) => `logic:truthAndFalsehood.${path}`;
+const side = (honest: boolean) => (honest ? 'honest' : 'liar');
 
-export function describeClaim(claim: Claim, speaker: number, names: readonly string[]): string {
-  const name = (i: number) => (i === speaker ? 'I' : (names[i] as string));
-  const pairName = (a: number, b: number) =>
-    a === speaker
-      ? `${name(b)} and I`
-      : b === speaker
-        ? `${name(a)} and I`
-        : `${name(a)} and ${name(b)}`;
+/**
+ * What a character says, without the final full stop (the view and the explanation add their own
+ * punctuation). Sentences that include the speaker ("Ben and I") are separate templates, because
+ * the verb changes person in most languages.
+ */
+export function describeClaim(claim: Claim, speaker: number, names: readonly string[]): Message {
+  const name = (i: number) => names[i] as string;
   switch (claim.type) {
     case 'is':
-      return `${name(claim.target)} is ${kind(claim.honest)}.`;
+      return msg(key(`claim.is.${side(claim.honest)}`), { name: name(claim.target) });
     case 'same':
-      return `${pairName(claim.a, claim.b)} are the same: both truth-tellers or both liars.`;
     case 'different':
-      return `${pairName(claim.a, claim.b)} are different: one truth-teller and one liar.`;
-    case 'count': {
-      const op = { 'at-least': 'At least', exactly: 'Exactly', 'at-most': 'At most' }[claim.op];
-      const many = claim.k !== 1;
-      const number = ['no', 'one', 'two', 'three', 'four'][claim.k] ?? String(claim.k);
-      return `${op} ${number} of us ${many ? 'are' : 'is'} ${kinds(claim.honest, many)}.`;
+    case 'either': {
+      const type = claim.type === 'either' ? `either.${side(claim.honest)}` : claim.type;
+      const other = claim.a === speaker ? claim.b : claim.b === speaker ? claim.a : -1;
+      return other === -1
+        ? msg(key(`claim.${type}.pair`), { a: name(claim.a), b: name(claim.b) })
+        : msg(key(`claim.${type}.withMe`), { other: name(other) });
     }
-    case 'either':
-      return `At least one of ${pairName(claim.a, claim.b).replace(' and I', ' and me')} is ${kind(claim.honest)}.`;
+    case 'count': {
+      const op = { 'at-least': 'atLeast', exactly: 'exactly', 'at-most': 'atMost' }[claim.op];
+      return msg(key(`claim.count.${op}.${side(claim.honest)}`), {
+        count: claim.k,
+        number: msg(key(`numbers.${claim.k}`)),
+      });
+    }
   }
 }
 
-export const describeGroup = (world: readonly boolean[], names: readonly string[]) => {
+/** "Nobody", "Everyone", "Only Ana", "Ana and Ben": who tells the truth, as an option label. */
+export const describeGroup = (world: readonly boolean[], names: readonly string[]): Text => {
   const honest = names.filter((_, i) => world[i]);
-  if (honest.length === 0) return 'Nobody';
-  if (honest.length === names.length) return 'Everyone';
-  return honest.length === 1 ? `Only ${honest[0] as string}` : listJoin(honest);
+  if (honest.length === 0) return msg(key('group.nobody'));
+  if (honest.length === names.length) return msg(key('group.everyone'));
+  return honest.length === 1
+    ? msg(key('group.only'), { name: honest[0] as string })
+    : listText(honest);
 };

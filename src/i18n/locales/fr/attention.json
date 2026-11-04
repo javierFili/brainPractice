@@ -1,0 +1,601 @@
+{
+  "shared": {
+    "ell": "forme en L",
+    "colouredEll": "forme en L $t(kit:colorForm.f.{{color}})",
+    "mirrored": "en miroir",
+    "turn": {
+      "0": "à l’endroit",
+      "90": "avec rotation à droite",
+      "180": "à l’envers",
+      "270": "avec rotation à gauche"
+    },
+    "inLanguage": "{{fr}}",
+    "colorPlural": {
+      "m": {
+        "red": "rouges",
+        "orange": "orange",
+        "yellow": "jaunes",
+        "green": "verts",
+        "blue": "bleus",
+        "purple": "violets"
+      },
+      "f": {
+        "red": "rouges",
+        "orange": "orange",
+        "yellow": "jaunes",
+        "green": "vertes",
+        "blue": "bleues",
+        "purple": "violettes"
+      }
+    },
+    "shapes": {
+      "circle": "cercles",
+      "square": "carrés",
+      "triangle": "triangles",
+      "diamond": "losanges",
+      "star": "étoiles",
+      "hexagon": "hexagones",
+      "heart": "cœurs",
+      "cross": "croix",
+      "ell": "formes en L"
+    },
+    "colouredShapes": {
+      "circle": "cercles $t(attention:shared.colorPlural.m.{{color}})",
+      "square": "carrés $t(attention:shared.colorPlural.m.{{color}})",
+      "triangle": "triangles $t(attention:shared.colorPlural.m.{{color}})",
+      "diamond": "losanges $t(attention:shared.colorPlural.m.{{color}})",
+      "star": "étoiles $t(attention:shared.colorPlural.f.{{color}})",
+      "hexagon": "hexagones $t(attention:shared.colorPlural.m.{{color}})",
+      "heart": "cœurs $t(attention:shared.colorPlural.m.{{color}})",
+      "cross": "croix $t(attention:shared.colorPlural.f.{{color}})",
+      "ell": "formes en L $t(attention:shared.colorPlural.f.{{color}})"
+    },
+    "shapeCount": {
+      "circle_one": "{{count}} cercle",
+      "circle_other": "{{count}} cercles",
+      "square_one": "{{count}} carré",
+      "square_other": "{{count}} carrés",
+      "triangle_one": "{{count}} triangle",
+      "triangle_other": "{{count}} triangles",
+      "diamond_one": "{{count}} losange",
+      "diamond_other": "{{count}} losanges",
+      "star_one": "{{count}} étoile",
+      "star_other": "{{count}} étoiles",
+      "hexagon_one": "{{count}} hexagone",
+      "hexagon_other": "{{count}} hexagones",
+      "heart_one": "{{count}} cœur",
+      "heart_other": "{{count}} cœurs",
+      "cross_one": "{{count}} croix",
+      "cross_other": "{{count}} croix",
+      "ell_one": "{{count}} forme en L",
+      "ell_other": "{{count}} formes en L"
+    },
+    "colouredShapeCount": {
+      "circle_one": "{{count}} cercle $t(kit:colorForm.m.{{color}})",
+      "circle_other": "{{count}} cercles $t(attention:shared.colorPlural.m.{{color}})",
+      "square_one": "{{count}} carré $t(kit:colorForm.m.{{color}})",
+      "square_other": "{{count}} carrés $t(attention:shared.colorPlural.m.{{color}})",
+      "triangle_one": "{{count}} triangle $t(kit:colorForm.m.{{color}})",
+      "triangle_other": "{{count}} triangles $t(attention:shared.colorPlural.m.{{color}})",
+      "diamond_one": "{{count}} losange $t(kit:colorForm.m.{{color}})",
+      "diamond_other": "{{count}} losanges $t(attention:shared.colorPlural.m.{{color}})",
+      "star_one": "{{count}} étoile $t(kit:colorForm.f.{{color}})",
+      "star_other": "{{count}} étoiles $t(attention:shared.colorPlural.f.{{color}})",
+      "hexagon_one": "{{count}} hexagone $t(kit:colorForm.m.{{color}})",
+      "hexagon_other": "{{count}} hexagones $t(attention:shared.colorPlural.m.{{color}})",
+      "heart_one": "{{count}} cœur $t(kit:colorForm.m.{{color}})",
+      "heart_other": "{{count}} cœurs $t(attention:shared.colorPlural.m.{{color}})",
+      "cross_one": "{{count}} croix $t(kit:colorForm.f.{{color}})",
+      "cross_other": "{{count}} croix $t(attention:shared.colorPlural.f.{{color}})",
+      "ell_one": "{{count}} forme en L $t(kit:colorForm.f.{{color}})",
+      "ell_other": "{{count}} formes en L $t(attention:shared.colorPlural.f.{{color}})"
+    }
+  },
+  "changeDetection": {
+    "name": "Détection de changements",
+    "tagline": "La même scène… ou pas ?",
+    "description": "Regardez une petite scène de formes. Elle disparaît un instant puis revient. Quelque chose a-t-il changé ? Environ une fois sur deux, rien n’a changé. Les changements deviennent plus fins et les scènes plus chargées au fil des niveaux.",
+    "scoringSummary": "Chaque essai est correct si vous répondez « oui » pour une scène modifiée ou « non » pour une scène identique ; environ la moitié sont identiques, donc répondre au hasard donne environ 50 %. La réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Certains changements ne portent que sur la couleur (dès le niveau 6, vers une couleur voisine). La scène est une liste de cases nommées, donc un lecteur d’écran peut comparer les deux regards, mais le premier est limité dans le temps (doublé en mode détendu).",
+    "instructions": {
+      "look": "Regardez toute la scène pendant qu’elle est affichée (appuyez sur « Je suis prêt » pour passer plus tôt).",
+      "blank": "Après un court blanc, la scène revient.",
+      "answer": "Répondez « oui » si quelque chose a changé (couleur, forme, direction, position, un élément qui apparaît ou disparaît), « non » si elle est identique.",
+      "keys": "Touches : 1 = oui, 2 = non. Environ la moitié des scènes ne changent pas."
+    },
+    "simpleInstructions": "Regardez, attendez, regardez encore : quelque chose a-t-il changé ?",
+    "levels": {
+      "1": "3 éléments : l’un est-il apparu, a-t-il disparu ou changé de couleur ?",
+      "2": "4 éléments ; les formes peuvent aussi changer.",
+      "3": "5 éléments sur un plateau plus grand : changements de couleur ou de forme.",
+      "4": "6 éléments ; un élément peut aussi se déplacer.",
+      "5": "6 formes orientées : l’une peut pivoter.",
+      "6": "7 éléments avec des changements fins (couleur voisine, contour proche).",
+      "7": "8 éléments ; n’importe quel changement fin.",
+      "8": "9 éléments, avec un blanc plus long entre les deux.",
+      "9": "10 éléments, premier regard plus court.",
+      "10": "12 éléments, regard court, changements les plus fins."
+    },
+    "kinds": {
+      "none": "Aucun changement",
+      "appear": "Élément apparu ou disparu",
+      "move": "Élément déplacé",
+      "color": "Changement de couleur",
+      "shape": "Changement de forme",
+      "turn": "Élément pivoté"
+    },
+    "options": {
+      "yes": "Oui, quelque chose a changé",
+      "no": "Non, c’est pareil"
+    },
+    "prompt": "Quelque chose a-t-il changé ?",
+    "studyPrompt": "Regardez la scène : elle va disparaître un instant.",
+    "explanation": {
+      "changed": "Oui : {{changes}}.",
+      "unchanged": "Non : le second regard était identique au premier."
+    },
+    "change": "{{cell}}: {{before}} → {{after}}",
+    "empty": "vide",
+    "view": {
+      "firstLook": "Premier regard",
+      "secondLook": "Second regard",
+      "noChange": "(aucun changement)",
+      "wait": "Patientez…",
+      "blankBoard": "Plateau vide",
+      "changed": "modifiée"
+    }
+  },
+  "oddOneOut": {
+    "name": "L’intrus",
+    "tagline": "Toutes pareilles… sauf une.",
+    "description": "Une grille de formes identiques cache exactement une forme différente. Trouvez-la. La différence commence par un net changement de couleur, puis devient un contour proche, une forme pivotée ou un L en miroir dans des grilles plus grandes.",
+    "scoringSummary": "Une grille est réussie quand vous désignez la seule forme différente. Votre résultat est la part de grilles résolues ; la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Aux niveaux 1, 2 et 6, seule la couleur diffère ; chaque case est aussi nommée (par ex. « cercle rouge »), donc les lecteurs d’écran peuvent comparer les noms. Les niveaux d’orientation nomment la position (« avec rotation à droite », « en miroir »).",
+    "instructions": {
+      "1": "Toutes les formes de la grille sont identiques sauf une.",
+      "2": "Trouvez la forme différente et appuyez dessus. Il y en a toujours exactement une.",
+      "3": "Elle peut différer par la couleur, le contour, l’orientation, ou être en miroir.",
+      "4": "Clavier : les flèches passent d’une case à l’autre, Entrée valide."
+    },
+    "simpleInstructions": "Trouvez la forme différente et touchez-la.",
+    "levels": {
+      "1": "Repérez la forme d’une autre couleur (3×3).",
+      "2": "Repérez la couleur différente dans une grille plus grande de 4×4.",
+      "3": "L’intrus a maintenant une autre forme, de la même couleur.",
+      "4": "Repérez une forme au contour proche (carré ou losange…).",
+      "5": "Même forme, même couleur : l’une pointe ailleurs.",
+      "6": "Repérez une couleur voisine (rouge ou orange…) parmi 30.",
+      "7": "Une forme n’a pivoté que d’un quart de tour (6×6).",
+      "8": "Un L est en miroir.",
+      "9": "N’importe quel détail peut changer finement : couleur, contour, rotation ou miroir.",
+      "10": "N’importe quelle différence fine parmi 48 formes."
+    },
+    "kinds": {
+      "color": "Couleur différente",
+      "shape": "Forme différente",
+      "turn": "Forme pivotée",
+      "mirror": "Forme en miroir"
+    },
+    "prompt": "Trouvez la forme qui est différente.",
+    "explanation": "En {{cell}} se trouve l’intrus : {{odd}}. Les autres : {{base}}. Ce qui change : {{feature}}.",
+    "feature": {
+      "color": "la couleur",
+      "shape": "la forme",
+      "turn": "l’orientation",
+      "mirror": "le sens (en miroir)"
+    },
+    "view": {
+      "shapes": "Formes"
+    }
+  },
+  "visualDifference": {
+    "name": "Jeu des différences",
+    "tagline": "Repérez les différences, case par case.",
+    "description": "Deux images faites de formes semblent identiques, mais quelques cases de celle de droite diffèrent. Marquez chaque différence sur l’image de droite. Le compteur indique combien il y en a.",
+    "scoringSummary": "Une paire d’images est réussie quand chaque case marquée est une vraie différence. Votre résultat est la part de paires résolues exactement ; la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Certaines différences ne portent que sur la couleur (dès le niveau 6, des couleurs voisines comme le rouge et l’orange). Chaque case est nommée avec sa couleur, sa forme et sa position, donc les lecteurs d’écran peuvent comparer les deux images case par case.",
+    "instructions": {
+      "1": "Comparez les deux images case par case (sur petit écran, celle de droite est en dessous).",
+      "2": "Marquez chaque case de l’image de droite qui diffère, puis appuyez sur Vérifier.",
+      "3": "Une différence est un changement de couleur, de forme, d’orientation, ou un L en miroir.",
+      "4": "Le compteur indique combien de différences trouver."
+    },
+    "simpleInstructions": "Trouvez ce qui change dans la seconde image et touchez-le.",
+    "levels": {
+      "1": "Trouvez 1 différence entre deux images 3×3.",
+      "2": "Trouvez 2 différences dans des images 3×3.",
+      "3": "Trouvez 2 différences dans des images plus grandes, 4×4.",
+      "4": "Trouvez 3 différences dans des images 4×4.",
+      "5": "Les formes peuvent aussi pivoter : 3 différences.",
+      "6": "Trouvez 3 différences fines dans des images 5×5.",
+      "7": "Trouvez 4 différences, dont des L en miroir.",
+      "8": "Trouvez 4 différences fines de tout type.",
+      "9": "Trouvez 5 différences fines dans des images 6×6.",
+      "10": "Trouvez 6 différences fines dans des images 6×6 chargées."
+    },
+    "kinds": {
+      "plain": "Couleur et forme",
+      "oriented": "Avec rotations et miroirs"
+    },
+    "prompt_one": "Marquez la case de l’image de droite qui diffère.",
+    "prompt_other": "Marquez les {{count}} cases de l’image de droite qui diffèrent.",
+    "explanation": "Différences : {{differences}}.",
+    "difference": "{{cell}} ({{before}} → {{after}})",
+    "view": {
+      "leftPicture": "Image de gauche",
+      "rightPicture": "Image de droite",
+      "left": "Gauche",
+      "rightHeading": "Droite : marquez les différences",
+      "leftCell": "gauche",
+      "rightCell": "droite"
+    }
+  },
+  "targetTracking": {
+    "name": "Suivi de cible",
+    "tagline": "Ne quittez pas la carte des yeux.",
+    "description": "Quelques cartes sont montrées face visible et l’une (plus tard deux) est marquée. Les cartes sont retournées et échangent leurs places deux par deux, chaque échange étant indiqué par une flèche. Désignez ensuite l’endroit où la carte a fini.",
+    "scoringSummary": "Une manche est réussie quand vous désignez la carte demandée. Votre résultat est la part de manches réussies ; les échanges se déroulent à un rythme fixe et posé, et la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Chaque échange est aussi annoncé sous forme de texte (« les cartes 2 et 4 échangent leurs places »), un par seconde ou plus, et le rythme ralentit en mode détendu. Rien ne bouge ni ne clignote.",
+    "instructions": {
+      "1": "Regardez la carte marquée avant que les cartes soient retournées.",
+      "2": "À chaque étape, une flèche montre deux cartes qui échangent leurs places. Suivez la carte marquée.",
+      "3": "Quand les échanges sont terminés, appuyez sur la carte là où elle se trouve.",
+      "4": "Dès le niveau 7, suivez deux cartes marquées : la question n’en nomme une qu’à la fin."
+    },
+    "simpleInstructions": "Regardez les cartes s’échanger et retrouvez la carte marquée.",
+    "levels": {
+      "1": "Suivez une carte pendant 2 échanges entre 3 cartes.",
+      "2": "Suivez une carte pendant 3 échanges.",
+      "3": "Quatre cartes, 4 échanges.",
+      "4": "Quatre cartes, 5 échanges plus rapides.",
+      "5": "Cinq cartes, 5 échanges.",
+      "6": "Cinq cartes, 6 échanges.",
+      "7": "Suivez deux cartes à la fois : on vous interrogera sur l’une.",
+      "8": "Deux cartes pendant 7 échanges.",
+      "9": "Deux cartes parmi 6, 8 échanges.",
+      "10": "Deux cartes parmi 6, 10 échanges à vive allure."
+    },
+    "kinds": {
+      "single": "Une carte",
+      "double": "Deux cartes"
+    },
+    "prompt": {
+      "single": "Suivez la carte marquée, puis appuyez là où elle termine.",
+      "double": "Suivez les deux cartes marquées. À la fin, on vous interrogera sur l’une d’elles."
+    },
+    "explanation": "La carte ({{item}}) est passée par {{path}}, elle a donc fini en position {{position}}.",
+    "view": {
+      "position": "position {{position}}",
+      "followThis": "suivez cette carte",
+      "follow": "suivre",
+      "covered": "carte cachée",
+      "swapping": "en échange",
+      "remember_one": "Retenez la carte marquée : {{cards}}.",
+      "remember_other": "Retenez les cartes marquées : {{cards}}.",
+      "cardAt": "{{item}} en position {{position}}",
+      "swap": "Échange {{step}} sur {{total}} : les cartes {{a}} et {{b}} changent de place.",
+      "swapDone": "Échange {{step}} sur {{total}} terminé.",
+      "ended": "Où les cartes ont fini.",
+      "where": "Où se trouve maintenant cette carte : {{item}} ?",
+      "cards": "Cartes"
+    }
+  },
+  "distractorFiltering": {
+    "name": "Filtrage des distracteurs",
+    "tagline": "Seulement les triangles bleus. Ignorez le reste.",
+    "description": "Marquez chaque élément qui respecte une règle comme « triangles bleus », alors que des sosies partagent la couleur ou la forme. Les distracteurs ressemblent de plus en plus à la cible et, aux niveaux élevés, c’est vous qui décidez quand vous les avez tous trouvés.",
+    "scoringSummary": "Une grille est réussie quand vos marques correspondent aux cibles : cibles oubliées et marques erronées sont des erreurs. Dès le niveau 8, une erreur est tolérée. Votre résultat est la part de grilles résolues ; la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Les règles qui nomment une couleur demandent la vision des couleurs pour jouer à vue ; chaque élément est aussi nommé (« triangle violet »), donc un lecteur d’écran peut filtrer par nom. Les formes diffèrent toujours aussi par leur contour.",
+    "instructions": {
+      "1": "Lisez la règle au-dessus de la grille : elle nomme une forme, une couleur ou les deux.",
+      "2": "Marquez chaque élément qui respecte exactement la règle, puis appuyez sur Vérifier.",
+      "3": "Les sosies ne respectent qu’une partie de la règle : un cœur bleu n’est pas un triangle bleu.",
+      "4": "Dès le niveau 7, le nombre n’est pas donné ; dès le niveau 8, un écart est permis."
+    },
+    "simpleInstructions": "Touchez toutes les formes qui respectent la règle, et seulement elles.",
+    "levels": {
+      "1": "Marquez tous les éléments d’une forme.",
+      "2": "Marquez tous les éléments d’une couleur.",
+      "3": "Deux critères à la fois : bonne forme ET bonne couleur.",
+      "4": "Davantage de sosies partagent un critère avec la cible.",
+      "5": "Presque chaque distracteur partage un critère.",
+      "6": "Leurres de la couleur ou du contour le plus proche.",
+      "7": "Le nombre de cibles n’est pas donné : décidez quand vous avez fini.",
+      "8": "7 cibles parmi des leurres proches (un écart permis).",
+      "9": "8 cibles parmi 42 éléments (un écart permis).",
+      "10": "9 cibles parmi 48 leurres proches (un écart permis)."
+    },
+    "kinds": {
+      "shape": "Une forme",
+      "color": "Une couleur",
+      "conjunction": "Forme et couleur"
+    },
+    "phrase": {
+      "shape": "{{shapes}} (toute couleur)",
+      "color": "formes $t(attention:shared.colorPlural.f.{{color}}) (toute forme)"
+    },
+    "prompt": {
+      "exact_one": "Marquez le seul élément qui correspond : {{phrase}}.",
+      "exact_other": "Marquez les {{count}} éléments qui correspondent : {{phrase}}.",
+      "free": "Marquez tous les éléments qui correspondent : {{phrase}}. À vous de décider combien il y en a.",
+      "freeWithSlip": "Marquez tous les éléments qui correspondent : {{phrase}}. À vous de décider combien il y en a. Un écart est permis."
+    },
+    "explanation_one": "Il y en avait {{count}} : {{phrase}}.",
+    "explanation_other": "Il y en avait {{count}} : {{phrase}}.",
+    "view": {
+      "rule": "Règle :",
+      "items": "Éléments"
+    }
+  },
+  "symbolCounting": {
+    "name": "Comptage de symboles",
+    "tagline": "Combien y en a-t-il, exactement ?",
+    "description": "Comptez combien de fois un symbole apparaît dans un champ de formes. Les sosies qui ne diffèrent que par la couleur, le contour, l’orientation ou le miroir ne comptent pas. Les champs vont jusqu’à 48 éléments.",
+    "scoringSummary": "Un champ est réussi quand votre nombre est exact. Votre résultat est la part de champs comptés exactement ; la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Certains sosies ne diffèrent que par la couleur. Le champ est aussi une liste d’éléments nommés (« triangle bleu, avec rotation à gauche »), donc un lecteur d’écran peut compter par nom.",
+    "instructions": {
+      "1": "Le symbole à compter est affiché au-dessus du champ.",
+      "2": "Comptez chaque copie exacte : même forme, même couleur, même orientation.",
+      "3": "Les sosies ne comptent pas. Tapez le nombre et appuyez sur Entrée.",
+      "4": "Astuce : avancez ligne par ligne pour ne rien compter deux fois."
+    },
+    "simpleInstructions": "Comptez combien de fois vous voyez le symbole du haut.",
+    "levels": {
+      "1": "Comptez un symbole parmi des formes bien différentes.",
+      "2": "La même forme dans d’autres couleurs ne compte pas.",
+      "3": "Sosies de couleur ou de forme, 25 éléments.",
+      "4": "Sosies proches : couleur voisine, contour similaire.",
+      "5": "Ne comptez que les formes orientées dans le bon sens.",
+      "6": "Un champ 6×6 de sosies proches.",
+      "7": "Orientation et couleurs voisines, 36 éléments.",
+      "8": "Comptez un L parmi des L pivotés et en miroir.",
+      "9": "48 éléments, sosies de tout type.",
+      "10": "48 éléments, uniquement des sosies, jusqu’à 15 cibles."
+    },
+    "kinds": {
+      "plain": "Remplissage distinct",
+      "lookalike": "Sosies de couleur et de forme",
+      "oriented": "Sosies d’orientation"
+    },
+    "prompt": "Combien de fois ce symbole apparaît-il : {{mark}} ?",
+    "explanation_one": "Il y a {{count}} copie exacte de ce symbole : {{mark}} (en surbrillance).",
+    "explanation_other": "Il y a {{count}} copies exactes de ce symbole : {{mark}} (en surbrillance).",
+    "view": {
+      "count": "Comptez :",
+      "field": "Champ"
+    }
+  },
+  "sustainedAttention": {
+    "name": "Défi d’attention soutenue",
+    "tagline": "Restez dans le flux.",
+    "description": "Des lettres apparaissent une à une à un rythme régulier. Appuyez sur « Maintenant ! » (ou Espace) chaque fois que la cible apparaît ; plus tard, seulement quand un X suit immédiatement un A. Les séries passent de 15 à 45 lettres.",
+    "scoringSummary": "Chaque série est notée sur les oublis plus les appuis erronés ; elle est réussie si ce total reste dans la tolérance indiquée (de 0 à 2 selon le niveau). Votre résultat est la part de séries dans la tolérance.",
+    "accessibilityNotes": "Les lettres changent à un rythme fixe (0,8–1,5 s chacune, 50 % plus lent en mode détendu) et sont annoncées aux lecteurs d’écran ; rien ne clignote. Un appui compte pour la lettre affichée à ce moment-là.",
+    "instructions": {
+      "1": "Les lettres apparaissent une à une dans le cadre. Continuez à regarder jusqu’à la fin de la série.",
+      "2": "Appuyez sur « Maintenant ! » ou Espace pendant que la lettre cible est affichée.",
+      "3": "Dès le niveau 5 : appuyez seulement pour un X qui suit immédiatement un A.",
+      "4": "La série s’envoie seule à la fin. Un appui compte pour la lettre affichée à ce moment-là."
+    },
+    "simpleInstructions": "Appuyez sur le bouton chaque fois que vous voyez le X.",
+    "levels": {
+      "1": "Appuyez pour chaque X dans une série de 15 lettres.",
+      "2": "20 lettres, un peu plus vite.",
+      "3": "Des lettres ressemblantes (K, Y) arrivent.",
+      "4": "30 lettres avec des lettres ressemblantes.",
+      "5": "Appuyez pour un X seulement quand il suit immédiatement un A.",
+      "6": "A puis X, avec plus de leurres.",
+      "7": "A puis X, 35 lettres.",
+      "8": "A puis X parmi des lettres ressemblantes.",
+      "9": "40 lettres, rythme soutenu.",
+      "10": "45 lettres, la plus longue veille."
+    },
+    "kinds": {
+      "single": "Cible unique",
+      "sequence": "Cible après signal"
+    },
+    "prompt": {
+      "single": "Appuyez sur « Maintenant ! » pour chaque {{target}}.",
+      "sequence": "Appuyez sur « Maintenant ! » pour un {{target}} juste après un {{cue}}."
+    },
+    "slips_one": "Jusqu’à {{count}} écart est permis.",
+    "slips_other": "Jusqu’à {{count}} écarts sont permis.",
+    "explanation": "Il y avait {{count}} cibles, aux positions {{positions}}.",
+    "view": {
+      "rule": {
+        "single": "Appuyez pour chaque {{target}}.",
+        "sequence": "Appuyez pour un {{target}} juste après un {{cue}}."
+      },
+      "legend": "La série : ✓ cible validée · • cible manquée · ✗ appui erroné",
+      "stream": "La série",
+      "letter": "lettre {{position}}, {{letter}}",
+      "target": "cible",
+      "pressed": "vous avez appuyé",
+      "done": "Terminé",
+      "getReady": "Préparez-vous…",
+      "letters_one": "{{count}} lettre",
+      "letters_other": "{{count}} lettres",
+      "recorded": "appui enregistré",
+      "now": "Maintenant ! (Espace)"
+    }
+  },
+  "dualTask": {
+    "name": "Double tâche",
+    "tagline": "Deux comptes à la fois.",
+    "description": "Des paires d’un nombre et d’une forme apparaissent une à une. Tenez deux comptes à la fois, par exemple les nombres pairs et les étoiles, puis choisissez l’option où les deux comptes sont justes.",
+    "scoringSummary": "Une série est réussie quand l’option choisie a les deux comptes justes. Chaque compte a deux valeurs possibles, donc n’en avoir qu’un de juste laisse 50 % de hasard. La réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Dès le niveau 6, le compte des formes nomme une couleur. Chaque paire est annoncée aux lecteurs d’écran (« 7, étoile bleue ») ; le rythme (0,9–1,6 s par paire) double en mode détendu.",
+    "instructions": {
+      "1": "Lisez les deux règles avant le début : l’une sur les nombres, l’autre sur les formes.",
+      "2": "Les paires apparaissent une à une. Gardez deux comptes en tête.",
+      "3": "Une paire peut compter pour les deux règles, pour une seule ou pour aucune.",
+      "4": "À la fin, choisissez l’option où les deux comptes sont justes (touches 1–4)."
+    },
+    "simpleInstructions": "Comptez deux choses à la fois, puis choisissez la bonne paire de nombres.",
+    "levels": {
+      "1": "Comptez les nombres pairs et les étoiles sur 6 paires.",
+      "2": "Deux comptes sur 8 paires.",
+      "3": "10 paires ; les options ne diffèrent plus que d’un.",
+      "4": "Des formes ressemblantes arrivent.",
+      "5": "Nouvelle règle : comptez les nombres supérieurs à 5.",
+      "6": "Seules les formes d’une couleur comptent.",
+      "7": "Nombres à deux chiffres supérieurs à 50, formes colorées.",
+      "8": "Nombres pairs à deux chiffres, 16 paires.",
+      "9": "18 paires à vive allure.",
+      "10": "20 paires, nombres impairs à deux chiffres."
+    },
+    "kinds": {
+      "parity": "Pair/impair + formes",
+      "threshold": "Grands nombres + formes"
+    },
+    "numbers": {
+      "even": "nombres pairs",
+      "odd": "nombres impairs",
+      "above": "nombres supérieurs à {{threshold}}"
+    },
+    "numberCount": {
+      "even_one": "{{count}} nombre pair",
+      "even_other": "{{count}} nombres pairs",
+      "odd_one": "{{count}} nombre impair",
+      "odd_other": "{{count}} nombres impairs",
+      "above_one": "{{count}} nombre supérieur à {{threshold}}",
+      "above_other": "{{count}} nombres supérieurs à {{threshold}}"
+    },
+    "prompt": "Quelle option a les deux comptes justes ?",
+    "studyPrompt": "Comptez deux choses : {{numbers}} et {{shapes}}.",
+    "explanation": "Il y avait {{numbers}} et {{shapes}}.",
+    "view": {
+      "rules": "Comptez : {{numbers}} · {{shapes}}",
+      "getReady": "Préparez-vous…",
+      "done": "Terminé : préparez-vous à répondre",
+      "pairs_one": "{{count}} paire",
+      "pairs_other": "{{count}} paires",
+      "legend": "La série (# = nombre compté, ★ = forme comptée) :",
+      "stream": "La série",
+      "counted": "(compté)"
+    }
+  },
+  "complexVisualInspection": {
+    "name": "Inspection visuelle complexe",
+    "tagline": "Les trois critères doivent correspondre.",
+    "description": "Inspectez une grille dense et marquez chaque élément qui respecte une règle portant sur trois critères à la fois : forme, couleur et orientation (plus tard aussi le miroir et « n’importe quelle couleur sauf… »). La plupart des distracteurs n’échouent que sur un critère.",
+    "scoringSummary": "Une grille est réussie quand vos marques correspondent aux cibles (cibles oubliées et marques erronées sont des erreurs) ; dès le niveau 8, une erreur est tolérée. Votre résultat est la part de grilles résolues ; la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Les règles nomment une couleur : jouer à vue demande donc la vision des couleurs ; chaque élément est aussi nommé avec sa couleur, sa forme et sa position (« forme en L verte, en miroir, avec rotation à gauche ») pour les lecteurs d’écran. L’orientation se juge sur la forme dessinée, ce qui demande de regarder attentivement.",
+    "instructions": {
+      "1": "Lisez la règle : une forme, une orientation et une couleur doivent TOUTES correspondre.",
+      "2": "La plupart des éléments n’enfreignent qu’une partie de la règle : vérifiez chaque critère.",
+      "3": "« En miroir » signifie retourné de gauche à droite ; « avec rotation à droite » signifie un quart de tour dans le sens des aiguilles d’une montre.",
+      "4": "Marquez chaque correspondance, puis appuyez sur Vérifier. Dès le niveau 7, c’est vous qui décidez combien il y en a."
+    },
+    "simpleInstructions": "Touchez les formes qui respectent la règle en tout point.",
+    "levels": {
+      "1": "Forme, couleur et orientation : triangles vers le haut ou vers le bas.",
+      "2": "Trois formes, deux orientations.",
+      "3": "Les quatre orientations.",
+      "4": "Plus de couleurs, plus de sosies.",
+      "5": "Formes en L : être en miroir ou non compte aussi.",
+      "6": "Leurres de la couleur la plus proche, 6×6.",
+      "7": "Le nombre de cibles n’est plus donné.",
+      "8": "Couleur exclue : n’importe quelle couleur sauf une (un écart permis).",
+      "9": "Règle d’exclusion avec des L en miroir partout.",
+      "10": "La grille la plus dense : 48 éléments, n’importe quelle règle."
+    },
+    "kinds": {
+      "positive": "Forme, couleur et orientation",
+      "negated": "Toute couleur sauf une"
+    },
+    "rule": {
+      "negated": "{{shapes}}, de n’importe quelle couleur sauf {{color}}"
+    },
+    "prompt": {
+      "exact_one": "Marquez le seul qui correspond : {{rule}}.",
+      "exact_other": "Marquez les {{count}} qui correspondent : {{rule}}.",
+      "free": "Marquez toutes les correspondances : {{rule}}. À vous de décider combien.",
+      "freeWithSlip": "Marquez toutes les correspondances : {{rule}}. À vous de décider combien. Un écart est permis."
+    },
+    "explanation": "{{count}} éléments respectaient tous les critères ({{rule}}). Les autres différaient par la forme, la couleur ou l’orientation.",
+    "view": {
+      "rule": "Règle :",
+      "ruleExample": "Règle (exemple) :",
+      "items": "Éléments"
+    }
+  },
+  "errorDetection": {
+    "name": "Détection d’erreurs",
+    "tagline": "Relisez : une seule chose est fausse.",
+    "description": "Relisez des listes du quotidien (une liste triée, un ticket de caisse, un emploi du temps, une liste de mots, des codes recopiés) et désignez la seule ligne fausse. Les erreurs deviennent plus petites et les listes plus longues.",
+    "scoringSummary": "Une liste est réussie quand vous désignez la seule ligne fausse. Votre résultat est la part de listes résolues ; la réponse n’est pas chronométrée.",
+    "accessibilityNotes": "Les tickets et emplois du temps demandent des calculs simples (multiplier de petites quantités, additionner des prix, soustraire des heures). Les listes de mots utilisent des mots français courants.",
+    "instructions": {
+      "1": "Lisez la règle au-dessus de la liste : elle dit ce que chaque ligne doit respecter.",
+      "2": "Vérifiez les lignes une à une. Exactement une ligne enfreint la règle.",
+      "3": "Appuyez sur cette ligne (ou déplacez-vous avec les flèches et appuyez sur Entrée).",
+      "4": "Dès le niveau 7, les erreurs sont petites : 10 centimes, 5 minutes, un 0 au lieu d’un O."
+    },
+    "simpleInstructions": "Une ligne de la liste est fausse. Trouvez-la et touchez-la.",
+    "levels": {
+      "1": "Trouvez le nombre mal placé dans une liste courte.",
+      "2": "Trouvez le mot mal orthographié.",
+      "3": "Vérifiez un ticket de caisse : le total d’une ligne est faux.",
+      "4": "Relisez des codes recopiés.",
+      "5": "Vérifiez un emploi du temps : une durée est fausse.",
+      "6": "Listes variées, 7 lignes.",
+      "7": "Tickets avec total général ; petites erreurs.",
+      "8": "Codes avec des caractères ressemblants (0 et O, 8 et B).",
+      "9": "Listes variées avec petites erreurs, 9 lignes.",
+      "10": "Listes variées avec petites erreurs, 10 lignes."
+    },
+    "kinds": {
+      "sorted": "Liste triée",
+      "receipt": "Ticket de caisse",
+      "schedule": "Emploi du temps",
+      "spelling": "Orthographe",
+      "copy": "Codes recopiés"
+    },
+    "prompt": "Quelle ligne est fausse ?",
+    "rule": {
+      "sortedNumbers": "Les nombres devraient aller du plus petit au plus grand. L’un d’eux est mal placé.",
+      "sortedWords": "Les mots devraient être dans l’ordre alphabétique. L’un d’eux est mal placé.",
+      "receipt": "Chaque ligne : quantité × prix = total de la ligne. Une ligne est fausse.",
+      "receiptWithTotal": "Chaque ligne : quantité × prix = total de la ligne, et TOTAL est la somme des lignes. Une ligne est fausse.",
+      "schedule": "Chaque créneau indique sa durée en minutes. Une durée ne correspond pas à ses horaires.",
+      "spelling": "Chaque mot est un mot français courant. L’un d’eux est mal orthographié.",
+      "copy": "Chaque code de droite devrait être la copie exacte de celui de gauche. Une copie est fausse."
+    },
+    "row": {
+      "receipt": "{{quantity}} × {{item}} à {{price}} = {{total}}",
+      "total": "TOTAL = {{total}}",
+      "schedule": "{{start}}–{{end}}  {{activity}} ({{minutes}} min)"
+    },
+    "activity": {
+      "reading": "Lecture",
+      "maths": "Maths",
+      "lunch": "Déjeuner",
+      "music": "Musique",
+      "walk": "Promenade",
+      "art": "Arts plastiques",
+      "break": "Pause",
+      "science": "Sciences",
+      "meeting": "Réunion",
+      "emails": "E-mails",
+      "gym": "Sport",
+      "cooking": "Cuisine",
+      "phoneCall": "Appel",
+      "shopping": "Courses"
+    },
+    "explanation": {
+      "sorted": "« {{value}} » est mal placé : sans lui, la liste est dans l’ordre.",
+      "total": "Les lignes font {{sum}} au total, mais TOTAL indique {{total}}.",
+      "line": "{{quantity}} × {{price}} = {{right}}, et non {{wrong}}.",
+      "schedule_one": "De {{start}} à {{end}}, il y a {{count}} minute, et non {{stated}}.",
+      "schedule_other": "De {{start}} à {{end}}, il y a {{count}} minutes, et non {{stated}}.",
+      "spelling": "« {{wrong}} » s’écrit « {{right}} ».",
+      "copy": "{{wrong}} n’est pas {{original}} : le caractère {{position}} est « {{replacement}} » au lieu de « {{char}} »."
+    },
+    "view": {
+      "row": "Ligne {{row}} : {{text}}",
+      "wrongRow": "ligne fausse",
+      "yourPick": "votre choix"
+    }
+  }
+}

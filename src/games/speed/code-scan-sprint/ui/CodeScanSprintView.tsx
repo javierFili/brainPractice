@@ -1,11 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps } from '@/games/types';
 import type { CodeScanSprintChallenge } from '../content/types';
 
-type Marker = 'answer' | 'your pick';
+type Marker = 'answer' | 'pick';
 
 const MARKER_TONE: Record<Marker, string> = {
   answer: 'border-success/60 bg-success/10 text-success',
-  'your pick': 'border-danger/60 bg-danger/10 text-danger',
+  pick: 'border-danger/60 bg-danger/10 text-danger',
 };
 
 /**
@@ -18,6 +19,7 @@ export function CodeScanSprintView({
   locate,
   answer,
 }: ContentViewProps<CodeScanSprintChallenge>) {
+  const { t } = useTranslation('speed');
   const { lines } = challenge.content;
   const review = phase === 'review';
   const solution =
@@ -27,11 +29,11 @@ export function CodeScanSprintView({
   const markersOf = (i: number): Marker[] => {
     if (!review) return [];
     if (i === solution) return ['answer'];
-    return i === pick ? ['your pick'] : [];
+    return i === pick ? ['pick'] : [];
   };
 
   return (
-    <section aria-label="Code listing" className="min-w-0">
+    <section aria-label={t('codeScanSprint.view.listing')} className="min-w-0">
       <ol className="overflow-x-auto rounded-lg border border-amber-400/40 bg-canvas/60 py-2 font-mono text-sm leading-8">
         {lines.map((line, i) => {
           const markers = markersOf(i);
@@ -48,7 +50,7 @@ export function CodeScanSprintView({
                   key={marker}
                   className={`ml-2 shrink-0 rounded border px-1.5 font-sans text-xs font-semibold ${MARKER_TONE[marker]}`}
                 >
-                  {marker === 'answer' ? '✓ answer' : '✗ your pick'}
+                  {t(`codeScanSprint.view.badge.${marker}`)}
                 </span>
               ))}
             </>
@@ -67,7 +69,17 @@ export function CodeScanSprintView({
                 <button
                   type="button"
                   disabled={locate.disabled}
-                  aria-label={`Line ${i + 1}: ${line.text}${markers.length > 0 ? ` (${markers.join(', ')})` : ''}`}
+                  aria-label={
+                    markers.length > 0
+                      ? t('codeScanSprint.view.lineMarked', {
+                          line: i + 1,
+                          text: line.text,
+                          markers: markers
+                            .map((marker) => t(`codeScanSprint.view.marker.${marker}`))
+                            .join(', '),
+                        })
+                      : t('codeScanSprint.view.line', { line: i + 1, text: line.text })
+                  }
                   onClick={() => {
                     locate.onLocate(i);
                   }}

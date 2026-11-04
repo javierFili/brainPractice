@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { codeMemoryGame } from './content/definition';
 import type { MemoryChallenge } from './content/types';
@@ -7,11 +8,11 @@ export const codeMemoryModule = defineGameModule<MemoryChallenge>({
   definition: codeMemoryGame,
   ContentView: CodeMemoryContentView,
   kindLabels: {
-    'record-recall': 'Record recall',
-    'cross-reference': 'Cross-reference lookup',
-    'foreign-key-join': 'Foreign-key joins',
-    'sequence-recall': 'Call sequences',
-    'variable-state': 'Variable state',
-    'position-recall': 'Grid positions',
+    'record-recall': msg('programming:codeMemory.kinds.recordRecall'),
+    'cross-reference': msg('programming:codeMemory.kinds.crossReference'),
+    'foreign-key-join': msg('programming:codeMemory.kinds.foreignKeyJoin'),
+    'sequence-recall': msg('programming:codeMemory.kinds.sequenceRecall'),
+    'variable-state': msg('programming:codeMemory.kinds.variableState'),
+    'position-recall': msg('programming:codeMemory.kinds.positionRecall'),
   },
 });

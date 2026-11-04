@@ -41,7 +41,7 @@ describe('Conditional Reasoning', () => {
         const answer = response.question.options.find((o) => o.id === response.solution.optionId);
         const expected = oracle(c.content.atoms.length, c.content.premises, c.content.question);
         expect(expected).not.toBe('inconsistent');
-        expect(answer?.label).toBe(VERDICT_LABELS[expected as 'true']);
+        expect(answer?.label).toEqual(VERDICT_LABELS[expected as 'true']);
         seen.add(expected);
       }
       expect(seen.size).toBe(CONDITIONAL_LEVELS[level].verdicts.length);

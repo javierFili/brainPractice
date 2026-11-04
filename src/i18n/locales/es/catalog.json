@@ -1,0 +1,175 @@
+{
+  "catalog": {
+    "eyebrow": "Entrenamiento",
+    "title": "Todas las actividades",
+    "description_one": "{{count}} juego en {{areas}} áreas. Cada uno tiene diez niveles, explica sus reglas antes de empezar y guarda tus resultados en este dispositivo.",
+    "description_other": "{{count}} juegos en {{areas}} áreas. Cada uno tiene diez niveles, explica sus reglas antes de empezar y guarda tus resultados en este dispositivo.",
+    "filter": "Filtrar actividades",
+    "search": "Buscar",
+    "searchPlaceholder": "memoria, formas, números…",
+    "area": "Área",
+    "allAreas": "Todas las áreas",
+    "suitedTo": "Pensado para",
+    "everyone": "Todo el mundo",
+    "noRush": "Funciona sin límite de tiempo",
+    "count_one": "{{count}} juego",
+    "count_other": "{{count}} juegos",
+    "countOf_one": "{{shown}} de {{count}} juego",
+    "countOf_other": "{{shown}} de {{count}} juegos",
+    "empty": "Ningún juego coincide con estos filtros. Prueba a borrar la búsqueda o a elegir «Todas las áreas»."
+  },
+  "card": {
+    "duration": "Duración",
+    "minutes": "~{{minutes}} min",
+    "progress": "Progreso",
+    "cleared": "{{cleared}}/10 superados · {{open}} abiertos",
+    "notPlayed": "Aún sin jugar",
+    "timing": "Tiempo",
+    "noRush": "Modo sin prisa"
+  },
+  "collections": {
+    "spatial": {
+      "title": "Razonamiento espacial",
+      "description": "Girar, reflejar, colocar y orientarse: juegos que te piden imaginar el espacio."
+    },
+    "concentration": {
+      "title": "Concentración",
+      "description": "Tareas más largas y constantes en las que el reto es mantener la atención."
+    }
+  },
+  "collection": {
+    "notFound": "Esta área no existe.",
+    "eyebrow": "Área de entrenamiento",
+    "all": "Todas las actividades",
+    "empty": "Todavía no hay juegos en esta área.",
+    "count_one": "{{count}} juego · cada juego tiene diez niveles; el nivel 1 siempre está abierto.",
+    "count_other": "{{count}} juegos · cada juego tiene diez niveles; el nivel 1 siempre está abierto."
+  },
+  "intro": {
+    "notFound": "Este juego no existe.",
+    "level": "Nivel",
+    "cleared": "superado",
+    "locked": "bloqueado",
+    "suggested": "sugerido",
+    "stateSeparator": ", ",
+    "legendFree": "✓ superado (rendimiento ≥ 70) · punto = nivel sugerido · juego libre: todos los niveles están abiertos.",
+    "legend_one": "✓ superado (rendimiento ≥ 70) · punto = nivel sugerido. El nivel 1 siempre está abierto; el siguiente se abre tras una sesión con rendimiento ≥ {{performance}} o tras {{count}} sesión completada. El juego libre (Configuración) los abre todos.",
+    "legend_other": "✓ superado (rendimiento ≥ 70) · punto = nivel sugerido. El nivel 1 siempre está abierto; el siguiente se abre tras una sesión con rendimiento ≥ {{performance}} o tras {{count}} sesiones completadas. El juego libre (Configuración) los abre todos.",
+    "levelTier": "Nivel {{level}} · {{tier}}",
+    "challenges": "Desafíos",
+    "timeLimit": "Límite de tiempo",
+    "none": "Ninguno",
+    "targetPace": "Ritmo objetivo",
+    "start": "Empezar nivel {{level}}",
+    "relaxed": "Tiempos relajados (sin límite para responder, el doble de tiempo para memorizar, no cuenta para los récords)",
+    "relaxedSpeed": "Tiempos relajados (sin límite para responder, el doble de tiempo para memorizar, no cuenta para los récords): este juego trata de velocidad, así que sus señales siguen siendo rápidas",
+    "howTo": "Cómo se juega",
+    "keyboardFull": "Se puede jugar con ratón, pantalla táctil o teclado (Tab, flechas, Intro; las teclas numéricas eligen opciones). Puedes volver a abrir estas instrucciones durante el juego.",
+    "keyboardPartial": "Algunos pasos necesitan un puntero o la pantalla táctil; las opciones también tienen teclas numéricas. Puedes volver a abrir estas instrucciones durante el juego.",
+    "scoring": "Cómo se calcula tu resultado",
+    "practises": "Practica: {{skills}} · unos {{minutes}} min · los resultados solo se guardan en este dispositivo.",
+    "accessibility": "Accesibilidad: {{notes}}",
+    "record": "Tu récord · nivel {{level}}",
+    "bestPerformance": "Mejor rendimiento",
+    "bestScore": "Mejor puntuación",
+    "bestAccuracy": "Mejor precisión",
+    "bestMedian": "Mejor tiempo mediano",
+    "plays_one": "{{count}} sesión completada",
+    "plays_other": "{{count}} sesiones completadas",
+    "notPlayed": "Aún sin jugar. Métricas registradas: puntuación, precisión, tiempo de respuesta, racha e índice de rendimiento."
+  },
+  "path": {
+    "notFound": "Esta ruta no existe.",
+    "eyebrow": "Ruta",
+    "leave": "Dejar esta ruta",
+    "choose": "Elegir esta ruta",
+    "offers": "Qué ofrece esta ruta",
+    "startWith": "Empezar con {{game}}",
+    "mixed_one": "Sesión variada de {{count}} minuto",
+    "mixed_other": "Sesión variada de {{count}} minutos",
+    "about": "Sobre esta ruta",
+    "yours": "Esta es tu ruta",
+    "goodToKnow": "Conviene saber",
+    "turnsOn": "Al elegirla se activa: {{settings}}. Puedes cambiar cada opción en <link>Configuración</link>.",
+    "onlySuggests": "Una ruta solo sugiere juegos. Todos los juegos y niveles del catálogo siguen disponibles.",
+    "activities": "Actividades de esta ruta",
+    "startHere": "Empieza aquí",
+    "settings": {
+      "textSize": "texto más grande",
+      "comfort": "controles cómodos",
+      "relaxedByDefault": "tiempos relajados",
+      "freePlay": "todos los niveles abiertos"
+    }
+  },
+  "paths": {
+    "eyebrow": "Rutas",
+    "title": "Elige una ruta",
+    "description": "Las rutas seleccionan juegos y ajustes para distintas edades e intereses. Son opcionales, puedes cambiarlas cuando quieras y nunca limitan lo que puedes jugar.",
+    "yours": "· tu ruta"
+  },
+  "routes": {
+    "kids": {
+      "tagline": "Retos cortos y divertidos con imágenes.",
+      "intro": "Memoria de imágenes, lógica sencilla y juegos de observación con instrucciones breves y sin prisas. Empieza en el nivel 1 y sube cuando te resulte fácil.",
+      "goals": {
+        "1": "Jugar con la memoria, los patrones y la lógica",
+        "2": "Rondas cortas sin presión de tiempo",
+        "3": "Comentarios claros y amables después de cada respuesta"
+      },
+      "notes": {
+        "1": "No se piden nombres, correos ni datos personales. El progreso se queda en este dispositivo.",
+        "2": "No hay clasificaciones públicas ni chats.",
+        "3": "Si alguna vez este sitio se ofrece públicamente a menores, antes se aplican el consentimiento parental y las normas de datos (ver docs/privacy.md)."
+      }
+    },
+    "teens": {
+      "tagline": "Retos visuales, estrategia y lógica.",
+      "intro": "Rompecabezas visuales más difíciles, problemas de estrategia y retos de memoria de trabajo. Supera tus propios récords: no hay clasificaciones públicas.",
+      "goals": {
+        "1": "Afrontar rompecabezas de lógica y estrategia",
+        "2": "Exigir más a la memoria de trabajo y a la búsqueda de patrones",
+        "3": "Seguir tus mejores marcas nivel a nivel"
+      },
+      "notes": {
+        "1": "Los récords son personales y se quedan en este dispositivo."
+      }
+    },
+    "adults": {
+      "tagline": "Memoria, concentración y planificación para el día a día.",
+      "intro": "Practica recordar listas y números, mantener la concentración, alternar entre tareas y planificar con antelación, en sesiones de 3 a 15 minutos.",
+      "goals": {
+        "1": "Practicar la memoria cotidiana (palabras, números, asociaciones)",
+        "2": "Mantener la concentración en tareas exigentes",
+        "3": "Encajar la práctica en sesiones diarias cortas"
+      },
+      "notes": {
+        "1": "Los resultados describen solo tu rendimiento en estas actividades; no son una evaluación médica ni psicológica."
+      }
+    },
+    "seniors": {
+      "tagline": "Actividades claras y tranquilas, a tu ritmo.",
+      "intro": "Texto más grande, botones más grandes y sin límites de tiempo por defecto. Puedes volver a abrir las instrucciones en cualquier momento de la partida.",
+      "goals": {
+        "1": "Mantener una rutina regular de actividad mental",
+        "2": "Practicar la memoria y la atención a un ritmo cómodo",
+        "3": "Ver tus propios resultados a lo largo del tiempo"
+      },
+      "notes": {
+        "1": "Al elegir esta ruta se activan el texto más grande, los controles cómodos y los tiempos relajados. Puedes cambiarlos cuando quieras en Configuración.",
+        "2": "Una respuesta lenta o equivocada forma parte de la práctica; no dice nada sobre tu salud."
+      }
+    },
+    "programmers": {
+      "tagline": "Lógica, lectura de código y memoria de trabajo.",
+      "intro": "Sigue algoritmos, caza errores, controla variables y razona sobre dependencias, además de juegos generales de lógica y memoria. Combínala con el curso de lógica de programación.",
+      "goals": {
+        "1": "Leer y seguir código con precisión",
+        "2": "Mantener el estado del programa en la memoria de trabajo",
+        "3": "Razonar sobre condiciones, bucles y dependencias"
+      },
+      "notes": {
+        "1": "Al elegir esta ruta se abren todos los niveles (juego libre). Puedes desactivarlo en Configuración."
+      }
+    }
+  }
+}

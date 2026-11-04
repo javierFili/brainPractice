@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { parseFigure, figureLabel } from '../shared/content';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import {
@@ -22,8 +23,8 @@ describe('Visual Pattern Completion', () => {
       const next = solveRow(challenge.content.items);
       if (next === null) throw new Error('ambiguous row');
       const labels = optionLabels(challenge);
-      expect(labels.filter((l) => l === figureLabel(next))).toHaveLength(1);
-      expect(solutionLabel(challenge)).toBe(figureLabel(next));
+      expect(labels.filter((l) => l === en(figureLabel(next)))).toHaveLength(1);
+      expect(solutionLabel(challenge)).toBe(en(figureLabel(next)));
       for (const label of labels) expect(parseFigure(label)).not.toBeNull();
     }
   });

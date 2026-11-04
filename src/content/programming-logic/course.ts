@@ -1,4 +1,5 @@
 import { courseId, moduleId, type Course } from '@/domain/learning';
+import { msg } from '@/domain/shared';
 import { CONCEPTS } from './concepts';
 import { lesson as lesson01 } from './lessons/01-what-is-a-program';
 import { lesson as lesson02 } from './lessons/02-instructions-and-sequences';
@@ -14,15 +15,14 @@ import { lesson as lesson10 } from './lessons/10-debugging';
 /** Programming Logic: thinking before syntax. Module 1 is the first, free part of the path. */
 export const PROGRAMMING_LOGIC: Course = {
   id: courseId('programming-logic'),
-  title: 'Programming Logic',
-  summary:
-    'Learn how programs think — values, decisions, repetition, functions and algorithms — in a language-neutral pseudocode, before any specific syntax.',
+  title: msg('lessons:course.title'),
+  summary: msg('lessons:course.summary'),
   concepts: CONCEPTS,
   modules: [
     {
       id: moduleId('how-programs-think'),
-      title: 'How Programs Think',
-      summary: 'From what a program is to designing and debugging your first algorithms.',
+      title: msg('lessons:course.modules.how-programs-think.title'),
+      summary: msg('lessons:course.modules.how-programs-think.summary'),
       lessons: [
         lesson01,
         lesson02,

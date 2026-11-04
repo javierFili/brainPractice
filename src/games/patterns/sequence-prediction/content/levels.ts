@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SequencePredictionProfile } from './types';
 
@@ -10,7 +11,7 @@ const base = { wrap: false, diagonal: false, turning: false, maxStep: 1 } as con
 export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile>([
   {
     ...base,
-    objective: 'A shape slides one square each time. Where is it next?',
+    objective: msg('patterns:sequencePrediction.levels.1'),
     challengeCount: 5,
     kind: 'move',
     size: 4,
@@ -20,7 +21,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'Moves can go diagonally.',
+    objective: msg('patterns:sequencePrediction.levels.2'),
     challengeCount: 5,
     kind: 'move',
     size: 4,
@@ -31,7 +32,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'An arrow turns by the same amount each time.',
+    objective: msg('patterns:sequencePrediction.levels.3'),
     challengeCount: 6,
     kind: 'rotate',
     size: 3,
@@ -41,7 +42,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'An arrow slides and turns at the same time.',
+    objective: msg('patterns:sequencePrediction.levels.4'),
     challengeCount: 6,
     kind: 'move-rotate',
     size: 4,
@@ -51,7 +52,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'Marks that leave one edge come back on the opposite edge.',
+    objective: msg('patterns:sequencePrediction.levels.5'),
     challengeCount: 6,
     kind: 'move',
     size: 4,
@@ -63,7 +64,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'Longer steps of up to two squares, wrapping around.',
+    objective: msg('patterns:sequencePrediction.levels.6'),
     challengeCount: 6,
     kind: 'move',
     size: 5,
@@ -76,7 +77,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'Two marks, each with its own step.',
+    objective: msg('patterns:sequencePrediction.levels.7'),
     challengeCount: 6,
     kind: 'two-marks',
     size: 4,
@@ -87,7 +88,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'An arrow moves, turns and wraps around the edges.',
+    objective: msg('patterns:sequencePrediction.levels.8'),
     challengeCount: 6,
     kind: 'move-rotate',
     size: 5,
@@ -100,7 +101,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'Two marks: one slides, the other moves and turns.',
+    objective: msg('patterns:sequencePrediction.levels.9'),
     challengeCount: 6,
     kind: 'two-marks',
     size: 5,
@@ -112,7 +113,7 @@ export const SEQUENCE_PREDICTION_LEVELS = defineLevels<SequencePredictionProfile
   },
   {
     ...base,
-    objective: 'Two marks with their own steps, turning and wrapping around.',
+    objective: msg('patterns:sequencePrediction.levels.10'),
     challengeCount: 6,
     kind: 'two-marks',
     size: 5,

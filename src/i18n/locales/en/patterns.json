@@ -1,0 +1,854 @@
+{
+  "abstractPatternChallenge": {
+    "name": "Abstract Pattern Challenge",
+    "tagline": "One panel breaks the rule. Which one?",
+    "description": "Several panels of figures share a hidden rule — about colour, shape, number, direction or order — while other features change freely. Find the rule and spot the one panel that breaks it.",
+    "scoringSummary": "Each set counts as correct when you pick the panel that breaks the shared rule. Your result is the share of sets solved; there is no time limit.",
+    "simpleInstructions": "Find the panel that does not fit with the others.",
+    "instructions": {
+      "1": "All panels but one follow the same rule. Some features change just to distract you.",
+      "2": "Rules can be about colour, shape, how many figures, which way arrows point, or the order of the figures.",
+      "3": "Only one panel can be the odd one out under any rule. Keys 1 to 6 pick a panel."
+    },
+    "levels": {
+      "1": "Four panels: find the one whose figures do not match.",
+      "2": "Every panel but one contains the same shape.",
+      "3": "All different: no repeated shape or colour inside a panel.",
+      "4": "Five panels; the rule may be about colour, shape or content.",
+      "5": "Count the figures too: the rule may be how many.",
+      "6": "Arrows join in: the rule may be the direction they point.",
+      "7": "Any of seven rules, with bigger panels as noise.",
+      "8": "Six panels; a new rule: exactly one figure has another colour.",
+      "9": "Order matters: panels that read the same backwards.",
+      "10": "Any rule, six panels of three or four figures."
+    },
+    "kinds": {
+      "colour": "Colour rules",
+      "shape": "Shape rules",
+      "count": "Counting rules",
+      "direction": "Direction rules",
+      "order": "Order rules"
+    },
+    "prompt": "Which panel breaks the rule that all the others follow?",
+    "panel": "Panel {{index}}",
+    "explanation": "In every other panel, {{rule}}. Panel {{index}} breaks it: {{reason}}.",
+    "rule": {
+      "same-colour": "all figures in a panel are the same colour",
+      "same-shape": "all figures in a panel are the same shape",
+      "different-shapes": "no two figures in a panel share a shape",
+      "different-colours": "no two figures in a panel share a colour",
+      "same-count_one": "every panel has {{count}} figure",
+      "same-count_other": "every panel has {{count}} figures",
+      "contains-shape": {
+        "circle": "every panel contains at least one circle",
+        "square": "every panel contains at least one square",
+        "triangle": "every panel contains at least one triangle",
+        "diamond": "every panel contains at least one diamond",
+        "star": "every panel contains at least one star",
+        "hexagon": "every panel contains at least one hexagon",
+        "heart": "every panel contains at least one heart",
+        "cross": "every panel contains at least one cross",
+        "arrow": "every panel contains at least one arrow"
+      },
+      "same-direction": "all arrows in a panel point the same way",
+      "one-odd-colour": "exactly one figure in each panel has a different colour from the rest",
+      "mirror-order": "each panel reads the same from left to right and from right to left"
+    },
+    "break": {
+      "mixes": "it mixes {{list}}",
+      "sameShape": "two of its figures have the same shape",
+      "sameColour": "two of its figures have the same colour",
+      "count_one": "it has {{count}} figure instead of {{expected}}",
+      "count_other": "it has {{count}} figures instead of {{expected}}",
+      "contains": {
+        "circle": "it has no circle",
+        "square": "it has no square",
+        "triangle": "it has no triangle",
+        "diamond": "it has no diamond",
+        "star": "it has no star",
+        "hexagon": "it has no hexagon",
+        "heart": "it has no heart",
+        "cross": "it has no cross",
+        "arrow": "it has no arrow"
+      },
+      "directions": "its arrows point {{list}}",
+      "allSame": "all its figures are the same colour",
+      "severalOdd": "more than one of its figures has a different colour",
+      "order": "read backwards, its figures come in a different order"
+    },
+    "view": {
+      "panels": "Panels",
+      "panel": "Panel {{index}}: {{figures}}"
+    }
+  },
+  "gridAndPathReasoning": {
+    "name": "Grid and Path Reasoning",
+    "tagline": "Find your way through the maze.",
+    "description": "A turtle moves through a grid maze, one square at a time, up, down, left or right, never through walls. Count the steps of the shortest route, find the only exit it can reach, or spot the cell every shortest route must cross.",
+    "scoringSummary": "Each maze counts as correct when your number or choice is right. Your result is the share of mazes solved; there is no time limit.",
+    "accessibilityNotes": "Each maze is also described row by row for screen readers, but following routes by ear is demanding on the larger mazes.",
+    "simpleInstructions": "Help the turtle find its way around the walls.",
+    "instructions": {
+      "1": "The turtle moves one square at a time: up, down, left or right. It cannot cross walls (striped squares) or move diagonally.",
+      "2": "A step is one move to the next square. Count the steps of the shortest route when asked.",
+      "3": "Exits are lettered; numbered cells are the candidates when you must find the cell every shortest route crosses."
+    },
+    "levels": {
+      "1": "Count the steps to the star on a small, open grid.",
+      "2": "Find the one exit the turtle can reach.",
+      "3": "Count steps when walls force a detour.",
+      "4": "Find the cell every shortest route crosses.",
+      "5": "Bigger 7×7 mazes: exits and step counts.",
+      "6": "Longer detours and cells that must be crossed.",
+      "7": "Several shortest routes, one cell they all share.",
+      "8": "8×8 mazes with four exits.",
+      "9": "9×9 mazes with long detours.",
+      "10": "Every question on dense 9×9 mazes."
+    },
+    "kinds": {
+      "shortest-length": "Shortest route length",
+      "reachable-exit": "Reachable exit",
+      "must-pass": "Cell every route crosses"
+    },
+    "prompt": {
+      "shortest": "How many steps is the shortest route from the turtle to the star?",
+      "exit": "Which exit can the turtle reach? It moves up, down, left or right, never through walls.",
+      "mustPass": "Every shortest route from the turtle to the star passes through one of the numbered cells. Which one?"
+    },
+    "unit": "steps",
+    "exit": "Exit {{letter}}",
+    "cell": "Cell {{number}}",
+    "run": {
+      "right_one": "right {{count}}",
+      "right_other": "right {{count}}",
+      "left_one": "left {{count}}",
+      "left_other": "left {{count}}",
+      "up_one": "up {{count}}",
+      "up_other": "up {{count}}",
+      "down_one": "down {{count}}",
+      "down_other": "down {{count}}"
+    },
+    "explanation": {
+      "shortest_one": "The shortest route takes {{count}} step, for example: {{route}}. No route avoids the walls with fewer steps.",
+      "shortest_other": "The shortest route takes {{count}} steps, for example: {{route}}. No route avoids the walls with fewer steps.",
+      "exit_one": "{{exit}} can be reached, for example: {{route}}. {{others}} is cut off by walls: no route leads there.",
+      "exit_other": "{{exit}} can be reached, for example: {{route}}. {{others}} are cut off by walls: no route leads there.",
+      "mustPass": "The shortest routes take {{steps}} steps, and every one passes through {{cell}}. Going through {{others}} makes the route longer.",
+      "mustPassMany": "The shortest routes take {{steps}} steps (there are {{total}} of them), and every one passes through {{cell}}. Going through {{others}} makes the route longer."
+    },
+    "view": {
+      "start": "turtle (start)",
+      "goal": "star (goal)",
+      "exit": "exit {{letter}}",
+      "cell": "cell {{number}}",
+      "at": "{{what}} at column {{column}}",
+      "walls_one": "wall at column {{columns}}",
+      "walls_other": "walls at columns {{columns}}",
+      "rowOpen": "Row {{row}}: all open",
+      "row": "Row {{row}}: {{parts}}",
+      "legendStart": "start",
+      "legendExits": "letters: exits",
+      "legendGoal": "goal",
+      "legendWalls": "striped squares are walls",
+      "maze": "Maze of {{size}} by {{size}} squares, described row by row."
+    }
+  },
+  "matrixReasoning": {
+    "name": "Matrix Reasoning",
+    "tagline": "Find the rules of rows and columns.",
+    "description": "A grid of figures with one cell missing. Shape, colour, number and direction each follow their own rule across rows and columns. Work out every rule and choose the figure that fits the gap.",
+    "scoringSummary": "Each matrix counts as correct when you choose the figure that fits every rule. Your result is the share of matrices completed correctly; there is no time limit.",
+    "simpleInstructions": "Look at the rows and columns and pick the picture that fits the gap.",
+    "instructions": {
+      "1": "Look at one feature at a time: shape, colour, how many, and which way arrows point.",
+      "2": "Each feature follows its own rule: the same along a row, the same down a column, once in every row and column, or one step more each cell.",
+      "3": "Choose the figure that fits every rule at the gap. Every wrong option breaks at least one rule."
+    },
+    "levels": {
+      "1": "Complete a 2×2 matrix where one feature changes.",
+      "2": "A 2×2 matrix where shape and colour follow different rules.",
+      "3": "A 3×3 matrix: rows or columns share a feature.",
+      "4": "A 3×3 matrix where shape and colour both follow rules.",
+      "5": "Each value once in every row and column.",
+      "6": "The number of shapes joins in, sometimes counting up.",
+      "7": "Three features at once, and the gap can be anywhere.",
+      "8": "Arrows that turn step by step, with colour and count rules.",
+      "9": "Three features, only latin squares and steps, eight options.",
+      "10": "Arrows or shapes, every feature on its own hard rule, eight options."
+    },
+    "kinds": {
+      "shapes-colours": "Shapes and colours",
+      "counts": "Shapes, colours and counts",
+      "arrows": "Turning arrows"
+    },
+    "prompt": "Which figure completes the matrix?",
+    "explanation": "{{rules}} So the missing cell (row {{row}}, column {{column}}) is {{answer}}.",
+    "line": {
+      "shape": "Shape: {{rule}}.",
+      "color": "Colour: {{rule}}.",
+      "count": "Number of shapes: {{rule}}.",
+      "rotation": "Direction: {{rule}}."
+    },
+    "layout": {
+      "shape": {
+        "byRow": "each row keeps one shape ({{list}}, top to bottom)",
+        "byColumn": "each column keeps one shape ({{list}}, left to right)",
+        "latin": "the shapes {{list}} appear once in every row and every column",
+        "constant": "every cell has the same shape: {{value}}"
+      },
+      "color": {
+        "byRow": "each row keeps one colour ({{list}}, top to bottom)",
+        "byColumn": "each column keeps one colour ({{list}}, left to right)",
+        "latin": "the colours {{list}} appear once in every row and every column",
+        "constant": "every cell has the same colour: {{value}}"
+      },
+      "count": {
+        "byRow": "each row keeps one number of shapes ({{list}}, top to bottom)",
+        "byColumn": "each column keeps one number of shapes ({{list}}, left to right)",
+        "latin": "the numbers {{list}} appear once in every row and every column",
+        "constant": "every cell has the same number of shapes: {{value}}",
+        "stepRowMore": "along each row, left to right there is one shape more in each cell",
+        "stepRowFewer": "along each row, left to right there is one shape fewer in each cell",
+        "stepColumnMore": "down each column there is one shape more in each cell",
+        "stepColumnFewer": "down each column there is one shape fewer in each cell"
+      },
+      "rotation": {
+        "byRow": "each row keeps one direction ({{list}}, top to bottom)",
+        "byColumn": "each column keeps one direction ({{list}}, left to right)",
+        "latin": "the directions {{list}} appear once in every row and every column",
+        "constant": "every cell has the same direction: {{value}}",
+        "stepRowClockwise": "along each row, left to right the arrow turns a quarter turn clockwise from cell to cell",
+        "stepRowAnticlockwise": "along each row, left to right the arrow turns a quarter turn anticlockwise from cell to cell",
+        "stepColumnClockwise": "down each column the arrow turns a quarter turn clockwise from cell to cell",
+        "stepColumnAnticlockwise": "down each column the arrow turns a quarter turn anticlockwise from cell to cell"
+      }
+    },
+    "view": {
+      "matrix": "Matrix, {{size}} rows by {{size}} columns, one cell missing",
+      "missingAt": "Row {{row}}, column {{column}}: missing",
+      "cell": "Row {{row}}, column {{column}}: {{figure}}",
+      "missing": "Missing cell"
+    }
+  },
+  "numberPatternCompletion": {
+    "name": "Number Pattern Completion",
+    "tagline": "Find the missing number in grids, pyramids, wheels and crosses.",
+    "description": "Numbers are laid out in grids, pyramids, wheels and crosses, and each layout follows a rule: rows that add up, bricks that sum the two below, opposite segments that match, centres made from their arms. Find the rule and type the missing number.",
+    "scoringSummary": "Each layout counts as correct when you type the exact missing number. Your result is the share of layouts completed correctly; there is no time limit.",
+    "simpleInstructions": "Find the rule and type the missing number.",
+    "instructions": {
+      "1": "Each layout hides one number, marked “?”. Find the rule the other numbers follow.",
+      "2": "Grids: compare rows and columns. Pyramids: each brick is the sum of the two below it.",
+      "3": "Wheels: look at numbers on opposite sides. Crosses: the centre comes from the four arms, the same way in every cross.",
+      "4": "Type the missing number and press Enter."
+    },
+    "levels": {
+      "1": "Each row adds up: first plus second gives the third.",
+      "2": "Sums in rows or in columns, with the gap anywhere.",
+      "3": "Number pyramids: each brick is the sum of the two below.",
+      "4": "Rows that subtract or move by a fixed step.",
+      "5": "Wheels: opposite segments share a hidden link.",
+      "6": "Bigger pyramids where you may have to work backwards.",
+      "7": "Grids where rows and columns work together.",
+      "8": "Crosses: find how the arms make the centre.",
+      "9": "Pyramids with extra blank bricks, and mixed layouts.",
+      "10": "Every layout, with products and five-brick pyramids."
+    },
+    "kinds": {
+      "grid": "Number grids",
+      "pyramid": "Number pyramids",
+      "wheel": "Number wheels",
+      "cross": "Number crosses"
+    },
+    "grid": {
+      "prompt": "Find the rule in the rows or columns. Which number is missing?",
+      "explanation": "{{rule}} Here {{working}}.",
+      "rule": {
+        "row-sum": "In each row, the first number plus the second gives the third.",
+        "column-sum": "In each column, the top number plus the middle one gives the bottom one.",
+        "row-difference": "In each row, the first number minus the second gives the third.",
+        "column-difference": "In each column, the top number minus the middle one gives the bottom one.",
+        "row-step": "Each row goes up or down by its own fixed step from left to right.",
+        "column-step": "Each column goes up or down by its own fixed step from top to bottom.",
+        "row-product": "In each row, the first number times the second gives the third.",
+        "column-product": "In each column, the top number times the middle one gives the bottom one.",
+        "add-table": "Moving from one column to another adds the same amount in every row (and moving between rows adds the same amount in every column).",
+        "row-total": "Every row adds up to the same total.",
+        "column-total": "Every column adds up to the same total."
+      },
+      "working": {
+        "table": "so the missing number is {{answer}}",
+        "rowTotal": "the total is {{total}}, so in row {{row}} the missing number is {{answer}}",
+        "columnTotal": "the total is {{total}}, so in column {{column}} the missing number is {{answer}}",
+        "row": "in row {{row}} ({{shown}}) the missing number is {{answer}}",
+        "column": "in column {{column}} ({{shown}}) the missing number is {{answer}}"
+      }
+    },
+    "pyramid": {
+      "prompt": "Each brick is the sum of the two bricks below it. What number goes in the brick marked “?”",
+      "explanation": "Each brick is the sum of the two below it. Working it out: {{steps}}. So “?” is {{answer}}."
+    },
+    "wheel": {
+      "prompt": "Find how opposite numbers on the wheel are linked. Which number is missing?",
+      "explanation": {
+        "sum": "Opposite segments always add up to {{k}}. The segment opposite the gap is {{partner}}, so the missing number is {{k}} − {{partner}} = {{answer}}.",
+        "difference_one": "Each of the first {{count}} segments (clockwise from the top) is {{k}} more than the segment opposite it. The segment opposite the gap is {{partner}}, so the missing number is {{working}} = {{answer}}.",
+        "difference_other": "Each of the first {{count}} segments (clockwise from the top) is {{k}} more than the segment opposite it. The segment opposite the gap is {{partner}}, so the missing number is {{working}} = {{answer}}."
+      }
+    },
+    "cross": {
+      "prompt": "The centre of each cross comes from its four arms in the same way. What is the missing centre?",
+      "explanation": "{{rule}}. In the last cross: {{working}} = {{answer}}.",
+      "rule": {
+        "sum": "The centre is the sum of the four arms",
+        "vertical-minus-horizontal": "The centre is (top + bottom) − (left + right)",
+        "product-sum": "The centre is top × bottom + left × right",
+        "product-difference": "The centre is top × bottom − left × right"
+      }
+    },
+    "view": {
+      "blank": "blank",
+      "missingNumber": "missing number",
+      "missing": "missing",
+      "gridCaption": "Number grid, 3 rows by 3 columns, with one missing number",
+      "pyramid": "Number pyramid, from the top brick down",
+      "pyramidRow": "Row {{row}} from the top",
+      "wheel": "Wheel with {{segments}} segments, clockwise from the top: {{values}}. Segment 1 is opposite segment {{opposite}}.",
+      "cross": "Cross {{index}}: top {{top}}, right {{right}}, bottom {{bottom}}, left {{left}}, centre {{centre}}",
+      "crosses": "Number crosses"
+    }
+  },
+  "ruleBasedPatternDiscovery": {
+    "name": "Rule-Based Pattern Discovery",
+    "tagline": "Work out the rule from examples.",
+    "description": "Each example shows a small grid before and after a hidden change: a mirror, a turn, a slide, tiles changing kind or falling down. Work out the change and choose what a new grid becomes. Higher levels chain two changes.",
+    "scoringSummary": "Each puzzle counts as correct when you choose the grid the hidden rule produces. Your result is the share of puzzles solved; there is no time limit.",
+    "simpleInstructions": "See how each picture changes, then change the new one the same way.",
+    "instructions": {
+      "1": "Compare each input grid with its output: what moved, turned, changed kind or fell?",
+      "2": "Check that your idea works for every example, not just the first.",
+      "3": "Apply the same change to the new input and choose the result. From level 8 the rule is two changes in a row.",
+      "4": "Tiles differ by shape as well as colour, and every grid is also described in words."
+    },
+    "levels": {
+      "1": "One kind of tile changes into another.",
+      "2": "Tiles fall, slide or spread.",
+      "3": "The grid is mirrored, turned or slid.",
+      "4": "Moves and turns on bigger grids with two kinds of tile.",
+      "5": "Tile changes with two or three kinds: replace or swap.",
+      "6": "Any single rule: find which kind of change it is.",
+      "7": "Any single rule on 5×5 grids with three kinds of tile.",
+      "8": "Two changes in a row: a move, then a tile change.",
+      "9": "Two changes in a row, of any two different kinds.",
+      "10": "Two chained changes on 5×5 grids with three kinds of tile."
+    },
+    "kinds": {
+      "move": "Mirrors, turns and slides",
+      "colour": "Tiles changing kind",
+      "gather": "Falling and filling",
+      "two-step": "Two changes in a row"
+    },
+    "prompt": {
+      "one": "The same change turns every input into its output. What does the new input become?",
+      "two": "Two changes, one after the other, turn every input into its output. What does the new input become?"
+    },
+    "explanation": {
+      "one": "In every example the grid {{rule}}. Doing the same to the new input gives the chosen grid.",
+      "two": "In every example the grid {{first}}, and then {{second}}. Doing the same to the new input gives the chosen grid."
+    },
+    "rule": {
+      "flip-lr": "is mirrored left to right",
+      "flip-ud": "is mirrored top to bottom",
+      "cw": "is turned a quarter turn clockwise",
+      "ccw": "is turned a quarter turn anticlockwise",
+      "180": "is turned half a turn",
+      "shift-right": "slides one square right (the last column comes back on the left)",
+      "shift-left": "slides one square left (the first column comes back on the right)",
+      "shift-down": "slides one square down (the bottom row comes back at the top)",
+      "shift-up": "slides one square up (the top row comes back at the bottom)",
+      "fall": "has every tile fall to the bottom of its column",
+      "slide-left": "has every tile slide to the left end of its row",
+      "fill-rows": "has every row with a tile filled with copies of its first tile",
+      "fill-columns": "has every column with a tile filled with copies of its top tile",
+      "recolour": "has every $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) replaced by $t(patterns:ruleBasedPatternDiscovery.tileA.{{to}})",
+      "swap": "has every $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) and $t(patterns:ruleBasedPatternDiscovery.tile.{{to}}) swapped"
+    },
+    "tile": {
+      "1": "blue square",
+      "2": "orange circle",
+      "3": "purple diamond",
+      "4": "green cross"
+    },
+    "tileA": {
+      "1": "a blue square",
+      "2": "an orange circle",
+      "3": "a purple diamond",
+      "4": "a green cross"
+    },
+    "view": {
+      "one": "One hidden change",
+      "two": "Two hidden changes, one after the other",
+      "examples": "Examples",
+      "input": "Example {{index}} input: {{grid}}",
+      "output": "Example {{index}} output: {{grid}}",
+      "new": "New",
+      "newInput": "New input: {{grid}}",
+      "newOutput": "Output of the new input (unknown)"
+    }
+  },
+  "sequencePrediction": {
+    "name": "Sequence Prediction",
+    "tagline": "Where will it be next?",
+    "description": "A few frames show marks moving across a grid or arrows turning, always by the same step. Work out each step and choose the frame that comes next. Higher levels combine moving and turning, wrap around the edges and track two marks at once.",
+    "scoringSummary": "Each sequence counts as correct when you choose the frame that continues it. Your result is the share of sequences predicted correctly; there is no time limit.",
+    "simpleInstructions": "See how the shape moves, then pick where it goes next.",
+    "instructions": {
+      "1": "Watch how each mark changes from one frame to the next: how far it moves and which way an arrow turns.",
+      "2": "Every mark keeps the same step in every frame.",
+      "3": "When a level says so, a mark leaving one edge comes back on the opposite edge.",
+      "4": "Choose the next frame. Keys 1 to 8 pick an option."
+    },
+    "levels": {
+      "1": "A shape slides one square each time. Where is it next?",
+      "2": "Moves can go diagonally.",
+      "3": "An arrow turns by the same amount each time.",
+      "4": "An arrow slides and turns at the same time.",
+      "5": "Marks that leave one edge come back on the opposite edge.",
+      "6": "Longer steps of up to two squares, wrapping around.",
+      "7": "Two marks, each with its own step.",
+      "8": "An arrow moves, turns and wraps around the edges.",
+      "9": "Two marks: one slides, the other moves and turns.",
+      "10": "Two marks with their own steps, turning and wrapping around."
+    },
+    "kinds": {
+      "move": "Moving marks",
+      "rotate": "Turning arrows",
+      "move-rotate": "Moving and turning",
+      "two-marks": "Two marks at once"
+    },
+    "mark": "{{figure}} at row {{row}}, column {{column}}",
+    "frame": "{{marks}}",
+    "step": {
+      "right_one": "{{count}} square right",
+      "right_other": "{{count}} squares right",
+      "left_one": "{{count}} square left",
+      "left_other": "{{count}} squares left",
+      "down_one": "{{count}} square down",
+      "down_other": "{{count}} squares down",
+      "up_one": "{{count}} square up",
+      "up_other": "{{count}} squares up"
+    },
+    "describe": {
+      "move": "{{name}} moves {{steps}} each frame",
+      "turn": {
+        "clockwise": "{{name}} turns a quarter turn clockwise each frame",
+        "anticlockwise": "{{name}} turns a quarter turn anticlockwise each frame"
+      },
+      "moveTurn": {
+        "clockwise": "{{name}} moves {{steps}} and turns a quarter turn clockwise each frame",
+        "anticlockwise": "{{name}} moves {{steps}} and turns a quarter turn anticlockwise each frame"
+      }
+    },
+    "prompt": {
+      "plain": "Which frame comes next?",
+      "wrap": "Which frame comes next? Marks leaving one edge come back on the opposite edge."
+    },
+    "explanation": {
+      "plain": "{{moves}}. So the next frame shows {{answer}}.",
+      "wrap": "{{moves}}, wrapping around the edges. So the next frame shows {{answer}}."
+    },
+    "view": {
+      "frames": "Frames, in order",
+      "frame": "Frame {{index}}",
+      "frameLabel": "Frame {{index}}: {{marks}}",
+      "next": "Next",
+      "nextFrame": "Next frame (unknown)",
+      "wrap": "Marks leaving one edge come back on the opposite edge."
+    }
+  },
+  "shapeRotation": {
+    "name": "Shape Rotation",
+    "tagline": "Turn it in your head.",
+    "description": "A piece made of squares is shown. Find the option that is the same piece turned around. From level 2 every piece also appears as its mirror image, which looks very similar but can only be made by flipping the piece over.",
+    "scoringSummary": "Each piece counts as correct when you choose the turned copy. Your result is the share of pieces matched correctly; there is no time limit.",
+    "accessibilityNotes": "Pieces are read aloud row by row (which columns are filled), which is much harder to turn mentally than the picture.",
+    "simpleInstructions": "Find the same shape, just turned around.",
+    "instructions": {
+      "1": "Look at the piece. Imagine turning it on the table, like a puzzle piece.",
+      "2": "Choose the option that is the same piece, turned. Flipping it over is not allowed.",
+      "3": "Mirror images look almost the same: check where the odd square sticks out.",
+      "4": "Keys 1 to 8 pick an option."
+    },
+    "levels": {
+      "1": "Find the same piece, turned, among different pieces.",
+      "2": "Tell a turned piece from its mirror image.",
+      "3": "Mirror images and pieces that differ by one square.",
+      "4": "Bigger 6-square pieces.",
+      "5": "6-square pieces that differ by one square.",
+      "6": "6-square pieces among six options.",
+      "7": "6-square look-alikes that differ by one square.",
+      "8": "Large 7-square pieces.",
+      "9": "7-square look-alikes that differ by one square.",
+      "10": "Eight options: four 7-square look-alikes and their mirror images."
+    },
+    "kinds": {
+      "pieces": "Different pieces",
+      "mirrors": "Turns versus mirror images"
+    },
+    "prompt": "Which option is the same piece, only turned (not flipped over)?",
+    "turn": {
+      "cw": "a quarter turn clockwise",
+      "180": "a half turn",
+      "ccw": "a quarter turn anticlockwise"
+    },
+    "explanation": {
+      "mirrors": "The answer is the piece turned {{turn}}. Each look-alike is a mirror image: to match it you would have to flip the piece over, and turning alone never does that. The remaining options are different pieces.",
+      "pieces": "The answer is the piece turned {{turn}}. The other options are different pieces: no turn makes them match."
+    },
+    "view": {
+      "piece": "Piece to turn: {{grid}}",
+      "mirrors": "Turn it, do not flip it: mirror images do not count.",
+      "pieces": "Find this piece, turned."
+    }
+  },
+  "shared": {
+    "missing": "Missing (this is what you choose)",
+    "colour": {
+      "m": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      },
+      "f": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      },
+      "n": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      },
+      "mp": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      },
+      "fp": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      },
+      "np": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      },
+      "w": {
+        "red": "red",
+        "orange": "orange",
+        "yellow": "yellow",
+        "green": "green",
+        "blue": "blue",
+        "purple": "purple"
+      }
+    },
+    "shape": {
+      "circle": "circle",
+      "square": "square",
+      "triangle": "triangle",
+      "diamond": "diamond",
+      "star": "star",
+      "hexagon": "hexagon",
+      "heart": "heart",
+      "cross": "cross",
+      "arrow": "arrow"
+    },
+    "shapes": {
+      "circle": "circles",
+      "square": "squares",
+      "triangle": "triangles",
+      "diamond": "diamonds",
+      "star": "stars",
+      "hexagon": "hexagons",
+      "heart": "hearts",
+      "cross": "crosses",
+      "arrow": "arrows"
+    },
+    "figureOne": {
+      "circle": "$t(patterns:shared.colour.m.{{color}}) circle",
+      "square": "$t(patterns:shared.colour.m.{{color}}) square",
+      "triangle": "$t(patterns:shared.colour.m.{{color}}) triangle",
+      "diamond": "$t(patterns:shared.colour.m.{{color}}) diamond",
+      "star": "$t(patterns:shared.colour.m.{{color}}) star",
+      "hexagon": "$t(patterns:shared.colour.m.{{color}}) hexagon",
+      "heart": "$t(patterns:shared.colour.m.{{color}}) heart",
+      "cross": "$t(patterns:shared.colour.m.{{color}}) cross",
+      "arrow": "$t(patterns:shared.colour.m.{{color}}) arrow"
+    },
+    "figure": {
+      "circle_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) circle",
+      "circle_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) circles",
+      "square_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) square",
+      "square_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) squares",
+      "triangle_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) triangle",
+      "triangle_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) triangles",
+      "diamond_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) diamond",
+      "diamond_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) diamonds",
+      "star_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) star",
+      "star_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) stars",
+      "hexagon_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) hexagon",
+      "hexagon_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) hexagons",
+      "heart_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) heart",
+      "heart_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) hearts",
+      "cross_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) cross",
+      "cross_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) crosses",
+      "arrow_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) arrow",
+      "arrow_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) arrows"
+    },
+    "pointing": {
+      "up": "{{figure}} pointing up",
+      "right": "{{figure}} pointing right",
+      "down": "{{figure}} pointing down",
+      "left": "{{figure}} pointing left"
+    },
+    "direction": {
+      "up": "up",
+      "right": "right",
+      "down": "down",
+      "left": "left"
+    },
+    "grid": {
+      "empty": "empty",
+      "describe": "{{rows}} by {{cols}} grid; {{lines}}",
+      "rowEmpty": "row {{row}} empty",
+      "rowFilled_one": "row {{row}} filled at column {{columns}}",
+      "rowFilled_other": "row {{row}} filled at columns {{columns}}",
+      "rowTiles": "row {{row}}: {{tiles}}",
+      "tileInColumn": "{{tile}} in column {{column}}"
+    },
+    "theFigure": {
+      "circle": "The $t(patterns:shared.colour.w.{{color}}) circle",
+      "square": "The $t(patterns:shared.colour.w.{{color}}) square",
+      "triangle": "The $t(patterns:shared.colour.w.{{color}}) triangle",
+      "diamond": "The $t(patterns:shared.colour.w.{{color}}) diamond",
+      "star": "The $t(patterns:shared.colour.w.{{color}}) star",
+      "hexagon": "The $t(patterns:shared.colour.w.{{color}}) hexagon",
+      "heart": "The $t(patterns:shared.colour.w.{{color}}) heart",
+      "cross": "The $t(patterns:shared.colour.w.{{color}}) cross",
+      "arrow": "The $t(patterns:shared.colour.w.{{color}}) arrow"
+    }
+  },
+  "spatialTransformation": {
+    "name": "Spatial Transformation",
+    "tagline": "Turn it, flip it, picture the result.",
+    "description": "A pattern on a grid and an instruction: turn it, flip it, or from level 7 do two moves in a row. Choose the picture of the result. Patterns grow from 3×3 to 5×5 and gain coloured tiles.",
+    "scoringSummary": "Each pattern counts as correct when you choose the result of the stated moves. Your result is the share of correct choices; there is no time limit.",
+    "accessibilityNotes": "Patterns and options are read aloud row by row, which makes picturing the move much harder than with the picture.",
+    "simpleInstructions": "Do the turn or flip in your head and pick the picture you get.",
+    "instructions": {
+      "1": "Read the instruction and picture the pattern moving: a turn spins it on the table, a flip turns it over like a page.",
+      "2": "With two moves, do the first one, then the second on the result.",
+      "3": "Choose the option that shows the result. Keys 1 to 8 pick an option."
+    },
+    "levels": {
+      "1": "Flip a small pattern like a mirror.",
+      "2": "Turn a small pattern.",
+      "3": "Turn a bigger pattern either way.",
+      "4": "Any turn or flip.",
+      "5": "Turns and flips with two kinds of tiles.",
+      "6": "A 5×5 pattern with three kinds of tiles, six options.",
+      "7": "Two moves in a row.",
+      "8": "Two moves in a row with two kinds of tiles.",
+      "9": "Two moves on a busy 5×5 pattern.",
+      "10": "Two moves; every turned and flipped version is an option."
+    },
+    "kinds": {
+      "single": "One move",
+      "double": "Two moves in a row"
+    },
+    "step": {
+      "cw": "Turn it a quarter turn clockwise",
+      "ccw": "Turn it a quarter turn anticlockwise",
+      "180": "Turn it a half turn",
+      "flip-lr": "Flip it left to right",
+      "flip-ud": "Flip it upside down"
+    },
+    "stepInline": {
+      "cw": "turn it a quarter turn clockwise",
+      "ccw": "turn it a quarter turn anticlockwise",
+      "180": "turn it a half turn",
+      "flip-lr": "flip it left to right",
+      "flip-ud": "flip it upside down"
+    },
+    "effect": {
+      "cw": "the top row becomes the right-hand column",
+      "ccw": "the top row becomes the left-hand column",
+      "180": "the top row becomes the bottom row, read backwards",
+      "flip-lr": "the left and right columns swap places, like a mirror standing beside it",
+      "flip-ud": "the top and bottom rows swap places, like a mirror lying under it"
+    },
+    "prompt": {
+      "single": "{{step}}. Which option shows the result?",
+      "double": "First {{first}}, then {{second}}. Which option shows the result?"
+    },
+    "explanation": {
+      "single": "{{step}}: {{effect}}.",
+      "numbered": "Step {{index}}: {{step}}: {{effect}}.",
+      "others": "The other options are the pattern turned or flipped in other ways."
+    },
+    "view": {
+      "start": "Starting pattern: {{grid}}",
+      "moves": "Moves, in order"
+    }
+  },
+  "symmetryRecognition": {
+    "name": "Symmetry Recognition",
+    "tagline": "Fold it in your head.",
+    "description": "Decide whether a pattern has a mirror line — down the middle, across the middle, both or none — and draw the missing mirror half of a picture. Higher levels use coloured tiles, patterns that are only almost symmetric and halves with no count given.",
+    "scoringSummary": "A pattern counts as correct when you name its exact mirror lines, or when every cell you mark (and no other) completes the mirror half. Your result is the share of correct patterns; there is no time limit.",
+    "accessibilityNotes": "Patterns are read aloud row by row; checking a mirror line by ear means comparing rows or columns from both ends.",
+    "simpleInstructions": "Fold the picture in your head: do both halves match?",
+    "instructions": {
+      "1": "A mirror line splits a pattern into two halves that match like a reflection, as if you folded the paper.",
+      "2": "Spotting: choose which mirror lines the pattern has. Check every cell, a single one can break it. Tiles must match in shape and colour.",
+      "3": "Drawing: mark the cells of the empty half so it mirrors the given half, then press Check.",
+      "4": "Keyboard: keys 1–4 pick an answer; arrow keys move between cells and Enter marks a cell."
+    },
+    "levels": {
+      "1": "Is the left side a mirror image of the right side?",
+      "2": "Draw the mirror image of a small half.",
+      "3": "Find every mirror line: left–right, top–bottom, both or none.",
+      "4": "Draw the mirror image of a bigger half.",
+      "5": "Spot patterns that are almost symmetric, with two cells out of place.",
+      "6": "Mirror across a horizontal line: draw the bottom half.",
+      "7": "Coloured tiles: shapes must mirror too.",
+      "8": "Draw the mirror half without being told how many cells.",
+      "9": "Large tile patterns with a single cell out of place.",
+      "10": "Large halves, either mirror line, no count given."
+    },
+    "kinds": {
+      "classify": "Spotting mirror lines",
+      "complete": "Drawing the mirror half"
+    },
+    "class": {
+      "left-right": "Vertical mirror line: left matches right",
+      "top-bottom": "Horizontal mirror line: top matches bottom",
+      "both": "Both mirror lines",
+      "none": "No mirror line"
+    },
+    "pair": "{{a}} and {{b}}",
+    "fold": {
+      "vertical": {
+        "ok": "Folding along the vertical line, every cell lands on a matching cell.",
+        "broken": "Folding along the vertical line does not work: {{pairs}} do not match.",
+        "brokenMore": "Folding along the vertical line does not work: {{pairs}} (and more) do not match."
+      },
+      "horizontal": {
+        "ok": "Folding along the horizontal line, every cell lands on a matching cell.",
+        "broken": "Folding along the horizontal line does not work: {{pairs}} do not match.",
+        "brokenMore": "Folding along the horizontal line does not work: {{pairs}} (and more) do not match."
+      }
+    },
+    "prompt": {
+      "classify": "Which mirror lines does this pattern have?",
+      "vertical": "Mark the cells on the right so the picture mirrors the left half.",
+      "horizontal": "Mark the cells at the bottom so the picture mirrors the top half."
+    },
+    "explanation": {
+      "classify": "{{answer}}.",
+      "vertical": "Each cell on the right copies the cell the same distance away on the other side of the line. The right half needs: {{cells}}.",
+      "horizontal": "Each cell on the bottom copies the cell the same distance away on the other side of the line. The bottom half needs: {{cells}}."
+    },
+    "view": {
+      "pattern": "Pattern: {{grid}}",
+      "given": {
+        "vertical": "Given left half",
+        "horizontal": "Given top half"
+      },
+      "fill": {
+        "vertical": "Right half to fill",
+        "horizontal": "Bottom half to fill"
+      },
+      "filled": "{{cell}}, filled",
+      "empty": "{{cell}}, empty"
+    }
+  },
+  "visualPatternCompletion": {
+    "name": "Visual Pattern Completion",
+    "tagline": "What comes next in the row?",
+    "description": "A row of coloured shapes follows a pattern: a block that repeats, a number of shapes that grows, an arrow that turns, or shapes and colours that cycle separately. Choose the figure that comes next.",
+    "scoringSummary": "Each row counts as correct when you choose the figure that continues it. Your result is the share of rows continued correctly; there is no time limit.",
+    "simpleInstructions": "Find the pattern and pick what comes next.",
+    "instructions": {
+      "1": "Look at the row from left to right and find what repeats or changes.",
+      "2": "Check each feature on its own: shape, colour, how many, and which way an arrow points.",
+      "3": "Choose the figure that comes next. Keys 1 to 8 pick an option."
+    },
+    "levels": {
+      "1": "Continue a pattern of two figures that take turns.",
+      "2": "Continue a block of three figures.",
+      "3": "Blocks with repeats inside, like AABB.",
+      "4": "A pattern that grows: one more each time.",
+      "5": "Longer blocks that may start in the middle.",
+      "6": "Shapes and colours follow two separate cycles.",
+      "7": "Arrows turn by the same step while colours repeat.",
+      "8": "Two cycles of different lengths, with more options.",
+      "9": "Counts change step by step while shapes cycle.",
+      "10": "Three features change at once: shape, colour and count."
+    },
+    "kinds": {
+      "repeat": "Repeating blocks",
+      "two-rules": "Two separate cycles",
+      "growing": "Growing and turning"
+    },
+    "prompt": "What comes next in the row?",
+    "explanation": "{{rule}} So the next one is {{answer}}.",
+    "rule": {
+      "repeat": "The block {{block}} repeats again and again.",
+      "parts": "{{parts}}."
+    },
+    "partStart": {
+      "countUp": "The number of shapes goes up by one each time",
+      "countDown": "The number of shapes goes down by one each time",
+      "turnClockwise": "The arrow turns a quarter turn clockwise each time",
+      "turnAnticlockwise": "The arrow turns a quarter turn anticlockwise each time",
+      "shapes_one": "Shapes repeat every {{count}}: {{cycle}}",
+      "shapes_other": "Shapes repeat every {{count}}: {{cycle}}",
+      "colours_one": "Colours repeat every {{count}}: {{cycle}}",
+      "colours_other": "Colours repeat every {{count}}: {{cycle}}"
+    },
+    "part": {
+      "countUp": "the number of shapes goes up by one each time",
+      "countDown": "the number of shapes goes down by one each time",
+      "turnClockwise": "the arrow turns a quarter turn clockwise each time",
+      "turnAnticlockwise": "the arrow turns a quarter turn anticlockwise each time",
+      "shapes_one": "shapes repeat every {{count}}: {{cycle}}",
+      "shapes_other": "shapes repeat every {{count}}: {{cycle}}",
+      "colours_one": "colours repeat every {{count}}: {{cycle}}",
+      "colours_other": "colours repeat every {{count}}: {{cycle}}"
+    },
+    "view": {
+      "row": "Pattern row, left to right",
+      "next": "Next figure (unknown)"
+    }
+  }
+}

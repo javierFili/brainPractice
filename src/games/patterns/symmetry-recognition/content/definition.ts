@@ -1,13 +1,12 @@
 import { multiSelectResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, randomInt, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg, type Message, type Text } from '@/domain/shared';
 import {
   at,
   cellName,
   flipLR,
   flipUD,
-  listWords,
   makeGrid,
   orderedChoice,
   sameGrid,
@@ -19,11 +18,13 @@ import type { Axis, SymmetryChallenge, SymmetryClass, SymmetryProfile } from './
 
 export const SYMMETRY_ID = gameIdOf('symmetry-recognition');
 
-export const CLASS_LABELS: Record<SymmetryClass, string> = {
-  'left-right': 'Vertical mirror line: left matches right',
-  'top-bottom': 'Horizontal mirror line: top matches bottom',
-  both: 'Both mirror lines',
-  none: 'No mirror line',
+const T = 'patterns:symmetryRecognition';
+
+export const CLASS_LABELS: Record<SymmetryClass, Message> = {
+  'left-right': msg(`${T}.class.left-right`),
+  'top-bottom': msg(`${T}.class.top-bottom`),
+  both: msg(`${T}.class.both`),
+  none: msg(`${T}.class.none`),
 };
 
 /** The exact symmetry of a grid. */
@@ -55,15 +56,15 @@ function symmetricGrid(
 }
 
 /** Pairs of mirror cells that do not match, for the explanation. */
-function mismatches(grid: TileGrid, axis: Axis): string[] {
+function mismatches(grid: TileGrid, axis: Axis): Message[] {
   const rows = grid.length;
   const cols = grid[0]?.length ?? 0;
-  const out: string[] = [];
+  const out: Message[] = [];
   for (let r = 0; r < rows; r++)
     for (let c = 0; c < cols; c++) {
       const [mr, mc] = axis === 'vertical' ? [r, cols - 1 - c] : [rows - 1 - r, c];
       if ((axis === 'vertical' ? c < mc : r < mr) && at(grid, r, c) !== at(grid, mr, mc))
-        out.push(`${cellName(r, c)} and ${cellName(mr, mc)}`);
+        out.push(msg(`${T}.pair`, { a: cellName(r, c), b: cellName(mr, mc) }));
     }
   return out;
 }
@@ -101,20 +102,23 @@ function classifyDraft(
   if (share < 0.25 || share > 0.7 || classifyGrid(grid) !== target) return null;
   const lrMiss = mismatches(grid, 'vertical');
   const tbMiss = mismatches(grid, 'horizontal');
-  const why = (miss: string[], line: string) =>
+  const why = (miss: Message[], line: Axis): Message =>
     miss.length === 0
-      ? `Folding along the ${line} line, every cell lands on a matching cell.`
-      : `Folding along the ${line} line does not work: ${listWords(miss.slice(0, 2).map((m) => m))}${miss.length > 2 ? ' (and more)' : ''} do not match.`;
+      ? msg(`${T}.fold.${line}.ok`)
+      : msg(`${T}.fold.${line}.${miss.length > 2 ? 'brokenMore' : 'broken'}`, {
+          pairs: joinText(miss.slice(0, 2)),
+        });
+  const reasons: Text[] = [msg(`${T}.explanation.classify`, { answer: CLASS_LABELS[target] })];
+  reasons.push(why(lrMiss, 'vertical'));
+  if (classes.includes('top-bottom')) reasons.push(why(tbMiss, 'horizontal'));
   return {
-    prompt: 'Which mirror lines does this pattern have?',
+    prompt: msg(`${T}.prompt.classify`),
     content: { kind: 'classify', grid },
     response: orderedChoice(
       classes.map((c) => CLASS_LABELS[c]),
       classes.indexOf(target),
     ),
-    explanation: `${CLASS_LABELS[target]}. ${why(lrMiss, 'vertical')} ${
-      classes.includes('top-bottom') ? why(tbMiss, 'horizontal') : ''
-    }`.trim(),
+    explanation: joinText(reasons, ' '),
     skills: ['spatial-reasoning', 'pattern-recognition'],
   };
 }
@@ -131,7 +135,7 @@ export function mirrorTargets(given: TileGrid, axis: Axis) {
 }
 
 /** Name of a cell of the half to fill, in whole-grid coordinates. */
-export function fillCellName(given: TileGrid, axis: Axis, index: number) {
+export function fillCellName(given: TileGrid, axis: Axis, index: number): Message {
   const rows = given.length;
   const cols = given[0]?.length ?? 0;
   const r = Math.floor(index / cols);
@@ -152,25 +156,22 @@ function completeDraft(
   if (sameGrid(given, selfMirror)) return null;
   const { targets } = mirrorTargets(given, axis);
   if (targets.length < 2 || targets.length > rows * cols - 2) return null;
-  const side = axis === 'vertical' ? 'right' : 'bottom';
   return {
-    prompt:
-      axis === 'vertical'
-        ? 'Mark the cells on the right so the picture mirrors the left half.'
-        : 'Mark the cells at the bottom so the picture mirrors the top half.',
+    prompt: msg(`${T}.prompt.${axis}`),
     content: { kind: 'complete', axis, given },
     response: multiSelectResponse(rows * cols, targets, { exact: profile.announceCount }),
-    explanation: `Each cell on the ${side} copies the cell the same distance away on the other side of the line. The ${side} half needs: ${listWords(targets.map((i) => fillCellName(given, axis, i)))}.`,
+    explanation: msg(`${T}.explanation.${axis}`, {
+      cells: joinText(targets.map((i) => fillCellName(given, axis, i))),
+    }),
     skills: ['spatial-reasoning', 'visual-orientation'],
   };
 }
 
 export const symmetryGame: GameDefinition<SymmetryChallenge, SymmetryProfile> = {
   id: SYMMETRY_ID,
-  name: 'Symmetry Recognition',
-  tagline: 'Fold it in your head.',
-  description:
-    'Decide whether a pattern has a mirror line — down the middle, across the middle, both or none — and draw the missing mirror half of a picture. Higher levels use coloured tiles, patterns that are only almost symmetric and halves with no count given.',
+  name: msg('patterns:symmetryRecognition.name'),
+  tagline: msg('patterns:symmetryRecognition.tagline'),
+  description: msg('patterns:symmetryRecognition.description'),
   area: 'patterns',
   skills: ['spatial-reasoning', 'pattern-recognition', 'visual-orientation'],
   meta: {
@@ -181,19 +182,17 @@ export const symmetryGame: GameDefinition<SymmetryChallenge, SymmetryProfile> = 
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'A pattern counts as correct when you name its exact mirror lines, or when every cell you mark (and no other) completes the mirror half. Your result is the share of correct patterns; there is no time limit.',
+    scoringSummary: msg('patterns:symmetryRecognition.scoringSummary'),
     feedback: 'explain',
-    accessibilityNotes:
-      'Patterns are read aloud row by row; checking a mirror line by ear means comparing rows or columns from both ends.',
+    accessibilityNotes: msg('patterns:symmetryRecognition.accessibilityNotes'),
   },
   instructions: [
-    'A mirror line splits a pattern into two halves that match like a reflection, as if you folded the paper.',
-    'Spotting: choose which mirror lines the pattern has. Check every cell, a single one can break it. Tiles must match in shape and colour.',
-    'Drawing: mark the cells of the empty half so it mirrors the given half, then press Check.',
-    'Keyboard: keys 1–4 pick an answer; arrow keys move between cells and Enter marks a cell.',
+    msg('patterns:symmetryRecognition.instructions.1'),
+    msg('patterns:symmetryRecognition.instructions.2'),
+    msg('patterns:symmetryRecognition.instructions.3'),
+    msg('patterns:symmetryRecognition.instructions.4'),
   ],
-  simpleInstructions: 'Fold the picture in your head: do both halves match?',
+  simpleInstructions: msg('patterns:symmetryRecognition.simpleInstructions'),
   levels: SYMMETRY_LEVELS,
   generate({ identity, profile, random }) {
     const draft = retryGeneration('symmetry pattern', () =>

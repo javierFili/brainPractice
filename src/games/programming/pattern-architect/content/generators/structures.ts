@@ -11,6 +11,7 @@ import {
   signatures,
   type DegreeSignature,
 } from '../solvers/isomorphism';
+import { joinText, msg, textId, type Message, type Text } from '@/domain/shared';
 import type { Arrow, Digraph, PatternProfile } from '../types';
 import type { PatternDraft } from './draft';
 
@@ -76,20 +77,26 @@ function relabel(random: RandomGenerator, graph: Digraph): Digraph {
   };
 }
 
-const describeSignature = (sig: DegreeSignature) => {
-  const [incoming, outgoing] = sig.split(':');
-  return `${incoming} in / ${outgoing} out`;
+const KEY = 'programming:patternArchitect.structure';
+
+/** `2 in / 1 out` for a node's arrow counts (`in:out`). */
+const describeSignature = (sig: string): Message => {
+  const [incoming = '0', outgoing = '0'] = sig.split(':');
+  return msg(`${KEY}.signature`, { in: incoming, out: outgoing });
 };
 
-/** Each node's arrow counts together with the arrow counts of the nodes it points to. */
+/**
+ * Each node's arrow counts together with the arrow counts of the nodes it points to, as
+ * `in:out|in:out,in:out` (described in words only when shown).
+ */
 function neighbourhoods(graph: Digraph): string[] {
   const sig = signatures(graph);
   return graph.nodes.map((node) => {
     const targets = graph.edges
       .filter(([from]) => from === node)
-      .map(([, to]) => describeSignature(sig.get(to) as DegreeSignature))
+      .map(([, to]) => sig.get(to) as DegreeSignature)
       .sort();
-    return `${describeSignature(sig.get(node) as DegreeSignature)}|${targets.join(', ')}`;
+    return `${sig.get(node) as DegreeSignature}|${targets.join(',')}`;
   });
 }
 
@@ -100,46 +107,65 @@ const tally = (values: readonly string[]) => {
 };
 
 /** Why a candidate is not a match, in terms the player can check (without naming the graph). */
-function whyDifferent(reference: Digraph, candidate: Digraph): string {
+function whyDifferent(reference: Digraph, candidate: Digraph): Message {
   const ref = tally([...signatures(reference).values()]);
   const found = [...tally([...signatures(candidate).values()])].find(
     ([sig, n]) => n > (ref.get(sig) ?? 0),
   );
   if (found !== undefined) {
     const [sig, n] = found;
-    const nodes = (k: number) => (k === 1 ? '1 node' : `${k} nodes`);
-    return `${nodes(n)} with ${describeSignature(sig)} arrows (the reference has ${ref.get(sig) ?? 0})`;
+    return msg(`${KEY}.reason.counts`, {
+      count: n,
+      signature: describeSignature(sig),
+      expected: ref.get(sig) ?? 0,
+    });
   }
   const candidateNeighbourhoods = tally(neighbourhoods(candidate));
   const missing = neighbourhoods(reference).find(
     (n) => !candidateNeighbourhoods.has(n) && !n.endsWith('|'),
   );
   if (missing !== undefined) {
-    const [own, targets] = missing.split('|');
-    return `same arrow counts at every node, but the reference has a node with ${own} arrows pointing to nodes with (${targets}) arrows, which it lacks`;
+    const [own = '', targets = ''] = missing.split('|');
+    return msg(`${KEY}.reason.neighbourhood`, {
+      own: describeSignature(own),
+      targets: joinText(targets.split(',').map(describeSignature), ', '),
+    });
   }
-  return 'same arrow counts at every node, but no renaming makes the arrows line up';
+  return msg(`${KEY}.reason.noRenaming`);
 }
 
 /** "Graph A: reason. Graphs B and D: reason." — identical reasons are stated once. */
-function groupReasons(entries: readonly { name: string; reason: string }[]): string {
-  const groups = new Map<string, string[]>();
-  for (const { name, reason } of entries) groups.set(reason, [...(groups.get(reason) ?? []), name]);
-  return [...groups]
-    .map(([reason, names]) => {
-      const list =
-        names.length === 1
-          ? `Graph ${names[0] as string}`
-          : `Graphs ${names.slice(0, -1).join(', ')} and ${names.at(-1) as string}`;
-      return `${list}: ${reason}.`;
-    })
-    .join(' ');
+function groupReasons(entries: readonly { name: string; reason: Message }[]): Text {
+  const groups = new Map<string, { reason: Message; names: string[] }>();
+  for (const { name, reason } of entries) {
+    const group = groups.get(textId(reason)) ?? { reason, names: [] };
+    group.names.push(name);
+    groups.set(textId(reason), group);
+  }
+  return joinText(
+    [...groups.values()].map(({ reason, names }) =>
+      names.length === 1
+        ? msg(`${KEY}.reasonOne`, { name: names[0] as string, reason })
+        : msg(`${KEY}.reasonMany`, { names: joinText(names), reason }),
+    ),
+    ' ',
+  );
 }
 
-/** Keeps the displayed candidate order A, B, C… for the answer buttons too. */
+/**
+ * Keeps the displayed candidate order A, B, C… for the answer buttons too. Options are drawn by
+ * graph name (sorting by name is the same as sorting by "Graph X"), then labelled in words.
+ */
 function orderedChoice(random: RandomGenerator, correct: string, wrong: readonly string[]) {
   const response = singleChoice(random, correct, wrong);
-  const options = [...response.question.options].sort((x, y) => x.label.localeCompare(y.label));
+  // The builder was given plain names, so every label here is a literal string.
+  const named = response.question.options.map((option) => ({
+    id: option.id,
+    name: typeof option.label === 'string' ? option.label : '',
+  }));
+  const options = named
+    .sort((x, y) => x.name.localeCompare(y.name))
+    .map(({ id, name }) => ({ id, label: msg(`${KEY}.graph`, { name }) }));
   return { ...response, question: { options } } satisfies ResponseOf<'single-choice'>;
 }
 
@@ -176,15 +202,14 @@ export function structureMatch(random: RandomGenerator, profile: PatternProfile)
         .map((c) => ({ name: c.name, reason: whyDifferent(reference, c.graph) })),
     );
     return {
-      prompt:
-        'Which graph has exactly the same connection structure as the reference? Only the names differ.',
+      prompt: msg(`${KEY}.prompt`),
       content: { kind: 'structure-match', reference, candidates },
       response: orderedChoice(
         random,
-        `Graph ${correct.name}`,
-        candidates.filter((c) => c !== correct).map((c) => `Graph ${c.name}`),
+        correct.name,
+        candidates.filter((c) => c !== correct).map((c) => c.name),
       ),
-      explanation: `Graph ${correct.name} is the match: renaming ${renaming} turns every arrow of the reference into an arrow of Graph ${correct.name}. ${reasons}`,
+      explanation: msg(`${KEY}.explanation`, { name: correct.name, renaming, reasons }),
       skills: ['abstraction', 'pattern-recognition'],
     };
   });

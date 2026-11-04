@@ -1,3 +1,5 @@
+import type { Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { Shape } from '../../shared/ui';
 import { frameWords } from '../content/frames';
 import type { Frame } from '../content/types';
@@ -11,16 +13,17 @@ export function FrameGrid({
 }: {
   readonly frame: Frame;
   readonly size: number;
-  readonly label?: string;
+  readonly label?: Text;
   readonly decorative?: boolean;
 }) {
+  const tx = useText();
   return (
     <div
       className="grid w-20 gap-0.5 sm:w-24"
       style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}
       {...(decorative
         ? { 'aria-hidden': true }
-        : { role: 'img', 'aria-label': label ?? frameWords(frame) })}
+        : { role: 'img', 'aria-label': tx(label ?? frameWords(frame)) })}
     >
       {Array.from({ length: size * size }, (_, i) => {
         const mark = frame.marks.find((m) => m.row * size + m.col === i);

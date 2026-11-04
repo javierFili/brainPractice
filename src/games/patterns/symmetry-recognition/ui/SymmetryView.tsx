@@ -1,4 +1,5 @@
 import { CellGrid, MultiSelectBoard } from '@/games/kit/ui';
+import { msg } from '@/domain/shared';
 import type { ContentViewProps } from '@/games/types';
 import { cellName, describeGrid } from '../../shared/content';
 import { TileGridFigure } from '../../shared/ui';
@@ -16,7 +17,9 @@ export function SymmetryView({ challenge, respond, answer }: ContentViewProps<Sy
       <div className="flex justify-center">
         <TileGridFigure
           grid={content.grid}
-          label={`Pattern: ${describeGrid(content.grid)}`}
+          label={msg('patterns:symmetryRecognition.view.pattern', {
+            grid: describeGrid(content.grid),
+          })}
           className="w-52 sm:w-64"
         />
       </div>
@@ -30,12 +33,14 @@ export function SymmetryView({ challenge, respond, answer }: ContentViewProps<Sy
   const givenGrid = (
     <div className="min-w-0 flex-1">
       <CellGrid
-        label={vertical ? 'Given left half' : 'Given top half'}
+        label={msg(`patterns:symmetryRecognition.view.given.${axis}`)}
         columns={cols}
         size="sm"
         cells={given.flat().map((v, i) => ({
           key: String(i),
-          label: `${cellName(Math.floor(i / cols), i % cols)}, ${v > 0 ? 'filled' : 'empty'}`,
+          label: msg(`patterns:symmetryRecognition.view.${v > 0 ? 'filled' : 'empty'}`, {
+            cell: cellName(Math.floor(i / cols), i % cols),
+          }),
           content: v > 0 ? <Filled /> : null,
         }))}
       />
@@ -45,12 +50,12 @@ export function SymmetryView({ challenge, respond, answer }: ContentViewProps<Sy
     <div className="min-w-0 flex-1">
       <MultiSelectBoard
         response={response}
-        label={vertical ? 'Right half to fill' : 'Bottom half to fill'}
+        label={msg(`patterns:symmetryRecognition.view.fill.${axis}`)}
         columns={cols}
         size="sm"
         respond={respond}
         answer={answer}
-        submitLabel="Check"
+        submitLabel={msg('kit:board.check')}
         cells={Array.from({ length: rows * cols }, (_, i) => ({
           key: String(i),
           label: fillCellName(given, axis, i),

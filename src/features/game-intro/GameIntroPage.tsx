@@ -1,4 +1,5 @@
 import { useId, useRef, useState, type KeyboardEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import {
   isLevelCleared,
@@ -7,7 +8,7 @@ import {
   UNLOCK_AFTER_PLAYS,
   UNLOCK_PERFORMANCE_INDEX,
 } from '@/domain/progress';
-import { DIFFICULTY_LEVELS, type DifficultyLevel } from '@/domain/shared';
+import { DIFFICULTY_LEVELS, joinText, msg, type DifficultyLevel } from '@/domain/shared';
 import { useServices } from '@/app/providers/servicesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
@@ -15,9 +16,9 @@ import { StatTile } from '@/components/ui/StatTile';
 import { usePreferences } from '@/app/providers/preferencesContext';
 import { Icon } from '@/components/ui/Icon';
 import { CATEGORIES } from '@/features/shared/categories';
-import { formatMs, formatPercent, formatPoints, formatSeconds } from '@/features/shared/format';
 import { NotFound } from '@/features/shared/NotFound';
 import { useProgress } from '@/features/shared/useProgress';
+import { useFormat, useText } from '@/i18n';
 
 export function GameIntroPage() {
   const { gameId = '' } = useParams();
@@ -30,9 +31,12 @@ export function GameIntroPage() {
   const [assistedChoice, setAssisted] = useState<boolean | null>(null);
   const assisted = assistedChoice ?? preferences.relaxedByDefault;
   const levelButtons = useRef<(HTMLButtonElement | null)[]>([]);
+  const { t } = useTranslation('catalog');
+  const tx = useText();
+  const format = useFormat();
 
   const module = getModule(gameId);
-  if (!module) return <NotFound message="This game does not exist." />;
+  if (!module) return <NotFound message={t('intro.notFound')} />;
   const { definition } = module;
   const meta = CATEGORIES[definition.meta.category];
   const game = state.status === 'ready' ? state.progress.games[definition.id] : undefined;
@@ -69,17 +73,17 @@ export function GameIntroPage() {
         eyebrow={
           <span className={`flex items-center gap-1.5 ${meta.text}`}>
             <Icon name={meta.icon} className="h-4 w-4" />
-            {meta.label}
+            {tx(meta.label)}
           </span>
         }
-        title={definition.name}
-        description={definition.description}
+        title={tx(definition.name)}
+        description={tx(definition.description)}
       />
       <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
         <div className="flex flex-col gap-8">
           <section aria-labelledby="levels-title">
             <h2 id="levels-title" className="mb-3 text-lg font-semibold text-white">
-              Level
+              {t('intro.level')}
             </h2>
             <div
               role="radiogroup"
@@ -101,7 +105,12 @@ export function GameIntroPage() {
                     ref={(element) => {
                       levelButtons.current[l - 1] = element;
                     }}
-                    aria-label={`Level ${l}${cleared ? ', cleared' : ''}${locked ? ', locked' : ''}${l === suggested && !locked ? ', suggested' : ''}`}
+                    aria-label={[
+                      t('common:level.label', { level: l }),
+                      ...(cleared ? [t('intro.cleared')] : []),
+                      ...(locked ? [t('intro.locked')] : []),
+                      ...(l === suggested && !locked ? [t('intro.suggested')] : []),
+                    ].join(t('intro.stateSeparator'))}
                     aria-disabled={locked}
                     onClick={() => {
                       if (!locked) setChosen(l);
@@ -135,8 +144,11 @@ export function GameIntroPage() {
             </div>
             <p className="mt-2 text-xs text-slate-500">
               {preferences.freePlay
-                ? '✓ cleared (performance ≥ 70) · dot = suggested level · free play: every level is open.'
-                : `✓ cleared (performance ≥ 70) · dot = suggested level. Level 1 is always open; the next level opens after a session with performance ≥ ${UNLOCK_PERFORMANCE_INDEX} or after ${UNLOCK_AFTER_PLAYS} completed sessions. Free play (Settings) opens all.`}
+                ? t('intro.legendFree')
+                : t('intro.legend', {
+                    performance: UNLOCK_PERFORMANCE_INDEX,
+                    count: UNLOCK_AFTER_PLAYS,
+                  })}
             </p>
           </section>
 
@@ -145,29 +157,33 @@ export function GameIntroPage() {
             className="rounded-xl border border-slate-800 bg-slate-900/40 p-5"
           >
             <p className="text-xs font-semibold tracking-widest text-slate-400 uppercase">
-              Level {level} · {profile.tier}
+              {t('intro.levelTier', { level, tier: t(`common:tiers.${profile.tier}`) })}
             </p>
             <h2 id="level-detail" className="mt-1 text-lg font-semibold text-white">
-              {profile.objective}
+              {tx(profile.objective)}
             </h2>
             <dl className="mt-4 grid grid-cols-3 gap-3 text-sm">
               <div>
-                <dt className="text-slate-400">Challenges</dt>
+                <dt className="text-slate-400">{t('intro.challenges')}</dt>
                 <dd className="font-mono text-white">{profile.challengeCount}</dd>
               </div>
               <div>
-                <dt className="text-slate-400">Time limit</dt>
+                <dt className="text-slate-400">{t('intro.timeLimit')}</dt>
                 <dd className="font-mono text-white">
-                  {assisted ? 'None' : formatSeconds(profile.timing.limitMs)}
+                  {assisted
+                    ? t('intro.none')
+                    : format.seconds(profile.timing.limitMs, t('common:format.noLimit'))}
                 </dd>
               </div>
               <div>
-                <dt className="text-slate-400">Target pace</dt>
-                <dd className="font-mono text-white">{formatSeconds(profile.timing.targetMs)}</dd>
+                <dt className="text-slate-400">{t('intro.targetPace')}</dt>
+                <dd className="font-mono text-white">
+                  {format.seconds(profile.timing.targetMs, t('common:format.noLimit'))}
+                </dd>
               </div>
             </dl>
             <div className="mt-5 flex flex-wrap items-center gap-4">
-              <Button onClick={start}>Start level {level}</Button>
+              <Button onClick={start}>{t('intro.start', { level })}</Button>
               <label
                 htmlFor={assistedId}
                 className="flex items-center gap-2 text-sm text-slate-300"
@@ -181,26 +197,23 @@ export function GameIntroPage() {
                   }}
                   className="h-4 w-4 accent-sky-400"
                 />
-                Relaxed timing (no answer limit, double memorisation time, not counted in records)
-                {!definition.meta.relaxedFriendly &&
-                  ' — this game is about speed, so its signals stay quick'}
+                {definition.meta.relaxedFriendly ? t('intro.relaxed') : t('intro.relaxedSpeed')}
               </label>
             </div>
           </section>
 
           <section aria-labelledby="how-title">
             <h2 id="how-title" className="mb-3 text-lg font-semibold text-white">
-              How to play
+              {t('intro.howTo')}
             </h2>
             <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-300">
-              {definition.instructions.map((line) => (
-                <li key={line}>{line}</li>
+              {definition.instructions.map((line, i) => (
+                <li key={i}>{tx(line)}</li>
               ))}
               <li>
                 {definition.meta.keyboard === 'full'
-                  ? 'Playable with mouse, touch or keyboard (Tab, arrows, Enter; number keys pick options).'
-                  : 'Some steps need a pointer or touch; options also have number keys.'}{' '}
-                You can reopen these instructions during the game.
+                  ? t('intro.keyboardFull')
+                  : t('intro.keyboardPartial')}
               </li>
             </ul>
           </section>
@@ -210,16 +223,23 @@ export function GameIntroPage() {
             className="rounded-xl border border-line bg-surface p-5 text-sm text-ink-soft"
           >
             <h2 id="scoring-title" className="mb-2 text-lg font-semibold text-ink">
-              How your result is calculated
+              {t('intro.scoring')}
             </h2>
-            <p>{definition.meta.scoringSummary}</p>
+            <p>{tx(definition.meta.scoringSummary)}</p>
             <p className="mt-2 text-ink-muted">
-              Practises: {definition.skills.map((sk) => sk.replaceAll('-', ' ')).join(', ')} · about{' '}
-              {definition.meta.estimatedMinutes} min · results are saved only on this device.
+              {t('intro.practises', {
+                skills: tx(
+                  joinText(
+                    definition.skills.map((sk) => msg(`common:skills.${sk}`)),
+                    ', ',
+                  ),
+                ),
+                minutes: definition.meta.estimatedMinutes,
+              })}
             </p>
             {definition.meta.accessibilityNotes !== undefined && (
               <p className="mt-2 text-ink-muted">
-                Accessibility: {definition.meta.accessibilityNotes}
+                {t('intro.accessibility', { notes: tx(definition.meta.accessibilityNotes) })}
               </p>
             )}
           </section>
@@ -227,23 +247,28 @@ export function GameIntroPage() {
 
         <aside aria-labelledby="record-title" className="flex flex-col gap-3">
           <h2 id="record-title" className="text-lg font-semibold text-white">
-            Your record · level {level}
+            {t('intro.record', { level })}
           </h2>
           {record ? (
             <dl className="grid grid-cols-2 gap-3 lg:grid-cols-1">
-              <StatTile label="Best performance" value={`${record.bestPerformanceIndex}/100`} />
-              <StatTile label="Best score" value={formatPoints(record.bestScore)} />
-              <StatTile label="Best accuracy" value={formatPercent(record.bestAccuracy)} />
               <StatTile
-                label="Best median time"
-                value={formatMs(record.bestMedianResponseMs)}
-                hint={`${record.plays} completed ${record.plays === 1 ? 'session' : 'sessions'}`}
+                label={t('intro.bestPerformance')}
+                value={`${record.bestPerformanceIndex}/100`}
+              />
+              <StatTile label={t('intro.bestScore')} value={format.points(record.bestScore)} />
+              <StatTile
+                label={t('intro.bestAccuracy')}
+                value={format.percent(record.bestAccuracy)}
+              />
+              <StatTile
+                label={t('intro.bestMedian')}
+                value={format.ms(record.bestMedianResponseMs)}
+                hint={t('intro.plays', { count: record.plays })}
               />
             </dl>
           ) : (
             <p className="rounded-xl border border-dashed border-slate-700 p-4 text-sm text-slate-400">
-              Not played yet. Metrics tracked: score, accuracy, response time, streak and
-              performance index.
+              {t('intro.notPlayed')}
             </p>
           )}
         </aside>

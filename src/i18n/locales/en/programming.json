@@ -1,0 +1,862 @@
+{
+  "shared": {
+    "program": "Program",
+    "narrate": {
+      "step": "line {{line}}: {{changes}}",
+      "more_one": "… ({{count}} more step)",
+      "more_other": "… ({{count}} more steps)"
+    },
+    "trace": {
+      "title": "Step-by-step trace",
+      "caption": "Each step that changed a variable",
+      "line": "Line",
+      "code": "Code",
+      "after": "After it runs",
+      "more_one": "… {{count}} more step follows the same pattern.",
+      "more_other": "… {{count}} more steps follow the same pattern.",
+      "output": "Output:",
+      "nothingPrinted": "(nothing printed)",
+      "stopped": "stopped on line {{line}}: {{message}}"
+    }
+  },
+  "variableTracking": {
+    "name": "Variable Tracking",
+    "tagline": "Keep every variable straight, line by line.",
+    "description": "A short program updates several variables with assignments, copies and swaps. Follow it line by line and say what a variable holds at the end, at a given line, or which one ends up largest.",
+    "scoringSummary": "Each question has one exact answer, computed by running the program. Your result is the share answered correctly, with a small bonus for pace; nothing is timed out.",
+    "instructions": {
+      "order": "The program runs from top to bottom, one line at a time.",
+      "copy": "“x = y” copies the value y has right now; changing y later does not change x.",
+      "swap": "A swap uses a helper: temp = a, a = b, b = temp.",
+      "typed": "From level 4 you type the exact number. After answering, the full trace is shown."
+    },
+    "simpleInstructions": "Read the lines one by one and keep track of each box’s number.",
+    "levels": {
+      "1": "Two variables, two updates: follow each assignment in order.",
+      "2": "Updates that read another variable.",
+      "3": "Copies keep the value they were given: later changes do not follow them.",
+      "4": "Swaps through a helper variable; type the exact value.",
+      "5": "Stop in the middle: the value right after a given line.",
+      "6": "Four variables and updates that combine several of them.",
+      "7": "Longer programs: six updates over four variables.",
+      "8": "Seven updates; most of them read the variable they overwrite.",
+      "9": "Five variables, chained swaps and nested expressions.",
+      "10": "Everything at once: eight updates over five variables."
+    },
+    "kinds": {
+      "finalValue": "Final value",
+      "afterLine": "Value mid-program",
+      "largest": "Largest variable"
+    },
+    "prompt": {
+      "finalValue": "What is the value of {{name}} when the program ends?",
+      "afterLine": "What is the value of {{name}} right after line {{line}} runs?",
+      "largest": "Which of {{names}} holds the largest value when the program ends?"
+    },
+    "explanation": {
+      "finalValue": "Step by step — {{steps}}. So {{name}} ends at {{value}}.",
+      "afterLine": "Up to line {{line}} — {{steps}}. So {{name}} is {{value}} at that point (it ends at {{final}}).",
+      "largest": "Step by step — {{steps}}. At the end {{final}}, so {{winner}} is the largest."
+    },
+    "view": {
+      "label": "Program to trace",
+      "compare": "Compare {{names}} after the last line.",
+      "track": "Track {{name}} to the last line.",
+      "stop": "Stop right after line {{line}} (highlighted)."
+    }
+  },
+  "conditionalLogic": {
+    "name": "Conditional Logic",
+    "tagline": "Which branch runs?",
+    "description": "Read if / elif / else chains with and, or and not, and decide what a program prints for given inputs — or which input leads to a given output. Later levels nest conditions and test short-circuit evaluation.",
+    "scoringSummary": "Every answer is checked by running the program with the interpreter. Your result is the share answered correctly, with a small bonus for pace; answering is not timed.",
+    "instructions": {
+      "order": "Conditions are checked from the top: the first true one runs its block, the rest are skipped.",
+      "operators": "“and” needs both sides true; “or” needs at least one; “not” flips true and false.",
+      "backwards": "Some questions give you an output and ask which input produces it.",
+      "shortCircuit": "From level 8: “and” stops at the first false side and “or” at the first true one — a division the program never reaches cannot fail."
+    },
+    "simpleInstructions": "Check each condition from the top; the first true one decides what is printed.",
+    "levels": {
+      "1": "One input, one comparison per branch: the first true condition wins.",
+      "2": "Two inputs and four outcomes.",
+      "3": "Combine comparisons with “and” and “or”.",
+      "4": "True/false flags and “not”.",
+      "5": "Ifs inside ifs: only one inner chain ever runs.",
+      "6": "Work backwards: which input produces this output?",
+      "7": "Five outcomes and conditions that mix “and” with “or”.",
+      "8": "Short-circuit: “and” stops at the first false, “or” at the first true.",
+      "9": "Guards in the wrong order: spot the condition that crashes.",
+      "10": "Everything at once: nested chains, mixed logic and short-circuits."
+    },
+    "kinds": {
+      "branch": "If / elif / else chains",
+      "nested": "Nested conditions",
+      "findInput": "Input for an output",
+      "shortCircuit": "Short-circuit evaluation"
+    },
+    "errorOutcome": "Stops with an error (division by zero)",
+    "prompt": {
+      "happens": "What happens when this program runs?",
+      "letter": "Which letter does this program print?",
+      "findInput": "Which input makes this program print {{target}}?"
+    },
+    "explanation": {
+      "step": "line {{line}}: “{{cond}}” is {{value}}",
+      "stepError": "line {{line}}: “{{cond}}” evaluates the division first, with y = 0 → error",
+      "runPrints": "With {{inputs}}: {{steps}} — so it prints {{outcome}}.",
+      "runError": "With {{inputs}}: {{steps}} — so the program stops with an error. “and” / “or” only skip the right side when the left side already decides the result.",
+      "miss": "{{inputs}} prints {{outcome}}",
+      "findInput": "{{run}} The others: {{others}}."
+    },
+    "view": {
+      "label": "Program with conditions",
+      "fromOptions": "The inputs come from the options. Which one makes it print {{target}}?",
+      "inputs_one": "Lines 1–{{count}} set the inputs.",
+      "inputs_other": "Lines 1–{{count}} set the inputs.",
+      "inputsDivision_one": "Lines 1–{{count}} set the inputs. Dividing by zero stops the program with an error.",
+      "inputsDivision_other": "Lines 1–{{count}} set the inputs. Dividing by zero stops the program with an error."
+    }
+  },
+  "algorithmicLogic": {
+    "name": "Algorithm Tracing",
+    "tagline": "Dependencies, traces and constraints.",
+    "description": "Order tasks that depend on each other, trace language-neutral pseudocode and solve deployment puzzles. Trains deduction, conditional reasoning and algorithmic thinking.",
+    "scoringSummary": "Points for each correct answer, scaled by level, with a bonus for pace and streaks; a wrong answer costs a quarter of the base. Accuracy is 75% of the performance index.",
+    "instructions": {
+      "read": "Read the whole challenge before answering: every rule, arrow and line matters.",
+      "arrow": "An arrow “x → y” means x must finish before y starts.",
+      "pseudocode": "Pseudocode runs top to bottom; “set a ← b + 1” stores the new value in a.",
+      "exact": "From level 4 some answers are exact numbers — work them out, there are no options to guess from."
+    },
+    "levels": {
+      "1": "Follow simple dependencies and straight-line assignments.",
+      "2": "Branching: evaluate a condition and follow only the branch it selects.",
+      "3": "Near-miss orders and your first constraint puzzles: verify every rule.",
+      "4": "Compound conditions and exact answers: no options to lean on.",
+      "5": "Loops and transitive dependencies: reason about what happens repeatedly and indirectly.",
+      "6": "Conditions inside loops: state changes the path on every iteration.",
+      "7": "Open-ended loops and deduction chains across six services.",
+      "8": "Parallel scheduling: find the chain that bounds the whole build.",
+      "9": "Weighted schedules, nested loops and seven-service deductions with weak clues.",
+      "10": "Everything at once: large weighted graphs, long traces and only relative clues."
+    },
+    "kinds": {
+      "dependencyOrder": "Execution order",
+      "dependencyCount": "Transitive dependencies",
+      "criticalPath": "Parallel scheduling",
+      "programTrace": "Program tracing",
+      "constraintArrangement": "Constraint puzzles"
+    },
+    "rules": {
+      "before": "{{a}} is deployed before {{b}}",
+      "immediatelyBefore": "{{a}} is deployed immediately before {{b}}",
+      "notAdjacent": "{{a}} and {{b}} are not deployed next to each other",
+      "at": "{{a}} is deployed in slot {{slot}}",
+      "notAt": "{{a}} is not deployed in slot {{slot}}"
+    },
+    "constraint": {
+      "prompt": {
+        "arrangement": "Services are deployed one per slot, left to right. Which deployment order satisfies every rule?",
+        "position": "Services are deployed one per slot, left to right. Which service is deployed in slot {{slot}}?"
+      },
+      "breaks": "{{arrangement}} breaks “{{rule}}”",
+      "explanation": {
+        "arrangement": "The only arrangement that satisfies every rule is {{arrangement}}. {{reasons}}.",
+        "position": "The only arrangement that satisfies every rule is {{arrangement}}. So slot {{slot}} holds {{answer}}."
+      }
+    },
+    "dependencyOrder": {
+      "prompt": "Each arrow means the left module must run before the right one. Which execution order is valid?",
+      "breaks": "{{order}} breaks {{edges}}",
+      "explanation": "{{order}} runs every module after all of its dependencies (other valid orders may exist, but none of them was offered). {{reasons}}."
+    },
+    "dependencyCount": {
+      "prompt": "How many modules must finish (directly or indirectly) before {{target}} can start?",
+      "explanation_one": "{{target}} transitively depends on {{modules}} — {{count}} module.",
+      "explanation_other": "{{target}} transitively depends on {{modules}} — {{count}} modules."
+    },
+    "criticalPath": {
+      "prompt": {
+        "weighted": "Independent modules can run in parallel. What is the minimum number of rounds (each module takes the rounds shown) to finish everything?",
+        "unweighted": "Independent modules can run in parallel. What is the minimum number of rounds (each module takes one round) to finish everything?"
+      },
+      "explanation_one": "The longest dependency chain is {{path}}, which takes {{count}} round; everything else fits in parallel alongside it.",
+      "explanation_other": "The longest dependency chain is {{path}}, which takes {{count}} rounds; everything else fits in parallel alongside it."
+    },
+    "programTrace": {
+      "prompt": "What is the value of {{name}} after the program runs?",
+      "explanation": "Tracing the program line by line ends with {{state}}, so {{result}}."
+    },
+    "units": {
+      "modules": "modules",
+      "rounds": "rounds"
+    },
+    "view": {
+      "modules": "Modules",
+      "rounds_one": "{{count}} round",
+      "rounds_other": "{{count}} rounds",
+      "dependencies": "Dependencies",
+      "arrowMeaning": "x → y means x runs before y",
+      "before": "before",
+      "grouped": "Same dependencies, grouped by module",
+      "noPrerequisites": "no prerequisites",
+      "needs": "needs {{modules}}",
+      "services": "Services",
+      "rules": "Rules · slots 1–{{last}}",
+      "program": "Pseudocode program"
+    }
+  },
+  "loopPrediction": {
+    "name": "Loop Prediction",
+    "tagline": "How many turns, and what is left at the end?",
+    "description": "Predict what for and while loops do: how many times a line runs, what an accumulator holds at the end, or the last value printed. Later levels nest loops and exit early.",
+    "scoringSummary": "Every answer comes from running the program with the interpreter. Your result is the share answered correctly, with a small bonus for pace; answering is not timed.",
+    "instructions": {
+      "range": "“for i in range(a, b)” runs with i = a, a + 1, … up to b − 1 (b itself is not included).",
+      "while": "“while” checks its condition before every turn and stops as soon as it is false.",
+      "nested": "An inner loop starts again from the beginning on every turn of the outer loop.",
+      "return": "“return” inside a loop ends the whole function at once. After answering, the trace is shown."
+    },
+    "simpleInstructions": "Count the turns of the loop and keep track of the numbers as they change.",
+    "levels": {
+      "1": "Count the turns of a simple loop and add up as it goes.",
+      "2": "While loops: the condition is checked before every turn.",
+      "3": "An if inside the loop: not every turn changes the total.",
+      "4": "Exact answers: type the number.",
+      "5": "A loop inside a loop: the inner one restarts every outer turn.",
+      "6": "Early exits: a return inside a loop ends it at once.",
+      "7": "Longer loops of every kind.",
+      "8": "Inner loops whose length depends on the outer variable.",
+      "9": "Stop conditions joined with “and”: which one ends the loop first?",
+      "10": "Everything at once, with up to nine turns per loop."
+    },
+    "kinds": {
+      "iterations": "Iteration count",
+      "finalValue": "Value after the loop",
+      "lastOutput": "Last printed value"
+    },
+    "prompt": {
+      "iterations": "How many times does line {{line}} run?",
+      "finalValue": "What is the value of {{name}} when the program ends?",
+      "lastOutput": "What is the last value this program prints?"
+    },
+    "explanation": {
+      "iterations_one": "Line {{line}} ran {{count}} time. Step by step — {{steps}}.",
+      "iterations_other": "Line {{line}} ran {{count}} times. Step by step — {{steps}}.",
+      "finalValue": "{{name}} ends at {{value}}. Step by step — {{steps}}.",
+      "lastOutput_one": "It prints {{shown}} — {{count}} value, the last is {{last}}. Step by step — {{steps}}.",
+      "lastOutput_other": "It prints {{shown}} — {{count}} values, the last is {{last}}. Step by step — {{steps}}."
+    },
+    "view": {
+      "label": "Program with loops",
+      "count": "Count every time line {{line}} (highlighted) runs, across all turns.",
+      "follow": "Follow {{name}} through every turn.",
+      "followVariable": "Follow the variable through every turn.",
+      "output": "Each print adds one value to the output."
+    }
+  },
+  "codeScan": {
+    "name": "Code Comparison",
+    "tagline": "Spot the one token that changed.",
+    "description": "Compare an original pseudocode snippet with its copy and spot the single changed token — an operator, a swapped variable, an off-by-one number, a misspelled name or a negated condition. Trains processing speed, rapid comparison and fast error detection.",
+    "scoringSummary": "Speed is the trained ability: the pace bonus is doubled and pace is 40% of the performance index, but a wrong answer costs points.",
+    "instructions": {
+      "layout": "The original is on the left (or on top), the copy on the right (or below).",
+      "oneToken": "When the snippets differ, exactly one token of one line changed; everything else is identical.",
+      "point": "To point at a changed line, click it (or focus it with Tab and press Enter) in the copy.",
+      "kinds": "Change kinds: operator (< → <=, + → -, and → or), variable swapped for another one in the snippet, number changed, name misspelled, or “not” added to a condition.",
+      "speed": "Speed counts more than in other games — but a wrong answer costs points, so stay precise."
+    },
+    "levels": {
+      "1": "Compare two short snippets and decide whether they are identical.",
+      "2": "Point at the exact line that changed; misspelled names join the mix.",
+      "3": "Negated conditions and one-character changes: read every token, not the shape.",
+      "4": "Nested blocks and compound conditions: more places for a change to hide.",
+      "5": "Runs of look-alike lines: compare token by token, not line shape.",
+      "6": "Longer listings under a tighter clock; most changes are one character.",
+      "7": "Name the kind of change: operator, variable, number, typo or negation.",
+      "8": "Classify fine changes hidden among look-alike lines, faster.",
+      "9": "Find and classify the change with no hint: locate first, then name it.",
+      "10": "Twelve dense, near-identical lines and a one-character change: at full speed."
+    },
+    "kinds": {
+      "sameOrDifferent": "Same or different",
+      "findTheChange": "Find the change",
+      "classifyTheChange": "Classify the change"
+    },
+    "category": {
+      "operator": "Operator changed",
+      "variable": "Variable swapped",
+      "number": "Number changed",
+      "typo": "Name misspelled",
+      "negation": "Condition negated"
+    },
+    "same": "Identical",
+    "different": "Different",
+    "prompt": {
+      "sameOrDifferent": "Is the copy identical to the original?",
+      "findTheChange": "One token of the copy differs from the original. Which line of the copy changed?",
+      "classify": "One token of the copy changed. What kind of change is it?",
+      "classifyLine": "Line {{line}} of the copy has one changed token. What kind of change is it?"
+    },
+    "change": {
+      "operator": "On line {{line}}, the operator “{{before}}” became “{{after}}”: “{{from}}” → “{{to}}”.",
+      "variable": "On line {{line}}, the variable “{{before}}” was replaced by “{{after}}”, another variable of the snippet: “{{from}}” → “{{to}}”.",
+      "number": "On line {{line}}, the number {{before}} became {{after}}: “{{from}}” → “{{to}}”.",
+      "typo": "On line {{line}}, the name “{{before}}” was misspelled as “{{after}}”: “{{from}}” → “{{to}}”.",
+      "negation": "On line {{line}}, “not” was added in front of the condition, negating it: “{{from}}” → “{{to}}”."
+    },
+    "explanation": {
+      "same_one": "{{label}}: all {{count}} lines match token for token.",
+      "same_other": "{{label}}: all {{count}} lines match token for token.",
+      "different": "{{label}}: exactly one token differs. {{change}}",
+      "line": "Line {{line}} changed. {{change}}",
+      "classify": "{{category}}. {{change}}"
+    },
+    "view": {
+      "title": {
+        "original": "Original",
+        "copy": "Copy"
+      },
+      "snippet": {
+        "original": "Original snippet",
+        "copy": "Copy snippet"
+      },
+      "marker": {
+        "check": "check",
+        "changed": "changed",
+        "pick": "your pick"
+      },
+      "line": "Line {{line}}: {{code}}",
+      "lineMarked": "Line {{line}}: {{code}} ({{markers}})",
+      "identical": "No line differs: the snippets are identical."
+    }
+  },
+  "dependencyOrdering": {
+    "name": "Dependency Ordering",
+    "tagline": "What has to happen before what?",
+    "description": "Build steps, kitchen prep and release tasks, each with the tasks it needs. Find what can start, what is unblocked, a complete valid order — and which new need would create a cycle.",
+    "scoringSummary": "Each question has exactly one right answer, checked by a graph solver. Your result is the share answered correctly, with a small bonus for pace; answering is not timed.",
+    "instructions": {
+      "needs": "“A needs B” means B must be finished before A can start.",
+      "listed": "Only the listed needs count — not what you would do in a real kitchen or project.",
+      "arrows": "To order tasks, use the arrow buttons next to each one, then submit.",
+      "cycle": "A cycle (A needs B, B needs A, possibly through other tasks) makes every order impossible."
+    },
+    "simpleInstructions": "Do each task only after the tasks it needs are done.",
+    "levels": {
+      "1": "Find the task that needs nothing.",
+      "2": "Chain every task into the only order that works.",
+      "3": "Some work is done: what is unblocked now?",
+      "4": "Several orders could work: pick the one option that does.",
+      "5": "Near misses: each wrong order breaks a single need.",
+      "6": "Cycles: which new need would make every order impossible?",
+      "7": "Hidden cycles: the loop runs through other tasks.",
+      "8": "Eight tasks and denser needs.",
+      "9": "Nine tasks: long chains and long hidden cycles.",
+      "10": "Everything at once on ten tasks."
+    },
+    "kinds": {
+      "startFirst": "What can start first",
+      "readyNext": "What is unblocked",
+      "fullOrder": "Complete order",
+      "validOrder": "Valid order among options",
+      "cycle": "Cycle detection"
+    },
+    "themes": {
+      "monorepo": "Monorepo build",
+      "kitchen": "Kitchen prep",
+      "release": "Release checklist"
+    },
+    "tasks": {
+      "build_core": "build core",
+      "build_utils": "build utils",
+      "build_parser": "build parser",
+      "build_router": "build router",
+      "build_charts": "build charts",
+      "build_auth": "build auth",
+      "build_forms": "build forms",
+      "build_icons": "build icons",
+      "build_api_client": "build api-client",
+      "build_themes": "build themes",
+      "chop_onions": "chop onions",
+      "grate_cheese": "grate cheese",
+      "toast_seeds": "toast seeds",
+      "make_sauce": "make sauce",
+      "boil_pasta": "boil pasta",
+      "wash_lettuce": "wash lettuce",
+      "slice_tomatoes": "slice tomatoes",
+      "whisk_eggs": "whisk eggs",
+      "roast_peppers": "roast peppers",
+      "mix_dressing": "mix dressing",
+      "update_changelog": "update changelog",
+      "bump_version": "bump version",
+      "translate_strings": "translate strings",
+      "record_demo": "record demo",
+      "review_copy": "review copy",
+      "run_audit": "run audit",
+      "refresh_screenshots": "refresh screenshots",
+      "write_notes": "write notes",
+      "check_licences": "check licences",
+      "sign_binaries": "sign binaries"
+    },
+    "quoted": "{{task}}",
+    "need": "{{task}} needs {{prerequisite}}",
+    "needsNothing": "{{task}} needs nothing",
+    "prompt": {
+      "startFirst": "Which task can start first?",
+      "readyNext": "The ticked tasks are done. Which of these can start now?",
+      "fullOrder": "There is only one order that respects every need. Put the tasks in that order.",
+      "validOrder": "Which order respects every need?",
+      "cycle": "Which new need would create a cycle, so that no order could ever work?"
+    },
+    "explanation": {
+      "startFirst": "{{task}} is the only task that needs nothing. The others must wait: {{others}}.",
+      "readyNextFree": "{{needs}}, and so it was free to start. The others still wait: {{others}}.",
+      "readyNextDone": "{{needs}}, and all of that is done. The others still wait: {{others}}.",
+      "fullOrder": "{{first}} needs nothing, then each task needs the one before it: {{steps}}.",
+      "fullOrderExtra": "{{first}} needs nothing, then each task needs the one before it: {{steps}}. The extra needs ({{extra}}) are already satisfied by that chain.",
+      "validOrder": "Only {{order}} keeps every task after what it needs: {{others}}.",
+      "brokenOrder": "the order with {{task}} before {{prerequisite}} fails because {{task}} needs {{prerequisite}}",
+      "cycle": "{{loop}} already runs in that order (each one before the next). If {{task}} also needed {{prerequisite}}, it would have to come before itself. The other new needs keep at least one valid order."
+    },
+    "view": {
+      "heading_one": "{{theme}} · {{count}} task",
+      "heading_other": "{{theme}} · {{count}} tasks",
+      "tasks": "Tasks and what each one needs",
+      "done": "(done)",
+      "needsNothing": "needs nothing",
+      "needs": "needs {{list}}",
+      "cycleHint": "Each option adds one new need to the list above. Exactly one of them closes a loop.",
+      "validOrder": "Valid order:"
+    }
+  },
+  "algorithmConstruction": {
+    "name": "Algorithm Construction",
+    "tagline": "Put the blocks in the order that works.",
+    "description": "You get the pieces of a program and the output it must print. Arrange the blocks so it prints exactly that; later levels add loops and a spare block that is not needed.",
+    "scoringSummary": "An order counts as correct only when it is the single order that prints the target; every possible order is checked with the interpreter when the challenge is made. Untimed, with a small bonus for pace.",
+    "instructions": {
+      "target": "The program must print exactly the output shown above the blocks.",
+      "variables": "A line can only use a variable that an earlier block has already set.",
+      "move": "Move blocks with the ↑ / ↓ buttons, then submit. Loop blocks move as a whole.",
+      "spare": "From level 6 one block is a spare: the program does not use it — move it to the end."
+    },
+    "simpleInstructions": "Put the code blocks in the order that prints the number shown.",
+    "levels": {
+      "1": "Three blocks: set a value, change it, print it.",
+      "2": "Four blocks: each line needs a value set by an earlier one.",
+      "3": "Three variables: find which block can only come after which.",
+      "4": "A loop block: what happens before the loop changes what it produces.",
+      "5": "Five blocks around a loop.",
+      "6": "A spare block: one block is not needed — put it last.",
+      "7": "Spare blocks among three variables.",
+      "8": "Two loops: their order matters.",
+      "9": "Two loops and a spare block.",
+      "10": "Always a spare: two loops, three variables, one block too many."
+    },
+    "kinds": {
+      "orderBlocks": "Order every block",
+      "spareBlock": "Order with a spare block"
+    },
+    "then": "{{before}}, then {{after}}",
+    "prompt": {
+      "orderBlocks": "Order the blocks so the program prints {{printed}}.",
+      "spareBlock": "Order the blocks so the program prints {{printed}}. One block is not needed: put it last."
+    },
+    "explanation": {
+      "orderBlocks_one": "Only {{order}} prints {{printed}} (the only possible order was checked with the interpreter). Step by step — {{steps}}.",
+      "orderBlocks_other": "Only {{order}} prints {{printed}} (all {{count}} possible orders were checked with the interpreter; the others print something else or stop with an error). Step by step — {{steps}}.",
+      "spareBlock_one": "Only {{order}} prints {{printed}} (the only possible order was checked with the interpreter). Block {{spare}} is the spare: no order that uses it prints {{printed}}. Step by step — {{steps}}.",
+      "spareBlock_other": "Only {{order}} prints {{printed}} (all {{count}} possible orders were checked with the interpreter; the others print something else or stop with an error). Block {{spare}} is the spare: no order that uses it prints {{printed}}. Step by step — {{steps}}."
+    },
+    "view": {
+      "target": "Target output:",
+      "spare": "One block is not needed: it goes last.",
+      "blocks": "Blocks to order",
+      "block": "Block {{id}}",
+      "finished": "The finished program"
+    }
+  },
+  "bugHunter": {
+    "name": "Bug Hunter",
+    "tagline": "One artifact, a few rules, exactly one bug.",
+    "description": "Scan logs, data records and pseudocode against explicit rules and point at the single item that breaks one. Trains selective and sustained attention, anomaly detection and debugging.",
+    "scoringSummary": "Points for each anomaly found, scaled by level, with pace and streak bonuses. Accuracy is 75% of the performance index.",
+    "instructions": {
+      "rules": "Read the rules first: only the stated rules count, not what “looks” wrong.",
+      "check": "Then check the items one by one. Exactly one item breaks exactly one rule.",
+      "above": "Rules about “the item above” compare each item only with its direct neighbour.",
+      "nearMisses": "Many items are near-misses — unusual but legal. Click (or press Enter on) the bug to answer."
+    },
+    "levels": {
+      "1": "Hold one rule in mind and check a short list against it, item by item.",
+      "2": "Read pseudocode as data: find the line that breaks a naming or ordering rule.",
+      "3": "Subtle bugs: typos, off-by-one values and seconds out of order.",
+      "4": "Two rules at once, and resources that must be opened and closed correctly.",
+      "5": "Mixed rule families: compare with the line above and check each field.",
+      "6": "Longer artifacts with more decoys: stay accurate all the way down.",
+      "7": "Three rules per item, including conditions that only apply to some items.",
+      "8": "Dense artifacts where most suspicious-looking items are legal.",
+      "9": "Sustained attention: three rules over three dozen noisy items.",
+      "10": "Everything at once: 42 items, three rules, heavy noise and near-misses everywhere."
+    },
+    "kinds": {
+      "sequenceAnomaly": "Sequence anomalies",
+      "schemaViolation": "Schema violations",
+      "codeRule": "Code rules",
+      "multiRule": "Multiple rules"
+    },
+    "prompt": {
+      "sequenceAnomaly": "Scan the log. Exactly one line breaks a rule — which one?",
+      "schemaViolation": "Validate the records against the schema. Exactly one record is invalid — which one?",
+      "multiRule": "Every log line must satisfy all the rules. Exactly one line breaks one of them — which one?",
+      "codeRule": "Review the program. Exactly one line breaks a rule — which one?"
+    },
+    "rule": {
+      "consecutive": "Each {{field}} is exactly 1 more than the {{field}} on the item above.",
+      "ascendingTime": "Each {{field}} is the same as or later than the {{field}} on the item above.",
+      "unique": "No {{field}} repeats a {{field}} used on an earlier item.",
+      "oneOf": "{{field}} is one of: {{values}}.",
+      "exact": "{{field}} is {{value}}.",
+      "range": "{{field}} is a whole number from {{min}} to {{max}}.",
+      "digits_one": "{{field}} is a whole number with exactly {{count}} digit.",
+      "digits_other": "{{field}} is a whole number with exactly {{count}} digits.",
+      "email": "{{field}} has exactly one \"@\", a name before it and a dotted domain after it (name@domain.tld).",
+      "semver": "{{field}} is three whole numbers separated by dots (major.minor.patch).",
+      "multipleOf": "{{field}} is a multiple of {{step}}.",
+      "impliesExact": "When {{when}} is {{equals}}, {{field}} is {{value}}.",
+      "impliesRange": "When {{when}} is {{equals}}, {{field}} is a whole number from {{min}} to {{max}}.",
+      "definedBeforeUse": "Every variable is assigned with “set” on an earlier line before it is read.",
+      "closeOpened": "Every “open x” is followed by a “close x” on a later line.",
+      "writeWhileOpen": "“write … to x” only happens while x is open (after “open x”, before “close x”).",
+      "camelCase": "Every name is camelCase: it starts with a lower-case letter and uses only letters and digits (no “_”)."
+    },
+    "reason": {
+      "emailProblem": {
+        "notText": "is not text",
+        "noAt": "has no \"@\"",
+        "manyAt": "has more than one \"@\"",
+        "noLocal": "has nothing before the \"@\"",
+        "badDomain": "has \"{{domain}}\" after the \"@\", which is not a dotted domain"
+      },
+      "email": "{{field}} {{value}} {{problem}}",
+      "oneOf": "{{field}}={{value}} is not one of {{values}}",
+      "range": "{{field}}={{value}} is outside {{min}}–{{max}}",
+      "digits_one": "{{field}}={{value}} has {{count}} digit, not {{expected}}",
+      "digits_other": "{{field}}={{value}} has {{count}} digits, not {{expected}}",
+      "notWhole": "{{field}}={{value}} is not a whole number",
+      "semver": "{{field}} {{value}} is not three whole numbers separated by dots",
+      "multipleOf": "{{field}}={{value}} is not a multiple of {{step}}",
+      "implies": "{{when}} is {{equals}} but {{field}}={{value}}",
+      "consecutive": "{{field}}={{value}} follows {{field}}={{previous}}; it should be {{expected}}",
+      "invalidTime": "{{field}}={{value}} is not a valid HH:MM:SS time",
+      "earlier": "{{field}}={{value}} is earlier than {{previous}} on the item above",
+      "repeated": "{{field}}={{value}} was already used on item {{item}}",
+      "unassigned": {
+        "never": "it reads {{name}}, which has not been assigned yet (it is never set)",
+        "here": "it reads {{name}}, which has not been assigned yet (this line is the first to set it)",
+        "later": "it reads {{name}}, which has not been assigned yet (it is first set on line {{line}})"
+      },
+      "neverClosed": "{{resource}} is opened here but never closed afterwards",
+      "write": {
+        "closed": "it writes to {{resource}}, which was already closed on line {{line}}",
+        "openedLater": "it writes to {{resource}}, which is only opened later, on line {{line}}",
+        "neverOpened": "it writes to {{resource}}, which is never opened"
+      },
+      "camelCase": "the name {{name}} is not camelCase"
+    },
+    "explanation": {
+      "numbered": "Item {{item}} is the bug: {{reason}}. It breaks rule {{number}}: {{rule}}",
+      "single": "Item {{item}} is the bug: {{reason}}. It breaks the rule: {{rule}}"
+    },
+    "view": {
+      "rules": "Rules — every item must satisfy all of them",
+      "rule": "Rule",
+      "artifact": {
+        "log_one": "Log · {{count}} item",
+        "log_other": "Log · {{count}} items",
+        "records_one": "Records · {{count}} item",
+        "records_other": "Records · {{count}} items",
+        "program_one": "Program · {{count}} item",
+        "program_other": "Program · {{count}} items"
+      },
+      "breaks": "✗ breaks rule: {{rule}}",
+      "breaksNumbered": "✗ breaks rule R{{number}}: {{rule}}",
+      "pick": "your pick",
+      "pickCorrect": "✓ your pick",
+      "item": "Item {{item}}: {{text}}"
+    }
+  },
+  "codeMemory": {
+    "name": "Code Memory",
+    "tagline": "Records, calls, state and positions — from memory.",
+    "description": "Study records, API call sequences, variable assignments and keyword grids, then answer once they are hidden. Trains the working, sequential and contextual memory you use when you keep a data structure or a trace in your head.",
+    "scoringSummary": "Points for each correct recall, scaled by level, with small pace and streak bonuses. Accuracy is 75% of the performance index.",
+    "instructions": {
+      "study": "Every challenge starts with a study phase: memorise what you see, then press “I’m ready” or wait for the timer.",
+      "hidden": "The material is hidden before the question appears, so you will not know in advance what is asked.",
+      "assignments": "Assignments run top to bottom; “y = x + 2” stores the new value in y.",
+      "exact": "From level 4 some answers are exact numbers, and from level 5 you may have to rebuild a whole call order."
+    },
+    "levels": {
+      "1": "Hold a few fields, calls and positions in mind for a few seconds.",
+      "2": "Keep two records apart and track a variable through an update.",
+      "3": "Remember what followed what, and positions on a larger grid.",
+      "4": "Exact answers: compute and hold three variables with no options to lean on.",
+      "5": "Interference: look-alike ids and keywords, and rebuilding a full call order.",
+      "6": "Similar calls on the same resources: encode the exact order, not the gist.",
+      "7": "Look records up by another field and recall state at a given line.",
+      "8": "Four records, four variables and eight similar calls held at once.",
+      "9": "Joins: follow a foreign key between two tables you can no longer see.",
+      "10": "Maximum load and interference with the shortest study time per item."
+    },
+    "kinds": {
+      "recordRecall": "Record recall",
+      "crossReference": "Cross-reference lookup",
+      "foreignKeyJoin": "Foreign-key joins",
+      "sequenceRecall": "Call sequences",
+      "variableState": "Variable state",
+      "positionRecall": "Grid positions"
+    },
+    "record": {
+      "prompt": "What was the {{field}} of the {{type}} record?",
+      "explanation": "The {{type}} record was {{record}}, so its {{field}} was {{value}}."
+    },
+    "crossReference": {
+      "prompt": "The {{type}} whose {{key}} was {{keyValue}} — what was its {{field}}?",
+      "explanation": "Only one {{type}} had {{key}} {{keyValue}}: {{record}}. Its {{field}} was {{value}}."
+    },
+    "join": {
+      "prompt": "The {{parent}} whose {{key}} was {{keyValue}} has one {{child}} (linked by {{foreignKey}}). What was that {{child}}'s {{field}}?",
+      "explanation": "The {{parent}} with {{key}} {{keyValue}} had id {{parentId}}; the {{child}} with {{link}} was {{record}}, so its {{field}} was {{value}}."
+    },
+    "sequence": {
+      "prompt": {
+        "order": "Put the calls back in the order they ran.",
+        "position": "Which call was #{{position}}?",
+        "successor": "Which call came right after {{call}}?"
+      },
+      "explanation": {
+        "order": "The calls ran in this order: {{calls}}.",
+        "position": "The sequence was {{calls}}; call #{{position}} was {{answer}}.",
+        "successor": "The sequence was {{calls}}; right after {{call}} came {{answer}}."
+      }
+    },
+    "state": {
+      "prompt": {
+        "final": "What was the final value of {{name}}?",
+        "afterLine": "What was the value of {{name}} right after line {{line}}?"
+      },
+      "explanation": {
+        "final": "{{steps}}; so {{name}} ended as {{value}}.",
+        "afterLine": "{{steps}}; so right after line {{line}}, {{name}} was {{value}} (it later became {{later}})."
+      }
+    },
+    "position": {
+      "prompt": "Where was the keyword “{{keyword}}”? Select its cell.",
+      "explanation": "{{keyword}} was in {{cell}}.",
+      "explanationTwin": "{{keyword}} was in {{cell}}. The look-alike {{twin}} was in {{twinCell}}."
+    },
+    "view": {
+      "hidden": "Hidden — answer from memory.",
+      "callsHeading": "Calls, in the order they ran",
+      "calls": "Calls",
+      "answerMark": "✓ answer",
+      "givenCall": "given call",
+      "wrongPick": "✗ your pick",
+      "assignmentsHeading": "Assignments (run top to bottom)",
+      "assignments": "Assignments",
+      "askedHere": "← asked here",
+      "asked": "← asked",
+      "recordList": "Records",
+      "records": "{{type}} records",
+      "table": "{{type}} table",
+      "childTable": "{{type}} table · {{link}}",
+      "mark": {
+        "key": "key",
+        "answer": "answer",
+        "linkedId": "linked id",
+        "link": "link"
+      },
+      "cell": "Row {{row}}, column {{column}}",
+      "grid": "Keyword grid, {{rows}} rows by {{columns}} columns",
+      "empty": "empty"
+    }
+  },
+  "patternArchitect": {
+    "name": "Pattern Architect",
+    "tagline": "Find the rule, then apply it.",
+    "description": "Continue number sequences, complete symbol grids, infer hidden programs from examples and recognise the same structure under different names. Trains pattern recognition, abstraction and generalisation.",
+    "scoringSummary": "Points for each rule found and applied, scaled by level, with pace and streak bonuses. Accuracy is 75% of the performance index.",
+    "instructions": {
+      "rule": "Every challenge hides one rule. Find a rule that explains everything shown, then apply it.",
+      "grids": "Grids: shapes and counts can follow different rules — check rows and columns separately.",
+      "programs": "Hidden programs chain a few simple steps from the listed vocabulary; the order of the steps matters.",
+      "trees": "Trees are written as a(b, c): a contains b and c, in that order. Graphs match when renaming the nodes makes every arrow line up."
+    },
+    "levels": {
+      "1": "Spot a single regularity: a constant step, or one attribute changing in a grid.",
+      "2": "Steps that change and grids where two attributes follow separate rules.",
+      "3": "Two sequences woven together, and grids whose counts follow arithmetic.",
+      "4": "Infer a hidden one-step program from input → output examples.",
+      "5": "Programs of two chained steps: separate what each step contributes.",
+      "6": "Data-dependent steps (repeats, pairs, running totals) with fewer examples.",
+      "7": "Structure over content: match graphs by shape and restructure trees by analogy.",
+      "8": "Three-step programs, bigger graphs and tree rules from a single example.",
+      "9": "Look-alike structures with identical arrow counts, and two-step tree rules.",
+      "10": "Minimal evidence: three-step programs, seven-node look-alikes, composed tree rules."
+    },
+    "kinds": {
+      "numberSequence": "Number sequences",
+      "symbolGrid": "Symbol grids",
+      "transformInference": "Hidden programs",
+      "structureMatch": "Matching structures",
+      "treeAnalogy": "Tree analogies"
+    },
+    "cell": {
+      "circle_one": "{{count}} circle",
+      "circle_other": "{{count}} circles",
+      "triangle_one": "{{count}} triangle",
+      "triangle_other": "{{count}} triangles",
+      "square_one": "{{count}} square",
+      "square_other": "{{count}} squares",
+      "diamond_one": "{{count}} diamond",
+      "diamond_other": "{{count}} diamonds",
+      "star_one": "{{count}} star",
+      "star_other": "{{count}} stars"
+    },
+    "sequence": {
+      "prompt": "Which number comes next?",
+      "explanation": "Rule: {{rule}}. So after {{last}} comes {{answer}}.",
+      "explanationTrap": "Rule: {{rule}}. So after {{last}} comes {{answer}}. Repeating only the last step would give {{repeated}}."
+    },
+    "sequenceRule": {
+      "constantAdd": "add {{n}} each time",
+      "constantSubtract": "subtract {{n}} each time",
+      "alternatingSteps": "the steps alternate: {{steps}}, …",
+      "growingStep": "the step grows by {{n}} every time ({{steps}}, …)",
+      "shrinkingStep": "the step shrinks by {{n}} every time ({{steps}}, …)",
+      "multiply": "multiply by {{factor}} each time",
+      "interleaved": "two sequences take turns: the 1st, 3rd, 5th… terms go {{odd}}, the 2nd, 4th, 6th… terms go {{even}}",
+      "stepCycle": "the steps repeat in a cycle of three: {{steps}}",
+      "multiplyAdd": "multiply by {{factor}}, then add {{n}}",
+      "multiplySubtract": "multiply by {{factor}}, then subtract {{n}}",
+      "sumOfPreviousTwo": "each term is the sum of the two before it",
+      "alternatingMultiplyFirstAdd": "alternately multiply by {{factor}} and add {{n}}",
+      "alternatingMultiplyFirstSubtract": "alternately multiply by {{factor}} and subtract {{n}}",
+      "alternatingMultiplyLastAdd": "alternately add {{n}} and multiply by {{factor}}",
+      "alternatingMultiplyLastSubtract": "alternately subtract {{n}} and multiply by {{factor}}"
+    },
+    "grid": {
+      "prompt": "Which cell completes the grid?",
+      "explanation": "Shapes: {{shapes}}. Counts: {{counts}}. So the missing cell ({{position}}) is {{cell}} — {{description}}."
+    },
+    "layer": {
+      "byRow": "each row keeps one value",
+      "byColumn": "each column keeps one value",
+      "shiftLeft": "each row is the row above moved one place to the left (the first wraps to the end)",
+      "shiftRight": "each row is the row above moved one place to the right (the last wraps to the front)",
+      "constant": "the same in every cell",
+      "rowUp": "along each row (left to right) the count goes up by one",
+      "rowDown": "along each row (left to right) the count goes down by one",
+      "columnUp": "along each column (top to bottom) the count goes up by one",
+      "columnDown": "along each column (top to bottom) the count goes down by one",
+      "rowSum": "in each row the last count is the sum of the others",
+      "columnSum": "in each column the bottom count is the sum of the others"
+    },
+    "step": "{{n}}) {{step}}",
+    "listOp": {
+      "reverse": "reverse the list",
+      "sortAscending": "sort from smallest to largest",
+      "sortDescending": "sort from largest to smallest",
+      "rotateLeft": "move the first item to the end",
+      "rotateRight": "move the last item to the front",
+      "dropFirst": "remove the first item",
+      "dropLast": "remove the last item",
+      "duplicateEach": "write every item twice",
+      "add": "add {{n}} to every item",
+      "double": "double every item",
+      "keepEven": "keep only the even numbers",
+      "keepOdd": "keep only the odd numbers",
+      "takeFirst_one": "keep only the first {{count}} item",
+      "takeFirst_other": "keep only the first {{count}} items",
+      "swapPairs": "swap each neighbouring pair (1st↔2nd, 3rd↔4th, …)",
+      "removeRepeats": "remove repeated values (keep the first of each)",
+      "runningTotal": "replace each item by the total so far"
+    },
+    "vocabulary": {
+      "reverse": "reverse the list",
+      "sort": "sort from smallest to largest, or from largest to smallest",
+      "rotate": "move the first item to the end, or the last item to the front",
+      "drop": "remove the first item, or the last item",
+      "duplicateEach": "write every item twice",
+      "add": "add 1, 2 or 3 to every item",
+      "double": "double every item",
+      "keepParity": "keep only the even numbers, or only the odd numbers",
+      "takeFirst": "keep only the first 2 or 3 items",
+      "swapPairs": "swap each neighbouring pair (1st↔2nd, 3rd↔4th, …)",
+      "removeRepeats": "remove repeated values (keep the first of each)",
+      "runningTotal": "replace each item by the total so far"
+    },
+    "transform": {
+      "prompt": "The same hidden program turns every input into its output. What does it produce for the new input?",
+      "explanation_one": "The hidden program: {{steps}}. Applied to the new input: {{path}}, so the answer is {{answer}}. Every program of up to {{count}} step that fits all the examples gives this same result.",
+      "explanation_other": "The hidden program: {{steps}}. Applied to the new input: {{path}}, so the answer is {{answer}}. Every program of up to {{count}} steps that fits all the examples gives this same result."
+    },
+    "treeOp": {
+      "mirror": "mirror the whole tree (every item lists its children in reverse order)",
+      "mirrorTop": "reverse only the order of the top-level items",
+      "rotateTop": "move the first top-level item to the end",
+      "pruneLeaves": "remove every item that has no children",
+      "flatten": "flatten: every item becomes a direct child of the root, in reading order",
+      "sortChildren": "sort the children of every item alphabetically"
+    },
+    "tree": {
+      "prompt": "The same restructuring rule turns each tree on the left into the tree on the right. What does the new tree become?",
+      "explanation_one": "The rule: {{steps}}. So {{question}} becomes {{answer}}. Every rule of up to {{count}} step that fits the examples gives this same tree.",
+      "explanation_other": "The rule: {{steps}}. So {{question}} becomes {{answer}}. Every rule of up to {{count}} steps that fits the examples gives this same tree."
+    },
+    "structure": {
+      "prompt": "Which graph has exactly the same connection structure as the reference? Only the names differ.",
+      "graph": "Graph {{name}}",
+      "signature": "{{in}} in / {{out}} out",
+      "explanation": "Graph {{name}} is the match: renaming {{renaming}} turns every arrow of the reference into an arrow of Graph {{name}}. {{reasons}}",
+      "reasonOne": "Graph {{name}}: {{reason}}.",
+      "reasonMany": "Graphs {{names}}: {{reason}}.",
+      "reason": {
+        "counts_one": "{{count}} node with {{signature}} arrows (the reference has {{expected}})",
+        "counts_other": "{{count}} nodes with {{signature}} arrows (the reference has {{expected}})",
+        "neighbourhood": "same arrow counts at every node, but the reference has a node with {{own}} arrows pointing to nodes with ({{targets}}) arrows, which it lacks",
+        "noRenaming": "same arrow counts at every node, but no renaming makes the arrows line up"
+      }
+    },
+    "view": {
+      "sequence": "Sequence",
+      "nextTerm": "Next term (unknown)",
+      "grid": "Symbol grid, {{size}} rows by {{size}} columns, with one missing cell",
+      "missingCell": "Missing cell",
+      "examples_one": "Examples · hidden program of up to {{count}} step",
+      "examples_other": "Examples · hidden program of up to {{count}} steps",
+      "input": "Input",
+      "becomes": "becomes",
+      "output": "Output",
+      "newOutput": "Output for the new input (unknown)",
+      "possibleSteps": "Possible steps",
+      "treeRule_one": "Restructuring rule of up to {{count}} step",
+      "treeRule_other": "Restructuring rule of up to {{count}} steps",
+      "treeExamples": "Examples",
+      "before": "Example {{n}}, before",
+      "after": "Example {{n}}, after",
+      "newTree": "New tree",
+      "newTreeResult": "Restructured new tree (unknown)",
+      "pointsTo": "points to",
+      "nothing": "nothing",
+      "reference": "Reference · {{nodes}} nodes, {{arrows}} arrows",
+      "referenceArrows": "Arrows of the reference",
+      "candidates": "Candidate graphs",
+      "graphArrows": "Arrows of Graph {{name}}"
+    }
+  }
+}

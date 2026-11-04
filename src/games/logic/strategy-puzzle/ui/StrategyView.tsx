@@ -1,3 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
+import { cellLabel } from '@/games/kit/content';
 import { CellGrid } from '@/games/kit/ui';
 import { ClueList, Panel } from '@/games/logic/shared/ui';
 import type { ContentViewProps } from '@/games/types';
@@ -5,10 +8,15 @@ import { PILE_NAMES } from '../content/definition';
 import type { StrategyChallenge } from '../content/types';
 
 function Coins({ count, label }: { readonly count: number; readonly label: string }) {
+  const { t } = useTranslation('logic');
   return (
     <div className="flex items-center gap-3">
       <span className="w-16 shrink-0 text-sm font-semibold text-ink">{label}</span>
-      <span role="img" aria-label={`${label}: ${count} coins`} className="flex flex-wrap gap-1">
+      <span
+        role="img"
+        aria-label={t('strategyPuzzle.view.coins', { label, count })}
+        className="flex flex-wrap gap-1"
+      >
         {Array.from({ length: count }, (_, i) => (
           <span key={i} className="h-5 w-5 rounded-full border-2 border-glow bg-glow/30" />
         ))}
@@ -39,8 +47,13 @@ function Board({
           key: String(i),
           label:
             tile === 0
-              ? `row ${Math.floor(i / cols) + 1}, column ${(i % cols) + 1}: gap`
-              : `row ${Math.floor(i / cols) + 1}, column ${(i % cols) + 1}: tile ${tile}`,
+              ? msg('logic:strategyPuzzle.view.gap', {
+                  cell: cellLabel(Math.floor(i / cols), i % cols),
+                })
+              : msg('logic:strategyPuzzle.view.tile', {
+                  cell: cellLabel(Math.floor(i / cols), i % cols),
+                  tile,
+                }),
           content:
             tile === 0 ? null : (
               <span className="font-mono text-xl font-bold text-ink">{tile}</span>
@@ -53,38 +66,36 @@ function Board({
 }
 
 export function StrategyView({ challenge }: ContentViewProps<StrategyChallenge>) {
+  const { t } = useTranslation('logic');
   const { content } = challenge;
+  const R = (path: string, values?: Record<string, number>) =>
+    msg(`logic:strategyPuzzle.rules.${path}`, values);
   switch (content.kind) {
     case 'take-away':
       return (
         <div className="flex flex-col gap-4">
-          <Panel title="Rules">
+          <Panel title={t('shared.rules')}>
             <ClueList
-              label="Rules"
-              clues={[
-                `On each turn, take 1 to ${content.maxTake} coins.`,
-                'Whoever takes the last coin wins. Your friend always plays the best move.',
-              ]}
+              label={t('shared.rules')}
+              clues={[R('takeAway', { max: content.maxTake }), R('lastCoin')]}
             />
           </Panel>
-          <Coins count={content.pile} label="Pile" />
+          <Coins count={content.pile} label={t('strategyPuzzle.view.pile')} />
         </div>
       );
     case 'piles':
       return (
         <div className="flex flex-col gap-4">
-          <Panel title="Rules">
-            <ClueList
-              label="Rules"
-              clues={[
-                'On each turn, take any number of coins (at least one) from one pile.',
-                'Whoever takes the last coin wins. Your friend always plays the best move.',
-              ]}
-            />
+          <Panel title={t('shared.rules')}>
+            <ClueList label={t('shared.rules')} clues={[R('piles'), R('lastCoin')]} />
           </Panel>
           <div className="flex flex-col gap-2">
             {content.piles.map((count, i) => (
-              <Coins key={i} count={count} label={`Pile ${PILE_NAMES[i] as string}`} />
+              <Coins
+                key={i}
+                count={count}
+                label={t('strategyPuzzle.view.namedPile', { name: PILE_NAMES[i] })}
+              />
             ))}
           </div>
         </div>
@@ -92,19 +103,17 @@ export function StrategyView({ challenge }: ContentViewProps<StrategyChallenge>)
     case 'jugs':
       return (
         <div className="flex flex-col gap-4">
-          <Panel title="Rules">
+          <Panel title={t('shared.rules')}>
             <ClueList
-              label="Rules"
+              label={t('shared.rules')}
               clues={[
-                ...(content.tap
-                  ? ['Fill a jug to the top from the tap, or empty a jug completely.']
-                  : ['There is no tap: you can only pour.']),
-                'Pour one jug into another until the second is full or the first is empty.',
-                `Goal: exactly ${content.target} ${content.target === 1 ? 'litre' : 'litres'} in any one jug.`,
+                R(content.tap ? 'tap' : 'noTap'),
+                R('pour'),
+                R('goal', { count: content.target }),
               ]}
             />
           </Panel>
-          <ul aria-label="Jugs" className="flex flex-wrap gap-3">
+          <ul aria-label={t('strategyPuzzle.view.jugs')} className="flex flex-wrap gap-3">
             {content.capacities.map((cap, i) => {
               const amount = content.start[i] as number;
               return (
@@ -112,7 +121,9 @@ export function StrategyView({ challenge }: ContentViewProps<StrategyChallenge>)
                   key={i}
                   className="flex w-28 flex-col items-center gap-1 rounded-lg border border-line bg-raised p-2 text-center"
                 >
-                  <span className="text-sm font-semibold text-ink">{cap}-litre jug</span>
+                  <span className="text-sm font-semibold text-ink">
+                    {t('strategyPuzzle.view.jug', { cap })}
+                  </span>
                   <span
                     aria-hidden="true"
                     className="relative h-16 w-10 overflow-hidden rounded-b-md border-2 border-ink-muted"
@@ -123,7 +134,11 @@ export function StrategyView({ challenge }: ContentViewProps<StrategyChallenge>)
                     />
                   </span>
                   <span className="text-xs text-ink-soft">
-                    {amount === 0 ? 'empty' : amount === cap ? `full (${amount} L)` : `${amount} L`}
+                    {amount === 0
+                      ? t('strategyPuzzle.view.empty')
+                      : amount === cap
+                        ? t('strategyPuzzle.view.full', { amount })
+                        : t('strategyPuzzle.view.litres', { amount })}
                   </span>
                 </li>
               );
@@ -134,21 +149,23 @@ export function StrategyView({ challenge }: ContentViewProps<StrategyChallenge>)
     case 'sliding':
       return (
         <div className="flex flex-col gap-4">
-          <Panel title="Rules">
-            <ClueList
-              label="Rules"
-              clues={[
-                'Slide a tile that is next to the gap into the gap.',
-                'Reach the goal picture.',
-              ]}
-            />
+          <Panel title={t('shared.rules')}>
+            <ClueList label={t('shared.rules')} clues={[R('slide'), R('reach')]} />
           </Panel>
           <div className="flex flex-wrap justify-around gap-4">
-            <Panel title="Now">
-              <Board board={content.start} cols={content.cols} label="Current board" />
+            <Panel title={t('strategyPuzzle.view.now')}>
+              <Board
+                board={content.start}
+                cols={content.cols}
+                label={t('strategyPuzzle.view.currentBoard')}
+              />
             </Panel>
-            <Panel title="Goal">
-              <Board board={content.goal} cols={content.cols} label="Goal board" />
+            <Panel title={t('strategyPuzzle.view.goal')}>
+              <Board
+                board={content.goal}
+                cols={content.cols}
+                label={t('strategyPuzzle.view.goalBoard')}
+              />
             </Panel>
           </div>
         </div>

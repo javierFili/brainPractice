@@ -1,0 +1,862 @@
+{
+  "shared": {
+    "program": "Programm",
+    "narrate": {
+      "step": "Zeile {{line}}: {{changes}}",
+      "more_one": "… ({{count}} weiterer Schritt)",
+      "more_other": "… ({{count}} weitere Schritte)"
+    },
+    "trace": {
+      "title": "Ablauf Schritt für Schritt",
+      "caption": "Jeder Schritt, der eine Variable verändert hat",
+      "line": "Zeile",
+      "code": "Code",
+      "after": "Nach der Ausführung",
+      "more_one": "… {{count}} weiterer Schritt folgt demselben Muster.",
+      "more_other": "… {{count}} weitere Schritte folgen demselben Muster.",
+      "output": "Ausgabe:",
+      "nothingPrinted": "(nichts ausgegeben)",
+      "stopped": "angehalten in Zeile {{line}}: {{message}}"
+    }
+  },
+  "variableTracking": {
+    "name": "Variablen verfolgen",
+    "tagline": "Behalte jede Variable im Blick, Zeile für Zeile.",
+    "description": "Ein kurzes Programm ändert mehrere Variablen durch Zuweisungen, Kopien und Vertauschungen. Verfolge es Zeile für Zeile und sag, welchen Wert eine Variable am Ende oder nach einer bestimmten Zeile hat oder welche am Ende am größten ist.",
+    "scoringSummary": "Jede Frage hat genau eine Antwort, berechnet durch Ausführen des Programms. Dein Ergebnis ist der Anteil richtiger Antworten mit einem kleinen Bonus fürs Tempo; es gibt kein Zeitlimit.",
+    "instructions": {
+      "order": "Das Programm läuft von oben nach unten, eine Zeile nach der anderen.",
+      "copy": "„x = y“ kopiert den Wert, den y gerade hat; ändert sich y später, bleibt x gleich.",
+      "swap": "Beim Vertauschen hilft eine Hilfsvariable: temp = a, a = b, b = temp.",
+      "typed": "Ab Stufe 4 tippst du die genaue Zahl ein. Nach der Antwort siehst du den vollständigen Ablauf."
+    },
+    "simpleInstructions": "Lies die Zeilen nacheinander und merk dir die Zahl in jeder Box.",
+    "levels": {
+      "1": "Zwei Variablen, zwei Änderungen: Folge jeder Zuweisung der Reihe nach.",
+      "2": "Änderungen, die eine andere Variable lesen.",
+      "3": "Kopien behalten ihren Wert: Spätere Änderungen wirken sich nicht auf sie aus.",
+      "4": "Vertauschen über eine Hilfsvariable; tippe den genauen Wert ein.",
+      "5": "Halt in der Mitte: der Wert direkt nach einer bestimmten Zeile.",
+      "6": "Vier Variablen und Änderungen, die mehrere davon verknüpfen.",
+      "7": "Längere Programme: sechs Änderungen an vier Variablen.",
+      "8": "Sieben Änderungen; die meisten lesen die Variable, die sie überschreiben.",
+      "9": "Fünf Variablen, verkettete Vertauschungen und verschachtelte Ausdrücke.",
+      "10": "Alles zusammen: acht Änderungen an fünf Variablen."
+    },
+    "kinds": {
+      "finalValue": "Endwert",
+      "afterLine": "Wert mitten im Programm",
+      "largest": "Größte Variable"
+    },
+    "prompt": {
+      "finalValue": "Welchen Wert hat {{name}}, wenn das Programm endet?",
+      "afterLine": "Welchen Wert hat {{name}} direkt nach Zeile {{line}}?",
+      "largest": "Welche von {{names}} hat am Ende des Programms den größten Wert?"
+    },
+    "explanation": {
+      "finalValue": "Schritt für Schritt: {{steps}}. Also endet {{name}} bei {{value}}.",
+      "afterLine": "Bis Zeile {{line}}: {{steps}}. Also ist {{name}} an dieser Stelle {{value}} (am Ende {{final}}).",
+      "largest": "Schritt für Schritt: {{steps}}. Am Ende gilt {{final}}, also ist {{winner}} am größten."
+    },
+    "view": {
+      "label": "Programm zum Verfolgen",
+      "compare": "Vergleiche {{names}} nach der letzten Zeile.",
+      "track": "Verfolge {{name}} bis zur letzten Zeile.",
+      "stop": "Halte direkt nach Zeile {{line}} an (markiert)."
+    }
+  },
+  "conditionalLogic": {
+    "name": "Bedingungslogik",
+    "tagline": "Welcher Zweig läuft?",
+    "description": "Lies if-/elif-/else-Ketten mit and, or und not und entscheide, was ein Programm bei bestimmten Eingaben ausgibt – oder welche Eingabe zu einer bestimmten Ausgabe führt. Höhere Stufen verschachteln Bedingungen und prüfen die Kurzschlussauswertung.",
+    "scoringSummary": "Jede Antwort wird geprüft, indem der Interpreter das Programm ausführt. Dein Ergebnis ist der Anteil richtiger Antworten mit einem kleinen Bonus fürs Tempo; für die Antwort gibt es kein Zeitlimit.",
+    "instructions": {
+      "order": "Bedingungen werden von oben geprüft: Die erste wahre führt ihren Block aus, der Rest wird übersprungen.",
+      "operators": "„and“ braucht zwei wahre Seiten, „or“ mindestens eine; „not“ kehrt wahr und falsch um.",
+      "backwards": "Manche Fragen nennen dir eine Ausgabe und fragen, welche Eingabe sie erzeugt.",
+      "shortCircuit": "Ab Stufe 8: „and“ stoppt bei der ersten falschen Seite, „or“ bei der ersten wahren – eine Division, die das Programm nie erreicht, kann nicht scheitern."
+    },
+    "simpleInstructions": "Prüfe jede Bedingung von oben; die erste wahre entscheidet, was ausgegeben wird.",
+    "levels": {
+      "1": "Eine Eingabe, ein Vergleich pro Zweig: Die erste wahre Bedingung gewinnt.",
+      "2": "Zwei Eingaben und vier Ergebnisse.",
+      "3": "Verknüpfe Vergleiche mit „and“ und „or“.",
+      "4": "Wahr/falsch-Flags und „not“.",
+      "5": "Ifs in Ifs: Nur eine innere Kette läuft.",
+      "6": "Rückwärts denken: Welche Eingabe erzeugt diese Ausgabe?",
+      "7": "Fünf Ergebnisse und Bedingungen, die „and“ mit „or“ mischen.",
+      "8": "Kurzschluss: „and“ stoppt beim ersten Falsch, „or“ beim ersten Wahr.",
+      "9": "Prüfungen in falscher Reihenfolge: Finde die Bedingung, die abstürzt.",
+      "10": "Alles zusammen: verschachtelte Ketten, gemischte Logik und Kurzschlüsse."
+    },
+    "kinds": {
+      "branch": "If-/elif-/else-Ketten",
+      "nested": "Verschachtelte Bedingungen",
+      "findInput": "Eingabe zur Ausgabe",
+      "shortCircuit": "Kurzschlussauswertung"
+    },
+    "errorOutcome": "Bricht mit einem Fehler ab (Division durch null)",
+    "prompt": {
+      "happens": "Was passiert, wenn dieses Programm läuft?",
+      "letter": "Welchen Buchstaben gibt dieses Programm aus?",
+      "findInput": "Bei welcher Eingabe gibt dieses Programm {{target}} aus?"
+    },
+    "explanation": {
+      "step": "Zeile {{line}}: „{{cond}}“ ist {{value}}",
+      "stepError": "Zeile {{line}}: „{{cond}}“ wertet zuerst die Division aus, mit y = 0 → Fehler",
+      "runPrints": "Mit {{inputs}}: {{steps}} – also gibt es {{outcome}} aus.",
+      "runError": "Mit {{inputs}}: {{steps}} – also bricht das Programm mit einem Fehler ab. „and“ / „or“ überspringen die rechte Seite nur, wenn die linke das Ergebnis schon festlegt.",
+      "miss": "{{inputs}} gibt {{outcome}} aus",
+      "findInput": "{{run}} Die anderen: {{others}}."
+    },
+    "view": {
+      "label": "Programm mit Bedingungen",
+      "fromOptions": "Die Eingaben stehen in den Optionen. Bei welcher wird {{target}} ausgegeben?",
+      "inputs_one": "Zeile 1 legt die Eingabe fest.",
+      "inputs_other": "Die Zeilen 1–{{count}} legen die Eingaben fest.",
+      "inputsDivision_one": "Zeile 1 legt die Eingabe fest. Eine Division durch null bricht das Programm mit einem Fehler ab.",
+      "inputsDivision_other": "Die Zeilen 1–{{count}} legen die Eingaben fest. Eine Division durch null bricht das Programm mit einem Fehler ab."
+    }
+  },
+  "algorithmicLogic": {
+    "name": "Algorithmen verfolgen",
+    "tagline": "Abhängigkeiten, Abläufe und Bedingungen.",
+    "description": "Bring voneinander abhängige Aufgaben in die richtige Reihenfolge, verfolge sprachneutralen Pseudocode und löse Deployment-Rätsel. Trainiert logisches Schließen, bedingtes Denken und algorithmisches Denken.",
+    "scoringSummary": "Punkte für jede richtige Antwort, nach Stufe gewichtet, mit Bonus für Tempo und Serien; eine falsche Antwort kostet ein Viertel der Basis. Die Genauigkeit macht 75 % des Leistungsindex aus.",
+    "instructions": {
+      "read": "Lies die ganze Aufgabe, bevor du antwortest: Jede Regel, jeder Pfeil und jede Zeile zählt.",
+      "arrow": "Ein Pfeil „x → y“ bedeutet: x muss fertig sein, bevor y startet.",
+      "pseudocode": "Pseudocode läuft von oben nach unten; „set a ← b + 1“ speichert den neuen Wert in a.",
+      "exact": "Ab Stufe 4 sind manche Antworten exakte Zahlen – rechne sie aus, es gibt keine Optionen zum Raten."
+    },
+    "levels": {
+      "1": "Folge einfachen Abhängigkeiten und geradlinigen Zuweisungen.",
+      "2": "Verzweigungen: Werte eine Bedingung aus und folge nur dem Zweig, den sie wählt.",
+      "3": "Fast richtige Reihenfolgen und deine ersten Bedingungsrätsel: Prüfe jede Regel.",
+      "4": "Zusammengesetzte Bedingungen und exakte Antworten: keine Optionen als Stütze.",
+      "5": "Schleifen und transitive Abhängigkeiten: Denke über Wiederholtes und Indirektes nach.",
+      "6": "Bedingungen in Schleifen: Der Zustand ändert den Weg bei jedem Durchlauf.",
+      "7": "Offene Schleifen und Schlussketten über sechs Dienste.",
+      "8": "Parallele Planung: Finde die Kette, die den ganzen Build begrenzt.",
+      "9": "Gewichtete Pläne, verschachtelte Schleifen und Schlüsse über sieben Dienste mit schwachen Hinweisen.",
+      "10": "Alles zugleich: große gewichtete Graphen, lange Abläufe und nur relative Hinweise."
+    },
+    "kinds": {
+      "dependencyOrder": "Ausführungsreihenfolge",
+      "dependencyCount": "Transitive Abhängigkeiten",
+      "criticalPath": "Parallele Planung",
+      "programTrace": "Programme verfolgen",
+      "constraintArrangement": "Bedingungsrätsel"
+    },
+    "rules": {
+      "before": "{{a}} wird vor {{b}} bereitgestellt",
+      "immediatelyBefore": "{{a}} wird direkt vor {{b}} bereitgestellt",
+      "notAdjacent": "{{a}} und {{b}} werden nicht nebeneinander bereitgestellt",
+      "at": "{{a}} wird auf Platz {{slot}} bereitgestellt",
+      "notAt": "{{a}} wird nicht auf Platz {{slot}} bereitgestellt"
+    },
+    "constraint": {
+      "prompt": {
+        "arrangement": "Die Dienste werden einer pro Platz von links nach rechts bereitgestellt. Welche Reihenfolge erfüllt alle Regeln?",
+        "position": "Die Dienste werden einer pro Platz von links nach rechts bereitgestellt. Welcher Dienst steht auf Platz {{slot}}?"
+      },
+      "breaks": "{{arrangement}} verletzt „{{rule}}“",
+      "explanation": {
+        "arrangement": "Die einzige Anordnung, die alle Regeln erfüllt, ist {{arrangement}}. {{reasons}}.",
+        "position": "Die einzige Anordnung, die alle Regeln erfüllt, ist {{arrangement}}. Auf Platz {{slot}} steht also {{answer}}."
+      }
+    },
+    "dependencyOrder": {
+      "prompt": "Jeder Pfeil bedeutet, dass das linke Modul vor dem rechten laufen muss. Welche Ausführungsreihenfolge ist gültig?",
+      "breaks": "{{order}} verletzt {{edges}}",
+      "explanation": "{{order}} führt jedes Modul nach all seinen Abhängigkeiten aus (es kann weitere gültige Reihenfolgen geben, aber keine davon stand zur Auswahl). {{reasons}}."
+    },
+    "dependencyCount": {
+      "prompt": "Wie viele Module müssen (direkt oder indirekt) fertig sein, bevor {{target}} starten kann?",
+      "explanation_one": "{{target}} hängt transitiv von {{modules}} ab – {{count}} Modul.",
+      "explanation_other": "{{target}} hängt transitiv von {{modules}} ab – {{count}} Module."
+    },
+    "criticalPath": {
+      "prompt": {
+        "weighted": "Unabhängige Module können parallel laufen. Wie viele Runden (jedes Modul braucht die angegebenen Runden) sind mindestens nötig, um alles fertigzustellen?",
+        "unweighted": "Unabhängige Module können parallel laufen. Wie viele Runden (jedes Modul braucht eine Runde) sind mindestens nötig, um alles fertigzustellen?"
+      },
+      "explanation_one": "Die längste Abhängigkeitskette ist {{path}} und dauert {{count}} Runde; alles andere passt parallel daneben.",
+      "explanation_other": "Die längste Abhängigkeitskette ist {{path}} und dauert {{count}} Runden; alles andere passt parallel daneben."
+    },
+    "programTrace": {
+      "prompt": "Welchen Wert hat {{name}}, nachdem das Programm gelaufen ist?",
+      "explanation": "Verfolgt man das Programm Zeile für Zeile, endet es mit {{state}}, also {{result}}."
+    },
+    "units": {
+      "modules": "Module",
+      "rounds": "Runden"
+    },
+    "view": {
+      "modules": "Module",
+      "rounds_one": "{{count}} Runde",
+      "rounds_other": "{{count}} Runden",
+      "dependencies": "Abhängigkeiten",
+      "arrowMeaning": "x → y bedeutet: x läuft vor y",
+      "before": "vor",
+      "grouped": "Dieselben Abhängigkeiten, nach Modul gruppiert",
+      "noPrerequisites": "keine Voraussetzungen",
+      "needs": "braucht {{modules}}",
+      "services": "Dienste",
+      "rules": "Regeln · Plätze 1–{{last}}",
+      "program": "Pseudocode-Programm"
+    }
+  },
+  "loopPrediction": {
+    "name": "Schleifen vorhersagen",
+    "tagline": "Wie viele Durchläufe, und was bleibt am Ende?",
+    "description": "Sag voraus, was for- und while-Schleifen tun: wie oft eine Zeile läuft, was ein Akkumulator am Ende enthält oder welcher Wert zuletzt ausgegeben wird. Höhere Stufen verschachteln Schleifen und brechen früher ab.",
+    "scoringSummary": "Jede Antwort stammt aus einem Lauf des Programms im Interpreter. Dein Ergebnis ist der Anteil richtiger Antworten mit einem kleinen Bonus fürs Tempo; für die Antwort gibt es kein Zeitlimit.",
+    "instructions": {
+      "range": "„for i in range(a, b)“ läuft mit i = a, a + 1, … bis b − 1 (b selbst gehört nicht dazu).",
+      "while": "„while“ prüft seine Bedingung vor jedem Durchlauf und stoppt, sobald sie falsch ist.",
+      "nested": "Eine innere Schleife beginnt bei jedem Durchlauf der äußeren wieder von vorn.",
+      "return": "„return“ in einer Schleife beendet sofort die ganze Funktion. Nach der Antwort siehst du den Ablauf."
+    },
+    "simpleInstructions": "Zähl die Durchläufe der Schleife und verfolge, wie sich die Zahlen ändern.",
+    "levels": {
+      "1": "Zähl die Durchläufe einer einfachen Schleife und addiere mit.",
+      "2": "While-Schleifen: Die Bedingung wird vor jedem Durchlauf geprüft.",
+      "3": "Ein if in der Schleife: Nicht jeder Durchlauf ändert die Summe.",
+      "4": "Genaue Antworten: Tippe die Zahl ein.",
+      "5": "Eine Schleife in einer Schleife: Die innere startet bei jedem äußeren Durchlauf neu.",
+      "6": "Vorzeitiger Ausstieg: Ein return in einer Schleife beendet sie sofort.",
+      "7": "Längere Schleifen aller Art.",
+      "8": "Innere Schleifen, deren Länge von der äußeren Variable abhängt.",
+      "9": "Abbruchbedingungen mit „and“: Welche beendet die Schleife zuerst?",
+      "10": "Alles zusammen, mit bis zu neun Durchläufen pro Schleife."
+    },
+    "kinds": {
+      "iterations": "Anzahl der Durchläufe",
+      "finalValue": "Wert nach der Schleife",
+      "lastOutput": "Zuletzt ausgegebener Wert"
+    },
+    "prompt": {
+      "iterations": "Wie oft läuft Zeile {{line}}?",
+      "finalValue": "Welchen Wert hat {{name}}, wenn das Programm endet?",
+      "lastOutput": "Welchen Wert gibt dieses Programm zuletzt aus?"
+    },
+    "explanation": {
+      "iterations_one": "Zeile {{line}} lief {{count}}-mal. Schritt für Schritt: {{steps}}.",
+      "iterations_other": "Zeile {{line}} lief {{count}}-mal. Schritt für Schritt: {{steps}}.",
+      "finalValue": "{{name}} endet bei {{value}}. Schritt für Schritt: {{steps}}.",
+      "lastOutput_one": "Es gibt {{shown}} aus – {{count}} Wert, der letzte ist {{last}}. Schritt für Schritt: {{steps}}.",
+      "lastOutput_other": "Es gibt {{shown}} aus – {{count}} Werte, der letzte ist {{last}}. Schritt für Schritt: {{steps}}."
+    },
+    "view": {
+      "label": "Programm mit Schleifen",
+      "count": "Zähle jeden Durchlauf von Zeile {{line}} (markiert), über alle Runden hinweg.",
+      "follow": "Verfolge {{name}} durch jeden Durchlauf.",
+      "followVariable": "Verfolge die Variable durch jeden Durchlauf.",
+      "output": "Jedes print fügt der Ausgabe einen Wert hinzu."
+    }
+  },
+  "codeScan": {
+    "name": "Codevergleich",
+    "tagline": "Finde das eine Token, das sich geändert hat.",
+    "description": "Vergleiche ein originales Pseudocode-Snippet mit seiner Kopie und finde das einzige geänderte Token – einen Operator, eine vertauschte Variable, eine um eins verschobene Zahl, einen falsch geschriebenen Namen oder eine verneinte Bedingung. Trainiert Verarbeitungsgeschwindigkeit, schnelles Vergleichen und schnelles Erkennen von Fehlern.",
+    "scoringSummary": "Tempo ist die trainierte Fähigkeit: Der Tempobonus ist verdoppelt und das Tempo macht 40 % des Leistungsindex aus, aber eine falsche Antwort kostet Punkte.",
+    "instructions": {
+      "layout": "Das Original steht links (oder oben), die Kopie rechts (oder unten).",
+      "oneToken": "Wenn sich die Snippets unterscheiden, hat sich genau ein Token in einer Zeile geändert; alles andere ist gleich.",
+      "point": "Um auf eine geänderte Zeile zu zeigen, klicke sie in der Kopie an (oder fokussiere sie mit Tab und drücke Enter).",
+      "kinds": "Arten von Änderungen: Operator (< → <=, + → -, and → or), Variable gegen eine andere aus dem Snippet getauscht, Zahl geändert, Name falsch geschrieben oder „not“ vor eine Bedingung gesetzt.",
+      "speed": "Tempo zählt mehr als in anderen Spielen – aber eine falsche Antwort kostet Punkte, also bleib genau."
+    },
+    "levels": {
+      "1": "Vergleiche zwei kurze Snippets und entscheide, ob sie identisch sind.",
+      "2": "Zeige auf genau die Zeile, die sich geändert hat; falsch geschriebene Namen kommen dazu.",
+      "3": "Verneinte Bedingungen und Änderungen um ein Zeichen: Lies jedes Token, nicht die Form.",
+      "4": "Verschachtelte Blöcke und zusammengesetzte Bedingungen: mehr Verstecke für eine Änderung.",
+      "5": "Reihen ähnlicher Zeilen: Vergleiche Token für Token, nicht die Zeilenform.",
+      "6": "Längere Listings bei knapperer Zeit; die meisten Änderungen betreffen ein Zeichen.",
+      "7": "Benenne die Art der Änderung: Operator, Variable, Zahl, Tippfehler oder Verneinung.",
+      "8": "Ordne feine Änderungen zwischen ähnlichen Zeilen ein, schneller.",
+      "9": "Finde und benenne die Änderung ohne Hinweis: erst finden, dann einordnen.",
+      "10": "Zwölf dichte, fast gleiche Zeilen und eine Änderung um ein Zeichen: mit vollem Tempo."
+    },
+    "kinds": {
+      "sameOrDifferent": "Gleich oder verschieden",
+      "findTheChange": "Finde die Änderung",
+      "classifyTheChange": "Ordne die Änderung ein"
+    },
+    "category": {
+      "operator": "Operator geändert",
+      "variable": "Variable vertauscht",
+      "number": "Zahl geändert",
+      "typo": "Name falsch geschrieben",
+      "negation": "Bedingung verneint"
+    },
+    "same": "Identisch",
+    "different": "Verschieden",
+    "prompt": {
+      "sameOrDifferent": "Ist die Kopie identisch mit dem Original?",
+      "findTheChange": "Ein Token der Kopie weicht vom Original ab. Welche Zeile der Kopie hat sich geändert?",
+      "classify": "Ein Token der Kopie hat sich geändert. Welche Art von Änderung ist es?",
+      "classifyLine": "Zeile {{line}} der Kopie enthält ein geändertes Token. Welche Art von Änderung ist es?"
+    },
+    "change": {
+      "operator": "In Zeile {{line}} wurde der Operator „{{before}}“ zu „{{after}}“: „{{from}}“ → „{{to}}“.",
+      "variable": "In Zeile {{line}} wurde die Variable „{{before}}“ durch „{{after}}“ ersetzt, eine andere Variable des Snippets: „{{from}}“ → „{{to}}“.",
+      "number": "In Zeile {{line}} wurde die Zahl {{before}} zu {{after}}: „{{from}}“ → „{{to}}“.",
+      "typo": "In Zeile {{line}} wurde der Name „{{before}}“ falsch als „{{after}}“ geschrieben: „{{from}}“ → „{{to}}“.",
+      "negation": "In Zeile {{line}} wurde „not“ vor die Bedingung gesetzt, was sie verneint: „{{from}}“ → „{{to}}“."
+    },
+    "explanation": {
+      "same_one": "{{label}}: Die Zeile stimmt Token für Token überein.",
+      "same_other": "{{label}}: Alle {{count}} Zeilen stimmen Token für Token überein.",
+      "different": "{{label}}: Genau ein Token weicht ab. {{change}}",
+      "line": "Zeile {{line}} hat sich geändert. {{change}}",
+      "classify": "{{category}}. {{change}}"
+    },
+    "view": {
+      "title": {
+        "original": "Original",
+        "copy": "Kopie"
+      },
+      "snippet": {
+        "original": "Original-Snippet",
+        "copy": "Kopie-Snippet"
+      },
+      "marker": {
+        "check": "prüfen",
+        "changed": "geändert",
+        "pick": "deine Wahl"
+      },
+      "line": "Zeile {{line}}: {{code}}",
+      "lineMarked": "Zeile {{line}}: {{code}} ({{markers}})",
+      "identical": "Keine Zeile weicht ab: Die Snippets sind identisch."
+    }
+  },
+  "dependencyOrdering": {
+    "name": "Abhängigkeiten ordnen",
+    "tagline": "Was muss vor was passieren?",
+    "description": "Build-Schritte, Küchenvorbereitung und Release-Aufgaben, jede mit den Aufgaben, die sie voraussetzt. Finde heraus, was beginnen kann, was frei geworden ist, eine vollständige gültige Reihenfolge – und welche neue Voraussetzung einen Zyklus erzeugen würde.",
+    "scoringSummary": "Jede Frage hat genau eine richtige Antwort, geprüft von einem Graph-Löser. Dein Ergebnis ist der Anteil richtiger Antworten mit einem kleinen Bonus fürs Tempo; für die Antwort gibt es kein Zeitlimit.",
+    "instructions": {
+      "needs": "„A setzt B voraus“ heißt: B muss fertig sein, bevor A beginnen kann.",
+      "listed": "Es zählen nur die aufgeführten Voraussetzungen – nicht, was du in einer echten Küche oder einem echten Projekt tun würdest.",
+      "arrows": "Ordne die Aufgaben mit den Pfeiltasten neben jeder Aufgabe und sende dann ab.",
+      "cycle": "Ein Zyklus (A setzt B voraus, B setzt A voraus, vielleicht über andere Aufgaben) macht jede Reihenfolge unmöglich."
+    },
+    "simpleInstructions": "Erledige jede Aufgabe erst, wenn alles, was sie voraussetzt, fertig ist.",
+    "levels": {
+      "1": "Finde die Aufgabe ohne Voraussetzungen.",
+      "2": "Verkette alle Aufgaben zur einzigen Reihenfolge, die funktioniert.",
+      "3": "Ein Teil ist erledigt: Was ist jetzt frei?",
+      "4": "Mehrere Reihenfolgen wären möglich: Wähle die eine Option, die passt.",
+      "5": "Knapp daneben: Jede falsche Reihenfolge verletzt genau eine Voraussetzung.",
+      "6": "Zyklen: Welche neue Voraussetzung macht jede Reihenfolge unmöglich?",
+      "7": "Versteckte Zyklen: Die Schleife läuft über andere Aufgaben.",
+      "8": "Acht Aufgaben und dichtere Voraussetzungen.",
+      "9": "Neun Aufgaben: lange Ketten und lange versteckte Zyklen.",
+      "10": "Alles zusammen mit zehn Aufgaben."
+    },
+    "kinds": {
+      "startFirst": "Was zuerst beginnen kann",
+      "readyNext": "Was frei geworden ist",
+      "fullOrder": "Vollständige Reihenfolge",
+      "validOrder": "Gültige Reihenfolge wählen",
+      "cycle": "Zyklen erkennen"
+    },
+    "themes": {
+      "monorepo": "Monorepo-Build",
+      "kitchen": "Küchenvorbereitung",
+      "release": "Release-Checkliste"
+    },
+    "tasks": {
+      "build_core": "core bauen",
+      "build_utils": "utils bauen",
+      "build_parser": "parser bauen",
+      "build_router": "router bauen",
+      "build_charts": "charts bauen",
+      "build_auth": "auth bauen",
+      "build_forms": "forms bauen",
+      "build_icons": "icons bauen",
+      "build_api_client": "api-client bauen",
+      "build_themes": "themes bauen",
+      "chop_onions": "Zwiebeln hacken",
+      "grate_cheese": "Käse reiben",
+      "toast_seeds": "Kerne rösten",
+      "make_sauce": "Soße kochen",
+      "boil_pasta": "Nudeln kochen",
+      "wash_lettuce": "Salat waschen",
+      "slice_tomatoes": "Tomaten schneiden",
+      "whisk_eggs": "Eier verquirlen",
+      "roast_peppers": "Paprika rösten",
+      "mix_dressing": "Dressing anrühren",
+      "update_changelog": "Changelog aktualisieren",
+      "bump_version": "Version erhöhen",
+      "translate_strings": "Texte übersetzen",
+      "record_demo": "Demo aufnehmen",
+      "review_copy": "Formulierungen prüfen",
+      "run_audit": "Audit durchführen",
+      "refresh_screenshots": "Screenshots erneuern",
+      "write_notes": "Notizen schreiben",
+      "check_licences": "Lizenzen prüfen",
+      "sign_binaries": "Binärdateien signieren"
+    },
+    "quoted": "„{{task}}“",
+    "need": "{{task}} setzt {{prerequisite}} voraus",
+    "needsNothing": "{{task}} hat keine Voraussetzungen",
+    "prompt": {
+      "startFirst": "Welche Aufgabe kann zuerst beginnen?",
+      "readyNext": "Die abgehakten Aufgaben sind erledigt. Welche davon kann jetzt beginnen?",
+      "fullOrder": "Nur eine Reihenfolge erfüllt alle Voraussetzungen. Bring die Aufgaben in diese Reihenfolge.",
+      "validOrder": "Welche Reihenfolge erfüllt alle Voraussetzungen?",
+      "cycle": "Welche neue Voraussetzung würde einen Zyklus erzeugen, sodass keine Reihenfolge mehr funktioniert?"
+    },
+    "explanation": {
+      "startFirst": "{{task}} ist die einzige Aufgabe ohne Voraussetzungen. Die anderen müssen warten: {{others}}.",
+      "readyNextFree": "{{needs}}, also konnte sie sofort beginnen. Die anderen warten noch: {{others}}.",
+      "readyNextDone": "{{needs}}, und das ist alles erledigt. Die anderen warten noch: {{others}}.",
+      "fullOrder": "{{first}} hat keine Voraussetzungen, danach setzt jede Aufgabe die vorherige voraus: {{steps}}.",
+      "fullOrderExtra": "{{first}} hat keine Voraussetzungen, danach setzt jede Aufgabe die vorherige voraus: {{steps}}. Die zusätzlichen Voraussetzungen ({{extra}}) erfüllt diese Kette bereits.",
+      "validOrder": "Nur {{order}} stellt jede Aufgabe hinter ihre Voraussetzungen: {{others}}.",
+      "brokenOrder": "die Reihenfolge mit {{task}} vor {{prerequisite}} scheitert, weil {{task}} {{prerequisite}} voraussetzt",
+      "cycle": "{{loop}} steht bereits in dieser Reihenfolge (jede vor der nächsten). Würde {{task}} auch {{prerequisite}} voraussetzen, müsste sie vor sich selbst kommen. Die anderen neuen Voraussetzungen lassen mindestens eine gültige Reihenfolge zu."
+    },
+    "view": {
+      "heading_one": "{{theme}} · {{count}} Aufgabe",
+      "heading_other": "{{theme}} · {{count}} Aufgaben",
+      "tasks": "Aufgaben und ihre Voraussetzungen",
+      "done": "(erledigt)",
+      "needsNothing": "keine Voraussetzungen",
+      "needs": "setzt voraus: {{list}}",
+      "cycleHint": "Jede Option fügt der Liste oben eine neue Voraussetzung hinzu. Genau eine davon schließt einen Kreis.",
+      "validOrder": "Gültige Reihenfolge:"
+    }
+  },
+  "algorithmConstruction": {
+    "name": "Algorithmen bauen",
+    "tagline": "Bring die Blöcke in die Reihenfolge, die funktioniert.",
+    "description": "Du bekommst die Teile eines Programms und die Ausgabe, die es liefern muss. Ordne die Blöcke so, dass es genau das ausgibt; höhere Stufen bringen Schleifen und einen überzähligen Block, der nicht gebraucht wird.",
+    "scoringSummary": "Eine Reihenfolge zählt nur als richtig, wenn sie die einzige ist, die das Ziel ausgibt; beim Erstellen der Aufgabe prüft der Interpreter jede mögliche Reihenfolge. Ohne Zeitlimit, mit einem kleinen Bonus fürs Tempo.",
+    "instructions": {
+      "target": "Das Programm muss genau die Ausgabe über den Blöcken liefern.",
+      "variables": "Eine Zeile kann nur eine Variable nutzen, die ein früherer Block schon gesetzt hat.",
+      "move": "Verschiebe die Blöcke mit den Tasten ↑ / ↓ und sende dann ab. Schleifenblöcke bewegen sich als Ganzes.",
+      "spare": "Ab Stufe 6 ist ein Block überzählig: Das Programm nutzt ihn nicht – schieb ihn ans Ende."
+    },
+    "simpleInstructions": "Bring die Codeblöcke in die Reihenfolge, die die angezeigte Zahl ausgibt.",
+    "levels": {
+      "1": "Drei Blöcke: einen Wert setzen, ändern, ausgeben.",
+      "2": "Vier Blöcke: Jede Zeile braucht einen Wert, den eine frühere gesetzt hat.",
+      "3": "Drei Variablen: Finde heraus, welcher Block erst nach welchem kommen kann.",
+      "4": "Ein Schleifenblock: Was vor der Schleife passiert, ändert ihr Ergebnis.",
+      "5": "Fünf Blöcke rund um eine Schleife.",
+      "6": "Ein überzähliger Block: Er wird nicht gebraucht – setz ihn ans Ende.",
+      "7": "Überzählige Blöcke bei drei Variablen.",
+      "8": "Zwei Schleifen: Ihre Reihenfolge zählt.",
+      "9": "Zwei Schleifen und ein überzähliger Block.",
+      "10": "Immer einer zu viel: zwei Schleifen, drei Variablen, ein Block zu viel."
+    },
+    "kinds": {
+      "orderBlocks": "Alle Blöcke ordnen",
+      "spareBlock": "Ordnen mit überzähligem Block"
+    },
+    "then": "{{before}}, dann {{after}}",
+    "prompt": {
+      "orderBlocks": "Ordne die Blöcke so, dass das Programm {{printed}} ausgibt.",
+      "spareBlock": "Ordne die Blöcke so, dass das Programm {{printed}} ausgibt. Ein Block wird nicht gebraucht: Setz ihn ans Ende."
+    },
+    "explanation": {
+      "orderBlocks_one": "Nur {{order}} gibt {{printed}} aus (die einzige mögliche Reihenfolge wurde mit dem Interpreter geprüft). Schritt für Schritt: {{steps}}.",
+      "orderBlocks_other": "Nur {{order}} gibt {{printed}} aus (alle {{count}} möglichen Reihenfolgen wurden mit dem Interpreter geprüft; die anderen geben etwas anderes aus oder brechen mit einem Fehler ab). Schritt für Schritt: {{steps}}.",
+      "spareBlock_one": "Nur {{order}} gibt {{printed}} aus (die einzige mögliche Reihenfolge wurde mit dem Interpreter geprüft). Block {{spare}} ist überzählig: Keine Reihenfolge, die ihn nutzt, gibt {{printed}} aus. Schritt für Schritt: {{steps}}.",
+      "spareBlock_other": "Nur {{order}} gibt {{printed}} aus (alle {{count}} möglichen Reihenfolgen wurden mit dem Interpreter geprüft; die anderen geben etwas anderes aus oder brechen mit einem Fehler ab). Block {{spare}} ist überzählig: Keine Reihenfolge, die ihn nutzt, gibt {{printed}} aus. Schritt für Schritt: {{steps}}."
+    },
+    "view": {
+      "target": "Zielausgabe:",
+      "spare": "Ein Block wird nicht gebraucht: Er kommt ans Ende.",
+      "blocks": "Zu ordnende Blöcke",
+      "block": "Block {{id}}",
+      "finished": "Das fertige Programm"
+    }
+  },
+  "bugHunter": {
+    "name": "Bug-Jäger",
+    "tagline": "Ein Artefakt, ein paar Regeln, genau ein Bug.",
+    "description": "Prüfe Logs, Datensätze und Pseudocode anhand ausdrücklicher Regeln und zeige auf das einzige Element, das eine davon verletzt. Trainiert selektive und anhaltende Aufmerksamkeit, das Erkennen von Anomalien und Debugging.",
+    "scoringSummary": "Punkte für jede gefundene Anomalie, nach Stufe gewichtet, mit Bonus für Tempo und Serien. Die Genauigkeit macht 75 % des Leistungsindex aus.",
+    "instructions": {
+      "rules": "Lies zuerst die Regeln: Nur die genannten Regeln zählen, nicht was falsch „aussieht“.",
+      "check": "Prüfe dann die Elemente nacheinander. Genau ein Element verletzt genau eine Regel.",
+      "above": "Regeln über „das Element darüber“ vergleichen jedes Element nur mit seinem direkten Nachbarn.",
+      "nearMisses": "Viele Elemente sind Beinahe-Fehler – ungewöhnlich, aber gültig. Klicke auf den Bug (oder drücke darauf Enter), um zu antworten."
+    },
+    "levels": {
+      "1": "Behalte eine Regel im Kopf und prüfe eine kurze Liste Element für Element.",
+      "2": "Lies Pseudocode wie Daten: Finde die Zeile, die eine Namens- oder Reihenfolgeregel verletzt.",
+      "3": "Subtile Bugs: Tippfehler, um eins verschobene Werte und Sekunden in falscher Reihenfolge.",
+      "4": "Zwei Regeln zugleich und Ressourcen, die korrekt geöffnet und geschlossen werden müssen.",
+      "5": "Gemischte Regelfamilien: Vergleiche mit der Zeile darüber und prüfe jedes Feld.",
+      "6": "Längere Artefakte mit mehr Ködern: Bleib bis ganz unten genau.",
+      "7": "Drei Regeln pro Element, darunter Bedingungen, die nur für manche gelten.",
+      "8": "Dichte Artefakte, in denen die meisten verdächtigen Elemente gültig sind.",
+      "9": "Anhaltende Aufmerksamkeit: drei Regeln über drei Dutzend verrauschte Elemente.",
+      "10": "Alles zugleich: 42 Elemente, drei Regeln, viel Rauschen und überall Beinahe-Fehler."
+    },
+    "kinds": {
+      "sequenceAnomaly": "Folge-Anomalien",
+      "schemaViolation": "Schemaverstöße",
+      "codeRule": "Coderegeln",
+      "multiRule": "Mehrere Regeln"
+    },
+    "prompt": {
+      "sequenceAnomaly": "Prüfe das Log. Genau eine Zeile verletzt eine Regel – welche?",
+      "schemaViolation": "Prüfe die Datensätze gegen das Schema. Genau ein Datensatz ist ungültig – welcher?",
+      "multiRule": "Jede Logzeile muss alle Regeln erfüllen. Genau eine verletzt eine davon – welche?",
+      "codeRule": "Prüfe das Programm. Genau eine Zeile verletzt eine Regel – welche?"
+    },
+    "rule": {
+      "consecutive": "Jedes {{field}} ist genau 1 größer als das {{field}} im Element darüber.",
+      "ascendingTime": "Jedes {{field}} ist gleich oder später als das {{field}} im Element darüber.",
+      "unique": "Kein {{field}} wiederholt ein {{field}} aus einem früheren Element.",
+      "oneOf": "{{field}} ist einer der Werte: {{values}}.",
+      "exact": "{{field}} ist {{value}}.",
+      "range": "{{field}} ist eine ganze Zahl von {{min}} bis {{max}}.",
+      "digits_one": "{{field}} ist eine ganze Zahl mit genau {{count}} Ziffer.",
+      "digits_other": "{{field}} ist eine ganze Zahl mit genau {{count}} Ziffern.",
+      "email": "{{field}} hat genau ein „@“, davor einen Namen und danach eine Domain mit Punkten (name@domain.tld).",
+      "semver": "{{field}} besteht aus drei ganzen Zahlen, getrennt durch Punkte (major.minor.patch).",
+      "multipleOf": "{{field}} ist ein Vielfaches von {{step}}.",
+      "impliesExact": "Wenn {{when}} gleich {{equals}} ist, ist {{field}} gleich {{value}}.",
+      "impliesRange": "Wenn {{when}} gleich {{equals}} ist, ist {{field}} eine ganze Zahl von {{min}} bis {{max}}.",
+      "definedBeforeUse": "Jede Variable wird mit „set“ in einer früheren Zeile zugewiesen, bevor sie gelesen wird.",
+      "closeOpened": "Auf jedes „open x“ folgt in einer späteren Zeile ein „close x“.",
+      "writeWhileOpen": "„write … to x“ kommt nur vor, solange x geöffnet ist (nach „open x“, vor „close x“).",
+      "camelCase": "Jeder Name ist in camelCase: Er beginnt mit einem Kleinbuchstaben und enthält nur Buchstaben und Ziffern (kein „_“)."
+    },
+    "reason": {
+      "emailProblem": {
+        "notText": "ist kein Text",
+        "noAt": "hat kein „@“",
+        "manyAt": "hat mehr als ein „@“",
+        "noLocal": "hat nichts vor dem „@“",
+        "badDomain": "hat „{{domain}}“ nach dem „@“, was keine Domain mit Punkten ist"
+      },
+      "email": "{{field}} {{value}} {{problem}}",
+      "oneOf": "{{field}}={{value}} gehört nicht zu {{values}}",
+      "range": "{{field}}={{value}} liegt außerhalb von {{min}}–{{max}}",
+      "digits_one": "{{field}}={{value}} hat {{count}} Ziffer, nicht {{expected}}",
+      "digits_other": "{{field}}={{value}} hat {{count}} Ziffern, nicht {{expected}}",
+      "notWhole": "{{field}}={{value}} ist keine ganze Zahl",
+      "semver": "{{field}} {{value}} besteht nicht aus drei ganzen Zahlen, getrennt durch Punkte",
+      "multipleOf": "{{field}}={{value}} ist kein Vielfaches von {{step}}",
+      "implies": "{{when}} ist {{equals}}, aber {{field}}={{value}}",
+      "consecutive": "{{field}}={{value}} folgt auf {{field}}={{previous}}; es müsste {{expected}} sein",
+      "invalidTime": "{{field}}={{value}} ist keine gültige Uhrzeit im Format HH:MM:SS",
+      "earlier": "{{field}}={{value}} ist früher als {{previous}} im Element darüber",
+      "repeated": "{{field}}={{value}} wurde schon in Element {{item}} verwendet",
+      "unassigned": {
+        "never": "es liest {{name}}, das noch nicht zugewiesen wurde (es wird nie zugewiesen)",
+        "here": "es liest {{name}}, das noch nicht zugewiesen wurde (diese Zeile weist es als erste zu)",
+        "later": "es liest {{name}}, das noch nicht zugewiesen wurde (es wird erst in Zeile {{line}} zugewiesen)"
+      },
+      "neverClosed": "{{resource}} wird hier geöffnet, aber danach nie geschlossen",
+      "write": {
+        "closed": "es schreibt in {{resource}}, das schon in Zeile {{line}} geschlossen wurde",
+        "openedLater": "es schreibt in {{resource}}, das erst später in Zeile {{line}} geöffnet wird",
+        "neverOpened": "es schreibt in {{resource}}, das nie geöffnet wird"
+      },
+      "camelCase": "der Name {{name}} ist nicht in camelCase"
+    },
+    "explanation": {
+      "numbered": "Element {{item}} ist der Bug: {{reason}}. Es verletzt Regel {{number}}: {{rule}}",
+      "single": "Element {{item}} ist der Bug: {{reason}}. Es verletzt die Regel: {{rule}}"
+    },
+    "view": {
+      "rules": "Regeln – jedes Element muss alle erfüllen",
+      "rule": "Regel",
+      "artifact": {
+        "log_one": "Log · {{count}} Element",
+        "log_other": "Log · {{count}} Elemente",
+        "records_one": "Datensätze · {{count}} Element",
+        "records_other": "Datensätze · {{count}} Elemente",
+        "program_one": "Programm · {{count}} Element",
+        "program_other": "Programm · {{count}} Elemente"
+      },
+      "breaks": "✗ verletzt die Regel: {{rule}}",
+      "breaksNumbered": "✗ verletzt Regel R{{number}}: {{rule}}",
+      "pick": "deine Wahl",
+      "pickCorrect": "✓ deine Wahl",
+      "item": "Element {{item}}: {{text}}"
+    }
+  },
+  "codeMemory": {
+    "name": "Code-Gedächtnis",
+    "tagline": "Datensätze, Aufrufe, Zustände und Positionen – aus dem Gedächtnis.",
+    "description": "Präge dir Datensätze, API-Aufrufsequenzen, Variablenzuweisungen und Schlüsselwort-Raster ein und antworte, sobald sie verborgen sind. Trainiert das Arbeits-, Reihenfolge- und Kontextgedächtnis, das du brauchst, wenn du eine Datenstruktur oder einen Ablauf im Kopf behältst.",
+    "scoringSummary": "Punkte für jede richtige Erinnerung, nach Stufe gewichtet, mit kleinen Boni für Tempo und Serien. Die Genauigkeit macht 75 % des Leistungsindex aus.",
+    "instructions": {
+      "study": "Jede Aufgabe beginnt mit einer Lernphase: Präge dir ein, was du siehst, und drücke dann „Ich bin bereit“ oder warte auf den Timer.",
+      "hidden": "Das Material wird ausgeblendet, bevor die Frage erscheint – du weißt also vorher nicht, was gefragt wird.",
+      "assignments": "Zuweisungen laufen von oben nach unten; „y = x + 2“ speichert den neuen Wert in y.",
+      "exact": "Ab Stufe 4 sind manche Antworten exakte Zahlen, und ab Stufe 5 musst du eventuell eine ganze Aufrufreihenfolge wiederherstellen."
+    },
+    "levels": {
+      "1": "Behalte ein paar Felder, Aufrufe und Positionen für einige Sekunden im Kopf.",
+      "2": "Halte zwei Datensätze auseinander und verfolge eine Variable über eine Änderung.",
+      "3": "Merke dir, was worauf folgte, und Positionen in einem größeren Raster.",
+      "4": "Exakte Antworten: Berechne und behalte drei Variablen ohne Optionen als Stütze.",
+      "5": "Interferenz: ähnliche IDs und Schlüsselwörter und eine ganze Aufrufreihenfolge wiederherstellen.",
+      "6": "Ähnliche Aufrufe auf denselben Ressourcen: Merke dir die genaue Reihenfolge, nicht nur das Wesentliche.",
+      "7": "Finde Datensätze über ein anderes Feld und erinnere den Zustand an einer bestimmten Zeile.",
+      "8": "Vier Datensätze, vier Variablen und acht ähnliche Aufrufe gleichzeitig.",
+      "9": "Joins: Folge einem Fremdschlüssel zwischen zwei Tabellen, die du nicht mehr siehst.",
+      "10": "Maximale Last und Interferenz bei kürzester Lernzeit pro Element."
+    },
+    "kinds": {
+      "recordRecall": "Datensätze erinnern",
+      "crossReference": "Querverweise",
+      "foreignKeyJoin": "Fremdschlüssel-Joins",
+      "sequenceRecall": "Aufrufsequenzen",
+      "variableState": "Variablenzustand",
+      "positionRecall": "Rasterpositionen"
+    },
+    "record": {
+      "prompt": "Welchen Wert hatte das Feld {{field}} im Datensatz {{type}}?",
+      "explanation": "Der Datensatz {{type}} war {{record}}, also war sein Feld {{field}} gleich {{value}}."
+    },
+    "crossReference": {
+      "prompt": "Der {{type}}-Datensatz mit {{key}} gleich {{keyValue}} – welchen Wert hatte sein Feld {{field}}?",
+      "explanation": "Nur ein {{type}}-Datensatz hatte {{key}} {{keyValue}}: {{record}}. Sein Feld {{field}} war {{value}}."
+    },
+    "join": {
+      "prompt": "Der {{parent}}-Datensatz mit {{key}} gleich {{keyValue}} hat einen {{child}}-Datensatz (verknüpft über {{foreignKey}}). Welchen Wert hatte dessen Feld {{field}}?",
+      "explanation": "Der {{parent}}-Datensatz mit {{key}} {{keyValue}} hatte die id {{parentId}}; der {{child}}-Datensatz mit {{link}} war {{record}}, also war sein Feld {{field}} gleich {{value}}."
+    },
+    "sequence": {
+      "prompt": {
+        "order": "Bring die Aufrufe wieder in die Reihenfolge, in der sie liefen.",
+        "position": "Welcher Aufruf war Nr. {{position}}?",
+        "successor": "Welcher Aufruf kam direkt nach {{call}}?"
+      },
+      "explanation": {
+        "order": "Die Aufrufe liefen in dieser Reihenfolge: {{calls}}.",
+        "position": "Die Folge war {{calls}}; Aufruf Nr. {{position}} war {{answer}}.",
+        "successor": "Die Folge war {{calls}}; direkt nach {{call}} kam {{answer}}."
+      }
+    },
+    "state": {
+      "prompt": {
+        "final": "Welchen Endwert hatte {{name}}?",
+        "afterLine": "Welchen Wert hatte {{name}} direkt nach Zeile {{line}}?"
+      },
+      "explanation": {
+        "final": "{{steps}}; also endete {{name}} mit {{value}}.",
+        "afterLine": "{{steps}}; direkt nach Zeile {{line}} war {{name}} also {{value}} (später wurde es zu {{later}})."
+      }
+    },
+    "position": {
+      "prompt": "Wo stand das Schlüsselwort „{{keyword}}“? Wähle sein Feld.",
+      "explanation": "{{keyword}} stand in {{cell}}.",
+      "explanationTwin": "{{keyword}} stand in {{cell}}. Das ähnliche {{twin}} stand in {{twinCell}}."
+    },
+    "view": {
+      "hidden": "Verborgen – antworte aus dem Gedächtnis.",
+      "callsHeading": "Aufrufe in der Reihenfolge, in der sie liefen",
+      "calls": "Aufrufe",
+      "answerMark": "✓ Lösung",
+      "givenCall": "gegebener Aufruf",
+      "wrongPick": "✗ deine Wahl",
+      "assignmentsHeading": "Zuweisungen (von oben nach unten)",
+      "assignments": "Zuweisungen",
+      "askedHere": "← hier gefragt",
+      "asked": "← gefragt",
+      "recordList": "Datensätze",
+      "records": "{{type}}-Datensätze",
+      "table": "{{type}}-Tabelle",
+      "childTable": "{{type}}-Tabelle · {{link}}",
+      "mark": {
+        "key": "Schlüssel",
+        "answer": "Lösung",
+        "linkedId": "verknüpfte id",
+        "link": "Verknüpfung"
+      },
+      "cell": "Zeile {{row}}, Spalte {{column}}",
+      "grid": "Schlüsselwort-Raster, {{rows}} Zeilen mal {{columns}} Spalten",
+      "empty": "leer"
+    }
+  },
+  "patternArchitect": {
+    "name": "Musterarchitekt",
+    "tagline": "Finde die Regel und wende sie an.",
+    "description": "Setze Zahlenfolgen fort, vervollständige Symbolraster, erschließe versteckte Programme aus Beispielen und erkenne dieselbe Struktur unter anderen Namen. Trainiert Mustererkennung, Abstraktion und Verallgemeinerung.",
+    "scoringSummary": "Punkte für jede gefundene und angewandte Regel, nach Stufe gewichtet, mit Bonus für Tempo und Serien. Die Genauigkeit macht 75 % des Leistungsindex aus.",
+    "instructions": {
+      "rule": "Jede Aufgabe verbirgt eine Regel. Finde eine Regel, die alles Gezeigte erklärt, und wende sie an.",
+      "grids": "Raster: Formen und Anzahlen können unterschiedlichen Regeln folgen – prüfe Zeilen und Spalten getrennt.",
+      "programs": "Versteckte Programme verketten ein paar einfache Schritte aus dem angegebenen Vokabular; die Reihenfolge der Schritte zählt.",
+      "trees": "Bäume werden als a(b, c) geschrieben: a enthält b und c, in dieser Reihenfolge. Graphen passen zusammen, wenn nach dem Umbenennen der Knoten jeder Pfeil übereinstimmt."
+    },
+    "levels": {
+      "1": "Erkenne eine einzige Regelmäßigkeit: einen festen Schritt oder ein Merkmal, das sich im Raster ändert.",
+      "2": "Schritte, die sich ändern, und Raster, in denen zwei Merkmale getrennten Regeln folgen.",
+      "3": "Zwei verflochtene Folgen und Raster, deren Anzahlen einer Rechnung folgen.",
+      "4": "Erschließe ein verstecktes Ein-Schritt-Programm aus Beispielen Eingabe → Ausgabe.",
+      "5": "Programme aus zwei verketteten Schritten: Trenne, was jeder Schritt beiträgt.",
+      "6": "Datenabhängige Schritte (Wiederholungen, Paare, laufende Summen) mit weniger Beispielen.",
+      "7": "Struktur vor Inhalt: Ordne Graphen nach ihrer Form zu und baue Bäume per Analogie um.",
+      "8": "Drei-Schritt-Programme, größere Graphen und Baumregeln aus einem einzigen Beispiel.",
+      "9": "Ähnliche Strukturen mit gleich vielen Pfeilen und Baumregeln aus zwei Schritten.",
+      "10": "Minimale Hinweise: Drei-Schritt-Programme, ähnliche Graphen mit sieben Knoten, zusammengesetzte Baumregeln."
+    },
+    "kinds": {
+      "numberSequence": "Zahlenfolgen",
+      "symbolGrid": "Symbolraster",
+      "transformInference": "Versteckte Programme",
+      "structureMatch": "Passende Strukturen",
+      "treeAnalogy": "Baum-Analogien"
+    },
+    "cell": {
+      "circle_one": "{{count}} Kreis",
+      "circle_other": "{{count}} Kreise",
+      "triangle_one": "{{count}} Dreieck",
+      "triangle_other": "{{count}} Dreiecke",
+      "square_one": "{{count}} Quadrat",
+      "square_other": "{{count}} Quadrate",
+      "diamond_one": "{{count}} Raute",
+      "diamond_other": "{{count}} Rauten",
+      "star_one": "{{count}} Stern",
+      "star_other": "{{count}} Sterne"
+    },
+    "sequence": {
+      "prompt": "Welche Zahl kommt als Nächstes?",
+      "explanation": "Regel: {{rule}}. Nach {{last}} kommt also {{answer}}.",
+      "explanationTrap": "Regel: {{rule}}. Nach {{last}} kommt also {{answer}}. Nur den letzten Schritt zu wiederholen ergäbe {{repeated}}."
+    },
+    "sequenceRule": {
+      "constantAdd": "jedes Mal {{n}} addieren",
+      "constantSubtract": "jedes Mal {{n}} subtrahieren",
+      "alternatingSteps": "die Schritte wechseln sich ab: {{steps}}, …",
+      "growingStep": "der Schritt wächst jedes Mal um {{n}} ({{steps}}, …)",
+      "shrinkingStep": "der Schritt schrumpft jedes Mal um {{n}} ({{steps}}, …)",
+      "multiply": "jedes Mal mit {{factor}} multiplizieren",
+      "interleaved": "zwei Folgen wechseln sich ab: das 1., 3., 5. … Glied geht {{odd}}, das 2., 4., 6. … Glied geht {{even}}",
+      "stepCycle": "die Schritte wiederholen sich im Dreierzyklus: {{steps}}",
+      "multiplyAdd": "mit {{factor}} multiplizieren, dann {{n}} addieren",
+      "multiplySubtract": "mit {{factor}} multiplizieren, dann {{n}} subtrahieren",
+      "sumOfPreviousTwo": "jedes Glied ist die Summe der beiden vorherigen",
+      "alternatingMultiplyFirstAdd": "abwechselnd mit {{factor}} multiplizieren und {{n}} addieren",
+      "alternatingMultiplyFirstSubtract": "abwechselnd mit {{factor}} multiplizieren und {{n}} subtrahieren",
+      "alternatingMultiplyLastAdd": "abwechselnd {{n}} addieren und mit {{factor}} multiplizieren",
+      "alternatingMultiplyLastSubtract": "abwechselnd {{n}} subtrahieren und mit {{factor}} multiplizieren"
+    },
+    "grid": {
+      "prompt": "Welches Feld vervollständigt das Raster?",
+      "explanation": "Formen: {{shapes}}. Anzahlen: {{counts}}. Das fehlende Feld ({{position}}) ist also {{cell}} – {{description}}."
+    },
+    "layer": {
+      "byRow": "jede Zeile behält einen Wert",
+      "byColumn": "jede Spalte behält einen Wert",
+      "shiftLeft": "jede Zeile ist die Zeile darüber, um eine Stelle nach links verschoben (das erste wandert ans Ende)",
+      "shiftRight": "jede Zeile ist die Zeile darüber, um eine Stelle nach rechts verschoben (das letzte wandert an den Anfang)",
+      "constant": "in jedem Feld gleich",
+      "rowUp": "entlang jeder Zeile (von links nach rechts) steigt die Anzahl um eins",
+      "rowDown": "entlang jeder Zeile (von links nach rechts) sinkt die Anzahl um eins",
+      "columnUp": "entlang jeder Spalte (von oben nach unten) steigt die Anzahl um eins",
+      "columnDown": "entlang jeder Spalte (von oben nach unten) sinkt die Anzahl um eins",
+      "rowSum": "in jeder Zeile ist die letzte Anzahl die Summe der anderen",
+      "columnSum": "in jeder Spalte ist die unterste Anzahl die Summe der anderen"
+    },
+    "step": "{{n}}) {{step}}",
+    "listOp": {
+      "reverse": "die Liste umkehren",
+      "sortAscending": "aufsteigend sortieren",
+      "sortDescending": "absteigend sortieren",
+      "rotateLeft": "das erste Element ans Ende verschieben",
+      "rotateRight": "das letzte Element an den Anfang verschieben",
+      "dropFirst": "das erste Element entfernen",
+      "dropLast": "das letzte Element entfernen",
+      "duplicateEach": "jedes Element zweimal schreiben",
+      "add": "zu jedem Element {{n}} addieren",
+      "double": "jedes Element verdoppeln",
+      "keepEven": "nur die geraden Zahlen behalten",
+      "keepOdd": "nur die ungeraden Zahlen behalten",
+      "takeFirst_one": "nur das erste Element behalten",
+      "takeFirst_other": "nur die ersten {{count}} Elemente behalten",
+      "swapPairs": "jedes Nachbarpaar tauschen (1.↔2., 3.↔4., …)",
+      "removeRepeats": "wiederholte Werte entfernen (jeweils den ersten behalten)",
+      "runningTotal": "jedes Element durch die bisherige Summe ersetzen"
+    },
+    "vocabulary": {
+      "reverse": "die Liste umkehren",
+      "sort": "aufsteigend oder absteigend sortieren",
+      "rotate": "das erste Element ans Ende oder das letzte an den Anfang verschieben",
+      "drop": "das erste oder das letzte Element entfernen",
+      "duplicateEach": "jedes Element zweimal schreiben",
+      "add": "zu jedem Element 1, 2 oder 3 addieren",
+      "double": "jedes Element verdoppeln",
+      "keepParity": "nur die geraden oder nur die ungeraden Zahlen behalten",
+      "takeFirst": "nur die ersten 2 oder 3 Elemente behalten",
+      "swapPairs": "jedes Nachbarpaar tauschen (1.↔2., 3.↔4., …)",
+      "removeRepeats": "wiederholte Werte entfernen (jeweils den ersten behalten)",
+      "runningTotal": "jedes Element durch die bisherige Summe ersetzen"
+    },
+    "transform": {
+      "prompt": "Dasselbe versteckte Programm macht aus jeder Eingabe ihre Ausgabe. Was ergibt es für die neue Eingabe?",
+      "explanation_one": "Das versteckte Programm: {{steps}}. Angewandt auf die neue Eingabe: {{path}}, die Antwort ist also {{answer}}. Jedes Programm mit höchstens {{count}} Schritt, das zu allen Beispielen passt, liefert dasselbe Ergebnis.",
+      "explanation_other": "Das versteckte Programm: {{steps}}. Angewandt auf die neue Eingabe: {{path}}, die Antwort ist also {{answer}}. Jedes Programm mit höchstens {{count}} Schritten, das zu allen Beispielen passt, liefert dasselbe Ergebnis."
+    },
+    "treeOp": {
+      "mirror": "den ganzen Baum spiegeln (jedes Element listet seine Kinder in umgekehrter Reihenfolge)",
+      "mirrorTop": "nur die Reihenfolge der obersten Elemente umkehren",
+      "rotateTop": "das erste oberste Element ans Ende verschieben",
+      "pruneLeaves": "jedes Element ohne Kinder entfernen",
+      "flatten": "abflachen: jedes Element wird direktes Kind der Wurzel, in Lesereihenfolge",
+      "sortChildren": "die Kinder jedes Elements alphabetisch sortieren"
+    },
+    "tree": {
+      "prompt": "Dieselbe Umbauregel macht aus jedem Baum links den Baum rechts. Was wird aus dem neuen Baum?",
+      "explanation_one": "Die Regel: {{steps}}. Aus {{question}} wird also {{answer}}. Jede Regel mit höchstens {{count}} Schritt, die zu den Beispielen passt, ergibt denselben Baum.",
+      "explanation_other": "Die Regel: {{steps}}. Aus {{question}} wird also {{answer}}. Jede Regel mit höchstens {{count}} Schritten, die zu den Beispielen passt, ergibt denselben Baum."
+    },
+    "structure": {
+      "prompt": "Welcher Graph hat genau dieselbe Verbindungsstruktur wie die Referenz? Nur die Namen unterscheiden sich.",
+      "graph": "Graph {{name}}",
+      "signature": "{{in}} ein / {{out}} aus",
+      "explanation": "Graph {{name}} passt: Die Umbenennung {{renaming}} macht aus jedem Pfeil der Referenz einen Pfeil von Graph {{name}}. {{reasons}}",
+      "reasonOne": "Graph {{name}}: {{reason}}.",
+      "reasonMany": "Graphen {{names}}: {{reason}}.",
+      "reason": {
+        "counts_one": "{{count}} Knoten mit Pfeilen {{signature}} (die Referenz hat {{expected}})",
+        "counts_other": "{{count}} Knoten mit Pfeilen {{signature}} (die Referenz hat {{expected}})",
+        "neighbourhood": "gleiche Pfeilzahlen an jedem Knoten, aber die Referenz hat einen Knoten mit Pfeilen {{own}}, der auf Knoten mit Pfeilen ({{targets}}) zeigt – das fehlt hier",
+        "noRenaming": "gleiche Pfeilzahlen an jedem Knoten, aber keine Umbenennung bringt die Pfeile zur Deckung"
+      }
+    },
+    "view": {
+      "sequence": "Folge",
+      "nextTerm": "Nächstes Glied (unbekannt)",
+      "grid": "Symbolraster mit {{size}} Zeilen und {{size}} Spalten, ein Feld fehlt",
+      "missingCell": "Fehlendes Feld",
+      "examples_one": "Beispiele · verstecktes Programm mit höchstens {{count}} Schritt",
+      "examples_other": "Beispiele · verstecktes Programm mit höchstens {{count}} Schritten",
+      "input": "Eingabe",
+      "becomes": "wird zu",
+      "output": "Ausgabe",
+      "newOutput": "Ausgabe für die neue Eingabe (unbekannt)",
+      "possibleSteps": "Mögliche Schritte",
+      "treeRule_one": "Umbauregel mit höchstens {{count}} Schritt",
+      "treeRule_other": "Umbauregel mit höchstens {{count}} Schritten",
+      "treeExamples": "Beispiele",
+      "before": "Beispiel {{n}}, vorher",
+      "after": "Beispiel {{n}}, nachher",
+      "newTree": "Neuer Baum",
+      "newTreeResult": "Umgebauter neuer Baum (unbekannt)",
+      "pointsTo": "zeigt auf",
+      "nothing": "nichts",
+      "reference": "Referenz · {{nodes}} Knoten, {{arrows}} Pfeile",
+      "referenceArrows": "Pfeile der Referenz",
+      "candidates": "Kandidaten-Graphen",
+      "graphArrows": "Pfeile von Graph {{name}}"
+    }
+  }
+}

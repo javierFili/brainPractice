@@ -1,13 +1,20 @@
 import type { Challenge } from '@/domain/challenge';
 import type { DifficultyProfile } from '@/domain/difficulty';
+import type { Localized } from './lexicon';
 
 export interface SortedList {
   readonly kind: 'sorted';
-  /** Numbers in increasing order, or words in alphabetical order, with one item out of place. */
-  readonly values: readonly (number | string)[];
+  /** Numbers in increasing order with one out of place; empty for a word list. */
+  readonly values: readonly number[];
+  /**
+   * Words in alphabetical order in each language, with one out of place on the same row in every
+   * language; null for a number list.
+   */
+  readonly words: Localized<readonly string[]> | null;
 }
 
 export interface ReceiptLine {
+  /** Stable (English) name of a kit object; shown translated. */
   readonly item: string;
   readonly quantity: number;
   readonly priceCents: number;
@@ -22,6 +29,7 @@ export interface Receipt {
 }
 
 export interface ScheduleEvent {
+  /** Activity id, shown translated. */
   readonly activity: string;
   /** Minutes after midnight. */
   readonly start: number;
@@ -37,7 +45,8 @@ export interface Schedule {
 
 export interface SpellingList {
   readonly kind: 'spelling';
-  readonly words: readonly string[];
+  /** The same words in each language; one row is misspelt (the same row in every language). */
+  readonly words: Localized<readonly string[]>;
 }
 
 export interface CopyCheck {

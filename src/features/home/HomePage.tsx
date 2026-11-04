@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { pathById, PATHS } from '@/content/paths';
 import {
@@ -18,10 +19,10 @@ import { WeekStrip } from '@/features/dashboard/WeekStrip';
 import { catalogEntries, categoriesFor, dailyPool } from '@/features/shared/catalog';
 import { CATEGORIES, GENERAL_CATEGORIES } from '@/features/shared/categories';
 import { dayKeyOf } from '@/features/shared/days';
-import { formatDuration, formatPercent, relativeDay } from '@/features/shared/format';
 import { LoadError } from '@/features/shared/LoadError';
 import { PageLoading } from '@/features/shared/PageLoading';
 import { useAppData } from '@/features/shared/useAppData';
+import { useFormat, useText } from '@/i18n';
 
 const PATH_ICONS: Readonly<Record<string, IconName>> = {
   kids: 'kids',
@@ -58,10 +59,16 @@ function Panel({
 function Dashboard({ progress, profile }: { progress: UserProgress; profile: UserProfile }) {
   const { modules, getModule, clock } = useServices();
   const { preferences } = usePreferences();
+  const { t } = useTranslation('home');
+  const tx = useText();
+  const format = useFormat();
   const now = clock.now();
   const today = dayKeyOf(now);
   const path = pathById(preferences.path);
-  const name = (id: string) => getModule(id)?.definition.name ?? id;
+  const name = (id: string) => {
+    const definition = getModule(id)?.definition;
+    return definition ? tx(definition.name) : id;
+  };
   const exists = (id: string) => getModule(id) !== undefined;
 
   const resume = continueTarget(progress, exists, preferences.freePlay);
@@ -95,32 +102,29 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-5 rounded-3xl border border-line bg-gradient-to-br from-surface via-surface to-brand/10 p-6 sm:p-8">
         <p className="text-sm font-medium text-brand-strong">
-          {returning ? 'Welcome back' : 'Welcome'}
-          {path ? ` · ${path.name} route` : ''}
+          {returning ? t('home.welcomeBack') : t('home.welcome')}
+          {path ? t('home.routeSuffix', { route: tx(path.name) }) : ''}
         </p>
         <h1 className="max-w-2xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl">
-          Train your mind at your own pace.
+          {t('home.title')}
         </h1>
-        <p className="max-w-2xl text-ink-soft">
-          Explore challenges of memory, logic, attention and reasoning. Short sessions, ten levels
-          per game, and results you can follow over time.
-        </p>
+        <p className="max-w-2xl text-ink-soft">{t('home.lead')}</p>
         <div className="flex flex-wrap gap-3">
           {resume ? (
             <ButtonLink to={`/games/${resume.gameId}/play/${resume.level}`}>
-              <Icon name="play" /> Continue {name(resume.gameId)}
+              <Icon name="play" /> {t('home.continueGame', { game: name(resume.gameId) })}
             </ButtonLink>
           ) : (
             <ButtonLink to={suggestions[0] ? `/games/${suggestions[0].gameId}` : '/games'}>
-              <Icon name="play" /> Start your first activity
+              <Icon name="play" /> {t('home.startFirst')}
             </ButtonLink>
           )}
           <ButtonLink to="/quick" variant="secondary">
-            <Icon name="timer" /> Quick session
+            <Icon name="timer" /> {t('home.quickSession')}
           </ButtonLink>
           {!path && (
             <ButtonLink to="/start" variant="ghost">
-              Choose a route
+              {t('home.chooseRoute')}
             </ButtonLink>
           )}
         </div>
@@ -132,34 +136,43 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
           className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-5"
         >
           <h2 id="continue-title" className="flex items-center gap-2 font-semibold text-ink">
-            <Icon name="play" className="h-5 w-5 text-brand" /> Continue training
+            <Icon name="play" className="h-5 w-5 text-brand" /> {t('home.continue.title')}
           </h2>
           {resume ? (
             <>
               <p className="text-ink-soft">
-                <span className="font-semibold text-ink">{name(resume.gameId)}</span> · level{' '}
-                {resume.session.level}, {relativeDay(resume.session.endedAt, now)}
+                <Trans
+                  t={t}
+                  i18nKey="home.continue.where"
+                  values={{
+                    game: name(resume.gameId),
+                    level: resume.session.level,
+                    when: format.relativeDay(resume.session.endedAt, now),
+                  }}
+                  components={{ b: <span className="font-semibold text-ink" /> }}
+                />
               </p>
               <p className="text-sm text-ink-muted">
-                Last result: {formatPercent(resume.session.accuracy)} accuracy ·{' '}
                 {resume.cleared
-                  ? `level cleared — level ${resume.level} is next`
-                  : 'repeat it to clear the level (performance 70)'}
+                  ? t('home.continue.lastCleared', {
+                      accuracy: format.percent(resume.session.accuracy),
+                      level: resume.level,
+                    })
+                  : t('home.continue.lastRepeat', {
+                      accuracy: format.percent(resume.session.accuracy),
+                    })}
               </p>
               <div className="mt-auto flex flex-wrap gap-2">
                 <ButtonLink to={`/games/${resume.gameId}/play/${resume.level}`}>
-                  Play level {resume.level}
+                  {t('home.continue.playLevel', { level: resume.level })}
                 </ButtonLink>
                 <ButtonLink to={`/games/${resume.gameId}`} variant="ghost">
-                  Details
+                  {t('home.continue.details')}
                 </ButtonLink>
               </div>
             </>
           ) : (
-            <p className="text-sm text-ink-soft">
-              Nothing in progress yet. Pick any activity below — every game starts at level 1 and
-              explains its rules first.
-            </p>
+            <p className="text-sm text-ink-soft">{t('home.continue.empty')}</p>
           )}
         </section>
 
@@ -168,29 +181,31 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
           className="flex flex-col gap-3 rounded-2xl border border-glow/30 bg-glow/5 p-5"
         >
           <h2 id="daily-title" className="flex items-center gap-2 font-semibold text-ink">
-            <Icon name="calendar" className="h-5 w-5 text-glow" /> Daily challenge
+            <Icon name="calendar" className="h-5 w-5 text-glow" /> {t('home.daily.title')}
           </h2>
           {daily ? (
             <>
               <p className="text-ink-soft">
-                Today: <span className="font-semibold text-ink">{name(daily.gameId)}</span> at level{' '}
-                {daily.level}. The same set all day.
+                <Trans
+                  t={t}
+                  i18nKey="home.daily.today"
+                  values={{ game: name(daily.gameId), level: daily.level }}
+                  components={{ b: <span className="font-semibold text-ink" /> }}
+                />
               </p>
               <p className="text-sm text-ink-muted">
                 {dailyDone
-                  ? `Done today — performance ${dailyDone.performanceIndex}/100. Come back tomorrow for a new one.`
-                  : 'About three minutes. Missing a day costs nothing.'}
+                  ? t('home.daily.done', { performance: dailyDone.performanceIndex })
+                  : t('home.daily.pending')}
               </p>
               <div className="mt-auto">
                 <ButtonLink to="/daily" variant={dailyDone ? 'secondary' : 'primary'}>
-                  {dailyDone ? 'See today’s result' : 'Play today’s challenge'}
+                  {dailyDone ? t('home.daily.seeResult') : t('home.daily.play')}
                 </ButtonLink>
               </div>
             </>
           ) : (
-            <p className="text-sm text-ink-muted">
-              No games are available for the daily challenge.
-            </p>
+            <p className="text-sm text-ink-muted">{t('home.daily.none')}</p>
           )}
         </section>
 
@@ -199,11 +214,9 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
           className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-5"
         >
           <h2 id="quick-title" className="flex items-center gap-2 font-semibold text-ink">
-            <Icon name="timer" className="h-5 w-5 text-cat-patterns" /> Quick session
+            <Icon name="timer" className="h-5 w-5 text-cat-patterns" /> {t('home.quick.title')}
           </h2>
-          <p className="text-sm text-ink-soft">
-            A mix of short activities from different areas, at your level.
-          </p>
+          <p className="text-sm text-ink-soft">{t('home.quick.body')}</p>
           <ul className="mt-auto grid grid-cols-4 gap-2">
             {QUICK_SESSION_MINUTES.map((minutes) => (
               <li key={minutes}>
@@ -212,7 +225,7 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
                   className="flex flex-col items-center rounded-xl border border-line bg-raised py-2 hover:border-brand focus-visible:outline-2 focus-visible:outline-brand"
                 >
                   <span className="text-lg font-semibold text-ink">{minutes}</span>
-                  <span className="text-xs text-ink-muted">min</span>
+                  <span className="text-xs text-ink-muted">{t('home.quick.min')}</span>
                 </Link>
               </li>
             ))}
@@ -221,7 +234,7 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
       </div>
 
       {suggestions.length > 0 && (
-        <Panel id="recommended-title" title="Recommended for you">
+        <Panel id="recommended-title" title={t('home.recommended')}>
           <ul className="grid gap-3 md:grid-cols-3">
             {suggestions.map((s) => (
               <Suggestion key={s.gameId} suggestion={s} name={name(s.gameId)} />
@@ -232,49 +245,61 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
 
       <Panel
         id="progress-title"
-        title="Your progress"
+        title={t('home.progress.title')}
         action={
           <Link to="/progress" className="text-sm text-brand hover:underline">
-            See all
+            {t('home.progress.seeAll')}
           </Link>
         }
       >
         {returning ? (
           <>
             <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              <StatTile label="Sessions" value={progress.totals.sessions} />
-              <StatTile label="Practice time" value={formatDuration(progress.totals.practiceMs)} />
-              <StatTile label="Games explored" value={`${played.size}/${modules.length}`} />
               <StatTile
-                label="Levels open"
-                value={openedLevels}
-                hint="across the games you played"
+                label={t('home.progress.sessions')}
+                value={format.number(progress.totals.sessions)}
+              />
+              <StatTile
+                label={t('home.progress.practiceTime')}
+                value={format.duration(progress.totals.practiceMs)}
+              />
+              <StatTile
+                label={t('home.progress.explored')}
+                value={`${format.number(played.size)}/${format.number(modules.length)}`}
+              />
+              <StatTile
+                label={t('home.progress.levelsOpen')}
+                value={format.number(openedLevels)}
+                hint={t('home.progress.levelsOpenHint')}
               />
             </dl>
             <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-4">
               <WeekStrip week={week} />
               {goal !== null && (
                 <p className="text-sm text-ink-soft">
-                  Today: {Math.round(todayMs / 60_000)} of {goal} min{' '}
-                  {todayMs >= goal * 60_000 ? '· goal reached' : ''}
+                  {todayMs >= goal * 60_000
+                    ? t('home.progress.todayReached', {
+                        minutes: Math.round(todayMs / 60_000),
+                        goal,
+                      })
+                    : t('home.progress.today', { minutes: Math.round(todayMs / 60_000), goal })}
                 </p>
               )}
             </div>
           </>
         ) : (
           <p className="rounded-2xl border border-dashed border-line p-5 text-sm text-ink-muted">
-            Your sessions, practice time and records will appear here after your first activity.
-            Everything stays on this device.
+            {t('home.progress.empty')}
           </p>
         )}
       </Panel>
 
       <Panel
         id="areas-title"
-        title="Explore by area"
+        title={t('home.areas.title')}
         action={
           <Link to="/games" className="text-sm text-brand hover:underline">
-            All activities
+            {t('home.areas.all')}
           </Link>
         }
       >
@@ -289,9 +314,11 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
                   className={`flex h-full flex-col gap-2 rounded-2xl border ${meta.ring} ${meta.soft} p-4 hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand`}
                 >
                   <Icon name={meta.icon} className={`h-7 w-7 ${meta.text}`} />
-                  <span className="font-semibold text-ink">{meta.label}</span>
-                  <span className="text-sm text-ink-soft">{meta.summary}</span>
-                  <span className="mt-auto text-xs text-ink-muted">{count} games</span>
+                  <span className="font-semibold text-ink">{tx(meta.label)}</span>
+                  <span className="text-sm text-ink-soft">{tx(meta.summary)}</span>
+                  <span className="mt-auto text-xs text-ink-muted">
+                    {t('home.areas.games', { count })}
+                  </span>
                 </Link>
               </li>
             );
@@ -299,7 +326,7 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
         </ul>
       </Panel>
 
-      <Panel id="routes-title" title="Routes for every age and interest">
+      <Panel id="routes-title" title={t('home.routes.title')}>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {PATHS.map((p) => (
             <li key={p.id}>
@@ -312,30 +339,27 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
               >
                 <Icon name={PATH_ICONS[p.id] ?? 'adults'} className="h-6 w-6 text-brand" />
                 <span className="font-semibold text-ink">
-                  {p.name}
+                  {tx(p.name)}
                   {p.id === path?.id && (
-                    <span className="ml-2 text-xs text-brand">· your route</span>
+                    <span className="ml-2 text-xs text-brand">{t('home.routes.yours')}</span>
                   )}
                 </span>
-                <span className="text-sm text-ink-soft">{p.tagline}</span>
+                <span className="text-sm text-ink-soft">{tx(p.tagline)}</span>
               </Link>
             </li>
           ))}
         </ul>
       </Panel>
 
-      <Panel id="learn-title" title="Specialisation: programming">
+      <Panel id="learn-title" title={t('home.programming.title')}>
         <div className="flex flex-col gap-3 rounded-2xl border border-cat-programming/30 bg-cat-programming/5 p-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-2xl text-sm text-ink-soft">
-            Optional. A 10-lesson course on programming logic and ten coding games (tracing,
-            debugging, variables, loops). Everything else in the app works without any coding.
-          </p>
+          <p className="max-w-2xl text-sm text-ink-soft">{t('home.programming.body')}</p>
           <div className="flex gap-2">
             <ButtonLink to="/learn" variant="secondary">
-              Course
+              {t('home.programming.course')}
             </ButtonLink>
             <ButtonLink to="/train/programming" variant="ghost">
-              Coding games
+              {t('home.programming.games')}
             </ButtonLink>
           </div>
         </div>
@@ -345,13 +369,15 @@ function Dashboard({ progress, profile }: { progress: UserProgress; profile: Use
 }
 
 const SUGGESTION_LABEL: Readonly<Record<TrainingSuggestion['kind'], string>> = {
-  'level-up': 'Next level',
-  variety: 'For variety',
-  discover: 'Something new',
-  start: 'Good start',
+  'level-up': 'home.suggestion.levelUp',
+  variety: 'home.suggestion.variety',
+  discover: 'home.suggestion.discover',
+  start: 'home.suggestion.start',
 };
 
 function Suggestion({ suggestion, name }: { suggestion: TrainingSuggestion; name: string }) {
+  const { t } = useTranslation('home');
+  const tx = useText();
   return (
     <li>
       <Link
@@ -359,12 +385,12 @@ function Suggestion({ suggestion, name }: { suggestion: TrainingSuggestion; name
         className="flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-line-strong hover:bg-raised focus-visible:outline-2 focus-visible:outline-brand"
       >
         <span className="text-xs font-semibold tracking-wide text-brand-strong uppercase">
-          {SUGGESTION_LABEL[suggestion.kind]}
+          {t(SUGGESTION_LABEL[suggestion.kind])}
         </span>
         <span className="font-semibold text-ink">
-          {name} · level {suggestion.level}
+          {t('home.suggestion.game', { game: name, level: suggestion.level })}
         </span>
-        <span className="text-sm text-ink-soft">{suggestion.reason}</span>
+        <span className="text-sm text-ink-soft">{tx(suggestion.reason)}</span>
       </Link>
     </li>
   );

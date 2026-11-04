@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { PATHS } from '@/content/paths';
 import { createGameRegistry, GAME_CATEGORIES } from '@/domain/game';
 import { planAssessment } from '@/domain/assessment';
@@ -41,7 +42,9 @@ describe('catalog integrity', () => {
         definition.tagline,
         ...definition.instructions,
         definition.meta.scoringSummary,
-      ].join(' ');
+      ]
+        .map(en)
+        .join(' ');
       expect(banned.test(text), definition.id).toBe(false);
     }
   });

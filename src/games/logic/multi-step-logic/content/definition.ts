@@ -1,4 +1,4 @@
-import { numericResponse, singleChoice } from '@/domain/challenge';
+import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import {
   chance,
@@ -9,11 +9,11 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { listJoin, PEOPLE, type Draft } from '@/games/logic/shared/content';
+import { gameIdOf, joinText, msg, type Text } from '@/domain/shared';
+import { listText, PEOPLE, textChoice, type Draft } from '@/games/logic/shared/content';
 import { MULTI_STEP_LEVELS } from './levels';
 import { compareOrders, comparisonPath, factHolds, solveNumbers } from './solver';
-import { describeFact, describeQuestion } from './text';
+import { describeFact, describeQuestion, factSentence } from './text';
 import type {
   Comparison,
   Fact,
@@ -110,16 +110,17 @@ function buildNumbers(random: RandomGenerator, profile: MultiStepProfile) {
   return { values, facts, question, answer };
 }
 
+const key = (path: string) => `logic:multiStepLogic.${path}`;
+
 /** Step-by-step working when one value is known; otherwise the unique solution with checks. */
-function explainNumbers(content: NumbersContent, answerText: string): string {
+function explainNumbers(content: NumbersContent, answerText: Text): Text {
   const { facts, names, theme, solution } = content;
-  const unit = (v: number) => (theme === 'ages' ? `${v}` : `${v} marbles`);
   const known = new Set<number>();
-  const lines: string[] = [];
+  const lines: Text[] = [];
   const anchor = facts.find((f): f is Extract<Fact, { type: 'value' }> => f.type === 'value');
   if (anchor) {
     known.add(anchor.a);
-    lines.push(describeFact(anchor, theme, names));
+    lines.push(factSentence(anchor, theme, names));
     for (let progress = true; progress;) {
       progress = false;
       for (const f of facts) {
@@ -130,17 +131,24 @@ function explainNumbers(content: NumbersContent, answerText: string): string {
         known.add(target);
         progress = true;
         lines.push(
-          `${describeFact(f, theme, names).replace(/\.$/, '')}, so ${names[target] as string} ${theme === 'ages' ? 'is' : 'has'} ${unit(solution[target] as number)}.`,
+          msg(key(`explanation.step.${theme}`), {
+            fact: describeFact(f, theme, names),
+            name: names[target] as string,
+            count: solution[target] as number,
+          }),
         );
       }
     }
-    return `${lines.join(' ')} So the answer is ${answerText}.`;
+    return msg(key('explanation.chain'), { lines: joinText(lines, ' '), answer: answerText });
   }
-  const table = names.map((name, i) => `${name} ${unit(solution[i] as number)}`);
+  const table = names.map((name, i) =>
+    msg(key(`explanation.entry.${theme}`), { name, count: solution[i] as number }),
+  );
   const hasTotal = facts.some((f) => f.type === 'sum');
-  return hasTotal
-    ? `Only one set of numbers fits every fact, including the total: ${listJoin(table)}. Check each fact against it. So the answer is ${answerText}.`
-    : `The facts do not fix the exact numbers, but every set that fits gives the same answer. One example: ${listJoin(table)}. So the answer is ${answerText}.`;
+  return msg(key(`explanation.${hasTotal ? 'total' : 'free'}`), {
+    table: listText(table),
+    answer: answerText,
+  });
 }
 
 function numbersDraft(
@@ -166,19 +174,15 @@ function numbersDraft(
     prompt: describeQuestion(question, theme, names),
     content,
     response: choice
-      ? singleChoice(
+      ? textChoice(
           random,
           answerText,
           names.filter((n) => n !== answerText),
         )
-      : numericResponse(
-          answer,
-          question.type === 'value' && theme === 'ages'
-            ? 'years'
-            : theme === 'marbles'
-              ? 'marbles'
-              : 'years',
-        ),
+      : {
+          ...numericResponse(answer),
+          question: { unit: msg(key(`units.${theme === 'marbles' ? 'marbles' : 'years'}`)) },
+        },
     explanation: explainNumbers(content, answerText),
     skills: ['logical-reasoning', 'working-memory', 'decomposition'],
   };
@@ -235,24 +239,26 @@ function compareDraft(
     });
   const answerName = names[answer] as string;
   return {
-    prompt: question === 'most' ? 'Who is the tallest?' : 'Who is the shortest?',
+    prompt: msg(key(`compare.${question === 'most' ? 'tallest' : 'shortest'}`)),
     content: { kind: 'compare', names, comparisons, question, solution: rank },
-    response: singleChoice(
+    response: textChoice(
       random,
       answerName,
       names.filter((x) => x !== answerName),
     ),
-    explanation: `Writing “taller than” as “>”: ${chains.join('; ')}. So ${answerName} is ${question === 'most' ? 'taller' : 'shorter'} than everyone else.`,
+    explanation: msg(key(`compare.explanation.${question}`), {
+      chains: joinText(chains, '; '),
+      name: answerName,
+    }),
     skills: ['logical-reasoning', 'sequential-thinking'],
   };
 }
 
 export const multiStepLogicGame: GameDefinition<MultiStepChallenge, MultiStepProfile> = {
   id: MULTI_STEP_LOGIC_ID,
-  name: 'Multi-Step Logic Challenge',
-  tagline: 'Chain several facts together to reach the answer.',
-  description:
-    'Facts link people together: who is older, who has more, who is taller. No single fact gives the answer — you must combine them step by step. Higher levels add people, “twice as many” and totals, and mix numbers with comparisons.',
+  name: msg('logic:multiStepLogic.name'),
+  tagline: msg('logic:multiStepLogic.tagline'),
+  description: msg('logic:multiStepLogic.description'),
   area: 'logic',
   skills: ['logical-reasoning', 'working-memory', 'decomposition', 'problem-solving'],
   meta: {
@@ -263,17 +269,16 @@ export const multiStepLogicGame: GameDefinition<MultiStepChallenge, MultiStepPro
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Every answer is checked by trying all possible numbers or orders. Your result is the share of answers that are correct; there is no time limit.',
+    scoringSummary: msg('logic:multiStepLogic.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Every fact is true. No single fact gives the answer on its own.',
-    'Start from what you know for sure (a known age or a total) and work outwards one fact at a time.',
-    '“Twice as many” means double; “half as many” means divide by two.',
-    'Some questions ask for a number, others ask for a name.',
+    msg('logic:multiStepLogic.instructions.1'),
+    msg('logic:multiStepLogic.instructions.2'),
+    msg('logic:multiStepLogic.instructions.3'),
+    msg('logic:multiStepLogic.instructions.4'),
   ],
-  simpleInstructions: 'Put the facts together, one at a time, to find the answer.',
+  simpleInstructions: msg('logic:multiStepLogic.simpleInstructions'),
   levels: MULTI_STEP_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);

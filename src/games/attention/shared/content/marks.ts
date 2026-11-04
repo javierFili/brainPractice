@@ -1,5 +1,13 @@
 import { pick, type RandomGenerator } from '@/domain/random';
-import { COLORS, SHAPES, type ColorName, type ShapeKind } from '@/games/kit/content';
+import { joinText, msg, type Message, type Text } from '@/domain/shared';
+import {
+  COLORS,
+  SHAPES,
+  glyphLabel,
+  shapeLabel,
+  type ColorName,
+  type ShapeKind,
+} from '@/games/kit/content';
 
 /**
  * A mark is a kit glyph (shape + colour) in a pose, plus one asymmetric shape (`ell`, an L) so
@@ -49,34 +57,48 @@ export function markKey(m: Mark): string {
 
 export const sameLook = (a: Mark, b: Mark): boolean => markKey(a) === markKey(b);
 
-export const shapeName = (shape: MarkShape): string => (shape === 'ell' ? 'L shape' : shape);
+export const shapeName = (shape: MarkShape): Message =>
+  shape === 'ell' ? msg('attention:shared.ell') : shapeLabel(shape);
 
-const TURN_WORDS: Record<Rotation, string> = {
-  0: 'upright',
-  90: 'turned right',
-  180: 'upside down',
-  270: 'turned left',
-};
+/** "upright", "turned right", "upside down", "turned left". */
+export const turnWord = (rotation: Rotation): Message => msg(`attention:shared.turn.${rotation}`);
 
-/** "turned right, mirrored"; empty for the default pose or a pose the shape cannot show. */
-export function poseWords(m: Mark): string {
+/** Pose words, e.g. [turned right, mirrored]; empty for the default pose or one the shape cannot show. */
+export function poseWords(m: Mark): Message[] {
   const c = canonicalMark(m);
-  const words: string[] = [];
-  if (c.rotation !== 0) words.push(TURN_WORDS[c.rotation]);
-  if (c.mirrored) words.push('mirrored');
-  return words.join(', ');
+  const words: Message[] = [];
+  if (c.rotation !== 0) words.push(turnWord(c.rotation));
+  if (c.mirrored) words.push(msg('attention:shared.mirrored'));
+  return words;
 }
+
+/** "blue triangle" (the grammar of colour and noun is handled per language). */
+const colouredName = (m: Mark): Message =>
+  m.shape === 'ell'
+    ? msg('attention:shared.colouredEll', { color: m.color })
+    : glyphLabel({ shape: m.shape, color: m.color });
 
 /** Spoken name that differs whenever the look differs: "blue triangle, upside down". */
-export function markLabel(m: Mark): string {
+export function markLabel(m: Mark): Text {
   const pose = poseWords(m);
-  return `${m.color} ${shapeName(m.shape)}${pose === '' ? '' : `, ${pose}`}`;
+  return pose.length === 0 ? colouredName(m) : joinText([colouredName(m), ...pose], ', ');
 }
 
-/** Plural description of a shape: "triangles", "L shapes". */
-export const shapePlural = (shape: MarkShape): string => `${shapeName(shape)}s`;
+/** Plural description of a shape, optionally in one colour: "triangles", "blue L shapes". */
+export const shapePlural = (shape: MarkShape, color: ColorName | null = null): Message =>
+  color === null
+    ? msg(`attention:shared.shapes.${shape}`)
+    : msg(`attention:shared.colouredShapes.${shape}`, { color });
 
-export const turnWord = (rotation: Rotation): string => TURN_WORDS[rotation];
+/** A counted shape, optionally in one colour: "1 star", "3 blue stars". */
+export const shapeCount = (
+  shape: MarkShape,
+  count: number,
+  color: ColorName | null = null,
+): Message =>
+  color === null
+    ? msg(`attention:shared.shapeCount.${shape}`, { count })
+    : msg(`attention:shared.colouredShapeCount.${shape}`, { count, color });
 
 export const randomColor = (random: RandomGenerator, except: readonly ColorName[] = []) =>
   pick(

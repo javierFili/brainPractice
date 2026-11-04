@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { OddOneOutProfile } from './types';
 
@@ -10,7 +11,7 @@ const search = (cells: number) => untimed(4000 + cells * 250);
  */
 export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
   {
-    objective: 'Spot the one shape in a different colour (3×3).',
+    objective: msg('attention:oddOneOut.levels.1'),
     challengeCount: 5,
     changes: ['color'],
     columns: 3,
@@ -19,7 +20,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(9),
   },
   {
-    objective: 'Spot the different colour in a bigger 4×4 grid.',
+    objective: msg('attention:oddOneOut.levels.2'),
     challengeCount: 5,
     changes: ['color'],
     columns: 4,
@@ -28,7 +29,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(16),
   },
   {
-    objective: 'Now the odd one is a different shape, same colour.',
+    objective: msg('attention:oddOneOut.levels.3'),
     challengeCount: 6,
     changes: ['shape'],
     columns: 4,
@@ -37,7 +38,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(16),
   },
   {
-    objective: 'Spot a shape with a similar outline (square vs diamond…).',
+    objective: msg('attention:oddOneOut.levels.4'),
     challengeCount: 6,
     changes: ['shape'],
     columns: 4,
@@ -46,7 +47,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(20),
   },
   {
-    objective: 'Same shape, same colour — one points another way.',
+    objective: msg('attention:oddOneOut.levels.5'),
     challengeCount: 6,
     changes: ['turn'],
     columns: 5,
@@ -55,7 +56,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(25),
   },
   {
-    objective: 'Spot a nearby colour (red vs orange…) among 30.',
+    objective: msg('attention:oddOneOut.levels.6'),
     challengeCount: 6,
     changes: ['color'],
     columns: 5,
@@ -64,7 +65,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(30),
   },
   {
-    objective: 'One shape is turned only a quarter turn (6×6).',
+    objective: msg('attention:oddOneOut.levels.7'),
     challengeCount: 6,
     changes: ['turn'],
     columns: 6,
@@ -73,7 +74,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(36),
   },
   {
-    objective: 'One L shape is mirrored.',
+    objective: msg('attention:oddOneOut.levels.8'),
     challengeCount: 6,
     changes: ['mirror'],
     columns: 6,
@@ -82,7 +83,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(36),
   },
   {
-    objective: 'Any feature can differ, finely: colour, outline, turn or mirror.',
+    objective: msg('attention:oddOneOut.levels.9'),
     challengeCount: 6,
     changes: ['color', 'shape', 'turn', 'mirror'],
     columns: 6,
@@ -91,7 +92,7 @@ export const ODD_ONE_OUT_LEVELS = defineLevels<OddOneOutProfile>([
     timing: search(42),
   },
   {
-    objective: 'Any fine difference among 48 shapes.',
+    objective: msg('attention:oddOneOut.levels.10'),
     challengeCount: 6,
     changes: ['color', 'shape', 'turn', 'mirror'],
     columns: 6,

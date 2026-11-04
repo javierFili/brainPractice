@@ -1,6 +1,6 @@
 import type { GameDefinition } from '@/domain/game';
 import { weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { codeRule } from './generators/code';
 import type { BugHunterDraft } from './generators/draft';
 import { multiRule, schemaViolation, sequenceAnomaly } from './generators/records';
@@ -21,10 +21,9 @@ export const BUG_HUNTER_GAME_ID = gameIdOf('bug-hunter');
 
 export const bugHunterGame: GameDefinition<AttentionChallenge, BugHunterProfile> = {
   id: BUG_HUNTER_GAME_ID,
-  name: 'Bug Hunter',
-  tagline: 'One artifact, a few rules, exactly one bug.',
-  description:
-    'Scan logs, data records and pseudocode against explicit rules and point at the single item that breaks one. Trains selective and sustained attention, anomaly detection and debugging.',
+  name: msg('programming:bugHunter.name'),
+  tagline: msg('programming:bugHunter.tagline'),
+  description: msg('programming:bugHunter.description'),
   area: 'attention',
   skills: ['attention', 'debugging', 'abstraction', 'pattern-recognition'],
   meta: {
@@ -35,15 +34,14 @@ export const bugHunterGame: GameDefinition<AttentionChallenge, BugHunterProfile>
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time', 'streak'],
-    scoringSummary:
-      'Points for each anomaly found, scaled by level, with pace and streak bonuses. Accuracy is 75% of the performance index.',
+    scoringSummary: msg('programming:bugHunter.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Read the rules first: only the stated rules count, not what “looks” wrong.',
-    'Then check the items one by one. Exactly one item breaks exactly one rule.',
-    'Rules about “the item above” compare each item only with its direct neighbour.',
-    'Many items are near-misses — unusual but legal. Click (or press Enter on) the bug to answer.',
+    msg('programming:bugHunter.instructions.rules'),
+    msg('programming:bugHunter.instructions.check'),
+    msg('programming:bugHunter.instructions.above'),
+    msg('programming:bugHunter.instructions.nearMisses'),
   ],
   levels: BUG_HUNTER_LEVELS,
   generate({ identity, profile, random }) {

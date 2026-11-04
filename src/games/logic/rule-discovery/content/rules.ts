@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import { ALL_GLYPHS, COLORS, SHAPES, type Glyph } from '@/games/kit/content';
 import type { GlyphFamily, GlyphRule, NumberFamily, NumberRule, NumberTest } from './types';
 
@@ -76,38 +77,48 @@ export function numberRules(family: NumberFamily): NumberRule[] {
   return kinds.flatMap((a) => ranges.map((b) => ({ type: 'and' as const, a, b })));
 }
 
-export function describeNumberTest(test: NumberTest): string {
+const key = (path: string) => `logic:ruleDiscovery.${path}`;
+
+/** "even", "in the 3 times table", "greater than 40". */
+export function describeNumberTest(test: NumberTest): Message {
   switch (test.type) {
     case 'even':
-      return 'even';
     case 'odd':
-      return 'odd';
+      return msg(key(`test.${test.type}`));
     case 'multiple':
-      return `in the ${test.of} times table`;
+      return msg(key('test.multiple'), { of: test.of });
     case 'greater':
-      return `greater than ${test.than}`;
     case 'less':
-      return `less than ${test.than}`;
+      return msg(key(`test.${test.type}`), { than: test.than });
     case 'ends-in':
-      return `ending in ${test.digit}`;
+      return msg(key('test.endsIn'), { digit: String(test.digit) });
   }
 }
 
-export function describeRule(rule: GlyphRule | NumberRule): string {
+/**
+ * The rule in words. Colour and shape ids are interpolated and each language nests the right
+ * colour form and article itself (`$t(kit:colorForm.f.{{color}})`), so nothing agrees in code.
+ */
+export function describeRule(rule: GlyphRule | NumberRule): Message {
   switch (rule.type) {
     case 'color':
-      return `the shape is ${rule.color}`;
-    case 'shape':
-      return `the shape is a ${rule.shape}`;
     case 'not-color':
-      return `the shape is not ${rule.color}`;
+      return msg(key(`rule.${rule.type === 'color' ? 'color' : 'notColor'}`), {
+        color: rule.color,
+      });
+    case 'shape':
     case 'not-shape':
-      return `the shape is not a ${rule.shape}`;
+      return msg(key(`rule.${rule.type === 'shape' ? 'shape' : 'notShape'}`), {
+        shape: rule.shape,
+      });
     case 'color-or-shape':
-      return `the shape is ${rule.color}, or it is a ${rule.shape} (or both)`;
+      return msg(key('rule.colorOrShape'), { color: rule.color, shape: rule.shape });
     case 'and':
-      return `the number is ${describeNumberTest(rule.a)} and ${describeNumberTest(rule.b)}`;
+      return msg(key('rule.and'), {
+        a: describeNumberTest(rule.a),
+        b: describeNumberTest(rule.b),
+      });
     default:
-      return `the number is ${describeNumberTest(rule)}`;
+      return msg(key('rule.number'), { test: describeNumberTest(rule) });
   }
 }

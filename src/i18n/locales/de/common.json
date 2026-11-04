@@ -1,0 +1,167 @@
+{
+  "loading": "Wird geladen …",
+  "actions": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "start": "Starten",
+    "continue": "Fortsetzen",
+    "retry": "Erneut versuchen",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "submit": "Absenden",
+    "undo": "Rückgängig",
+    "clear": "Löschen",
+    "skip": "Überspringen",
+    "finish": "Beenden",
+    "reload": "Seite neu laden",
+    "goHome": "Zur Startseite"
+  },
+  "answer": {
+    "correct": "Richtig",
+    "incorrect": "Falsch",
+    "timedOut": "Zeit abgelaufen",
+    "skipped": "Übersprungen"
+  },
+  "level": {
+    "label": "Stufe {{level}}",
+    "short": "S{{level}}",
+    "locked": "Gesperrt"
+  },
+  "tiers": {
+    "fundamentals": "Grundlagen",
+    "intermediate": "Mittelstufe",
+    "advanced": "Fortgeschritten",
+    "expert": "Experte"
+  },
+  "areas": {
+    "logic": {
+      "label": "Logik",
+      "summary": "Schlussfolgern, Abhängigkeiten und algorithmisches Denken."
+    },
+    "memory": {
+      "label": "Gedächtnis",
+      "summary": "Informationen unter Belastung behalten und aktualisieren."
+    },
+    "speed": {
+      "label": "Tempo",
+      "summary": "Schnell und genau vergleichen und entscheiden."
+    },
+    "attention": {
+      "label": "Aufmerksamkeit",
+      "summary": "Das Wesentliche im Durcheinander finden."
+    },
+    "patterns": {
+      "label": "Muster",
+      "summary": "Regeln aus Beispielen und Strukturen ableiten."
+    }
+  },
+  "categories": {
+    "memory": {
+      "label": "Gedächtnis",
+      "summary": "Bilder, Wörter, Zahlen und Positionen merken, abrufen und aktualisieren."
+    },
+    "logic": {
+      "label": "Logik",
+      "summary": "Schlussfolgern, planen und Rätsel mit einer eindeutig prüfbaren Lösung knacken."
+    },
+    "speed": {
+      "label": "Denkgeschwindigkeit",
+      "summary": "Schnelle, genaue Entscheidungen: reagieren, vergleichen und einordnen."
+    },
+    "attention": {
+      "label": "Aufmerksamkeit",
+      "summary": "Ziele finden, Ablenkungen ausblenden und konzentriert bleiben."
+    },
+    "patterns": {
+      "label": "Muster & Raum",
+      "summary": "Regeln entdecken, Muster ergänzen und Formen im Kopf drehen."
+    },
+    "programming": {
+      "label": "Programmieren",
+      "summary": "Code nachverfolgen, Variablen im Blick behalten und Fehler jagen – für Programmierer."
+    }
+  },
+  "audiences": {
+    "kids": "Kinder",
+    "teens": "Jugendliche",
+    "adults": "Erwachsene",
+    "seniors": "Senioren",
+    "programmers": "Programmierer"
+  },
+  "skills": {
+    "decomposition": "Zerlegung",
+    "abstraction": "Abstraktion",
+    "pattern-recognition": "Mustererkennung",
+    "logical-reasoning": "logisches Denken",
+    "working-memory": "Arbeitsgedächtnis",
+    "attention": "Aufmerksamkeit",
+    "debugging": "Fehlersuche",
+    "algorithmic-thinking": "algorithmisches Denken",
+    "short-term-memory": "Kurzzeitgedächtnis",
+    "long-term-recall": "Langzeitabruf",
+    "visual-memory": "visuelles Gedächtnis",
+    "auditory-memory": "auditives Gedächtnis",
+    "selective-attention": "selektive Aufmerksamkeit",
+    "sustained-attention": "Daueraufmerksamkeit",
+    "concentration": "Konzentration",
+    "processing-speed": "Verarbeitungsgeschwindigkeit",
+    "reaction-time": "Reaktionszeit",
+    "problem-solving": "Problemlösen",
+    "spatial-reasoning": "räumliches Denken",
+    "visual-orientation": "visuelle Orientierung",
+    "cognitive-flexibility": "kognitive Flexibilität",
+    "sequential-thinking": "sequenzielles Denken",
+    "planning": "Planung",
+    "error-detection": "Fehlererkennung",
+    "instruction-comprehension": "Anweisungsverständnis",
+    "mental-agility": "geistige Beweglichkeit"
+  },
+  "format": {
+    "noLimit": "Ohne Limit"
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen."
+  },
+  "response": {
+    "enterNumber": "Gib eine Zahl ein.",
+    "yourAnswer": "Deine Antwort",
+    "yourAnswerUnit": "Deine Antwort ({{unit}})",
+    "toggleSign": "Minuszeichen umschalten",
+    "yourOrder": "Deine Reihenfolge",
+    "moveUp": "{{item}} nach oben",
+    "moveDown": "{{item}} nach unten",
+    "submitOrder": "Reihenfolge absenden",
+    "yourSequence": "Deine Folge, {{entered}} von {{total}}",
+    "slot": "{{position}}: {{item}}",
+    "emptySlot": "{{position}}: leer",
+    "symbols": "Symbole",
+    "submitSequence": "Folge absenden",
+    "answerOptions": "Antwortmöglichkeiten",
+    "spokenCorrect": "{{option}}, richtige Antwort",
+    "spokenYours": "{{option}}, deine Antwort",
+    "correctAnswer": "Richtige Antwort",
+    "yourAnswerMark": "Deine Antwort"
+  },
+  "describe": {
+    "nothingMarked": "nichts markiert",
+    "items_one": "Element {{positions}}",
+    "items_other": "Elemente {{positions}}",
+    "item": "Element {{position}}",
+    "number": "{{value}}",
+    "allPairs_one": "das Paar",
+    "allPairs_other": "alle {{count}} Paare",
+    "tapDuringSignal": "tippen, solange das Signal zu sehen ist",
+    "doNotTap": "nicht tippen",
+    "noAnswer": "keine Antwort",
+    "attempts_one": "{{count}} Versuch",
+    "attempts_other": "{{count}} Versuche",
+    "pairsFound": "{{found}} von {{total}} Paaren, {{misses}}",
+    "misses_one": "{{count}} Fehlgriff",
+    "misses_other": "{{count}} Fehlgriffe",
+    "noTap": "nicht getippt",
+    "tappedEarly": "vor dem Signal getippt",
+    "tappedAfter": "nach {{ms}} ms getippt"
+  }
+}

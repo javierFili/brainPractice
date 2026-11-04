@@ -1,0 +1,192 @@
+{
+  "home": {
+    "welcomeBack": "Bon retour",
+    "welcome": "Bienvenue",
+    "routeSuffix": " · parcours {{route}}",
+    "title": "Entraînez votre esprit à votre rythme.",
+    "lead": "Explorez des défis de mémoire, de logique, d’attention et de raisonnement. Des séances courtes, dix niveaux par jeu et des résultats à suivre dans le temps.",
+    "continueGame": "Continuer {{game}}",
+    "startFirst": "Commencer votre première activité",
+    "quickSession": "Session rapide",
+    "chooseRoute": "Choisir un parcours",
+    "continue": {
+      "title": "Reprendre l’entraînement",
+      "where": "<b>{{game}}</b> · niveau {{level}}, {{when}}",
+      "lastCleared": "Dernier résultat : {{accuracy}} de précision · niveau réussi ; le niveau {{level}} est le suivant",
+      "lastRepeat": "Dernier résultat : {{accuracy}} de précision · recommencez pour réussir le niveau (performance 70)",
+      "playLevel": "Jouer le niveau {{level}}",
+      "details": "Détails",
+      "empty": "Rien en cours pour l’instant. Choisissez une activité ci-dessous : chaque jeu commence au niveau 1 et explique d’abord ses règles."
+    },
+    "daily": {
+      "title": "Défi du jour",
+      "today": "Aujourd’hui : <b>{{game}}</b> au niveau {{level}}. La même série toute la journée.",
+      "done": "Fait aujourd’hui : performance {{performance}}/100. Revenez demain pour un nouveau défi.",
+      "pending": "Environ trois minutes. Manquer un jour ne coûte rien.",
+      "seeResult": "Voir le résultat du jour",
+      "play": "Jouer le défi du jour",
+      "none": "Aucun jeu n’est disponible pour le défi du jour."
+    },
+    "quick": {
+      "title": "Session rapide",
+      "body": "Un mélange d’activités courtes de différents domaines, à votre niveau.",
+      "min": "min"
+    },
+    "recommended": "Recommandé pour vous",
+    "progress": {
+      "title": "Votre progression",
+      "seeAll": "Tout voir",
+      "sessions": "Séances",
+      "practiceTime": "Temps d’entraînement",
+      "explored": "Jeux explorés",
+      "levelsOpen": "Niveaux ouverts",
+      "levelsOpenHint": "dans les jeux auxquels vous avez joué",
+      "today": "Aujourd’hui : {{minutes}} sur {{goal}} min",
+      "todayReached": "Aujourd’hui : {{minutes}} sur {{goal}} min · objectif atteint",
+      "empty": "Vos séances, votre temps d’entraînement et vos records apparaîtront ici après votre première activité. Tout reste sur cet appareil."
+    },
+    "areas": {
+      "title": "Explorer par domaine",
+      "all": "Toutes les activités",
+      "games_one": "{{count}} jeu",
+      "games_other": "{{count}} jeux"
+    },
+    "routes": {
+      "title": "Des parcours pour tous les âges et tous les intérêts",
+      "yours": "· votre parcours"
+    },
+    "programming": {
+      "title": "Spécialisation : programmation",
+      "body": "Facultatif. Un cours de 10 leçons sur la logique de programmation et dix jeux de code (exécution pas à pas, débogage, variables, boucles). Tout le reste de l’application fonctionne sans programmer.",
+      "course": "Cours",
+      "games": "Jeux de code"
+    },
+    "suggestion": {
+      "levelUp": "Niveau suivant",
+      "variety": "Pour varier",
+      "discover": "Quelque chose de nouveau",
+      "start": "Bon point de départ",
+      "game": "{{game}} · niveau {{level}}"
+    }
+  },
+  "continue": {
+    "eyebrow": "Général",
+    "title": "Reprendre l’entraînement",
+    "last": "Dernière activité",
+    "summary": "Niveau {{level}} le {{date}} · {{accuracy}} de précision · performance {{performance}}/100",
+    "summaryEarly": "Niveau {{level}} le {{date}} · {{accuracy}} de précision · performance {{performance}}/100 · arrêtée avant la fin",
+    "repeat": "Refaire le niveau {{level}}",
+    "goTo": "Aller au niveau {{level}}",
+    "another": "Choisir un autre niveau",
+    "recent": "Joués récemment",
+    "level": "niveau {{level}}",
+    "empty": "Vous n’avez encore rien joué, il n’y a donc rien à continuer.",
+    "browse": "Parcourir les activités",
+    "tryQuick": "Essayer une session rapide"
+  },
+  "daily": {
+    "loadError": "Impossible de charger votre progression.",
+    "eyebrow": "Défi du jour",
+    "description": "Un nouveau défi chaque jour, le même pour tout le monde. Cinq problèmes rapides à votre niveau : environ trois minutes.",
+    "areaLevel": "{{area}} · niveau {{level}}",
+    "done": "✓ Terminé pour aujourd’hui : performance {{performance}}/100. Un nouveau défi arrive demain.",
+    "back": "Retour au tableau de bord",
+    "again": "Rejouer (non comptabilisé)",
+    "start": "Commencer le défi du jour"
+  },
+  "onboarding": {
+    "eyebrow": "Pour commencer",
+    "title": "Que souhaitez-vous travailler ?",
+    "description": "Choisissez un parcours pour recevoir des suggestions adaptées. C’est facultatif, cela ne change rien à ce que vous pouvez jouer et vous pouvez en changer à tout moment.",
+    "route": "Parcours",
+    "explore": {
+      "name": "Simplement explorer",
+      "tagline": "Sans parcours : des suggestions de tous les domaines."
+    },
+    "daysQuestion": "Combien de jours par semaine souhaitez-vous vous entraîner ?",
+    "daysHint": "Votre propre objectif. Manquer un jour ne coûte rien.",
+    "days_one": "{{count}} jour",
+    "days_other": "{{count}} jours"
+  },
+  "week": {
+    "label": "Les sept derniers jours",
+    "practised": "{{day}} : entraînement fait",
+    "notPractised": "{{day}} : pas d’entraînement",
+    "summary_one": "<b>{{active}} sur {{count}}</b> jour cette semaine",
+    "summary_other": "<b>{{active}} sur {{count}}</b> jours cette semaine",
+    "summaryReached_one": "<b>{{active}} sur {{count}}</b> jour cette semaine : objectif atteint",
+    "summaryReached_other": "<b>{{active}} sur {{count}}</b> jours cette semaine : objectif atteint",
+    "run_one": " · {{count}} jour d’affilée",
+    "run_other": " · {{count}} jours d’affilée"
+  },
+  "quick": {
+    "eyebrow": "Entraînement",
+    "title": "Session rapide",
+    "description": "Un entraînement court et varié pour les journées chargées : 3, 5, 10 ou 15 minutes.",
+    "unavailable": "Cette activité n’est pas disponible.",
+    "activityOf": "Activité {{index}} sur {{total}} ·",
+    "progress": "Progression de la session rapide",
+    "end": "Terminer la session rapide",
+    "done": "Séance terminée",
+    "summary_one": "{{count}} activité · {{time}} · {{correct}} bonnes réponses sur {{total}} ({{percent}})",
+    "summary_other": "{{count}} activités · {{time}} · {{correct}} bonnes réponses sur {{total}} ({{percent}})",
+    "summaryEmpty_one": "{{count}} activité · {{time}} · aucune réponse",
+    "summaryEmpty_other": "{{count}} activités · {{time}} · aucune réponse",
+    "gameLevel": "{{game}} · niveau {{level}}",
+    "notAnswered": "Sans réponse",
+    "notAnsweredEarly": "Sans réponse · arrêtée avant la fin",
+    "result": "{{correct}}/{{attempted}} bonnes réponses · performance {{performance}}/100",
+    "resultEarly": "{{correct}}/{{attempted}} bonnes réponses · performance {{performance}}/100 · arrêtée avant la fin",
+    "saved": "Chaque activité a été enregistrée dans l’historique de son jeu. Les blocs rapides sont plus courts que les séances complètes.",
+    "again": "Une autre session rapide",
+    "seeProgress": "Voir ma progression",
+    "home": "Accueil",
+    "howLong": "Combien de temps ?",
+    "duration": "Durée",
+    "minutes_one": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "about_one": "environ {{count}} activité",
+    "about_other": "environ {{count}} activités",
+    "relaxed": "Sans pression de temps (rythme détendu ; uniquement les jeux qui fonctionnent sans chrono)",
+    "explain": "Les activités viennent de différents domaines, au niveau suggéré par vos résultats. La durée réelle dépend de votre rythme.",
+    "explainRoute": "Les activités viennent de différents domaines et privilégient votre parcours {{route}}, au niveau suggéré par vos résultats. La durée réelle dépend de votre rythme.",
+    "start_one": "Commencer une séance de {{count}} minute",
+    "start_other": "Commencer une séance de {{count}} minutes"
+  },
+  "errors": {
+    "notFound": {
+      "title": "Rien ici",
+      "message": "Cette page n’existe pas.",
+      "browse": "Parcourir les jeux"
+    },
+    "load": {
+      "title": "Impossible de lire votre progression enregistrée.",
+      "body": "Rien n’a été supprimé. Réessayez, ou vérifiez que ce navigateur autorise le stockage du site."
+    },
+    "route": {
+      "eyebrow": "erreur",
+      "title": "Une erreur s’est produite",
+      "body": "Cet écran n’a pas pu s’afficher. Votre progression enregistrée n’est pas affectée.",
+      "reload": "Recharger",
+      "home": "Aller à l’accueil",
+      "details": "Détails techniques"
+    }
+  },
+  "ui": {
+    "countdown": {
+      "short": "{{seconds}} s",
+      "left_one": "Encore {{count}} seconde",
+      "left_other": "Encore {{count}} secondes"
+    },
+    "code": {
+      "label": "Code",
+      "ran": "Cette ligne a été exécutée",
+      "bug": "← le bug",
+      "pick": "← votre choix",
+      "line": "Ligne {{number}}",
+      "lineRan": "exécutée",
+      "lineCurrent": "en cours",
+      "separator": ", "
+    }
+  }
+}

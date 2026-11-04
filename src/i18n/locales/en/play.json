@@ -1,0 +1,118 @@
+{
+  "stage": {
+    "memorise": "Memorise this — it will be hidden.",
+    "ready": "I’m ready",
+    "confirmAnswer": "Confirm your answer",
+    "selectedItem": "Selected item {{position}}"
+  },
+  "header": {
+    "relaxed": "Relaxed timing",
+    "challenge": "Challenge",
+    "score": "Score",
+    "streak": "Streak",
+    "studyLeft": "Memorisation time left",
+    "timeLeft": "Time left",
+    "progress": "Session progress"
+  },
+  "feedback": {
+    "notThisTime": "Not this time",
+    "points": "{{points}} pts",
+    "yourAnswer": "Your answer:",
+    "correctAnswer": "Correct:",
+    "answer": "Answer: {{answer}}",
+    "seeResults": "See results",
+    "nextChallenge": "Next challenge"
+  },
+  "page": {
+    "notFound": "This game, level or seed does not exist.",
+    "lockedTitle": "Level {{level}} is not open yet",
+    "lockedDescription": "Each level opens after a session of the level below with performance 50 or more, or after three completed sessions of it. Free play in Settings opens every level.",
+    "playLevel": "Play level {{level}}",
+    "settings": "Settings"
+  },
+  "runner": {
+    "endSession": "End session",
+    "hideInstructions": "Hide instructions",
+    "howToPlay": "How to play"
+  },
+  "results": {
+    "label": {
+      "endedEarly": "Session ended early",
+      "excellent": "Excellent session",
+      "cleared": "Level cleared",
+      "gettingThere": "Getting there",
+      "keepGoing": "Good practice — keep going"
+    },
+    "reasons": {
+      "notEnough": "Not enough answers to judge this level yet.",
+      "topMastered": "Top level mastered — keep sharpening your speed.",
+      "ready": "Accurate and on pace: ready for the next level.",
+      "fundamentals": "Keep practising the fundamentals.",
+      "consolidate": "Consolidate the previous level before moving on.",
+      "pace": "Accurate — now work on your pace.",
+      "keepPractising": "Keep practising this level."
+    },
+    "direction": {
+      "up": "↑ Level up",
+      "stay": "→ Stay",
+      "down": "↓ Step back"
+    },
+    "comparison": {
+      "title": "Compared with last time:",
+      "first": "This is your first completed session at level {{level}} in this mode, so there is nothing comparable yet.",
+      "higher": "In this game, your accuracy was higher than in your last comparable session (level {{level}}): {{before}} → {{after}}.",
+      "lower": "Your accuracy was lower than in your last comparable session ({{before}} → {{after}}). Results vary from session to session; that is normal.",
+      "same": "Your accuracy matched your last comparable session ({{after}}); performance {{delta}}."
+    },
+    "related": {
+      "title": "Where this skill shows up in programming",
+      "lesson": "Lesson: {{lesson}}"
+    },
+    "endedEarlyNote": "Unanswered challenges were skipped and it does not count toward records.",
+    "relaxedNote": "Relaxed timing session — saved to history, not to records.",
+    "stats": {
+      "performance": "Performance",
+      "performanceHint": "{{accuracy}} accuracy · {{pace}} pace",
+      "score": "Score",
+      "scoreHint": "of {{max}} possible",
+      "accuracy": "Accuracy",
+      "accuracyHint": "{{correct}} of {{attempted}} correct",
+      "medianReaction": "Median reaction",
+      "medianReactionHint": "signal to tap, correct taps only",
+      "medianTime": "Median time",
+      "medianAnswerTime": "Median answer time",
+      "timeHint": "avg {{average}} · best {{best}}",
+      "untimedHint": "untimed game: shown for information only",
+      "longestStreak": "Longest streak",
+      "timeouts": "Time-outs",
+      "duration": "Duration",
+      "seed": "Seed",
+      "seedHint": "Replay the exact same challenges"
+    },
+    "recommendation": {
+      "title": "Recommendation: {{direction}} (level {{level}})"
+    },
+    "actions": {
+      "repeat": "Repeat level",
+      "nextLevel": "Next level",
+      "replaySeed": "Replay this seed",
+      "backToGame": "Back to game"
+    },
+    "practise": {
+      "title": "Something to practise:",
+      "detail": "{{kind}} ({{correct}}/{{total}} this session)."
+    },
+    "breakdown": "By challenge type",
+    "review": {
+      "none": "Review — no mistakes 🎯",
+      "count": "Review ({{total}})",
+      "timedOut": "Timed out",
+      "youAnswered": "You answered"
+    },
+    "save": {
+      "saving": "Saving progress…",
+      "saved": "Progress saved on this device.",
+      "failed": "Progress could not be saved on this device."
+    }
+  }
+}

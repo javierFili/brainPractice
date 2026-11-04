@@ -1,3 +1,4 @@
+import { en } from './i18n';
 import type { Challenge } from '@/domain/challenge';
 import { generateChallenge } from '@/domain/game';
 import { deriveSeed, toSeed } from '@/domain/random';
@@ -20,7 +21,8 @@ export function choiceLabels(challenge: Challenge): { correct: string; wrong: st
   const correct = options.find((o) => o.id === response.solution.optionId);
   const wrong = options.find((o) => o.id !== response.solution.optionId);
   if (!correct || !wrong) throw new Error('Malformed options');
-  return { correct: correct.label, wrong: wrong.label };
+  // English labels, so guessability heuristics and assertions read like the source text.
+  return { correct: en(correct.label), wrong: en(wrong.label) };
 }
 
 /** First session seed whose first challenge uses the given response format. */

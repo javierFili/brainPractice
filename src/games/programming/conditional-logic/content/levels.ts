@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ConditionalProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { ConditionalProfile } from './types';
  */
 export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
   {
-    objective: 'One input, one comparison per branch: the first true condition wins.',
+    objective: msg('programming:conditionalLogic.levels.1'),
     challengeCount: 5,
     timing: untimed(25_000),
     kinds: { branch: 1 },
@@ -17,7 +18,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare'],
   },
   {
-    objective: 'Two inputs and four outcomes.',
+    objective: msg('programming:conditionalLogic.levels.2'),
     challengeCount: 6,
     timing: untimed(30_000),
     kinds: { branch: 1 },
@@ -26,7 +27,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare'],
   },
   {
-    objective: 'Combine comparisons with “and” and “or”.',
+    objective: msg('programming:conditionalLogic.levels.3'),
     challengeCount: 6,
     timing: untimed(35_000),
     kinds: { branch: 2, 'find-input': 1 },
@@ -35,7 +36,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or'],
   },
   {
-    objective: 'True/false flags and “not”.',
+    objective: msg('programming:conditionalLogic.levels.4'),
     challengeCount: 6,
     timing: untimed(40_000),
     kinds: { branch: 2, 'find-input': 1 },
@@ -44,7 +45,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or', 'not', 'flag'],
   },
   {
-    objective: 'Ifs inside ifs: only one inner chain ever runs.',
+    objective: msg('programming:conditionalLogic.levels.5'),
     challengeCount: 6,
     timing: untimed(45_000),
     kinds: { branch: 1, nested: 2, 'find-input': 1 },
@@ -53,7 +54,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or', 'not', 'flag'],
   },
   {
-    objective: 'Work backwards: which input produces this output?',
+    objective: msg('programming:conditionalLogic.levels.6'),
     challengeCount: 6,
     timing: untimed(50_000),
     kinds: { branch: 1, nested: 1, 'find-input': 2 },
@@ -62,7 +63,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
   },
   {
-    objective: 'Five outcomes and conditions that mix “and” with “or”.',
+    objective: msg('programming:conditionalLogic.levels.7'),
     challengeCount: 7,
     timing: untimed(60_000),
     kinds: { branch: 1, nested: 2, 'find-input': 2 },
@@ -71,7 +72,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
   },
   {
-    objective: 'Short-circuit: “and” stops at the first false, “or” at the first true.',
+    objective: msg('programming:conditionalLogic.levels.8'),
     challengeCount: 7,
     timing: untimed(60_000),
     kinds: { branch: 1, nested: 1, 'find-input': 1, 'short-circuit': 2 },
@@ -80,7 +81,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
   },
   {
-    objective: 'Guards in the wrong order: spot the condition that crashes.',
+    objective: msg('programming:conditionalLogic.levels.9'),
     challengeCount: 7,
     timing: untimed(70_000),
     kinds: { nested: 1, 'find-input': 1, 'short-circuit': 3 },
@@ -89,7 +90,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     parts: ['compare', 'and', 'or', 'not', 'flag', 'mixed'],
   },
   {
-    objective: 'Everything at once: nested chains, mixed logic and short-circuits.',
+    objective: msg('programming:conditionalLogic.levels.10'),
     challengeCount: 8,
     timing: untimed(80_000),
     kinds: { nested: 2, 'find-input': 2, 'short-circuit': 3 },

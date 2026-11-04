@@ -15,7 +15,10 @@ function face(card: CardFace) {
   }
   const item = byId.get(card.objectId);
   if (!item) throw new Error(`Unknown object ${card.objectId}`);
-  return { label: item.name, content: <ObjectFace item={item} className="text-3xl sm:text-4xl" /> };
+  return {
+    label: item.label,
+    content: <ObjectFace item={item} className="text-3xl sm:text-4xl" />,
+  };
 }
 
 export function MemoryCardsView({

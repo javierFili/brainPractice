@@ -1,6 +1,7 @@
 import { singleChoice, type ResponseOf } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
+import { msg } from '@/domain/shared';
 import type { CodeMemoryProfile } from '../types';
 import { callsOn, RESOURCES } from '../vocabulary';
 import type { MemoryDraft } from './draft';
@@ -52,10 +53,12 @@ export function sequenceRecall(random: RandomGenerator, profile: CodeMemoryProfi
       const response = orderingResponse(random, calls);
       if (response === null) return null;
       return {
-        prompt: 'Put the calls back in the order they ran.',
+        prompt: msg('programming:codeMemory.sequence.prompt.order'),
         content: { kind: 'sequence-recall', calls, ask: { type: 'order' } },
         response,
-        explanation: `The calls ran in this order: ${calls.join(' → ')}.`,
+        explanation: msg('programming:codeMemory.sequence.explanation.order', {
+          calls: calls.join(' → '),
+        }),
         skills,
       };
     }
@@ -85,12 +88,20 @@ export function sequenceRecall(random: RandomGenerator, profile: CodeMemoryProfi
 
     const prompt =
       question === 'position'
-        ? `Which call was #${index + 1}?`
-        : `Which call came right after ${asked ?? ''}?`;
-    const reason =
+        ? msg('programming:codeMemory.sequence.prompt.position', { position: index + 1 })
+        : msg('programming:codeMemory.sequence.prompt.successor', { call: asked ?? '' });
+    const explanation =
       question === 'position'
-        ? `call #${index + 1} was ${answer}`
-        : `right after ${asked ?? ''} came ${answer}`;
+        ? msg('programming:codeMemory.sequence.explanation.position', {
+            calls: listing(calls),
+            position: index + 1,
+            answer,
+          })
+        : msg('programming:codeMemory.sequence.explanation.successor', {
+            calls: listing(calls),
+            call: asked ?? '',
+            answer,
+          });
     return {
       prompt,
       content: {
@@ -99,7 +110,7 @@ export function sequenceRecall(random: RandomGenerator, profile: CodeMemoryProfi
         ask: question === 'position' ? { type: 'position', index } : { type: 'successor', index },
       },
       response: singleChoice(random, answer, distractors),
-      explanation: `The sequence was ${listing(calls)}; ${reason}.`,
+      explanation,
       skills,
     };
   });

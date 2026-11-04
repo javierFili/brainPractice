@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { VisualChangesProfile } from './types';
 
@@ -11,7 +12,7 @@ const look = (items: number, msPerItem: number) =>
  */
 export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
   {
-    objective: 'Spot which of 4 shapes changed colour.',
+    objective: msg('memory:visualChanges.levels.1'),
     challengeCount: 5,
     size: 3,
     items: 4,
@@ -20,7 +21,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(4, 1000),
   },
   {
-    objective: 'Spot a change of colour or shape among 5 items.',
+    objective: msg('memory:visualChanges.levels.2'),
     challengeCount: 5,
     size: 3,
     items: 5,
@@ -29,7 +30,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(5, 900),
   },
   {
-    objective: 'Spot the change among 6 items on a 4×4 grid.',
+    objective: msg('memory:visualChanges.levels.3'),
     challengeCount: 5,
     size: 4,
     items: 6,
@@ -38,7 +39,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(6, 800),
   },
   {
-    objective: 'Spot the change among 7 items with a shorter look.',
+    objective: msg('memory:visualChanges.levels.4'),
     challengeCount: 5,
     size: 4,
     items: 7,
@@ -47,7 +48,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(7, 650),
   },
   {
-    objective: 'Spot the change among 8 look-alike items.',
+    objective: msg('memory:visualChanges.levels.5'),
     challengeCount: 5,
     size: 4,
     items: 8,
@@ -56,7 +57,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(8, 700),
   },
   {
-    objective: 'Spot the change among 9 look-alike items on a 5×5 grid.',
+    objective: msg('memory:visualChanges.levels.6'),
     challengeCount: 5,
     size: 5,
     items: 9,
@@ -65,7 +66,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(9, 650),
   },
   {
-    objective: 'Spot a change or find two items that swapped places.',
+    objective: msg('memory:visualChanges.levels.7'),
     challengeCount: 5,
     size: 5,
     items: 10,
@@ -74,7 +75,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(10, 600),
   },
   {
-    objective: 'Spot changes and swaps among 12 look-alike items.',
+    objective: msg('memory:visualChanges.levels.8'),
     challengeCount: 5,
     size: 5,
     items: 12,
@@ -83,7 +84,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(12, 550),
   },
   {
-    objective: 'Spot changes and swaps among 14 items on a 6×6 grid.',
+    objective: msg('memory:visualChanges.levels.9'),
     challengeCount: 4,
     size: 6,
     items: 14,
@@ -92,7 +93,7 @@ export const VISUAL_CHANGES_LEVELS = defineLevels<VisualChangesProfile>([
     timing: look(14, 500),
   },
   {
-    objective: 'Spot changes and swaps among 16 look-alike items with a brief look.',
+    objective: msg('memory:visualChanges.levels.10'),
     challengeCount: 4,
     size: 6,
     items: 16,

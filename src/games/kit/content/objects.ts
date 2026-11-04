@@ -1,12 +1,17 @@
 import { sample, type RandomGenerator } from '@/domain/random';
+import { msg, type Message } from '@/domain/shared';
 
 export type ObjectCategory =
   'fruit' | 'animal' | 'vehicle' | 'tool' | 'clothing' | 'nature' | 'food';
 
-/** Everyday objects with an emoji face and a spoken name. Names are unique. */
+/**
+ * Everyday objects with an emoji face and a spoken name. `name` is the stable English identifier
+ * (unique, used by game rules); `label` is what people read, in their language.
+ */
 export interface EverydayObject {
   readonly id: string;
   readonly name: string;
+  readonly label: Message;
   readonly emoji: string;
   readonly category: ObjectCategory;
 }
@@ -14,6 +19,7 @@ export interface EverydayObject {
 const o = (emoji: string, name: string, category: ObjectCategory): EverydayObject => ({
   id: name.replaceAll(' ', '-'),
   name,
+  label: msg(`kit:objects.${name.replaceAll(' ', '-')}`),
   emoji,
   category,
 });

@@ -1,6 +1,7 @@
 import { numericResponse, singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
+import { msg } from '@/domain/shared';
 import {
   ExecutionLimitError,
   execute,
@@ -226,7 +227,10 @@ export function programTrace(random: RandomGenerator, profile: LogicProfile): Lo
         flips.every((flipIf) => execute(program, { flipIf }).env[ask] === value)
       )
         return null;
-      const explanation = `Tracing the program line by line ends with ${formatState(env)}, so ${ask} = ${value}.`;
+      const explanation = msg('programming:algorithmicLogic.programTrace.explanation', {
+        state: formatState(env),
+        result: `${ask} = ${value}`,
+      });
       const base = {
         content: { kind: 'program-trace' as const, program, ask },
         explanation,
@@ -236,7 +240,7 @@ export function programTrace(random: RandomGenerator, profile: LogicProfile): Lo
       if (answer === 'numeric') {
         return {
           ...base,
-          prompt: `What is the value of ${ask} after the program runs?`,
+          prompt: msg('programming:algorithmicLogic.programTrace.prompt', { name: ask }),
           response: numericResponse(value),
         };
       }
@@ -255,7 +259,7 @@ export function programTrace(random: RandomGenerator, profile: LogicProfile): Lo
       const distractors = [...side(-1, below), ...side(1, 3 - below)];
       return {
         ...base,
-        prompt: `What is the value of ${ask} after the program runs?`,
+        prompt: msg('programming:algorithmicLogic.programTrace.prompt', { name: ask }),
         response: singleChoice(random, String(value), distractors.map(String)),
       };
     } catch (error) {

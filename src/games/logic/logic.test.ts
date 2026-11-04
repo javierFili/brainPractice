@@ -2,6 +2,7 @@
 import { createGameRegistry, generateChallenge } from '@/domain/game';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { contractSeeds } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { LOGIC_GAMES } from './index';
 
 describe('Logic category', () => {
@@ -53,7 +54,7 @@ describe('Logic category', () => {
 
   it('never mentions programming syntax in the copy', () => {
     for (const { definition } of LOGIC_GAMES) {
-      const text = [definition.description, ...definition.instructions].join(' ');
+      const text = [definition.description, ...definition.instructions].map(en).join(' ');
       expect(text).not.toMatch(/[{}=←]|\bvar\b|\bfunction\b|\bwhile\b/);
     }
   });

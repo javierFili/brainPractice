@@ -11,6 +11,7 @@ import {
   solutionLabel,
 } from '../shared/testing';
 import { solveFrames, sequencePredictionGame } from './content/definition';
+import { en } from '@/test/i18n';
 import { frameLabel, parseFrame } from './content/frames';
 import { SEQUENCE_PREDICTION_LEVELS } from './content/levels';
 import { sequencePredictionModule } from './index';
@@ -41,7 +42,7 @@ describe('Sequence Prediction', () => {
       const { frames, size, wrap } = challenge.content;
       const next = solveFrames(frames, size, wrap);
       if (next === null) throw new Error('frames are not determined');
-      const expected = frameLabel(next, size);
+      const expected = en(frameLabel(next, size));
       expect(solutionLabel(challenge)).toBe(expected);
       const labels = optionLabels(challenge);
       expect(labels.filter((l) => l === expected)).toHaveLength(1);

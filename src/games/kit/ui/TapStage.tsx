@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Answer, ResponseOf } from '@/domain/challenge';
+import type { Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 
 type Stage = 'waiting' | 'signal' | 'done';
 
@@ -12,7 +15,7 @@ interface Props {
   /** The stimulus shown during the window; for no-go trials it is the "do not tap" stimulus. */
   readonly signal: ReactNode;
   /** Accessible description of the stimulus, announced when it appears. */
-  readonly signalLabel: string;
+  readonly signalLabel: Text;
   /** Monotonic time source; injectable for tests. */
   readonly now?: () => number;
 }
@@ -31,9 +34,11 @@ export function TapStage({
   answer,
   waiting,
   signal,
-  signalLabel,
+  signalLabel: signalText,
   now = defaultNow,
 }: Props) {
+  const { t } = useTranslation('kit');
+  const signalLabel = useText()(signalText);
   const { signalDelayMs, windowMs } = response.question;
   const [stage, setStage] = useState<Stage>('waiting');
   const onset = useRef<number | null>(null);
@@ -100,8 +105,8 @@ export function TapStage({
       aria-label={
         active
           ? stage === 'signal'
-            ? `${signalLabel}. Tap now if it is a go signal.`
-            : 'Wait for the signal. Press Space or tap when it appears.'
+            ? t('tap.signal', { signal: signalLabel })
+            : t('tap.waiting')
           : signalLabel
       }
       className="flex min-h-56 w-full touch-manipulation items-center justify-center rounded-2xl border border-line bg-surface select-none focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-default sm:min-h-72"

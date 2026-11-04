@@ -1,6 +1,7 @@
 import { numericResponse, singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { chance, pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
+import { msg, type Message } from '@/domain/shared';
 import { formatAssignment } from '../format';
 import { trace, valueAt, type Slip } from '../solvers/state';
 import type { Assignment, CodeMemoryProfile, Expr, Operand } from '../types';
@@ -109,18 +110,27 @@ function slipValues(lines: readonly Assignment[], ask: Ask, vars: readonly strin
   ].filter((value): value is number => value !== undefined);
 }
 
-function explain(lines: readonly Assignment[], ask: Ask, answer: number): string {
+function explain(lines: readonly Assignment[], ask: Ask, answer: number): Message {
   const steps = trace(lines)
     .map((env, i) => {
       const line = lines[i] as Assignment;
       return `${i + 1}. ${formatAssignment(line)} → ${line.target} = ${env[line.target] ?? '?'}`;
     })
     .join('; ');
-  const conclusion =
-    ask.afterLine === null
-      ? `so ${ask.variable} ended as ${answer}`
-      : `so right after line ${ask.afterLine}, ${ask.variable} was ${answer} (it later became ${valueAt(lines, ask.variable, null) ?? '?'})`;
-  return `${steps}; ${conclusion}.`;
+  // Values are code (they must read exactly like the options), so they are passed as text.
+  return ask.afterLine === null
+    ? msg('programming:codeMemory.state.explanation.final', {
+        steps,
+        name: ask.variable,
+        value: String(answer),
+      })
+    : msg('programming:codeMemory.state.explanation.afterLine', {
+        steps,
+        line: ask.afterLine,
+        name: ask.variable,
+        value: String(answer),
+        later: String(valueAt(lines, ask.variable, null) ?? '?'),
+      });
 }
 
 /** Assignments shown, then hidden: compute and hold the evolving state of each variable. */
@@ -145,8 +155,11 @@ export function variableState(random: RandomGenerator, profile: CodeMemoryProfil
 
     const prompt =
       ask.afterLine === null
-        ? `What was the final value of ${ask.variable}?`
-        : `What was the value of ${ask.variable} right after line ${ask.afterLine}?`;
+        ? msg('programming:codeMemory.state.prompt.final', { name: ask.variable })
+        : msg('programming:codeMemory.state.prompt.afterLine', {
+            name: ask.variable,
+            line: ask.afterLine,
+          });
     const base = {
       prompt,
       content: { kind: 'variable-state', lines, ask } as const,

@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generateChallenge } from '@/domain/game';
@@ -37,7 +38,7 @@ describe('Symmetry Recognition', () => {
     for (const { challenge } of all) {
       if (challenge.content.kind !== 'classify') continue;
       const truth = oracleClass(challenge.content.grid);
-      expect(solutionLabel(challenge)).toBe(CLASS_LABELS[truth]);
+      expect(solutionLabel(challenge)).toBe(en(CLASS_LABELS[truth]));
       counts.set(truth, (counts.get(truth) ?? 0) + 1);
     }
     const values = [...counts.values()];

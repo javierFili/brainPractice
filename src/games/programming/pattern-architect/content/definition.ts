@@ -1,7 +1,7 @@
 import type { GameDefinition } from '@/domain/game';
 import type { RandomGenerator } from '@/domain/random';
 import { weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import type { PatternDraft } from './generators/draft';
 import { symbolGrid } from './generators/grids';
 import { numberSequence } from './generators/sequences';
@@ -26,10 +26,9 @@ export const PATTERN_GAME_ID = gameIdOf('pattern-architect');
 
 export const patternArchitectGame: GameDefinition<PatternChallenge, PatternProfile> = {
   id: PATTERN_GAME_ID,
-  name: 'Pattern Architect',
-  tagline: 'Find the rule, then apply it.',
-  description:
-    'Continue number sequences, complete symbol grids, infer hidden programs from examples and recognise the same structure under different names. Trains pattern recognition, abstraction and generalisation.',
+  name: msg('programming:patternArchitect.name'),
+  tagline: msg('programming:patternArchitect.tagline'),
+  description: msg('programming:patternArchitect.description'),
   area: 'patterns',
   skills: ['pattern-recognition', 'abstraction', 'algorithmic-thinking', 'decomposition'],
   meta: {
@@ -40,15 +39,14 @@ export const patternArchitectGame: GameDefinition<PatternChallenge, PatternProfi
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time', 'streak'],
-    scoringSummary:
-      'Points for each rule found and applied, scaled by level, with pace and streak bonuses. Accuracy is 75% of the performance index.',
+    scoringSummary: msg('programming:patternArchitect.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Every challenge hides one rule. Find a rule that explains everything shown, then apply it.',
-    'Grids: shapes and counts can follow different rules — check rows and columns separately.',
-    'Hidden programs chain a few simple steps from the listed vocabulary; the order of the steps matters.',
-    'Trees are written as a(b, c): a contains b and c, in that order. Graphs match when renaming the nodes makes every arrow line up.',
+    msg('programming:patternArchitect.instructions.rule'),
+    msg('programming:patternArchitect.instructions.grids'),
+    msg('programming:patternArchitect.instructions.programs'),
+    msg('programming:patternArchitect.instructions.trees'),
   ],
   levels: PATTERN_LEVELS,
   generate({ identity, profile, random }) {

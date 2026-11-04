@@ -1,75 +1,88 @@
 import type { IconName } from '@/components/ui/Icon';
+import { msg, type Text } from '@/domain/shared';
 
 export interface NavItem {
   readonly to: string;
-  readonly label: string;
+  readonly label: Text;
   readonly icon: IconName;
   /** Match the path exactly (only `/`), instead of any sub-path. */
   readonly end?: boolean;
 }
 
 export interface NavSection {
-  readonly title: string;
+  /** Stable id (React key, tests); the heading is `title`. */
+  readonly id: string;
+  readonly title: Text;
   readonly items: readonly NavItem[];
 }
 
 /** Every entry leads to a working screen (checked by the navigation tests). */
 export const NAV_SECTIONS: readonly NavSection[] = [
   {
-    title: 'General',
+    id: 'general',
+    title: msg('nav:sections.general'),
     items: [
-      { to: '/', label: 'Home', icon: 'home', end: true },
-      { to: '/continue', label: 'Continue training', icon: 'play' },
-      { to: '/daily', label: 'Daily challenge', icon: 'calendar' },
-      { to: '/progress', label: 'My progress', icon: 'chart' },
+      { to: '/', label: msg('nav:items.home'), icon: 'home', end: true },
+      { to: '/continue', label: msg('nav:items.continue'), icon: 'play' },
+      { to: '/daily', label: msg('nav:items.daily'), icon: 'calendar' },
+      { to: '/progress', label: msg('nav:items.progress'), icon: 'chart' },
     ],
   },
   {
-    title: 'Training',
+    id: 'training',
+    title: msg('nav:sections.training'),
     items: [
-      { to: '/games', label: 'All activities', icon: 'grid', end: true },
-      { to: '/quick', label: 'Quick session', icon: 'timer' },
-      { to: '/train/memory', label: 'Memory', icon: 'memory' },
-      { to: '/train/logic', label: 'Logic', icon: 'logic' },
-      { to: '/train/attention', label: 'Attention', icon: 'attention' },
-      { to: '/train/speed', label: 'Mental speed', icon: 'speed' },
-      { to: '/train/patterns', label: 'Patterns', icon: 'patterns' },
-      { to: '/train/spatial', label: 'Spatial reasoning', icon: 'spatial' },
-      { to: '/train/concentration', label: 'Concentration', icon: 'focus' },
+      { to: '/games', label: msg('nav:items.games'), icon: 'grid', end: true },
+      { to: '/quick', label: msg('nav:items.quick'), icon: 'timer' },
+      { to: '/train/memory', label: msg('nav:items.trainMemory'), icon: 'memory' },
+      { to: '/train/logic', label: msg('nav:items.trainLogic'), icon: 'logic' },
+      { to: '/train/attention', label: msg('nav:items.trainAttention'), icon: 'attention' },
+      { to: '/train/speed', label: msg('nav:items.trainSpeed'), icon: 'speed' },
+      { to: '/train/patterns', label: msg('nav:items.trainPatterns'), icon: 'patterns' },
+      { to: '/train/spatial', label: msg('nav:items.trainSpatial'), icon: 'spatial' },
+      { to: '/train/concentration', label: msg('nav:items.trainConcentration'), icon: 'focus' },
     ],
   },
   {
-    title: 'Routes',
+    id: 'routes',
+    title: msg('nav:sections.routes'),
     items: [
-      { to: '/paths/kids', label: 'Kids', icon: 'kids' },
-      { to: '/paths/teens', label: 'Teens', icon: 'teens' },
-      { to: '/paths/adults', label: 'Adults', icon: 'adults' },
-      { to: '/paths/seniors', label: 'Seniors', icon: 'seniors' },
-      { to: '/paths/programmers', label: 'Programmers', icon: 'code' },
+      { to: '/paths/kids', label: msg('nav:items.pathsKids'), icon: 'kids' },
+      { to: '/paths/teens', label: msg('nav:items.pathsTeens'), icon: 'teens' },
+      { to: '/paths/adults', label: msg('nav:items.pathsAdults'), icon: 'adults' },
+      { to: '/paths/seniors', label: msg('nav:items.pathsSeniors'), icon: 'seniors' },
+      { to: '/paths/programmers', label: msg('nav:items.pathsProgrammers'), icon: 'code' },
     ],
   },
   {
-    title: 'Assessment',
+    id: 'assessment',
+    title: msg('nav:sections.assessment'),
     items: [
-      { to: '/assessment', label: 'Cognitive assessment', icon: 'assessment', end: true },
-      { to: '/assessment/history', label: 'Past results', icon: 'history' },
-      { to: '/assessment/profile', label: 'My performance profile', icon: 'profile' },
+      { to: '/assessment', label: msg('nav:items.assessment'), icon: 'assessment', end: true },
+      { to: '/assessment/history', label: msg('nav:items.assessmentHistory'), icon: 'history' },
+      { to: '/assessment/profile', label: msg('nav:items.assessmentProfile'), icon: 'profile' },
     ],
   },
   {
-    title: 'Learning',
+    id: 'learning',
+    title: msg('nav:sections.learning'),
     items: [
-      { to: '/learn', label: 'Programming logic', icon: 'learn', end: true },
-      { to: '/learn/thinking', label: 'Computational thinking', icon: 'flow' },
-      { to: '/train/programming', label: 'Algorithm challenges', icon: 'code' },
+      { to: '/learn', label: msg('nav:items.learn'), icon: 'learn', end: true },
+      { to: '/learn/thinking', label: msg('nav:items.learnThinking'), icon: 'flow' },
+      { to: '/train/programming', label: msg('nav:items.trainProgramming'), icon: 'code' },
     ],
   },
   {
-    title: 'Settings',
+    id: 'settings',
+    title: msg('nav:sections.settings'),
     items: [
-      { to: '/settings', label: 'Preferences', icon: 'settings', end: true },
-      { to: '/settings/accessibility', label: 'Accessibility', icon: 'accessibility' },
-      { to: '/settings/data', label: 'Reset demo data', icon: 'reset' },
+      { to: '/settings', label: msg('nav:items.settings'), icon: 'settings', end: true },
+      {
+        to: '/settings/accessibility',
+        label: msg('nav:items.settingsAccessibility'),
+        icon: 'accessibility',
+      },
+      { to: '/settings/data', label: msg('nav:items.settingsData'), icon: 'reset' },
     ],
   },
 ];

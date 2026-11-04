@@ -1,14 +1,16 @@
 import { useId, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ContentViewProps } from '@/games/types';
+import { useText } from '@/i18n';
 import { itemTexts, ruleTexts } from '../content/format';
 import { findViolations } from '../content/solvers/violations';
 import type { AttentionChallenge, BugHunterKind } from '../content/types';
 
-const ARTIFACT: Record<BugHunterKind, string> = {
-  'sequence-anomaly': 'Log',
-  'schema-violation': 'Records',
-  'multi-rule': 'Log',
-  'code-rule': 'Program',
+const ARTIFACT: Record<BugHunterKind, 'log' | 'records' | 'program'> = {
+  'sequence-anomaly': 'log',
+  'schema-violation': 'records',
+  'multi-rule': 'log',
+  'code-rule': 'program',
 };
 
 const heading = 'mb-2 text-xs font-semibold tracking-wide text-slate-400 uppercase';
@@ -22,10 +24,12 @@ export function BugHunterContentView({
   phase,
   locate,
 }: ContentViewProps<AttentionChallenge>) {
+  const { t } = useTranslation('programming');
+  const tx = useText();
   const { content } = challenge;
   const rulesId = useId();
   const itemsId = useId();
-  const rules = ruleTexts(content);
+  const rules = ruleTexts(content).map(tx);
   const items = useMemo(() => itemTexts(content), [content]);
 
   const solution = phase === 'review' ? (locate?.solutionIndex ?? null) : null;
@@ -44,11 +48,12 @@ export function BugHunterContentView({
     <div className="flex flex-col gap-5">
       <section aria-labelledby={rulesId}>
         <h3 id={rulesId} className={heading}>
-          {numbered ? 'Rules — every item must satisfy all of them' : 'Rule'}
+          {numbered ? t('bugHunter.view.rules') : t('bugHunter.view.rule')}
         </h3>
         <ol className="space-y-1.5 rounded-lg border border-rose-400/40 bg-rose-400/5 p-3 text-sm text-slate-200">
           {rules.map((rule, i) => (
-            <li key={rule} className="flex gap-2">
+            // Rules are fixed for the challenge; the index is their identity (text changes with language).
+            <li key={i} className="flex gap-2">
               <span className="shrink-0 font-mono text-rose-300">R{i + 1}</span>
               <span>{rule}</span>
             </li>
@@ -58,7 +63,7 @@ export function BugHunterContentView({
 
       <section aria-labelledby={itemsId}>
         <h3 id={itemsId} className={heading}>
-          {ARTIFACT[content.kind]} · {items.length} items
+          {t(`bugHunter.view.artifact.${ARTIFACT[content.kind]}`, { count: items.length })}
         </h3>
         <ol className="flex flex-col gap-1">
           {items.map((text, i) => {
@@ -66,9 +71,14 @@ export function BugHunterContentView({
             const isPick = i === picked;
             const markers = [
               isBug && broken
-                ? `✗ breaks rule${numbered ? ` R${broken.ruleIndex + 1}` : ''}: ${broken.rule}`
+                ? numbered
+                  ? t('bugHunter.view.breaksNumbered', {
+                      number: broken.ruleIndex + 1,
+                      rule: tx(broken.rule),
+                    })
+                  : t('bugHunter.view.breaks', { rule: tx(broken.rule) })
                 : null,
-              isPick ? (isBug ? '✓ your pick' : 'your pick') : null,
+              isPick ? (isBug ? t('bugHunter.view.pickCorrect') : t('bugHunter.view.pick')) : null,
             ].filter((m): m is string => m !== null);
             const tone = isBug
               ? 'border-emerald-400/70 bg-emerald-400/10'
@@ -81,21 +91,28 @@ export function BugHunterContentView({
                 <button
                   type="button"
                   disabled={!interactive}
-                  aria-label={[`Item ${i + 1}: ${text}`, ...markers].join(' — ')}
+                  aria-label={[t('bugHunter.view.item', { item: i + 1, text }), ...markers].join(
+                    ' — ',
+                  )}
                   onClick={() => {
                     locate?.onLocate(i);
                   }}
-                  className={`flex w-full flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border px-2 py-1 text-left font-mono text-xs transition-colors focus-visible:outline-2 focus-visible:outline-sky-400 disabled:cursor-default sm:text-sm ${tone}`}
+                  className={`flex w-full flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border px-2 py-1 text-left text-xs transition-colors focus-visible:outline-2 focus-visible:outline-sky-400 disabled:cursor-default sm:text-sm ${tone}`}
                 >
-                  <span aria-hidden="true" className="w-6 shrink-0 text-right text-slate-500">
+                  <span
+                    aria-hidden="true"
+                    className="w-6 shrink-0 text-right font-mono text-slate-500"
+                  >
                     {i + 1}
                   </span>
-                  <span className="min-w-0 flex-1 break-words text-slate-100">{text}</span>
+                  <span className="min-w-0 flex-1 font-mono break-words text-slate-100">
+                    {text}
+                  </span>
                   {markers.map((marker) => (
                     <span
                       key={marker}
                       aria-hidden="true"
-                      className={`font-sans text-xs font-semibold ${isBug ? 'text-emerald-300' : 'text-rose-300'}`}
+                      className={`text-xs font-semibold ${isBug ? 'text-emerald-300' : 'text-rose-300'}`}
                     >
                       {marker}
                     </span>

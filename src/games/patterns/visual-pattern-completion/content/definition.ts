@@ -1,14 +1,15 @@
-import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { COLORS, SHAPES, type ColorName, type ShapeKind } from '@/games/kit/content';
+import { gameIdOf, joinText, msg, type Message, type TextValue } from '@/domain/shared';
+import { colorLabel, COLORS, SHAPES, type ColorName, type ShapeKind } from '@/games/kit/content';
 import {
   balancedDesign,
   figure,
+  figureKey,
   figureLabel,
   minimalPeriod,
   nextCandidates,
+  textChoice,
   turn,
   type Draft,
   type Figure,
@@ -24,12 +25,12 @@ export const VISUAL_PATTERN_ID = gameIdOf('visual-pattern-completion');
 const PLAIN_SHAPES: readonly ShapeKind[] = SHAPES.filter((s) => s !== 'triangle');
 const MAX_COUNT = 6;
 
-const cycleWords = (values: readonly string[]) => values.join(' → ');
+const T = 'patterns:visualPatternCompletion';
 
 interface Built {
   readonly items: Figure[];
   readonly answer: Figure;
-  readonly rule: string;
+  readonly rule: Message;
 }
 
 function buildRepeat(random: RandomGenerator, profile: VisualPatternProfile): Built {
@@ -53,7 +54,7 @@ function buildRepeat(random: RandomGenerator, profile: VisualPatternProfile): Bu
   return {
     items,
     answer: at(n),
-    rule: `The block ${cycleWords(block)} repeats again and again.`,
+    rule: msg(`${T}.rule.repeat`, { block: joinText(block, ' → ') }),
   };
 }
 
@@ -71,7 +72,10 @@ function buildRules(random: RandomGenerator, profile: VisualPatternProfile): Bui
   let n = Math.max(profile.shown, 2 * ps, 2 * pc);
   let count: (i: number) => number = () => 1;
   let angle: (i: number) => Rotation = () => 0;
-  const parts: string[] = [];
+  // Each part is a clause; the first one starts the sentence (capitalised in its own key).
+  const parts: Message[] = [];
+  const part = (name: string, values?: Record<string, TextValue>) =>
+    msg(`${T}.${parts.length === 0 ? 'partStart' : 'part'}.${name}`, values);
   if (profile.growth === 'count') {
     n = Math.min(n, MAX_COUNT - 1);
     if (2 * ps > n || 2 * pc > n) return null;
@@ -79,30 +83,39 @@ function buildRules(random: RandomGenerator, profile: VisualPatternProfile): Bui
     const start =
       step > 0 ? randomInt(random, 1, MAX_COUNT - n) : randomInt(random, n + 1, MAX_COUNT);
     count = (i) => start + step * i;
-    parts.push(`the number of shapes goes ${step > 0 ? 'up' : 'down'} by one each time`);
+    parts.push(part(step > 0 ? 'countUp' : 'countDown'));
   }
   if (rotation) {
     const step = pick(random, [90, -90]);
     const start = pick(random, [0, 90, 180, 270] as const);
     angle = (i) => turn(start, step * i);
-    parts.push(
-      `the arrow turns a quarter turn ${step > 0 ? 'clockwise' : 'anticlockwise'} each time`,
-    );
+    parts.push(part(step > 0 ? 'turnClockwise' : 'turnAnticlockwise'));
   }
   const shapeAt = (i: number) => shapes[(so + i) % shapes.length] as FigureShape;
   const colorAt = (i: number) => colors[(co + i) % colors.length] as ColorName;
   if (ps > 1)
     parts.push(
-      `shapes repeat every ${ps}: ${cycleWords(Array.from({ length: ps }, (_, i) => shapeAt(i)))}`,
+      part('shapes', {
+        count: ps,
+        cycle: joinText(
+          Array.from({ length: ps }, (_, i) => msg(`patterns:shared.shape.${shapeAt(i)}`)),
+          ' → ',
+        ),
+      }),
     );
   if (pc > 1)
     parts.push(
-      `colours repeat every ${pc}: ${cycleWords(Array.from({ length: pc }, (_, i) => colorAt(i)))}`,
+      part('colours', {
+        count: pc,
+        cycle: joinText(
+          Array.from({ length: pc }, (_, i) => colorLabel(colorAt(i))),
+          ' → ',
+        ),
+      }),
     );
   const at = (i: number) => figure(shapeAt(i), colorAt(i), count(i), angle(i));
   const items = Array.from({ length: n }, (_, i) => at(i));
-  const text = parts.join('; ');
-  return { items, answer: at(n), rule: `${text.charAt(0).toUpperCase()}${text.slice(1)}.` };
+  return { items, answer: at(n), rule: msg(`${T}.rule.parts`, { parts: joinText(parts, '; ') }) };
 }
 
 /**
@@ -125,8 +138,8 @@ export function solveRow(items: readonly Figure[]): Figure | null {
     counts[0] ?? 1,
     angles[0] as Rotation,
   );
-  const whole = minimalPeriod(items.map((f) => figureLabel(f)));
-  if (whole !== null && figureLabel(items[items.length - whole] as Figure) !== figureLabel(next))
+  const whole = minimalPeriod(items.map((f) => figureKey(f)));
+  if (whole !== null && figureKey(items[items.length - whole] as Figure) !== figureKey(next))
     return null;
   return next;
 }
@@ -144,7 +157,7 @@ function draft(random: RandomGenerator, profile: VisualPatternProfile) {
     if (built === null) return null;
     const { items, answer } = built;
     const solved = solveRow(items);
-    if (solved === null || figureLabel(solved) !== figureLabel(answer)) return null;
+    if (solved === null || figureKey(solved) !== figureKey(answer)) return null;
     const varies = (values: readonly unknown[]) => new Set(values).size > 1;
     const shapes = items.map((f) => f.shape);
     const colors = items.map((f) => f.color);
@@ -162,17 +175,17 @@ function draft(random: RandomGenerator, profile: VisualPatternProfile) {
         ? { rotation: others(angles, answer.rotation, [0, 90, 180, 270] as Rotation[]) }
         : {}),
     });
-    const key = (f: Figure) => figureLabel(f);
+    const key = (f: Figure) => figureKey(f);
     const options =
       balancedDesign(random, answer, alternatives(false), profile.options, key) ??
       balancedDesign(random, answer, alternatives(true), profile.options, key);
     if (options === null) return null;
-    const [right, ...wrong] = options.map(key);
+    const [right, ...wrong] = options.map((f) => figureLabel(f));
     return {
-      prompt: 'What comes next in the row?',
+      prompt: msg(`${T}.prompt`),
       content: { kind: profile.kind, items },
-      response: singleChoice(random, right as string, wrong),
-      explanation: `${built.rule} So the next one is ${figureLabel(answer)}.`,
+      response: textChoice(random, right as Message, wrong),
+      explanation: msg(`${T}.explanation`, { rule: built.rule, answer: figureLabel(answer) }),
       skills:
         profile.kind === 'repeat'
           ? ['pattern-recognition', 'sequential-thinking']
@@ -183,10 +196,9 @@ function draft(random: RandomGenerator, profile: VisualPatternProfile) {
 
 export const visualPatternGame: GameDefinition<VisualPatternChallenge, VisualPatternProfile> = {
   id: VISUAL_PATTERN_ID,
-  name: 'Visual Pattern Completion',
-  tagline: 'What comes next in the row?',
-  description:
-    'A row of coloured shapes follows a pattern: a block that repeats, a number of shapes that grows, an arrow that turns, or shapes and colours that cycle separately. Choose the figure that comes next.',
+  name: msg('patterns:visualPatternCompletion.name'),
+  tagline: msg('patterns:visualPatternCompletion.tagline'),
+  description: msg('patterns:visualPatternCompletion.description'),
   area: 'patterns',
   skills: ['pattern-recognition', 'sequential-thinking', 'abstraction'],
   meta: {
@@ -197,16 +209,15 @@ export const visualPatternGame: GameDefinition<VisualPatternChallenge, VisualPat
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each row counts as correct when you choose the figure that continues it. Your result is the share of rows continued correctly; there is no time limit.',
+    scoringSummary: msg('patterns:visualPatternCompletion.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Look at the row from left to right and find what repeats or changes.',
-    'Check each feature on its own: shape, colour, how many, and which way an arrow points.',
-    'Choose the figure that comes next. Keys 1 to 8 pick an option.',
+    msg('patterns:visualPatternCompletion.instructions.1'),
+    msg('patterns:visualPatternCompletion.instructions.2'),
+    msg('patterns:visualPatternCompletion.instructions.3'),
   ],
-  simpleInstructions: 'Find the pattern and pick what comes next.',
+  simpleInstructions: msg('patterns:visualPatternCompletion.simpleInstructions'),
   levels: VISUAL_PATTERN_LEVELS,
   generate({ identity, profile, random }) {
     return { ...identity, ...draft(random, profile), timing: profile.timing };

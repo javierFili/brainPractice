@@ -1,0 +1,95 @@
+{
+  "protocols": {
+    "quick": {
+      "name": "Cognitive Assessment · quick",
+      "title": "Quick",
+      "summary": "One short pass over memory, logic, attention, speed and patterns.",
+      "start": "Start quick assessment"
+    },
+    "standard": {
+      "name": "Cognitive Assessment · standard",
+      "title": "Standard",
+      "summary": "More challenges per area, including spatial rotation and position memory: a steadier result.",
+      "start": "Start standard assessment"
+    },
+    "programming": {
+      "name": "Programming Cognitive Assessment",
+      "title": "Programming",
+      "summary": "The five areas measured with code-based tasks, for the programming route.",
+      "start": "Start programming assessment"
+    }
+  },
+  "page": {
+    "eyebrow": "Assessment",
+    "title": "Cognitive Assessment",
+    "description": "A structured run through several kinds of task that produces a recreational performance profile. Compare it only with your own earlier runs of the same protocol.",
+    "chooseLength": "Choose a length",
+    "protocol": "Assessment protocol",
+    "length_one": "{{count}} challenge · {{minutes}} min",
+    "length_other": "{{count}} challenges · {{minutes}} min",
+    "howItWorks": "How it works",
+    "section": "{{game}} · levels {{levels}}",
+    "structureNote": "The same games, levels and number of challenges every time, so runs of one protocol can be compared. Harder levels weigh more. Each round explains its rules; rounds do not count toward level records.",
+    "missing": "Not available: missing games {{games}}."
+  },
+  "flow": {
+    "unavailable": "This assessment step is not available.",
+    "area": "{{area}} · level {{level}}",
+    "round": "Round {{round}} of {{total}}",
+    "progress": "Assessment progress",
+    "skipRound": "Skip round (counts as unsolved)"
+  },
+  "disclaimer": {
+    "title": "What this is — and is not",
+    "what": "This is a recreational self-evaluation tool. Scores describe how you performed on these specific exercises: accuracy and pace, with harder levels weighing more. They are based on few challenges, carry a wide margin and are not compared with population norms.",
+    "not": "It is <strong>not</strong> an IQ test, a psychometric instrument or a clinical or professional diagnosis, and it should not be used for hiring or any consequential decision."
+  },
+  "history": {
+    "earlierProtocol": "Earlier protocol",
+    "empty": "No assessment yet.",
+    "take": "Take the assessment",
+    "title": "Past results",
+    "description": "Each run is compared only with your previous run of the same protocol.",
+    "same": "same as last run",
+    "delta": "{{delta}} vs. last run"
+  },
+  "profilePage": {
+    "title": "My performance profile",
+    "description": "Your most recent assessment, area by area. A recreational profile of these activities — not a measure of intelligence or health.",
+    "index": "index {{value}}/100",
+    "keepPractising": "An area you can keep practising:",
+    "seeGames": "See its games"
+  },
+  "result": {
+    "eyebrow": "Performance Profile",
+    "index": "Performance index:",
+    "summary_one": "{{band}} overall · ±{{margin}} points · {{answered}} of {{count}} challenge answered · {{duration}}",
+    "summary_other": "{{band}} overall · ±{{margin}} points · {{answered}} of {{count}} challenges answered · {{duration}}",
+    "caveat_one": "With {{count}} challenge the margin is wide: read these numbers as a rough starting point for choosing what to train, not as a precise measurement. Skipped challenges count as unsolved. This is an internal index of this platform — not an IQ score, not a clinical measure, and not compared with any population.",
+    "caveat_other": "With {{count}} challenges the margin is wide: read these numbers as a rough starting point for choosing what to train, not as a precise measurement. Skipped challenges count as unsolved. This is an internal index of this platform — not an IQ score, not a clinical measure, and not compared with any population.",
+    "byArea": "By area",
+    "caption": "Cognitive score per area, 0 to 100",
+    "columns": {
+      "area": "Area",
+      "score": "Score",
+      "band": "Band",
+      "evidence": "Evidence"
+    },
+    "notMeasured": "Not measured",
+    "skipped": "Skipped — counts as 0",
+    "bands": {
+      "developing": "Room to practise",
+      "solid": "Steady",
+      "strong": "Strong",
+      "exceptional": "Very strong"
+    },
+    "evidence": "±{{margin}} · {{answered}}/{{items}} answered",
+    "next": {
+      "title": "What to train next",
+      "areas": "Your strongest area was <strong>{{strongest}}</strong>. The biggest opportunity is <strong>{{weakest}}</strong>.",
+      "train": "Train {{game}}",
+      "browse": "Browse games",
+      "retake": "Retake assessment"
+    }
+  }
+}

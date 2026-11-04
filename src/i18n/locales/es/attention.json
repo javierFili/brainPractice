@@ -1,0 +1,601 @@
+{
+  "shared": {
+    "ell": "forma de L",
+    "colouredEll": "forma de L $t(kit:colorForm.f.{{color}})",
+    "mirrored": "en espejo",
+    "turn": {
+      "0": "sin girar",
+      "90": "con giro a la derecha",
+      "180": "boca abajo",
+      "270": "con giro a la izquierda"
+    },
+    "inLanguage": "{{es}}",
+    "colorPlural": {
+      "m": {
+        "red": "rojos",
+        "orange": "naranjas",
+        "yellow": "amarillos",
+        "green": "verdes",
+        "blue": "azules",
+        "purple": "morados"
+      },
+      "f": {
+        "red": "rojas",
+        "orange": "naranjas",
+        "yellow": "amarillas",
+        "green": "verdes",
+        "blue": "azules",
+        "purple": "moradas"
+      }
+    },
+    "shapes": {
+      "circle": "círculos",
+      "square": "cuadrados",
+      "triangle": "triángulos",
+      "diamond": "rombos",
+      "star": "estrellas",
+      "hexagon": "hexágonos",
+      "heart": "corazones",
+      "cross": "cruces",
+      "ell": "formas de L"
+    },
+    "colouredShapes": {
+      "circle": "círculos $t(attention:shared.colorPlural.m.{{color}})",
+      "square": "cuadrados $t(attention:shared.colorPlural.m.{{color}})",
+      "triangle": "triángulos $t(attention:shared.colorPlural.m.{{color}})",
+      "diamond": "rombos $t(attention:shared.colorPlural.m.{{color}})",
+      "star": "estrellas $t(attention:shared.colorPlural.f.{{color}})",
+      "hexagon": "hexágonos $t(attention:shared.colorPlural.m.{{color}})",
+      "heart": "corazones $t(attention:shared.colorPlural.m.{{color}})",
+      "cross": "cruces $t(attention:shared.colorPlural.f.{{color}})",
+      "ell": "formas de L $t(attention:shared.colorPlural.f.{{color}})"
+    },
+    "shapeCount": {
+      "circle_one": "{{count}} círculo",
+      "circle_other": "{{count}} círculos",
+      "square_one": "{{count}} cuadrado",
+      "square_other": "{{count}} cuadrados",
+      "triangle_one": "{{count}} triángulo",
+      "triangle_other": "{{count}} triángulos",
+      "diamond_one": "{{count}} rombo",
+      "diamond_other": "{{count}} rombos",
+      "star_one": "{{count}} estrella",
+      "star_other": "{{count}} estrellas",
+      "hexagon_one": "{{count}} hexágono",
+      "hexagon_other": "{{count}} hexágonos",
+      "heart_one": "{{count}} corazón",
+      "heart_other": "{{count}} corazones",
+      "cross_one": "{{count}} cruz",
+      "cross_other": "{{count}} cruces",
+      "ell_one": "{{count}} forma de L",
+      "ell_other": "{{count}} formas de L"
+    },
+    "colouredShapeCount": {
+      "circle_one": "{{count}} círculo $t(kit:colorForm.m.{{color}})",
+      "circle_other": "{{count}} círculos $t(attention:shared.colorPlural.m.{{color}})",
+      "square_one": "{{count}} cuadrado $t(kit:colorForm.m.{{color}})",
+      "square_other": "{{count}} cuadrados $t(attention:shared.colorPlural.m.{{color}})",
+      "triangle_one": "{{count}} triángulo $t(kit:colorForm.m.{{color}})",
+      "triangle_other": "{{count}} triángulos $t(attention:shared.colorPlural.m.{{color}})",
+      "diamond_one": "{{count}} rombo $t(kit:colorForm.m.{{color}})",
+      "diamond_other": "{{count}} rombos $t(attention:shared.colorPlural.m.{{color}})",
+      "star_one": "{{count}} estrella $t(kit:colorForm.f.{{color}})",
+      "star_other": "{{count}} estrellas $t(attention:shared.colorPlural.f.{{color}})",
+      "hexagon_one": "{{count}} hexágono $t(kit:colorForm.m.{{color}})",
+      "hexagon_other": "{{count}} hexágonos $t(attention:shared.colorPlural.m.{{color}})",
+      "heart_one": "{{count}} corazón $t(kit:colorForm.m.{{color}})",
+      "heart_other": "{{count}} corazones $t(attention:shared.colorPlural.m.{{color}})",
+      "cross_one": "{{count}} cruz $t(kit:colorForm.f.{{color}})",
+      "cross_other": "{{count}} cruces $t(attention:shared.colorPlural.f.{{color}})",
+      "ell_one": "{{count}} forma de L $t(kit:colorForm.f.{{color}})",
+      "ell_other": "{{count}} formas de L $t(attention:shared.colorPlural.f.{{color}})"
+    }
+  },
+  "changeDetection": {
+    "name": "Detección de cambios",
+    "tagline": "¿La misma escena… o no?",
+    "description": "Observa una pequeña escena de figuras. Desaparece un momento y vuelve. ¿Ha cambiado algo? Aproximadamente la mitad de las veces no cambia nada. Los cambios se vuelven más finos y las escenas más llenas a medida que avanzas.",
+    "scoringSummary": "Cada intento cuenta como correcto si respondes «sí» ante una escena cambiada o «no» ante una igual; cerca de la mitad no cambian, así que responder al azar acierta alrededor del 50 %. Responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Algunos cambios son solo de color (desde el nivel 6, a un color cercano). La escena es una lista de casillas con nombre, así que un lector de pantalla puede comparar las dos miradas, pero la primera tiene tiempo limitado (el doble en modo relajado).",
+    "instructions": {
+      "look": "Mira toda la escena mientras se muestra (pulsa «Estoy listo» para avanzar antes).",
+      "blank": "Tras una breve pausa en blanco, la escena vuelve.",
+      "answer": "Responde «sí» si algo cambió (color, forma, dirección, posición, un elemento que aparece o desaparece) y «no» si es idéntica.",
+      "keys": "Teclas: 1 = sí, 2 = no. Aproximadamente la mitad de las escenas no cambian."
+    },
+    "simpleInstructions": "Mira, espera y vuelve a mirar: ¿ha cambiado algo?",
+    "levels": {
+      "1": "3 elementos: ¿apareció, desapareció o cambió de color alguno?",
+      "2": "4 elementos; las formas también pueden cambiar.",
+      "3": "5 elementos en un tablero más grande: cambios de color o de forma.",
+      "4": "6 elementos; uno también puede moverse.",
+      "5": "6 figuras que apuntan: una puede girar.",
+      "6": "7 elementos con cambios finos (color cercano, contorno parecido).",
+      "7": "8 elementos; cualquier cambio fino.",
+      "8": "9 elementos, con una pausa más larga entre medias.",
+      "9": "10 elementos, primera mirada más corta.",
+      "10": "12 elementos, mirada corta, los cambios más finos."
+    },
+    "kinds": {
+      "none": "Sin cambios",
+      "appear": "Elemento que aparece o desaparece",
+      "move": "Elemento movido",
+      "color": "Cambio de color",
+      "shape": "Cambio de forma",
+      "turn": "Elemento girado"
+    },
+    "options": {
+      "yes": "Sí, algo ha cambiado",
+      "no": "No, es igual"
+    },
+    "prompt": "¿Ha cambiado algo?",
+    "studyPrompt": "Mira la escena: desaparecerá un momento.",
+    "explanation": {
+      "changed": "Sí: {{changes}}.",
+      "unchanged": "No: la segunda mirada era idéntica a la primera."
+    },
+    "change": "{{cell}}: {{before}} → {{after}}",
+    "empty": "vacía",
+    "view": {
+      "firstLook": "Primera mirada",
+      "secondLook": "Segunda mirada",
+      "noChange": "(sin cambios)",
+      "wait": "Espera…",
+      "blankBoard": "Tablero en blanco",
+      "changed": "cambiada"
+    }
+  },
+  "oddOneOut": {
+    "name": "El intruso",
+    "tagline": "Todas iguales… menos una.",
+    "description": "Una cuadrícula de figuras idénticas esconde exactamente una distinta. Encuéntrala. La diferencia empieza siendo un cambio claro de color y pasa a ser un contorno parecido, una figura girada o una L en espejo en cuadrículas más grandes.",
+    "scoringSummary": "Una cuadrícula cuenta como correcta cuando señalas la única figura distinta. Tu resultado es la proporción de cuadrículas resueltas; responder no tiene límite de tiempo.",
+    "accessibilityNotes": "En los niveles 1, 2 y 6 la diferencia es solo de color; cada casilla también tiene nombre (p. ej., «círculo rojo»), así que los lectores de pantalla pueden comparar nombres. Los niveles de orientación nombran la postura («con giro a la derecha», «en espejo»).",
+    "instructions": {
+      "1": "Todas las figuras de la cuadrícula son iguales salvo una.",
+      "2": "Encuentra la distinta y púlsala. Siempre hay exactamente una.",
+      "3": "Puede diferir en el color, el contorno, hacia dónde apunta o estar en espejo.",
+      "4": "Teclado: las flechas mueven entre casillas y Intro elige."
+    },
+    "simpleInstructions": "Encuentra la figura que es distinta y tócala.",
+    "levels": {
+      "1": "Encuentra la figura de otro color (3×3).",
+      "2": "Encuentra el color distinto en una cuadrícula mayor de 4×4.",
+      "3": "Ahora la intrusa tiene otra forma y el mismo color.",
+      "4": "Encuentra una figura de contorno parecido (cuadrado o rombo…).",
+      "5": "Misma forma, mismo color: una apunta hacia otro lado.",
+      "6": "Encuentra un color cercano (rojo o naranja…) entre 30.",
+      "7": "Una figura está girada solo un cuarto de vuelta (6×6).",
+      "8": "Una L está en espejo.",
+      "9": "Cualquier rasgo puede variar sutilmente: color, contorno, giro o espejo.",
+      "10": "Cualquier diferencia sutil entre 48 figuras."
+    },
+    "kinds": {
+      "color": "Color distinto",
+      "shape": "Forma distinta",
+      "turn": "Figura girada",
+      "mirror": "Figura en espejo"
+    },
+    "prompt": "Encuentra la figura que es distinta.",
+    "explanation": "En {{cell}} está la distinta: {{odd}}. Las demás: {{base}}. Cambia {{feature}}.",
+    "feature": {
+      "color": "el color",
+      "shape": "la forma",
+      "turn": "la orientación",
+      "mirror": "el reflejo (está en espejo)"
+    },
+    "view": {
+      "shapes": "Figuras"
+    }
+  },
+  "visualDifference": {
+    "name": "Encuentra las diferencias",
+    "tagline": "Busca las diferencias, casilla a casilla.",
+    "description": "Dos dibujos hechos de figuras parecen iguales, pero algunas casillas del de la derecha cambian. Marca cada diferencia en el dibujo de la derecha. El contador te dice cuántas hay.",
+    "scoringSummary": "Un par de dibujos cuenta como correcto cuando cada casilla marcada es una diferencia real. Tu resultado es la proporción de pares resueltos con exactitud; responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Algunas diferencias son solo de color (desde el nivel 6, colores cercanos como rojo y naranja). Cada casilla se nombra con su color, forma y postura, así que los lectores de pantalla pueden comparar los dos dibujos casilla a casilla.",
+    "instructions": {
+      "1": "Compara los dos dibujos casilla a casilla (en pantallas pequeñas, el de la derecha está debajo).",
+      "2": "Marca cada casilla del dibujo de la derecha que sea distinta y pulsa Comprobar.",
+      "3": "Una diferencia es un cambio de color, de forma, de hacia dónde apunta o una L en espejo.",
+      "4": "El contador muestra cuántas diferencias hay que encontrar."
+    },
+    "simpleInstructions": "Encuentra lo que cambia en el segundo dibujo y tócalo.",
+    "levels": {
+      "1": "Encuentra 1 diferencia entre dos dibujos de 3×3.",
+      "2": "Encuentra 2 diferencias en dibujos de 3×3.",
+      "3": "Encuentra 2 diferencias en dibujos más grandes de 4×4.",
+      "4": "Encuentra 3 diferencias en dibujos de 4×4.",
+      "5": "Ahora las figuras también pueden girar: 3 diferencias.",
+      "6": "Encuentra 3 diferencias sutiles en dibujos de 5×5.",
+      "7": "Encuentra 4 diferencias, incluidas L en espejo.",
+      "8": "Encuentra 4 diferencias sutiles de cualquier tipo.",
+      "9": "Encuentra 5 diferencias sutiles en dibujos de 6×6.",
+      "10": "Encuentra 6 diferencias sutiles en dibujos de 6×6 muy llenos."
+    },
+    "kinds": {
+      "plain": "Color y forma",
+      "oriented": "Con giros y espejos"
+    },
+    "prompt_one": "Marca la casilla del dibujo de la derecha que es distinta.",
+    "prompt_other": "Marca las {{count}} casillas del dibujo de la derecha que son distintas.",
+    "explanation": "Diferencias: {{differences}}.",
+    "difference": "{{cell}} ({{before}} → {{after}})",
+    "view": {
+      "leftPicture": "Dibujo de la izquierda",
+      "rightPicture": "Dibujo de la derecha",
+      "left": "Izquierda",
+      "rightHeading": "Derecha: marca las diferencias",
+      "leftCell": "izquierda",
+      "rightCell": "derecha"
+    }
+  },
+  "targetTracking": {
+    "name": "Sigue la carta",
+    "tagline": "No le quites el ojo a la carta.",
+    "description": "Se muestran unas cartas boca arriba y una (más adelante, dos) está marcada. Las cartas se tapan e intercambian sus lugares de dos en dos, y cada cambio se indica con una flecha. Después, señala dónde ha terminado la carta.",
+    "scoringSummary": "Una ronda cuenta como correcta cuando señalas la carta por la que se pregunta. Tu resultado es la proporción de rondas acertadas; los cambios van a un ritmo fijo y tranquilo, y responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Cada cambio también se anuncia como texto («las cartas 2 y 4 cambian de lugar»), uno cada segundo o más, y el ritmo baja en modo relajado. Nada se mueve ni parpadea.",
+    "instructions": {
+      "1": "Fíjate en la carta marcada antes de que se tapen las cartas.",
+      "2": "En cada paso, una flecha muestra dos cartas que cambian de lugar. Sigue la carta marcada.",
+      "3": "Cuando acaben los cambios, pulsa la carta donde está ahora.",
+      "4": "Desde el nivel 7, sigue dos cartas marcadas: la pregunta nombra una de ellas solo al final."
+    },
+    "simpleInstructions": "Mira cómo se cambian las cartas y encuentra la marcada.",
+    "levels": {
+      "1": "Sigue una carta durante 2 cambios entre 3 cartas.",
+      "2": "Sigue una carta durante 3 cambios.",
+      "3": "Cuatro cartas, 4 cambios.",
+      "4": "Cuatro cartas, 5 cambios más rápidos.",
+      "5": "Cinco cartas, 5 cambios.",
+      "6": "Cinco cartas, 6 cambios.",
+      "7": "Sigue dos cartas a la vez: te preguntarán por una.",
+      "8": "Dos cartas durante 7 cambios.",
+      "9": "Dos cartas entre 6, 8 cambios.",
+      "10": "Dos cartas entre 6, 10 cambios a buen ritmo."
+    },
+    "kinds": {
+      "single": "Una carta",
+      "double": "Dos cartas"
+    },
+    "prompt": {
+      "single": "Sigue la carta marcada y pulsa donde termine.",
+      "double": "Sigue las dos cartas marcadas. Al final te preguntarán por una de ellas."
+    },
+    "explanation": "La carta ({{item}}) pasó por {{path}}, así que terminó en la posición {{position}}.",
+    "view": {
+      "position": "posición {{position}}",
+      "followThis": "sigue esta carta",
+      "follow": "sigue",
+      "covered": "carta tapada",
+      "swapping": "cambiando",
+      "remember_one": "Recuerda la carta marcada: {{cards}}.",
+      "remember_other": "Recuerda las cartas marcadas: {{cards}}.",
+      "cardAt": "{{item}} en la posición {{position}}",
+      "swap": "Cambio {{step}} de {{total}}: las cartas {{a}} y {{b}} cambian de lugar.",
+      "swapDone": "Cambio {{step}} de {{total}} hecho.",
+      "ended": "Dónde acabaron las cartas.",
+      "where": "¿Dónde está ahora esta carta: {{item}}?",
+      "cards": "Cartas"
+    }
+  },
+  "distractorFiltering": {
+    "name": "Filtra las distracciones",
+    "tagline": "Solo los triángulos azules. Ignora el resto.",
+    "description": "Marca cada elemento que cumpla una regla como «triángulos azules», mientras los parecidos comparten el color o la forma. Las distracciones se parecen cada vez más al objetivo y, en niveles altos, decides tú cuándo los has encontrado todos.",
+    "scoringSummary": "Una cuadrícula cuenta como correcta cuando tus marcas coinciden con los objetivos: los objetivos sin marcar y las marcas erróneas son errores. Desde el nivel 8 se tolera un error. Tu resultado es la proporción de cuadrículas resueltas; responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Las reglas que nombran un color requieren visión del color para jugar visualmente; cada elemento también tiene nombre («triángulo morado»), así que un lector de pantalla puede filtrar por nombre. Las formas siempre se distinguen también por el contorno.",
+    "instructions": {
+      "1": "Lee la regla sobre la cuadrícula: nombra una forma, un color o ambos.",
+      "2": "Marca cada elemento que cumpla exactamente la regla y pulsa Comprobar.",
+      "3": "Los parecidos solo cumplen parte de la regla: un corazón azul no es un triángulo azul.",
+      "4": "Desde el nivel 7 no se indica cuántos hay; desde el nivel 8 se permite un fallo."
+    },
+    "simpleInstructions": "Toca todas las figuras que cumplen la regla, y solo esas.",
+    "levels": {
+      "1": "Marca todos los elementos de una forma.",
+      "2": "Marca todos los elementos de un color.",
+      "3": "Dos rasgos a la vez: forma correcta Y color correcto.",
+      "4": "Más parecidos comparten un rasgo con el objetivo.",
+      "5": "Casi todas las distracciones comparten un rasgo.",
+      "6": "Señuelos del color o contorno más cercano.",
+      "7": "No se indica cuántos objetivos hay: decide cuándo has terminado.",
+      "8": "7 objetivos entre señuelos parecidos (se permite un fallo).",
+      "9": "8 objetivos entre 42 elementos (se permite un fallo).",
+      "10": "9 objetivos entre 48 señuelos parecidos (se permite un fallo)."
+    },
+    "kinds": {
+      "shape": "Una forma",
+      "color": "Un color",
+      "conjunction": "Forma y color"
+    },
+    "phrase": {
+      "shape": "{{shapes}} (de cualquier color)",
+      "color": "figuras $t(attention:shared.colorPlural.f.{{color}}) (de cualquier forma)"
+    },
+    "prompt": {
+      "exact_one": "Marca el único elemento que cumple: {{phrase}}.",
+      "exact_other": "Marca los {{count}} elementos que cumplen: {{phrase}}.",
+      "free": "Marca todos los elementos que cumplen: {{phrase}}. Tú decides cuántos hay.",
+      "freeWithSlip": "Marca todos los elementos que cumplen: {{phrase}}. Tú decides cuántos hay. Se permite un fallo."
+    },
+    "explanation_one": "Había {{count}} en total: {{phrase}}.",
+    "explanation_other": "Había {{count}} en total: {{phrase}}.",
+    "view": {
+      "rule": "Regla:",
+      "items": "Elementos"
+    }
+  },
+  "symbolCounting": {
+    "name": "Cuenta símbolos",
+    "tagline": "¿Cuántos hay… exactamente?",
+    "description": "Cuenta cuántas veces aparece un símbolo en un campo de figuras. Los parecidos que solo cambian en color, contorno, dirección o reflejo no se cuentan. Los campos llegan a 48 elementos.",
+    "scoringSummary": "Un campo cuenta como correcto cuando tu número es exacto. Tu resultado es la proporción de campos contados con exactitud; responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Algunos parecidos solo cambian de color. El campo también es una lista de elementos con nombre («triángulo azul, con giro a la izquierda»), así que un lector de pantalla puede contar por nombre.",
+    "instructions": {
+      "1": "El símbolo que hay que contar aparece sobre el campo.",
+      "2": "Cuenta cada copia exacta: misma forma, mismo color, misma dirección.",
+      "3": "Los parecidos no cuentan. Escribe el número y pulsa Intro.",
+      "4": "Consejo: ve fila por fila para no contar nada dos veces."
+    },
+    "simpleInstructions": "Cuenta cuántas veces ves el símbolo de arriba.",
+    "levels": {
+      "1": "Cuenta un símbolo entre otros claramente distintos.",
+      "2": "La misma forma en otros colores no se cuenta.",
+      "3": "Parecidos en color o forma, 25 elementos.",
+      "4": "Parecidos cercanos: color próximo, contorno similar.",
+      "5": "Cuenta solo las figuras que apuntan en la dirección correcta.",
+      "6": "Un campo de 6×6 con parecidos cercanos.",
+      "7": "Dirección y colores próximos, 36 elementos.",
+      "8": "Cuenta una L entre L giradas y en espejo.",
+      "9": "48 elementos, parecidos de todo tipo.",
+      "10": "48 elementos, todo parecidos, hasta 15 objetivos."
+    },
+    "kinds": {
+      "plain": "Relleno distinto",
+      "lookalike": "Parecidos en color y forma",
+      "oriented": "Parecidos en dirección"
+    },
+    "prompt": "¿Cuántas veces aparece este símbolo: {{mark}}?",
+    "explanation_one": "Hay {{count}} copia exacta de este símbolo: {{mark}} (resaltada).",
+    "explanation_other": "Hay {{count}} copias exactas de este símbolo: {{mark}} (resaltadas).",
+    "view": {
+      "count": "Cuenta:",
+      "field": "Campo"
+    }
+  },
+  "sustainedAttention": {
+    "name": "Desafío de atención sostenida",
+    "tagline": "No pierdas el hilo.",
+    "description": "Las letras aparecen una a una a un ritmo constante. Pulsa «¡Ya!» (o Espacio) cada vez que aparezca el objetivo; más adelante, solo cuando una X llegue justo después de una A. Las secuencias crecen de 15 a 45 letras.",
+    "scoringSummary": "Cada secuencia se puntúa por los fallos más las pulsaciones erróneas; cuenta como correcta si ese total está dentro de la tolerancia indicada (de 0 a 2, según el nivel). Tu resultado es la proporción de secuencias dentro de la tolerancia.",
+    "accessibilityNotes": "Las letras cambian a un ritmo fijo (0,8–1,5 s cada una, un 50 % más lento en modo relajado) y se anuncian a los lectores de pantalla; nada parpadea. Una pulsación cuenta para la letra que está en pantalla en ese momento.",
+    "instructions": {
+      "1": "Las letras aparecen una a una en el recuadro. Sigue mirando hasta que acabe la secuencia.",
+      "2": "Pulsa «¡Ya!» o Espacio mientras la letra objetivo esté en pantalla.",
+      "3": "Desde el nivel 5: pulsa solo ante una X que llegue justo después de una A.",
+      "4": "La secuencia se envía sola al final. Una pulsación cuenta para la letra mostrada en ese momento."
+    },
+    "simpleInstructions": "Pulsa el botón cada vez que veas la X.",
+    "levels": {
+      "1": "Pulsa ante cada X en una secuencia de 15 letras.",
+      "2": "20 letras, un poco más rápido.",
+      "3": "Llegan letras parecidas (K, Y).",
+      "4": "30 letras con letras parecidas.",
+      "5": "Pulsa ante una X solo si llega justo después de una A.",
+      "6": "A y luego X, con más señuelos.",
+      "7": "A y luego X, 35 letras.",
+      "8": "A y luego X entre letras parecidas.",
+      "9": "40 letras, a buen ritmo.",
+      "10": "45 letras, la vigilancia más larga."
+    },
+    "kinds": {
+      "single": "Un solo objetivo",
+      "sequence": "Objetivo tras la señal"
+    },
+    "prompt": {
+      "single": "Pulsa «¡Ya!» ante cada {{target}}.",
+      "sequence": "Pulsa «¡Ya!» ante una {{target}} justo después de una {{cue}}."
+    },
+    "slips_one": "Se permite hasta {{count}} fallo.",
+    "slips_other": "Se permiten hasta {{count}} fallos.",
+    "explanation": "Había {{count}} objetivos, en las posiciones {{positions}}.",
+    "view": {
+      "rule": {
+        "single": "Pulsa ante cada {{target}}.",
+        "sequence": "Pulsa ante una {{target}} justo después de una {{cue}}."
+      },
+      "legend": "La secuencia: ✓ objetivo pulsado · • objetivo perdido · ✗ pulsación errónea",
+      "stream": "La secuencia",
+      "letter": "letra {{position}}, {{letter}}",
+      "target": "objetivo",
+      "pressed": "pulsaste",
+      "done": "Terminado",
+      "getReady": "Prepárate…",
+      "letters_one": "{{count}} letra",
+      "letters_other": "{{count}} letras",
+      "recorded": "pulsación registrada",
+      "now": "¡Ya! (Espacio)"
+    }
+  },
+  "dualTask": {
+    "name": "Atención dividida",
+    "tagline": "Dos cuentas a la vez.",
+    "description": "Aparecen, uno a uno, pares de un número y una figura. Lleva dos cuentas a la vez —por ejemplo, números pares y estrellas— y elige la opción con las dos cuentas correctas.",
+    "scoringSummary": "Una secuencia cuenta como correcta cuando la opción elegida tiene las dos cuentas bien. Cada cuenta tiene dos valores candidatos, así que acertar solo una deja un 50 % de azar. Responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Desde el nivel 6, la cuenta de figuras nombra un color. Cada par se anuncia a los lectores de pantalla («7, estrella azul»); el ritmo (0,9–1,6 s por par) se duplica en modo relajado.",
+    "instructions": {
+      "1": "Lee las dos reglas antes de empezar: una sobre números y otra sobre figuras.",
+      "2": "Los pares aparecen uno a uno. Lleva dos cuentas en la cabeza.",
+      "3": "Un par puede contar para las dos reglas, para una o para ninguna.",
+      "4": "Al final, elige la opción con las dos cuentas correctas (teclas 1–4)."
+    },
+    "simpleInstructions": "Cuenta dos cosas a la vez y elige la pareja de números correcta.",
+    "levels": {
+      "1": "Cuenta números pares y estrellas en 6 pares.",
+      "2": "Dos cuentas en 8 pares.",
+      "3": "10 pares; ahora las opciones se diferencian en uno.",
+      "4": "Llegan figuras parecidas.",
+      "5": "Nueva regla numérica: cuenta los números mayores que 5.",
+      "6": "Solo cuentan las figuras de un color.",
+      "7": "Números de dos cifras mayores que 50, figuras de colores.",
+      "8": "Números pares de dos cifras, 16 pares.",
+      "9": "18 pares a buen ritmo.",
+      "10": "20 pares, números impares de dos cifras."
+    },
+    "kinds": {
+      "parity": "Par/impar + figuras",
+      "threshold": "Números grandes + figuras"
+    },
+    "numbers": {
+      "even": "números pares",
+      "odd": "números impares",
+      "above": "números mayores que {{threshold}}"
+    },
+    "numberCount": {
+      "even_one": "{{count}} número par",
+      "even_other": "{{count}} números pares",
+      "odd_one": "{{count}} número impar",
+      "odd_other": "{{count}} números impares",
+      "above_one": "{{count}} número mayor que {{threshold}}",
+      "above_other": "{{count}} números mayores que {{threshold}}"
+    },
+    "prompt": "¿Qué opción tiene las dos cuentas correctas?",
+    "studyPrompt": "Cuenta dos cosas: {{numbers}} y {{shapes}}.",
+    "explanation": "Había {{numbers}} y {{shapes}}.",
+    "view": {
+      "rules": "Cuenta: {{numbers}} · {{shapes}}",
+      "getReady": "Prepárate…",
+      "done": "Terminado: prepárate para responder",
+      "pairs_one": "{{count}} par",
+      "pairs_other": "{{count}} pares",
+      "legend": "La secuencia (# = número contado, ★ = figura contada):",
+      "stream": "La secuencia",
+      "counted": "(contado)"
+    }
+  },
+  "complexVisualInspection": {
+    "name": "Inspección visual compleja",
+    "tagline": "Deben coincidir los tres rasgos.",
+    "description": "Inspecciona una cuadrícula densa y marca cada elemento que cumpla una regla con tres rasgos a la vez: forma, color y dirección (más adelante también el reflejo y «cualquier color salvo…»). La mayoría de las distracciones fallan en un solo rasgo.",
+    "scoringSummary": "Una cuadrícula cuenta como correcta cuando tus marcas coinciden con los objetivos (los objetivos sin marcar y las marcas erróneas son errores); desde el nivel 8 se tolera un error. Tu resultado es la proporción de cuadrículas resueltas; responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Las reglas nombran un color, así que jugar visualmente requiere visión del color; cada elemento también se nombra con color, forma y postura («forma de L verde, en espejo, con giro a la izquierda») para los lectores de pantalla. La dirección se juzga sobre la figura dibujada, lo que exige mirar con atención.",
+    "instructions": {
+      "1": "Lee la regla: una forma, una dirección y un color deben coincidir TODOS.",
+      "2": "La mayoría de los elementos fallan solo en una parte de la regla: revisa cada rasgo.",
+      "3": "«En espejo» significa volteado de izquierda a derecha; «con giro a la derecha» es un cuarto de vuelta en el sentido de las agujas del reloj.",
+      "4": "Marca cada coincidencia y pulsa Comprobar. Desde el nivel 7 decides tú cuántas hay."
+    },
+    "simpleInstructions": "Toca las figuras que cumplen la regla en todo.",
+    "levels": {
+      "1": "Forma, color y dirección: triángulos hacia arriba o hacia abajo.",
+      "2": "Tres formas, dos direcciones.",
+      "3": "Las cuatro direcciones.",
+      "4": "Más colores, más parecidos.",
+      "5": "Formas de L: también cuenta si están en espejo o no.",
+      "6": "Señuelos del color más cercano, 6×6.",
+      "7": "Ya no se indica cuántos objetivos hay.",
+      "8": "Color negado: cualquier color salvo uno (se permite un fallo).",
+      "9": "Regla negada con formas de L en espejo por todas partes.",
+      "10": "La cuadrícula más densa: 48 elementos, cualquier regla."
+    },
+    "kinds": {
+      "positive": "Forma, color y dirección",
+      "negated": "Cualquier color salvo uno"
+    },
+    "rule": {
+      "negated": "{{shapes}}, de cualquier color salvo {{color}}"
+    },
+    "prompt": {
+      "exact_one": "Marca el único que cumple: {{rule}}.",
+      "exact_other": "Marca los {{count}} que cumplen: {{rule}}.",
+      "free": "Marca todos los que cumplen: {{rule}}. Tú decides cuántos hay.",
+      "freeWithSlip": "Marca todos los que cumplen: {{rule}}. Tú decides cuántos hay. Se permite un fallo."
+    },
+    "explanation": "{{count}} elementos cumplían todos los rasgos ({{rule}}). El resto difería en forma, color o dirección.",
+    "view": {
+      "rule": "Regla:",
+      "ruleExample": "Regla (p. ej.):",
+      "items": "Elementos"
+    }
+  },
+  "errorDetection": {
+    "name": "Detección de errores",
+    "tagline": "Revisa: exactamente una cosa está mal.",
+    "description": "Revisa listas cotidianas —una lista ordenada, un tique de compra, un horario del día, una lista de palabras, códigos copiados— y señala la única fila que está mal. Los errores se hacen más pequeños y las listas más largas.",
+    "scoringSummary": "Una lista cuenta como correcta cuando señalas la única fila errónea. Tu resultado es la proporción de listas resueltas; responder no tiene límite de tiempo.",
+    "accessibilityNotes": "Los tiques y horarios requieren cálculos sencillos (multiplicar cantidades pequeñas, sumar precios, restar horas). Las listas de palabras usan palabras comunes en español.",
+    "instructions": {
+      "1": "Lee la regla sobre la lista: dice lo que debe cumplir cada fila.",
+      "2": "Revisa las filas una a una. Exactamente una incumple la regla.",
+      "3": "Pulsa esa fila (o muévete con las flechas y pulsa Intro).",
+      "4": "Desde el nivel 7 los errores son pequeños: 10 céntimos, 5 minutos, un 0 en lugar de una O."
+    },
+    "simpleInstructions": "Una línea de la lista está mal. Encuéntrala y tócala.",
+    "levels": {
+      "1": "Encuentra el número fuera de orden en una lista corta.",
+      "2": "Encuentra la palabra mal escrita.",
+      "3": "Revisa un tique de compra: el total de una línea está mal.",
+      "4": "Revisa códigos copiados.",
+      "5": "Revisa un horario: una duración está mal.",
+      "6": "Listas variadas, 7 filas.",
+      "7": "Tiques con total general; errores pequeños.",
+      "8": "Códigos con caracteres parecidos (0 y O, 8 y B).",
+      "9": "Listas variadas con errores pequeños, 9 filas.",
+      "10": "Listas variadas con errores pequeños, 10 filas."
+    },
+    "kinds": {
+      "sorted": "Lista ordenada",
+      "receipt": "Tique",
+      "schedule": "Horario",
+      "spelling": "Ortografía",
+      "copy": "Códigos copiados"
+    },
+    "prompt": "¿Qué fila está mal?",
+    "rule": {
+      "sortedNumbers": "Los números deberían ir de menor a mayor. Uno está fuera de lugar.",
+      "sortedWords": "Las palabras deberían estar en orden alfabético. Una está fuera de lugar.",
+      "receipt": "Cada línea: cantidad × precio = total de la línea. Una línea está mal.",
+      "receiptWithTotal": "Cada línea: cantidad × precio = total de la línea, y TOTAL es la suma de las líneas. Una fila está mal.",
+      "schedule": "Cada franja indica su duración en minutos. Una duración no coincide con sus horas.",
+      "spelling": "Todas son palabras comunes en español. Una está mal escrita.",
+      "copy": "Cada código de la derecha debería ser una copia exacta del de la izquierda. Una copia está mal."
+    },
+    "row": {
+      "receipt": "{{quantity}} × {{item}} a {{price}} = {{total}}",
+      "total": "TOTAL = {{total}}",
+      "schedule": "{{start}}–{{end}}  {{activity}} ({{minutes}} min)"
+    },
+    "activity": {
+      "reading": "Lectura",
+      "maths": "Matemáticas",
+      "lunch": "Comida",
+      "music": "Música",
+      "walk": "Paseo",
+      "art": "Arte",
+      "break": "Descanso",
+      "science": "Ciencias",
+      "meeting": "Reunión",
+      "emails": "Correos",
+      "gym": "Gimnasio",
+      "cooking": "Cocina",
+      "phoneCall": "Llamada",
+      "shopping": "Compras"
+    },
+    "explanation": {
+      "sorted": "«{{value}}» está fuera de lugar: sin ese elemento, la lista está en orden.",
+      "total": "Las líneas suman {{sum}}, pero TOTAL dice {{total}}.",
+      "line": "{{quantity}} × {{price}} = {{right}}, no {{wrong}}.",
+      "schedule_one": "De {{start}} a {{end}} hay {{count}} minuto, no {{stated}}.",
+      "schedule_other": "De {{start}} a {{end}} hay {{count}} minutos, no {{stated}}.",
+      "spelling": "«{{wrong}}» debería escribirse «{{right}}».",
+      "copy": "{{wrong}} no es {{original}}: el carácter {{position}} es «{{replacement}}» en lugar de «{{char}}»."
+    },
+    "view": {
+      "row": "Fila {{row}}: {{text}}",
+      "wrongRow": "fila errónea",
+      "yourPick": "tu elección"
+    }
+  }
+}

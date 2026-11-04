@@ -1,12 +1,16 @@
 import { numericResponse, singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg, type Message } from '@/domain/shared';
 import { ordinal } from '../../shared/content';
 import { NUMBER_RECALL_LEVELS } from './levels';
 import type { ChunkedNumber, NumberRecallChallenge, NumberRecallProfile } from './types';
 
-const LABELS = ['Phone', 'Door code', 'Locker', 'Ticket', 'Order', 'Flight', 'Room', 'Account'];
+/** Ids of the names a number can have; `numberName` is what people read. */
+const NAMES = ['phone', 'doorCode', 'locker', 'ticket', 'order', 'flight', 'room', 'account'];
+
+/** "Phone", "Door code"… in the reader's language. */
+export const numberName = (n: ChunkedNumber): Message => msg(`memory:numberRecall.names.${n.name}`);
 
 /** Chunk of `size` digits with a non-zero first digit, so typed numbers never lose a zero. */
 const chunk = (random: RandomGenerator, size: number) =>
@@ -32,10 +36,9 @@ export const NUMBER_RECALL_ID = gameIdOf('number-recall');
 
 export const numberRecallGame: GameDefinition<NumberRecallChallenge, NumberRecallProfile> = {
   id: NUMBER_RECALL_ID,
-  name: 'Number Recall',
-  tagline: 'Codes, phone numbers, tickets: hold them for a moment.',
-  description:
-    'A number appears in chunks, like a phone number or a door code. When it is hidden, type it back, say which chunk came in a given place, or — with two numbers on screen — recall the one that is asked.',
+  name: msg('memory:numberRecall.name'),
+  tagline: msg('memory:numberRecall.tagline'),
+  description: msg('memory:numberRecall.description'),
   area: 'memory',
   skills: ['short-term-memory', 'working-memory', 'sequential-thinking'],
   meta: {
@@ -46,32 +49,35 @@ export const numberRecallGame: GameDefinition<NumberRecallChallenge, NumberRecal
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'An answer counts when the whole number is typed exactly or the right chunk is picked. Your result is the share of numbers recalled; answering is not timed.',
+    scoringSummary: msg('memory:numberRecall.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Read the number. The gaps split it into chunks, which are easier to hold.',
-    'When it is hidden, answer the question: type the number without spaces, or pick a chunk.',
-    'Some levels show two numbers with names: remember both, only one will be asked.',
+    msg('memory:numberRecall.instructions.read'),
+    msg('memory:numberRecall.instructions.answer'),
+    msg('memory:numberRecall.instructions.two'),
   ],
-  simpleInstructions: 'Look at the number, then type it back.',
+  simpleInstructions: msg('memory:numberRecall.simpleInstructions'),
   levels: NUMBER_RECALL_LEVELS,
   generate({ identity, profile, random }) {
     const variant = pick(random, profile.variants);
     const count = variant.kind === 'two-numbers' ? 2 : 1;
-    const labels = sample(random, LABELS, count);
+    const names = sample(random, NAMES, count);
     // Two numbers must differ, or "which one was asked" would not matter.
     const numbers = retryGeneration('distinct numbers', () => {
-      const made = labels.map((label) => ({
-        label,
+      const made = names.map((name) => ({
+        name,
         groups: distinctChunks(random, variant.groups),
       }));
       return new Set(made.map(valueOf)).size === made.length ? made : null;
     });
     const asked = randomInt(random, 0, count - 1);
     const target = numbers[asked] as ChunkedNumber;
-    const base = { ...identity, timing: profile.timing, studyPrompt: 'Remember the number.' };
+    const base = {
+      ...identity,
+      timing: profile.timing,
+      studyPrompt: msg('memory:numberRecall.studyPrompt.one'),
+    };
 
     if (variant.kind === 'which-group') {
       const position = randomInt(random, 0, target.groups.length - 1);
@@ -91,11 +97,16 @@ export const numberRecallGame: GameDefinition<NumberRecallChallenge, NumberRecal
       }
       return {
         ...base,
-        prompt: `Which chunk came ${ordinal(position + 1)}?`,
-        studyPrompt: 'Remember the chunks and their order.',
+        prompt: msg('memory:numberRecall.prompt.whichGroup', { turn: ordinal(position + 1) }),
+        studyPrompt: msg('memory:numberRecall.studyPrompt.chunks'),
         content: { kind: variant.kind, numbers, ask: { number: asked, group: position } },
         response: singleChoice(random, correct, [...seen, ...lures]),
-        explanation: `The ${target.label} number was ${spoken(target)}; chunk ${position + 1} was ${correct}.`,
+        explanation: msg('memory:numberRecall.explanation.whichGroup', {
+          name: numberName(target),
+          number: spoken(target),
+          position: position + 1,
+          chunk: correct,
+        }),
         skills: ['short-term-memory', 'sequential-thinking'],
       };
     }
@@ -103,15 +114,31 @@ export const numberRecallGame: GameDefinition<NumberRecallChallenge, NumberRecal
       ...base,
       prompt:
         variant.kind === 'type-back'
-          ? `Type the ${target.label} number, without spaces.`
-          : `Type the ${target.label} number (not the ${(numbers[1 - asked] as ChunkedNumber).label}).`,
-      ...(variant.kind === 'two-numbers' ? { studyPrompt: 'Remember both numbers.' } : {}),
+          ? msg('memory:numberRecall.prompt.typeBack', { name: numberName(target) })
+          : msg('memory:numberRecall.prompt.twoNumbers', {
+              name: numberName(target),
+              other: numberName(numbers[1 - asked] as ChunkedNumber),
+            }),
+      ...(variant.kind === 'two-numbers'
+        ? { studyPrompt: msg('memory:numberRecall.studyPrompt.both') }
+        : {}),
       content: { kind: variant.kind, numbers, ask: { number: asked, group: null } },
       response: numericResponse(valueOf(target)),
       explanation:
         variant.kind === 'type-back'
-          ? `The ${target.label} number was ${spoken(target)}.`
-          : `${numbers.map((n) => `${n.label}: ${spoken(n)}`).join('; ')}. The ${target.label} number was asked.`,
+          ? msg('memory:numberRecall.explanation.typeBack', {
+              name: numberName(target),
+              number: spoken(target),
+            })
+          : msg('memory:numberRecall.explanation.twoNumbers', {
+              numbers: joinText(
+                numbers.map((n) =>
+                  msg('memory:numberRecall.entry', { name: numberName(n), number: spoken(n) }),
+                ),
+                '; ',
+              ),
+              name: numberName(target),
+            }),
       skills:
         variant.kind === 'type-back'
           ? ['short-term-memory']

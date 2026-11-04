@@ -1,4 +1,3 @@
-import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import {
   pick,
@@ -8,9 +7,9 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { PEOPLE, type Draft } from '@/games/logic/shared/content';
-import { CATEGORIES, CATEGORY_IDS } from './categories';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
+import { PEOPLE, textChoice, type Draft } from '@/games/logic/shared/content';
+import { CATEGORIES, CATEGORY_IDS, categorySentence, valueLabel } from './categories';
 import { LOGICAL_DEDUCTION_LEVELS } from './levels';
 import { filterTables, indexedTables, minimizeClues, tableAt, type Table } from './solver';
 import type {
@@ -99,10 +98,9 @@ function buildPuzzle(random: RandomGenerator, profile: DeductionProfile): Puzzle
 
 export const logicalDeductionGame: GameDefinition<DeductionChallenge, DeductionProfile> = {
   id: LOGICAL_DEDUCTION_ID,
-  name: 'Logical Deduction',
-  tagline: 'Use the clues to work out who has what.',
-  description:
-    'Each person has exactly one item from every list, and no two people share an item. Read the clues, rule out what cannot be true, and answer one question. Higher levels add people, more lists to match and clues that only say what is not true.',
+  name: msg('logic:logicalDeduction.name'),
+  tagline: msg('logic:logicalDeduction.tagline'),
+  description: msg('logic:logicalDeduction.description'),
   area: 'logic',
   skills: ['logical-reasoning', 'problem-solving', 'working-memory'],
   meta: {
@@ -113,17 +111,16 @@ export const logicalDeductionGame: GameDefinition<DeductionChallenge, DeductionP
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each puzzle has exactly one answer. Your result is the share of puzzles answered correctly; there is no time limit.',
+    scoringSummary: msg('logic:logicalDeduction.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Each person has exactly one item from each list, and no two people have the same item.',
-    'Read every clue. Clues are always true.',
-    'Rule out what cannot be true until only one answer is left, then answer the question.',
-    'Tip: “not” clues are useful — if someone does not have two of three items, they have the third.',
+    msg('logic:logicalDeduction.instructions.items'),
+    msg('logic:logicalDeduction.instructions.clues'),
+    msg('logic:logicalDeduction.instructions.ruleOut'),
+    msg('logic:logicalDeduction.instructions.tip'),
   ],
-  simpleInstructions: 'Read the clues and find out who has what.',
+  simpleInstructions: msg('logic:logicalDeduction.simpleInstructions'),
   levels: LOGICAL_DEDUCTION_LEVELS,
   generate({ identity, profile, random }) {
     const { target, clues } = retryGeneration('deduction puzzle', () =>
@@ -145,7 +142,6 @@ export const logicalDeductionGame: GameDefinition<DeductionChallenge, DeductionP
     const fact = pick(random, facts.length > 0 ? facts : [{ category: 0, person: 0 }]);
     const value = target[fact.category]?.[fact.person] as number;
     const category = categories[fact.category] as DeductionContent['categories'][number];
-    const text = CATEGORIES[category.id];
     const valueName = category.values[value] as string;
     const personName = people[fact.person] as string;
     const askWho = random.next() < 0.5;
@@ -153,19 +149,26 @@ export const logicalDeductionGame: GameDefinition<DeductionChallenge, DeductionP
       ? { type: 'who', category: fact.category, value }
       : { type: 'what', category: fact.category, person: fact.person };
     const response = askWho
-      ? singleChoice(
+      ? textChoice(
           random,
           personName,
           people.filter((p) => p !== personName),
         )
-      : singleChoice(
+      : textChoice(
           random,
-          valueName,
-          category.values.filter((v) => v !== valueName),
+          valueLabel(category.id, valueName),
+          category.values.filter((v) => v !== valueName).map((v) => valueLabel(category.id, v)),
         );
-    const rows = people.map(
-      (person, p) =>
-        `${person}: ${categories.map((cat, c) => cat.values[target[c]?.[p] as number] as string).join(', ')}`,
+    const rows = people.map((person, p) =>
+      msg('logic:logicalDeduction.row', {
+        person,
+        values: joinText(
+          categories.map((cat, c) =>
+            valueLabel(cat.id, cat.values[target[c]?.[p] as number] as string),
+          ),
+          ', ',
+        ),
+      }),
     );
     const content: DeductionContent = {
       kind: profile.categories === 1 ? 'single-category' : 'multi-category',
@@ -175,10 +178,16 @@ export const logicalDeductionGame: GameDefinition<DeductionChallenge, DeductionP
       question,
     };
     const draft: Draft<DeductionChallenge> = {
-      prompt: askWho ? text.askWho(valueName) : text.askWhat(personName),
+      prompt: askWho
+        ? categorySentence(category.id, 'askWho', { value: valueName })
+        : categorySentence(category.id, 'askWhat', { person: personName }),
       content,
       response,
-      explanation: `Only one way to share out the items fits all ${clues.length} clues: ${rows.join('; ')}. Every other way breaks at least one clue. So ${personName} ${text.is(valueName)}.`,
+      explanation: msg('logic:logicalDeduction.explanation', {
+        count: clues.length,
+        rows: joinText(rows, '; '),
+        fact: categorySentence(category.id, 'is', { subject: personName, value: valueName }),
+      }),
       skills:
         profile.categories === 1
           ? ['logical-reasoning', 'problem-solving']

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SymmetryProfile } from './types';
 
@@ -13,7 +14,7 @@ const complete = { kind: 'complete', classes: [], breaks: 0, tiles: 1 } as const
 export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   {
     ...classify,
-    objective: 'Is the left side a mirror image of the right side?',
+    objective: msg('patterns:symmetryRecognition.levels.1'),
     challengeCount: 5,
     rows: 4,
     cols: 4,
@@ -24,7 +25,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...complete,
-    objective: 'Draw the mirror image of a small half.',
+    objective: msg('patterns:symmetryRecognition.levels.2'),
     challengeCount: 5,
     rows: 4,
     cols: 4,
@@ -34,7 +35,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...classify,
-    objective: 'Find every mirror line: left–right, top–bottom, both or none.',
+    objective: msg('patterns:symmetryRecognition.levels.3'),
     challengeCount: 6,
     rows: 5,
     cols: 5,
@@ -45,7 +46,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...complete,
-    objective: 'Draw the mirror image of a bigger half.',
+    objective: msg('patterns:symmetryRecognition.levels.4'),
     challengeCount: 5,
     rows: 5,
     cols: 6,
@@ -55,7 +56,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...classify,
-    objective: 'Spot patterns that are almost symmetric, with two cells out of place.',
+    objective: msg('patterns:symmetryRecognition.levels.5'),
     challengeCount: 6,
     rows: 6,
     cols: 6,
@@ -66,7 +67,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...complete,
-    objective: 'Mirror across a horizontal line: draw the bottom half.',
+    objective: msg('patterns:symmetryRecognition.levels.6'),
     challengeCount: 5,
     rows: 6,
     cols: 5,
@@ -76,7 +77,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...classify,
-    objective: 'Coloured tiles: shapes must mirror too.',
+    objective: msg('patterns:symmetryRecognition.levels.7'),
     challengeCount: 6,
     rows: 6,
     cols: 6,
@@ -87,7 +88,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...complete,
-    objective: 'Draw the mirror half without being told how many cells.',
+    objective: msg('patterns:symmetryRecognition.levels.8'),
     challengeCount: 5,
     rows: 6,
     cols: 6,
@@ -97,7 +98,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...classify,
-    objective: 'Large tile patterns with a single cell out of place.',
+    objective: msg('patterns:symmetryRecognition.levels.9'),
     challengeCount: 6,
     rows: 6,
     cols: 6,
@@ -108,7 +109,7 @@ export const SYMMETRY_LEVELS = defineLevels<SymmetryProfile>([
   },
   {
     ...complete,
-    objective: 'Large halves, either mirror line, no count given.',
+    objective: msg('patterns:symmetryRecognition.levels.10'),
     challengeCount: 5,
     rows: 8,
     cols: 6,

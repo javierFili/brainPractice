@@ -1,6 +1,8 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { chance, pick, randomInt, sample, type RandomGenerator } from '@/domain/random';
+import { msg, type Message } from '@/domain/shared';
+import { cellLabel as gridCellLabel } from '@/games/kit/content';
 import { cellLabel, describeCell } from '../format';
 import { analyseLayer, layerOf, solveGrid } from '../solvers/grid';
 import { SHAPES, type GridCell, type GridRule, type PatternProfile, type Shape } from '../types';
@@ -9,8 +11,10 @@ import { pickDistractors, type PatternDraft } from './draft';
 interface Layer<V> {
   readonly values: V[][];
   /** The rule in plain words, completing "Shapes: …" / "Counts: …". */
-  readonly description: string;
+  readonly description: Message;
 }
+
+const LAYER = 'programming:patternArchitect.layer';
 
 const grid = <V>(size: number, at: (row: number, column: number) => V): V[][] =>
   Array.from({ length: size }, (_, r) => Array.from({ length: size }, (__, c) => at(r, c)));
@@ -23,28 +27,26 @@ function categoricalLayer<V>(rule: GridRule, size: number, palette: readonly V[]
   const value = (i: number) => palette[i % palette.length] as V;
   switch (rule) {
     case 'by-row':
-      return { values: grid(size, (r) => value(r)), description: 'each row keeps one value' };
+      return { values: grid(size, (r) => value(r)), description: msg(`${LAYER}.byRow`) };
     case 'by-column':
       return {
         values: grid(size, (_, c) => value(c)),
-        description: 'each column keeps one value',
+        description: msg(`${LAYER}.byColumn`),
       };
     case 'shift-left':
       return {
         values: grid(size, (r, c) => value((r + c) % size)),
-        description:
-          'each row is the row above moved one place to the left (the first wraps to the end)',
+        description: msg(`${LAYER}.shiftLeft`),
       };
     case 'shift-right':
       return {
         values: grid(size, (r, c) => value((c - r + size) % size)),
-        description:
-          'each row is the row above moved one place to the right (the last wraps to the front)',
+        description: msg(`${LAYER}.shiftRight`),
       };
     default:
       return {
         values: grid(size, () => value(0)),
-        description: 'the same in every cell',
+        description: msg(`${LAYER}.constant`),
       };
   }
 }
@@ -60,10 +62,9 @@ function countLayer(random: RandomGenerator, rule: GridRule, size: number): Laye
       );
       const values = grid(size, (r, c) => (starts[r] as number) + c * step);
       const line = rule === 'row-step' ? 'row' : 'column';
-      const direction = rule === 'row-step' ? 'left to right' : 'top to bottom';
       return {
         values: rule === 'row-step' ? values : transposed(values),
-        description: `along each ${line} (${direction}) the count goes ${step > 0 ? 'up' : 'down'} by one`,
+        description: msg(`${LAYER}.${line}${step > 0 ? 'Up' : 'Down'}`),
       };
     }
     case 'row-sum':
@@ -74,11 +75,8 @@ function countLayer(random: RandomGenerator, rule: GridRule, size: number): Laye
         return [...parts, parts.reduce((a, b) => a + b, 0)];
       });
       return rule === 'row-sum'
-        ? { values, description: 'in each row the last count is the sum of the others' }
-        : {
-            values: transposed(values),
-            description: 'in each column the bottom count is the sum of the others',
-          };
+        ? { values, description: msg(`${LAYER}.rowSum`) }
+        : { values: transposed(values), description: msg(`${LAYER}.columnSum`) };
     }
     default:
       return categoricalLayer(
@@ -144,12 +142,17 @@ export function symbolGrid(random: RandomGenerator, profile: PatternProfile): Pa
       profile.distractors,
     );
     if (wrong === null) return null;
-    const position = `row ${missing.row + 1}, column ${missing.column + 1}`;
     return {
-      prompt: 'Which cell completes the grid?',
+      prompt: msg('programming:patternArchitect.grid.prompt'),
       content: { kind: 'symbol-grid', cells },
       response: singleChoice(random, cellLabel(answer), wrong),
-      explanation: `Shapes: ${shapes.description}. Counts: ${counts.description}. So the missing cell (${position}) is ${cellLabel(answer)} — ${describeCell(answer)}.`,
+      explanation: msg('programming:patternArchitect.grid.explanation', {
+        shapes: shapes.description,
+        counts: counts.description,
+        position: gridCellLabel(missing.row, missing.column),
+        cell: cellLabel(answer),
+        description: describeCell(answer),
+      }),
       skills: ['pattern-recognition', 'decomposition'],
     };
   });

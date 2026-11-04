@@ -1,0 +1,862 @@
+{
+  "shared": {
+    "program": "Programa",
+    "narrate": {
+      "step": "línea {{line}}: {{changes}}",
+      "more_one": "… ({{count}} paso más)",
+      "more_other": "… ({{count}} pasos más)"
+    },
+    "trace": {
+      "title": "Traza paso a paso",
+      "caption": "Cada paso que cambió una variable",
+      "line": "Línea",
+      "code": "Código",
+      "after": "Después de ejecutarse",
+      "more_one": "… {{count}} paso más sigue el mismo patrón.",
+      "more_other": "… {{count}} pasos más siguen el mismo patrón.",
+      "output": "Salida:",
+      "nothingPrinted": "(no se imprimió nada)",
+      "stopped": "se detuvo en la línea {{line}}: {{message}}"
+    }
+  },
+  "variableTracking": {
+    "name": "Seguimiento de variables",
+    "tagline": "No pierdas de vista ninguna variable, línea a línea.",
+    "description": "Un programa corto actualiza varias variables con asignaciones, copias e intercambios. Síguelo línea a línea y di qué contiene una variable al final o en una línea concreta, o cuál acaba siendo la mayor.",
+    "scoringSummary": "Cada pregunta tiene una única respuesta exacta, calculada ejecutando el programa. Tu resultado es la proporción de aciertos, con una pequeña bonificación por rapidez; no hay límite de tiempo.",
+    "instructions": {
+      "order": "El programa se ejecuta de arriba abajo, una línea cada vez.",
+      "copy": "«x = y» copia el valor que tiene y en ese momento; si y cambia después, x no cambia.",
+      "swap": "Un intercambio usa una variable auxiliar: temp = a, a = b, b = temp.",
+      "typed": "Desde el nivel 4 escribes el número exacto. Tras responder se muestra la traza completa."
+    },
+    "simpleInstructions": "Lee las líneas una a una y recuerda el número de cada caja.",
+    "levels": {
+      "1": "Dos variables, dos cambios: sigue cada asignación en orden.",
+      "2": "Cambios que leen otra variable.",
+      "3": "Las copias conservan el valor recibido: los cambios posteriores no les afectan.",
+      "4": "Intercambios con una variable auxiliar; escribe el valor exacto.",
+      "5": "Detente a mitad: el valor justo después de una línea dada.",
+      "6": "Cuatro variables y cambios que combinan varias de ellas.",
+      "7": "Programas más largos: seis cambios sobre cuatro variables.",
+      "8": "Siete cambios; la mayoría lee la variable que sobrescribe.",
+      "9": "Cinco variables, intercambios encadenados y expresiones anidadas.",
+      "10": "Todo a la vez: ocho cambios sobre cinco variables."
+    },
+    "kinds": {
+      "finalValue": "Valor final",
+      "afterLine": "Valor a mitad del programa",
+      "largest": "Variable mayor"
+    },
+    "prompt": {
+      "finalValue": "¿Qué valor tiene {{name}} cuando termina el programa?",
+      "afterLine": "¿Qué valor tiene {{name}} justo después de ejecutarse la línea {{line}}?",
+      "largest": "¿Cuál de {{names}} tiene el valor más alto cuando termina el programa?"
+    },
+    "explanation": {
+      "finalValue": "Paso a paso: {{steps}}. Así que {{name}} termina valiendo {{value}}.",
+      "afterLine": "Hasta la línea {{line}}: {{steps}}. Así que en ese punto {{name}} vale {{value}} (al final vale {{final}}).",
+      "largest": "Paso a paso: {{steps}}. Al final {{final}}, así que {{winner}} es la mayor."
+    },
+    "view": {
+      "label": "Programa que seguir",
+      "compare": "Compara {{names}} tras la última línea.",
+      "track": "Sigue {{name}} hasta la última línea.",
+      "stop": "Detente justo después de la línea {{line}} (resaltada)."
+    }
+  },
+  "conditionalLogic": {
+    "name": "Lógica condicional",
+    "tagline": "¿Qué rama se ejecuta?",
+    "description": "Lee cadenas if / elif / else con and, or y not, y decide qué imprime un programa con unas entradas dadas, o qué entrada lleva a una salida concreta. Los niveles avanzados anidan condiciones y ponen a prueba la evaluación en cortocircuito.",
+    "scoringSummary": "Cada respuesta se comprueba ejecutando el programa con el intérprete. Tu resultado es la proporción de aciertos, con una pequeña bonificación por rapidez; no hay límite de tiempo para responder.",
+    "instructions": {
+      "order": "Las condiciones se comprueban desde arriba: la primera verdadera ejecuta su bloque y el resto se salta.",
+      "operators": "«and» necesita que ambos lados sean verdaderos; «or», al menos uno; «not» invierte verdadero y falso.",
+      "backwards": "Algunas preguntas te dan una salida y te piden la entrada que la produce.",
+      "shortCircuit": "Desde el nivel 8: «and» se detiene en el primer lado falso y «or» en el primero verdadero; una división a la que el programa nunca llega no puede fallar."
+    },
+    "simpleInstructions": "Comprueba cada condición desde arriba; la primera verdadera decide qué se imprime.",
+    "levels": {
+      "1": "Una entrada, una comparación por rama: gana la primera condición verdadera.",
+      "2": "Dos entradas y cuatro resultados.",
+      "3": "Combina comparaciones con «and» y «or».",
+      "4": "Indicadores verdadero/falso y «not».",
+      "5": "Ifs dentro de ifs: solo se ejecuta una cadena interna.",
+      "6": "Al revés: ¿qué entrada produce esta salida?",
+      "7": "Cinco resultados y condiciones que mezclan «and» con «or».",
+      "8": "Cortocircuito: «and» se detiene en el primer falso y «or» en el primer verdadero.",
+      "9": "Comprobaciones en el orden equivocado: encuentra la condición que falla.",
+      "10": "Todo a la vez: cadenas anidadas, lógica mixta y cortocircuitos."
+    },
+    "kinds": {
+      "branch": "Cadenas if / elif / else",
+      "nested": "Condiciones anidadas",
+      "findInput": "Entrada para una salida",
+      "shortCircuit": "Evaluación en cortocircuito"
+    },
+    "errorOutcome": "Se detiene con un error (división entre cero)",
+    "prompt": {
+      "happens": "¿Qué ocurre al ejecutar este programa?",
+      "letter": "¿Qué letra imprime este programa?",
+      "findInput": "¿Qué entrada hace que este programa imprima {{target}}?"
+    },
+    "explanation": {
+      "step": "línea {{line}}: «{{cond}}» es {{value}}",
+      "stepError": "línea {{line}}: «{{cond}}» evalúa primero la división, con y = 0 → error",
+      "runPrints": "Con {{inputs}}: {{steps}}; por tanto, imprime {{outcome}}.",
+      "runError": "Con {{inputs}}: {{steps}}; por tanto, el programa se detiene con un error. «and» / «or» solo se saltan el lado derecho cuando el izquierdo ya decide el resultado.",
+      "miss": "{{inputs}} imprime {{outcome}}",
+      "findInput": "{{run}} Las demás: {{others}}."
+    },
+    "view": {
+      "label": "Programa con condiciones",
+      "fromOptions": "Las entradas vienen de las opciones. ¿Cuál hace que imprima {{target}}?",
+      "inputs_one": "La línea 1 fija la entrada.",
+      "inputs_other": "Las líneas 1–{{count}} fijan las entradas.",
+      "inputsDivision_one": "La línea 1 fija la entrada. Dividir entre cero detiene el programa con un error.",
+      "inputsDivision_other": "Las líneas 1–{{count}} fijan las entradas. Dividir entre cero detiene el programa con un error."
+    }
+  },
+  "algorithmicLogic": {
+    "name": "Trazado de algoritmos",
+    "tagline": "Dependencias, trazas y restricciones.",
+    "description": "Ordena tareas que dependen unas de otras, sigue pseudocódigo neutro respecto al lenguaje y resuelve puzles de despliegue. Entrena la deducción, el razonamiento condicional y el pensamiento algorítmico.",
+    "scoringSummary": "Puntos por cada respuesta correcta, según el nivel, con bonificación por ritmo y rachas; una respuesta incorrecta resta un cuarto de la base. La precisión supone el 75 % del índice de rendimiento.",
+    "instructions": {
+      "read": "Lee todo el reto antes de responder: cada regla, flecha y línea cuenta.",
+      "arrow": "Una flecha «x → y» significa que x debe terminar antes de que empiece y.",
+      "pseudocode": "El pseudocódigo se ejecuta de arriba abajo; «set a ← b + 1» guarda el nuevo valor en a.",
+      "exact": "A partir del nivel 4 algunas respuestas son números exactos: calcúlalos, no hay opciones entre las que adivinar."
+    },
+    "levels": {
+      "1": "Sigue dependencias sencillas y asignaciones en línea recta.",
+      "2": "Bifurcaciones: evalúa una condición y sigue solo la rama que elige.",
+      "3": "Órdenes casi correctos y tus primeros puzles de restricciones: comprueba cada regla.",
+      "4": "Condiciones compuestas y respuestas exactas: sin opciones en las que apoyarte.",
+      "5": "Bucles y dependencias transitivas: razona sobre lo que ocurre de forma repetida e indirecta.",
+      "6": "Condiciones dentro de bucles: el estado cambia el camino en cada iteración.",
+      "7": "Bucles abiertos y cadenas de deducción con seis servicios.",
+      "8": "Planificación en paralelo: encuentra la cadena que limita toda la compilación.",
+      "9": "Planificaciones con duraciones, bucles anidados y deducciones con siete servicios y pistas débiles.",
+      "10": "Todo a la vez: grafos grandes con duraciones, trazas largas y solo pistas relativas."
+    },
+    "kinds": {
+      "dependencyOrder": "Orden de ejecución",
+      "dependencyCount": "Dependencias transitivas",
+      "criticalPath": "Planificación en paralelo",
+      "programTrace": "Traza de programas",
+      "constraintArrangement": "Puzles de restricciones"
+    },
+    "rules": {
+      "before": "{{a}} se despliega antes que {{b}}",
+      "immediatelyBefore": "{{a}} se despliega justo antes que {{b}}",
+      "notAdjacent": "{{a}} y {{b}} no se despliegan uno al lado del otro",
+      "at": "{{a}} se despliega en la posición {{slot}}",
+      "notAt": "{{a}} no se despliega en la posición {{slot}}"
+    },
+    "constraint": {
+      "prompt": {
+        "arrangement": "Los servicios se despliegan uno por posición, de izquierda a derecha. ¿Qué orden de despliegue cumple todas las reglas?",
+        "position": "Los servicios se despliegan uno por posición, de izquierda a derecha. ¿Qué servicio se despliega en la posición {{slot}}?"
+      },
+      "breaks": "{{arrangement}} incumple «{{rule}}»",
+      "explanation": {
+        "arrangement": "La única disposición que cumple todas las reglas es {{arrangement}}. {{reasons}}.",
+        "position": "La única disposición que cumple todas las reglas es {{arrangement}}. Así que en la posición {{slot}} está {{answer}}."
+      }
+    },
+    "dependencyOrder": {
+      "prompt": "Cada flecha indica que el módulo de la izquierda debe ejecutarse antes que el de la derecha. ¿Qué orden de ejecución es válido?",
+      "breaks": "{{order}} incumple {{edges}}",
+      "explanation": "{{order}} ejecuta cada módulo después de todas sus dependencias (puede haber otros órdenes válidos, pero ninguno estaba entre las opciones). {{reasons}}."
+    },
+    "dependencyCount": {
+      "prompt": "¿Cuántos módulos deben terminar (directa o indirectamente) antes de que pueda empezar {{target}}?",
+      "explanation_one": "{{target}} depende de forma transitiva de {{modules}}: {{count}} módulo.",
+      "explanation_other": "{{target}} depende de forma transitiva de {{modules}}: {{count}} módulos."
+    },
+    "criticalPath": {
+      "prompt": {
+        "weighted": "Los módulos independientes pueden ejecutarse en paralelo. ¿Cuál es el número mínimo de rondas (cada módulo dura las rondas indicadas) para terminarlo todo?",
+        "unweighted": "Los módulos independientes pueden ejecutarse en paralelo. ¿Cuál es el número mínimo de rondas (cada módulo dura una ronda) para terminarlo todo?"
+      },
+      "explanation_one": "La cadena de dependencias más larga es {{path}}, que dura {{count}} ronda; todo lo demás cabe en paralelo junto a ella.",
+      "explanation_other": "La cadena de dependencias más larga es {{path}}, que dura {{count}} rondas; todo lo demás cabe en paralelo junto a ella."
+    },
+    "programTrace": {
+      "prompt": "¿Cuál es el valor de {{name}} cuando termina el programa?",
+      "explanation": "Al seguir el programa línea a línea se llega a {{state}}, así que {{result}}."
+    },
+    "units": {
+      "modules": "módulos",
+      "rounds": "rondas"
+    },
+    "view": {
+      "modules": "Módulos",
+      "rounds_one": "{{count}} ronda",
+      "rounds_other": "{{count}} rondas",
+      "dependencies": "Dependencias",
+      "arrowMeaning": "x → y significa que x se ejecuta antes que y",
+      "before": "antes que",
+      "grouped": "Las mismas dependencias, agrupadas por módulo",
+      "noPrerequisites": "sin requisitos previos",
+      "needs": "necesita {{modules}}",
+      "services": "Servicios",
+      "rules": "Reglas · posiciones 1–{{last}}",
+      "program": "Programa en pseudocódigo"
+    }
+  },
+  "loopPrediction": {
+    "name": "Predicción de bucles",
+    "tagline": "¿Cuántas vueltas y qué queda al final?",
+    "description": "Predice qué hacen los bucles for y while: cuántas veces se ejecuta una línea, qué contiene un acumulador al final o el último valor impreso. Los niveles avanzados anidan bucles y salen antes de tiempo.",
+    "scoringSummary": "Cada respuesta se obtiene ejecutando el programa con el intérprete. Tu resultado es la proporción de aciertos, con una pequeña bonificación por rapidez; no hay límite de tiempo para responder.",
+    "instructions": {
+      "range": "«for i in range(a, b)» se ejecuta con i = a, a + 1, … hasta b − 1 (b no se incluye).",
+      "while": "«while» comprueba su condición antes de cada vuelta y se detiene en cuanto es falsa.",
+      "nested": "Un bucle interno vuelve a empezar desde el principio en cada vuelta del bucle externo.",
+      "return": "«return» dentro de un bucle termina toda la función de inmediato. Tras responder se muestra la traza."
+    },
+    "simpleInstructions": "Cuenta las vueltas del bucle y sigue los números a medida que cambian.",
+    "levels": {
+      "1": "Cuenta las vueltas de un bucle simple y ve sumando.",
+      "2": "Bucles while: la condición se comprueba antes de cada vuelta.",
+      "3": "Un if dentro del bucle: no todas las vueltas cambian el total.",
+      "4": "Respuestas exactas: escribe el número.",
+      "5": "Un bucle dentro de otro: el interno vuelve a empezar en cada vuelta externa.",
+      "6": "Salidas anticipadas: un return dentro de un bucle lo termina al instante.",
+      "7": "Bucles más largos de todo tipo.",
+      "8": "Bucles internos cuya longitud depende de la variable externa.",
+      "9": "Condiciones de parada unidas con «and»: ¿cuál termina antes el bucle?",
+      "10": "Todo a la vez, con hasta nueve vueltas por bucle."
+    },
+    "kinds": {
+      "iterations": "Número de vueltas",
+      "finalValue": "Valor tras el bucle",
+      "lastOutput": "Último valor impreso"
+    },
+    "prompt": {
+      "iterations": "¿Cuántas veces se ejecuta la línea {{line}}?",
+      "finalValue": "¿Qué valor tiene {{name}} cuando termina el programa?",
+      "lastOutput": "¿Cuál es el último valor que imprime este programa?"
+    },
+    "explanation": {
+      "iterations_one": "La línea {{line}} se ejecutó {{count}} vez. Paso a paso: {{steps}}.",
+      "iterations_other": "La línea {{line}} se ejecutó {{count}} veces. Paso a paso: {{steps}}.",
+      "finalValue": "{{name}} termina valiendo {{value}}. Paso a paso: {{steps}}.",
+      "lastOutput_one": "Imprime {{shown}}: {{count}} valor, el último es {{last}}. Paso a paso: {{steps}}.",
+      "lastOutput_other": "Imprime {{shown}}: {{count}} valores, el último es {{last}}. Paso a paso: {{steps}}."
+    },
+    "view": {
+      "label": "Programa con bucles",
+      "count": "Cuenta cada vez que se ejecuta la línea {{line}} (resaltada), en todas las vueltas.",
+      "follow": "Sigue {{name}} en cada vuelta.",
+      "followVariable": "Sigue la variable en cada vuelta.",
+      "output": "Cada print añade un valor a la salida."
+    }
+  },
+  "codeScan": {
+    "name": "Comparación de código",
+    "tagline": "Detecta el único token que ha cambiado.",
+    "description": "Compara un fragmento de pseudocódigo original con su copia y detecta el único token cambiado: un operador, una variable intercambiada, un número desviado en uno, un nombre mal escrito o una condición negada. Entrena la velocidad de procesamiento, la comparación rápida y la detección ágil de errores.",
+    "scoringSummary": "La velocidad es la capacidad que se entrena: la bonificación por ritmo se duplica y el ritmo supone el 40 % del índice de rendimiento, pero una respuesta incorrecta resta puntos.",
+    "instructions": {
+      "layout": "El original está a la izquierda (o arriba) y la copia a la derecha (o abajo).",
+      "oneToken": "Cuando los fragmentos difieren, ha cambiado exactamente un token de una línea; todo lo demás es idéntico.",
+      "point": "Para señalar una línea cambiada, haz clic en ella en la copia (o enfócala con Tab y pulsa Intro).",
+      "kinds": "Tipos de cambio: operador (< → <=, + → -, and → or), variable sustituida por otra del fragmento, número cambiado, nombre mal escrito o «not» añadido a una condición.",
+      "speed": "La velocidad cuenta más que en otros juegos, pero una respuesta incorrecta resta puntos: sé preciso."
+    },
+    "levels": {
+      "1": "Compara dos fragmentos cortos y decide si son idénticos.",
+      "2": "Señala la línea exacta que cambió; se suman los nombres mal escritos.",
+      "3": "Condiciones negadas y cambios de un solo carácter: lee cada token, no la forma.",
+      "4": "Bloques anidados y condiciones compuestas: más sitios donde esconder un cambio.",
+      "5": "Series de líneas parecidas: compara token a token, no la forma de la línea.",
+      "6": "Listados más largos con menos tiempo; la mayoría de los cambios son de un carácter.",
+      "7": "Nombra el tipo de cambio: operador, variable, número, errata o negación.",
+      "8": "Clasifica cambios finos escondidos entre líneas parecidas, más rápido.",
+      "9": "Encuentra y clasifica el cambio sin pista: primero localízalo, luego nómbralo.",
+      "10": "Doce líneas densas y casi idénticas y un cambio de un carácter: a toda velocidad."
+    },
+    "kinds": {
+      "sameOrDifferent": "Igual o diferente",
+      "findTheChange": "Encuentra el cambio",
+      "classifyTheChange": "Clasifica el cambio"
+    },
+    "category": {
+      "operator": "Operador cambiado",
+      "variable": "Variable intercambiada",
+      "number": "Número cambiado",
+      "typo": "Nombre mal escrito",
+      "negation": "Condición negada"
+    },
+    "same": "Idénticos",
+    "different": "Diferentes",
+    "prompt": {
+      "sameOrDifferent": "¿Es la copia idéntica al original?",
+      "findTheChange": "Un token de la copia difiere del original. ¿Qué línea de la copia cambió?",
+      "classify": "Ha cambiado un token de la copia. ¿Qué tipo de cambio es?",
+      "classifyLine": "La línea {{line}} de la copia tiene un token cambiado. ¿Qué tipo de cambio es?"
+    },
+    "change": {
+      "operator": "En la línea {{line}}, el operador «{{before}}» pasó a ser «{{after}}»: «{{from}}» → «{{to}}».",
+      "variable": "En la línea {{line}}, la variable «{{before}}» se sustituyó por «{{after}}», otra variable del fragmento: «{{from}}» → «{{to}}».",
+      "number": "En la línea {{line}}, el número {{before}} pasó a ser {{after}}: «{{from}}» → «{{to}}».",
+      "typo": "En la línea {{line}}, el nombre «{{before}}» se escribió mal como «{{after}}»: «{{from}}» → «{{to}}».",
+      "negation": "En la línea {{line}}, se añadió «not» delante de la condición, negándola: «{{from}}» → «{{to}}»."
+    },
+    "explanation": {
+      "same_one": "{{label}}: la única línea coincide token a token.",
+      "same_other": "{{label}}: las {{count}} líneas coinciden token a token.",
+      "different": "{{label}}: difiere exactamente un token. {{change}}",
+      "line": "Cambió la línea {{line}}. {{change}}",
+      "classify": "{{category}}. {{change}}"
+    },
+    "view": {
+      "title": {
+        "original": "Original",
+        "copy": "Copia"
+      },
+      "snippet": {
+        "original": "Fragmento original",
+        "copy": "Fragmento copiado"
+      },
+      "marker": {
+        "check": "revisa",
+        "changed": "cambiada",
+        "pick": "tu elección"
+      },
+      "line": "Línea {{line}}: {{code}}",
+      "lineMarked": "Línea {{line}}: {{code}} ({{markers}})",
+      "identical": "Ninguna línea difiere: los fragmentos son idénticos."
+    }
+  },
+  "dependencyOrdering": {
+    "name": "Orden de dependencias",
+    "tagline": "¿Qué tiene que pasar antes de qué?",
+    "description": "Pasos de compilación, preparación en la cocina y tareas de lanzamiento, cada uno con las tareas que requiere. Descubre qué puede empezar, qué queda desbloqueado, un orden válido completo y qué nueva dependencia crearía un ciclo.",
+    "scoringSummary": "Cada pregunta tiene exactamente una respuesta correcta, comprobada por un resolutor de grafos. Tu resultado es la proporción de aciertos, con una pequeña bonificación por rapidez; no hay límite de tiempo para responder.",
+    "instructions": {
+      "needs": "«A requiere B» significa que B debe terminar antes de que A pueda empezar.",
+      "listed": "Solo cuentan las dependencias de la lista, no lo que harías en una cocina o un proyecto reales.",
+      "arrows": "Para ordenar las tareas, usa los botones de flecha junto a cada una y luego envía.",
+      "cycle": "Un ciclo (A requiere B y B requiere A, quizá a través de otras tareas) hace imposible cualquier orden."
+    },
+    "simpleInstructions": "Haz cada tarea solo cuando las tareas que requiere estén hechas.",
+    "levels": {
+      "1": "Encuentra la tarea que no requiere nada.",
+      "2": "Encadena todas las tareas en el único orden posible.",
+      "3": "Parte del trabajo está hecho: ¿qué queda desbloqueado?",
+      "4": "Varios órdenes podrían valer: elige la única opción que funciona.",
+      "5": "Casi aciertos: cada orden incorrecto rompe una sola dependencia.",
+      "6": "Ciclos: ¿qué nueva dependencia haría imposible cualquier orden?",
+      "7": "Ciclos ocultos: el bucle pasa por otras tareas.",
+      "8": "Ocho tareas y más dependencias.",
+      "9": "Nueve tareas: cadenas largas y ciclos ocultos largos.",
+      "10": "Todo a la vez con diez tareas."
+    },
+    "kinds": {
+      "startFirst": "Qué puede empezar primero",
+      "readyNext": "Qué queda desbloqueado",
+      "fullOrder": "Orden completo",
+      "validOrder": "Orden válido entre opciones",
+      "cycle": "Detección de ciclos"
+    },
+    "themes": {
+      "monorepo": "Compilación del monorepo",
+      "kitchen": "Preparación en la cocina",
+      "release": "Lista de lanzamiento"
+    },
+    "tasks": {
+      "build_core": "compilar core",
+      "build_utils": "compilar utils",
+      "build_parser": "compilar parser",
+      "build_router": "compilar router",
+      "build_charts": "compilar charts",
+      "build_auth": "compilar auth",
+      "build_forms": "compilar forms",
+      "build_icons": "compilar icons",
+      "build_api_client": "compilar api-client",
+      "build_themes": "compilar themes",
+      "chop_onions": "picar cebollas",
+      "grate_cheese": "rallar queso",
+      "toast_seeds": "tostar semillas",
+      "make_sauce": "preparar la salsa",
+      "boil_pasta": "cocer la pasta",
+      "wash_lettuce": "lavar la lechuga",
+      "slice_tomatoes": "cortar tomates",
+      "whisk_eggs": "batir huevos",
+      "roast_peppers": "asar pimientos",
+      "mix_dressing": "mezclar el aliño",
+      "update_changelog": "actualizar el changelog",
+      "bump_version": "subir la versión",
+      "translate_strings": "traducir los textos",
+      "record_demo": "grabar la demo",
+      "review_copy": "revisar la redacción",
+      "run_audit": "pasar la auditoría",
+      "refresh_screenshots": "renovar las capturas",
+      "write_notes": "escribir las notas",
+      "check_licences": "revisar las licencias",
+      "sign_binaries": "firmar los binarios"
+    },
+    "quoted": "«{{task}}»",
+    "need": "{{task}} requiere {{prerequisite}}",
+    "needsNothing": "{{task}} no requiere nada",
+    "prompt": {
+      "startFirst": "¿Qué tarea puede empezar primero?",
+      "readyNext": "Las tareas marcadas están hechas. ¿Cuál de estas puede empezar ya?",
+      "fullOrder": "Solo hay un orden que respeta todas las dependencias. Pon las tareas en ese orden.",
+      "validOrder": "¿Qué orden respeta todas las dependencias?",
+      "cycle": "¿Qué nueva dependencia crearía un ciclo, de modo que ningún orden pudiera funcionar?"
+    },
+    "explanation": {
+      "startFirst": "{{task}} es la única tarea que no requiere nada. Las demás deben esperar: {{others}}.",
+      "readyNextFree": "{{needs}}, así que podía empezar. Las demás siguen esperando: {{others}}.",
+      "readyNextDone": "{{needs}}, y todo eso ya está hecho. Las demás siguen esperando: {{others}}.",
+      "fullOrder": "{{first}} no requiere nada y cada tarea requiere la anterior: {{steps}}.",
+      "fullOrderExtra": "{{first}} no requiere nada y cada tarea requiere la anterior: {{steps}}. Las dependencias extra ({{extra}}) ya se cumplen con esa cadena.",
+      "validOrder": "Solo {{order}} deja cada tarea después de lo que requiere: {{others}}.",
+      "brokenOrder": "el orden con {{task}} antes de {{prerequisite}} falla porque {{task}} requiere {{prerequisite}}",
+      "cycle": "{{loop}} ya va en ese orden (cada una antes de la siguiente). Si {{task}} también requiriera {{prerequisite}}, tendría que ir antes que sí misma. Las otras dependencias nuevas mantienen al menos un orden válido."
+    },
+    "view": {
+      "heading_one": "{{theme}} · {{count}} tarea",
+      "heading_other": "{{theme}} · {{count}} tareas",
+      "tasks": "Tareas y lo que requiere cada una",
+      "done": "(hecha)",
+      "needsNothing": "no requiere nada",
+      "needs": "requiere {{list}}",
+      "cycleHint": "Cada opción añade una nueva dependencia a la lista de arriba. Exactamente una de ellas cierra un ciclo.",
+      "validOrder": "Orden válido:"
+    }
+  },
+  "algorithmConstruction": {
+    "name": "Construcción de algoritmos",
+    "tagline": "Pon los bloques en el orden que funciona.",
+    "description": "Recibes las piezas de un programa y la salida que debe imprimir. Ordena los bloques para que imprima exactamente eso; los niveles avanzados añaden bucles y un bloque sobrante que no hace falta.",
+    "scoringSummary": "Un orden solo cuenta como correcto si es el único que imprime el objetivo; al crear el reto se comprueban todos los órdenes posibles con el intérprete. Sin límite de tiempo, con una pequeña bonificación por rapidez.",
+    "instructions": {
+      "target": "El programa debe imprimir exactamente la salida que aparece encima de los bloques.",
+      "variables": "Una línea solo puede usar una variable que un bloque anterior ya haya asignado.",
+      "move": "Mueve los bloques con los botones ↑ / ↓ y luego envía. Los bloques de bucle se mueven enteros.",
+      "spare": "Desde el nivel 6 sobra un bloque: el programa no lo usa; muévelo al final."
+    },
+    "simpleInstructions": "Pon los bloques de código en el orden que imprime el número mostrado.",
+    "levels": {
+      "1": "Tres bloques: asigna un valor, cámbialo e imprímelo.",
+      "2": "Cuatro bloques: cada línea necesita un valor asignado por otra anterior.",
+      "3": "Tres variables: descubre qué bloque solo puede ir después de cuál.",
+      "4": "Un bloque de bucle: lo que pasa antes del bucle cambia lo que produce.",
+      "5": "Cinco bloques alrededor de un bucle.",
+      "6": "Un bloque sobrante: no hace falta; ponlo al final.",
+      "7": "Bloques sobrantes con tres variables.",
+      "8": "Dos bucles: su orden importa.",
+      "9": "Dos bucles y un bloque sobrante.",
+      "10": "Siempre sobra uno: dos bucles, tres variables y un bloque de más."
+    },
+    "kinds": {
+      "orderBlocks": "Ordenar todos los bloques",
+      "spareBlock": "Ordenar con un bloque sobrante"
+    },
+    "then": "{{before}} y después {{after}}",
+    "prompt": {
+      "orderBlocks": "Ordena los bloques para que el programa imprima {{printed}}.",
+      "spareBlock": "Ordena los bloques para que el programa imprima {{printed}}. Sobra un bloque: ponlo al final."
+    },
+    "explanation": {
+      "orderBlocks_one": "Solo {{order}} imprime {{printed}} (se comprobó con el intérprete el único orden posible). Paso a paso: {{steps}}.",
+      "orderBlocks_other": "Solo {{order}} imprime {{printed}} (se comprobaron con el intérprete los {{count}} órdenes posibles; los demás imprimen otra cosa o se detienen con un error). Paso a paso: {{steps}}.",
+      "spareBlock_one": "Solo {{order}} imprime {{printed}} (se comprobó con el intérprete el único orden posible). El bloque {{spare}} es el sobrante: ningún orden que lo use imprime {{printed}}. Paso a paso: {{steps}}.",
+      "spareBlock_other": "Solo {{order}} imprime {{printed}} (se comprobaron con el intérprete los {{count}} órdenes posibles; los demás imprimen otra cosa o se detienen con un error). El bloque {{spare}} es el sobrante: ningún orden que lo use imprime {{printed}}. Paso a paso: {{steps}}."
+    },
+    "view": {
+      "target": "Salida objetivo:",
+      "spare": "Sobra un bloque: va al final.",
+      "blocks": "Bloques que ordenar",
+      "block": "Bloque {{id}}",
+      "finished": "El programa terminado"
+    }
+  },
+  "bugHunter": {
+    "name": "Cazador de bugs",
+    "tagline": "Un artefacto, unas pocas reglas, exactamente un bug.",
+    "description": "Revisa registros, datos y pseudocódigo con reglas explícitas y señala el único elemento que incumple una. Entrena la atención selectiva y sostenida, la detección de anomalías y la depuración.",
+    "scoringSummary": "Puntos por cada anomalía encontrada, según el nivel, con bonificación por ritmo y rachas. La precisión supone el 75 % del índice de rendimiento.",
+    "instructions": {
+      "rules": "Lee primero las reglas: solo cuentan las reglas indicadas, no lo que «parece» incorrecto.",
+      "check": "Después revisa los elementos uno a uno. Exactamente un elemento incumple exactamente una regla.",
+      "above": "Las reglas sobre «el elemento de arriba» comparan cada elemento solo con su vecino inmediato.",
+      "nearMisses": "Muchos elementos son casi errores: raros pero válidos. Haz clic en el bug (o pulsa Intro sobre él) para responder."
+    },
+    "levels": {
+      "1": "Ten una regla en mente y comprueba una lista corta con ella, elemento a elemento.",
+      "2": "Lee el pseudocódigo como datos: encuentra la línea que incumple una regla de nombres o de orden.",
+      "3": "Bugs sutiles: erratas, valores desviados en uno y segundos fuera de orden.",
+      "4": "Dos reglas a la vez y recursos que hay que abrir y cerrar correctamente.",
+      "5": "Familias de reglas mezcladas: compara con la línea de arriba y revisa cada campo.",
+      "6": "Artefactos más largos con más señuelos: mantén la precisión hasta el final.",
+      "7": "Tres reglas por elemento, incluidas condiciones que solo se aplican a algunos.",
+      "8": "Artefactos densos donde la mayoría de los elementos sospechosos son válidos.",
+      "9": "Atención sostenida: tres reglas sobre tres docenas de elementos con ruido.",
+      "10": "Todo a la vez: 42 elementos, tres reglas, mucho ruido y casi errores por todas partes."
+    },
+    "kinds": {
+      "sequenceAnomaly": "Anomalías de secuencia",
+      "schemaViolation": "Violaciones del esquema",
+      "codeRule": "Reglas de código",
+      "multiRule": "Varias reglas"
+    },
+    "prompt": {
+      "sequenceAnomaly": "Revisa el registro. Exactamente una línea incumple una regla: ¿cuál?",
+      "schemaViolation": "Valida los registros con el esquema. Exactamente un registro no es válido: ¿cuál?",
+      "multiRule": "Cada línea del registro debe cumplir todas las reglas. Exactamente una incumple alguna: ¿cuál?",
+      "codeRule": "Revisa el programa. Exactamente una línea incumple una regla: ¿cuál?"
+    },
+    "rule": {
+      "consecutive": "Cada {{field}} es exactamente 1 más que el {{field}} del elemento de arriba.",
+      "ascendingTime": "Cada {{field}} es igual o posterior al {{field}} del elemento de arriba.",
+      "unique": "Ningún {{field}} repite un {{field}} usado en un elemento anterior.",
+      "oneOf": "{{field}} es uno de: {{values}}.",
+      "exact": "{{field}} es {{value}}.",
+      "range": "{{field}} es un número entero de {{min}} a {{max}}.",
+      "digits_one": "{{field}} es un número entero de exactamente {{count}} cifra.",
+      "digits_other": "{{field}} es un número entero de exactamente {{count}} cifras.",
+      "email": "{{field}} tiene exactamente una «@», un nombre delante y un dominio con puntos detrás (nombre@dominio.tld).",
+      "semver": "{{field}} son tres números enteros separados por puntos (major.minor.patch).",
+      "multipleOf": "{{field}} es múltiplo de {{step}}.",
+      "impliesExact": "Cuando {{when}} es {{equals}}, {{field}} es {{value}}.",
+      "impliesRange": "Cuando {{when}} es {{equals}}, {{field}} es un número entero de {{min}} a {{max}}.",
+      "definedBeforeUse": "Cada variable se asigna con «set» en una línea anterior antes de leerse.",
+      "closeOpened": "Cada «open x» va seguido de un «close x» en una línea posterior.",
+      "writeWhileOpen": "«write … to x» solo ocurre mientras x está abierto (después de «open x» y antes de «close x»).",
+      "camelCase": "Todos los nombres están en camelCase: empiezan por minúscula y solo usan letras y cifras (sin «_»)."
+    },
+    "reason": {
+      "emailProblem": {
+        "notText": "no es texto",
+        "noAt": "no tiene «@»",
+        "manyAt": "tiene más de una «@»",
+        "noLocal": "no tiene nada delante de la «@»",
+        "badDomain": "tiene «{{domain}}» después de la «@», que no es un dominio con puntos"
+      },
+      "email": "{{field}} {{value}} {{problem}}",
+      "oneOf": "{{field}}={{value}} no es uno de {{values}}",
+      "range": "{{field}}={{value}} está fuera de {{min}}–{{max}}",
+      "digits_one": "{{field}}={{value}} tiene {{count}} cifra, no {{expected}}",
+      "digits_other": "{{field}}={{value}} tiene {{count}} cifras, no {{expected}}",
+      "notWhole": "{{field}}={{value}} no es un número entero",
+      "semver": "{{field}} {{value}} no son tres números enteros separados por puntos",
+      "multipleOf": "{{field}}={{value}} no es múltiplo de {{step}}",
+      "implies": "{{when}} es {{equals}}, pero {{field}}={{value}}",
+      "consecutive": "{{field}}={{value}} va después de {{field}}={{previous}}; debería ser {{expected}}",
+      "invalidTime": "{{field}}={{value}} no es una hora HH:MM:SS válida",
+      "earlier": "{{field}}={{value}} es anterior a {{previous}} del elemento de arriba",
+      "repeated": "{{field}}={{value}} ya se usó en el elemento {{item}}",
+      "unassigned": {
+        "never": "lee {{name}}, que aún no se ha asignado (nunca se asigna)",
+        "here": "lee {{name}}, que aún no se ha asignado (esta línea es la primera que lo asigna)",
+        "later": "lee {{name}}, que aún no se ha asignado (se asigna por primera vez en la línea {{line}})"
+      },
+      "neverClosed": "{{resource}} se abre aquí pero nunca se cierra después",
+      "write": {
+        "closed": "escribe en {{resource}}, que ya se cerró en la línea {{line}}",
+        "openedLater": "escribe en {{resource}}, que no se abre hasta más tarde, en la línea {{line}}",
+        "neverOpened": "escribe en {{resource}}, que nunca se abre"
+      },
+      "camelCase": "el nombre {{name}} no está en camelCase"
+    },
+    "explanation": {
+      "numbered": "El bug es el elemento {{item}}: {{reason}}. Incumple la regla {{number}}: {{rule}}",
+      "single": "El bug es el elemento {{item}}: {{reason}}. Incumple la regla: {{rule}}"
+    },
+    "view": {
+      "rules": "Reglas: cada elemento debe cumplirlas todas",
+      "rule": "Regla",
+      "artifact": {
+        "log_one": "Registro · {{count}} elemento",
+        "log_other": "Registro · {{count}} elementos",
+        "records_one": "Datos · {{count}} elemento",
+        "records_other": "Datos · {{count}} elementos",
+        "program_one": "Programa · {{count}} elemento",
+        "program_other": "Programa · {{count}} elementos"
+      },
+      "breaks": "✗ incumple la regla: {{rule}}",
+      "breaksNumbered": "✗ incumple la regla R{{number}}: {{rule}}",
+      "pick": "tu elección",
+      "pickCorrect": "✓ tu elección",
+      "item": "Elemento {{item}}: {{text}}"
+    }
+  },
+  "codeMemory": {
+    "name": "Memoria de código",
+    "tagline": "Registros, llamadas, estado y posiciones, de memoria.",
+    "description": "Estudia registros, secuencias de llamadas a una API, asignaciones de variables y cuadrículas de palabras clave, y responde cuando ya estén ocultos. Entrena la memoria de trabajo, secuencial y contextual que usas cuando tienes en la cabeza una estructura de datos o una traza.",
+    "scoringSummary": "Puntos por cada recuerdo correcto, según el nivel, con pequeñas bonificaciones por ritmo y rachas. La precisión supone el 75 % del índice de rendimiento.",
+    "instructions": {
+      "study": "Cada reto empieza con una fase de estudio: memoriza lo que ves y pulsa «Estoy listo» o espera al temporizador.",
+      "hidden": "El material se oculta antes de que aparezca la pregunta, así que no sabrás de antemano qué se preguntará.",
+      "assignments": "Las asignaciones se ejecutan de arriba abajo; «y = x + 2» guarda el nuevo valor en y.",
+      "exact": "A partir del nivel 4 algunas respuestas son números exactos, y desde el nivel 5 puede que tengas que reconstruir todo el orden de llamadas."
+    },
+    "levels": {
+      "1": "Retén unos pocos campos, llamadas y posiciones durante unos segundos.",
+      "2": "Distingue dos registros y sigue una variable a través de una actualización.",
+      "3": "Recuerda qué vino después de qué, y posiciones en una cuadrícula más grande.",
+      "4": "Respuestas exactas: calcula y retén tres variables sin opciones en las que apoyarte.",
+      "5": "Interferencia: ids y palabras clave parecidos, y reconstruir un orden de llamadas completo.",
+      "6": "Llamadas parecidas sobre los mismos recursos: memoriza el orden exacto, no la idea general.",
+      "7": "Busca registros por otro campo y recuerda el estado en una línea concreta.",
+      "8": "Cuatro registros, cuatro variables y ocho llamadas parecidas a la vez.",
+      "9": "Uniones: sigue una clave foránea entre dos tablas que ya no ves.",
+      "10": "Carga e interferencia máximas con el menor tiempo de estudio por elemento."
+    },
+    "kinds": {
+      "recordRecall": "Recordar registros",
+      "crossReference": "Búsqueda cruzada",
+      "foreignKeyJoin": "Uniones por clave foránea",
+      "sequenceRecall": "Secuencias de llamadas",
+      "variableState": "Estado de variables",
+      "positionRecall": "Posiciones en la cuadrícula"
+    },
+    "record": {
+      "prompt": "¿Cuál era el campo {{field}} del registro {{type}}?",
+      "explanation": "El registro {{type}} era {{record}}, así que su {{field}} era {{value}}."
+    },
+    "crossReference": {
+      "prompt": "El {{type}} cuyo {{key}} era {{keyValue}}: ¿cuál era su {{field}}?",
+      "explanation": "Solo un {{type}} tenía {{key}} {{keyValue}}: {{record}}. Su {{field}} era {{value}}."
+    },
+    "join": {
+      "prompt": "El {{parent}} cuyo {{key}} era {{keyValue}} tiene un {{child}} (enlazado por {{foreignKey}}). ¿Cuál era el {{field}} de ese {{child}}?",
+      "explanation": "El {{parent}} con {{key}} {{keyValue}} tenía el id {{parentId}}; el {{child}} con {{link}} era {{record}}, así que su {{field}} era {{value}}."
+    },
+    "sequence": {
+      "prompt": {
+        "order": "Vuelve a poner las llamadas en el orden en que se ejecutaron.",
+        "position": "¿Cuál fue la llamada n.º {{position}}?",
+        "successor": "¿Qué llamada vino justo después de {{call}}?"
+      },
+      "explanation": {
+        "order": "Las llamadas se ejecutaron en este orden: {{calls}}.",
+        "position": "La secuencia era {{calls}}; la llamada n.º {{position}} fue {{answer}}.",
+        "successor": "La secuencia era {{calls}}; justo después de {{call}} vino {{answer}}."
+      }
+    },
+    "state": {
+      "prompt": {
+        "final": "¿Cuál fue el valor final de {{name}}?",
+        "afterLine": "¿Cuál era el valor de {{name}} justo después de la línea {{line}}?"
+      },
+      "explanation": {
+        "final": "{{steps}}; así que {{name}} terminó valiendo {{value}}.",
+        "afterLine": "{{steps}}; así que justo después de la línea {{line}}, {{name}} valía {{value}} (más tarde pasó a valer {{later}})."
+      }
+    },
+    "position": {
+      "prompt": "¿Dónde estaba la palabra clave «{{keyword}}»? Selecciona su casilla.",
+      "explanation": "{{keyword}} estaba en la {{cell}}.",
+      "explanationTwin": "{{keyword}} estaba en la {{cell}}. La parecida {{twin}} estaba en la {{twinCell}}."
+    },
+    "view": {
+      "hidden": "Oculto: responde de memoria.",
+      "callsHeading": "Llamadas, en el orden en que se ejecutaron",
+      "calls": "Llamadas",
+      "answerMark": "✓ respuesta",
+      "givenCall": "llamada dada",
+      "wrongPick": "✗ tu elección",
+      "assignmentsHeading": "Asignaciones (se ejecutan de arriba abajo)",
+      "assignments": "Asignaciones",
+      "askedHere": "← se pregunta aquí",
+      "asked": "← preguntado",
+      "recordList": "Registros",
+      "records": "Registros {{type}}",
+      "table": "Tabla {{type}}",
+      "childTable": "Tabla {{type}} · {{link}}",
+      "mark": {
+        "key": "clave",
+        "answer": "respuesta",
+        "linkedId": "id enlazado",
+        "link": "enlace"
+      },
+      "cell": "Fila {{row}}, columna {{column}}",
+      "grid": "Cuadrícula de palabras clave, {{rows}} filas por {{columns}} columnas",
+      "empty": "vacía"
+    }
+  },
+  "patternArchitect": {
+    "name": "Arquitecto de patrones",
+    "tagline": "Encuentra la regla y aplícala.",
+    "description": "Continúa secuencias numéricas, completa cuadrículas de símbolos, deduce programas ocultos a partir de ejemplos y reconoce la misma estructura con nombres distintos. Entrena el reconocimiento de patrones, la abstracción y la generalización.",
+    "scoringSummary": "Puntos por cada regla encontrada y aplicada, según el nivel, con bonificaciones por ritmo y rachas. La precisión supone el 75 % del índice de rendimiento.",
+    "instructions": {
+      "rule": "Cada reto esconde una regla. Encuentra una regla que explique todo lo que ves y aplícala.",
+      "grids": "Cuadrículas: las formas y las cantidades pueden seguir reglas distintas; revisa filas y columnas por separado.",
+      "programs": "Los programas ocultos encadenan unos pocos pasos sencillos del vocabulario indicado; el orden de los pasos importa.",
+      "trees": "Los árboles se escriben como a(b, c): a contiene b y c, en ese orden. Dos grafos coinciden cuando, al renombrar los nodos, todas las flechas encajan."
+    },
+    "levels": {
+      "1": "Detecta una sola regularidad: un paso constante o un atributo que cambia en una cuadrícula.",
+      "2": "Pasos que cambian y cuadrículas donde dos atributos siguen reglas distintas.",
+      "3": "Dos secuencias entrelazadas y cuadrículas cuyas cantidades siguen una aritmética.",
+      "4": "Deduce un programa oculto de un paso a partir de ejemplos entrada → salida.",
+      "5": "Programas de dos pasos encadenados: separa lo que aporta cada paso.",
+      "6": "Pasos que dependen de los datos (repeticiones, parejas, totales acumulados) con menos ejemplos.",
+      "7": "Estructura por encima del contenido: empareja grafos por su forma y reestructura árboles por analogía.",
+      "8": "Programas de tres pasos, grafos más grandes y reglas de árboles con un solo ejemplo.",
+      "9": "Estructuras parecidas con el mismo número de flechas y reglas de árboles de dos pasos.",
+      "10": "Pruebas mínimas: programas de tres pasos, grafos parecidos de siete nodos y reglas de árboles compuestas."
+    },
+    "kinds": {
+      "numberSequence": "Secuencias numéricas",
+      "symbolGrid": "Cuadrículas de símbolos",
+      "transformInference": "Programas ocultos",
+      "structureMatch": "Estructuras equivalentes",
+      "treeAnalogy": "Analogías de árboles"
+    },
+    "cell": {
+      "circle_one": "{{count}} círculo",
+      "circle_other": "{{count}} círculos",
+      "triangle_one": "{{count}} triángulo",
+      "triangle_other": "{{count}} triángulos",
+      "square_one": "{{count}} cuadrado",
+      "square_other": "{{count}} cuadrados",
+      "diamond_one": "{{count}} rombo",
+      "diamond_other": "{{count}} rombos",
+      "star_one": "{{count}} estrella",
+      "star_other": "{{count}} estrellas"
+    },
+    "sequence": {
+      "prompt": "¿Qué número viene después?",
+      "explanation": "Regla: {{rule}}. Así que después de {{last}} viene {{answer}}.",
+      "explanationTrap": "Regla: {{rule}}. Así que después de {{last}} viene {{answer}}. Repetir solo el último paso daría {{repeated}}."
+    },
+    "sequenceRule": {
+      "constantAdd": "sumar {{n}} cada vez",
+      "constantSubtract": "restar {{n}} cada vez",
+      "alternatingSteps": "los pasos se alternan: {{steps}}, …",
+      "growingStep": "el paso crece {{n}} cada vez ({{steps}}, …)",
+      "shrinkingStep": "el paso disminuye {{n}} cada vez ({{steps}}, …)",
+      "multiply": "multiplicar por {{factor}} cada vez",
+      "interleaved": "dos secuencias se turnan: los términos 1.º, 3.º, 5.º… van {{odd}}, los términos 2.º, 4.º, 6.º… van {{even}}",
+      "stepCycle": "los pasos se repiten en un ciclo de tres: {{steps}}",
+      "multiplyAdd": "multiplicar por {{factor}} y luego sumar {{n}}",
+      "multiplySubtract": "multiplicar por {{factor}} y luego restar {{n}}",
+      "sumOfPreviousTwo": "cada término es la suma de los dos anteriores",
+      "alternatingMultiplyFirstAdd": "alternar multiplicar por {{factor}} y sumar {{n}}",
+      "alternatingMultiplyFirstSubtract": "alternar multiplicar por {{factor}} y restar {{n}}",
+      "alternatingMultiplyLastAdd": "alternar sumar {{n}} y multiplicar por {{factor}}",
+      "alternatingMultiplyLastSubtract": "alternar restar {{n}} y multiplicar por {{factor}}"
+    },
+    "grid": {
+      "prompt": "¿Qué casilla completa la cuadrícula?",
+      "explanation": "Formas: {{shapes}}. Cantidades: {{counts}}. Así que la casilla que falta ({{position}}) es {{cell}}: {{description}}."
+    },
+    "layer": {
+      "byRow": "cada fila mantiene un mismo valor",
+      "byColumn": "cada columna mantiene un mismo valor",
+      "shiftLeft": "cada fila es la de arriba desplazada un lugar a la izquierda (el primero pasa al final)",
+      "shiftRight": "cada fila es la de arriba desplazada un lugar a la derecha (el último pasa al principio)",
+      "constant": "igual en todas las casillas",
+      "rowUp": "a lo largo de cada fila (de izquierda a derecha) la cantidad sube de uno en uno",
+      "rowDown": "a lo largo de cada fila (de izquierda a derecha) la cantidad baja de uno en uno",
+      "columnUp": "a lo largo de cada columna (de arriba abajo) la cantidad sube de uno en uno",
+      "columnDown": "a lo largo de cada columna (de arriba abajo) la cantidad baja de uno en uno",
+      "rowSum": "en cada fila la última cantidad es la suma de las demás",
+      "columnSum": "en cada columna la cantidad de abajo es la suma de las demás"
+    },
+    "step": "{{n}}) {{step}}",
+    "listOp": {
+      "reverse": "invertir la lista",
+      "sortAscending": "ordenar de menor a mayor",
+      "sortDescending": "ordenar de mayor a menor",
+      "rotateLeft": "mover el primer elemento al final",
+      "rotateRight": "mover el último elemento al principio",
+      "dropFirst": "quitar el primer elemento",
+      "dropLast": "quitar el último elemento",
+      "duplicateEach": "escribir cada elemento dos veces",
+      "add": "sumar {{n}} a cada elemento",
+      "double": "duplicar el valor de cada elemento",
+      "keepEven": "quedarse solo con los números pares",
+      "keepOdd": "quedarse solo con los números impares",
+      "takeFirst_one": "quedarse solo con el primer elemento",
+      "takeFirst_other": "quedarse solo con los {{count}} primeros elementos",
+      "swapPairs": "intercambiar cada pareja de vecinos (1.º↔2.º, 3.º↔4.º, …)",
+      "removeRepeats": "quitar los valores repetidos (conservar el primero de cada uno)",
+      "runningTotal": "sustituir cada elemento por el total acumulado"
+    },
+    "vocabulary": {
+      "reverse": "invertir la lista",
+      "sort": "ordenar de menor a mayor, o de mayor a menor",
+      "rotate": "mover el primer elemento al final, o el último al principio",
+      "drop": "quitar el primer elemento, o el último",
+      "duplicateEach": "escribir cada elemento dos veces",
+      "add": "sumar 1, 2 o 3 a cada elemento",
+      "double": "duplicar el valor de cada elemento",
+      "keepParity": "quedarse solo con los números pares, o solo con los impares",
+      "takeFirst": "quedarse solo con los 2 o 3 primeros elementos",
+      "swapPairs": "intercambiar cada pareja de vecinos (1.º↔2.º, 3.º↔4.º, …)",
+      "removeRepeats": "quitar los valores repetidos (conservar el primero de cada uno)",
+      "runningTotal": "sustituir cada elemento por el total acumulado"
+    },
+    "transform": {
+      "prompt": "El mismo programa oculto convierte cada entrada en su salida. ¿Qué produce para la nueva entrada?",
+      "explanation_one": "El programa oculto: {{steps}}. Aplicado a la nueva entrada: {{path}}, así que la respuesta es {{answer}}. Cualquier programa de hasta {{count}} paso que encaje con todos los ejemplos da este mismo resultado.",
+      "explanation_other": "El programa oculto: {{steps}}. Aplicado a la nueva entrada: {{path}}, así que la respuesta es {{answer}}. Cualquier programa de hasta {{count}} pasos que encaje con todos los ejemplos da este mismo resultado."
+    },
+    "treeOp": {
+      "mirror": "reflejar todo el árbol (cada elemento lista sus hijos en orden inverso)",
+      "mirrorTop": "invertir solo el orden de los elementos de primer nivel",
+      "rotateTop": "mover el primer elemento de primer nivel al final",
+      "pruneLeaves": "quitar cada elemento que no tiene hijos",
+      "flatten": "aplanar: cada elemento pasa a ser hijo directo de la raíz, en orden de lectura",
+      "sortChildren": "ordenar alfabéticamente los hijos de cada elemento"
+    },
+    "tree": {
+      "prompt": "La misma regla de reestructuración convierte cada árbol de la izquierda en el de la derecha. ¿En qué se convierte el nuevo árbol?",
+      "explanation_one": "La regla: {{steps}}. Así que {{question}} se convierte en {{answer}}. Cualquier regla de hasta {{count}} paso que encaje con los ejemplos da este mismo árbol.",
+      "explanation_other": "La regla: {{steps}}. Así que {{question}} se convierte en {{answer}}. Cualquier regla de hasta {{count}} pasos que encaje con los ejemplos da este mismo árbol."
+    },
+    "structure": {
+      "prompt": "¿Qué grafo tiene exactamente la misma estructura de conexiones que el de referencia? Solo cambian los nombres.",
+      "graph": "Grafo {{name}}",
+      "signature": "{{in}} de entrada / {{out}} de salida",
+      "explanation": "El grafo {{name}} es el que coincide: renombrar {{renaming}} convierte cada flecha del de referencia en una flecha del grafo {{name}}. {{reasons}}",
+      "reasonOne": "Grafo {{name}}: {{reason}}.",
+      "reasonMany": "Grafos {{names}}: {{reason}}.",
+      "reason": {
+        "counts_one": "{{count}} nodo con flechas {{signature}} (el de referencia tiene {{expected}})",
+        "counts_other": "{{count}} nodos con flechas {{signature}} (el de referencia tiene {{expected}})",
+        "neighbourhood": "mismo número de flechas en cada nodo, pero el de referencia tiene un nodo con flechas {{own}} que apuntan a nodos con flechas ({{targets}}), y este no",
+        "noRenaming": "mismo número de flechas en cada nodo, pero ningún renombrado hace que las flechas encajen"
+      }
+    },
+    "view": {
+      "sequence": "Secuencia",
+      "nextTerm": "Siguiente término (desconocido)",
+      "grid": "Cuadrícula de símbolos de {{size}} filas por {{size}} columnas, con una casilla que falta",
+      "missingCell": "Casilla que falta",
+      "examples_one": "Ejemplos · programa oculto de hasta {{count}} paso",
+      "examples_other": "Ejemplos · programa oculto de hasta {{count}} pasos",
+      "input": "Entrada",
+      "becomes": "se convierte en",
+      "output": "Salida",
+      "newOutput": "Salida para la nueva entrada (desconocida)",
+      "possibleSteps": "Pasos posibles",
+      "treeRule_one": "Regla de reestructuración de hasta {{count}} paso",
+      "treeRule_other": "Regla de reestructuración de hasta {{count}} pasos",
+      "treeExamples": "Ejemplos",
+      "before": "Ejemplo {{n}}, antes",
+      "after": "Ejemplo {{n}}, después",
+      "newTree": "Nuevo árbol",
+      "newTreeResult": "Nuevo árbol reestructurado (desconocido)",
+      "pointsTo": "apunta a",
+      "nothing": "nada",
+      "reference": "Referencia · {{nodes}} nodos, {{arrows}} flechas",
+      "referenceArrows": "Flechas del grafo de referencia",
+      "candidates": "Grafos candidatos",
+      "graphArrows": "Flechas del grafo {{name}}"
+    }
+  }
+}

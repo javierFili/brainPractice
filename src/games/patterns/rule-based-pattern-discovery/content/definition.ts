@@ -1,7 +1,9 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
+
+const T = 'patterns:ruleBasedPatternDiscovery';
 import { gridKey, type Draft } from '../../shared/content';
 import { RULE_DISCOVERY_LEVELS } from './levels';
 import {
@@ -88,7 +90,6 @@ function draft(random: RandomGenerator, profile: RuleDiscoveryProfile) {
             ),
           )
         : null;
-    const rule = second === null ? [first] : [first, second];
     const fresh = (): FlatExample | null => {
       for (let i = 0; i < 20; i++) {
         const input = randomInput(random, n, kinds);
@@ -159,13 +160,13 @@ function draft(random: RandomGenerator, profile: RuleDiscoveryProfile) {
       steps,
     };
     return {
-      prompt:
-        steps === 1
-          ? 'The same change turns every input into its output. What does the new input become?'
-          : 'Two changes, one after the other, turn every input into its output. What does the new input become?',
+      prompt: msg(`${T}.prompt.${steps === 1 ? 'one' : 'two'}`),
       content,
       response: singleChoice(random, label(question.output), wrong.map(label)),
-      explanation: `In every example the grid ${rule.map((r) => r.words).join(', and then ')}. Doing the same to the new input gives the chosen grid.`,
+      explanation:
+        second === null
+          ? msg(`${T}.explanation.one`, { rule: first.words })
+          : msg(`${T}.explanation.two`, { first: first.words, second: second.words }),
       skills:
         steps === 1
           ? ['pattern-recognition', 'abstraction', 'logical-reasoning']
@@ -176,10 +177,9 @@ function draft(random: RandomGenerator, profile: RuleDiscoveryProfile) {
 
 export const ruleDiscoveryGame: GameDefinition<RuleDiscoveryChallenge, RuleDiscoveryProfile> = {
   id: RULE_DISCOVERY_ID,
-  name: 'Rule-Based Pattern Discovery',
-  tagline: 'Work out the rule from examples.',
-  description:
-    'Each example shows a small grid before and after a hidden change: a mirror, a turn, a slide, tiles changing kind or falling down. Work out the change and choose what a new grid becomes. Higher levels chain two changes.',
+  name: msg('patterns:ruleBasedPatternDiscovery.name'),
+  tagline: msg('patterns:ruleBasedPatternDiscovery.tagline'),
+  description: msg('patterns:ruleBasedPatternDiscovery.description'),
   area: 'patterns',
   skills: ['pattern-recognition', 'abstraction', 'logical-reasoning', 'decomposition'],
   meta: {
@@ -190,17 +190,16 @@ export const ruleDiscoveryGame: GameDefinition<RuleDiscoveryChallenge, RuleDisco
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each puzzle counts as correct when you choose the grid the hidden rule produces. Your result is the share of puzzles solved; there is no time limit.',
+    scoringSummary: msg('patterns:ruleBasedPatternDiscovery.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Compare each input grid with its output: what moved, turned, changed kind or fell?',
-    'Check that your idea works for every example, not just the first.',
-    'Apply the same change to the new input and choose the result. From level 8 the rule is two changes in a row.',
-    'Tiles differ by shape as well as colour, and every grid is also described in words.',
+    msg('patterns:ruleBasedPatternDiscovery.instructions.1'),
+    msg('patterns:ruleBasedPatternDiscovery.instructions.2'),
+    msg('patterns:ruleBasedPatternDiscovery.instructions.3'),
+    msg('patterns:ruleBasedPatternDiscovery.instructions.4'),
   ],
-  simpleInstructions: 'See how each picture changes, then change the new one the same way.',
+  simpleInstructions: msg('patterns:ruleBasedPatternDiscovery.simpleInstructions'),
   levels: RULE_DISCOVERY_LEVELS,
   generate({ identity, profile, random }) {
     return { ...identity, ...draft(random, profile), timing: profile.timing };

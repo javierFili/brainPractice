@@ -1,3 +1,4 @@
+import { isMessage, msg, type Message, type Text } from '@/domain/shared';
 import { COLORS, SHAPES, type ColorName, type ShapeKind } from '@/games/kit/content';
 
 /**
@@ -40,16 +41,57 @@ export const figure = (
   rotation: Rotation = 0,
 ): Figure => ({ shape, color, count, rotation: isPointing(shape) ? rotation : 0 });
 
-/** `2 blue arrows pointing right`; the count is left out for a single figure. */
-export function figureLabel(f: Figure, { withCount = true } = {}): string {
+/**
+ * Stable code of a figure, `2 blue arrows pointing right` (the count is left out for a single
+ * figure when `withCount` is false). Used for identity and tests; never shown to people.
+ */
+export function figureKey(f: Figure, { withCount = true } = {}): string {
   const base = `${withCount ? `${f.count} ` : ''}${f.color} ${plural(f.shape, withCount ? f.count : 1)}`;
   return isPointing(f.shape) ? `${base} pointing ${DIRECTION[f.rotation]}` : base;
 }
 
-export const figureKey = (f: Figure) => figureLabel(f);
+/**
+ * The figure in words, in the reader's language: "2 blue arrows pointing right", "2 flechas azules
+ * hacia la derecha". Colour agreement (gender, number) is handled by the translations.
+ */
+export function figureLabel(f: Figure, { withCount = true } = {}): Message {
+  const base = withCount
+    ? msg(`patterns:shared.figure.${f.shape}`, { count: f.count, color: f.color })
+    : msg(`patterns:shared.figureOne.${f.shape}`, { color: f.color });
+  return isPointing(f.shape)
+    ? msg(`patterns:shared.pointing.${DIRECTION[f.rotation]}`, { figure: base })
+    : base;
+}
+
 export const sameFigure = (a: Figure, b: Figure) => figureKey(a) === figureKey(b);
 
-/** Inverse of `figureLabel`; null for other labels. */
+const FIGURE_KEY = /^patterns:shared\.(figure|figureOne)\.(\w+)$/;
+const POINTING_KEY = /^patterns:shared\.pointing\.(\w+)$/;
+
+/** The figure a `figureLabel` message describes; null for any other text. */
+export function figureFromText(text: Text): Figure | null {
+  if (!isMessage(text)) return null;
+  let inner: Text = text;
+  let rotation: Rotation = 0;
+  const pointing = POINTING_KEY.exec(text.key);
+  if (pointing) {
+    const found = ROTATION_VALUES.find((r) => DIRECTION[r] === pointing[1]);
+    const nested = text.values?.['figure'];
+    if (found === undefined || nested === undefined || typeof nested === 'number') return null;
+    inner = nested;
+    rotation = found;
+  }
+  if (!isMessage(inner)) return null;
+  const match = FIGURE_KEY.exec(inner.key);
+  const shape = FIGURE_SHAPES.find((s) => s === match?.[2]);
+  const color = COLORS.find((c) => c === inner.values?.['color']);
+  const count = match?.[1] === 'figureOne' ? 1 : inner.values?.['count'];
+  if (shape === undefined || color === undefined || typeof count !== 'number') return null;
+  if (isPointing(shape) !== (pointing !== null)) return null;
+  return figure(shape, color, count, rotation);
+}
+
+/** Inverse of `figureKey` (also reads English figure labels); null for other labels. */
 export function parseFigure(label: string): Figure | null {
   const words = label.split(' ');
   const count = /^\d$/.test(words[0] ?? '') ? Number(words.shift()) : 1;

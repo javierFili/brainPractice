@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import { describeCodeRule, describeRecordRule } from '../format';
 import type { BugHunterContent } from '../types';
 import { codeRuleViolations } from './codeRules';
@@ -8,8 +9,8 @@ export interface Violation {
   readonly index: number;
   /** 0-based index into `content.rules`. */
   readonly ruleIndex: number;
-  readonly rule: string;
-  readonly reason: string;
+  readonly rule: Message;
+  readonly reason: Message;
 }
 
 /**
@@ -37,7 +38,16 @@ export function findViolations(content: BugHunterContent): Violation[] {
 }
 
 /** Feedback sentence; always names the item number, the rule and the concrete reason. */
-export const explainViolation = (violation: Violation, ruleCount: number) =>
-  `Item ${violation.index + 1} is the bug: ${violation.reason}. ${
-    ruleCount > 1 ? `It breaks rule ${violation.ruleIndex + 1}: ` : 'It breaks the rule: '
-  }${violation.rule}`;
+export const explainViolation = (violation: Violation, ruleCount: number): Message =>
+  ruleCount > 1
+    ? msg('programming:bugHunter.explanation.numbered', {
+        item: violation.index + 1,
+        reason: violation.reason,
+        number: violation.ruleIndex + 1,
+        rule: violation.rule,
+      })
+    : msg('programming:bugHunter.explanation.single', {
+        item: violation.index + 1,
+        reason: violation.reason,
+        rule: violation.rule,
+      });

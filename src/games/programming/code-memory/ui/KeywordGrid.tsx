@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { ChallengePhase, LocateBinding } from '@/games/types';
 import { cellPosition } from '../content/format';
 
@@ -11,11 +12,6 @@ interface Props {
   readonly answerIndex: number | null;
 }
 
-const cellName = (index: number, cols: number) => {
-  const { row, col } = cellPosition(index, cols);
-  return `Row ${row}, column ${col}`;
-};
-
 function ReviewCell({
   word,
   isSolution,
@@ -25,6 +21,7 @@ function ReviewCell({
   isSolution: boolean;
   isWrongPick: boolean;
 }) {
+  const { t } = useTranslation('programming');
   const tone = isSolution
     ? 'border-cyan-400/60 bg-cyan-400/10 text-cyan-200'
     : isWrongPick
@@ -32,11 +29,11 @@ function ReviewCell({
       : 'border-slate-700 text-slate-100';
   return (
     <div
-      className={`flex h-full min-h-12 flex-col items-center justify-center rounded-md border px-1 py-2 font-mono text-sm ${tone}`}
+      className={`flex h-full min-h-12 flex-col items-center justify-center rounded-md border px-1 py-2 text-sm ${tone}`}
     >
-      <span>{word ?? <span className="text-slate-600">·</span>}</span>
-      {isSolution && <span className="text-xs">✓ answer</span>}
-      {isWrongPick && <span className="text-xs">✗ your pick</span>}
+      <span className="font-mono">{word ?? <span className="text-slate-600">·</span>}</span>
+      {isSolution && <span className="text-xs">{t('codeMemory.view.answerMark')}</span>}
+      {isWrongPick && <span className="text-xs">{t('codeMemory.view.wrongPick')}</span>}
     </div>
   );
 }
@@ -49,11 +46,16 @@ export function KeywordGrid({ rows, cols, cells, phase, locate, answerIndex }: P
   const rowIndexes = Array.from({ length: rows }, (_, r) => r);
   const colIndexes = Array.from({ length: cols }, (_, c) => c);
   const responding = phase === 'respond';
+  const { t } = useTranslation('programming');
+  const cellName = (index: number) => {
+    const { row, col } = cellPosition(index, cols);
+    return t('codeMemory.view.cell', { row, column: col });
+  };
 
   return (
     <table
       className="w-full max-w-xl table-fixed border-separate border-spacing-1.5"
-      aria-label={`Keyword grid, ${rows} rows by ${cols} columns`}
+      aria-label={t('codeMemory.view.grid', { rows, columns: cols })}
     >
       <tbody>
         {rowIndexes.map((r) => (
@@ -66,7 +68,7 @@ export function KeywordGrid({ rows, cols, cells, phase, locate, answerIndex }: P
                   <td key={c} className="p-0">
                     <button
                       type="button"
-                      aria-label={cellName(index, cols)}
+                      aria-label={cellName(index)}
                       disabled={locate?.disabled ?? true}
                       onClick={() => {
                         locate?.onLocate(index);
@@ -81,7 +83,11 @@ export function KeywordGrid({ rows, cols, cells, phase, locate, answerIndex }: P
                 );
               }
               return (
-                <td key={c} className="p-0" aria-label={word === null ? 'empty' : undefined}>
+                <td
+                  key={c}
+                  className="p-0"
+                  aria-label={word === null ? t('codeMemory.view.empty') : undefined}
+                >
                   <ReviewCell
                     word={word}
                     isSolution={phase === 'review' && answerIndex === index}

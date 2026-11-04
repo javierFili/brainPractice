@@ -1,6 +1,6 @@
 import type { GameDefinition } from '@/domain/game';
 import { chance, pick, randomInt } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, type Message } from '@/domain/shared';
 import { SPEED_SCORING, fixedChoice } from '@/games/speed/shared/content';
 import { FLANKER_LEVELS } from './levels';
 import {
@@ -13,7 +13,11 @@ import {
   type RowItem,
 } from './types';
 
-export const directionLabel = (d: Direction) => d.charAt(0).toUpperCase() + d.slice(1);
+export const directionLabel = (d: Direction): Message =>
+  msg(`speed:multiChoiceProcessing.directions.${d}`);
+
+/** "left" as in "pointed left" (each language words the direction its own way). */
+const pointing = (d: Direction): Message => msg(`speed:multiChoiceProcessing.pointing.${d}`);
 
 export const directionsOf = (count: 2 | 4): readonly Direction[] => DIRECTIONS.slice(0, count);
 
@@ -21,10 +25,9 @@ export const MULTI_CHOICE_PROCESSING_ID = gameIdOf('multi-choice-processing');
 
 export const multiChoiceProcessingGame: GameDefinition<FlankerChallenge, FlankerProfile> = {
   id: MULTI_CHOICE_PROCESSING_ID,
-  name: 'Multi-Choice Processing Challenge',
-  tagline: 'Ignore the crowd: which way does the centre point?',
-  description:
-    'A row of arrows appears. Answer the direction of the centre arrow while the arrows around it point the same way, another way, or nowhere. Later levels add up and down, longer rows and a cue that sometimes asks for the outer arrows instead.',
+  name: msg('speed:multiChoiceProcessing.name'),
+  tagline: msg('speed:multiChoiceProcessing.tagline'),
+  description: msg('speed:multiChoiceProcessing.description'),
   area: 'speed',
   skills: ['selective-attention', 'processing-speed', 'cognitive-flexibility'],
   meta: {
@@ -35,19 +38,17 @@ export const multiChoiceProcessingGame: GameDefinition<FlankerChallenge, Flanker
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time'],
-    scoringSummary:
-      'Each answer is right or wrong; a wrong answer costs points. A correct answer earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit; the conflict between arrows still has to be resolved.',
+    scoringSummary: msg('speed:multiChoiceProcessing.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'Directions are given by arrow shape, never by colour. Screen readers announce the row as a list of directions; the visual conflict that makes the task hard is mostly lost when listening.',
+    accessibilityNotes: msg('speed:multiChoiceProcessing.accessibilityNotes'),
   },
   instructions: [
-    'Look at the arrow in the middle of the row and answer its direction (click or number keys).',
-    'Ignore the arrows around it — they may point another way.',
-    'From level 5 arrows can also point up or down.',
-    'From level 7 a cue says CENTRE (the middle arrow) or OUTER (the arrows around it).',
+    msg('speed:multiChoiceProcessing.instructions.centre'),
+    msg('speed:multiChoiceProcessing.instructions.ignore'),
+    msg('speed:multiChoiceProcessing.instructions.vertical'),
+    msg('speed:multiChoiceProcessing.instructions.cue'),
   ],
-  simpleInstructions: 'Which way does the middle arrow point?',
+  simpleInstructions: msg('speed:multiChoiceProcessing.simpleInstructions'),
   levels: FLANKER_LEVELS,
   scoring: SPEED_SCORING,
   generate({ identity, profile, random }) {
@@ -80,21 +81,17 @@ export const multiChoiceProcessingGame: GameDefinition<FlankerChallenge, Flanker
     const jitter = Math.min(2, Math.floor((7 - profile.rowLength) / 2));
     const track = profile.rowLength + 2 * jitter;
     const start = randomInt(random, 0, 2 * jitter);
-    const target = rule === 'centre' ? 'centre arrow' : 'outer arrows';
     return {
       ...identity,
-      prompt:
-        rule === 'centre'
-          ? profile.kind === 'single'
-            ? 'Which way does the arrow point?'
-            : 'Which way does the centre arrow point?'
-          : 'Which way do the outer arrows point?',
+      prompt: msg(
+        `speed:multiChoiceProcessing.prompt.${profile.kind === 'single' ? 'single' : rule}`,
+      ),
       content: { kind: profile.kind, rule, row, congruence, track, start },
       response: fixedChoice(directions.map(directionLabel), answerIndex),
-      explanation:
-        profile.kind === 'single'
-          ? `The arrow pointed ${answer}.`
-          : `The ${target} pointed ${answer}${conflict ? `; the ${rule === 'centre' ? 'outer arrows' : 'centre arrow'} pointed ${other}` : ''}.`,
+      explanation: msg(
+        `speed:multiChoiceProcessing.explanation.${profile.kind === 'single' ? 'single' : rule}${conflict ? 'Conflict' : ''}`,
+        { direction: pointing(answer), other: pointing(other) },
+      ),
       skills:
         profile.kind === 'cued'
           ? ['selective-attention', 'cognitive-flexibility', 'processing-speed']

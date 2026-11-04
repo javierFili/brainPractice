@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { numberSequencesGame } from './content/definition';
 import type { SequenceChallenge } from './content/types';
@@ -7,12 +8,12 @@ export const numberSequencesModule = defineGameModule<SequenceChallenge>({
   definition: numberSequencesGame,
   ContentView: NumberSequencesView,
   kindLabels: {
-    add: 'Constant steps',
-    multiply: 'Multiplying',
-    'alternating-add': 'Alternating steps',
-    'growing-add': 'Growing steps',
-    interleaved: 'Two mixed sequences',
-    'two-step': 'Two-step rules',
-    'sum-of-two': 'Sum of the two before',
+    add: msg('logic:numberSequences.kinds.add'),
+    multiply: msg('logic:numberSequences.kinds.multiply'),
+    'alternating-add': msg('logic:numberSequences.kinds.alternating-add'),
+    'growing-add': msg('logic:numberSequences.kinds.growing-add'),
+    interleaved: msg('logic:numberSequences.kinds.interleaved'),
+    'two-step': msg('logic:numberSequences.kinds.two-step'),
+    'sum-of-two': msg('logic:numberSequences.kinds.sum-of-two'),
   },
 });

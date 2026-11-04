@@ -1,8 +1,8 @@
-import { numericResponse, singleChoice } from '@/domain/challenge';
+import { numericResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { fixedChoice, listJoin, type Draft } from '@/games/logic/shared/content';
+import { gameIdOf, joinText, msg, type Text } from '@/domain/shared';
+import { fixedChoice, orListText, textChoice, type Draft } from '@/games/logic/shared/content';
 import { STRATEGY_LEVELS } from './levels';
 import {
   applyPileMove,
@@ -22,9 +22,16 @@ export const STRATEGY_PUZZLE_ID = gameIdOf('strategy-puzzle');
 type StrategyDraft = Draft<StrategyChallenge>;
 
 export const PILE_NAMES = ['A', 'B', 'C', 'D'];
-const takeLabel = (n: number) => `Take ${n}`;
-export const pileMoveLabel = (m: PileMove) =>
-  `Take ${m.take} from pile ${PILE_NAMES[m.pile] as string}`;
+const key = (path: string) => `logic:strategyPuzzle.${path}`;
+const takeLabel = (n: number) => msg(key('take'), { n });
+export const pileMoveLabel = (m: PileMove): Text =>
+  msg(key('takeFromPile'), { n: m.take, pile: PILE_NAMES[m.pile] as string });
+
+/** "a, then b, then c". */
+const thenList = (items: readonly Text[]): Text =>
+  items.length <= 1
+    ? joinText(items)
+    : msg(key('then'), { head: thenList(items.slice(0, -1)), last: items.at(-1) as Text });
 
 function takeAway(random: RandomGenerator, profile: StrategyProfile): StrategyDraft {
   const { maxTake, pile: range } = profile.takeAway;
@@ -44,13 +51,19 @@ function takeAway(random: RandomGenerator, profile: StrategyProfile): StrategyDr
     (_, i) => i * (maxTake + 1),
   ).filter((n) => n <= left);
   return {
-    prompt: `It is your turn. There are ${pile} coins. Which move makes sure you take the last coin?`,
+    prompt: msg(key('prompt.takeAway'), { count: pile }),
     content: { kind: 'take-away', pile, maxTake },
     response: fixedChoice(
       Array.from({ length: maxTake }, (_, i) => takeLabel(i + 1)),
       takeLabel(take),
     ),
-    explanation: `Take ${take}, leaving ${left}. Positions with ${listJoin(losing.map(String), 'or')} coins lose for the player whose turn it is: whatever your friend takes (1 to ${maxTake}), you take the rest of ${maxTake + 1} and reach the next one, until you take the last coin. Any other move leaves a number your friend can use the same way.`,
+    explanation: msg(key('explanation.takeAway'), {
+      take,
+      left,
+      losing: orListText(losing.map(String)),
+      max: maxTake,
+      group: maxTake + 1,
+    }),
     skills: ['planning', 'logical-reasoning'],
   };
 }
@@ -70,15 +83,15 @@ function piles(random: RandomGenerator, profile: StrategyProfile): StrategyDraft
   });
   const after = applyPileMove(state, win);
   const distractors = sample(random, losing, 3);
-  const equalHint =
-    state.length === 2 && after[0] === after[1]
-      ? ' With two equal piles, you can copy every move your friend makes on the other pile.'
-      : '';
+  const equal = state.length === 2 && after[0] === after[1];
   return {
-    prompt: 'It is your turn. Which move makes sure you take the last coin?',
+    prompt: msg(key('prompt.piles')),
     content: { kind: 'piles', piles: state },
-    response: singleChoice(random, pileMoveLabel(win), distractors.map(pileMoveLabel)),
-    explanation: `${pileMoveLabel(win)}, leaving piles of ${after.join(', ')}. Checking every possible game from there, each reply your friend makes leaves you a move that keeps you winning, until you take the last coin.${equalHint} Every other move gives your friend such a winning reply.`,
+    response: textChoice(random, pileMoveLabel(win), distractors.map(pileMoveLabel)),
+    explanation: msg(key(`explanation.${equal ? 'pilesEqual' : 'piles'}`), {
+      move: pileMoveLabel(win),
+      after: joinText(after.map(String), ', '),
+    }),
     skills: ['planning', 'logical-reasoning'],
   };
 }
@@ -111,12 +124,18 @@ function jugs(random: RandomGenerator, profile: StrategyProfile): StrategyDraft 
     return { caps, start, tap, target, path };
   });
   const { caps, start, tap, target, path } = puzzle;
-  const steps = path.map((s, i) => `${i + 1}. ${s.action} (${s.state.join(' | ')})`);
+  const steps = path.map((s, i) =>
+    msg(key('jug.step'), {
+      n: i + 1,
+      action: s.action,
+      state: joinText(s.state.map(String), ' | '),
+    }),
+  );
   return {
-    prompt: `What is the smallest number of moves to get exactly ${target} ${target === 1 ? 'litre' : 'litres'} in one jug?`,
+    prompt: msg(key('prompt.jugs'), { count: target }),
     content: { kind: 'jugs', capacities: caps, start, tap, target },
-    response: numericResponse(path.length, 'moves'),
-    explanation: `A search through every possible sequence of moves finds no way shorter than ${path.length} moves. One shortest way: ${steps.join('; ')}.`,
+    response: { ...numericResponse(path.length), question: { unit: msg(key('units.moves')) } },
+    explanation: msg(key('explanation.jugs'), { count: path.length, steps: joinText(steps, '; ') }),
     skills: ['planning', 'problem-solving'],
   };
 }
@@ -130,10 +149,13 @@ function sliding(random: RandomGenerator, profile: StrategyProfile): StrategyDra
   const start = pick(random, boards).split(',').map(Number);
   const path = slidingPath(start, rows, cols);
   return {
-    prompt: 'What is the smallest number of slides to reach the goal picture?',
+    prompt: msg(key('prompt.sliding')),
     content: { kind: 'sliding', rows, cols, start, goal: slidingGoal(rows, cols) },
-    response: numericResponse(path.length, 'slides'),
-    explanation: `A search through every reachable board shows the goal is ${path.length} slides away and no fewer. One shortest way: slide tile ${path.join(', then ')}.`,
+    response: { ...numericResponse(path.length), question: { unit: msg(key('units.slides')) } },
+    explanation: msg(key('explanation.sliding'), {
+      count: path.length,
+      tiles: thenList(path.map(String)),
+    }),
     skills: ['planning', 'spatial-reasoning'],
   };
 }
@@ -142,10 +164,9 @@ const GENERATORS = { 'take-away': takeAway, piles, jugs, sliding } as const;
 
 export const strategyPuzzleGame: GameDefinition<StrategyChallenge, StrategyProfile> = {
   id: STRATEGY_PUZZLE_ID,
-  name: 'Strategy Puzzle',
-  tagline: 'Plan ahead: find the best move or the shortest way.',
-  description:
-    'Coin games where you must find the move that guarantees a win, water jugs to measure an exact amount, and sliding tiles to put back in place. Every answer is checked by searching all possibilities, so the best move or the smallest number of moves is certain.',
+  name: msg('logic:strategyPuzzle.name'),
+  tagline: msg('logic:strategyPuzzle.tagline'),
+  description: msg('logic:strategyPuzzle.description'),
   area: 'logic',
   skills: ['planning', 'problem-solving', 'logical-reasoning'],
   meta: {
@@ -156,17 +177,16 @@ export const strategyPuzzleGame: GameDefinition<StrategyChallenge, StrategyProfi
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Answers are checked against an exhaustive search. Your result is the share of puzzles answered correctly; there is no time limit.',
+    scoringSummary: msg('logic:strategyPuzzle.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Coin games: you and a friend take turns. Whoever takes the last coin wins. Your friend always plays the best move.',
-    'Water jugs: fill a jug from the tap, empty it, or pour one jug into another until it is full or the first is empty. Each counts as one move.',
-    'Sliding tiles: slide a tile next to the gap into the gap. Each slide counts as one move.',
-    'Plan in your head, then answer. Use paper if it helps.',
+    msg('logic:strategyPuzzle.instructions.1'),
+    msg('logic:strategyPuzzle.instructions.2'),
+    msg('logic:strategyPuzzle.instructions.3'),
+    msg('logic:strategyPuzzle.instructions.4'),
   ],
-  simpleInstructions: 'Think a few moves ahead to find the best move or the fewest moves.',
+  simpleInstructions: msg('logic:strategyPuzzle.simpleInstructions'),
   levels: STRATEGY_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);

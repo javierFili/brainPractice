@@ -1,3 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { joinText, msg } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { COLORS } from '@/games/kit/content';
 import { MultiSelectBoard } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
@@ -11,6 +14,8 @@ export function InspectionView({
   respond,
   answer,
 }: ContentViewProps<InspectionChallenge>) {
+  const { t } = useTranslation('attention');
+  const tx = useText();
   const { items, columns, rule } = challenge.content;
   const { response } = challenge;
   if (response.format !== 'multi-select')
@@ -21,23 +26,23 @@ export function InspectionView({
   return (
     <div className="flex flex-col items-center gap-4">
       <p className="flex flex-wrap items-center justify-center gap-2 rounded-lg border border-line bg-raised px-3 py-1.5 text-sm text-ink-soft">
-        Rule{rule.negated ? ' (e.g.)' : ''}:
+        {t(`complexVisualInspection.view.${rule.negated ? 'ruleExample' : 'rule'}`)}
         <MarkFace
           mark={mark(rule.shape, exampleColor, rule.rotation, rule.mirrored)}
           className="h-8 w-8"
         />
-        <span className="font-semibold text-ink">{ruleText(rule)}</span>
+        <span className="font-semibold text-ink">{tx(ruleText(rule))}</span>
       </p>
       <MultiSelectBoard
         response={response}
-        label="Items"
+        label={msg('attention:complexVisualInspection.view.items')}
         columns={columns}
         size={columns >= 5 ? 'sm' : 'md'}
         respond={respond}
         answer={answer}
         cells={items.map((m, i) => ({
           key: String(i),
-          label: `${cellName(i, columns)}, ${markLabel(m)}`,
+          label: joinText([cellName(i, columns), markLabel(m)], ', '),
           content: <MarkFace mark={m} />,
         }))}
       />

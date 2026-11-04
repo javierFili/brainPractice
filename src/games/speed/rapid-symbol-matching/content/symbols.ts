@@ -1,4 +1,5 @@
 import { pick, randomInt, type RandomGenerator } from '@/domain/random';
+import { joinText, msg, type Text } from '@/domain/shared';
 import type { Mutation, SymbolPool } from './types';
 
 /** Each pool is a list of groups; a substitution stays inside its symbol's group. */
@@ -16,32 +17,39 @@ const POOLS: Record<SymbolPool, readonly (readonly string[])[]> = {
 };
 
 const SYMBOL_NAMES: Readonly<Record<string, string>> = {
-  '▲': 'up triangle',
+  '▲': 'upTriangle',
   '■': 'square',
   '●': 'circle',
   '◆': 'diamond',
   '★': 'star',
   '♥': 'heart',
-  '▼': 'down triangle',
+  '▼': 'downTriangle',
 };
 
 /** The symbols of a string (every symbol here is a single code point). */
 export const symbolsOf = (text: string): string[] => Array.from(text);
 
 /** Spoken form: symbols by name, letters spelled with their case ("small b", "capital Q"). */
-export function spokenString(text: string): string {
-  return symbolsOf(text)
-    .map((ch) => {
+export function spokenString(text: string): Text {
+  return joinText(
+    symbolsOf(text).map((ch): Text => {
       const name = SYMBOL_NAMES[ch];
-      if (name !== undefined) return name;
-      if (/[a-z]/.test(ch)) return `small ${ch}`;
-      if (/[A-Z]/.test(ch)) return `capital ${ch}`;
+      if (name !== undefined) return msg(`speed:rapidSymbolMatching.spoken.${name}`);
+      if (/[a-z]/.test(ch)) return msg('speed:rapidSymbolMatching.spoken.small', { letter: ch });
+      if (/[A-Z]/.test(ch)) return msg('speed:rapidSymbolMatching.spoken.capital', { letter: ch });
       return ch;
-    })
-    .join(', ');
+    }),
+    ', ',
+  );
 }
 
 export const poolSymbols = (pool: SymbolPool): readonly string[] => POOLS[pool].flat();
+
+const ANY_SYMBOL: ReadonlySet<string> = new Set(Object.values(POOLS).flat(2));
+
+/** True for a candidate string made only of game symbols (not a translated word like "Same"). */
+export const isSymbolString = (text: string): boolean =>
+  text.length > 0 && symbolsOf(text).every((ch) => ANY_SYMBOL.has(ch));
 
 const groupOf = (pool: SymbolPool, ch: string) =>
   POOLS[pool].find((group) => group.includes(ch)) ?? [];

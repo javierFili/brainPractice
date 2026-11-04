@@ -1,4 +1,5 @@
 import type { AssessmentDefinition } from '@/domain/assessment';
+import { msg, type Text } from '@/domain/shared';
 
 /**
  * Assessment protocols. Each one is a fixed battery: same games, same levels and the same number
@@ -49,29 +50,39 @@ export const PROGRAMMING_ASSESSMENT: AssessmentDefinition = {
 
 export interface AssessmentProtocol {
   readonly definition: AssessmentDefinition;
-  readonly title: string;
-  readonly summary: string;
+  /** Full protocol name shown in history (`definition.name` is a stable English label). */
+  readonly name: Text;
+  readonly title: Text;
+  readonly summary: Text;
+  /** The start button ("Start quick assessment"). */
+  readonly start: Text;
+  /** Literal range in minutes, e.g. "8–12". */
   readonly minutes: string;
 }
 
 export const ASSESSMENT_PROTOCOLS: readonly AssessmentProtocol[] = [
   {
     definition: COGNITIVE_ASSESSMENT_QUICK,
-    title: 'Quick',
-    summary: 'One short pass over memory, logic, attention, speed and patterns.',
+    name: msg('assessment:protocols.quick.name'),
+    title: msg('assessment:protocols.quick.title'),
+    summary: msg('assessment:protocols.quick.summary'),
+    start: msg('assessment:protocols.quick.start'),
     minutes: '8–12',
   },
   {
     definition: COGNITIVE_ASSESSMENT_STANDARD,
-    title: 'Standard',
-    summary:
-      'More challenges per area, including spatial rotation and position memory: a steadier result.',
+    name: msg('assessment:protocols.standard.name'),
+    title: msg('assessment:protocols.standard.title'),
+    summary: msg('assessment:protocols.standard.summary'),
+    start: msg('assessment:protocols.standard.start'),
     minutes: '20–30',
   },
   {
     definition: PROGRAMMING_ASSESSMENT,
-    title: 'Programming',
-    summary: 'The five areas measured with code-based tasks, for the programming route.',
+    name: msg('assessment:protocols.programming.name'),
+    title: msg('assessment:protocols.programming.title'),
+    summary: msg('assessment:protocols.programming.summary'),
+    start: msg('assessment:protocols.programming.start'),
     minutes: '25–40',
   },
 ];

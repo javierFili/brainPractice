@@ -1,6 +1,6 @@
 import type { GameDefinition } from '@/domain/game';
 import { weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { constraintArrangement } from './generators/constraints';
 import type { LogicDraft } from './generators/draft';
 import { criticalPathChallenge, dependencyCount, dependencyOrder } from './generators/graphs';
@@ -20,10 +20,9 @@ export const LOGIC_GAME_ID = gameIdOf('algorithmic-logic');
 
 export const logicGame: GameDefinition<LogicChallenge, LogicProfile> = {
   id: LOGIC_GAME_ID,
-  name: 'Algorithm Tracing',
-  tagline: 'Dependencies, traces and constraints.',
-  description:
-    'Order tasks that depend on each other, trace language-neutral pseudocode and solve deployment puzzles. Trains deduction, conditional reasoning and algorithmic thinking.',
+  name: msg('programming:algorithmicLogic.name'),
+  tagline: msg('programming:algorithmicLogic.tagline'),
+  description: msg('programming:algorithmicLogic.description'),
   area: 'logic',
   skills: ['logical-reasoning', 'algorithmic-thinking', 'decomposition', 'working-memory'],
   meta: {
@@ -34,15 +33,14 @@ export const logicGame: GameDefinition<LogicChallenge, LogicProfile> = {
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time', 'streak'],
-    scoringSummary:
-      'Points for each correct answer, scaled by level, with a bonus for pace and streaks; a wrong answer costs a quarter of the base. Accuracy is 75% of the performance index.',
+    scoringSummary: msg('programming:algorithmicLogic.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Read the whole challenge before answering: every rule, arrow and line matters.',
-    'An arrow “x → y” means x must finish before y starts.',
-    'Pseudocode runs top to bottom; “set a ← b + 1” stores the new value in a.',
-    'From level 4 some answers are exact numbers — work them out, there are no options to guess from.',
+    msg('programming:algorithmicLogic.instructions.read'),
+    msg('programming:algorithmicLogic.instructions.arrow'),
+    msg('programming:algorithmicLogic.instructions.pseudocode'),
+    msg('programming:algorithmicLogic.instructions.exact'),
   ],
   levels: LOGIC_LEVELS,
   generate({ identity, profile, random }) {

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { NumberPatternProfile } from './types';
 
@@ -16,7 +17,7 @@ const base = {
 export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   {
     ...base,
-    objective: 'Each row adds up: first plus second gives the third.',
+    objective: msg('patterns:numberPatternCompletion.levels.1'),
     challengeCount: 5,
     kinds: { grid: 1 },
     maxValue: 5,
@@ -24,7 +25,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Sums in rows or in columns, with the gap anywhere.',
+    objective: msg('patterns:numberPatternCompletion.levels.2'),
     challengeCount: 5,
     kinds: { grid: 1 },
     maxValue: 9,
@@ -33,7 +34,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Number pyramids: each brick is the sum of the two below.',
+    objective: msg('patterns:numberPatternCompletion.levels.3'),
     challengeCount: 5,
     kinds: { pyramid: 2, grid: 1 },
     maxValue: 9,
@@ -42,7 +43,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Rows that subtract or move by a fixed step.',
+    objective: msg('patterns:numberPatternCompletion.levels.4'),
     challengeCount: 6,
     kinds: { grid: 2, pyramid: 1 },
     maxValue: 12,
@@ -54,7 +55,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Wheels: opposite segments share a hidden link.',
+    objective: msg('patterns:numberPatternCompletion.levels.5'),
     challengeCount: 6,
     kinds: { wheel: 2, grid: 1 },
     maxValue: 12,
@@ -66,7 +67,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Bigger pyramids where you may have to work backwards.',
+    objective: msg('patterns:numberPatternCompletion.levels.6'),
     challengeCount: 6,
     kinds: { pyramid: 2, wheel: 1 },
     maxValue: 12,
@@ -76,7 +77,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Grids where rows and columns work together.',
+    objective: msg('patterns:numberPatternCompletion.levels.7'),
     pyramid: { base: 4, askBottom: true, blanks: 0 },
     challengeCount: 6,
     kinds: { grid: 2, wheel: 1 },
@@ -87,7 +88,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Crosses: find how the arms make the centre.',
+    objective: msg('patterns:numberPatternCompletion.levels.8'),
     pyramid: { base: 4, askBottom: true, blanks: 0 },
     challengeCount: 6,
     kinds: { cross: 2, grid: 1 },
@@ -98,7 +99,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Pyramids with extra blank bricks, and mixed layouts.',
+    objective: msg('patterns:numberPatternCompletion.levels.9'),
     challengeCount: 6,
     kinds: { pyramid: 2, cross: 1, wheel: 1 },
     maxValue: 15,
@@ -109,7 +110,7 @@ export const NUMBER_PATTERN_LEVELS = defineLevels<NumberPatternProfile>([
   },
   {
     ...base,
-    objective: 'Every layout, with products and five-brick pyramids.',
+    objective: msg('patterns:numberPatternCompletion.levels.10'),
     challengeCount: 6,
     kinds: { grid: 1, pyramid: 1, cross: 1, wheel: 1 },
     maxValue: 15,

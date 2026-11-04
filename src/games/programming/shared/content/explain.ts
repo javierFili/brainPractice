@@ -1,4 +1,5 @@
 import { literal, type RunResult, type TraceStep, type Value } from '@/domain/pseudocode';
+import { joinText, msg, type Text } from '@/domain/shared';
 
 export interface TraceChange {
   /** 1-based source line. */
@@ -41,4 +42,20 @@ export function narrate(source: string, result: RunResult, limit = 10): string {
     .join(' · ');
   const rest = steps.length - limit;
   return rest > 0 ? `${shown} · … (${rest} more ${rest === 1 ? 'step' : 'steps'})` : shown;
+}
+
+/**
+ * `narrate` as translatable text: the same steps ("line 1: x = 4 · line 2: y = 7 …") where only
+ * the word around the code is a message; the changes themselves stay literal code.
+ */
+export function narrateText(source: string, result: RunResult, limit = 10): Text {
+  const steps = traceChanges(source, result).filter((step) => step.changes.length > 0);
+  const shown: Text[] = steps
+    .slice(0, limit)
+    .map((step) =>
+      msg('programming:shared.narrate.step', { line: step.line, changes: step.changes.join(', ') }),
+    );
+  const rest = steps.length - limit;
+  if (rest > 0) shown.push(msg('programming:shared.narrate.more', { count: rest }));
+  return joinText(shown, ' · ');
 }

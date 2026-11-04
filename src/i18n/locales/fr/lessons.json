@@ -1,0 +1,1839 @@
+{
+  "whatIsAProgram": {
+    "title": "Qu'est-ce qu'un programme ?",
+    "objective": "Vous saurez expliquer ce qu'est un programme et prédire ce qu'affiche un tout petit programme.",
+    "summary": "Un programme est une recette précise : l'ordinateur suit chaque instruction à la lettre, dans l'ordre, et transforme une entrée en sortie.",
+    "keyPoints": {
+      "1": "Un programme est une liste d'instructions précises ; l'ordinateur fait exactement ce qu'elles disent, rien de plus.",
+      "2": "La plupart des programmes ont la même forme : entrée → traitement → sortie.",
+      "3": "Une instruction vague ou incomplète donne un mauvais résultat, même si une personne « aurait compris ce que vous vouliez dire ».",
+      "4": "`print(...)` affiche une valeur ; le texte entre guillemets s'affiche tel quel."
+    },
+    "steps": {
+      "recipe": {
+        "title": "Un programme est une recette précise",
+        "blocks": {
+          "b1": "Un programme est une liste d'instructions pour un ordinateur. L'ordinateur les suit à la lettre : il ne devine jamais ce que vous vouliez dire.",
+          "b2": "« Fais du thé » suffit pour une personne, mais c'est bien trop vague pour un ordinateur. Il lui faut chaque étape en détail :",
+          "b3": {
+            "1": "Remplir la bouilloire d'eau.",
+            "2": "Allumer la bouilloire et attendre que l'eau bouille.",
+            "3": "Mettre un sachet de thé dans la tasse.",
+            "4": "Verser l'eau chaude dans la tasse."
+          },
+          "b4": "Si une étape manque ou n'est pas claire, l'ordinateur ne comblera pas le vide. La précision, c'est votre travail.",
+          "b5": "Un tout petit programme : quatre instructions exactes. `*` signifie multiplier ; `print` affiche un résultat."
+        }
+      },
+      "playShop": {
+        "title": "Exécutez un vrai programme",
+        "intro": "Modifiez les valeurs d'entrée et exécutez le programme. Les instructions ne changent pas ; seules les données changent.",
+        "prompts": {
+          "1": "Mettez quantity à 5. Avant d'exécuter, prédisez ce que le programme affiche.",
+          "2": "Mettez price à 0. Quelle est la sortie, et pourquoi ?",
+          "3": "Mettez quantity à 0. Une instruction a-t-elle changé, ou seulement les données ?"
+        }
+      },
+      "ipo": {
+        "title": "Entrée → traitement → sortie",
+        "blocks": {
+          "b1": "Presque tous les programmes prennent des données (entrée), travaillent avec (traitement) et affichent un résultat (sortie).",
+          "b2": {
+            "caption": "La forme d'un petit programme de courses.",
+            "nodes": {
+              "start": "Début",
+              "in": "Entrée : price = 4, quantity = 3",
+              "work": "Traitement : total = price * quantity",
+              "out": "Sortie : print(total) affiche 12",
+              "end": "Fin"
+            }
+          }
+        }
+      }
+    },
+    "exercises": {
+      "mcPreciseInstruction": {
+        "prompt": "Un robot doit arroser une plante. Quelle instruction pourrait-il suivre sans rien deviner ?",
+        "hints": {
+          "1": "Demandez-vous : le robot sait-il exactement quoi faire, en quelle quantité et où ?"
+        },
+        "explanation": "Seule cette instruction dit quoi utiliser, en quelle quantité et où le mettre. Les autres obligent le robot à deviner ce que veulent dire « un peu », « correctement » ou « quand il le faut ».",
+        "options": {
+          "some": "Donne un peu d'eau à la plante.",
+          "properly": "Occupe-toi correctement de la plante.",
+          "exact": "Verse 200 ml d'eau dans le pot.",
+          "needed": "Arrose la plante quand il le faut."
+        },
+        "misconceptions": {
+          "some": "« Un peu » n'est pas une quantité. Un ordinateur ne peut pas choisir entre une goutte et un seau.",
+          "properly": "« Correctement » a un sens pour une personne, mais n'indique aucune action concrète que le robot puisse effectuer.",
+          "needed": "Cela cache la partie difficile : comment le robot sait-il quand la plante a besoin d'eau ? Cette règle manque."
+        }
+      },
+      "predictFirstPrint": {
+        "prompt": "Qu'affiche ce programme ? Écrivez une ligne par print.",
+        "hints": {
+          "1": "L'ordinateur exécute les lignes de haut en bas.",
+          "2": "Le texte entre guillemets s'affiche exactement tel qu'il est écrit, sans les guillemets."
+        },
+        "explanation": "La première ligne affiche `Hello`, puis la deuxième affiche `World`. Chaque `print` affiche son texte sur sa propre ligne, dans l'ordre des lignes.",
+        "mistakes": {
+          "m1": "Chaque `print` écrit sa propre ligne : les deux mots apparaissent donc sur des lignes séparées.",
+          "m2": "L'ordinateur commence en haut : `Hello` est affiché en premier."
+        }
+      },
+      "matchInputProcessingOutput": {
+        "prompt": "Associez chaque ligne du programme de courses à son rôle.",
+        "hints": {
+          "1": "L'entrée, ce sont les données de départ ; le traitement travaille avec ; la sortie affiche le résultat."
+        },
+        "explanation": "`price = 4` fournit ses données au programme, `total = price * 3` calcule avec, et `print(total)` montre le résultat à l'utilisateur.",
+        "pairs": {
+          "input": "Entrée : les données de départ du programme",
+          "processing": "Traitement : calculer quelque chose de nouveau",
+          "output": "Sortie : afficher le résultat"
+        }
+      },
+      "orderMakeTea": {
+        "prompt": "Mettez les instructions précises pour « faire du thé » dans un ordre qu'une machine pourrait suivre.",
+        "hints": {
+          "1": "Une étape ne peut avoir lieu que lorsque ce dont elle a besoin est prêt."
+        },
+        "explanation": "Chaque étape a besoin de la précédente : l'eau doit être dans la bouilloire avant de bouillir, elle doit bouillir avant d'être versée, et le thé doit infuser avant qu'on retire le sachet.",
+        "items": {
+          "fill": "Remplir la bouilloire d'eau",
+          "boil": "Allumer la bouilloire et attendre que l'eau bouille",
+          "pour": "Verser l'eau bouillante sur le sachet de thé dans la tasse",
+          "wait": "Attendre 3 minutes",
+          "remove": "Retirer le sachet de thé"
+        }
+      },
+      "predictSumPrint": {
+        "prompt": "Qu'affiche ce programme ?",
+        "hints": {
+          "1": "`print(a + b)` calcule d'abord `a + b`, puis affiche le résultat."
+        },
+        "explanation": "`a` contient 3 et `b` contient 4. L'ordinateur calcule `a + b` = 7 et affiche le nombre, pas la formule.",
+        "mistakes": {
+          "m1": "Sans guillemets, `a + b` est un calcul, pas du texte. L'ordinateur en affiche le résultat.",
+          "m2": "`+` entre deux nombres les additionne ; il ne colle pas les chiffres l'un à l'autre."
+        }
+      },
+      "debugIncompleteInstruction": {
+        "prompt": "Ce programme devrait calculer le prix de 3 articles à 4 chacun (12), mais il donne 4. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Suivez le programme ligne par ligne et notez ce que contient `total`.",
+          "2": "`quantity` est-elle utilisée quelque part ?"
+        },
+        "explanation": "La ligne 3 copie seulement le prix dans `total` ; elle ne dit jamais de multiplier par la quantité. L'ordinateur fait exactement ce que dit la ligne : la correction est donc `total = price * quantity`.",
+        "causes": {
+          "order": "print s'exécute avant le calcul de total",
+          "incomplete": "L'instruction ne dit jamais d'utiliser la quantité",
+          "guess": "L'ordinateur a oublié ce que signifie quantity"
+        },
+        "misconceptions": {
+          "order": "`print(total)` est la dernière ligne : `total` a donc déjà une valeur quand elle s'exécute.",
+          "guess": "L'ordinateur a toujours `quantity = 3` en mémoire. On ne lui a simplement jamais dit de l'utiliser."
+        }
+      },
+      "mcFollowsLiterally": {
+        "prompt": "Un programme devrait afficher le total d'une addition, mais une instruction oublie d'ajouter le pourboire. Que fait l'ordinateur ?",
+        "explanation": "Un ordinateur suit les instructions à la lettre. Il ne sait pas qu'un pourboire était prévu : il calcule et affiche donc le total sans lui.",
+        "options": {
+          "fixes": "Il remarque que le pourboire manque et l'ajoute",
+          "literal": "Il affiche le total sans le pourboire",
+          "refuses": "Il s'arrête parce que les instructions sont incomplètes"
+        },
+        "misconceptions": {
+          "fixes": "L'ordinateur ne sait pas ce que vous aviez en tête ; il ne connaît que ce que disent les instructions.",
+          "refuses": "Du point de vue de l'ordinateur, les instructions sont complètes : chaque ligne est valide, donc il les exécute. Vous seul savez qu'il manque une étape."
+        }
+      },
+      "predictStartEnd": {
+        "prompt": "Qu'affiche ce programme ? Écrivez une ligne par print.",
+        "explanation": "Les lignes s'exécutent dans l'ordre : `Start` est affiché, `x` reçoit 2 * 5 = 10, `print(x)` affiche la valeur 10, puis `End` est affiché.",
+        "mistakes": {
+          "m1": "`x` n'a pas de guillemets : `print(x)` affiche donc la valeur stockée dans `x`, pas la lettre x.",
+          "m2": "La ligne 2 calcule `2 * 5` et stocke le résultat, 10.",
+          "m3": "La ligne 2 n'affiche rien, mais la ligne 3, si : elle affiche la valeur de `x`."
+        }
+      }
+    }
+  },
+  "loops": {
+    "title": "Boucles",
+    "objective": "Vous saurez suivre une boucle while ou for tour par tour, prédire les valeurs qu'elle laisse et repérer les boucles qui ne s'arrêtent jamais ou qui font un tour de trop peu.",
+    "summary": "Une boucle répète un bloc. while répète tant qu'une condition est vraie : quelque chose doit donc changer pour qu'elle s'arrête. for répète une fois par élément d'une liste ou d'un intervalle. Les accumulateurs construisent un résultat au fil des tours.",
+    "keyPoints": {
+      "1": "Une boucle while a besoin d'une variable qui change dans la boucle et d'une condition qui finit par devenir fausse.",
+      "2": "`for item in list:` exécute le bloc une fois pour chaque élément ; `len(list)` indique combien il y a d'éléments.",
+      "3": "`range(1, 5)` donne 1, 2, 3, 4 : la fin n'est pas incluse. Utilisez `range(1, 6)` pour atteindre 5.",
+      "4": "Schéma de l'accumulateur : commencez par `total = 0` avant la boucle, puis `total = total + x` à l'intérieur."
+    },
+    "steps": {
+      "intro": {
+        "title": "Recommencer",
+        "blocks": {
+          "p1": "Écrire `print(1)`, `print(2)`, `print(3)` … fonctionne pour trois lignes, pas pour mille. Une boucle dit « répète ce bloc » une seule fois, et c'est l'ordinateur qui se charge de répéter.",
+          "code1": {
+            "caption": "Posez la question, exécutez le bloc, reposez la question. Arrêtez-vous quand la réponse est fausse."
+          },
+          "list1": {
+            "1": "Une valeur de départ : `count = 1`",
+            "2": "Une condition d'arrêt, vérifiée avant chaque tour : `count <= 3`",
+            "3": "Un changement dans la boucle qui rapproche de l'arrêt : `count = count + 1`"
+          },
+          "callout1": "Si rien dans la boucle ne modifie la condition, elle reste vraie pour toujours : c'est une boucle infinie. Ici, le programme l'arrête après 5000 étapes."
+        }
+      },
+      "play-laps": {
+        "title": "Changez la limite",
+        "intro": "Changez la limite et observez combien de fois le corps de la boucle s'exécute.",
+        "prompts": {
+          "1": "Mettez limit à 5. Prédisez la dernière ligne « lap » avant de regarder.",
+          "2": "Mettez limit à 0. Pourquoi le corps de la boucle ne s'exécute-t-il jamais ?",
+          "3": "Après la boucle, count vaut toujours un de plus que limit. Pourquoi ?"
+        }
+      },
+      "for-loops": {
+        "title": "for : un tour par élément",
+        "blocks": {
+          "p1": "Quand vous savez déjà ce qu'il faut parcourir, utilisez `for`. Il prend chaque élément à tour de rôle, le place dans la variable de boucle et exécute le bloc. Une liste contient plusieurs valeurs dans l'ordre : `prices = [4, 10, 6]`, et `len(prices)` vaut 3.",
+          "code1": {
+            "caption": "Accumulateur : total part de 0 et augmente d'un prix à chaque tour."
+          },
+          "p2": "`range(a, b)` produit les nombres de a jusqu'à b, b non compris. `range(1, 5)` donne 1, 2, 3, 4, et `range(4)` donne 0, 1, 2, 3.",
+          "callout1": "L'erreur de un est le bug classique des boucles : un tour de trop ou de moins. Vérifiez la première et la dernière valeur que prend la variable de boucle."
+        }
+      },
+      "play-sum": {
+        "title": "Somme jusqu'à n",
+        "intro": "Changez n et regardez total augmenter tour après tour.",
+        "prompts": {
+          "1": "Mettez n à 1. Combien de tours fait la boucle ?",
+          "2": "Mettez n à 5. Prédisez total avant d'exécuter : 1 + 2 + 3 + 4 + 5.",
+          "3": "Que vaut i après la boucle ? Pourquoi est-ce n et pas n + 1 ?"
+        }
+      }
+    },
+    "exercises": {
+      "trace-doubling": {
+        "prompt": "Quelle est la valeur de n après la boucle ?",
+        "hints": {
+          "1": "Faites un petit tableau : n avant chaque vérification, et si n < 20 est vrai. 1, 2, 4, …"
+        },
+        "explanation": "n vaut 1, 2, 4, 8, 16. 16 < 20 est encore vrai, donc un tour de plus fait passer n à 32. Alors 32 < 20 est faux et la boucle s'arrête.",
+        "commonMistakes": {
+          "16": "Avec n = 16, la condition 16 < 20 est encore vraie, donc la boucle fait un tour de plus.",
+          "20": "n ne prend que les valeurs 1, 2, 4, 8, 16, 32. Il ne vaut jamais 20 ; la boucle s'arrête à la première valeur qui n'est pas inférieure à 20."
+        }
+      },
+      "never-stops": {
+        "prompt": "Que se passe-t-il quand ce programme s'exécute ?",
+        "hints": {
+          "1": "Quelle ligne de la boucle modifie n ?"
+        },
+        "explanation": "Rien dans la boucle ne modifie n, donc `n > 0` reste vrai pour toujours. La boucle affiche 5 encore et encore et ne se termine jamais.",
+        "options": {
+          "countdown": "Il affiche 5, 4, 3, 2, 1",
+          "once": "Il affiche 5 une fois puis s'arrête",
+          "error": "Il affiche une erreur avant d'afficher quoi que ce soit",
+          "forever": "Il affiche 5 encore et encore sans jamais s'arrêter"
+        },
+        "misconceptions": {
+          "countdown": "Une boucle ne compte pas à rebours toute seule. Seule une ligne comme `n = n - 1` modifierait n.",
+          "once": "while n'est pas if : après le corps, il vérifie de nouveau la condition, et 5 > 0 est toujours vrai.",
+          "error": "Chaque ligne est du code valide. Le problème n'est pas la syntaxe : c'est que la boucle n'a aucun moyen de s'arrêter."
+        }
+      },
+      "range-values": {
+        "prompt": "Qu'affiche ce programme ?",
+        "hints": {
+          "1": "range(1, 4) commence à 1. Le 4 est-il inclus ?"
+        },
+        "explanation": "`range(1, 4)` donne 1, 2 et 3 : la valeur de fin 4 n'est pas incluse.",
+        "commonMistakes": {
+          "k1": "La fin d'un range n'est pas incluse : range(1, 4) s'arrête avant 4.",
+          "k2": "range(1, 4) commence à sa première valeur, 1. Seul range(4) commence à 0."
+        }
+      },
+      "complete-average": {
+        "prompt": "Complétez le programme pour que average soit la moyenne des nombres (4).",
+        "hints": {
+          "1": "Une moyenne, c'est la somme divisée par le nombre de valeurs."
+        },
+        "explanation": "total part de 0 et ajoute chaque nombre : 3 + 5 + 2 + 6 = 16. `len(numbers)` vaut 4, donc la moyenne est 16 / 4 = 4.",
+        "misconceptions": {
+          "k1": "Partir de 1 ajoute un 1 en trop qui n'est pas dans la liste.",
+          "k2": "Partir de 3 compte le premier nombre deux fois : la boucle l'ajoute de nouveau à son premier tour.",
+          "k3": "`total = n` remplace total à chaque tour, donc seul le dernier nombre est conservé.",
+          "k4": "`total + 1` compte les nombres au lieu de les additionner.",
+          "k5": "Il y a quatre nombres, et `len(numbers)` reste juste si la liste change.",
+          "k6": "Après la boucle, n est le dernier nombre (6), pas le nombre de valeurs."
+        }
+      },
+      "count-passed": {
+        "prompt": "Quelle est la valeur de passed après la boucle ?",
+        "hints": {
+          "1": "Parcourez la liste une note à la fois et demandez-vous : est-elle >= 5 ?"
+        },
+        "explanation": "7, 9 et 5 valent au moins 5, mais pas 3. passed part de 0 et augmente de 1 trois fois.",
+        "commonMistakes": {
+          "2": "`>=` inclut 5, donc la dernière note compte aussi.",
+          "4": "Le if dans la boucle saute le 3 : seules les notes de 5 ou plus sont comptées.",
+          "21": "passed augmente de 1 à chaque fois, il n'additionne pas les notes elles-mêmes."
+        }
+      },
+      "debug-never-ends": {
+        "prompt": "Ce programme devrait additionner 1 + 2 + 3 + 4 + 5 dans total (15), mais il ne se termine jamais. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Suivez n : 1, puis 0, puis …. Est-ce que `n <= 5` devient faux un jour ?"
+        },
+        "explanation": "La ligne 5 diminue n, donc `n <= 5` reste vrai pour toujours. La remplacer par `n = n + 1` rapproche n de la condition d'arrêt.",
+        "causes": {
+          "start": "total devrait commencer à 1",
+          "away": "n s'éloigne de la condition d'arrêt, donc la boucle ne se termine jamais",
+          "condition": "La condition devrait être `n < 5`"
+        },
+        "misconceptions": {
+          "start": "La valeur de départ change la somme, mais elle ne peut pas arrêter la boucle.",
+          "condition": "Avec n qui vaut 1, 0, -1, … `n < 5` reste tout autant vrai pour toujours. C'est le changement de n qui est faux."
+        }
+      },
+      "debug-off-by-one": {
+        "prompt": "total devrait valoir 1 + 2 + 3 + 4 + 5 = 15, mais il vaut 10. Quelle ligne est fausse, et pourquoi ?",
+        "explanation": "`range(1, 5)` s'arrête avant 5, donc 5 n'est jamais ajouté et total vaut 10. `range(1, 6)` inclut 5.",
+        "causes": {
+          "start": "total devrait commencer à 1",
+          "replace": "Il faudrait écrire `total = i`",
+          "end": "Le range s'arrête un nombre trop tôt",
+          "print": "print devrait être dans la boucle"
+        },
+        "misconceptions": {
+          "start": "Commencer à 1 donnerait 11, toujours pas 15. Le problème, c'est le 5 qui manque.",
+          "replace": "`total = i` ne garde que le dernier nombre et jette la somme.",
+          "print": "Afficher dans la boucle montre les étapes, mais le total final reste 10."
+        }
+      },
+      "trace-steps": {
+        "prompt": "Quelle est la valeur de count après la boucle ?",
+        "explanation": "n vaut 10, 7, 4, 1, -2. La boucle tourne tant que n > 0, et 1 > 0 est vrai, donc il y a 4 tours avant que n devienne -2.",
+        "commonMistakes": {
+          "3": "Avec n = 1, la condition 1 > 0 est encore vraie, donc il y a un quatrième tour.",
+          "-2": "C'est la valeur de n après la boucle. count augmente de 1 à chaque tour."
+        }
+      },
+      "pick-range": {
+        "prompt": "Vous voulez afficher les nombres de 1 à 5. Quel en-tête de boucle est le bon ?",
+        "explanation": "Un range s'arrête avant sa valeur de fin, donc pour inclure 5 la fin doit être 6 : `range(1, 6)` donne 1, 2, 3, 4, 5.",
+        "misconceptions": {
+          "five": "La fin n'est pas incluse : range(1, 5) donne 1, 2, 3, 4 et oublie 5.",
+          "zero": "Celui-ci fait aussi cinq tours, mais les nombres vont de 0 à 4, pas de 1 à 5.",
+          "short": "range(5) équivaut à range(0, 5) : 0, 1, 2, 3, 4."
+        }
+      }
+    }
+  },
+  "instructionsAndSequences": {
+    "title": "Instructions et séquences",
+    "objective": "Vous saurez suivre pas à pas un court programme, ligne par ligne, et expliquer pourquoi changer l'ordre de ses lignes change le résultat.",
+    "summary": "Les programmes s'exécutent de haut en bas, une ligne à la fois. Chaque ligne travaille avec ce que les lignes précédentes ont laissé : l'ordre compte donc.",
+    "keyPoints": {
+      "1": "L'ordinateur exécute les lignes de haut en bas, chacune une seule fois.",
+      "2": "Chaque ligne travaille avec les valeurs laissées par les lignes précédentes.",
+      "3": "Échanger deux lignes peut changer le résultat, même si chaque ligne est correcte prise isolément.",
+      "4": "Pour suivre un programme pas à pas, notez les valeurs après chaque ligne."
+    },
+    "steps": {
+      "topToBottom": {
+        "title": "Une ligne à la fois, de haut en bas",
+        "blocks": {
+          "b1": "Une séquence est une liste d'instructions exécutées l'une après l'autre. L'ordinateur commence par la première ligne, la termine, puis passe à la suivante.",
+          "b2": "Pas à pas : après la ligne 1, x vaut 1. Après la ligne 2, x vaut 4. Après la ligne 3, x vaut 8.",
+          "b3": "Suivre un programme pas à pas, c'est faire comme l'ordinateur : avancer ligne par ligne et noter chaque valeur quand elle change. Ne sautez pas directement à la fin."
+        }
+      },
+      "playAddThenDouble": {
+        "title": "Ajouter, puis doubler",
+        "intro": "Ce programme ajoute 3 puis double. Changez le nombre de départ et observez chaque ligne.",
+        "prompts": {
+          "1": "Mettez start à 2. Avant d'exécuter, suivez-le pas à pas sur papier : qu'affiche-t-il ?",
+          "2": "Mettez start à 0. Pourquoi le résultat est-il 6 et non 0 ?"
+        }
+      },
+      "orderMatters": {
+        "title": "L'ordre change le résultat",
+        "blocks": {
+          "b1": "Voici les deux mêmes instructions qu'avant, inversées. Chaque ligne est toujours correcte, mais le programme double maintenant d'abord et ajoute 3 ensuite.",
+          "b2": "Pas à pas : 1, puis 2, puis 5. L'autre ordre donnait 8.",
+          "b3": "Une ligne utilise les valeurs qui existent au moment où elle s'exécute. Si vous la déplacez, elle voit d'autres valeurs."
+        }
+      },
+      "playDoubleThenAdd": {
+        "title": "Doubler, puis ajouter",
+        "intro": "Mêmes instructions, ordre inverse. Essayez les mêmes nombres de départ que dans le premier exemple interactif et comparez.",
+        "prompts": {
+          "1": "Mettez start à 2. L'autre ordre affichait 10. Qu'affiche celui-ci ?",
+          "2": "Mettez start à 0. Pourquoi cet ordre donne-t-il 3 au lieu de 6 ?"
+        }
+      }
+    },
+    "exercises": {
+      "mcRunOrder": {
+        "prompt": "Un programme a cinq lignes et aucune instruction particulière. Comment l'ordinateur l'exécute-t-il ?",
+        "hints": {
+          "1": "Pensez à la lecture d'une recette : par où commencez-vous, et combien de fois faites-vous chaque étape ?"
+        },
+        "explanation": "Sans instruction particulière, un programme est une simple séquence : l'ordinateur exécute la ligne 1, puis la ligne 2, et ainsi de suite, chaque ligne exactement une fois.",
+        "options": {
+          "important": "La ligne la plus importante d'abord, puis les autres",
+          "sequence": "De haut en bas, chaque ligne une fois",
+          "together": "Les cinq lignes au même moment",
+          "bottom": "De la dernière ligne jusqu'à la première"
+        },
+        "misconceptions": {
+          "important": "L'ordinateur ne sait pas quelle ligne compte le plus. Il suit seulement l'ordre dans lequel vous les avez écrites.",
+          "together": "Les lignes s'exécutent l'une après l'autre. C'est pour cela qu'une ligne peut utiliser une valeur produite par une ligne précédente.",
+          "bottom": "La dernière ligne affiche souvent le résultat, mais elle s'exécute en dernier, après tout ce dont elle dépend."
+        }
+      },
+      "predictTraceX": {
+        "prompt": "Suivez le programme pas à pas. Quelle est la valeur de x à la fin ?",
+        "hints": {
+          "1": "Notez x après chaque ligne.",
+          "2": "La ligne 3 double la valeur que x contient après la ligne 2."
+        },
+        "explanation": "x commence à 5, la ligne 2 le fait passer à 6 et la ligne 3 double ce 6 pour obtenir 12.",
+        "mistakes": {
+          "m1": "Cela fait 5 * 2 + 1 : doubler d'abord. Mais la ligne + 1 vient en premier, elle s'exécute donc en premier.",
+          "m2": "Vous vous êtes arrêté après la ligne 2. La ligne 3 s'exécute aussi et double x.",
+          "m3": "La ligne 3 double la valeur actuelle de x (6), pas la valeur de départ 5."
+        }
+      },
+      "orderBrushTeeth": {
+        "prompt": "Mettez les étapes du brossage de dents dans un ordre qui fonctionne.",
+        "hints": {
+          "1": "Quelle étape a besoin qu'une autre soit faite avant ?"
+        },
+        "explanation": "Il faut tenir la brosse avant d'y mettre du dentifrice, et il faut du dentifrice avant de se brosser. La brosse est rincée après le brossage, et seule une brosse propre est rangée.",
+        "items": {
+          "pick": "Prendre la brosse à dents",
+          "paste": "Mettre du dentifrice sur la brosse",
+          "brush": "Se brosser les dents pendant deux minutes",
+          "rinse": "Rincer la brosse à dents sous le robinet",
+          "back": "Remettre la brosse propre dans son verre"
+        }
+      },
+      "orderCodeChain": {
+        "prompt": "Mettez ces lignes dans un ordre qui s'exécute sans erreur et affiche 20.",
+        "hints": {
+          "1": "Une variable doit avoir une valeur avant qu'une ligne puisse la lire.",
+          "2": "Trouvez la ligne qui n'utilise aucune autre variable : elle doit venir en premier."
+        },
+        "explanation": "`b` a besoin de `a`, et `c` a besoin de `b` : il faut donc les définir dans cet ordre. L'affichage vient en dernier : (2 + 3) * 4 = 20."
+      },
+      "buildCelsiusToFahrenheit": {
+        "prompt": "Construisez un programme qui convertit 20 °C en Fahrenheit et affiche le résultat. La règle : multiplier par 9, diviser par 5, puis ajouter 32. Tous les blocs ne servent pas.",
+        "hints": {
+          "1": "Suivez la règle dans son ordre : d'abord l'étape multiplier-diviser, puis l'étape + 32.",
+          "2": "Deux blocs ne font pas partie de la règle."
+        },
+        "explanation": "Définissez la température, appliquez la règle dans son ordre (20 * 9 / 5 = 36, puis 36 + 32 = 68) et affichez le résultat à la fin.",
+        "misconceptions": {
+          "minus": "Soustraire 32, c'est la règle pour l'autre sens (de Fahrenheit vers Celsius).",
+          "early": "Ceci affiche la température de départ, 20, et non le résultat converti."
+        }
+      },
+      "debugSkipsStep": {
+        "prompt": "Un t-shirt coûte 50. Un bon de réduction retire 10, puis la livraison ajoute 5 : total devrait donc valoir 45. Le programme donne 55. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Suivez pas à pas : que contient price après la ligne 2 ?",
+          "2": "La ligne 3 utilise-t-elle ce résultat ?"
+        },
+        "explanation": "La ligne 2 laisse price à 40, mais la ligne 3 repart de 50 et ignore ce résultat. Elle doit s'appuyer sur l'étape précédente : `total = price + 5`.",
+        "causes": {
+          "ignores": "Elle ignore le résultat de l'étape du bon de réduction",
+          "coupon": "La ligne du bon de réduction s'exécute trop tard",
+          "shipping": "La livraison devrait être soustraite, pas ajoutée"
+        },
+        "misconceptions": {
+          "coupon": "La ligne du bon de réduction s'exécute avant la ligne 3 et fonctionne : price passe à 40. Simplement, la ligne 3 ne le lit jamais.",
+          "shipping": "La livraison augmente bien le coût. Le problème, c'est ce à quoi on l'ajoute."
+        }
+      },
+      "predictPrintMoments": {
+        "prompt": "Qu'affiche ce programme ? Écrivez une ligne par print.",
+        "explanation": "Chaque `print` affiche n au moment où il s'exécute : d'abord 1, puis 2 après l'ajout de 1, puis 20 après la multiplication par 10.",
+        "mistakes": {
+          "m1": "Un print n'attend pas la fin. Il affiche la valeur de n au moment où cette ligne s'exécute.",
+          "m2": "Il y a trois lignes print et chacune s'exécute une fois : trois lignes apparaissent donc.",
+          "m3": "La dernière étape multiplie la valeur actuelle de n (2) par 10, ce qui donne 20."
+        }
+      },
+      "mcSwappedLines": {
+        "prompt": "Le programme B est le programme A avec ses deux dernières lignes inversées. Avec quelle valeur chacun se termine-t-il ?",
+        "explanation": "A multiplie d'abord : 2 * 3 = 6, puis 6 + 1 = 7. B ajoute d'abord : 2 + 1 = 3, puis 3 * 3 = 9. Mêmes lignes, ordre différent, résultat différent.",
+        "options": {
+          "same": "Les deux se terminent avec 7",
+          "reversed": "A se termine avec 9, B avec 7",
+          "error": "B s'arrête sur une erreur",
+          "right": "A se termine avec 7, B avec 9"
+        },
+        "misconceptions": {
+          "same": "Les lignes sont les mêmes, mais chacune voit des valeurs différentes quand l'ordre change.",
+          "reversed": "Reprenez A pas à pas : il multiplie d'abord (6), puis ajoute 1, donc il se termine avec 7.",
+          "error": "Chaque ligne de B lit une valeur déjà définie : rien ne se passe mal. Seul le résultat change."
+        }
+      },
+      "predictNoRecalculation": {
+        "prompt": "Suivez le programme attentivement. Quelle est la valeur de c à la fin ?",
+        "explanation": "La ligne 2 s'exécute une seule fois, quand a vaut 3 : b devient donc 6. La ligne 3 change a en 10 mais ne réexécute pas la ligne 2. Donc c = 10 + 6 = 16.",
+        "mistakes": {
+          "m1": "b a été calculé une seule fois à la ligne 2, quand a valait 3. Changer a ensuite ne met pas b à jour.",
+          "m2": "La ligne 3 met a à 10 avant que la ligne 4 s'exécute : la ligne 4 utilise donc 10, pas 3."
+        }
+      }
+    }
+  },
+  "functions": {
+    "title": "Fonctions",
+    "objective": "Vous saurez définir une fonction, l'appeler avec des arguments et utiliser la valeur qu'elle renvoie.",
+    "summary": "Une fonction donne un nom à un groupe d'étapes. Vous la définissez une fois, vous l'appelez avec des valeurs, et elle renvoie un résultat avec return.",
+    "keyPoints": {
+      "1": "Définir une fonction n'exécute rien ; ses étapes ne s'exécutent que lorsqu'on l'appelle.",
+      "2": "Les arguments remplissent les paramètres dans l'ordre : la première valeur va au premier paramètre.",
+      "3": "`return` renvoie une valeur à l'appelant ; `print` ne fait que l'afficher, et l'appel donne `none`.",
+      "4": "Les variables définies dans une fonction sont locales : elles ne modifient pas les variables du niveau principal."
+    },
+    "steps": {
+      "why-functions": {
+        "title": "Nommer un groupe d'étapes",
+        "blocks": {
+          "p1": "Quand les mêmes étapes sont nécessaires à plusieurs endroits, vous pouvez leur donner un nom une fois et réutiliser ce nom. Le nom dit aussi à quoi servent les étapes, si bien que le programme principal se lit comme un plan.",
+          "code1": {
+            "caption": "Les lignes 1–3 définissent la fonction. La ligne 5 l'appelle et stocke le résultat, 12."
+          },
+          "callout1": "Définir n'est pas exécuter. La ligne `function` ne fait que mémoriser les étapes ; elles s'exécutent quand une ligne appelle `total_price(…)`, avec `price` à 4 et `quantity` à 3."
+        }
+      },
+      "play-call": {
+        "title": "Appelez-la avec d'autres valeurs",
+        "intro": "La fonction ne change pas. Vous choisissez les arguments, et l'appel renvoie un résultat différent à chaque fois.",
+        "prompts": {
+          "1": "Mettez quantity à 0. Que renvoie l'appel maintenant ?",
+          "2": "Regardez quelles lignes se sont exécutées : le corps de la fonction ne s'exécute qu'après l'appel de la ligne 5.",
+          "3": "Mettez price à 10 et quantity à 2. Prédisez bill avant d'exécuter."
+        }
+      },
+      "return-vs-print": {
+        "title": "Renvoyer une valeur",
+        "blocks": {
+          "p1": "`return` termine la fonction et remet une valeur à la ligne qui l'a appelée, qui peut la stocker ou calculer avec. `print` ne fait qu'afficher une valeur à l'écran ; l'appelant ne reçoit rien.",
+          "code1": {
+            "caption": "Les deux appels calculent 9, mais seul given le stocke. shown vaut none."
+          },
+          "callout1": "Une fonction sans `return` renvoie `none`. Les variables définies dans une fonction sont locales : elles disparaissent quand elle se termine et ne modifient jamais une variable du niveau principal portant le même nom."
+        }
+      },
+      "play-print-return": {
+        "title": "Afficher ou renvoyer ?",
+        "intro": "Les deux fonctions calculent le même carré. Regardez quelle variable reçoit réellement la valeur.",
+        "prompts": {
+          "1": "Exécutez-le avec n = 3. Le carré est affiché une fois, mais une seule variable contient 9. Laquelle ?",
+          "2": "Changez n en -4. shown reçoit-il une valeur ?"
+        }
+      }
+    },
+    "exercises": {
+      "mc-define-runs-nothing": {
+        "prompt": "Qu'affiche ce programme ?",
+        "hints": {
+          "1": "Y a-t-il une ligne qui appelle `greet(…)` ?"
+        },
+        "explanation": "Le bloc `function` ne fait que définir `greet` ; rien ne l'appelle jamais. La seule ligne qui exécute un print est `print(\"Start\")`.",
+        "options": {
+          "hello-start": "Hello name, puis Start",
+          "start-hello": "Start, puis Hello",
+          "error": "Une erreur, car name n'a pas de valeur"
+        },
+        "misconceptions": {
+          "hello-start": "Cela traite la définition comme si elle s'exécutait. Le corps d'une fonction ne s'exécute que lorsqu'on l'appelle.",
+          "start-hello": "Une fonction ne s'exécute pas toute seule à la fin du programme ; une ligne doit l'appeler.",
+          "error": "name n'a besoin d'une valeur que lorsque la fonction s'exécute. Ici, elle ne s'exécute jamais, donc rien ne lit name."
+        }
+      },
+      "predict-return": {
+        "prompt": "Quelle est la valeur de b ?",
+        "hints": {
+          "1": "Calculez d'abord a : `double(4)` renvoie 4 * 2.",
+          "2": "Ensuite, `double(a)` utilise la valeur stockée dans a."
+        },
+        "explanation": "`double(4)` renvoie 8, donc a vaut 8. `double(a)` renvoie 16, et en ajoutant 1 on obtient 17.",
+        "commonMistakes": {
+          "9": "Cela double encore 4. Le second appel reçoit a, qui vaut déjà 8.",
+          "16": "C'est ce que renvoie `double(a)` ; le + 1 s'applique encore à la valeur renvoyée.",
+          "18": "Le + 1 est ajouté après le retour de l'appel, pas à n dans la fonction."
+        }
+      },
+      "match-params": {
+        "prompt": "Une fonction commence par `function describe(name, age, city):` et est appelée ainsi : `describe(\"Lima\", 30, \"Ana\")`. Associez chaque paramètre à la valeur qu'il reçoit.",
+        "hints": {
+          "1": "Les arguments sont associés par position, pas par leur apparence."
+        },
+        "explanation": "Le premier argument va au premier paramètre, le deuxième au deuxième, et ainsi de suite. La fonction ne peut pas savoir que \"Lima\" ressemble à une ville."
+      },
+      "predict-print-vs-return": {
+        "prompt": "Qu'affiche ce programme ? Écrivez une ligne par print.",
+        "hints": {
+          "1": "Que renvoie `half` à la ligne qui l'a appelée ?"
+        },
+        "explanation": "Pendant l'appel, `print(n / 2)` affiche 5. La fonction n'a pas de return, donc result vaut none, et la dernière ligne affiche none.",
+        "commonMistakes": {
+          "k1": "Afficher dans la fonction ne renvoie pas la valeur, donc result ne contient pas 5.",
+          "5": "La dernière ligne affiche aussi : elle montre la valeur de result, qui est none.",
+          "none": "L'appel exécute quand même le corps de la fonction, et ce corps affiche d'abord 5."
+        }
+      },
+      "complete-return": {
+        "prompt": "Complétez le return pour que avg soit la moyenne des deux nombres (8).",
+        "hints": {
+          "1": "Que faut-il faire à total pour transformer la somme de deux nombres en leur moyenne ?"
+        },
+        "explanation": "total vaut 16, la somme des deux paramètres. Renvoyer `total / 2` remet 8 à l'appelant.",
+        "misconceptions": {
+          "k1": "Cela renvoie la somme, 16. La division n'a jamais lieu.",
+          "k2": "La division passe avant l'addition, donc cela donne 6 + 5 = 11.",
+          "k3": "avg est la variable du niveau principal qui recevra le résultat ; dans la fonction, elle n'a pas encore de valeur."
+        }
+      },
+      "debug-print-not-return": {
+        "prompt": "cost devrait valoir 60, mais il finit à none alors que 60 s'affiche à l'écran. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Que renvoie la fonction à la ligne 5 ?"
+        },
+        "explanation": "La ligne 3 affiche taxed mais ne le renvoie pas, donc l'appel renvoie none. `return taxed` remet 60 à cost.",
+        "causes": {
+          "name": "Le paramètre devrait s'appeler cost pour que le résultat arrive dans cost",
+          "prints": "La fonction affiche le résultat au lieu de le renvoyer",
+          "math": "Le calcul de la taxe multiplie par le mauvais nombre",
+          "order": "La fonction est appelée avant que ses étapes aient été exécutées"
+        },
+        "misconceptions": {
+          "name": "Les noms de paramètres sont locaux ; en renommer un ne renvoie aucune valeur à l'appelant.",
+          "math": "50 * 1.2 fait 60, exactement ce qui est affiché. La valeur est juste ; elle ne revient simplement jamais.",
+          "order": "La fonction est définie aux lignes 1–3 et appelée à la ligne 5 : c'est le bon ordre."
+        }
+      },
+      "predict-nested-call": {
+        "prompt": "Quelle est la valeur de r ?",
+        "explanation": "`sum_of_squares(2, 3)` appelle `square(2)`, qui renvoie 4, et `square(3)`, qui renvoie 9. Elle renvoie 4 + 9 = 13.",
+        "commonMistakes": {
+          "25": "Cela met au carré la somme (2 + 3). Chaque nombre est mis au carré séparément, puis les résultats sont additionnés.",
+          "5": "Cela additionne seulement les arguments ; chacun passe d'abord par square.",
+          "10": "Cela double au lieu de mettre au carré : x * x donne 2 * 2 et 3 * 3."
+        }
+      },
+      "mc-local": {
+        "prompt": "Qu'affiche la dernière ligne ?",
+        "explanation": "L'affectation `count = 0` dans `reset` crée une variable locale qui disparaît à la fin de la fonction. Le count du niveau principal vaut toujours 10.",
+        "options": {
+          "error": "Une erreur, car count est défini deux fois"
+        },
+        "misconceptions": {
+          "zero": "value vaut 0, mais count dans la fonction est local. Le count du niveau principal n'est pas touché.",
+          "none": "La fonction renvoie 0, donc rien ici ne vaut none, et count a été mis à 10 au début.",
+          "error": "Réaffecter une variable est permis ; ici, les deux count sont même des variables distinctes."
+        }
+      },
+      "debug-return-in-loop": {
+        "prompt": "cart devrait valoir 12, la somme des prix, mais il vaut 3. Quelle ligne est fausse, et pourquoi ?",
+        "explanation": "`return` termine immédiatement la fonction. Indenté dans la boucle, il s'exécute au premier tour, avec seulement 3 ajouté ; sorti de la boucle, il s'exécute une fois tous les prix ajoutés.",
+        "causes": {
+          "start": "amount devrait commencer au premier prix, pas à 0",
+          "early": "Elle renvoie dans la boucle, au premier tour",
+          "add": "La boucle ajoute p à la mauvaise variable"
+        },
+        "misconceptions": {
+          "start": "Partir de 0 est correct pour une somme ; le problème est que la boucle s'arrête après un seul prix.",
+          "add": "amount = amount + p est correct ; il ne s'exécute simplement qu'une fois."
+        }
+      }
+    }
+  },
+  "valuesAndVariables": {
+    "title": "Valeurs et variables",
+    "objective": "Vous saurez suivre la valeur de chaque variable au fil de plusieurs affectations et distinguer nombres, texte et valeurs vrai/faux.",
+    "summary": "Une variable est un nom pour une valeur stockée. Affecter remplace l'ancienne valeur, et le type de valeur (nombre, texte, vrai/faux) décide de ce que vous pouvez en faire.",
+    "keyPoints": {
+      "1": "`x = 5` stocke la valeur 5 sous le nom x ; une nouvelle affectation remplace l'ancienne valeur.",
+      "2": "`x = x + 1` lit d'abord x, calcule le côté droit, puis range le résultat dans x.",
+      "3": "5 est un nombre, \"5\" est du texte : `\"5\" + \"5\"` donne \"55\". Utilisez `str()` pour coller un nombre à du texte.",
+      "4": "Pour échanger deux variables, il faut une variable temporaire, sinon une valeur est perdue."
+    },
+    "steps": {
+      "namesAndValues": {
+        "title": "Un nom pour une valeur",
+        "blocks": {
+          "b1": "Une variable est un nom qui contient une valeur. `score = 10` signifie « stocke 10 sous le nom score ». C'est une instruction, pas une question pour savoir si score vaut 10.",
+          "b2": "Après la ligne 1 : 10. La ligne 2 la remplace : 25. La ligne 3 lit 25, ajoute 5, stocke 30.",
+          "b3": {
+            "1": "Une variable contient une seule valeur à la fois. Une nouvelle affectation jette l'ancienne valeur.",
+            "2": "Dans `score = score + 5`, le côté droit est calculé d'abord avec la valeur actuelle, puis le résultat est stocké.",
+            "3": "Lire une variable qui n'a jamais reçu de valeur est une erreur : l'ordinateur n'a rien à lire."
+          }
+        }
+      },
+      "playUpdate": {
+        "title": "Regardez une valeur changer",
+        "intro": "Changez le score de départ et observez comment chaque ligne lit et remplace les valeurs.",
+        "prompts": {
+          "1": "Mettez score à 20. Prédisez bonus avant d'exécuter.",
+          "2": "La ligne 3 met score à 0. Pourquoi bonus garde-t-il sa valeur ?"
+        }
+      },
+      "kindsOfValues": {
+        "title": "Nombres, texte et vrai/faux",
+        "blocks": {
+          "b1": "Les valeurs ont des types. `7` est un nombre, `\"7\"` est du texte (ce sont les guillemets qui en font du texte), et `true` / `false` répondent aux questions par oui ou non.",
+          "b2": "`+` additionne les nombres mais colle les textes.",
+          "b3": "`\"Age: \" + 30` est une erreur : on ne peut pas coller du texte et un nombre. Transformez d'abord le nombre en texte avec `str(30)`.",
+          "b4": "Pour échanger a et b, gardez d'abord une copie : `temp = a`, puis `a = b`, puis `b = temp`. Sans temp, l'ancien a est perdu quand la ligne `a = b` s'exécute."
+        }
+      },
+      "playKinds": {
+        "title": "Texte et nombres ensemble",
+        "intro": "Changez le nom et l'âge. Remarquez où `str()` est nécessaire et où il ne l'est pas.",
+        "prompts": {
+          "1": "Mettez age à 17. Que vaut next_year, et que contient message ?",
+          "2": "next_year est un nombre mais message est du texte. Quelle partie de la ligne 2 transforme le nombre en texte ?"
+        }
+      }
+    },
+    "exercises": {
+      "mcAssignmentReplaces": {
+        "prompt": "Après ces deux lignes, que contient x ?",
+        "hints": {
+          "1": "Une variable contient une seule valeur à la fois."
+        },
+        "explanation": "La seconde affectation remplace la première : 5 est jeté et x contient 8.",
+        "options": {
+          "both": "À la fois 5 et 8"
+        },
+        "misconceptions": {
+          "thirteen": "Affecter n'additionne pas. Pour additionner, il faudrait écrire `x = x + 8`.",
+          "both": "Une variable n'est pas une liste. Une nouvelle valeur remplace l'ancienne.",
+          "five": "La première valeur ne reste pas. La ligne suivante s'exécute après elle et l'écrase."
+        }
+      },
+      "predictReadThenWrite": {
+        "prompt": "Quelle est la valeur de points à la fin ?",
+        "hints": {
+          "1": "Calculez d'abord le côté droit de la ligne 2, avec la valeur que points a à ce moment-là."
+        },
+        "explanation": "La ligne 2 lit points (10), ajoute 5 et range 15 dans points.",
+        "mistakes": {
+          "m1": "La ligne 2 s'exécute aussi : elle stocke une nouvelle valeur dans points.",
+          "m2": "Le côté droit est `points + 5` : l'ancienne valeur est donc utilisée, pas jetée."
+        }
+      },
+      "matchValueKinds": {
+        "prompt": "Associez chaque morceau de code à ce qu'il est.",
+        "hints": {
+          "1": "Cherchez les guillemets : ils créent du texte. Un mot sans guillemets est un nom."
+        },
+        "explanation": "`7` est un nombre, `\"7\"` est du texte à cause des guillemets, `true` est une valeur vrai/faux, et `total` sans guillemets est le nom d'une variable.",
+        "pairs": {
+          "number": "Un nombre",
+          "text": "Du texte",
+          "boolean": "Une valeur vrai/faux",
+          "variable": "Le nom d'une variable"
+        }
+      },
+      "completeLoseALife": {
+        "prompt": "Un joueur commence avec 3 vies et en perd une. Complétez la ligne 2 pour que lives finisse à 2.",
+        "hints": {
+          "1": "Lisez la valeur actuelle, puis retirez-en un."
+        },
+        "explanation": "`lives - 1` lit la valeur actuelle (3) et soustrait 1 ; le résultat 2 est rangé dans lives.",
+        "misconceptions": {
+          "m1": "Avec des guillemets, \"lives\" n'est que le mot, pas la valeur stockée, et du texte moins un nombre est une erreur.",
+          "m2": "Il n'existe aucune variable appelée life. Lire un nom qui n'a jamais reçu de valeur est une erreur.",
+          "m3": "Ajouter 1 donne 4 vies : le joueur gagne une vie au lieu d'en perdre une.",
+          "m4": "lives * 1 vaut toujours 3 : multiplier par 1 ne change rien."
+        }
+      },
+      "predictTextPlusText": {
+        "prompt": "Quelle est la valeur de b ?",
+        "hints": {
+          "1": "Regardez les guillemets. Est-ce une somme de nombres ou du texte qu'on colle ?"
+        },
+        "explanation": "\"5\" est du texte, pas un nombre. `+` entre deux textes les colle : b vaut donc \"55\".",
+        "mistakes": {
+          "m1": "Ça, c'est a, où 5 et 5 sont des nombres. Dans b, les guillemets en font du texte, qui est collé.",
+          "m2": "Le texte ne s'additionne jamais. \"5\" + \"5\" colle les deux caractères."
+        }
+      },
+      "mcTextPlusNumber": {
+        "prompt": "Que se passe-t-il quand ce programme s'exécute ?",
+        "hints": {
+          "1": "Quel est le type de la valeur de age ? Et de \" is \" ?"
+        },
+        "explanation": "La ligne 3 essaie de coller du texte et le nombre 30, ce qui est une erreur. Écrire `str(age)` le transformerait d'abord en texte \"30\".",
+        "options": {
+          "works": "line devient \"Ana is 30\"",
+          "name": "line devient \"Ana is age\"",
+          "error": "Erreur à la ligne 3 : on ne peut pas coller du texte et un nombre",
+          "quotes": "Erreur à la ligne 2 : 30 a besoin de guillemets"
+        },
+        "misconceptions": {
+          "works": "Une personne le lirait ainsi, mais l'ordinateur refuse de coller du texte et un nombre sans `str()`.",
+          "name": "age n'a pas de guillemets, il désigne donc la variable. Le problème, c'est son type de valeur (un nombre).",
+          "quotes": "La ligne 2 est correcte : stocker un nombre est permis. Le problème n'apparaît que lorsqu'on le colle à du texte."
+        }
+      },
+      "debugSwapWithoutTemp": {
+        "prompt": "Ce programme devrait échanger a et b, pour que a finisse à 2 et b à 1. Mais b finit à 2. Quelle ligne est fausse, et pourquoi ?",
+        "explanation": "À la ligne 5, a a déjà été remplacé par 2 à la ligne 4. L'ancienne valeur de a ne survit que dans temp : la ligne doit donc être `b = temp`.",
+        "causes": {
+          "tempUnused": "Elle copie le nouveau a au lieu de l'ancienne valeur sauvegardée",
+          "noTemp": "La variable temporaire est inutile",
+          "order": "La ligne 3 devrait venir après la ligne 4"
+        },
+        "misconceptions": {
+          "noTemp": "Sans temp, le 1 d'origine serait perdu quand `a = b` s'exécute. temp en est la seule copie.",
+          "order": "temp doit sauvegarder a avant que la ligne 4 le remplace : la ligne 3 est donc à la bonne place."
+        }
+      },
+      "predictTraceTwoVariables": {
+        "prompt": "Suivez les deux variables. Quelle est la valeur de x à la fin ?",
+        "explanation": "x = 3, puis y = 5, puis x = 10, puis y = 9. La dernière ligne additionne les valeurs actuelles : 10 + 9 = 19.",
+        "mistakes": {
+          "m1": "C'est x après la ligne 3. La dernière ligne lui ajoute encore y.",
+          "m2": "Cela utilise les premières valeurs (3 + 5). À la dernière ligne, x et y ont tous deux été remplacés.",
+          "m3": "Cela ajoute le x actuel (10) à un ancien y (5). La ligne 4 a déjà changé y en 9."
+        }
+      },
+      "mcCountPlusOne": {
+        "prompt": "Que fait la ligne `count = count + 1` ?",
+        "explanation": "`=` signifie « stocke ». Le côté droit est calculé d'abord avec la valeur actuelle de count, et le résultat remplace l'ancienne valeur.",
+        "options": {
+          "check": "Elle vérifie si count est égal à count + 1",
+          "second": "Elle crée une deuxième variable nommée count",
+          "never": "Rien, car un nombre ne peut jamais être égal à lui-même plus 1",
+          "update": "Elle lit count, ajoute 1 et stocke le résultat dans count"
+        },
+        "misconceptions": {
+          "check": "En code, `=` est une instruction de stockage, pas une question. Pour comparer, on utilise `==`.",
+          "second": "Il n'y a qu'un seul count. La nouvelle valeur remplace l'ancienne sous le même nom.",
+          "never": "C'est vrai en maths, mais ici `=` signifie « stocke » : la ligne est donc une mise à jour valide."
+        }
+      }
+    }
+  },
+  "problemDecomposition": {
+    "title": "Décomposition de problèmes",
+    "objective": "Vous saurez découper un problème en sous-problèmes aux entrées et sorties claires, et les relier sous forme de petites fonctions.",
+    "summary": "Les grands problèmes deviennent gérables quand on les découpe en petites étapes. Chaque étape reçoit une entrée et produit une sortie, et la sortie d'une étape alimente la suivante.",
+    "keyPoints": {
+      "1": "Décrivez chaque sous-problème par son entrée et sa sortie avant d'écrire du code.",
+      "2": "Ordonnez les sous-problèmes pour que chacun dispose des entrées dont il a besoin, issues des précédents.",
+      "3": "Chaque sous-problème devient une petite fonction ; le programme principal relie leurs résultats.",
+      "4": "Une étape qui résout un autre problème est une distraction, et une étape manquante donne un mauvais résultat."
+    },
+    "steps": {
+      "break-it-down": {
+        "title": "Un problème, plusieurs petits",
+        "blocks": {
+          "p1": "« Calculer le prix d'une commande avec une remise » est trop gros pour être résolu d'un coup. Découpez-le en questions plus petites, chacune avec quelque chose qui entre et quelque chose qui sort.",
+          "list1": {
+            "1": "Sous-total : le prix et la quantité entrent → le montant avant remise sort.",
+            "2": "Remise : le sous-total et le fait que l'acheteur soit membre entrent → le montant à déduire sort.",
+            "3": "Prix final : le sous-total et la remise entrent → ce que paie l'acheteur sort."
+          },
+          "callout1": "La sortie d'un sous-problème est l'entrée du suivant. Si vous savez dire ce qui entre et ce qui sort, vous êtes prêt à écrire cette étape."
+        }
+      },
+      "play-order": {
+        "title": "Une commande, étape par étape",
+        "intro": "Chaque sous-problème est une petite fonction. `final_price` les relie : le sous-total entre dans l'étape de la remise.",
+        "prompts": {
+          "1": "Mettez member à false. Quel sous-problème donne maintenant une sortie différente ?",
+          "2": "Mettez quantity à 5. Quelles fonctions voient la nouvelle valeur, et lesquelles ne voient que son résultat ?"
+        }
+      },
+      "inputs-outputs-first": {
+        "title": "Entrées et sorties avant le code",
+        "blocks": {
+          "p1": "Prenez « noter une liste de scores ». Avant tout code, écrivez chaque étape comme un nom avec ce qu'elle reçoit et ce qu'elle renvoie. Ensuite, chaque ligne du plan devient une petite fonction.",
+          "code1": {
+            "caption": "Le plan montre déjà comment les étapes se relient : avg passe de l'une à l'autre."
+          },
+          "callout1": "S'il manque une étape, le programme tourne quand même, mais l'étape suivante reçoit le mauvais type de valeur, comme un total là où on attendait une moyenne."
+        }
+      },
+      "play-grade": {
+        "title": "Noter en deux étapes",
+        "intro": "Trois scores entrent dans `average` ; sa sortie entre dans `label`. Changez les entrées et voyez quelle étape réagit.",
+        "prompts": {
+          "1": "Mettez pass_mark à 60. Est-ce avg qui change, ou seulement result ?",
+          "2": "Mettez s2 à 10. Quelle étape donne en premier une nouvelle sortie ?",
+          "3": "Trouvez des scores qui donnent result égal à \"pass\" avec pass_mark à 60."
+        }
+      }
+    },
+    "exercises": {
+      "mc-sub-problem-io": {
+        "prompt": "Un sous-problème de la commande est « calculer la remise ». Quelles sont son entrée et sa sortie ?",
+        "hints": {
+          "1": "Que devez-vous savoir avant de pouvoir calculer une remise ?"
+        },
+        "explanation": "Une remise est une part du montant à payer : elle a donc besoin du sous-total en entrée et produit le montant à déduire. Le prix final est une étape ultérieure qui utilise cette sortie.",
+        "options": {
+          "final-in": "Entrée : le prix final · Sortie : le sous-total",
+          "names": "Entrée : le nom des articles · Sortie : un ticket imprimé",
+          "subtotal-in": "Entrée : le sous-total · Sortie : le montant à déduire",
+          "nothing": "Entrée : rien · Sortie : le prix final"
+        },
+        "misconceptions": {
+          "final-in": "Cela exécute les étapes à l'envers : le prix final n'est connu qu'après la remise.",
+          "names": "Le nom des articles n'influe pas sur la remise ; un ticket de caisse est un autre sous-problème.",
+          "nothing": "Une étape sans entrée ne peut pas dépendre de la commande. Et le prix final est le rôle de la dernière étape."
+        }
+      },
+      "build-order-plan": {
+        "prompt": "Construisez le plan pour « le prix d'une commande avec 10 % de remise ». Utilisez uniquement les étapes qui résolvent ce problème, dans l'ordre.",
+        "hints": {
+          "1": "Partez de ce que vous avez : chaque article avec son prix et sa quantité.",
+          "2": "Une étape répond à une question que personne n'a posée."
+        },
+        "explanation": "Chaque étape utilise la sortie de la précédente : les totaux de ligne donnent le sous-total, le sous-total donne la remise, et les deux donnent le prix final.",
+        "blocks": {
+          "lines": "Multiplier chaque prix par sa quantité → totaux de ligne",
+          "sum": "Additionner les totaux de ligne → sous-total",
+          "cheapest": "Trouver l'article le plus cher → prix le plus élevé",
+          "discount": "Prendre 10 % du sous-total → remise",
+          "final": "Soustraire la remise du sous-total → prix final",
+          "per-item": "Baisser chaque quantité de 10 % → nouvelles quantités"
+        },
+        "misconceptions": {
+          "cheapest": "Aucune étape suivante n'utilise le prix le plus élevé. Elle résout un autre problème.",
+          "per-item": "La remise réduit le prix, pas le nombre d'articles achetés. Elle modifie la mauvaise valeur."
+        }
+      },
+      "predict-composed": {
+        "prompt": "Chaque sous-problème est une fonction. Quelle est la valeur de final ?",
+        "hints": {
+          "1": "Calculez d'abord subtotal : c'est l'entrée de l'étape suivante.",
+          "2": "apply_discount renvoie le montant moins la remise, pas la remise elle-même."
+        },
+        "explanation": "line_total donne 8 * 5 = 40. apply_discount prend 25 % de 40, soit 10, et renvoie 40 - 10 = 30.",
+        "commonMistakes": {
+          "40": "C'est le sous-total. La deuxième étape doit encore en déduire la remise.",
+          "10": "C'est la remise elle-même ; la fonction la soustrait du montant.",
+          "15": "La remise est une part du sous-total (40), pas le sous-total moins 25."
+        }
+      },
+      "order-grade-steps": {
+        "prompt": "Mettez les sous-problèmes de « noter une liste de scores » dans un ordre qui fonctionne.",
+        "hints": {
+          "1": "Pour chaque étape, demandez-vous : de quelle sortie précédente a-t-elle besoin ?"
+        },
+        "explanation": "Chaque étape a besoin de la sortie de la précédente : le total donne la moyenne, la moyenne est comparée au seuil de réussite, et cette comparaison devient l'étiquette.",
+        "items": {
+          "total": "Additionner les scores → total",
+          "average": "Diviser le total par le nombre de scores → moyenne",
+          "compare": "Comparer la moyenne à 50 → passed (true/false)",
+          "label": "Transformer passed en mot → \"pass\" ou \"fail\""
+        }
+      },
+      "complete-compose": {
+        "prompt": "Reliez les sous-problèmes pour que pay soit le sous-total plus la livraison (40). La livraison est gratuite à partir de 50.",
+        "hints": {
+          "1": "Qu'attend shipping en entrée : une liste de prix ou un montant ?"
+        },
+        "explanation": "shipping reçoit un montant : il doit donc recevoir la sortie de subtotal, stockée dans base. 35 est inférieur à 50, donc shipping renvoie 5 et pay vaut 40.",
+        "misconceptions": {
+          "k1": "shipping attend un montant, mais ici il reçoit la liste des prix. Son entrée est la sortie de subtotal.",
+          "k2": "Cela recalcule le sous-total et l'ajoute deux fois : 35 + 35 = 70. Aucune livraison n'est calculée.",
+          "k3": "pay est la valeur calculée sur cette ligne : elle n'a donc pas encore de valeur."
+        }
+      },
+      "debug-missing-step": {
+        "prompt": "Les scores 30, 40 et 50 ont une moyenne de 40, donc result devrait valoir \"fail\". Il vaut \"pass\". Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Vérifiez chaque fonction : sa sortie correspond-elle à ce que le plan dit qu'elle renvoie ?"
+        },
+        "explanation": "average saute l'étape qui divise par le nombre de scores, donc elle transmet 120 à label. Avec `return total / len(scores)`, sa sortie est 40, ce qui est un échec.",
+        "causes": {
+          "mark": "label compare avec le mauvais seuil de réussite",
+          "nested": "Passer un appel comme argument d'un autre fait perdre la valeur",
+          "missing": "Il manque une étape : le total n'est jamais divisé pour obtenir une moyenne",
+          "loop": "La boucle saute le dernier score"
+        },
+        "misconceptions": {
+          "mark": "50 est bien le seuil prévu ; le problème est la valeur que reçoit label.",
+          "nested": "L'appel intérieur s'exécute en premier et sa valeur renvoyée devient l'argument. Cette partie fonctionne.",
+          "loop": "La boucle parcourt les trois scores ; total vaut bien 120."
+        }
+      },
+      "mc-best-split": {
+        "prompt": "Problème : « Un panier a-t-il droit à la livraison gratuite ? Oui, quand le total atteint au moins 50. » Quel découpage fonctionne ?",
+        "explanation": "La question a d'abord besoin du total, puis d'une décision oui/non à son sujet. Chaque étape a une entrée et une sortie claires, et la première sortie est exactement ce dont la deuxième a besoin.",
+        "options": {
+          "one-step": "Une seule étape : regarder le panier et décider",
+          "total-then-check": "1. total(prices) → nombre   2. is_free(total) → true/false",
+          "cheapest": "1. cheapest(prices) → nombre   2. is_free(cheapest) → true/false",
+          "backwards": "1. is_free(prices) → true/false   2. total(is_free) → nombre"
+        },
+        "misconceptions": {
+          "one-step": "Cela reformule le problème sans le découper ; aucune entrée ni sortie n'est nommée.",
+          "cheapest": "La règle porte sur le total, donc l'article le moins cher résout un autre problème.",
+          "backwards": "La décision a besoin du total, mais le total est calculé après, à partir d'une valeur true/false."
+        }
+      },
+      "predict-report": {
+        "prompt": "Qu'affiche ce programme ?",
+        "explanation": "count_above compte les scores strictement supérieurs à 80 : 90 et 85, donc high vaut 2. report utilise cette sortie pour obtenir low = 4 - 2 = 2 et construit le texte.",
+        "commonMistakes": {
+          "k1": "80 n'est pas supérieur à 80, donc il ne compte pas comme élevé.",
+          "k2": "low est le nombre de scores moins les scores élevés : 4 - 2.",
+          "2": "report renvoie la phrase entière, et c'est cette phrase qui est affichée."
+        }
+      },
+      "match-outputs": {
+        "prompt": "Associez chaque sous-problème d'un passage en caisse à la sortie qu'il doit renvoyer.",
+        "explanation": "Connaître la sortie de chaque étape vous dit comment la suivante peut l'utiliser : les nombres s'additionnent, true/false guide une décision, le texte s'affiche.",
+        "pairs": {
+          "sum": "Un nombre : la somme des prix",
+          "off": "Un nombre : le montant à déduire",
+          "bool": "true ou false",
+          "text": "Du texte à montrer à l'acheteur"
+        }
+      }
+    }
+  },
+  "conditions": {
+    "title": "Conditions",
+    "objective": "Vous saurez prédire quelle branche d'un if / elif / else s'exécute pour une valeur donnée, y compris pour les valeurs pile sur la limite.",
+    "summary": "Les programmes prennent des décisions en posant des questions vrai/faux. if / else choisit exactement un chemin, les chaînes elif sont vérifiées de haut en bas et les limites (>= ou >) tranchent les cas extrêmes.",
+    "keyPoints": {
+      "1": "Une condition est une question dont la réponse est vrai ou faux, comme `age >= 18`.",
+      "2": "if / else exécute exactement une de ses branches, jamais les deux et jamais aucune.",
+      "3": "Dans une chaîne elif, les conditions sont vérifiées de haut en bas et la première vraie l'emporte : l'ordre compte donc.",
+      "4": "Vérifiez la valeur limite : `>` l'exclut, `>=` l'inclut."
+    },
+    "steps": {
+      "intro": {
+        "title": "Un programme qui décide",
+        "blocks": {
+          "b1": "Jusqu'ici, toutes les lignes s'exécutaient, de haut en bas. Une condition permet à un programme de poser une question et de choisir quoi faire ensuite. La réponse à cette question est toujours `true` ou `false`.",
+          "b2": {
+            "caption": "Une question, deux chemins possibles. Un seul est emprunté.",
+            "nodes": {
+              "start": "DÉBUT",
+              "get": "LIRE L'ÂGE",
+              "ask": "ÂGE >= 18 ?",
+              "end": "FIN"
+            }
+          },
+          "b3": "La même décision en code. Les lignes indentées appartiennent à leur branche.",
+          "b4": {
+            "1": "`==` égal à (un `=` stocke une valeur, deux `==` posent une question)",
+            "2": "`!=` différent de",
+            "3": "`<` inférieur à, `<=` inférieur ou égal à",
+            "4": "`>` supérieur à, `>=` supérieur ou égal à"
+          }
+        }
+      },
+      "playAge": {
+        "title": "Testez la décision",
+        "intro": "Changez l'âge et regardez quelle branche s'exécute. Exactement une des deux lignes intérieures s'exécute.",
+        "prompts": {
+          "1": "Mettez age à 18 pile. Quelle branche s'exécute, et pourquoi ?",
+          "2": "Mettez age à 17. Qu'est-ce qui a changé dans la réponse à la question `age >= 18` ?",
+          "3": "Existe-t-il un âge qui fasse exécuter les deux branches ?"
+        }
+      },
+      "chains": {
+        "title": "Plus de deux chemins : elif",
+        "blocks": {
+          "b1": "Quand il y a plus de deux cas, ajoutez `elif` (« sinon si »). Le programme vérifie les conditions de haut en bas et n'exécute que la première qui est vraie. Les autres sont ignorées, même si elles seraient vraies aussi.",
+          "b2": "Avec score = 95, toutes les conditions sont vraies, mais seul \"A\" est attribué.",
+          "b3": "L'ordre compte : mettez la condition la plus stricte en premier. Si `score >= 50` venait en premier, un score de 95 obtiendrait \"C\".",
+          "b4": "Le bug le plus fréquent se trouve à la limite. Testez toujours la valeur pile sur le bord : 90 obtient-il \"A\" ou \"B\" ?"
+        }
+      },
+      "playGrade": {
+        "title": "Parcourez la chaîne",
+        "intro": "Changez le score et regardez quelle ligne de la chaîne est la première vraie.",
+        "prompts": {
+          "1": "Mettez score à 90 pile, puis à 89. Quelle note chacun obtient-il ?",
+          "2": "Mettez score à 95. `score >= 70` est vrai aussi : alors pourquoi la note n'est-elle pas \"B\" ?",
+          "3": "Trouvez le score le plus élevé qui obtient encore \"D\"."
+        }
+      }
+    },
+    "exercises": {
+      "whichIsAQuestion": {
+        "prompt": "Quelle ligne pose une question vrai/faux ?",
+        "hints": {
+          "1": "On peut répondre à une question par vrai ou faux. Quelle ligne a une telle réponse ?"
+        },
+        "explanation": "`score == 50` compare deux valeurs et donne vrai ou faux. Les autres lignes stockent, modifient ou affichent une valeur sans rien demander.",
+        "misconceptions": {
+          "assign": "Un seul `=` stocke 50 dans score. C'est une instruction, pas une question ; pour demander, il faut `==`.",
+          "print": "print affiche la valeur de score, mais ne la compare à rien.",
+          "update": "Ceci modifie score en ajoutant 1. Rien n'est comparé : il n'y a donc pas de réponse vrai/faux."
+        }
+      },
+      "predictOutfit": {
+        "prompt": "Quelle est la valeur de outfit après l'exécution de ce programme ?",
+        "hints": {
+          "1": "Remplacez temperature par 12 et répondez à la question : 12 > 20 ?"
+        },
+        "explanation": "temperature vaut 12, donc `temperature > 20` est faux. La branche if est ignorée et la branche else met outfit à \"jacket\".",
+        "mistakes": {
+          "m1": "La branche if ne s'exécute que si sa condition est vraie. 12 > 20 est faux : le programme passe donc au else."
+        }
+      },
+      "matchOperators": {
+        "prompt": "Associez chaque comparaison à sa signification.",
+        "hints": {
+          "1": "Le `=` de `>=` et `<=` signifie que la valeur elle-même est incluse."
+        },
+        "explanation": "`==` demande « identiques ? », `!=` demande « différents ? ». Avec `>=` et `<=`, la limite compte ; avec `>`, non.",
+        "pairs": {
+          "same": "a est égal à b",
+          "differ": "a est différent de b",
+          "least": "a vaut b ou plus",
+          "more": "a est plus grand que b, b lui-même exclu",
+          "most": "a vaut b ou moins"
+        }
+      },
+      "predictChain": {
+        "prompt": "Quelle est la valeur de grade ?",
+        "hints": {
+          "1": "Vérifiez les conditions une par une en partant du haut. Arrêtez-vous à la première qui est vraie."
+        },
+        "explanation": "70 >= 90 est faux, puis 70 >= 70 est vrai : grade devient donc \"B\" et le reste de la chaîne est ignoré.",
+        "mistakes": {
+          "m1": "`>=` inclut la limite : 70 >= 70 est vrai, donc la chaîne s'arrête à \"B\" avant d'atteindre \"C\".",
+          "m2": "70 >= 90 est faux : la première branche est donc ignorée."
+        }
+      },
+      "orderTrap": {
+        "prompt": "Ici, les conditions sont dans un autre ordre. Quelle est la valeur de label ?",
+        "hints": {
+          "1": "Quelle condition est vérifiée en premier, et est-elle vraie pour 95 ?"
+        },
+        "explanation": "La première condition, 95 >= 50, est déjà vraie : label devient donc \"pass\" et le elif n'est jamais vérifié. Le test le plus strict doit venir en premier.",
+        "mistakes": {
+          "m1": "95 >= 90 est vrai, mais la chaîne n'y arrive jamais : la première condition vraie l'emporte, et 95 >= 50 est vérifiée avant.",
+          "m2": "else ne s'exécute que si toutes les conditions au-dessus sont fausses. Ici, la première est vraie."
+        }
+      },
+      "completeSenior": {
+        "prompt": "Les personnes de 65 ans ou plus paient 5 ; tous les autres paient 10. Complétez la condition.",
+        "hints": {
+          "1": "« 65 ans ou plus » doit inclure 65 lui-même. Quel opérateur inclut la limite ?"
+        },
+        "explanation": "« 65 ans ou plus » signifie que 65 compte : le test est donc `age >= 65`. Pour l'âge 65, il est vrai et price devient 5.",
+        "misconceptions": {
+          "m1": "`>` exclut 65 lui-même : une personne de 65 ans paierait donc 10.",
+          "m2": "`<` demande « moins de 65 », l'inverse de la règle.",
+          "m3": "`!=` est vrai pour tous les âges sauf 65, ce qui est l'inverse de ce que l'on veut ici."
+        }
+      },
+      "debugShipping": {
+        "prompt": "La livraison devrait être gratuite (0) pour les commandes de 50 ou plus. Une commande de 50 pile est facturée 5. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Testez la limite : que donne 50 > 50 ?"
+        },
+        "explanation": "La ligne 2 utilise `>` : 50 > 50 est faux, et la commande de 50 tombe dans le else. `total >= 50` inclut la limite.",
+        "causes": {
+          "else": "La branche else ne devrait pas exister",
+          "boundary": "La comparaison exclut la valeur limite 50",
+          "equal": "Il faudrait `total == 50`",
+          "swapped": "Les valeurs 0 et 5 sont inversées"
+        },
+        "misconceptions": {
+          "else": "Sans else, les commandes de moins de 50 n'auraient aucune valeur de livraison. Le else est correct.",
+          "equal": "`==` ne rendrait gratuites que les commandes de 50 pile ; une commande de 80 paierait.",
+          "swapped": "Les inverser ferait payer les grosses commandes et rendrait gratuites les petites. Les valeurs sont bonnes ; c'est la question qui est fausse."
+        }
+      },
+      "predictWeather": {
+        "prompt": "Qu'affiche ce programme ?",
+        "explanation": "30 < 10 et 30 < 25 sont tous deux faux : else affiche donc \"hot\". La dernière ligne n'est pas indentée : elle s'exécute après la décision, quelle que soit la branche.",
+        "mistakes": {
+          "m1": "La dernière ligne n'est pas indentée : elle ne fait partie d'aucune branche et s'exécute toujours.",
+          "m2": "30 < 25 est faux : la branche elif est donc ignorée."
+        }
+      },
+      "separateIfs": {
+        "prompt": "Ce sont deux if séparés, pas une chaîne elif. Combien de lignes sont affichées ?",
+        "explanation": "Chaque if est une question à part. 15 > 10 est vrai et 15 > 5 est vrai : les deux affichent. Seul elif rend les vérifications suivantes dépendantes des précédentes.",
+        "options": {
+          "zero": "Aucune",
+          "one": "Une : \"big\"",
+          "two": "Deux : \"big\" et \"medium\"",
+          "error": "Une erreur : deux if ne peuvent pas se suivre"
+        },
+        "misconceptions": {
+          "zero": "Les deux conditions sont vraies pour 15 : au moins une ligne est donc affichée.",
+          "one": "C'est le comportement d'une chaîne elif. Des if séparés sont vérifiés indépendamment : le second est donc vérifié aussi.",
+          "error": "Un programme peut enchaîner autant de if que nécessaire ; chacun est une nouvelle décision."
+        }
+      }
+    }
+  },
+  "logicalOperators": {
+    "title": "Opérateurs logiques",
+    "objective": "Vous saurez combiner des questions vrai/faux avec and, or et not, et traduire une règle écrite en mots en une condition.",
+    "summary": "and exige que les deux côtés soient vrais, or en exige au moins un, not inverse la réponse. Grâce à eux, une seule condition peut exprimer des règles comme « entre 13 et 19 » ou « gratuit avant 5 ans ou après 65 ans ».",
+    "keyPoints": {
+      "1": "`a and b` n'est vrai que lorsque les deux sont vrais ; `a or b` est vrai dès qu'au moins l'un des deux l'est.",
+      "2": "`not` inverse vrai et faux. `not x > 3` signifie `not (x > 3)`.",
+      "3": "Un intervalle comme « de 13 à 19 », ce sont deux comparaisons reliées par and : `age >= 13 and age <= 19`.",
+      "4": "Lisez la règle à voix haute : « soit… soit… » demande or, « à la fois… et… » demande and."
+    },
+    "steps": {
+      "intro": {
+        "title": "Combiner des questions",
+        "blocks": {
+          "b1": "Les vraies règles ont souvent plusieurs parties : « un adolescent a au moins 13 ans et au plus 19 ans ». Les opérateurs logiques réunissent plusieurs réponses vrai/faux en une seule.",
+          "b2": {
+            "1": "`a and b` : vrai seulement si a et b sont vrais tous les deux",
+            "2": "`a or b` : vrai si au moins l'un des deux est vrai (y compris quand les deux le sont)",
+            "3": "`not a` : le contraire de a"
+          },
+          "b3": "Chaque côté est une comparaison complète ; and relie les deux réponses.",
+          "b4": "On ne peut pas écrire `13 <= age <= 19`. Écrivez les deux comparaisons en entier et reliez-les : `age >= 13 and age <= 19`."
+        }
+      },
+      "playAges": {
+        "title": "Deux règles, un âge",
+        "intro": "Changez l'âge et le billet, et observez chaque réponse combinée.",
+        "prompts": {
+          "1": "Essayez les âges 12, 13, 19 et 20. Pour lesquels teen est-il vrai ?",
+          "2": "Trouvez deux âges différents qui rendent free vrai.",
+          "3": "Désactivez has_ticket. Quels âges peuvent encore entrer, et pourquoi ?"
+        }
+      },
+      "translate": {
+        "title": "Des mots aux conditions",
+        "blocks": {
+          "b1": "Pour transformer une règle en code, trouvez d'abord les petites questions, puis décidez comment elles se relient. « Gratuit avant 5 ans ou après 65 ans » contient deux questions : `age < 5` et `age > 65`.",
+          "b2": "Personne n'a à la fois moins de 5 ans et plus de 65 ans : ici, and rendrait la règle toujours fausse.",
+          "b3": "Vérifiez votre condition avec un exemple qui doit passer et un autre qui doit échouer. Si aucune valeur ne peut la rendre vraie, vous avez sans doute utilisé and là où vous vouliez or.",
+          "b4": "`not (a and b)` signifie « pas les deux » : au moins l'un est faux, ce qui revient à `not a or not b`. Inverser une question combinée transforme aussi and en or."
+        }
+      }
+    },
+    "exercises": {
+      "whenIsAndTrue": {
+        "prompt": "Quand `a and b` est-il vrai ?",
+        "hints": {
+          "1": "« Il me faut un billet et une pièce d'identité » : quand entrez-vous ?"
+        },
+        "explanation": "and est exigeant : un seul côté faux suffit à rendre l'ensemble faux. Seul vrai et vrai donne vrai.",
+        "options": {
+          "one": "Quand au moins l'un des deux est vrai",
+          "exactly": "Quand exactement l'un des deux est vrai",
+          "both": "Seulement quand les deux sont vrais",
+          "neither": "Quand les deux sont faux"
+        },
+        "misconceptions": {
+          "one": "Ça, c'est or. Avec and, un seul côté faux rend toute la condition fausse.",
+          "exactly": "Si un seul côté est vrai, l'autre est faux, et and donne alors faux.",
+          "neither": "false and false donne faux. and ne transforme jamais des réponses fausses en vrai."
+        }
+      },
+      "predictOr": {
+        "prompt": "Quelle est la valeur de outside ?",
+        "hints": {
+          "1": "Répondez à chaque côté séparément : 3 < 5 ? 3 > 10 ? Puis reliez-les avec or."
+        },
+        "explanation": "3 < 5 est vrai et 3 > 10 est faux. or n'a besoin que d'un côté vrai : outside est donc vrai.",
+        "mistakes": {
+          "m1": "Un côté (3 > 10) est faux, mais or est vrai dès qu'un côté l'est, et 3 < 5 est vrai."
+        }
+      },
+      "predictNot": {
+        "prompt": "Quelle est la valeur de small ?",
+        "hints": {
+          "1": "`not` s'applique à toute la comparaison : calculez d'abord 8 > 10, puis inversez-le."
+        },
+        "explanation": "`not n > 10` signifie `not (n > 10)`. 8 > 10 est faux, et not faux donne vrai.",
+        "mistakes": {
+          "m1": "8 > 10 est faux ; not l'inverse : le résultat est donc vrai."
+        }
+      },
+      "completeComfortable": {
+        "prompt": "Une pièce est confortable quand la température va de 18 à 24, bornes comprises. Complétez la condition (pour temp = 30, elle doit être fausse).",
+        "hints": {
+          "1": "La température doit réussir les deux tests en même temps : ni trop froide, ni trop chaude."
+        },
+        "explanation": "« De 18 à 24 » signifie au moins 18 et au plus 24 : `temp >= 18 and temp <= 24`. 30 échoue au second test : le résultat est donc faux.",
+        "misconceptions": {
+          "m1": "Avec or, toute température de 18 ou plus passe : 30 serait donc considéré comme confortable.",
+          "m2": "La limite haute doit garder les valeurs d'au plus 24 : il faut donc `<=`."
+        }
+      },
+      "buildTicketPrice": {
+        "prompt": "Construisez un programme qui met price à 0 pour les enfants de moins de 5 ans ou les seniors de plus de 65 ans, et à 8 pour tous les autres.",
+        "hints": {
+          "1": "Commencez par la question, puis la branche du oui, puis else."
+        },
+        "explanation": "La règle est « moins de 5 ans ou plus de 65 ans » : la condition relie donc `age < 5` et `age > 65` avec or. La branche else couvre tous les autres.",
+        "misconceptions": {
+          "and": "Personne n'a à la fois moins de 5 ans et plus de 65 ans : avec and, personne n'entrerait jamais gratuitement.",
+          "flipped": "Les comparaisons sont dans le mauvais sens : tout âge est soit supérieur à 5, soit inférieur à 65, donc tout le monde entrerait gratuitement."
+        }
+      },
+      "matchRules": {
+        "prompt": "Associez chaque règle à la condition qui l'exprime.",
+        "hints": {
+          "1": "« Entre » demande les deux tests ; « soit… soit… » en demande un."
+        },
+        "explanation": "Un intervalle, ce sont deux tests reliés par and ; « soit… soit… » se relie avec or ; « pas les deux », c'est un not autour d'un and.",
+        "pairs": {
+          "teen": "L'âge va de 13 à 19",
+          "free": "Moins de 5 ans ou plus de 65 ans",
+          "notboth": "Pas à la fois de la pluie et du froid",
+          "adultticket": "Un adulte qui a un billet"
+        }
+      },
+      "debugWeekend": {
+        "prompt": "La boutique est fermée le jour 6 et le jour 7. Pour le jour 7, le programme affiche \"open\". Quelle ligne est fausse, et pourquoi ?",
+        "explanation": "La ligne 2 demande si day vaut 6 et 7 en même temps, ce qui n'est jamais vrai. La règle est « jour 6 ou jour 7 » : il faut donc or.",
+        "causes": {
+          "boundary": "Elle devrait utiliser `>=` au lieu de `==`",
+          "never": "and demande les deux à la fois, ce qui ne peut jamais être vrai",
+          "else": "La branche else capte le jour 7"
+        },
+        "misconceptions": {
+          "boundary": "Les tests `==` sont justes : le jour 7 doit correspondre exactement à 7. Le problème, c'est la façon dont les deux tests sont reliés.",
+          "else": "else ne s'exécute que parce que la condition est fausse. Corrigez la condition et else redevient correct."
+        }
+      },
+      "notBoth": {
+        "prompt": "Quelle condition signifie la même chose que `not (hungry and tired)` ?",
+        "explanation": "« Pas à la fois affamé et fatigué » est vrai dès que l'un des deux est faux : `not hungry or not tired`.",
+        "misconceptions": {
+          "andnot": "Cela signifie « ni affamé ni fatigué ». Avoir faim sans être fatigué, c'est aussi « pas les deux », et cette option donne faux dans ce cas.",
+          "or": "Ceci est vrai quand vous avez faim et êtes fatigué, exactement le cas que `not (hungry and tired)` exclut."
+        }
+      },
+      "predictPrice": {
+        "prompt": "Quelle est la valeur de price ?",
+        "explanation": "70 < 12 est faux et member est faux : la première condition est donc fausse. 70 >= 65 est vrai et not member est vrai : price vaut donc 7.",
+        "mistakes": {
+          "m1": "Les deux parties du elif sont vraies : 70 >= 65, et member est faux, donc not member est vrai.",
+          "m2": "or demande au moins un côté vrai, mais 70 < 12 est faux et member est faux."
+        }
+      }
+    }
+  },
+  "algorithms": {
+    "title": "Algorithmes",
+    "objective": "Vous saurez décrire un algorithme comme une recette précise, suivre les algorithmes classiques sur les listes (somme, comptage, maximum, recherche) et estimer la quantité de travail qu'ils font.",
+    "summary": "Un algorithme est une recette finie et précise qui résout tous les problèmes d'un même type. Vous découvrez quatre formes classiques sur les listes et voyez comment leur travail augmente avec la taille de la liste.",
+    "keyPoints": {
+      "1": "Un algorithme est précis, fini et fonctionne pour toute entrée de son type, pas seulement pour un exemple.",
+      "2": "La plupart des algorithmes sur les listes ont la même forme : fixer une valeur de départ, parcourir chaque élément, mettre la valeur à jour.",
+      "3": "Pour trouver le plus grand élément, partez du premier élément, pas de 0 : la liste pourrait être entièrement négative.",
+      "4": "Une recherche linéaire vérifie les éléments un par un, donc son travail augmente avec la longueur de la liste."
+    },
+    "steps": {
+      "recipe": {
+        "title": "Une recette pour toute une classe de problèmes",
+        "blocks": {
+          "p1": "Un algorithme est une liste d'étapes précise et finie qui résout tout un type de problème. « Additionner 4, 7 et 2 » est un problème ; « additionner n'importe quelle liste de nombres » est le type qu'un algorithme résout.",
+          "code1": {
+            "caption": "Somme : fonctionne pour n'importe quelle liste, courte ou longue."
+          },
+          "p2": "La plupart des algorithmes sur les listes ont la même forme : fixer une valeur de départ, parcourir chaque élément, mettre la valeur à jour. Seules la valeur de départ et la mise à jour changent.",
+          "list1": {
+            "1": "Somme : partir de `0`, ajouter chaque élément.",
+            "2": "Compter les correspondances : partir de `0`, ajouter `1` quand un élément réussit un test.",
+            "3": "Maximum : partir du premier élément, le remplacer quand un élément est plus grand."
+          }
+        }
+      },
+      "play-shapes": {
+        "title": "Trois algorithmes, une boucle",
+        "intro": "La même boucle exécute trois algorithmes à la fois : la somme, le comptage au-dessus d'une limite et le maximum. Changez les nombres et observez chaque résultat.",
+        "prompts": {
+          "1": "Rendez tous les nombres négatifs. largest est-il toujours juste ? Pourquoi part-il de numbers[0] ?",
+          "2": "Mettez limit à 20. Pourquoi above passe-t-il à 0 alors que total ne change pas ?",
+          "3": "Donnez à b la même valeur que d. largest change-t-il au dernier élément ?"
+        }
+      },
+      "search-cost": {
+        "title": "Chercher, et compter le travail",
+        "blocks": {
+          "p1": "Une recherche linéaire demande « est-ce le bon élément ? » pour chaque élément à tour de rôle. Un indicateur `found` commence à `false` et passe à `true` en cas de correspondance.",
+          "code1": {
+            "caption": "Recherche linéaire avec un indicateur found."
+          },
+          "p2": "Chaque `==` est une comparaison. Si la cible est absente, chaque élément est vérifié : 10 éléments coûtent 10 comparaisons, 1000 éléments en coûtent 1000. Le travail augmente avec n, la longueur de la liste.",
+          "callout1": "Une recherche qui s'arrête à la première correspondance est plus rapide quand la cible est près du début, mais dans le pire des cas elle vérifie quand même les n éléments."
+        }
+      },
+      "play-search": {
+        "title": "Comptez les comparaisons",
+        "intro": "Cette recherche s'arrête dès qu'elle trouve la cible et compte chaque comparaison. Changez la cible.",
+        "prompts": {
+          "1": "Mettez target à 4. Pourquoi une seule comparaison suffit-elle, et pourquoi l'indice est-il 0 ?",
+          "2": "Mettez target à 3, puis à 6. Les deux demandent 8 comparaisons. Pourquoi ?",
+          "3": "Quelle cible demande le plus de travail, et de quoi cela dépend-il ?"
+        }
+      }
+    },
+    "exercises": {
+      "what-is-algorithm": {
+        "prompt": "Lequel de ces énoncés est un algorithme ?",
+        "hints": {
+          "1": "Un algorithme doit fonctionner pour toute entrée de son type et doit se terminer."
+        },
+        "explanation": "Comparer chaque élément au meilleur trouvé jusque-là est précis, se termine toujours et fonctionne pour n'importe quelle liste. Les autres options ne résolvent qu'un cas, sont vagues ou ne se terminent jamais.",
+        "options": {
+          "one": "La réponse pour [3, 8, 5] est 8",
+          "vague": "Regarder la liste et choisir un grand nombre",
+          "recipe": "Garder le premier nombre ; comparer chaque nombre suivant et garder le plus grand",
+          "forever": "Continuer à vérifier des nombres jusqu'à se sentir sûr"
+        },
+        "misconceptions": {
+          "one": "C'est une réponse à un seul problème. Elle ne dit rien sur la liste suivante.",
+          "vague": "« Un grand nombre » n'est pas précis : deux personnes qui suivent cette consigne pourraient donner des réponses différentes.",
+          "forever": "« Jusqu'à se sentir sûr » n'a pas de fin claire, et un algorithme doit se terminer."
+        }
+      },
+      "count-adults": {
+        "prompt": "Ce programme compte les éléments qui correspondent. Que vaut adults à la fin ?",
+        "hints": {
+          "1": "Testez chaque âge avec `a >= 18` et ajoutez 1 seulement s'il réussit.",
+          "2": "Le 18 lui-même est-il inclus par `>=` ?"
+        },
+        "explanation": "19, 30 et 18 réussissent `a >= 18`, donc adults augmente trois fois. Compter ajoute 1 par correspondance, pas l'élément lui-même.",
+        "commonMistakes": {
+          "2": "`>=` inclut 18 lui-même, donc le dernier âge compte aussi.",
+          "67": "Cela additionne les âges. Compter ajoute 1 par correspondance, pas la valeur correspondante.",
+          "5": "C'est la longueur de la liste. Seuls les éléments qui réussissent le test sont comptés."
+        }
+      },
+      "build-max": {
+        "prompt": "Constructeur d'algorithmes : assemblez les blocs en un algorithme qui trouve le plus grand nombre d'une liste. Laissez de côté les blocs qui n'ont rien à y faire.",
+        "hints": {
+          "1": "Avant de comparer quoi que ce soit, max a besoin d'une valeur de départ prise dans la liste.",
+          "2": "La comparaison et la mise à jour ont lieu pour chaque nombre, puis la boucle recommence."
+        },
+        "explanation": "Initialisez max avec le premier nombre, puis pour chaque nombre suivant comparez et mettez à jour s'il est plus grand, en répétant jusqu'à la fin de la liste. Ce n'est qu'alors que max est connu : il est donc renvoyé en dernier.",
+        "blocks": {
+          "start": "Début",
+          "set": "Mettre max au premier nombre",
+          "read": "Lire le nombre suivant",
+          "compare": "Le comparer à max",
+          "update": "S'il est plus grand, mettre à jour max",
+          "repeat": "Répéter jusqu'à ce qu'il ne reste plus de nombres",
+          "return": "Renvoyer max",
+          "zero": "Mettre max à 0",
+          "last": "Renvoyer le dernier nombre lu"
+        },
+        "misconceptions": {
+          "zero": "Partir de 0 échoue quand tous les nombres sont négatifs : max resterait à 0, qui n'est pas dans la liste.",
+          "last": "Le dernier nombre lu est simplement la fin de la liste, pas forcément le plus grand."
+        }
+      },
+      "search-position": {
+        "prompt": "Cette recherche retient où elle a trouvé la cible. Que vaut position à la fin ?",
+        "hints": {
+          "1": "Les indices commencent à 0 : items[0] vaut 3.",
+          "2": "La boucle ne s'arrête pas à la première correspondance. Que se passe-t-il au deuxième 8 ?"
+        },
+        "explanation": "8 se trouve à l'indice 1 et à l'indice 3. La boucle continue après la première correspondance, donc position est écrasé par 3.",
+        "commonMistakes": {
+          "1": "C'est la première correspondance, mais la boucle ne s'arrête pas là : le deuxième 8 écrase position.",
+          "4": "Les indices commencent à 0, donc le quatrième élément est à l'indice 3.",
+          "2": "En comptant à partir de 1, le premier 8 est l'élément 2, mais les indices commencent à 0 et la boucle continue.",
+          "-1": "-1 ne reste que si rien ne correspond ; 8 est dans la liste."
+        }
+      },
+      "search-cost": {
+        "prompt": "Une recherche linéaire cherche un nom dans une liste de 1000 noms. Le nom n'est pas dans la liste. Combien de comparaisons fait-elle ?",
+        "hints": {
+          "1": "Pour être sûr qu'un nom est absent, quels éléments faut-il avoir vérifiés ?"
+        },
+        "explanation": "On ne peut exclure un élément absent qu'en vérifiant tous les éléments, donc la recherche fait 1000 comparaisons. Son travail augmente avec la longueur de la liste.",
+        "options": {
+          "ten": "Environ 10"
+        },
+        "misconceptions": {
+          "one": "Une comparaison ne vérifie que le premier nom ; le nom cherché pourrait être plus loin.",
+          "half": "Environ la moitié, c'est le coût habituel quand le nom est présent. Quand il est absent, tous les noms sont vérifiés.",
+          "ten": "Une recherche linéaire ne peut pas sauter d'éléments : elle n'a aucun moyen de passer par-dessus ceux qu'elle n'a pas vérifiés."
+        }
+      },
+      "count-passed": {
+        "prompt": "Complétez l'algorithme de comptage pour que passed soit le nombre de scores de 50 ou plus.",
+        "hints": {
+          "1": "Un score d'exactement 50 doit-il compter ?",
+          "2": "Un compteur augmente de un par correspondance, quel que soit le score."
+        },
+        "explanation": "`>=` inclut 50 lui-même, et le compteur augmente de 1 par correspondance : 72, 50 et 90 réussissent, donc passed vaut 3.",
+        "misconceptions": {
+          "k1": "`>` exclut un score d'exactement 50, donc passed vaudrait 2.",
+          "k2": "`<` compte les scores inférieurs à 50, l'inverse de ce qui est demandé.",
+          "k3": "Cela additionne les scores (une somme), au lieu de les compter (un comptage).",
+          "k4": "Cela met passed à 1 à chaque correspondance au lieu de l'augmenter."
+        }
+      },
+      "debug-max-start": {
+        "prompt": "largest devrait être la température la plus élevée, -2. Le programme donne 0. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Suivez largest : une température dépasse-t-elle un jour sa valeur de départ ?"
+        },
+        "explanation": "Toutes les températures sont inférieures à 0, donc aucune ne dépasse la valeur de départ et largest reste à 0, un nombre qui n'est même pas dans la liste. Partir de `temps[0]` fait du départ un vrai candidat.",
+        "causes": {
+          "start": "La valeur de départ n'est pas prise dans la liste, elle peut donc dépasser tous les éléments",
+          "compare": "La comparaison devrait être < parce que les nombres sont négatifs",
+          "skip": "La boucle saute la première température",
+          "update": "largest devrait être mis à jour avec largest + t"
+        },
+        "misconceptions": {
+          "compare": "`<` trouverait la température la plus froide (-9), pas la plus chaude.",
+          "skip": "`for t in temps` parcourt chaque élément, y compris le premier.",
+          "update": "Additionner transformerait l'algorithme du maximum en somme."
+        }
+      },
+      "range-sum": {
+        "prompt": "Qu'affiche ce programme ?",
+        "explanation": "`range(1, 4)` donne les indices 1, 2 et 3, donc prices[0] est sauté : 3 + 8 + 4 = 15.",
+        "commonMistakes": {
+          "20": "Cela additionne tous les prix, mais le range commence à l'indice 1, donc prices[0] est sauté.",
+          "16": "Cela additionne les indices 0 à 2. Le range est 1, 2, 3 : il commence à 1 et s'arrête avant 4.",
+          "11": "range(1, 4) inclut l'indice 3, donc le dernier prix compte."
+        }
+      },
+      "match-shapes": {
+        "prompt": "Associez chaque problème à la forme d'algorithme qui le résout.",
+        "explanation": "Additionner des valeurs est une somme, compter les éléments qui réussissent un test est un comptage, garder le meilleur jusque-là donne le maximum, et vérifier chaque élément pour une valeur donnée est une recherche.",
+        "pairs": {
+          "spend": "Le total dépensé ce mois-ci",
+          "sum": "Somme : partir de 0, ajouter chaque élément",
+          "unread": "Combien d'e-mails sont non lus",
+          "count": "Comptage : partir de 0, ajouter 1 par correspondance",
+          "best": "Le meilleur score d'une partie",
+          "largest": "Maximum : partir du premier élément, garder le plus grand",
+          "guest": "« Ana » est-elle sur la liste des invités ?",
+          "search": "Recherche : un indicateur found activé en cas de correspondance"
+        }
+      }
+    }
+  },
+  "debugging": {
+    "title": "Débogage",
+    "objective": "Vous saurez trouver et expliquer des bugs avec une méthode : reproduire, lire le message, suivre les valeurs, formuler une hypothèse, changer une seule chose et retester.",
+    "summary": "Déboguer est une méthode, pas une question de chance. Vous la pratiquez sur les familles de bugs rencontrées dans ce module : erreurs de un, bornes, écrasements, variables non initialisées, erreurs de type, boucles infinies et return mal placés.",
+    "keyPoints": {
+      "1": "Reproduisez d'abord le bug : connaissez l'entrée, le résultat attendu et le résultat obtenu.",
+      "2": "La ligne de l'erreur est l'endroit où le programme a remarqué le problème, ce qui n'est pas toujours là où se trouve l'erreur.",
+      "3": "Suivez les valeurs ligne par ligne, puis testez une hypothèse en changeant une seule chose à la fois.",
+      "4": "La plupart des bugs appartiennent à quelques familles : erreur de un, borne, écrasement, valeur de départ manquante, mélange de types, boucle infinie, return mal placé."
+    },
+    "steps": {
+      "method": {
+        "title": "Une méthode, pas de la chance",
+        "blocks": {
+          "p1": "Un bug est un écart entre ce que vous attendiez et ce que fait le programme. Deviner et modifier des lignes au hasard peut masquer un bug et en ajouter deux autres.",
+          "list1": {
+            "1": "Reproduire : trouvez une entrée qui fait apparaître le bug à chaque fois.",
+            "2": "Lisez le message d'erreur et la ligne qu'il indique.",
+            "3": "Suivez les valeurs : notez chaque variable après chaque ligne.",
+            "4": "Formulez une hypothèse : « Je pense que la boucle s'arrête un tour trop tôt. »",
+            "5": "Changez une seule chose, puis retestez avec la même entrée."
+          },
+          "callout1": "Le bug se trouve là où votre attente et la trace divergent pour la première fois. Cette ligne est votre suspecte."
+        }
+      },
+      "play-trace": {
+        "title": "Reproduire et tracer",
+        "intro": "Ce programme devrait additionner tous les nombres entiers de 1 à n. Pour n = 3, la bonne réponse est 1 + 2 + 3 = 6. Reproduisez le bug et suivez i et total.",
+        "prompts": {
+          "1": "Avec n = 3, quelle est la dernière valeur de i ? n est-il jamais ajouté ?",
+          "2": "Essayez n = 1. La réponse devrait être 1. Qu'obtenez-vous, et pourquoi ?",
+          "3": "Formulez une hypothèse : quelle modification unique de la ligne 2 corrigerait tous les n ?"
+        }
+      },
+      "families": {
+        "title": "Familles de bugs",
+        "blocks": {
+          "p1": "La plupart des bugs appartiennent à quelques familles. Reconnaître la famille transforme « quelque chose ne va pas » en hypothèse concrète.",
+          "list1": {
+            "1": "Erreur de un ou mauvaise borne : `<` au lieu de `<=`, ou `len(xs)` utilisé comme indice.",
+            "2": "Écraser au lieu d'accumuler : `total = x` au lieu de `total = total + x`.",
+            "3": "Mauvaise variable mise à jour, ou variable utilisée avant d'avoir une valeur.",
+            "4": "Mélange de types : `\"Score: \" + 5` nécessite `str(5)`.",
+            "5": "Boucle infinie : la variable de boucle ne se rapproche jamais de la condition d'arrêt.",
+            "6": "Return au mauvais endroit : dans la boucle, donc la fonction s'arrête après un élément."
+          },
+          "callout1": "Un message d'erreur indique la ligne où le programme n'a pas pu continuer. La vraie erreur se trouve souvent plus haut, par exemple une variable jamais définie."
+        }
+      },
+      "play-error": {
+        "title": "Lisez le message d'erreur",
+        "intro": "Désactivez useStr pour faire échouer le programme. Lisez le message et la ligne qu'il indique, puis réactivez-le.",
+        "prompts": {
+          "1": "Désactivez useStr. Quelle ligne le message indique-t-il, et que vous dit-il de faire ?",
+          "2": "Pourquoi le programme n'affiche-t-il rien après l'erreur ?"
+        }
+      }
+    },
+    "exercises": {
+      "order-method": {
+        "prompt": "Remettez la méthode de débogage dans l'ordre.",
+        "hints": {
+          "1": "On ne peut pas étudier un bug qu'on n'arrive pas à provoquer.",
+          "2": "Une modification ne prouve quelque chose qu'une fois retestée."
+        },
+        "explanation": "Faites d'abord apparaître le bug de façon fiable, puis rassemblez des indices (message, trace), expliquez-le par une hypothèse, testez-la avec une modification et confirmez en retestant.",
+        "items": {
+          "reproduce": "Reproduire le bug avec une entrée connue",
+          "read": "Lire le message d'erreur et sa ligne",
+          "trace": "Suivre les valeurs ligne par ligne",
+          "hypothesis": "Formuler une hypothèse sur la cause",
+          "change": "Changer une seule chose",
+          "retest": "Retester avec la même entrée"
+        }
+      },
+      "debug-off-by-one": {
+        "prompt": "total devrait valoir 1 + 2 + 3 + 4 = 10, mais le programme donne 6. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Suivez i : quelles valeurs prend-il dans la boucle ?",
+          "2": "Quand i vaut 4, la condition est-elle vraie ou fausse ?"
+        },
+        "explanation": "Quand i atteint 4, `i < n` est faux, donc 4 n'est jamais ajouté. `<=` garde le dernier nombre dans la boucle : une erreur de un classique.",
+        "causes": {
+          "boundary": "La boucle s'arrête un tour trop tôt, donc le dernier nombre n'est jamais ajouté",
+          "start": "i devrait commencer à 0 pour que plus de nombres soient ajoutés",
+          "overwrite": "total est écrasé à chaque tour au lieu d'augmenter",
+          "step": "i augmente trop vite et saute des nombres"
+        },
+        "misconceptions": {
+          "start": "Commencer à 0 ajoute 0, ce qui ne change rien : la boucle s'arrêterait toujours avant 4.",
+          "overwrite": "`total = total + i` garde l'ancien total et y ajoute, donc il augmente bien.",
+          "step": "i vaut 1, 2, 3 : il augmente de un et ne saute rien. Il s'arrête simplement trop tôt."
+        }
+      },
+      "test-hypothesis": {
+        "prompt": "Votre hypothèse : « la boucle fait un tour de trop peu ». Quelle étape suivante la teste le mieux ?",
+        "hints": {
+          "1": "Un bon test donne des indices clairs et change le moins de choses possible."
+        },
+        "explanation": "Afficher i à chaque tour montre exactement combien de fois la boucle tourne, sans rien changer d'autre. Les indices confirment ou réfutent l'hypothèse.",
+        "options": {
+          "rewrite": "Réécrire toute la boucle autrement",
+          "many": "Changer en même temps la condition, la valeur de départ et la mise à jour",
+          "trace": "Afficher i à chaque tour et compter les tours",
+          "rerun": "L'exécuter encore quelques fois sans rien changer"
+        },
+        "misconceptions": {
+          "rewrite": "Une réécriture peut masquer le bug sans vous dire ce que c'était, et peut en ajouter de nouveaux.",
+          "many": "Si trois changements le corrigent, vous ne savez pas lequel comptait, ni si deux d'entre eux s'annulent.",
+          "rerun": "Le même programme avec la même entrée donne le même résultat : le relancer n'apporte aucun indice."
+        }
+      },
+      "debug-overwrite": {
+        "prompt": "total devrait valoir 15, la somme des prix. Il vaut 5. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Suivez total après chaque tour : 4, puis… ?"
+        },
+        "explanation": "total vaut 4, 6, 5 : chaque tour le remplace par le prix courant. Ajouter à l'ancien total conserve ce qui a déjà été additionné.",
+        "causes": {
+          "start": "total devrait commencer au premier prix plutôt qu'à 0",
+          "overwrite": "Chaque tour remplace total au lieu d'y ajouter",
+          "loop": "La boucle ne parcourt que le dernier prix"
+        },
+        "misconceptions": {
+          "start": "La valeur de départ convient pour une somme ; elle est de toute façon perdue car la ligne 4 remplace total.",
+          "loop": "La boucle parcourt les trois prix ; la trace montre total prenant chacun à tour de rôle."
+        }
+      },
+      "debug-return": {
+        "prompt": "count_even devrait compter les nombres pairs : result devrait valoir 3. Il vaut 1. Quelle ligne est fausse, et pourquoi ?",
+        "hints": {
+          "1": "Regardez l'indentation de chaque ligne : de quel bloc fait-elle partie ?",
+          "2": "Quel effet `return` a-t-il sur la boucle ?"
+        },
+        "explanation": "Le `return` est indenté dans la boucle, donc la fonction se termine après le premier nombre. Ramené au niveau de la fonction, il s'exécute une fois la boucle terminée.",
+        "causes": {
+          "test": "`n % 2 == 0` n'est pas le bon test pour les nombres pairs",
+          "reset": "count est remis à 0 à chaque tour",
+          "return": "Le return est dans la boucle, donc la fonction s'arrête après un nombre",
+          "local": "count est locale, donc result ne peut pas la voir"
+        },
+        "misconceptions": {
+          "test": "Un nombre pair donne un reste de 0 quand on le divise par 2, donc le test est juste.",
+          "reset": "`count = 0` est avant la boucle, donc il ne s'exécute qu'une fois.",
+          "local": "count est locale, mais `return` envoie sa valeur à l'extérieur ; c'est justement ainsi que result la reçoit."
+        }
+      },
+      "trace-wrong-variable": {
+        "prompt": "L'autrice voulait que count compte les éléments (3). Suivez le programme tel qu'il est : que vaut count à la fin ?",
+        "hints": {
+          "1": "Faites un tableau de trace avec les colonnes x, total et count.",
+          "2": "La ligne 5 lit total, pas count."
+        },
+        "explanation": "La ligne 5 calcule count à partir de total au lieu de count : après le dernier tour, total vaut 9, donc count vaut 10. Suivre les vraies valeurs révèle la mauvaise variable.",
+        "commonMistakes": {
+          "3": "C'est ce que voulait l'autrice. La question est ce que fait réellement le programme : la ligne 5 utilise total.",
+          "9": "C'est total. count vaut total + 1.",
+          "4": "count n'augmente pas de 1 à chaque fois ; il est remplacé par total + 1."
+        }
+      },
+      "debug-endless-loop": {
+        "prompt": "Le programme devrait compter des pas de 2 de 10 jusqu'à 0 (steps devrait valoir 5). Il s'arrête avec « Arrêté après 5000 étapes ». Quelle ligne est fausse, et pourquoi ?",
+        "explanation": "n commence à 10 et augmente, donc `n > 0` reste vrai pour toujours. Chaque tour doit rapprocher n de la condition d'arrêt, c'est-à-dire soustraire.",
+        "causes": {
+          "condition": "La condition devrait être n >= 0",
+          "away": "n s'éloigne de la condition d'arrêt, donc elle n'est jamais atteinte",
+          "steps": "steps n'est jamais mis à jour dans la boucle",
+          "limit": "5000 étapes, c'est trop peu pour cette boucle"
+        },
+        "misconceptions": {
+          "condition": "Si n augmente, `n >= 0` reste tout autant vrai pour toujours ; en plus, cela ajouterait un tour.",
+          "steps": "steps augmente bien à la ligne 4 ; le problème, c'est ce qui arrive à n.",
+          "limit": "Aucune limite ne suffit : n augmente sans fin, donc la boucle ne se termine jamais."
+        }
+      },
+      "debug-last-index": {
+        "prompt": "last devrait être le dernier nom, \"Cai\". Le programme s'arrête avec « L’indice 3 est hors de la liste (valides : de 0 à 2) ». Quelle ligne est fausse, et pourquoi ?",
+        "explanation": "Une liste de 3 éléments a les indices 0, 1 et 2, donc le dernier est `len(names) - 1`. Utiliser la longueur elle-même dépasse la fin d'une case.",
+        "causes": {
+          "short": "La liste a besoin d'un quatrième nom",
+          "len": "len() compte à partir de 0, donc il donne une mauvaise longueur",
+          "zero": "Les indices commencent à 0, donc le dernier indice est la longueur moins 1"
+        },
+        "misconceptions": {
+          "short": "Ajouter un nom masquerait le bug : le code renverrait alors le nouveau nom, pas \"Cai\".",
+          "len": "len() est juste : il y a 3 noms. Ce sont les indices qui commencent à 0."
+        }
+      },
+      "match-families": {
+        "prompt": "Associez chaque symptôme à la famille de bugs la plus probable.",
+        "explanation": "Chaque symptôme désigne une famille : une boucle infinie atteint la limite d'étapes, écraser ne garde que le dernier élément, une borne manquante perd une valeur, mélanger texte et nombres nécessite str(), et une variable non définie ne peut pas être lue.",
+        "pairs": {
+          "limit": "« Arrêté après 5000 étapes »",
+          "endless": "La variable de boucle ne se rapproche jamais de l'arrêt",
+          "last": "Le total est toujours égal au dernier élément",
+          "overwrite": "Écraser au lieu d'accumuler",
+          "sum": "Additionner de 1 à 5 donne 10 au lieu de 15",
+          "offbyone": "Erreur de un : la borne est laissée de côté",
+          "type": "« Impossible d’additionner texte et nombre »",
+          "str": "Mélange de types : convertir avec str()",
+          "unset": "« count n’a pas encore de valeur »",
+          "init": "Variable utilisée avant d'avoir reçu une valeur de départ"
+        }
+      }
+    }
+  },
+  "course": {
+    "title": "Logique de programmation",
+    "summary": "Découvrez comment pensent les programmes — valeurs, décisions, répétition, fonctions et algorithmes — dans un pseudocode neutre, avant toute syntaxe particulière.",
+    "modules": {
+      "how-programs-think": {
+        "title": "Comment pensent les programmes",
+        "summary": "De ce qu’est un programme jusqu’à concevoir et déboguer vos premiers algorithmes."
+      }
+    }
+  },
+  "concepts": {
+    "programs": {
+      "name": "Programmes",
+      "summary": "Un programme est une liste précise d’instructions que l’ordinateur suit à la lettre.",
+      "why": {
+        "bug-hunter": "L’ordinateur agit sur chaque détail : lire les instructions avec précision compte."
+      }
+    },
+    "sequence": {
+      "name": "Séquence",
+      "summary": "Les instructions s’exécutent l’une après l’autre, de haut en bas ; l’ordre change le résultat.",
+      "why": {
+        "algorithmic-logic": "Ordonner des tâches selon leurs dépendances, c’est la même compétence qu’ordonner des instructions.",
+        "code-memory": "Se souvenir de ce qui s’est passé et dans quel ordre, c’est ainsi qu’on suit une séquence."
+      }
+    },
+    "variables": {
+      "name": "Variables",
+      "summary": "Des noms qui contiennent des valeurs ; l’affectation enregistre une nouvelle valeur et remplace l’ancienne.",
+      "why": {
+        "code-memory": "Suivre du code, c’est garder en tête la valeur actuelle de chaque variable.",
+        "code-scan": "Repérer rapidement quelle valeur a changé entre deux lignes."
+      }
+    },
+    "conditions": {
+      "name": "Conditions",
+      "summary": "if / elif / else choisissent exactement un chemin selon une question vrai/faux.",
+      "why": {
+        "algorithmic-logic": "On s’y entraîne directement à prédire quelle branche suit un programme.",
+        "bug-hunter": "Les valeurs limites (>= ou >) sont justement les détails où se cachent les bogues."
+      }
+    },
+    "boolean-logic": {
+      "name": "Opérateurs logiques",
+      "summary": "and, or et not combinent des questions vrai/faux en une seule.",
+      "why": {
+        "algorithmic-logic": "Les casse-têtes à contraintes sont des combinaisons de règles and / or / not.",
+        "pattern-architect": "Voir quelle règle convient à tous les exemples, c’est ainsi qu’on conçoit une condition."
+      }
+    },
+    "loops": {
+      "name": "Boucles",
+      "summary": "while et for répètent un bloc ; une boucle a besoin d’un moyen de s’arrêter.",
+      "why": {
+        "code-memory": "Suivre une boucle, c’est mettre à jour les valeurs de tête à chaque passage.",
+        "pattern-architect": "Une boucle est un motif répété ; trouver la règle vous donne le corps de la boucle."
+      }
+    },
+    "lists": {
+      "name": "Listes",
+      "summary": "Des collections ordonnées de valeurs, lues par position à partir de 0.",
+      "why": {
+        "code-memory": "Retenir des positions dans une structure, c’est le cœur de l’indexation.",
+        "bug-hunter": "Se tromper d’une position est l’erreur classique avec les listes."
+      }
+    },
+    "functions": {
+      "name": "Fonctions",
+      "summary": "Des étapes nommées et réutilisables : des paramètres entrent, une valeur de retour sort.",
+      "why": {
+        "pattern-architect": "Déduire une transformation à partir d’exemples d’entrée et de sortie, c’est exactement ce qu’est une fonction.",
+        "algorithmic-logic": "Suivre un appel, c’est suivre les valeurs qui entrent dans un bloc et en sortent."
+      }
+    },
+    "decomposition": {
+      "name": "Décomposition",
+      "summary": "Découper un problème en étapes plus petites aux entrées et sorties claires.",
+      "why": {
+        "algorithmic-logic": "Les graphes de dépendances montrent quelle sous-tâche doit précéder laquelle."
+      }
+    },
+    "algorithms": {
+      "name": "Algorithmes",
+      "summary": "Des recettes pas à pas : compter, additionner, trouver le plus grand, chercher.",
+      "why": {
+        "pattern-architect": "Reconnaître une forme algorithmique connue (accumuler, chercher, comparer) dans du code nouveau.",
+        "algorithmic-logic": "Raisonner sur le nombre minimal d’étapes nécessaires est le début de la complexité."
+      }
+    },
+    "debugging": {
+      "name": "Débogage",
+      "summary": "Trouver pourquoi un programme ne fait pas ce qu’il devrait : suivre, comparer, formuler une hypothèse.",
+      "why": {
+        "bug-hunter": "Trouver la seule ligne qui enfreint une règle, c’est du débogage en miniature.",
+        "code-scan": "Comparer rapidement ce que fait le code avec ce qu’il devrait faire."
+      }
+    }
+  }
+}

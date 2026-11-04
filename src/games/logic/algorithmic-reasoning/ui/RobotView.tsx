@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
 import { CellGrid, type CellState } from '@/games/kit/ui';
 import { Panel } from '@/games/logic/shared/ui';
 import type { ContentViewProps } from '@/games/types';
-import { cellLabel, describeProgram, FACING_WORDS } from '../content/robot';
+import { useText } from '@/i18n';
+import { cellLabel, describeProgram, facingLabel } from '../content/robot';
 import type { RobotChallenge } from '../content/types';
 
 const ARROWS = ['↑', '→', '↓', '←'] as const;
@@ -20,6 +23,8 @@ function Wall() {
 }
 
 export function RobotView({ challenge, phase, locate }: ContentViewProps<RobotChallenge>) {
+  const { t } = useTranslation('logic');
+  const tx = useText();
   const { size, walls, start, program } = challenge.content;
   const lines = describeProgram(program);
   const solution = phase === 'review' ? (locate?.solutionIndex ?? null) : null;
@@ -35,9 +40,9 @@ export function RobotView({ challenge, phase, locate }: ContentViewProps<RobotCh
   };
   return (
     <div className="flex flex-col gap-5 lg:flex-row">
-      <Panel title="Instructions">
+      <Panel title={t('algorithmicReasoning.view.instructions')}>
         <ol
-          aria-label="Instructions"
+          aria-label={t('algorithmicReasoning.view.instructions')}
           className="flex flex-col gap-1 rounded-lg border border-line bg-raised p-3 text-sm text-ink sm:text-base"
         >
           {lines.map((line, i) => (
@@ -52,14 +57,14 @@ export function RobotView({ challenge, phase, locate }: ContentViewProps<RobotCh
               }
             >
               <span className="mr-2 text-xs text-ink-muted">{i + 1}.</span>
-              {line.text}
+              {tx(line.text)}
             </li>
           ))}
         </ol>
       </Panel>
       <div className="w-full max-w-md min-w-0 lg:flex-1">
         <CellGrid
-          label="Robot grid"
+          label={t('algorithmicReasoning.view.grid')}
           columns={size}
           size="sm"
           disabled={!interactive}
@@ -73,14 +78,17 @@ export function RobotView({ challenge, phase, locate }: ContentViewProps<RobotCh
           cells={Array.from({ length: size * size }, (_, i) => {
             const isWall = walls.includes(i);
             const isStart = i === start.cell;
-            const extra = isWall
-              ? ', wall'
-              : isStart
-                ? `, robot start, facing ${FACING_WORDS[start.facing]}`
-                : '';
+            const cell = cellLabel(i, size);
             return {
               key: String(i),
-              label: `${cellLabel(i, size)}${extra}`,
+              label: isWall
+                ? msg('logic:algorithmicReasoning.view.wall', { cell })
+                : isStart
+                  ? msg('logic:algorithmicReasoning.view.start', {
+                      cell,
+                      facing: facingLabel(start.facing),
+                    })
+                  : cell,
               state: stateOf(i),
               content: isWall ? (
                 <Wall />

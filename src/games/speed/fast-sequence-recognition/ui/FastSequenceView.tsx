@@ -1,13 +1,21 @@
+import { useTranslation } from 'react-i18next';
+import { msg } from '@/domain/shared';
+import { useText } from '@/i18n';
 import { Glyph } from '@/games/kit/ui';
 import type { ContentViewProps } from '@/games/types';
 import { sequenceLabel } from '../content/definition';
 import type { FastSequenceChallenge } from '../content/types';
 
 function Row({ challenge }: { readonly challenge: FastSequenceChallenge }) {
+  const tx = useText();
   const { kind, items, glyphs } = challenge.content;
   return (
     <ol
-      aria-label={`Sequence: ${sequenceLabel(kind, items, glyphs)}`}
+      aria-label={tx(
+        msg('speed:fastSequenceRecognition.view.sequence', {
+          sequence: sequenceLabel(kind, items, glyphs),
+        }),
+      )}
       className="flex flex-wrap justify-center gap-1.5 sm:gap-2"
     >
       {items.map((id, i) => {
@@ -32,16 +40,19 @@ function Row({ challenge }: { readonly challenge: FastSequenceChallenge }) {
 
 /** Study: the whole sequence at once (one still display). Respond: hidden. Review: shown again. */
 export function FastSequenceView({ challenge, phase }: ContentViewProps<FastSequenceChallenge>) {
+  const { t } = useTranslation('speed');
   if (phase === 'respond') {
     return (
       <p className="text-center text-ink-soft">
-        Hidden. Pick the {challenge.content.items.length}-symbol sequence you just saw.
+        {t('fastSequenceRecognition.view.hidden', { count: challenge.content.items.length })}
       </p>
     );
   }
   return (
     <div className="flex flex-col items-center gap-2">
-      {phase === 'review' && <p className="text-sm text-ink-muted">You saw:</p>}
+      {phase === 'review' && (
+        <p className="text-sm text-ink-muted">{t('fastSequenceRecognition.view.youSaw')}</p>
+      )}
       <div aria-live={phase === 'study' ? 'assertive' : undefined}>
         <Row challenge={challenge} />
       </div>

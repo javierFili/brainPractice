@@ -7,6 +7,7 @@ import { LOGIC_LEVELS } from '../levels';
 import { satisfiesAll, solutions } from '../solvers/constraints';
 import { ancestors, criticalPathLength, isValidOrder } from '../solvers/graph';
 import { execute } from '../solvers/interpreter';
+import { en } from '@/test/i18n';
 import type { LogicChallenge, LogicKind } from '../types';
 
 const SEEDS = Array.from({ length: 30 }, (_, i) => i * 7919 + 1);
@@ -29,11 +30,11 @@ function correctAnswer(challenge: LogicChallenge): Answer {
 
 const labelOf = (challenge: LogicChallenge, optionId: string) =>
   challenge.response.format === 'single-choice'
-    ? challenge.response.question.options.find((o) => o.id === optionId)?.label
+    ? en(challenge.response.question.options.find((o) => o.id === optionId)?.label ?? '')
     : undefined;
 const optionLabels = (challenge: LogicChallenge) =>
   challenge.response.format === 'single-choice'
-    ? challenge.response.question.options.map((o) => o.label)
+    ? challenge.response.question.options.map((o) => en(o.label))
     : [];
 
 describe('Algorithmic Logic — level table', () => {
@@ -174,7 +175,7 @@ describe('Algorithmic Logic — generated content', () => {
         c.response.format === 'numeric'
           ? String(c.response.solution.value)
           : labelOf(c, (c.response.solution as { optionId: string }).optionId);
-      expect(c.explanation).toContain(answer);
+      expect(en(c.explanation)).toContain(answer);
     }
   });
 });

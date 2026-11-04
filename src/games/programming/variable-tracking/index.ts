@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { variableTrackingGame } from './content/definition';
 import type { TrackingChallenge } from './content/types';
@@ -7,8 +8,8 @@ export const variableTrackingModule = defineGameModule<TrackingChallenge>({
   definition: variableTrackingGame,
   ContentView: VariableTrackingView,
   kindLabels: {
-    'final-value': 'Final value',
-    'after-line': 'Value mid-program',
-    largest: 'Largest variable',
+    'final-value': msg('programming:variableTracking.kinds.finalValue'),
+    'after-line': msg('programming:variableTracking.kinds.afterLine'),
+    largest: msg('programming:variableTracking.kinds.largest'),
   },
 });

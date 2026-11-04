@@ -1,0 +1,512 @@
+{
+  "sequenceRecall": {
+    "name": "Recordar la secuencia",
+    "tagline": "Observa la secuencia y luego reconstrúyela.",
+    "description": "Colores, dígitos o formas aparecen uno tras otro. Cuando desaparecen, reconstruye la secuencia en el teclado de respuesta: en el mismo orden, o del último al primero cuando se pida.",
+    "scoringSummary": "Una secuencia cuenta como correcta solo si coinciden todas las posiciones. Tu resultado es el porcentaje de secuencias reconstruidas sin errores; responder no tiene límite de tiempo.",
+    "instructions": {
+      "watch": "Observa cómo aparecen los símbolos uno a uno. Pulsa «Estoy listo» si quieres responder antes.",
+      "rebuild": "Reconstruye la secuencia pulsando los símbolos en orden (o las teclas numéricas que aparecen en ellos).",
+      "reverse": "Algunas secuencias se piden en orden inverso: empieza por el último símbolo que viste.",
+      "undo": "Deshacer (o Retroceso) quita el último símbolo; envía cuando todas las casillas estén llenas."
+    },
+    "simpleInstructions": "Mira los colores y luego púlsalos en el mismo orden.",
+    "prompt": {
+      "forward_one": "Reconstruye el símbolo que viste.",
+      "forward_other": "Reconstruye los {{count}} símbolos en el orden en que los viste.",
+      "backward_one": "Reconstruye el símbolo que viste.",
+      "backward_other": "Reconstruye los {{count}} símbolos en orden inverso: el último primero."
+    },
+    "studyPrompt": {
+      "forward": "Observa la secuencia.",
+      "backward": "Observa la secuencia: la repetirás al revés."
+    },
+    "explanation": {
+      "forward": "La secuencia había que repetirla exactamente como se mostró.",
+      "backward": "La secuencia había que repetirla desde el último símbolo hasta el primero."
+    },
+    "kinds": {
+      "forward": "Orden directo",
+      "backward": "Orden inverso"
+    },
+    "levels": {
+      "1": "Repite 3 colores en orden.",
+      "2": "Repite 4 colores en orden.",
+      "3": "Repite 4 formas; los símbolos pueden repetirse.",
+      "4": "Repite 5 dígitos, a veces al revés.",
+      "5": "Retén 5 formas hacia delante o hacia atrás.",
+      "6": "Retén 6 dígitos hacia delante o hacia atrás.",
+      "7": "Retén 6 colores y dígitos mezclados.",
+      "8": "Retén 7 símbolos mezclados, más rápido.",
+      "9": "Invierte 8 dígitos mostrados con rapidez.",
+      "10": "Invierte 9 símbolos mezclados mostrados con rapidez."
+    },
+    "view": {
+      "done": "Terminado: prepárate",
+      "youSaw": "Viste:",
+      "sequenceShown": "La secuencia mostrada",
+      "hint": {
+        "forward_one": "Mismo orden que se mostró. {{count}} símbolo.",
+        "forward_other": "Mismo orden que se mostró. {{count}} símbolos.",
+        "backward_one": "Orden inverso: empieza por el último símbolo. {{count}} símbolo.",
+        "backward_other": "Orden inverso: empieza por el último símbolo. {{count}} símbolos."
+      }
+    }
+  },
+  "associationMemory": {
+    "name": "Memoria de asociaciones",
+    "tagline": "¿Qué iba con qué?",
+    "description": "Aprende unas cuantas parejas: un objeto y un color, una forma y un objeto, una palabra y un número. Después responde qué iba con uno de ellos. En los niveles altos hay más parejas, los elementos se parecen más y la pregunta va en sentido contrario.",
+    "scoringSummary": "Una respuesta cuenta si eliges el elemento que formaba pareja con el que se pregunta. Todas las opciones salían en las parejas que aprendiste. Tu resultado es la proporción de parejas recordadas; no hay límite de tiempo para responder.",
+    "instructions": {
+      "study": "Estudia las parejas. Unirlas en una pequeña historia o imagen ayuda («una manzana roja»).",
+      "pick": "Cuando se oculten, elige lo que iba con el elemento de la pregunta.",
+      "exact": "Todas las opciones salen de las parejas que viste, así que sé preciso.",
+      "reversed": "Desde el nivel 6 la pregunta puede ir al revés (del segundo elemento al primero)."
+    },
+    "simpleInstructions": "Recuerda qué va con qué y elige lo que falta.",
+    "prompt": {
+      "object-color": {
+        "forward": "¿Qué color iba con «{{item}}»?",
+        "reversed": "¿Qué objeto iba con el color «{{item}}»?"
+      },
+      "glyph-object": {
+        "forward": "¿Qué objeto iba con la figura «{{item}}»?",
+        "reversed": "¿Qué figura iba con «{{item}}»?"
+      },
+      "word-number": {
+        "forward": "¿Qué número iba con «{{item}}»?",
+        "reversed": "¿Qué palabra iba con el número {{item}}?"
+      }
+    },
+    "studyPrompt_one": "Aprende esta pareja.",
+    "studyPrompt_other": "Aprende estas {{count}} parejas.",
+    "explanation": "«{{cue}}» iba con «{{partner}}».",
+    "kinds": {
+      "objectColor": "Objetos y colores",
+      "glyphObject": "Figuras y objetos",
+      "wordNumber": "Palabras y números"
+    },
+    "levels": {
+      "1": "Aprende qué color va con cada uno de 3 objetos.",
+      "2": "Aprende 4 parejas de objeto y color.",
+      "3": "Aprende qué objeto va con cada una de 4 figuras.",
+      "4": "Aprende 4 parejas de palabra y número.",
+      "5": "Aprende los colores de 5 objetos de la misma familia.",
+      "6": "Aprende 5 parejas de palabra y número y recuerda la palabra a partir del número.",
+      "7": "Aprende 6 figuras parecidas con objetos; la pregunta puede ir en ambos sentidos.",
+      "8": "Aprende 6 palabras con números de las mismas cifras, en ambos sentidos.",
+      "9": "Aprende 7 parejas parecidas de cualquier tipo, en ambos sentidos.",
+      "10": "Aprende 8 parejas parecidas con menos tiempo para mirar, en ambos sentidos."
+    },
+    "view": {
+      "whatWent": "¿Qué iba con esto?",
+      "pairs": "Parejas",
+      "pair": "{{cue}} va con {{partner}}",
+      "pairAsked": "{{cue}} va con {{partner}}, preguntada"
+    }
+  },
+  "shared": {
+    "ordinal": {
+      "1": "en primer lugar",
+      "2": "en segundo lugar",
+      "3": "en tercer lugar",
+      "4": "en cuarto lugar",
+      "5": "en quinto lugar",
+      "6": "en sexto lugar",
+      "7": "en séptimo lugar",
+      "8": "en octavo lugar",
+      "9": "en noveno lugar",
+      "10": "en décimo lugar"
+    }
+  },
+  "dualMemoryChallenge": {
+    "name": "Doble memoria",
+    "tagline": "Qué, dónde y cuándo, todo a la vez.",
+    "description": "Los objetos aparecen de uno en uno, cada uno en su casilla. Ten en cuenta ambas cosas —dónde estaba cada objeto y en qué orden llegaron—, porque la pregunta puede ser sobre una de ellas o sobre las dos juntas.",
+    "scoringSummary": "Una respuesta cuenta si señalas la casilla correcta o eliges el objeto correcto. Las preguntas sobre el lugar y sobre el orden se mezclan al azar, así que el resultado refleja ambas. No hay límite de tiempo para responder.",
+    "instructions": {
+      "watch": "Los objetos aparecen de uno en uno, cada uno en una casilla de la cuadrícula.",
+      "remember": "Recuerda dónde estaba cada uno y en qué orden llegaron.",
+      "question": "Se te hará una pregunta: dónde estaba algo, qué objeto llegó en un turno concreto o qué objeto estaba en una casilla marcada.",
+      "keyboard": "Teclado: las flechas mueven entre casillas, Intro elige; las teclas numéricas eligen una opción."
+    },
+    "simpleInstructions": "Mira dónde aparece cada dibujo y en qué orden.",
+    "studyPrompt": "Recuerda dónde aparece cada objeto y en qué orden.",
+    "prompt": {
+      "where": "¿Dónde estaba el objeto «{{name}}»?",
+      "whereNth": "¿Dónde estaba el objeto que apareció {{turn}}?",
+      "whichNth": "¿Qué objeto apareció {{turn}}?",
+      "whichHere": "¿Qué objeto estaba en la casilla marcada?"
+    },
+    "explanation": "«{{name}}» apareció {{turn}}, en {{where}}.",
+    "kinds": {
+      "where": "¿Dónde estaba?",
+      "whichNth": "¿Cuál llegó en un turno dado?",
+      "whichHere": "¿Cuál estaba en esta casilla?",
+      "whereNth": "¿Dónde estaba el objeto n.º?"
+    },
+    "levels": {
+      "1": "Recuerda dónde y en qué orden aparecieron 3 objetos.",
+      "2": "Recuerda el lugar y el orden de 4 objetos.",
+      "3": "Di también qué objeto había en una casilla marcada.",
+      "4": "Lugar y orden de 5 objetos en una cuadrícula de 4×4.",
+      "5": "Llega la pregunta más difícil: ¿dónde estaba el objeto de un turno concreto?",
+      "6": "Seis objetos de la misma familia, cualquier pregunta.",
+      "7": "Seis objetos a un ritmo más rápido.",
+      "8": "Siete objetos de una familia en una cuadrícula de 4×4.",
+      "9": "Siete objetos repartidos en una cuadrícula de 5×5.",
+      "10": "Ocho objetos de una familia, rápido, en una cuadrícula de 5×5."
+    },
+    "view": {
+      "grid": "Cuadrícula",
+      "cellWith": "{{cell}}, {{name}}",
+      "done": "Listo, prepárate",
+      "appeared": "{{turn}}: {{name}} en {{cell}}",
+      "hidden": "Oculto: elige el objeto de memoria.",
+      "gridMarked": "Cuadrícula con la casilla marcada",
+      "pointSquare": "Señala la casilla",
+      "cellMarked": "{{cell}}, marcada",
+      "whatShown": "Lo que se mostró",
+      "cellShown": "{{cell}}, {{name}}, turno {{turn}}"
+    }
+  },
+  "memoryCards": {
+    "name": "Cartas de memoria",
+    "tagline": "Gira dos cartas y encuentra las gemelas.",
+    "description": "Un tablero de cartas boca abajo esconde parejas de dibujos idénticos. Gira dos cartas cada vez y recuerda dónde está cada dibujo para encontrar todas las parejas con los menos fallos posibles.",
+    "scoringSummary": "Un tablero cuenta como resuelto si encuentras todas las parejas sin pasarte de los fallos permitidos. La precisión es la proporción de tableros resueltos; no hay límite de tiempo.",
+    "instructions": {
+      "preview": "Algunos niveles empiezan mostrando todas las cartas un momento: fíjate en dónde está cada cosa.",
+      "turn": "Gira dos cartas. Si coinciden, se quedan boca arriba; si no, vuelven a girarse.",
+      "misses": "Encuentra todas las parejas antes de agotar los fallos (se muestran bajo el tablero).",
+      "keyboard": "Teclado: muévete entre las cartas con las flechas y pulsa Intro para girar una."
+    },
+    "simpleInstructions": "Gira dos cartas cada vez y encuentra los dibujos iguales.",
+    "prompt_one": "Encuentra la pareja.",
+    "prompt_other": "Encuentra las {{count}} parejas.",
+    "studyPrompt": "Mira las cartas: se van a dar la vuelta.",
+    "explanation_one": "Cada dibujo aparecía en exactamente dos cartas. En este tablero se permitía como máximo {{count}} intento fallido.",
+    "explanation_other": "Cada dibujo aparecía en exactamente dos cartas. En este tablero se permitían como máximo {{count}} intentos fallidos.",
+    "kinds": {
+      "objects": "Objetos cotidianos",
+      "family": "Objetos de una familia",
+      "glyphs": "Figuras de colores",
+      "nearGlyphs": "Figuras parecidas"
+    },
+    "levels": {
+      "1": "Encuentra 3 parejas tras ver el tablero.",
+      "2": "Encuentra 4 parejas tras un vistazo más corto.",
+      "3": "Encuentra 5 parejas de objetos de la misma familia.",
+      "4": "Encuentra 6 parejas con solo un vistazo breve.",
+      "5": "Encuentra 6 parejas sin vista previa: recuerda cada carta que gires.",
+      "6": "Encuentra 8 parejas de figuras sin vista previa.",
+      "7": "Encuentra 8 parejas entre figuras parecidas.",
+      "8": "Encuentra 10 parejas entre figuras parecidas.",
+      "9": "Encuentra 10 parejas con menos fallos permitidos.",
+      "10": "Encuentra 12 parejas parecidas con muy pocos fallos permitidos."
+    }
+  },
+  "numberRecall": {
+    "name": "Recuerdo de números",
+    "tagline": "Códigos, teléfonos, billetes: retenlos un momento.",
+    "description": "Un número aparece en bloques, como un teléfono o el código de una puerta. Cuando se oculta, escríbelo, di qué bloque iba en una posición o —con dos números en pantalla— recuerda el que se pregunta.",
+    "scoringSummary": "Una respuesta cuenta si escribes el número completo exacto o eliges el bloque correcto. Tu resultado es la proporción de números recordados; no hay límite de tiempo para responder.",
+    "instructions": {
+      "read": "Lee el número. Los espacios lo dividen en bloques, que son más fáciles de retener.",
+      "answer": "Cuando se oculte, responde la pregunta: escribe el número sin espacios o elige un bloque.",
+      "two": "Algunos niveles muestran dos números con nombre: recuerda los dos, solo se preguntará uno."
+    },
+    "simpleInstructions": "Mira el número y luego escríbelo.",
+    "names": {
+      "phone": "Teléfono",
+      "doorCode": "Código de la puerta",
+      "locker": "Taquilla",
+      "ticket": "Billete",
+      "order": "Pedido",
+      "flight": "Vuelo",
+      "room": "Habitación",
+      "account": "Cuenta"
+    },
+    "studyPrompt": {
+      "one": "Recuerda el número.",
+      "chunks": "Recuerda los bloques y su orden.",
+      "both": "Recuerda los dos números."
+    },
+    "prompt": {
+      "whichGroup": "¿Qué bloque apareció {{turn}}?",
+      "typeBack": "Escribe el número «{{name}}», sin espacios.",
+      "twoNumbers": "Escribe el número «{{name}}» (no el de «{{other}}»)."
+    },
+    "explanation": {
+      "whichGroup": "El número «{{name}}» era {{number}}; el bloque {{position}} era {{chunk}}.",
+      "typeBack": "El número «{{name}}» era {{number}}.",
+      "twoNumbers": "{{numbers}}. Se preguntaba el número «{{name}}»."
+    },
+    "entry": "{{name}}: {{number}}",
+    "kinds": {
+      "typeBack": "Escribir el número",
+      "whichGroup": "Bloque en una posición",
+      "twoNumbers": "Dos números a la vez"
+    },
+    "levels": {
+      "1": "Escribe un código de 4 cifras mostrado en dos pares.",
+      "2": "Escribe un número de 5 cifras en dos bloques.",
+      "3": "Escribe un número de 6 cifras en dos bloques.",
+      "4": "Recuerda tres pares de cifras y el orden en que aparecieron.",
+      "5": "Escribe un número de teléfono de 7 cifras.",
+      "6": "Retén dos números de 4 cifras; se preguntará uno de ellos.",
+      "7": "Recuerda tres bloques de tres cifras en orden.",
+      "8": "Escribe un número de 9 cifras o retén dos de 5 cifras.",
+      "9": "Retén dos números de 6 cifras a la vez.",
+      "10": "Cuatro bloques en orden o dos números de 6 cifras: se puede preguntar cualquiera."
+    },
+    "view": {
+      "hiddenChunk": "Oculto: elige el bloque de memoria.",
+      "hiddenDigits": "Oculto: escribe las cifras de memoria, sin espacios.",
+      "numbers": "Números",
+      "card": "{{name}}: {{digits}}",
+      "cardAsked": "{{name}}: {{digits}}, preguntado"
+    }
+  },
+  "objectRecall": {
+    "name": "Recuerdo de objetos",
+    "tagline": "¿Cuáles de estos viste?",
+    "description": "Mira un pequeño grupo de objetos cotidianos. Después, un tablero más grande los mezcla con otros nuevos: marca los que viste. En los niveles altos, los objetos nuevos son de las mismas familias que los estudiados.",
+    "scoringSummary": "Un tablero cuenta como correcto si todos los objetos que marcas son de los que estudiaste. Tu resultado es la proporción de tableros reconocidos con exactitud; no hay límite de tiempo para responder.",
+    "instructions": {
+      "look": "Mira los objetos. Pulsa «Estoy listo» cuando los tengas.",
+      "board": "Aparece un tablero más grande con los mismos objetos y algunos nuevos.",
+      "mark": "Marca exactamente los objetos que viste (el contador indica cuántos) y pulsa Comprobar.",
+      "keyboard": "Teclado: las flechas mueven entre objetos, Intro marca o desmarca uno."
+    },
+    "simpleInstructions": "Mira los dibujos y luego encuéntralos entre otros nuevos.",
+    "prompt_one": "Marca el objeto que viste.",
+    "prompt_other": "Marca los {{count}} objetos que viste.",
+    "studyPrompt_one": "Recuerda este objeto.",
+    "studyPrompt_other": "Recuerda estos {{count}} objetos.",
+    "explanation": "Viste: {{objects}}.",
+    "kinds": {
+      "mixed": "Objetos de cualquier tipo",
+      "family": "Familias parecidas"
+    },
+    "levels": {
+      "1": "Reconoce 3 objetos entre 6.",
+      "2": "Reconoce 4 objetos entre 8.",
+      "3": "Reconoce 5 objetos entre 10.",
+      "4": "Reconoce 5 objetos cuando los nuevos son del mismo tipo.",
+      "5": "Reconoce 6 objetos entre 12.",
+      "6": "Reconoce 6 objetos entre 12 parecidos de las mismas familias.",
+      "7": "Reconoce 7 objetos entre 14 de las mismas familias.",
+      "8": "Reconoce 8 objetos entre 16 con un vistazo más corto.",
+      "9": "Reconoce 9 objetos entre 18 de tres familias.",
+      "10": "Reconoce 10 objetos entre 20 con un vistazo breve."
+    },
+    "view": {
+      "toRemember": "Objetos que recordar",
+      "youSaw": "Objetos que viste"
+    }
+  },
+  "positionMemory": {
+    "name": "Memoria de posiciones",
+    "tagline": "¿Dónde se encendieron las luces?",
+    "description": "Algunas casillas de una cuadrícula se iluminan un momento. Cuando se apagan, marca las mismas casillas. En los niveles altos hay más casillas, cuadrículas más grandes y casillas señuelo de otro color que debes ignorar.",
+    "scoringSummary": "Una cuadrícula cuenta como correcta si todas las casillas marcadas se habían iluminado. Tu resultado es la proporción de cuadrículas recordadas con exactitud; no hay límite de tiempo para responder.",
+    "instructions": {
+      "watch": "Fíjate en qué casillas se iluminan. Pulsa «Estoy listo» para ocultarlas antes.",
+      "mark": "Marca las mismas casillas y pulsa Comprobar. El contador indica cuántas marcar.",
+      "filter": "Desde el nivel 5, recuerda solo las casillas azules (con un punto) e ignora las naranjas (a rayas).",
+      "keyboard": "Teclado: las flechas mueven entre casillas, Intro marca o desmarca una casilla."
+    },
+    "simpleInstructions": "Recuerda dónde estaban las luces y toca las mismas casillas.",
+    "prompt": {
+      "plain_one": "Marca la casilla que se iluminó.",
+      "plain_other": "Marca las {{count}} casillas que se iluminaron.",
+      "filtered_one": "Marca la casilla azul. Ignora las naranjas.",
+      "filtered_other": "Marca las {{count}} casillas azules. Ignora las naranjas."
+    },
+    "studyPrompt": {
+      "plain": "Recuerda las casillas iluminadas.",
+      "filtered": "Recuerda solo las casillas azules."
+    },
+    "explanation": "Las casillas iluminadas eran: {{cells}}.",
+    "kinds": {
+      "plain": "Casillas iluminadas",
+      "filtered": "Casillas azules entre señuelos"
+    },
+    "levels": {
+      "1": "Recuerda 2 casillas iluminadas en una cuadrícula de 3×3.",
+      "2": "Recuerda 3 casillas iluminadas en una cuadrícula de 3×3.",
+      "3": "Recuerda 3 casillas en una cuadrícula más grande de 4×4.",
+      "4": "Recuerda 4 casillas en una cuadrícula de 4×4.",
+      "5": "Recuerda 4 casillas azules e ignora 2 naranjas.",
+      "6": "Recuerda 5 casillas en una cuadrícula de 5×5.",
+      "7": "Recuerda 5 casillas azules entre 3 distractores.",
+      "8": "Recuerda 6 casillas con un vistazo corto.",
+      "9": "Recuerda 7 casillas azules entre 3 distractores en 6×6.",
+      "10": "Recuerda 8 casillas azules entre 4 distractores en 6×6."
+    },
+    "view": {
+      "toRemember": "Cuadrícula que recordar",
+      "target": "{{cell}}, iluminada en azul",
+      "distractor": "{{cell}}, iluminada en naranja",
+      "markCells": "Marca las casillas"
+    }
+  },
+  "visualChanges": {
+    "name": "Cambios visuales",
+    "tagline": "Algo ha cambiado. ¿Qué?",
+    "description": "Mira una cuadrícula de figuras. Desaparece y vuelve con una diferencia: una figura cambió de color o de forma o —en niveles altos— dos figuras se intercambiaron. Señala lo que cambió.",
+    "scoringSummary": "Una respuesta cuenta si señalas la figura cambiada (o las dos intercambiadas). Tu resultado es la proporción de cambios encontrados; no hay límite de tiempo para responder.",
+    "instructions": {
+      "look": "Mira las figuras y dónde están. Pulsa «Estoy listo» cuando las tengas.",
+      "tap": "La cuadrícula vuelve con un único cambio: toca la figura que cambió.",
+      "swap": "Desde el nivel 7, puede que dos figuras se intercambien: márcalas ambas y pulsa Comprobar.",
+      "keyboard": "Teclado: las flechas mueven entre casillas, Intro elige una."
+    },
+    "simpleInstructions": "Recuerda la imagen y toca lo que cambió.",
+    "prompt": {
+      "swap": "Dos figuras se intercambiaron. Marca las dos.",
+      "change": "Una figura cambió. ¿Cuál?"
+    },
+    "studyPrompt": "Recuerda las figuras y dónde están.",
+    "explanation": {
+      "swap": "Se intercambiaron «{{first}}» ({{firstCell}}) y «{{second}}» ({{secondCell}}).",
+      "change": "En {{cell}}: {{before}} → {{after}}."
+    },
+    "kinds": {
+      "color": "Cambio de color",
+      "shape": "Cambio de forma",
+      "swap": "Dos figuras intercambiadas"
+    },
+    "levels": {
+      "1": "Descubre cuál de 4 figuras cambió de color.",
+      "2": "Descubre un cambio de color o de forma entre 5 elementos.",
+      "3": "Descubre el cambio entre 6 elementos en una cuadrícula de 4×4.",
+      "4": "Descubre el cambio entre 7 elementos con un vistazo más corto.",
+      "5": "Descubre el cambio entre 8 elementos parecidos.",
+      "6": "Descubre el cambio entre 9 elementos parecidos en una cuadrícula de 5×5.",
+      "7": "Descubre un cambio o encuentra dos elementos intercambiados.",
+      "8": "Descubre cambios e intercambios entre 12 elementos parecidos.",
+      "9": "Descubre cambios e intercambios entre 14 elementos en una cuadrícula de 6×6.",
+      "10": "Descubre cambios e intercambios entre 16 elementos parecidos con un vistazo breve."
+    },
+    "view": {
+      "cell": "{{cell}}, {{content}}",
+      "empty": "vacía",
+      "toRemember": "Figuras que recordar",
+      "markSwapped": "Marca las dos figuras intercambiadas",
+      "whichChanged": "¿Qué figura cambió?",
+      "wasBefore": "Antes era: {{glyph}}."
+    }
+  },
+  "wordRecall": {
+    "name": "Recuerdo de palabras",
+    "tagline": "Lee una lista de palabras y luego encuéntralas.",
+    "description": "Las palabras aparecen de una en una. Después, búscalas en un tablero que también tiene palabras nuevas —más adelante de los mismos temas, así que «era una palabra de cocina» no basta—. Algunas listas de niveles altos hay que ordenarlas de nuevo.",
+    "scoringSummary": "Un tablero cuenta si tus marcas coinciden con la lista dentro de los despistes permitidos (palabras olvidadas más marcas erróneas); un orden cuenta si cada palabra está en su sitio. Tu resultado es la proporción de listas recordadas; no hay límite de tiempo para responder.",
+    "instructions": {
+      "read": "Lee cada palabra cuando aparezca. Decirla en voz baja puede ayudar.",
+      "mark": "Luego marca en el tablero las palabras que viste y pulsa Comprobar.",
+      "variants": "En algunos niveles se permite un despiste; en otros, vuelve a poner las palabras en el orden mostrado.",
+      "keyboard": "Teclado: las flechas mueven entre palabras, Intro marca una."
+    },
+    "simpleInstructions": "Lee las palabras y luego encuéntralas.",
+    "prompt": {
+      "order_one": "Pon la palabra en el orden en que apareció.",
+      "order_other": "Pon las {{count}} palabras en el orden en que aparecieron.",
+      "exact_one": "Marca la palabra que viste.",
+      "exact_other": "Marca las {{count}} palabras que viste.",
+      "tolerant_one": "Marca las palabras que viste (había {{count}}; se permite un despiste).",
+      "tolerant_other": "Marca las palabras que viste (había {{count}}; se permite un despiste)."
+    },
+    "studyPrompt": {
+      "order": "Lee las palabras y recuerda su orden.",
+      "recognise": "Lee las palabras."
+    },
+    "explanation": {
+      "order": "El orden era: {{words}}.",
+      "list": "La lista era: {{words}}."
+    },
+    "kinds": {
+      "recognise": "Palabras entre otras nuevas",
+      "similar": "Palabras entre otras del mismo tema",
+      "order": "Palabras en orden"
+    },
+    "levels": {
+      "1": "Reconoce 4 palabras entre 8.",
+      "2": "Reconoce 5 palabras entre 10.",
+      "3": "Reconoce 6 palabras entre 12.",
+      "4": "Reconoce 6 palabras cuando las nuevas son del mismo tema.",
+      "5": "Reconoce 7 palabras entre 14 de los mismos temas.",
+      "6": "Marca las 8 palabras que viste entre 16 (se permite un despiste).",
+      "7": "Reconoce 8 palabras o vuelve a ordenar 5.",
+      "8": "Reconoce 9 palabras entre 16 u ordena 6.",
+      "9": "Reconoce 10 palabras entre 18 u ordena 6.",
+      "10": "Reconoce 10 palabras entre 20 de tres temas u ordena 7."
+    },
+    "view": {
+      "done": "Listo, prepárate",
+      "hiddenOrder": "Oculto: usa las flechas de abajo para ordenar las palabras.",
+      "orderShown": "Las palabras aparecieron en este orden:",
+      "listShown": "La lista mostrada",
+      "board": "Palabras",
+      "boardSimilar": "Palabras, algunas de los mismos temas"
+    }
+  },
+  "workingMemoryGrid": {
+    "name": "Cuadrícula de memoria de trabajo",
+    "tagline": "Sigue la pista de las últimas luces.",
+    "description": "Las luces aparecen de una en una en una cuadrícula y no sabes cuántas vendrán. Ten presentes las más recientes y actualiza con cada luz nueva: después marca las últimas o señala la que apareció unos pasos antes.",
+    "scoringSummary": "Una respuesta cuenta si marcas exactamente las últimas luces pedidas o señalas la luz anterior correcta. Tu resultado es la proporción de secuencias respondidas correctamente; no hay límite de tiempo para responder.",
+    "instructions": {
+      "watch": "Mira las luces. Cada nueva saca a la más antigua de lo que debes retener.",
+      "update": "La longitud de la secuencia cambia, así que sigue actualizando hasta que pare.",
+      "answer": "Luego responde: marca las últimas luces o señala la luz que apareció cierto número de pasos antes de la última.",
+      "keyboard": "Teclado: las flechas mueven entre casillas, Intro elige o marca una."
+    },
+    "simpleInstructions": "Mira las luces y recuerda las últimas.",
+    "steps_one": "justo antes de la última",
+    "steps_other": "{{count}} pasos antes de la última",
+    "prompt": {
+      "lastK_one": "Marca la casilla de la última luz.",
+      "lastK_other": "Marca las casillas de las últimas {{count}} luces.",
+      "nBack": "¿Dónde estaba la luz que apareció {{steps}}?"
+    },
+    "studyPrompt": {
+      "lastK_one": "Ten presente la última luz.",
+      "lastK_other": "Ten presentes las últimas {{count}} luces.",
+      "nBack": "Mira las luces: se te preguntará por la que apareció {{steps}}."
+    },
+    "explanation": {
+      "lastK_one": "Hubo {{length}} luces; la última estaba en {{cells}}.",
+      "lastK_other": "Hubo {{length}} luces; las últimas {{count}} estaban en {{cells}}.",
+      "nBack": "Hubo {{length}} luces; la que apareció {{steps}} estaba en {{cell}}."
+    },
+    "kinds": {
+      "lastK": "Últimas luces",
+      "nBack": "Luz unos pasos atrás"
+    },
+    "levels": {
+      "1": "Retén las 2 últimas luces de una secuencia corta en una cuadrícula de 3×3.",
+      "2": "Retén las 2 últimas luces de una secuencia más larga.",
+      "3": "Señala la luz que apareció justo antes de la última.",
+      "4": "Retén las 3 últimas luces en una cuadrícula de 4×4.",
+      "5": "Señala la luz 2 pasos antes de la última.",
+      "6": "Cualquier pregunta: las 3 últimas luces o 2 pasos antes de la última.",
+      "7": "Retén las 4 últimas luces de una secuencia larga.",
+      "8": "En una cuadrícula de 5×5: las 4 últimas luces o 3 pasos antes de la última.",
+      "9": "Luces más rápidas: las 4 últimas o 3 pasos atrás, en secuencias de hasta 10.",
+      "10": "Las 5 últimas luces o 4 pasos antes de la última, en secuencias de hasta 11."
+    },
+    "view": {
+      "lights": "Luces",
+      "cellLit": "{{cell}}, encendida",
+      "done": "Listo, prepárate",
+      "lightAt": "Luz en {{cell}}",
+      "markLast": "Marca las últimas luces",
+      "pointLight": "Señala la luz",
+      "orderShown": "Orden mostrado: {{order}}"
+    }
+  }
+}

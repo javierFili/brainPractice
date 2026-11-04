@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { InspectionProfile } from './types';
 
@@ -10,7 +11,7 @@ const inspect = (cells: number, targets: number) => untimed(6000 + cells * 350 +
  */
 export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
   {
-    objective: 'Shape, colour and direction: triangles up or down.',
+    objective: msg('attention:complexVisualInspection.levels.1'),
     challengeCount: 4,
     columns: 4,
     rows: 4,
@@ -26,7 +27,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(16, 2),
   },
   {
-    objective: 'Three shapes, two directions.',
+    objective: msg('attention:complexVisualInspection.levels.2'),
     challengeCount: 4,
     columns: 4,
     rows: 5,
@@ -42,7 +43,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(20, 3),
   },
   {
-    objective: 'All four directions.',
+    objective: msg('attention:complexVisualInspection.levels.3'),
     challengeCount: 4,
     columns: 5,
     rows: 5,
@@ -58,7 +59,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(25, 3),
   },
   {
-    objective: 'More colours, more look-alikes.',
+    objective: msg('attention:complexVisualInspection.levels.4'),
     challengeCount: 4,
     columns: 5,
     rows: 6,
@@ -74,7 +75,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(30, 4),
   },
   {
-    objective: 'L shapes: mirrored or not also counts.',
+    objective: msg('attention:complexVisualInspection.levels.5'),
     challengeCount: 4,
     columns: 5,
     rows: 6,
@@ -90,7 +91,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(30, 4),
   },
   {
-    objective: 'Lures in the nearest colour, 6×6.',
+    objective: msg('attention:complexVisualInspection.levels.6'),
     challengeCount: 4,
     columns: 6,
     rows: 6,
@@ -106,7 +107,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(36, 5),
   },
   {
-    objective: 'The number of targets is no longer given.',
+    objective: msg('attention:complexVisualInspection.levels.7'),
     challengeCount: 4,
     columns: 6,
     rows: 6,
@@ -122,7 +123,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(36, 5),
   },
   {
-    objective: 'Negated colour: any colour except one (one slip allowed).',
+    objective: msg('attention:complexVisualInspection.levels.8'),
     challengeCount: 4,
     columns: 6,
     rows: 7,
@@ -138,7 +139,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(42, 6),
   },
   {
-    objective: 'Negated rule with mirrored L shapes everywhere.',
+    objective: msg('attention:complexVisualInspection.levels.9'),
     challengeCount: 4,
     columns: 6,
     rows: 7,
@@ -154,7 +155,7 @@ export const INSPECTION_LEVELS = defineLevels<InspectionProfile>([
     timing: inspect(42, 7),
   },
   {
-    objective: 'Densest grid: 48 items, any rule.',
+    objective: msg('attention:complexVisualInspection.levels.10'),
     challengeCount: 4,
     columns: 6,
     rows: 8,

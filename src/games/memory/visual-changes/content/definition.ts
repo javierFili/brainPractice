@@ -1,7 +1,7 @@
 import { locateResponse, multiSelectResponse } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, sample, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import {
   COLORS,
   distinctGlyphs,
@@ -89,10 +89,9 @@ export const VISUAL_CHANGES_ID = gameIdOf('visual-changes');
 
 export const visualChangesGame: GameDefinition<VisualChangesChallenge, VisualChangesProfile> = {
   id: VISUAL_CHANGES_ID,
-  name: 'Visual Changes',
-  tagline: 'Something is different. What?',
-  description:
-    'Look at a grid of shapes. It disappears and comes back with one difference: a shape changed colour or form, or — at higher levels — two shapes swapped places. Point at what changed.',
+  name: msg('memory:visualChanges.name'),
+  tagline: msg('memory:visualChanges.tagline'),
+  description: msg('memory:visualChanges.description'),
   area: 'memory',
   skills: ['visual-memory', 'error-detection', 'selective-attention'],
   meta: {
@@ -103,37 +102,44 @@ export const visualChangesGame: GameDefinition<VisualChangesChallenge, VisualCha
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'An answer counts when you point at the changed shape (or both swapped shapes). Your result is the share of changes found; answering is not timed.',
+    scoringSummary: msg('memory:visualChanges.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Look at the shapes and where they are. Press “I’m ready” when you have them.',
-    'The grid comes back with exactly one change: tap the shape that changed.',
-    'From level 7, two shapes may swap places instead: mark both, then press Check.',
-    'Keyboard: arrow keys move between cells, Enter chooses one.',
+    msg('memory:visualChanges.instructions.look'),
+    msg('memory:visualChanges.instructions.tap'),
+    msg('memory:visualChanges.instructions.swap'),
+    msg('memory:visualChanges.instructions.keyboard'),
   ],
-  simpleInstructions: 'Remember the picture, then tap what changed.',
+  simpleInstructions: msg('memory:visualChanges.simpleInstructions'),
   levels: VISUAL_CHANGES_LEVELS,
   generate({ identity, profile, random }) {
     const kind = weightedPick(random, profile.kinds);
     const content = retryGeneration('visible change', () => build(random, profile, kind));
     const { before, after, changed, size } = content;
     const cells = size * size;
-    const where = changed.map((i) => cellName(i, size));
     const first = changed[0] as number;
+    const second = changed[1] as number;
     return {
       ...identity,
-      prompt:
-        kind === 'swap' ? 'Two shapes swapped places. Mark both.' : 'One shape changed. Which one?',
-      studyPrompt: 'Remember the shapes and where they are.',
+      prompt: msg(`memory:visualChanges.prompt.${kind === 'swap' ? 'swap' : 'change'}`),
+      studyPrompt: msg('memory:visualChanges.studyPrompt'),
       content,
       response:
         kind === 'swap' ? multiSelectResponse(cells, changed) : locateResponse(cells, first),
       explanation:
         kind === 'swap'
-          ? `The ${glyphLabel(before[first] as Glyph)} and the ${glyphLabel(before[changed[1] as number] as Glyph)} swapped (${where.join(' and ')}).`
-          : `At ${where[0] ?? ''}, the ${glyphLabel(before[first] as Glyph)} became a ${glyphLabel(after[first] as Glyph)}.`,
+          ? msg('memory:visualChanges.explanation.swap', {
+              first: glyphLabel(before[first] as Glyph),
+              second: glyphLabel(before[second] as Glyph),
+              firstCell: cellName(first, size),
+              secondCell: cellName(second, size),
+            })
+          : msg('memory:visualChanges.explanation.change', {
+              cell: cellName(first, size),
+              before: glyphLabel(before[first] as Glyph),
+              after: glyphLabel(after[first] as Glyph),
+            }),
       skills:
         kind === 'swap'
           ? ['visual-memory', 'spatial-reasoning']

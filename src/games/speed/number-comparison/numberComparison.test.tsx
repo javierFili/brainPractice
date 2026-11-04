@@ -10,6 +10,7 @@ import { evaluateLabel } from './content/quantities';
 import { KIND_ORDER } from './content/types';
 import { numberComparisonModule } from './index';
 import { describeNumberOption } from './ui/numberOptions';
+import { en } from '@/test/i18n';
 
 describeGameContract(numberComparisonModule);
 
@@ -22,7 +23,7 @@ describe('Number Comparison content', () => {
       if (response.format !== 'single-choice') throw new Error('single-choice expected');
       const values = response.question.options.map((o) => ({
         id: o.id,
-        v: evaluateLabel(o.label),
+        v: evaluateLabel(en(o.label)),
       }));
       const target =
         content.ask === 'largest'
@@ -68,8 +69,8 @@ describe('Number Comparison content', () => {
   });
 
   it('spells fractions and operators out for screen readers', () => {
-    expect(describeNumberOption('3/4')).toBe('3 over 4');
-    expect(describeNumberOption('61 − 4')).toBe('61 minus 4');
+    expect(en(describeNumberOption('3/4') ?? '')).toBe('3 over 4');
+    expect(en(describeNumberOption('61 − 4') ?? '')).toBe('61 minus 4');
     expect(describeNumberOption('0.45')).toBeUndefined();
   });
 

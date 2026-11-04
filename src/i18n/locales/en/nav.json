@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "BrainPractice — Mental practice for every age"
+  },
+  "skipToContent": "Skip to content",
+  "landmarks": {
+    "main": "Main",
+    "navigation": "Navigation",
+    "sidebar": "Sidebar"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Close navigation"
+  },
+  "sidebar": {
+    "expand": "Expand sidebar",
+    "collapse": "Collapse sidebar"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "storageBlocked": "This browser blocks local storage, so progress will be lost when you close the tab.",
+  "disclaimer": "Recreational mental practice. Results describe performance on these activities only — this is not a medical, psychological or IQ assessment, and it does not diagnose, treat or prevent any condition.",
+  "sections": {
+    "general": "General",
+    "training": "Training",
+    "routes": "Routes",
+    "assessment": "Assessment",
+    "learning": "Learning",
+    "settings": "Settings"
+  },
+  "items": {
+    "home": "Home",
+    "continue": "Continue training",
+    "daily": "Daily challenge",
+    "progress": "My progress",
+    "games": "All activities",
+    "quick": "Quick session",
+    "trainMemory": "Memory",
+    "trainLogic": "Logic",
+    "trainAttention": "Attention",
+    "trainSpeed": "Mental speed",
+    "trainPatterns": "Patterns",
+    "trainSpatial": "Spatial reasoning",
+    "trainConcentration": "Concentration",
+    "pathsKids": "Kids",
+    "pathsTeens": "Teens",
+    "pathsAdults": "Adults",
+    "pathsSeniors": "Seniors",
+    "pathsProgrammers": "Programmers",
+    "assessment": "Cognitive assessment",
+    "assessmentHistory": "Past results",
+    "assessmentProfile": "My performance profile",
+    "learn": "Programming logic",
+    "learnThinking": "Computational thinking",
+    "trainProgramming": "Algorithm challenges",
+    "settings": "Preferences",
+    "settingsAccessibility": "Accessibility",
+    "settingsData": "Reset demo data"
+  }
+}

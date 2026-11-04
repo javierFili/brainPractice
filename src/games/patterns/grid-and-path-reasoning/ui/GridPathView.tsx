@@ -1,5 +1,7 @@
 import type { ContentViewProps } from '@/games/types';
-import { listWords } from '../../shared/content';
+import { useTranslation } from 'react-i18next';
+import { joinText, msg, type Message } from '@/domain/shared';
+import { useText } from '@/i18n';
 import type { GridPathChallenge, GridPathContent } from '../content/types';
 
 type Role =
@@ -21,40 +23,37 @@ function roleOf(content: GridPathContent, cell: number): Role {
   return { type: 'open' };
 }
 
-const roleWords = (role: Role) => {
+const V = 'patterns:gridAndPathReasoning.view';
+
+/** Names a role on its own ("turtle (start)", "exit A"); walls are listed together per row. */
+const roleWords = (role: Exclude<Role, { type: 'open' | 'wall' }>): Message => {
   switch (role.type) {
-    case 'open':
-      return 'open';
-    case 'wall':
-      return 'wall';
     case 'start':
-      return 'turtle (start)';
+      return msg(`${V}.start`);
     case 'goal':
-      return 'star (goal)';
+      return msg(`${V}.goal`);
     case 'exit':
-      return `exit ${role.letter}`;
+      return msg(`${V}.exit`, { letter: role.letter });
     case 'mark':
-      return `cell ${role.number}`;
+      return msg(`${V}.cell`, { number: role.number });
   }
 };
 
 /** "Row 2: walls at columns 1 and 4; exit A at column 6" — open squares are not listed. */
-function rowWords(content: GridPathContent, r: number) {
+function rowWords(content: GridPathContent, r: number): Message {
   const { size } = content;
-  const groups = new Map<string, number[]>();
+  const walls: number[] = [];
+  const parts: Message[] = [];
   for (let c = 0; c < size; c++) {
     const role = roleOf(content, r * size + c);
     if (role.type === 'open') continue;
-    const words = roleWords(role);
-    groups.set(words, [...(groups.get(words) ?? []), c + 1]);
+    if (role.type === 'wall') walls.push(c + 1);
+    else parts.push(msg(`${V}.at`, { what: roleWords(role), column: c + 1 }));
   }
-  if (groups.size === 0) return `Row ${r + 1}: all open`;
-  const parts = [...groups].map(([words, cols]) =>
-    words === 'wall'
-      ? `${cols.length === 1 ? 'wall' : 'walls'} at ${cols.length === 1 ? 'column' : 'columns'} ${listWords(cols.map(String))}`
-      : `${words} at column ${cols[0] ?? ''}`,
-  );
-  return `Row ${r + 1}: ${parts.join('; ')}`;
+  if (walls.length > 0)
+    parts.unshift(msg(`${V}.walls`, { count: walls.length, columns: joinText(walls.map(String)) }));
+  if (parts.length === 0) return msg(`${V}.rowOpen`, { row: r + 1 });
+  return msg(`${V}.row`, { row: r + 1, parts: joinText(parts, '; ') });
 }
 
 const WALL_STYLE = {
@@ -88,6 +87,8 @@ function Cell({ role }: { role: Role }) {
 }
 
 export function GridPathView({ challenge }: ContentViewProps<GridPathChallenge>) {
+  const { t } = useTranslation('patterns');
+  const tx = useText();
   const { content } = challenge;
   const { size } = content;
   return (
@@ -111,16 +112,17 @@ export function GridPathView({ challenge }: ContentViewProps<GridPathChallenge>)
       </div>
       <figcaption className="text-center text-xs text-ink-muted">
         <span aria-hidden="true">
-          🐢 start · {content.goal === null ? 'letters: exits' : '⭐ goal'}
+          🐢 {t('gridAndPathReasoning.view.legendStart')} ·{' '}
+          {content.goal === null
+            ? t('gridAndPathReasoning.view.legendExits')
+            : `⭐ ${t('gridAndPathReasoning.view.legendGoal')}`}
         </span>
-        <span aria-hidden="true"> · striped squares are walls</span>
-        <span className="sr-only">
-          Maze of {size} by {size} squares, described row by row.
-        </span>
+        <span aria-hidden="true"> · {t('gridAndPathReasoning.view.legendWalls')}</span>
+        <span className="sr-only">{t('gridAndPathReasoning.view.maze', { size })}</span>
       </figcaption>
       <ol className="sr-only">
         {Array.from({ length: size }, (_, r) => (
-          <li key={r}>{rowWords(content, r)}</li>
+          <li key={r}>{tx(rowWords(content, r))}</li>
         ))}
       </ol>
     </figure>

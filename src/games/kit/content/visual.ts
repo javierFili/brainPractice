@@ -1,4 +1,5 @@
 import { pick, sample, type RandomGenerator } from '@/domain/random';
+import { msg, type Message } from '@/domain/shared';
 
 /**
  * Visual vocabulary shared by every visual game. A glyph is always a shape *and* a colour, and its
@@ -31,7 +32,11 @@ export interface Pose {
   readonly mirrored: boolean;
 }
 
-export const glyphLabel = ({ shape, color }: Glyph): string => `${color} ${shape}`;
+/** "blue star", "estrella azul", "blauer Stern": adjective order and agreement are per language. */
+export const glyphLabel = ({ shape, color }: Glyph): Message =>
+  msg(`kit:glyph.${shape}`, { color });
+export const colorLabel = (color: ColorName): Message => msg(`kit:color.${color}`);
+export const shapeLabel = (shape: ShapeKind): Message => msg(`kit:shape.${shape}`);
 export const glyphKey = ({ shape, color }: Glyph): string => `${color}-${shape}`;
 export const sameGlyph = (a: Glyph, b: Glyph): boolean =>
   a.shape === b.shape && a.color === b.color;

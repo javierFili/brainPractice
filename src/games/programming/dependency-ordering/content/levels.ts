@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { DependencyProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { DependencyProfile } from './types';
  */
 export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
   {
-    objective: 'Find the task that needs nothing.',
+    objective: msg('programming:dependencyOrdering.levels.1'),
     challengeCount: 5,
     timing: untimed(25_000),
     kinds: { 'start-first': 2, 'full-order': 1 },
@@ -18,7 +19,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: false,
   },
   {
-    objective: 'Chain every task into the only order that works.',
+    objective: msg('programming:dependencyOrdering.levels.2'),
     challengeCount: 5,
     timing: untimed(35_000),
     kinds: { 'start-first': 1, 'full-order': 2 },
@@ -28,7 +29,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: false,
   },
   {
-    objective: 'Some work is done: what is unblocked now?',
+    objective: msg('programming:dependencyOrdering.levels.3'),
     challengeCount: 6,
     timing: untimed(40_000),
     kinds: { 'ready-next': 2, 'full-order': 1, 'valid-order': 1 },
@@ -38,7 +39,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: false,
   },
   {
-    objective: 'Several orders could work: pick the one option that does.',
+    objective: msg('programming:dependencyOrdering.levels.4'),
     challengeCount: 6,
     timing: untimed(45_000),
     kinds: { 'ready-next': 1, 'full-order': 1, 'valid-order': 2 },
@@ -48,7 +49,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: false,
   },
   {
-    objective: 'Near misses: each wrong order breaks a single need.',
+    objective: msg('programming:dependencyOrdering.levels.5'),
     challengeCount: 6,
     timing: untimed(55_000),
     kinds: { 'ready-next': 1, 'full-order': 1, 'valid-order': 2 },
@@ -58,7 +59,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: false,
   },
   {
-    objective: 'Cycles: which new need would make every order impossible?',
+    objective: msg('programming:dependencyOrdering.levels.6'),
     challengeCount: 6,
     timing: untimed(60_000),
     kinds: { 'ready-next': 1, 'valid-order': 2, cycle: 2 },
@@ -68,7 +69,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: false,
   },
   {
-    objective: 'Hidden cycles: the loop runs through other tasks.',
+    objective: msg('programming:dependencyOrdering.levels.7'),
     challengeCount: 7,
     timing: untimed(70_000),
     kinds: { 'ready-next': 1, 'full-order': 1, 'valid-order': 2, cycle: 2 },
@@ -78,7 +79,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: true,
   },
   {
-    objective: 'Eight tasks and denser needs.',
+    objective: msg('programming:dependencyOrdering.levels.8'),
     challengeCount: 7,
     timing: untimed(80_000),
     kinds: { 'ready-next': 1, 'full-order': 1, 'valid-order': 2, cycle: 2 },
@@ -88,7 +89,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: true,
   },
   {
-    objective: 'Nine tasks: long chains and long hidden cycles.',
+    objective: msg('programming:dependencyOrdering.levels.9'),
     challengeCount: 7,
     timing: untimed(90_000),
     kinds: { 'full-order': 1, 'valid-order': 2, cycle: 2, 'ready-next': 1 },
@@ -98,7 +99,7 @@ export const DEPENDENCY_LEVELS = defineLevels<DependencyProfile>([
     indirectCycles: true,
   },
   {
-    objective: 'Everything at once on ten tasks.',
+    objective: msg('programming:dependencyOrdering.levels.10'),
     challengeCount: 8,
     timing: untimed(100_000),
     kinds: { 'full-order': 1, 'valid-order': 2, cycle: 2, 'ready-next': 1 },

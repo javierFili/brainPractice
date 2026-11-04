@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { isLevelCleared, unlockedLevels, type GameProgress } from '@/domain/progress';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import type { GameDefinition } from '@/domain/game';
 import { Icon } from '@/components/ui/Icon';
 import { CATEGORIES } from '@/features/shared/categories';
+import { useText } from '@/i18n';
 
 /** One game in a list: what it is, how long it takes and where you are in it. */
 export function GameCard({
@@ -17,6 +19,8 @@ export function GameCard({
   readonly freePlay: boolean;
   readonly badge?: string;
 }) {
+  const { t } = useTranslation('catalog');
+  const tx = useText();
   const meta = CATEGORIES[definition.meta.category];
   const cleared = DIFFICULTY_LEVELS.filter((l) => isLevelCleared(progress?.[l])).length;
   const open = unlockedLevels(progress, freePlay).length;
@@ -31,7 +35,7 @@ export function GameCard({
           className={`flex items-center gap-1.5 text-xs font-semibold tracking-wide uppercase ${meta.text}`}
         >
           <Icon name={meta.icon} className="h-4 w-4" />
-          {meta.label}
+          {tx(meta.label)}
         </span>
         {badge !== undefined && (
           <span className="rounded-full bg-glow/15 px-2 py-0.5 text-xs font-medium text-glow">
@@ -41,23 +45,23 @@ export function GameCard({
       </div>
       <div>
         <h3 className="text-lg font-semibold text-ink group-hover:text-brand-strong">
-          {definition.name}
+          {tx(definition.name)}
         </h3>
-        <p className="mt-1 text-sm text-ink-soft">{definition.tagline}</p>
+        <p className="mt-1 text-sm text-ink-soft">{tx(definition.tagline)}</p>
       </div>
       <dl className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-1 text-xs text-ink-muted">
         <div className="flex gap-1">
-          <dt className="sr-only">Duration</dt>
-          <dd>~{definition.meta.estimatedMinutes} min</dd>
+          <dt className="sr-only">{t('card.duration')}</dt>
+          <dd>{t('card.minutes', { minutes: definition.meta.estimatedMinutes })}</dd>
         </div>
         <div className="flex gap-1">
-          <dt className="sr-only">Progress</dt>
-          <dd>{played ? `${cleared}/10 cleared · ${open} open` : 'Not played yet'}</dd>
+          <dt className="sr-only">{t('card.progress')}</dt>
+          <dd>{played ? t('card.cleared', { cleared, open }) : t('card.notPlayed')}</dd>
         </div>
         {definition.meta.relaxedFriendly && (
           <div>
-            <dt className="sr-only">Timing</dt>
-            <dd>No-rush mode</dd>
+            <dt className="sr-only">{t('card.timing')}</dt>
+            <dd>{t('card.noRush')}</dd>
           </div>
         )}
       </dl>

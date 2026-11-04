@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { StrategyProfile } from './types';
 
@@ -14,28 +15,28 @@ const base = {
  */
 export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
   {
-    objective: 'Take 1 or 2 coins: find the winning move.',
+    objective: msg('logic:strategyPuzzle.levels.1'),
     challengeCount: 4,
     timing: untimed(30_000),
     ...base,
     kinds: { 'take-away': 1 },
   },
   {
-    objective: 'Slide tiles on a small board.',
+    objective: msg('logic:strategyPuzzle.levels.2'),
     challengeCount: 4,
     timing: untimed(40_000),
     ...base,
     kinds: { 'take-away': 1, sliding: 1 },
   },
   {
-    objective: 'Measure water with two jugs.',
+    objective: msg('logic:strategyPuzzle.levels.3'),
     challengeCount: 4,
     timing: untimed(60_000),
     ...base,
     kinds: { jugs: 2, sliding: 1 },
   },
   {
-    objective: 'Take 1 to 3 coins from a bigger pile.',
+    objective: msg('logic:strategyPuzzle.levels.4'),
     challengeCount: 4,
     timing: untimed(60_000),
     ...base,
@@ -44,7 +45,7 @@ export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
     kinds: { 'take-away': 2, jugs: 1 },
   },
   {
-    objective: 'Slide tiles on a 2×3 board.',
+    objective: msg('logic:strategyPuzzle.levels.5'),
     challengeCount: 4,
     timing: untimed(80_000),
     ...base,
@@ -54,7 +55,7 @@ export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
     kinds: { sliding: 2, 'take-away': 1 },
   },
   {
-    objective: 'Harder jug puzzles.',
+    objective: msg('logic:strategyPuzzle.levels.6'),
     challengeCount: 4,
     timing: untimed(90_000),
     ...base,
@@ -64,7 +65,7 @@ export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
     kinds: { jugs: 2, sliding: 1 },
   },
   {
-    objective: 'Two piles of coins.',
+    objective: msg('logic:strategyPuzzle.levels.7'),
     challengeCount: 4,
     timing: untimed(90_000),
     ...base,
@@ -74,7 +75,7 @@ export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
     kinds: { piles: 2, 'take-away': 1 },
   },
   {
-    objective: 'Longer sliding puzzles.',
+    objective: msg('logic:strategyPuzzle.levels.8'),
     challengeCount: 4,
     timing: untimed(120_000),
     ...base,
@@ -85,7 +86,7 @@ export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
     kinds: { sliding: 2, piles: 1 },
   },
   {
-    objective: 'Three jugs and no tap: pour only.',
+    objective: msg('logic:strategyPuzzle.levels.9'),
     challengeCount: 4,
     timing: untimed(120_000),
     ...base,
@@ -96,7 +97,7 @@ export const STRATEGY_LEVELS = defineLevels<StrategyProfile>([
     kinds: { jugs: 2, piles: 1 },
   },
   {
-    objective: 'Three piles, long slides and three jugs.',
+    objective: msg('logic:strategyPuzzle.levels.10'),
     challengeCount: 5,
     timing: untimed(150_000),
     ...base,

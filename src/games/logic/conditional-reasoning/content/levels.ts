@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ConditionalProfile } from './types';
 
@@ -17,7 +18,7 @@ const base = { negatedParts: false, chainLength: 1, atoms: 2 };
  */
 export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
   {
-    objective: 'One rule, and its “if” part is true.',
+    objective: msg('logic:conditionalReasoning.levels.1'),
     challengeCount: 5,
     timing: untimed(20_000),
     ...base,
@@ -26,7 +27,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false'],
   },
   {
-    objective: 'Work backwards: the result did not happen.',
+    objective: msg('logic:conditionalReasoning.levels.2'),
     challengeCount: 5,
     timing: untimed(25_000),
     ...base,
@@ -35,7 +36,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false'],
   },
   {
-    objective: 'Spot the traps where you can’t tell.',
+    objective: msg('logic:conditionalReasoning.levels.3'),
     challengeCount: 6,
     timing: untimed(30_000),
     ...base,
@@ -44,7 +45,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Rules with “not” inside them.',
+    objective: msg('logic:conditionalReasoning.levels.4'),
     challengeCount: 6,
     timing: untimed(35_000),
     ...base,
@@ -54,7 +55,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Chains: two rules in a row.',
+    objective: msg('logic:conditionalReasoning.levels.5'),
     challengeCount: 6,
     timing: untimed(40_000),
     ...base,
@@ -64,7 +65,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Longer chains, with “not”.',
+    objective: msg('logic:conditionalReasoning.levels.6'),
     challengeCount: 6,
     timing: untimed(45_000),
     ...base,
@@ -75,7 +76,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Rules that say “unless”.',
+    objective: msg('logic:conditionalReasoning.levels.7'),
     challengeCount: 6,
     timing: untimed(45_000),
     ...base,
@@ -86,7 +87,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Rules that say “only if”.',
+    objective: msg('logic:conditionalReasoning.levels.8'),
     challengeCount: 6,
     timing: untimed(50_000),
     ...base,
@@ -97,7 +98,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Mixed rules, including “either … or”.',
+    objective: msg('logic:conditionalReasoning.levels.9'),
     challengeCount: 6,
     timing: untimed(60_000),
     negatedParts: true,
@@ -108,7 +109,7 @@ export const CONDITIONAL_LEVELS = defineLevels<ConditionalProfile>([
     verdicts: ['true', 'false', 'unknown'],
   },
   {
-    objective: 'Several mixed rules about four things.',
+    objective: msg('logic:conditionalReasoning.levels.10'),
     challengeCount: 6,
     timing: untimed(75_000),
     negatedParts: true,

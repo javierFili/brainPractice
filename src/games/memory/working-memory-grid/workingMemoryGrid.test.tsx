@@ -4,6 +4,7 @@ import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { cellName } from '../shared/content';
 import { workingMemoryGridGame } from './content/definition';
 import { WORKING_GRID_LEVELS } from './content/levels';
@@ -80,7 +81,7 @@ describe('Working Memory Grid view', () => {
         .queryAllByRole('listitem')
         .filter((el) => /, lit$/.test(el.getAttribute('aria-label') ?? ''));
     expect(lit()).toHaveLength(1);
-    expect(lit()[0]).toHaveAccessibleName(`${cellName(stream[0] as number, 3)}, lit`);
+    expect(lit()[0]).toHaveAccessibleName(`${en(cellName(stream[0] as number, 3))}, lit`);
     act(() => {
       vi.advanceTimersByTime(itemMs / 2);
     });
@@ -88,7 +89,7 @@ describe('Working Memory Grid view', () => {
     act(() => {
       vi.advanceTimersByTime(itemMs / 2);
     });
-    expect(lit()[0]).toHaveAccessibleName(`${cellName(stream[1] as number, 3)}, lit`);
+    expect(lit()[0]).toHaveAccessibleName(`${en(cellName(stream[1] as number, 3))}, lit`);
   });
 
   it('submits the marked last lights', async () => {
@@ -107,7 +108,7 @@ describe('Working Memory Grid view', () => {
       />,
     );
     for (const i of c.response.solution.indices) {
-      await user.click(screen.getByRole('button', { name: cellName(i, 3) }));
+      await user.click(screen.getByRole('button', { name: en(cellName(i, 3)) }));
     }
     await user.click(screen.getByRole('button', { name: 'Check' }));
     expect(respond).toHaveBeenCalledWith({

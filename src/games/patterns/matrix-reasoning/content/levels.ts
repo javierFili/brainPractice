@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { MatrixProfile, MatrixRule } from './types';
 
@@ -11,7 +12,7 @@ const STEPS: readonly MatrixRule[] = ['step-row', 'step-column'];
  */
 export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
   {
-    objective: 'Complete a 2×2 matrix where one feature changes.',
+    objective: msg('patterns:matrixReasoning.levels.1'),
     challengeCount: 5,
     size: 2,
     rules: { shape: LINES, color: LINES },
@@ -21,7 +22,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(15_000),
   },
   {
-    objective: 'A 2×2 matrix where shape and colour follow different rules.',
+    objective: msg('patterns:matrixReasoning.levels.2'),
     challengeCount: 5,
     size: 2,
     rules: { shape: LINES, color: LINES },
@@ -31,7 +32,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(18_000),
   },
   {
-    objective: 'A 3×3 matrix: rows or columns share a feature.',
+    objective: msg('patterns:matrixReasoning.levels.3'),
     challengeCount: 6,
     size: 3,
     rules: { shape: LINES, color: LINES },
@@ -41,7 +42,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(20_000),
   },
   {
-    objective: 'A 3×3 matrix where shape and colour both follow rules.',
+    objective: msg('patterns:matrixReasoning.levels.4'),
     challengeCount: 6,
     size: 3,
     rules: { shape: LINES, color: LINES },
@@ -51,7 +52,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(24_000),
   },
   {
-    objective: 'Each value once in every row and column.',
+    objective: msg('patterns:matrixReasoning.levels.5'),
     challengeCount: 6,
     size: 3,
     rules: { shape: [...LINES, ...LATIN], color: [...LINES, ...LATIN] },
@@ -61,7 +62,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(26_000),
   },
   {
-    objective: 'The number of shapes joins in, sometimes counting up.',
+    objective: msg('patterns:matrixReasoning.levels.6'),
     challengeCount: 6,
     size: 3,
     rules: {
@@ -75,7 +76,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(28_000),
   },
   {
-    objective: 'Three features at once, and the gap can be anywhere.',
+    objective: msg('patterns:matrixReasoning.levels.7'),
     challengeCount: 6,
     size: 3,
     rules: {
@@ -89,7 +90,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(32_000),
   },
   {
-    objective: 'Arrows that turn step by step, with colour and count rules.',
+    objective: msg('patterns:matrixReasoning.levels.8'),
     challengeCount: 6,
     size: 3,
     rules: {
@@ -103,7 +104,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(34_000),
   },
   {
-    objective: 'Three features, only latin squares and steps, eight options.',
+    objective: msg('patterns:matrixReasoning.levels.9'),
     challengeCount: 6,
     size: 3,
     rules: { shape: LATIN, color: LATIN, count: STEPS },
@@ -113,7 +114,7 @@ export const MATRIX_LEVELS = defineLevels<MatrixProfile>([
     timing: untimed(36_000),
   },
   {
-    objective: 'Arrows or shapes, every feature on its own hard rule, eight options.',
+    objective: msg('patterns:matrixReasoning.levels.10'),
     challengeCount: 6,
     size: 3,
     rules: {

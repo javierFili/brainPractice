@@ -3,8 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { generateChallenge } from '@/domain/game';
 import { toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
-import { groupOf } from '@/games/kit/content';
+import { groupOf, wordLabel } from '@/games/kit/content';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { wordRecallGame } from './content/definition';
 import { WORD_RECALL_LEVELS } from './content/levels';
 import { wordRecallModule } from './index';
@@ -64,12 +65,12 @@ describe('Word Recall view', () => {
       />,
     );
     const [first, second] = c.content.studied as [string, string];
-    expect(screen.getByText(first)).toBeInTheDocument();
+    expect(screen.getByText(en(wordLabel(first)))).toBeInTheDocument();
     act(() => {
       vi.advanceTimersByTime(c.content.itemMs);
     });
-    expect(screen.queryByText(first)).not.toBeInTheDocument();
-    expect(screen.getByText(second)).toBeInTheDocument();
+    expect(screen.queryByText(en(wordLabel(first)))).not.toBeInTheDocument();
+    expect(screen.getByText(en(wordLabel(second)))).toBeInTheDocument();
   });
 
   it('accepts one slip on tolerant boards', async () => {
@@ -89,7 +90,7 @@ describe('Word Recall view', () => {
       />,
     );
     for (const word of c.content.studied.slice(1)) {
-      await user.click(screen.getByRole('button', { name: word }));
+      await user.click(screen.getByRole('button', { name: en(wordLabel(word)) }));
     }
     await user.click(screen.getByRole('button', { name: 'Check' }));
     const sent = respond.mock.calls[0]?.[0] as { indices: number[] };

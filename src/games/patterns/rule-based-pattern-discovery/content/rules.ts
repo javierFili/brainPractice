@@ -1,4 +1,7 @@
-import { tileName, type TileGrid } from '../../shared/content';
+import { msg, type Message } from '@/domain/shared';
+import type { TileGrid } from '../../shared/content';
+
+const T = 'patterns:ruleBasedPatternDiscovery.rule';
 
 /** `move`: turns, mirrors and shifts. `colour`: tiles change kind. `gather`: tiles fall or spread. */
 export type RuleFamily = 'move' | 'colour' | 'gather';
@@ -10,7 +13,7 @@ export interface GridRule {
   readonly id: string;
   readonly family: RuleFamily;
   /** Completes "In every example the grid …": "is mirrored left to right". */
-  readonly words: string;
+  readonly words: Message;
   /** Runs the rule on an n × n grid given as flat cells. */
   run(cells: Cells, n: number): number[];
 }
@@ -25,7 +28,7 @@ export const cellsKey = (cells: Cells) => cells.join('');
 type Source = (r: number, c: number, n: number) => number;
 
 /** A rule that only moves tiles: out(r, c) = in(source(r, c)). Index maps are cached per size. */
-function moveRule(id: string, words: string, source: Source): GridRule {
+function moveRule(id: string, source: Source): GridRule {
   const cache = new Map<number, number[]>();
   const map = (n: number) => {
     let m = cache.get(n);
@@ -38,7 +41,7 @@ function moveRule(id: string, words: string, source: Source): GridRule {
   return {
     id,
     family: 'move',
-    words,
+    words: msg(`${T}.${id}`),
     run: (cells, n) => map(n).map((j) => cells[j] ?? 0),
   };
 }
@@ -46,38 +49,22 @@ function moveRule(id: string, words: string, source: Source): GridRule {
 const wrap = (v: number, n: number) => (v + n) % n;
 
 const MOVES: readonly GridRule[] = [
-  moveRule('flip-lr', 'is mirrored left to right', (r, c, n) => r * n + (n - 1 - c)),
-  moveRule('flip-ud', 'is mirrored top to bottom', (r, c, n) => (n - 1 - r) * n + c),
-  moveRule('cw', 'is turned a quarter turn clockwise', (r, c, n) => (n - 1 - c) * n + r),
-  moveRule('ccw', 'is turned a quarter turn anticlockwise', (r, c, n) => c * n + (n - 1 - r)),
-  moveRule('180', 'is turned half a turn', (r, c, n) => (n - 1 - r) * n + (n - 1 - c)),
-  moveRule(
-    'shift-right',
-    'slides one square right (the last column comes back on the left)',
-    (r, c, n) => r * n + wrap(c - 1, n),
-  ),
-  moveRule(
-    'shift-left',
-    'slides one square left (the first column comes back on the right)',
-    (r, c, n) => r * n + wrap(c + 1, n),
-  ),
-  moveRule(
-    'shift-down',
-    'slides one square down (the bottom row comes back at the top)',
-    (r, c, n) => wrap(r - 1, n) * n + c,
-  ),
-  moveRule(
-    'shift-up',
-    'slides one square up (the top row comes back at the bottom)',
-    (r, c, n) => wrap(r + 1, n) * n + c,
-  ),
+  moveRule('flip-lr', (r, c, n) => r * n + (n - 1 - c)),
+  moveRule('flip-ud', (r, c, n) => (n - 1 - r) * n + c),
+  moveRule('cw', (r, c, n) => (n - 1 - c) * n + r),
+  moveRule('ccw', (r, c, n) => c * n + (n - 1 - r)),
+  moveRule('180', (r, c, n) => (n - 1 - r) * n + (n - 1 - c)),
+  moveRule('shift-right', (r, c, n) => r * n + wrap(c - 1, n)),
+  moveRule('shift-left', (r, c, n) => r * n + wrap(c + 1, n)),
+  moveRule('shift-down', (r, c, n) => wrap(r - 1, n) * n + c),
+  moveRule('shift-up', (r, c, n) => wrap(r + 1, n) * n + c),
 ];
 
 const GATHERS: readonly GridRule[] = [
   {
     id: 'fall',
     family: 'gather',
-    words: 'has every tile fall to the bottom of its column',
+    words: msg(`${T}.fall`),
     run: (cells, n) => {
       const out = Array.from({ length: n * n }, () => 0);
       for (let c = 0; c < n; c++) {
@@ -93,7 +80,7 @@ const GATHERS: readonly GridRule[] = [
   {
     id: 'slide-left',
     family: 'gather',
-    words: 'has every tile slide to the left end of its row',
+    words: msg(`${T}.slide-left`),
     run: (cells, n) => {
       const out = Array.from({ length: n * n }, () => 0);
       for (let r = 0; r < n; r++) {
@@ -109,7 +96,7 @@ const GATHERS: readonly GridRule[] = [
   {
     id: 'fill-rows',
     family: 'gather',
-    words: 'has every row with a tile filled with copies of its first tile',
+    words: msg(`${T}.fill-rows`),
     run: (cells, n) => {
       const out = [...cells];
       for (let r = 0; r < n; r++) {
@@ -122,7 +109,7 @@ const GATHERS: readonly GridRule[] = [
   {
     id: 'fill-columns',
     family: 'gather',
-    words: 'has every column with a tile filled with copies of its top tile',
+    words: msg(`${T}.fill-columns`),
     run: (cells, n) => {
       const out = [...cells];
       for (let c = 0; c < n; c++) {
@@ -135,9 +122,7 @@ const GATHERS: readonly GridRule[] = [
   },
 ];
 
-const article = (name: string) => `${/^[aeiou]/.test(name) ? 'an' : 'a'} ${name}`;
-
-const valueRule = (id: string, words: string, table: readonly number[]): GridRule => ({
+const valueRule = (id: string, words: Message, table: readonly number[]): GridRule => ({
   id,
   family: 'colour',
   words,
@@ -158,7 +143,8 @@ export function ruleLibrary(kinds: readonly number[]): GridRule[] {
       rules.push(
         valueRule(
           `recolour-${from}-${to}`,
-          `has every ${tileName(from)} replaced by ${article(tileName(to))}`,
+          // Tile names come from per-tile forms in the translations (articles, plurals, gender).
+          msg(`${T}.recolour`, { from: String(from), to: String(to) }),
           table,
         ),
       );
@@ -169,7 +155,7 @@ export function ruleLibrary(kinds: readonly number[]): GridRule[] {
         rules.push(
           valueRule(
             `swap-${from}-${to}`,
-            `has every ${tileName(from)} and ${tileName(to)} swapped`,
+            msg(`${T}.swap`, { from: String(from), to: String(to) }),
             swap,
           ),
         );

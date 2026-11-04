@@ -1,27 +1,32 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Challenge } from '@/domain/challenge';
 import type { ChallengeRecord } from '@/domain/session';
 import { Button } from '@/components/ui/Button';
-import { formatMs, formatPoints } from '@/features/shared/format';
+import { useFormat, useText } from '@/i18n';
 import { describeAnswer, describeSolution } from './describe';
 
 const TITLES = {
   correct: {
     icon: '✓',
-    text: 'Correct',
+    text: 'common:answer.correct',
     tone: 'border-emerald-400/50 bg-emerald-400/5 text-emerald-200',
   },
   incorrect: {
     icon: '✗',
-    text: 'Incorrect',
+    text: 'common:answer.incorrect',
     tone: 'border-rose-400/50 bg-rose-400/5 text-rose-200',
   },
   'timed-out': {
     icon: '⧗',
-    text: "Time's up",
+    text: 'common:answer.timedOut',
     tone: 'border-amber-400/50 bg-amber-400/5 text-amber-200',
   },
-  skipped: { icon: '–', text: 'Skipped', tone: 'border-slate-600 bg-slate-800 text-slate-200' },
+  skipped: {
+    icon: '–',
+    text: 'common:answer.skipped',
+    tone: 'border-slate-600 bg-slate-800 text-slate-200',
+  },
 } as const;
 
 export function AnswerFeedback({
@@ -35,6 +40,9 @@ export function AnswerFeedback({
   isLast: boolean;
   onNext: () => void;
 }) {
+  const { t } = useTranslation('play');
+  const tx = useText();
+  const format = useFormat();
   const nextRef = useRef<HTMLButtonElement>(null);
   const title = TITLES[record.outcome];
 
@@ -51,26 +59,30 @@ export function AnswerFeedback({
       >
         <p className="text-lg font-semibold">
           <span aria-hidden="true">{title.icon} </span>
-          {title.text}
+          {t(title.text)}
         </p>
         <p className="font-mono text-sm tabular-nums">
-          {record.points.total >= 0 ? '+' : ''}
-          {formatPoints(record.points.total)} pts
+          {t('feedback.points', {
+            points: `${record.points.total >= 0 ? '+' : ''}${format.points(record.points.total)}`,
+          })}
           {record.responseTimeMs !== null && (
-            <span className="text-slate-400"> · {formatMs(record.responseTimeMs)}</span>
+            <span className="text-slate-400"> · {format.ms(record.responseTimeMs)}</span>
           )}
         </p>
       </div>
       {record.outcome !== 'correct' && (
         <p className="mt-2 text-sm text-slate-200">
-          Your answer: <span className="font-mono">{describeAnswer(challenge, record.answer)}</span>{' '}
-          · Correct: <span className="font-mono font-semibold">{describeSolution(challenge)}</span>
+          {t('feedback.yourAnswer')}{' '}
+          <span className="font-mono">{tx(describeAnswer(challenge, record.answer))}</span> ·{' '}
+          {t('feedback.correctAnswer')}{' '}
+          <span className="font-mono font-semibold">{tx(describeSolution(challenge))}</span>
         </p>
       )}
-      <p className="mt-3 text-sm leading-relaxed text-slate-300">{challenge.explanation}</p>
+      <p className="mt-3 text-sm leading-relaxed text-slate-300">{tx(challenge.explanation)}</p>
       <div className="mt-4">
         <Button ref={nextRef} onClick={onNext}>
-          {isLast ? 'See results' : 'Next challenge'} <span aria-hidden="true">→</span>
+          {isLast ? t('feedback.seeResults') : t('feedback.nextChallenge')}{' '}
+          <span aria-hidden="true">→</span>
         </Button>
       </div>
     </div>

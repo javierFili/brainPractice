@@ -1,16 +1,11 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, weightedPick } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg } from '@/domain/shared';
 import { SPEED_SCORING } from '@/games/speed/shared/content';
 import { NUMBER_COMPARISON_LEVELS } from './levels';
 import { compareQuantities, decimals, expressions, fractions, integers } from './quantities';
-import type {
-  NumberComparisonChallenge,
-  NumberComparisonProfile,
-  NumberKind,
-  Quantity,
-} from './types';
+import type { NumberComparisonChallenge, NumberComparisonProfile, Quantity } from './types';
 
 const BUILDERS = { integers, decimals, fractions, expressions } as const;
 
@@ -24,13 +19,6 @@ export function extremeOf(items: readonly Quantity[], ask: 'largest' | 'smallest
   return first;
 }
 
-const KIND_WORD: Record<NumberKind, string> = {
-  integers: 'number',
-  decimals: 'decimal',
-  fractions: 'fraction',
-  expressions: 'result',
-};
-
 export const NUMBER_COMPARISON_ID = gameIdOf('number-comparison');
 
 export const numberComparisonGame: GameDefinition<
@@ -38,10 +26,9 @@ export const numberComparisonGame: GameDefinition<
   NumberComparisonProfile
 > = {
   id: NUMBER_COMPARISON_ID,
-  name: 'Number Comparison',
-  tagline: 'Which one is bigger? Quick!',
-  description:
-    'Pick the largest (or smallest) value as fast as you can. The numbers get closer together, more of them appear, and later they come as decimals, fractions and small calculations.',
+  name: msg('speed:numberComparison.name'),
+  tagline: msg('speed:numberComparison.tagline'),
+  description: msg('speed:numberComparison.description'),
   area: 'speed',
   skills: ['processing-speed', 'mental-agility', 'selective-attention'],
   meta: {
@@ -52,17 +39,16 @@ export const numberComparisonGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time'],
-    scoringSummary:
-      'Each pick is right or wrong; a wrong pick costs points. A correct pick earns more the faster it comes, but accuracy carries most of the result. Relaxed timing removes the time limit.',
+    scoringSummary: msg('speed:numberComparison.scoringSummary'),
     feedback: 'brief',
   },
   instructions: [
-    'Read the question: largest or smallest.',
-    'Pick that value with a click or its number key (1–4).',
-    'Decimals: compare digit by digit after the point — 0.5 is larger than 0.45.',
-    'Fractions and calculations: work out the value before comparing.',
+    msg('speed:numberComparison.instructions.question'),
+    msg('speed:numberComparison.instructions.pick'),
+    msg('speed:numberComparison.instructions.decimals'),
+    msg('speed:numberComparison.instructions.fractions'),
   ],
-  simpleInstructions: 'Pick the biggest number, fast.',
+  simpleInstructions: msg('speed:numberComparison.simpleInstructions'),
   levels: NUMBER_COMPARISON_LEVELS,
   scoring: SPEED_SCORING,
   generate({ identity, profile, random }) {
@@ -75,7 +61,7 @@ export const numberComparisonGame: GameDefinition<
       if (answer === null || new Set(items.map((q) => q.label)).size !== items.length) return null;
       return {
         ...identity,
-        prompt: `Which ${KIND_WORD[kind]} is the ${ask}?`,
+        prompt: msg(`speed:numberComparison.prompt.${kind}.${ask}`),
         content: { kind, ask, items },
         response: singleChoice(
           random,
@@ -84,8 +70,11 @@ export const numberComparisonGame: GameDefinition<
         ),
         explanation:
           kind === 'expressions'
-            ? `${answer.label} = ${answer.num / answer.den}, the ${ask} result.`
-            : `${answer.label} is the ${ask}.`,
+            ? msg(`speed:numberComparison.explanation.expression.${ask}`, {
+                expression: answer.label,
+                value: String(answer.num / answer.den),
+              })
+            : msg(`speed:numberComparison.explanation.value.${ask}`, { value: answer.label }),
         skills: kind === 'integers' ? ['processing-speed'] : ['processing-speed', 'mental-agility'],
         timing: profile.timing,
       };

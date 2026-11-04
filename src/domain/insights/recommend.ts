@@ -12,6 +12,7 @@ import type { DayKey, UserProfile } from '../profile/profile';
 import type { UserProgress } from '../progress/progress';
 import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { DifficultyLevel } from '../shared/difficultyLevel';
+import { joinText, msg, type Text } from '../shared/text';
 import { cognitiveProfile } from './cognitiveProfile';
 import type { DailyChallenge } from './daily';
 
@@ -19,9 +20,9 @@ export type RecommendationKind = 'review' | 'lesson' | 'daily' | 'train' | 'asse
 
 export interface Recommendation {
   readonly kind: RecommendationKind;
-  readonly title: string;
+  readonly title: Text;
   /** Always says why, in terms of the learner's own progress. */
-  readonly reason: string;
+  readonly reason: Text;
   readonly href: string;
   readonly minutes: number;
 }
@@ -35,7 +36,7 @@ export interface RecommendationInput {
   readonly today: DayKey;
   readonly daily: DailyChallenge;
   readonly gameOfArea: Readonly<Partial<Record<CognitiveArea, string>>>;
-  readonly gameName: (gameId: string) => string;
+  readonly gameName: (gameId: string) => Text;
 }
 
 export const MAX_RECOMMENDATIONS = 4;
@@ -65,9 +66,8 @@ export function recommend(input: RecommendationInput): Recommendation[] {
       .map((item) => conceptOf(course, item.conceptId)?.name ?? item.conceptId);
     items.push({
       kind: 'review',
-      title: `Review: ${names.join(', ')}`,
-      reason:
-        'You learned these a while ago. Recalling them now, just as they start to fade, is what makes them last.',
+      title: msg('progress:recommend.review.title', { concepts: joinText(names, ', ') }),
+      reason: msg('progress:recommend.review.reason'),
       href: '/learn/review',
       minutes: Math.min(4, due.length) * 2,
     });
@@ -78,11 +78,18 @@ export function recommend(input: RecommendationInput): Recommendation[] {
     const { completedLessons, totalLessons } = courseProgress(course, learning);
     items.push({
       kind: 'lesson',
-      title: `Lesson: ${lesson.title}`,
+      title: msg('progress:recommend.lesson.title', { lesson: lesson.title }),
       reason:
         completedLessons === 0
-          ? `Start ${course.title} from the beginning: ${lesson.objective.replace(/^You will be able to /, 'you will be able to ')}`
-          : `Continue ${course.title} — ${completedLessons} of ${totalLessons} lessons done.`,
+          ? msg('progress:recommend.lesson.start', {
+              course: course.title,
+              objective: lesson.objective,
+            })
+          : msg('progress:recommend.lesson.continue', {
+              course: course.title,
+              completed: completedLessons,
+              count: totalLessons,
+            }),
       href: `/learn/${lesson.id}`,
       minutes: lesson.minutes,
     });
@@ -91,8 +98,8 @@ export function recommend(input: RecommendationInput): Recommendation[] {
   if (!profile.daily[today]) {
     items.push({
       kind: 'daily',
-      title: `Daily challenge · ${input.gameName(daily.gameId)}`,
-      reason: 'Five quick problems, the same for everyone today, at your level.',
+      title: msg('progress:recommend.daily.title', { game: input.gameName(daily.gameId) }),
+      reason: msg('progress:recommend.daily.reason'),
       href: '/daily',
       minutes: 3,
     });
@@ -112,12 +119,16 @@ export function recommend(input: RecommendationInput): Recommendation[] {
   if (link && focus) {
     const standing = standings.find((s) => s.area === link.area);
     const level = Math.max(link.level, standing?.suggestedLevel ?? 1) as DifficultyLevel;
-    const concept =
-      focus.concepts.map((id) => conceptOf(course, id)?.name).find((n) => n !== undefined) ?? '';
+    const concept = focus.concepts
+      .map((id) => conceptOf(course, id)?.name)
+      .find((n) => n !== undefined);
     items.push({
       kind: 'train',
-      title: `${input.gameName(link.gameId)} · level ${level}`,
-      reason: `You are learning ${concept.toLowerCase()}. ${link.why}`,
+      title: msg('progress:recommend.train.title', { game: input.gameName(link.gameId), level }),
+      reason:
+        concept === undefined
+          ? link.why
+          : msg('progress:recommend.train.learning', { concept, why: link.why }),
       href: `/games/${link.gameId}/play/${level}`,
       minutes: 3,
     });
@@ -134,11 +145,16 @@ export function recommend(input: RecommendationInput): Recommendation[] {
       const level = weakest.suggestedLevel;
       items.push({
         kind: 'train',
-        title: `${input.gameName(weakest.gameId)} · level ${level}`,
+        title: msg('progress:recommend.train.title', {
+          game: input.gameName(weakest.gameId),
+          level,
+        }),
         reason:
           weakest.recentPerformance === null
-            ? 'You have not trained this area yet.'
-            : `Your least practised area lately (recent performance ${weakest.recentPerformance}).`,
+            ? msg('progress:recommend.train.untrained')
+            : msg('progress:recommend.train.leastPractised', {
+                performance: weakest.recentPerformance,
+              }),
         href: `/games/${weakest.gameId}/play/${level}`,
         minutes: 3,
       });
@@ -149,9 +165,8 @@ export function recommend(input: RecommendationInput): Recommendation[] {
   if ((games.assessments ?? []).length === 0 && sessions >= 3) {
     items.push({
       kind: 'assessment',
-      title: 'Take the assessment',
-      reason:
-        'You have trained a few times: a baseline across all five areas shows where to focus next.',
+      title: msg('progress:recommend.assessment.title'),
+      reason: msg('progress:recommend.assessment.reason'),
       href: '/assessment',
       minutes: 30,
     });

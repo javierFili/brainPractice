@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { constraintSolverGame } from './content/definition';
 import type { ConstraintChallenge } from './content/types';
@@ -7,8 +8,8 @@ export const constraintSolverModule = defineGameModule<ConstraintChallenge>({
   definition: constraintSolverGame,
   ContentView: ConstraintView,
   kindLabels: {
-    latin: 'Rows and columns',
-    boxes: 'Grids with boxes',
-    inequalities: '“Smaller than” grids',
+    latin: msg('logic:constraintSolver.kinds.latin'),
+    boxes: msg('logic:constraintSolver.kinds.boxes'),
+    inequalities: msg('logic:constraintSolver.kinds.inequalities'),
   },
 });

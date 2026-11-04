@@ -1,5 +1,5 @@
 import { useId, useState, type ReactNode } from 'react';
-import { PATHS } from '@/content/paths';
+import { useTranslation } from 'react-i18next';
 import { AUDIENCES, type Audience } from '@/domain/game';
 import {
   DAILY_GOAL_OPTIONS,
@@ -12,6 +12,7 @@ import { useServices } from '@/app/providers/servicesContext';
 import { usePreferences } from '@/app/providers/preferencesContext';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button, ButtonLink } from '@/components/ui/Button';
+import { LanguageSelector } from '@/components/navigation/LanguageSelector';
 
 function Setting({
   title,
@@ -42,6 +43,7 @@ function Toggle({
   onChange: (value: boolean) => void;
   label: string;
 }) {
+  const { t } = useTranslation('settings');
   return (
     <button
       type="button"
@@ -60,7 +62,7 @@ function Toggle({
         className={`inline-block h-6 w-6 rounded-full bg-ink shadow transition-transform ${checked ? 'translate-x-7' : 'translate-x-1'}`}
       />
       <span aria-hidden="true" className="sr-only">
-        {checked ? 'On' : 'Off'}
+        {checked ? t('toggle.on') : t('toggle.off')}
       </span>
     </button>
   );
@@ -69,29 +71,32 @@ function Toggle({
 const selectClass =
   'rounded-lg border border-line bg-raised px-3 py-2 text-sm text-ink focus-visible:outline-2 focus-visible:outline-brand';
 
-const AUDIENCE_NAME: Readonly<Record<Audience, string>> = Object.fromEntries(
-  PATHS.map((p) => [p.id, p.name]),
-) as Record<Audience, string>;
-
 export function PreferencesPage() {
+  const { t } = useTranslation('settings');
   const { preferences, update } = usePreferences();
   const routeId = useId();
   const goalId = useId();
   return (
     <>
       <PageHeader
-        eyebrow="Settings"
-        title="Preferences"
-        description="How the app suggests and paces activities. Saved on this device only."
+        eyebrow={t('eyebrow')}
+        title={t('preferences.title')}
+        description={t('preferences.description')}
       />
       <div className="rounded-2xl border border-line bg-surface px-5">
         <Setting
-          title="Route"
-          description="Optional. A route chooses suggested games and settings; it never limits what you can play."
+          title={t('preferences.language.title')}
+          description={t('preferences.language.description')}
+        >
+          <LanguageSelector className="min-w-44" />
+        </Setting>
+        <Setting
+          title={t('preferences.route.title')}
+          description={t('preferences.route.description')}
         >
           <select
             id={routeId}
-            aria-label="Route"
+            aria-label={t('preferences.route.title')}
             value={preferences.path ?? ''}
             onChange={(e) => {
               const value = e.target.value;
@@ -103,41 +108,41 @@ export function PreferencesPage() {
             }}
             className={selectClass}
           >
-            <option value="">No route (general)</option>
+            <option value="">{t('preferences.route.none')}</option>
             {AUDIENCES.map((a) => (
               <option key={a} value={a}>
-                {AUDIENCE_NAME[a]}
+                {t(`common:audiences.${a}`)}
               </option>
             ))}
           </select>
         </Setting>
         <Setting
-          title="Daily practice goal"
-          description="A voluntary goal shown on the home screen. Not reaching it has no consequence."
+          title={t('preferences.goal.title')}
+          description={t('preferences.goal.description')}
         >
           <select
             id={goalId}
-            aria-label="Daily practice goal"
+            aria-label={t('preferences.goal.title')}
             value={preferences.dailyGoalMinutes ?? ''}
             onChange={(e) => {
               update({ dailyGoalMinutes: e.target.value === '' ? null : Number(e.target.value) });
             }}
             className={selectClass}
           >
-            <option value="">No goal</option>
+            <option value="">{t('preferences.goal.none')}</option>
             {DAILY_GOAL_OPTIONS.map((m) => (
               <option key={m} value={m}>
-                {m} minutes a day
+                {t('preferences.goal.option', { count: m })}
               </option>
             ))}
           </select>
         </Setting>
         <Setting
-          title="Relaxed timing by default"
-          description="Start every game without answer limits and with longer memorisation time. Relaxed sessions are saved but do not set records."
+          title={t('preferences.relaxed.title')}
+          description={t('preferences.relaxed.description')}
         >
           <Toggle
-            label="Relaxed timing by default"
+            label={t('preferences.relaxed.title')}
             checked={preferences.relaxedByDefault}
             onChange={(relaxedByDefault) => {
               update({ relaxedByDefault });
@@ -145,11 +150,11 @@ export function PreferencesPage() {
           />
         </Setting>
         <Setting
-          title="Free play"
-          description="Open all ten levels of every game. Without it, level 1 is open and each next level opens after a session with performance 50+ or after three completed sessions."
+          title={t('preferences.freePlay.title')}
+          description={t('preferences.freePlay.description')}
         >
           <Toggle
-            label="Free play"
+            label={t('preferences.freePlay.title')}
             checked={preferences.freePlay}
             onChange={(freePlay) => {
               update({ freePlay });
@@ -162,26 +167,31 @@ export function PreferencesPage() {
 }
 
 const TEXT_LABEL: Readonly<Record<TextSize, string>> = {
-  normal: 'Standard',
-  large: 'Large',
-  'x-large': 'Extra large',
+  normal: 'accessibility.textSize.normal',
+  large: 'accessibility.textSize.large',
+  'x-large': 'accessibility.textSize.xLarge',
 };
 
 export function AccessibilityPage() {
+  const { t } = useTranslation('settings');
   const { preferences, update } = usePreferences();
   return (
     <>
       <PageHeader
-        eyebrow="Settings"
-        title="Accessibility"
-        description="Adjust reading, motion and pace. Changes apply immediately."
+        eyebrow={t('eyebrow')}
+        title={t('accessibility.title')}
+        description={t('accessibility.description')}
       />
       <div className="rounded-2xl border border-line bg-surface px-5">
         <Setting
-          title="Text size"
-          description="Scales all text and controls. Browser zoom also works."
+          title={t('accessibility.textSize.title')}
+          description={t('accessibility.textSize.description')}
         >
-          <div role="radiogroup" aria-label="Text size" className="flex gap-2">
+          <div
+            role="radiogroup"
+            aria-label={t('accessibility.textSize.title')}
+            className="flex gap-2"
+          >
             {TEXT_SIZES.map((size) => (
               <button
                 key={size}
@@ -197,26 +207,29 @@ export function AccessibilityPage() {
                     : 'border-line bg-raised text-ink-soft'
                 }`}
               >
-                {TEXT_LABEL[size]}
+                {t(TEXT_LABEL[size])}
               </button>
             ))}
           </div>
         </Setting>
         <Setting
-          title="Reduce motion"
-          description="Turns off transitions and decorative animation. By default the app follows your system setting."
+          title={t('accessibility.motion.title')}
+          description={t('accessibility.motion.description')}
         >
           <Toggle
-            label="Reduce motion"
+            label={t('accessibility.motion.title')}
             checked={preferences.motion === 'reduce'}
             onChange={(on) => {
               update({ motion: on ? 'reduce' : 'system' });
             }}
           />
         </Setting>
-        <Setting title="Comfortable controls" description="Larger buttons and touch targets.">
+        <Setting
+          title={t('accessibility.comfort.title')}
+          description={t('accessibility.comfort.description')}
+        >
           <Toggle
-            label="Comfortable controls"
+            label={t('accessibility.comfort.title')}
             checked={preferences.comfort}
             onChange={(comfort) => {
               update({ comfort });
@@ -224,11 +237,11 @@ export function AccessibilityPage() {
           />
         </Setting>
         <Setting
-          title="No time limits"
-          description="Relaxed timing for every game: no answer limits, double memorisation time and feedback that waits for you."
+          title={t('accessibility.noLimits.title')}
+          description={t('accessibility.noLimits.description')}
         >
           <Toggle
-            label="No time limits"
+            label={t('accessibility.noLimits.title')}
             checked={preferences.relaxedByDefault}
             onChange={(relaxedByDefault) => {
               update({ relaxedByDefault });
@@ -237,18 +250,12 @@ export function AccessibilityPage() {
         </Setting>
       </div>
       <section className="mt-6 rounded-2xl border border-line bg-surface p-5 text-sm text-ink-soft">
-        <h2 className="mb-2 font-semibold text-ink">Also available everywhere</h2>
+        <h2 className="mb-2 font-semibold text-ink">{t('accessibility.always.title')}</h2>
         <ul className="list-disc space-y-1 pl-5">
-          <li>Every game can be played with the keyboard; answer options have number keys.</li>
-          <li>“How to play” reopens the instructions at any moment during a game.</li>
-          <li>
-            Shapes always differ in form as well as colour; feedback uses text and symbols, not only
-            colour.
-          </li>
-          <li>
-            Reaction games need quick responses; their pages say so. See docs/accessibility.md for
-            known limits.
-          </li>
+          <li>{t('accessibility.always.keyboard')}</li>
+          <li>{t('accessibility.always.howToPlay')}</li>
+          <li>{t('accessibility.always.shapes')}</li>
+          <li>{t('accessibility.always.reaction')}</li>
         </ul>
       </section>
     </>
@@ -257,6 +264,7 @@ export function AccessibilityPage() {
 
 /** Resets everything this demo stores in the browser, after an explicit confirmation. */
 export function DataPage() {
+  const { t } = useTranslation('settings');
   const { progress, learning, profile, preferences: preferencesRepository } = useServices();
   const { update } = usePreferences();
   const [stage, setStage] = useState<'idle' | 'confirm' | 'done' | 'failed'>('idle');
@@ -286,22 +294,22 @@ export function DataPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Settings"
-        title="Your data"
-        description="This demo has no accounts and no server: everything lives in this browser’s local storage."
+        eyebrow={t('eyebrow')}
+        title={t('data.title')}
+        description={t('data.description')}
       />
       <div className="flex flex-col gap-6">
         <section className="rounded-2xl border border-line bg-surface p-5 text-sm text-ink-soft">
-          <h2 className="mb-2 font-semibold text-ink">What is stored</h2>
+          <h2 className="mb-2 font-semibold text-ink">{t('data.stored.title')}</h2>
           <ul className="list-disc space-y-1 pl-5">
-            <li>Game results: level, score, accuracy, timing and date of each session.</li>
-            <li>Learning progress of the programming course.</li>
-            <li>Days you practised, daily challenges and your weekly target.</li>
-            <li>Preferences (route, text size, timing).</li>
+            <li>{t('data.stored.results')}</li>
+            <li>{t('data.stored.learning')}</li>
+            <li>{t('data.stored.days')}</li>
+            <li>{t('data.stored.preferences')}</li>
           </ul>
-          <p className="mt-2">No name, email, location or other personal details are collected.</p>
+          <p className="mt-2">{t('data.stored.noPersonal')}</p>
           <Button variant="secondary" className="mt-4" onClick={() => void exportData()}>
-            Show my data as JSON
+            {t('data.showJson')}
           </Button>
           {exporting !== null && (
             <pre className="mt-3 max-h-64 overflow-auto rounded-lg border border-line bg-canvas p-3 text-xs">
@@ -315,12 +323,9 @@ export function DataPage() {
           className="rounded-2xl border border-danger/40 bg-danger/5 p-5"
         >
           <h2 id="reset-title" className="font-semibold text-ink">
-            Reset demo data
+            {t('data.reset.title')}
           </h2>
-          <p className="mt-1 text-sm text-ink-soft">
-            Deletes all results, history, milestones, course progress and preferences on this
-            device. This cannot be undone.
-          </p>
+          <p className="mt-1 text-sm text-ink-soft">{t('data.reset.description')}</p>
           {stage === 'idle' && (
             <Button
               variant="danger"
@@ -329,7 +334,7 @@ export function DataPage() {
                 setStage('confirm');
               }}
             >
-              Reset all data…
+              {t('data.reset.button')}
             </Button>
           )}
           {stage === 'confirm' && (
@@ -339,11 +344,11 @@ export function DataPage() {
               className="mt-4 flex flex-col gap-3"
             >
               <p id="confirm-reset" className="font-medium text-danger">
-                Are you sure? Everything stored by this app on this device will be deleted.
+                {t('data.reset.confirm')}
               </p>
               <div className="flex flex-wrap gap-2">
                 <Button variant="danger" onClick={() => void reset()}>
-                  Yes, delete everything
+                  {t('data.reset.yes')}
                 </Button>
                 <Button
                   variant="ghost"
@@ -351,22 +356,22 @@ export function DataPage() {
                     setStage('idle');
                   }}
                 >
-                  Cancel
+                  {t('common:actions.cancel')}
                 </Button>
               </div>
             </div>
           )}
           {stage === 'done' && (
             <p role="status" className="mt-4 text-success">
-              All data was deleted.{' '}
+              {t('data.reset.done')}{' '}
               <ButtonLink to="/" variant="ghost">
-                Back to home
+                {t('data.reset.backHome')}
               </ButtonLink>
             </p>
           )}
           {stage === 'failed' && (
             <p role="alert" className="mt-4 text-danger">
-              Some data could not be deleted. Your browser may be blocking storage.
+              {t('data.reset.failed')}
             </p>
           )}
         </section>

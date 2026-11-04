@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { emptyProfile } from '../profile/profile';
 import { emptyProgress, type SessionSummary, type UserProgress } from '../progress/progress';
 import { toSeed } from '../random/seed';
@@ -104,7 +105,7 @@ describe('recommendTraining', () => {
     });
     expect(s[0]).toMatchObject({ kind: 'level-up', gameId: 'm1', level: 2 });
     expect(s[1]).toMatchObject({ kind: 'variety', gameId: 's1' });
-    expect(s[1]?.reason).toMatch(/not practised mental speed/);
+    expect(en(s[1]?.reason ?? '')).toMatch(/not practised mental speed/);
     expect(s[2]).toMatchObject({ kind: 'discover', gameId: 'a1' });
     expect(new Set(s.map((x) => x.gameId)).size).toBe(s.length);
   });

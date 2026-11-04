@@ -1,0 +1,88 @@
+{
+  "eyebrow": "Réglages",
+  "toggle": {
+    "on": "Activé",
+    "off": "Désactivé"
+  },
+  "preferences": {
+    "title": "Préférences",
+    "description": "Comment l’application suggère les activités et en règle le rythme. Enregistré uniquement sur cet appareil.",
+    "language": {
+      "title": "Langue",
+      "description": "La langue de toute l’application, jeux et leçons compris. Enregistrée sur cet appareil."
+    },
+    "route": {
+      "title": "Parcours",
+      "description": "Facultatif. Un parcours choisit des jeux et réglages suggérés ; il ne limite jamais ce à quoi vous pouvez jouer.",
+      "none": "Aucun parcours (général)"
+    },
+    "goal": {
+      "title": "Objectif quotidien",
+      "description": "Un objectif facultatif affiché sur l’écran d’accueil. Ne pas l’atteindre n’a aucune conséquence.",
+      "none": "Aucun objectif",
+      "option_one": "{{count}} minute par jour",
+      "option_other": "{{count}} minutes par jour"
+    },
+    "relaxed": {
+      "title": "Temps détendu par défaut",
+      "description": "Commencez chaque jeu sans limite de réponse et avec plus de temps de mémorisation. Les séances détendues sont enregistrées mais n’établissent pas de records."
+    },
+    "freePlay": {
+      "title": "Jeu libre",
+      "description": "Ouvre les dix niveaux de chaque jeu. Sinon, le niveau 1 est ouvert et chaque niveau suivant s’ouvre après une séance avec une performance d’au moins 50 ou après trois séances terminées."
+    }
+  },
+  "accessibility": {
+    "title": "Accessibilité",
+    "description": "Réglez la lecture, les animations et le rythme. Les changements s’appliquent immédiatement.",
+    "textSize": {
+      "title": "Taille du texte",
+      "description": "Agrandit tout le texte et les commandes. Le zoom du navigateur fonctionne aussi.",
+      "normal": "Standard",
+      "large": "Grande",
+      "xLarge": "Très grande"
+    },
+    "motion": {
+      "title": "Réduire les animations",
+      "description": "Désactive les transitions et les animations décoratives. Par défaut, l’application suit le réglage de votre système."
+    },
+    "comfort": {
+      "title": "Commandes confortables",
+      "description": "Boutons et zones tactiles plus grands."
+    },
+    "noLimits": {
+      "title": "Sans limite de temps",
+      "description": "Temps détendu pour tous les jeux : pas de limite de réponse, deux fois plus de temps de mémorisation et un retour qui vous attend."
+    },
+    "always": {
+      "title": "Toujours disponible",
+      "keyboard": "Tous les jeux se jouent au clavier ; les options de réponse ont des touches numériques.",
+      "howToPlay": "« Comment jouer » rouvre les instructions à tout moment pendant une partie.",
+      "shapes": "Les formes diffèrent toujours par leur contour en plus de leur couleur ; les retours utilisent du texte et des symboles, pas seulement la couleur.",
+      "reaction": "Les jeux de réaction demandent des réponses rapides, et leurs pages le signalent. Voir docs/accessibility.md pour les limites connues."
+    }
+  },
+  "data": {
+    "title": "Vos données",
+    "description": "Cette démo n’a ni comptes ni serveur : tout est stocké localement dans ce navigateur.",
+    "stored": {
+      "title": "Ce qui est enregistré",
+      "results": "Résultats des jeux : niveau, score, précision, temps et date de chaque séance.",
+      "learning": "Votre progression dans le cours de programmation.",
+      "days": "Les jours où vous vous êtes entraîné, les défis du jour et votre objectif hebdomadaire.",
+      "preferences": "Préférences (parcours, taille du texte, temps).",
+      "noPersonal": "Aucun nom, e-mail, lieu ni autre donnée personnelle n’est collecté."
+    },
+    "showJson": "Afficher mes données en JSON",
+    "reset": {
+      "title": "Réinitialiser les données de la démo",
+      "description": "Supprime tous les résultats, l’historique, les étapes, la progression du cours et les préférences sur cet appareil. Action irréversible.",
+      "button": "Réinitialiser toutes les données…",
+      "confirm": "Vous êtes sûr ? Tout ce que cette application a enregistré sur cet appareil sera supprimé.",
+      "yes": "Oui, tout supprimer",
+      "done": "Toutes les données ont été supprimées.",
+      "backHome": "Retour à l’accueil",
+      "failed": "Certaines données n’ont pas pu être supprimées. Votre navigateur bloque peut-être le stockage."
+    }
+  }
+}

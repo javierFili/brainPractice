@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ShapeRotationProfile } from './types';
 
@@ -7,7 +8,7 @@ import type { ShapeRotationProfile } from './types';
  */
 export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
   {
-    objective: 'Find the same piece, turned, among different pieces.',
+    objective: msg('patterns:shapeRotation.levels.1'),
     challengeCount: 5,
     cells: 5,
     pairs: 0,
@@ -16,7 +17,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(12_000),
   },
   {
-    objective: 'Tell a turned piece from its mirror image.',
+    objective: msg('patterns:shapeRotation.levels.2'),
     challengeCount: 5,
     cells: 5,
     pairs: 2,
@@ -25,7 +26,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(16_000),
   },
   {
-    objective: 'Mirror images and pieces that differ by one square.',
+    objective: msg('patterns:shapeRotation.levels.3'),
     challengeCount: 6,
     cells: 5,
     pairs: 2,
@@ -34,7 +35,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(18_000),
   },
   {
-    objective: 'Bigger 6-square pieces.',
+    objective: msg('patterns:shapeRotation.levels.4'),
     challengeCount: 6,
     cells: 6,
     pairs: 2,
@@ -43,7 +44,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(20_000),
   },
   {
-    objective: '6-square pieces that differ by one square.',
+    objective: msg('patterns:shapeRotation.levels.5'),
     challengeCount: 6,
     cells: 6,
     pairs: 2,
@@ -52,7 +53,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(22_000),
   },
   {
-    objective: '6-square pieces among six options.',
+    objective: msg('patterns:shapeRotation.levels.6'),
     challengeCount: 6,
     cells: 6,
     pairs: 3,
@@ -61,7 +62,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(24_000),
   },
   {
-    objective: '6-square look-alikes that differ by one square.',
+    objective: msg('patterns:shapeRotation.levels.7'),
     challengeCount: 6,
     cells: 6,
     pairs: 3,
@@ -70,7 +71,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(26_000),
   },
   {
-    objective: 'Large 7-square pieces.',
+    objective: msg('patterns:shapeRotation.levels.8'),
     challengeCount: 6,
     cells: 7,
     pairs: 3,
@@ -79,7 +80,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(28_000),
   },
   {
-    objective: '7-square look-alikes that differ by one square.',
+    objective: msg('patterns:shapeRotation.levels.9'),
     challengeCount: 6,
     cells: 7,
     pairs: 3,
@@ -88,7 +89,7 @@ export const SHAPE_ROTATION_LEVELS = defineLevels<ShapeRotationProfile>([
     timing: untimed(30_000),
   },
   {
-    objective: 'Eight options: four 7-square look-alikes and their mirror images.',
+    objective: msg('patterns:shapeRotation.levels.10'),
     challengeCount: 6,
     cells: 7,
     pairs: 4,

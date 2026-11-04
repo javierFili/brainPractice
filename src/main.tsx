@@ -7,13 +7,24 @@ import { LocalStoragePreferencesRepository } from '@/infrastructure/LocalStorage
 import { LocalStorageProfileRepository } from '@/infrastructure/LocalStorageProfileRepository';
 import { LocalStorageProgressRepository } from '@/infrastructure/LocalStorageProgressRepository';
 import { systemClock } from '@/infrastructure/SystemClock';
+import {
+  browserLanguages,
+  browserLanguageStorage,
+  detectLanguage,
+  initI18n,
+  readStoredLanguage,
+} from '@/i18n';
 import './index.css';
 
 // The app and its 60 games load as a separate chunk, so the page paints its loading state first.
+// The interface language loads alongside, so the first render is already translated.
 const [{ App }, { createServices }, { GAME_MODULES }] = await Promise.all([
   import('@/app/App'),
   import('@/app/composition'),
   import('@/games/registry'),
+  initI18n({
+    language: detectLanguage(readStoredLanguage(browserLanguageStorage()), browserLanguages()),
+  }),
 ]);
 
 const { storage, persistence } = openBrowserStorage();

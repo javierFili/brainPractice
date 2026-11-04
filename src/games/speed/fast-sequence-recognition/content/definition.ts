@@ -1,7 +1,7 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { sample, shuffle, weightedPick, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg, type Text } from '@/domain/shared';
 import { COLORS, SHAPES, glyphKey, glyphLabel, type Glyph } from '@/games/kit/content';
 import { SPEED_SCORING } from '@/games/speed/shared/content';
 import { FAST_SEQUENCE_LEVELS } from './levels';
@@ -29,9 +29,43 @@ export function sequenceLabel(
   kind: SequenceKind,
   items: readonly string[],
   glyphs: Readonly<Record<string, Glyph>>,
-): string {
+): Text {
   if (kind !== 'shapes') return items.join(' ');
-  return items.map((id) => glyphLabel(glyphs[id] as Glyph)).join(SHAPE_SEPARATOR);
+  return joinText(
+    items.map((id) => glyphLabel(glyphs[id] as Glyph)),
+    SHAPE_SEPARATOR,
+  );
+}
+
+const keyOf = (items: readonly string[]) => items.join('|');
+
+/**
+ * Options are drawn by sequence key (shape names are translated messages, compared by identity
+ * only through their ids), then labelled.
+ */
+function labelledChoice(
+  random: RandomGenerator,
+  kind: SequenceKind,
+  items: readonly string[],
+  options: readonly (readonly string[])[],
+  glyphs: Readonly<Record<string, Glyph>>,
+) {
+  const labels = new Map(options.map((o) => [keyOf(o), sequenceLabel(kind, o, glyphs)]));
+  const correct = keyOf(items);
+  const response = singleChoice(
+    random,
+    correct,
+    options.map(keyOf).filter((key) => key !== correct),
+  );
+  return {
+    ...response,
+    question: {
+      options: response.question.options.map((o) => ({
+        ...o,
+        label: labels.get(o.label as string) ?? o.label,
+      })),
+    },
+  };
 }
 
 export const FAST_SEQUENCE_RECOGNITION_ID = gameIdOf('fast-sequence-recognition');
@@ -41,10 +75,9 @@ export const fastSequenceRecognitionGame: GameDefinition<
   FastSequenceProfile
 > = {
   id: FAST_SEQUENCE_RECOGNITION_ID,
-  name: 'Fast Sequence Recognition',
-  tagline: 'One glimpse — which one was it?',
-  description:
-    'A short sequence of digits, letters or shapes is shown for a moment, then hidden. Pick it out from similar sequences as fast as you can. Sequences grow longer, glimpses get shorter, and at the top the candidates differ only in order.',
+  name: msg('speed:fastSequenceRecognition.name'),
+  tagline: msg('speed:fastSequenceRecognition.tagline'),
+  description: msg('speed:fastSequenceRecognition.description'),
   area: 'speed',
   skills: ['processing-speed', 'short-term-memory', 'visual-memory'],
   meta: {
@@ -55,18 +88,16 @@ export const fastSequenceRecognitionGame: GameDefinition<
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy', 'response-time'],
-    scoringSummary:
-      'Each pick is right or wrong; a wrong pick costs points. A correct pick earns more the faster it comes after the sequence is hidden, but accuracy carries most of the result. Relaxed timing doubles the glimpse and removes the answer limit.',
+    scoringSummary: msg('speed:fastSequenceRecognition.scoringSummary'),
     feedback: 'brief',
-    accessibilityNotes:
-      'The glimpse is a single, still display (no flashing). Screen readers announce the sequence once when it appears; a short glimpse can end before it is read, so relaxed timing is recommended with a screen reader.',
+    accessibilityNotes: msg('speed:fastSequenceRecognition.accessibilityNotes'),
   },
   instructions: [
-    'A sequence appears briefly. Take it in as a whole — press “I’m ready” if you are done early.',
-    'When it disappears, pick the same sequence among the candidates (click or number keys).',
-    'Candidates differ by one symbol or by two neighbours swapped.',
+    msg('speed:fastSequenceRecognition.instructions.glimpse'),
+    msg('speed:fastSequenceRecognition.instructions.pick'),
+    msg('speed:fastSequenceRecognition.instructions.differ'),
   ],
-  simpleInstructions: 'Look at the row, then find the same row.',
+  simpleInstructions: msg('speed:fastSequenceRecognition.simpleInstructions'),
   levels: FAST_SEQUENCE_LEVELS,
   scoring: SPEED_SCORING,
   generate({ identity, profile, random }) {
@@ -77,14 +108,12 @@ export const fastSequenceRecognitionGame: GameDefinition<
       const items = sample(random, pool, profile.length);
       const options = recognitionOptions(random, items, profile.optionCount, pool, profile.changes);
       if (options === null) return null;
-      const correct = sequenceLabel(kind, items, glyphs);
-      const distractors = options
-        .map((o) => sequenceLabel(kind, o, glyphs))
-        .filter((label) => label !== correct);
       return {
         ...identity,
-        prompt: 'Which sequence did you see?',
-        studyPrompt: `Take in these ${profile.length} ${kind === 'shapes' ? 'shapes' : kind}.`,
+        prompt: msg('speed:fastSequenceRecognition.prompt'),
+        studyPrompt: msg(`speed:fastSequenceRecognition.studyPrompt.${kind}`, {
+          count: profile.length,
+        }),
         content: {
           kind,
           items,
@@ -93,8 +122,10 @@ export const fastSequenceRecognitionGame: GameDefinition<
               ? Object.fromEntries(items.map((id) => [id, glyphs[id] as Glyph]))
               : {},
         },
-        response: singleChoice(random, correct, distractors),
-        explanation: `The sequence was ${correct}.`,
+        response: labelledChoice(random, kind, items, options, glyphs),
+        explanation: msg('speed:fastSequenceRecognition.explanation', {
+          sequence: sequenceLabel(kind, items, glyphs),
+        }),
         skills: ['processing-speed', 'short-term-memory'],
         timing: profile.timing,
       };

@@ -1,3 +1,4 @@
+import { msg, type Message } from '@/domain/shared';
 import type { TreeNode, TreeOp } from '../types';
 import type { ProgramSpace } from './programSpace';
 
@@ -65,22 +66,17 @@ export const treeSize = (tree: TreeNode): number =>
 export const treeHeight = (tree: TreeNode): number =>
   tree.children.length === 0 ? 0 : 1 + Math.max(...tree.children.map(treeHeight));
 
-export function describeTreeOp(op: TreeOp): string {
-  switch (op) {
-    case 'mirror':
-      return 'mirror the whole tree (every item lists its children in reverse order)';
-    case 'mirror-top':
-      return 'reverse only the order of the top-level items';
-    case 'rotate-top':
-      return 'move the first top-level item to the end';
-    case 'prune-leaves':
-      return 'remove every item that has no children';
-    case 'flatten':
-      return 'flatten: every item becomes a direct child of the root, in reading order';
-    case 'sort-children':
-      return 'sort the children of every item alphabetically';
-  }
-}
+const TREE_OP_KEYS: Readonly<Record<TreeOp, string>> = {
+  mirror: 'mirror',
+  'mirror-top': 'mirrorTop',
+  'rotate-top': 'rotateTop',
+  'prune-leaves': 'pruneLeaves',
+  flatten: 'flatten',
+  'sort-children': 'sortChildren',
+};
+
+export const describeTreeOp = (op: TreeOp): Message =>
+  msg(`programming:patternArchitect.treeOp.${TREE_OP_KEYS[op]}`);
 
 /** Look-alike restructurings, for "almost the right step" distractors. */
 export const TREE_SIBLINGS: Readonly<Record<TreeOp, readonly TreeOp[]>> = {

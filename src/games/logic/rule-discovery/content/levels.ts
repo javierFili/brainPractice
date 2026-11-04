@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { GlyphFamily, NumberFamily, RuleProfile } from './types';
 
@@ -15,7 +16,7 @@ const none = { hidden: [], considered: [] };
  */
 export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
   {
-    objective: 'The rule is about colour.',
+    objective: msg('logic:ruleDiscovery.levels.1'),
     challengeCount: 5,
     timing: untimed(20_000),
     glyph: { hidden: ['color'], considered: BASIC_GLYPH },
@@ -25,7 +26,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 3,
   },
   {
-    objective: 'Colour or shape: which one matters?',
+    objective: msg('logic:ruleDiscovery.levels.2'),
     challengeCount: 5,
     timing: untimed(25_000),
     glyph: { hidden: BASIC_GLYPH, considered: BASIC_GLYPH },
@@ -35,7 +36,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: 'Rules about numbers: even, odd, big or small.',
+    objective: msg('logic:ruleDiscovery.levels.3'),
     challengeCount: 5,
     timing: untimed(30_000),
     glyph: none,
@@ -45,7 +46,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: 'Rules that say what something is not.',
+    objective: msg('logic:ruleDiscovery.levels.4'),
     challengeCount: 5,
     timing: untimed(35_000),
     glyph: { hidden: ['not-color', 'not-shape'], considered: NEG_GLYPH },
@@ -55,7 +56,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: 'Times tables and ranges.',
+    objective: msg('logic:ruleDiscovery.levels.5'),
     challengeCount: 5,
     timing: untimed(40_000),
     glyph: none,
@@ -65,7 +66,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: '“Or” rules: one of two features is enough.',
+    objective: msg('logic:ruleDiscovery.levels.6'),
     challengeCount: 5,
     timing: untimed(45_000),
     glyph: { hidden: ['color-or-shape'], considered: ALL_GLYPH },
@@ -75,7 +76,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: 'Shapes and numbers, every simple rule.',
+    objective: msg('logic:ruleDiscovery.levels.7'),
     challengeCount: 5,
     timing: untimed(45_000),
     glyph: { hidden: NEG_GLYPH, considered: ALL_GLYPH },
@@ -85,7 +86,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: '“And” rules: two things must both be true.',
+    objective: msg('logic:ruleDiscovery.levels.8'),
     challengeCount: 5,
     timing: untimed(55_000),
     glyph: none,
@@ -95,7 +96,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 4,
   },
   {
-    objective: 'Any shape rule, fewer examples.',
+    objective: msg('logic:ruleDiscovery.levels.9'),
     challengeCount: 5,
     timing: untimed(55_000),
     glyph: { hidden: ALL_GLYPH, considered: ALL_GLYPH },
@@ -105,7 +106,7 @@ export const RULE_DISCOVERY_LEVELS = defineLevels<RuleProfile>([
     options: 5,
   },
   {
-    objective: 'Any rule, more options to check.',
+    objective: msg('logic:ruleDiscovery.levels.10'),
     challengeCount: 6,
     timing: untimed(60_000),
     glyph: { hidden: ['color-or-shape', 'not-shape', 'not-color'], considered: ALL_GLYPH },

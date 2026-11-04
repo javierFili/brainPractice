@@ -1,4 +1,5 @@
 import { err, ok, type Result } from '../shared/result';
+import { isBlankText, joinText, msg, type Text } from '../shared/text';
 import type { AnswerOf, Exercise, ExerciseAnswer, ExerciseKind, ExerciseOf } from './exercise';
 
 export type Verdict = 'correct' | 'partial' | 'incorrect';
@@ -9,14 +10,18 @@ export type Verdict = 'correct' | 'partial' | 'incorrect';
  * retry is left or the learner asks for the solution.
  */
 export interface Feedback {
-  readonly headline: string;
+  readonly headline: Text;
   /** "You chose B." / "You answered 15." */
-  readonly yourAnswer: string;
+  readonly yourAnswer: Text;
   /** Why that answer is wrong (or what was right about it), 0–2 short sentences. */
-  readonly diagnosis: readonly string[];
-  readonly explanation: string;
-  readonly correctAnswer: string;
+  readonly diagnosis: readonly Text[];
+  readonly explanation: Text;
+  readonly correctAnswer: Text;
 }
+
+/** Feedback sentences live in `learn:feedback.*`. */
+const F = (key: string, values?: Readonly<Record<string, Text | number>>) =>
+  msg(`learn:feedback.${key}`, values);
 
 export interface Evaluation {
   readonly verdict: Verdict;
@@ -33,18 +38,20 @@ export type AnswerError =
 
 const verdictOf = (credit: number): Verdict =>
   credit >= 1 ? 'correct' : credit > 0 ? 'partial' : 'incorrect';
-const HEADLINES: Readonly<Record<Verdict, string>> = {
-  correct: 'Correct.',
-  partial: 'Partly right.',
-  incorrect: 'Not quite.',
+const HEADLINES: Readonly<Record<Verdict, Text>> = {
+  correct: F('headline.correct'),
+  partial: F('headline.partial'),
+  incorrect: F('headline.incorrect'),
 };
 
 function evaluation(
   credit: number,
-  parts: Omit<Feedback, 'headline' | 'diagnosis'> & { diagnosis?: readonly (string | undefined)[] },
+  parts: Omit<Feedback, 'headline' | 'diagnosis'> & { diagnosis?: readonly (Text | undefined)[] },
 ): Evaluation {
   const verdict = verdictOf(credit);
-  const diagnosis = (parts.diagnosis ?? []).filter((d): d is string => d !== undefined && d !== '');
+  const diagnosis = (parts.diagnosis ?? []).filter(
+    (d): d is Text => d !== undefined && !isBlankText(d),
+  );
   return {
     verdict,
     credit,
@@ -100,7 +107,7 @@ type Evaluator<K extends ExerciseKind> = (
   answer: AnswerOf<K>,
 ) => Result<Evaluation, AnswerError>;
 
-const labelOf = (options: readonly { id: string; label: string }[], id: string) =>
+const labelOf = (options: readonly { id: string; label: Text }[], id: string): Text =>
   options.find((o) => o.id === id)?.label ?? id;
 
 const multipleChoice: Evaluator<'multiple-choice'> = (exercise, answer) => {
@@ -109,7 +116,7 @@ const multipleChoice: Evaluator<'multiple-choice'> = (exercise, answer) => {
   const correct = answer.optionId === exercise.correctOptionId;
   return ok(
     evaluation(correct ? 1 : 0, {
-      yourAnswer: `You chose “${labelOf(exercise.options, answer.optionId)}”.`,
+      yourAnswer: F('youChose', { option: labelOf(exercise.options, answer.optionId) }),
       diagnosis: correct ? [] : [exercise.misconceptions[answer.optionId]],
       explanation: exercise.explanation,
       correctAnswer: labelOf(exercise.options, exercise.correctOptionId),
@@ -125,7 +132,7 @@ const prediction: Evaluator<'prediction'> = (exercise, answer) => {
   )?.[1];
   return ok(
     evaluation(correct ? 1 : 0, {
-      yourAnswer: `You answered ${answer.value.trim()}.`,
+      yourAnswer: F('youAnswered', { value: answer.value.trim() }),
       diagnosis: correct ? [] : [mistake],
       explanation: exercise.explanation,
       correctAnswer: exercise.expected,
@@ -146,8 +153,11 @@ const codeCompletion: Evaluator<'code-completion'> = (exercise, answer) => {
     evaluation(credit, {
       yourAnswer:
         exercise.blanks.length === 1
-          ? `You filled in ${answer.blanks[exercise.blanks[0]?.id ?? ''] ?? ''}.`
-          : `${exercise.blanks.length - wrong.length} of ${exercise.blanks.length} blanks are right.`,
+          ? F('youFilledIn', { value: answer.blanks[exercise.blanks[0]?.id ?? ''] ?? '' })
+          : F('blanksRight', {
+              right: exercise.blanks.length - wrong.length,
+              count: exercise.blanks.length,
+            }),
       diagnosis: wrong.map(
         (b) => exercise.misconceptions?.[`${b.id}:${answer.blanks[b.id] ?? ''}`] ?? undefined,
       ),
@@ -172,15 +182,21 @@ const ordering: Evaluator<'ordering'> = (exercise, answer) => {
   const credit = inPlace === ids.length ? 1 : inPlace / ids.length >= 0.6 ? 0.5 : 0;
   return ok(
     evaluation(credit, {
-      yourAnswer: `${inPlace} of ${ids.length} steps are in the right place.`,
+      yourAnswer: F('stepsInPlace', { right: inPlace, count: ids.length }),
       diagnosis:
         firstWrong === -1
           ? []
           : [
-              `Step ${firstWrong + 1} should be “${labelOf(exercise.items, ids[firstWrong] ?? '')}”.`,
+              F('stepShouldBe', {
+                step: firstWrong + 1,
+                item: labelOf(exercise.items, ids[firstWrong] ?? ''),
+              }),
             ],
       explanation: exercise.explanation,
-      correctAnswer: exercise.items.map((i) => i.label).join(' → '),
+      correctAnswer: joinText(
+        exercise.items.map((i) => i.label),
+        ' → ',
+      ),
     }),
   );
 };
@@ -221,21 +237,28 @@ const blockBuilder: Evaluator<'block-builder'> = (exercise, answer) => {
       : 0;
   const diagnosis = [
     ...extra.map(
-      (id) => exercise.misconceptions[id] ?? `“${labelOf(exercise.blocks, id)}” is not needed.`,
+      (id) =>
+        exercise.misconceptions[id] ?? F('notNeeded', { block: labelOf(exercise.blocks, id) }),
     ),
     missing.length > 0
-      ? `Missing: ${missing.map((id) => `“${labelOf(exercise.blocks, id)}”`).join(', ')}.`
+      ? F('missing', {
+          blocks: joinText(
+            missing.map((id) => F('quoted', { text: labelOf(exercise.blocks, id) })),
+            ', ',
+          ),
+        })
       : undefined,
-    !exact && extra.length === 0 && missing.length === 0
-      ? 'The right blocks, but not in the right order.'
-      : undefined,
+    !exact && extra.length === 0 && missing.length === 0 ? F('wrongOrder') : undefined,
   ];
   return ok(
     evaluation(credit, {
-      yourAnswer: `You used ${answer.order.length} block${answer.order.length === 1 ? '' : 's'}.`,
+      yourAnswer: F('blocksUsed', { count: answer.order.length }),
       diagnosis: diagnosis.slice(0, 2),
       explanation: exercise.explanation,
-      correctAnswer: exercise.solution.map((id) => labelOf(exercise.blocks, id)).join(' → '),
+      correctAnswer: joinText(
+        exercise.solution.map((id) => labelOf(exercise.blocks, id)),
+        ' → ',
+      ),
     }),
   );
 };
@@ -255,10 +278,18 @@ const matching: Evaluator<'matching'> = (exercise, answer) => {
     wrong.length === 0 ? 1 : (exercise.pairs.length - wrong.length) / exercise.pairs.length;
   return ok(
     evaluation(credit >= 1 ? 1 : credit >= 0.5 ? credit : 0, {
-      yourAnswer: `${exercise.pairs.length - wrong.length} of ${exercise.pairs.length} matches are right.`,
-      diagnosis: wrong.slice(0, 2).map((p) => `“${p.left.label}” goes with “${p.right.label}”.`),
+      yourAnswer: F('matchesRight', {
+        right: exercise.pairs.length - wrong.length,
+        count: exercise.pairs.length,
+      }),
+      diagnosis: wrong
+        .slice(0, 2)
+        .map((p) => F('goesWith', { left: p.left.label, right: p.right.label })),
       explanation: exercise.explanation,
-      correctAnswer: exercise.pairs.map((p) => `${p.left.label} → ${p.right.label}`).join(' · '),
+      correctAnswer: joinText(
+        exercise.pairs.map((p) => joinText([p.left.label, p.right.label], ' → ')),
+        ' · ',
+      ),
     }),
   );
 };
@@ -274,17 +305,23 @@ const debugging: Evaluator<'debugging'> = (exercise, answer) => {
   const credit = lineRight && causeRight ? 1 : lineRight || causeRight ? 0.5 : 0;
   return ok(
     evaluation(credit, {
-      yourAnswer: `You pointed at line ${answer.line}: “${labelOf(exercise.causes, answer.causeId)}”.`,
+      yourAnswer: F('pointedAt', {
+        line: answer.line,
+        cause: labelOf(exercise.causes, answer.causeId),
+      }),
       diagnosis: [
-        lineRight ? undefined : `The problem is not on line ${answer.line}.`,
+        lineRight ? undefined : F('notOnLine', { line: answer.line }),
         causeRight
           ? lineRight
             ? undefined
-            : 'Your reason is right, though.'
+            : F('reasonRight')
           : exercise.misconceptions[answer.causeId],
       ],
       explanation: exercise.explanation,
-      correctAnswer: `Line ${exercise.bugLine}: ${labelOf(exercise.causes, exercise.correctCauseId)}`,
+      correctAnswer: F('lineCause', {
+        line: exercise.bugLine,
+        cause: labelOf(exercise.causes, exercise.correctCauseId),
+      }),
     }),
   );
 };

@@ -8,7 +8,7 @@ import {
   weightedPick,
   type RandomGenerator,
 } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, joinText, msg } from '@/domain/shared';
 import { orderingResponse, PEOPLE, permutations, type Draft } from '@/games/logic/shared/content';
 import { SEQUENCE_ORDERING_LEVELS } from './levels';
 import { clueHolds } from './solver';
@@ -96,10 +96,9 @@ function buildPuzzle(
 
 export const sequenceOrderingGame: GameDefinition<OrderingChallenge, OrderingProfile> = {
   id: SEQUENCE_ORDERING_ID,
-  name: 'Sequence Ordering',
-  tagline: 'Put everyone in the right order.',
-  description:
-    'Use clues such as “Ana finished ahead of Ben” or “exactly one person stands between them” to work out the full order. Higher levels add people and clues that only rule things out.',
+  name: msg('logic:sequenceOrdering.name'),
+  tagline: msg('logic:sequenceOrdering.tagline'),
+  description: msg('logic:sequenceOrdering.description'),
   area: 'logic',
   skills: ['sequential-thinking', 'logical-reasoning', 'working-memory'],
   meta: {
@@ -110,16 +109,15 @@ export const sequenceOrderingGame: GameDefinition<OrderingChallenge, OrderingPro
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Exactly one order fits all the clues. An answer counts when every position is right. Your result is the share of puzzles ordered correctly; there is no time limit.',
+    scoringSummary: msg('logic:sequenceOrdering.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Read every clue. Exactly one order fits all of them.',
-    'Start with clues that fix a position (“first”, “last”), then place the others around them.',
-    'Use the arrow buttons to move names up or down, then submit your order.',
+    msg('logic:sequenceOrdering.instructions.1'),
+    msg('logic:sequenceOrdering.instructions.2'),
+    msg('logic:sequenceOrdering.instructions.3'),
   ],
-  simpleInstructions: 'Use the clues to put the names in order.',
+  simpleInstructions: msg('logic:sequenceOrdering.simpleInstructions'),
   levels: SEQUENCE_ORDERING_LEVELS,
   generate({ identity, profile, random }) {
     const entities = sample(random, PEOPLE, profile.entities).sort();
@@ -130,13 +128,13 @@ export const sequenceOrderingGame: GameDefinition<OrderingChallenge, OrderingPro
     let shown = shuffle(random, entities);
     while (shown.every((e, i) => e === target[i])) shown = shuffle(random, entities);
     const draft: Draft<OrderingChallenge> = {
-      prompt:
-        kind === 'race'
-          ? 'Put the runners in finishing order, first at the top.'
-          : 'Put the people in line order, front of the line at the top.',
+      prompt: msg(`logic:sequenceOrdering.prompt.${kind}`),
       content: { kind, entities, clues, solution: target },
       response: orderingResponse(shown, target),
-      explanation: `Only one order fits all ${clues.length} clues: ${target.join(', ')}. Check each clue against it; moving anyone breaks at least one clue.`,
+      explanation: msg('logic:sequenceOrdering.explanation', {
+        count: clues.length,
+        order: joinText(target, ', '),
+      }),
       skills: ['sequential-thinking', 'logical-reasoning'],
     };
     return { ...identity, ...draft, timing: profile.timing };

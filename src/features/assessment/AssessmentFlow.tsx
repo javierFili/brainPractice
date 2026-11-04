@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AssessmentDefinition, AssessmentResult } from '@/domain/assessment';
 import { applyAssessmentResult, emptyProgress } from '@/domain/progress';
 import type { GameResult } from '@/domain/session';
@@ -7,6 +8,7 @@ import { useServices } from '@/app/providers/servicesContext';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { AREAS } from '@/features/shared/areas';
 import { SessionRunner } from '@/features/play/SessionRunner';
+import { useText } from '@/i18n';
 import { AssessmentResultView } from './AssessmentResultView';
 
 export function AssessmentFlow({
@@ -16,6 +18,8 @@ export function AssessmentFlow({
   definition: AssessmentDefinition;
   onRestart: () => void;
 }) {
+  const { t } = useTranslation('assessment');
+  const tx = useText();
   const { engine, clock, getModule, progress } = useServices();
   const [run] = useState(() => startAssessment(definition, engine, clock));
   const [session, setSession] = useState(() => run.startStep());
@@ -52,7 +56,7 @@ export function AssessmentFlow({
   if (!step || !module)
     return (
       <p role="alert" className="text-rose-300">
-        This assessment step is not available.
+        {t('flow.unavailable')}
       </p>
     );
   const meta = AREAS[step.area];
@@ -63,16 +67,16 @@ export function AssessmentFlow({
         <p className="flex flex-wrap items-center justify-between gap-2 text-sm">
           <span className={`font-semibold ${meta.accent}`}>
             <span aria-hidden="true">{meta.glyph} </span>
-            {meta.label} · level {step.level}
+            {t('flow.area', { area: tx(meta.label), level: step.level })}
           </span>
           <span className="font-mono text-slate-400">
-            Round {step.index + 1} of {run.steps.length}
+            {t('flow.round', { round: step.index + 1, total: run.steps.length })}
           </span>
         </p>
         <ProgressBar
           value={step.index}
           max={run.steps.length}
-          label="Assessment progress"
+          label={t('flow.progress')}
           tone="bg-violet-400"
         />
       </div>
@@ -81,7 +85,7 @@ export function AssessmentFlow({
         module={module}
         session={session}
         onFinished={onStepFinished}
-        endLabel="Skip round (counts as unsolved)"
+        endLabel={t('flow.skipRound')}
       />
     </div>
   );

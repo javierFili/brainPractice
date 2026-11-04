@@ -1,63 +1,58 @@
 import { exerciseId, lessonId, type Lesson } from '@/domain/learning';
+import { msg } from '@/domain/shared/text';
 import { C } from '../concepts';
+
+const t = (key: string) => msg(`lessons:debugging.${key}`);
 
 export const lesson: Lesson = {
   id: lessonId('debugging'),
-  title: 'Debugging',
-  objective:
-    'You will be able to find and explain bugs with a method: reproduce, read the message, trace values, form a hypothesis, change one thing and re-test.',
-  summary:
-    'Debugging is a method, not luck. You practise it on the bug families met in this module: off-by-one, boundaries, overwriting, uninitialised variables, type errors, endless loops and misplaced returns.',
+  title: t('title'),
+  objective: t('objective'),
+  summary: t('summary'),
   minutes: 14,
   concepts: [C.debugging],
-  keyPoints: [
-    'Reproduce the bug first: know the input, the result you expected and the result you got.',
-    'The error line is where the program noticed the problem, which is not always where the mistake is.',
-    'Trace the values line by line, then test one hypothesis by changing one thing at a time.',
-    'Most bugs belong to a few families: off-by-one, boundary, overwrite, missing start value, type mix, endless loop, misplaced return.',
-  ],
+  keyPoints: [t('keyPoints.1'), t('keyPoints.2'), t('keyPoints.3'), t('keyPoints.4')],
   steps: [
     {
       kind: 'explain',
       id: 'method',
-      title: 'A method, not luck',
+      title: t('steps.method.title'),
       blocks: [
         {
           kind: 'paragraph',
-          text: 'A bug is a difference between what you expected and what the program does. Guessing and changing lines at random can hide one bug and add two more.',
+          text: t('steps.method.blocks.p1'),
         },
         {
           kind: 'list',
           items: [
-            'Reproduce: find an input that shows the bug every time.',
-            'Read the error message and the line it names.',
-            'Trace the values: write down each variable after each line.',
-            'Form a hypothesis: "I think the loop stops one step early."',
-            'Change one thing, then re-test with the same input.',
+            t('steps.method.blocks.list1.1'),
+            t('steps.method.blocks.list1.2'),
+            t('steps.method.blocks.list1.3'),
+            t('steps.method.blocks.list1.4'),
+            t('steps.method.blocks.list1.5'),
           ],
         },
         {
           kind: 'callout',
           tone: 'key',
-          text: 'The bug is where your expectation and the trace first disagree. That line is your suspect.',
+          text: t('steps.method.blocks.callout1'),
         },
       ],
     },
     {
       kind: 'playground',
       id: 'play-trace',
-      title: 'Reproduce and trace',
-      intro:
-        'This program should add up every whole number from 1 to n. For n = 3 the right answer is 1 + 2 + 3 = 6. Reproduce the bug and trace i and total.',
+      title: t('steps.play-trace.title'),
+      intro: t('steps.play-trace.intro'),
       playground: {
         inputs: [{ name: 'n', type: 'number', initial: 3, min: 1, max: 10 }],
         source:
           'total = 0\nfor i in range(1, n):\n    total = total + i\nprint("sum 1 to", n, "is", total)',
         watch: ['i', 'total'],
         prompts: [
-          'With n = 3, what is the last value of i? Is n ever added?',
-          'Try n = 1. The answer should be 1. What do you get, and why?',
-          'Form a hypothesis: which single change to line 2 would fix every n?',
+          t('steps.play-trace.prompts.1'),
+          t('steps.play-trace.prompts.2'),
+          t('steps.play-trace.prompts.3'),
         ],
       },
     },
@@ -68,22 +63,18 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-order-method'),
         kind: 'ordering',
-        prompt: 'Put the debugging method in order.',
+        prompt: t('exercises.order-method.prompt'),
         concept: C.debugging,
         dimension: 'understanding',
-        hints: [
-          'You cannot study a bug you cannot make happen.',
-          'A change only proves something once you test it again.',
-        ],
-        explanation:
-          'First make the bug happen reliably, then gather evidence (message, trace), then explain it with a hypothesis, test it with one change, and confirm by re-testing.',
+        hints: [t('exercises.order-method.hints.1'), t('exercises.order-method.hints.2')],
+        explanation: t('exercises.order-method.explanation'),
         items: [
-          { id: 'reproduce', label: 'Reproduce the bug with a known input' },
-          { id: 'read', label: 'Read the error message and its line' },
-          { id: 'trace', label: 'Trace the values line by line' },
-          { id: 'hypothesis', label: 'Form a hypothesis about the cause' },
-          { id: 'change', label: 'Change one thing' },
-          { id: 'retest', label: 'Re-test with the same input' },
+          { id: 'reproduce', label: t('exercises.order-method.items.reproduce') },
+          { id: 'read', label: t('exercises.order-method.items.read') },
+          { id: 'trace', label: t('exercises.order-method.items.trace') },
+          { id: 'hypothesis', label: t('exercises.order-method.items.hypothesis') },
+          { id: 'change', label: t('exercises.order-method.items.change') },
+          { id: 'retest', label: t('exercises.order-method.items.retest') },
         ],
       },
     },
@@ -94,16 +85,11 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-debug-off-by-one'),
         kind: 'debugging',
-        prompt:
-          'total should be 1 + 2 + 3 + 4 = 10, but the program gives 6. Which line is wrong, and why?',
+        prompt: t('exercises.debug-off-by-one.prompt'),
         concept: C.debugging,
         dimension: 'debugging',
-        hints: [
-          'Trace i: which values does it take inside the loop?',
-          'When i is 4, is the condition true or false?',
-        ],
-        explanation:
-          'When i reaches 4, `i < n` is false, so 4 is never added. `<=` keeps the last number inside the loop: a classic off-by-one.',
+        hints: [t('exercises.debug-off-by-one.hints.1'), t('exercises.debug-off-by-one.hints.2')],
+        explanation: t('exercises.debug-off-by-one.explanation'),
         code: {
           source: 'n = 4\ntotal = 0\ni = 1\nwhile i < n:\n    total = total + i\n    i = i + 1',
         },
@@ -111,17 +97,17 @@ export const lesson: Lesson = {
         causes: [
           {
             id: 'boundary',
-            label: 'The loop stops one step early, so the last number is never added',
+            label: t('exercises.debug-off-by-one.causes.boundary'),
           },
-          { id: 'start', label: 'i should start at 0 so that more numbers are added' },
-          { id: 'overwrite', label: 'total is overwritten on every pass instead of growing' },
-          { id: 'step', label: 'i grows too fast and skips numbers' },
+          { id: 'start', label: t('exercises.debug-off-by-one.causes.start') },
+          { id: 'overwrite', label: t('exercises.debug-off-by-one.causes.overwrite') },
+          { id: 'step', label: t('exercises.debug-off-by-one.causes.step') },
         ],
         correctCauseId: 'boundary',
         misconceptions: {
-          start: 'Starting at 0 adds 0, which changes nothing: the loop would still stop before 4.',
-          overwrite: '`total = total + i` keeps the old total and adds to it, so it does grow.',
-          step: 'i goes 1, 2, 3: it grows by one and skips nothing. It just stops too soon.',
+          start: t('exercises.debug-off-by-one.misconceptions.start'),
+          overwrite: t('exercises.debug-off-by-one.misconceptions.overwrite'),
+          step: t('exercises.debug-off-by-one.misconceptions.step'),
         },
         fix: {
           source: 'n = 4\ntotal = 0\ni = 1\nwhile i <= n:\n    total = total + i\n    i = i + 1',
@@ -137,61 +123,57 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-test-hypothesis'),
         kind: 'multiple-choice',
-        prompt: 'Your hypothesis: "the loop runs one time too few." Which next step tests it best?',
+        prompt: t('exercises.test-hypothesis.prompt'),
         concept: C.debugging,
         dimension: 'application',
-        hints: ['A good test gives clear evidence and changes as little as possible.'],
-        explanation:
-          'Printing i on every pass shows exactly how many times the loop runs, with nothing else changed. The evidence confirms or rejects the hypothesis.',
+        hints: [t('exercises.test-hypothesis.hints.1')],
+        explanation: t('exercises.test-hypothesis.explanation'),
         options: [
-          { id: 'rewrite', label: 'Rewrite the whole loop in a different way' },
-          { id: 'many', label: 'Change the condition, the start value and the update together' },
-          { id: 'trace', label: 'Print i on every pass and count the passes' },
-          { id: 'rerun', label: 'Run it a few more times without changes' },
+          { id: 'rewrite', label: t('exercises.test-hypothesis.options.rewrite') },
+          { id: 'many', label: t('exercises.test-hypothesis.options.many') },
+          { id: 'trace', label: t('exercises.test-hypothesis.options.trace') },
+          { id: 'rerun', label: t('exercises.test-hypothesis.options.rerun') },
         ],
         correctOptionId: 'trace',
         misconceptions: {
-          rewrite:
-            'A rewrite may hide the bug without telling you what it was, and can add new ones.',
-          many: 'If three changes fix it, you do not know which one mattered, or whether two of them cancel out.',
-          rerun:
-            'The same program with the same input gives the same result: rerunning adds no evidence.',
+          rewrite: t('exercises.test-hypothesis.misconceptions.rewrite'),
+          many: t('exercises.test-hypothesis.misconceptions.many'),
+          rerun: t('exercises.test-hypothesis.misconceptions.rerun'),
         },
       },
     },
     {
       kind: 'explain',
       id: 'families',
-      title: 'Bug families',
+      title: t('steps.families.title'),
       blocks: [
         {
           kind: 'paragraph',
-          text: 'Most bugs belong to a few families. Recognising the family turns "something is wrong" into a concrete hypothesis.',
+          text: t('steps.families.blocks.p1'),
         },
         {
           kind: 'list',
           items: [
-            'Off-by-one or wrong boundary: `<` instead of `<=`, or `len(xs)` used as an index.',
-            'Overwrite instead of accumulate: `total = x` instead of `total = total + x`.',
-            'Wrong variable updated, or a variable used before it has a value.',
-            'Type mix: `"Score: " + 5` needs `str(5)`.',
-            'Endless loop: the loop variable never moves towards the stop condition.',
-            'Return in the wrong place: inside the loop, so the function stops after one item.',
+            t('steps.families.blocks.list1.1'),
+            t('steps.families.blocks.list1.2'),
+            t('steps.families.blocks.list1.3'),
+            t('steps.families.blocks.list1.4'),
+            t('steps.families.blocks.list1.5'),
+            t('steps.families.blocks.list1.6'),
           ],
         },
         {
           kind: 'callout',
           tone: 'warning',
-          text: 'An error message names the line where the program could not go on. The real mistake is often earlier, for example a variable that was never set.',
+          text: t('steps.families.blocks.callout1'),
         },
       ],
     },
     {
       kind: 'playground',
       id: 'play-error',
-      title: 'Read the error message',
-      intro:
-        'Turn useStr off to make the program fail. Read the message and the line it names, then turn it back on.',
+      title: t('steps.play-error.title'),
+      intro: t('steps.play-error.intro'),
       playground: {
         inputs: [
           { name: 'score', type: 'number', initial: 42, min: 0, max: 100 },
@@ -199,10 +181,7 @@ export const lesson: Lesson = {
         ],
         source:
           'if useStr:\n    label = "Score: " + str(score)\nelse:\n    label = "Score: " + score\nprint(label)',
-        prompts: [
-          'Turn useStr off. Which line does the message name, and what does it say to do?',
-          'Why does the program not print anything after the error?',
-        ],
+        prompts: [t('steps.play-error.prompts.1'), t('steps.play-error.prompts.2')],
       },
     },
     {
@@ -212,24 +191,22 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-debug-overwrite'),
         kind: 'debugging',
-        prompt: 'total should be 15, the sum of the prices. It is 5. Which line is wrong, and why?',
+        prompt: t('exercises.debug-overwrite.prompt'),
         concept: C.debugging,
         dimension: 'debugging',
-        hints: ['Trace total after each pass: 4, then …?'],
-        explanation:
-          'total goes 4, 6, 5: each pass replaces it with the current price. Adding to the old total keeps what was already summed.',
+        hints: [t('exercises.debug-overwrite.hints.1')],
+        explanation: t('exercises.debug-overwrite.explanation'),
         code: { source: 'prices = [4, 6, 5]\ntotal = 0\nfor p in prices:\n    total = p' },
         bugLine: 4,
         causes: [
-          { id: 'start', label: 'total should start at the first price instead of 0' },
-          { id: 'overwrite', label: 'Each pass replaces total instead of adding to it' },
-          { id: 'loop', label: 'The loop only visits the last price' },
+          { id: 'start', label: t('exercises.debug-overwrite.causes.start') },
+          { id: 'overwrite', label: t('exercises.debug-overwrite.causes.overwrite') },
+          { id: 'loop', label: t('exercises.debug-overwrite.causes.loop') },
         ],
         correctCauseId: 'overwrite',
         misconceptions: {
-          start:
-            'The start value is fine for a sum; it is lost anyway because line 4 replaces total.',
-          loop: 'The loop visits all three prices; the trace shows total taking each one in turn.',
+          start: t('exercises.debug-overwrite.misconceptions.start'),
+          loop: t('exercises.debug-overwrite.misconceptions.loop'),
         },
         fix: {
           source: 'prices = [4, 6, 5]\ntotal = 0\nfor p in prices:\n    total = total + p',
@@ -245,36 +222,30 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-debug-return'),
         kind: 'debugging',
-        prompt:
-          'count_even should count the even numbers: result should be 3. It is 1. Which line is wrong, and why?',
+        prompt: t('exercises.debug-return.prompt'),
         concept: C.debugging,
         dimension: 'debugging',
-        hints: [
-          'Look at the indentation of each line: which block is it part of?',
-          'What does `return` do to the loop?',
-        ],
-        explanation:
-          'The `return` is indented inside the loop, so the function ends after the first number. Moved out to the function level, it runs once the loop has finished.',
+        hints: [t('exercises.debug-return.hints.1'), t('exercises.debug-return.hints.2')],
+        explanation: t('exercises.debug-return.explanation'),
         code: {
           source:
             'function count_even(numbers):\n    count = 0\n    for n in numbers:\n        if n % 2 == 0:\n            count = count + 1\n        return count\nresult = count_even([2, 4, 5, 6])',
         },
         bugLine: 6,
         causes: [
-          { id: 'test', label: '`n % 2 == 0` is the wrong test for even numbers' },
-          { id: 'reset', label: 'count is reset to 0 on every pass' },
+          { id: 'test', label: t('exercises.debug-return.causes.test') },
+          { id: 'reset', label: t('exercises.debug-return.causes.reset') },
           {
             id: 'return',
-            label: 'The return is inside the loop, so the function stops after one number',
+            label: t('exercises.debug-return.causes.return'),
           },
-          { id: 'local', label: 'count is local, so result cannot see it' },
+          { id: 'local', label: t('exercises.debug-return.causes.local') },
         ],
         correctCauseId: 'return',
         misconceptions: {
-          test: 'An even number leaves remainder 0 when divided by 2, so the test is right.',
-          reset: '`count = 0` is before the loop, so it runs only once.',
-          local:
-            'count is local, but `return` sends its value out; that is exactly how result gets it.',
+          test: t('exercises.debug-return.misconceptions.test'),
+          reset: t('exercises.debug-return.misconceptions.reset'),
+          local: t('exercises.debug-return.misconceptions.local'),
         },
         fix: {
           source:
@@ -291,16 +262,14 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-trace-wrong-variable'),
         kind: 'prediction',
-        prompt:
-          'The author meant count to count the items (3). Trace the program as it is: what is count at the end?',
+        prompt: t('exercises.trace-wrong-variable.prompt'),
         concept: C.debugging,
         dimension: 'application',
         hints: [
-          'Make a trace table with columns x, total and count.',
-          'Line 5 reads total, not count.',
+          t('exercises.trace-wrong-variable.hints.1'),
+          t('exercises.trace-wrong-variable.hints.2'),
         ],
-        explanation:
-          'Line 5 builds count from total instead of from count: after the last pass total is 9, so count is 10. Tracing the real values reveals the wrong variable.',
+        explanation: t('exercises.trace-wrong-variable.explanation'),
         code: {
           source:
             'count = 0\ntotal = 0\nfor x in [2, 3, 4]:\n    total = total + x\n    count = total + 1',
@@ -309,9 +278,9 @@ export const lesson: Lesson = {
         target: { kind: 'variable', name: 'count' },
         expected: '10',
         commonMistakes: {
-          '3': 'That is what the author meant. The question is what the program actually does: line 5 uses total.',
-          '9': 'That is total. count is total + 1.',
-          '4': 'count is not increased by 1 each time; it is replaced by total + 1.',
+          '3': t('exercises.trace-wrong-variable.commonMistakes.3'),
+          '9': t('exercises.trace-wrong-variable.commonMistakes.9'),
+          '4': t('exercises.trace-wrong-variable.commonMistakes.4'),
         },
       },
     },
@@ -322,27 +291,24 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-debug-endless-loop'),
         kind: 'debugging',
-        prompt:
-          'The program should count steps of 2 from 10 down to 0 (steps should be 5). It stops with "Stopped after 5000 steps". Which line is wrong, and why?',
+        prompt: t('exercises.debug-endless-loop.prompt'),
         concept: C.debugging,
         dimension: 'debugging',
         hints: [],
-        explanation:
-          'n starts at 10 and grows, so `n > 0` stays true forever. Each pass must move n towards the stop condition, which means subtracting.',
+        explanation: t('exercises.debug-endless-loop.explanation'),
         code: { source: 'n = 10\nsteps = 0\nwhile n > 0:\n    steps = steps + 1\n    n = n + 2' },
         bugLine: 5,
         causes: [
-          { id: 'condition', label: 'The condition should be n >= 0' },
-          { id: 'away', label: 'n moves away from the stop condition, so it is never reached' },
-          { id: 'steps', label: 'steps is never updated inside the loop' },
-          { id: 'limit', label: '5000 steps is too few for this loop' },
+          { id: 'condition', label: t('exercises.debug-endless-loop.causes.condition') },
+          { id: 'away', label: t('exercises.debug-endless-loop.causes.away') },
+          { id: 'steps', label: t('exercises.debug-endless-loop.causes.steps') },
+          { id: 'limit', label: t('exercises.debug-endless-loop.causes.limit') },
         ],
         correctCauseId: 'away',
         misconceptions: {
-          condition:
-            'With n growing, `n >= 0` is just as true forever; it also would add an extra pass.',
-          steps: 'steps does go up on line 4; the problem is what happens to n.',
-          limit: 'No limit is enough: n grows without end, so the loop never finishes.',
+          condition: t('exercises.debug-endless-loop.misconceptions.condition'),
+          steps: t('exercises.debug-endless-loop.misconceptions.steps'),
+          limit: t('exercises.debug-endless-loop.misconceptions.limit'),
         },
         fix: {
           source: 'n = 10\nsteps = 0\nwhile n > 0:\n    steps = steps + 1\n    n = n - 2',
@@ -358,25 +324,22 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-debug-last-index'),
         kind: 'debugging',
-        prompt:
-          'last should be the last name, "Cai". The program stops with "Index 3 is outside the list (valid: 0 to 2)". Which line is wrong, and why?',
+        prompt: t('exercises.debug-last-index.prompt'),
         concept: C.debugging,
         dimension: 'debugging',
         hints: [],
-        explanation:
-          'A list of 3 items has indexes 0, 1 and 2, so the last one is `len(names) - 1`. Using the length itself goes one past the end.',
+        explanation: t('exercises.debug-last-index.explanation'),
         code: { source: 'names = ["Ana", "Ben", "Cai"]\nlast = names[len(names)]' },
         bugLine: 2,
         causes: [
-          { id: 'short', label: 'The list needs a fourth name' },
-          { id: 'len', label: 'len() counts from 0, so it gives the wrong length' },
-          { id: 'zero', label: 'Indexes start at 0, so the last index is the length minus 1' },
+          { id: 'short', label: t('exercises.debug-last-index.causes.short') },
+          { id: 'len', label: t('exercises.debug-last-index.causes.len') },
+          { id: 'zero', label: t('exercises.debug-last-index.causes.zero') },
         ],
         correctCauseId: 'zero',
         misconceptions: {
-          short:
-            'Adding a name would hide the bug: the code would then return the new name, not "Cai".',
-          len: 'len() is right: there are 3 names. It is the indexes that start at 0.',
+          short: t('exercises.debug-last-index.misconceptions.short'),
+          len: t('exercises.debug-last-index.misconceptions.len'),
         },
         fix: {
           source: 'names = ["Ana", "Ben", "Cai"]\nlast = names[len(names) - 1]',
@@ -392,32 +355,31 @@ export const lesson: Lesson = {
       exercise: {
         id: exerciseId('l10-match-families'),
         kind: 'matching',
-        prompt: 'Match each symptom with the most likely bug family.',
+        prompt: t('exercises.match-families.prompt'),
         concept: C.debugging,
         dimension: 'understanding',
         hints: [],
-        explanation:
-          'Each symptom points to a family: an endless loop hits the step limit, overwriting keeps only the last item, a missing boundary loses one value, mixing text and numbers needs str(), and an unset variable cannot be read.',
+        explanation: t('exercises.match-families.explanation'),
         pairs: [
           {
-            left: { id: 'limit', label: '"Stopped after 5000 steps"' },
-            right: { id: 'endless', label: 'The loop variable never moves towards the stop' },
+            left: { id: 'limit', label: t('exercises.match-families.pairs.limit') },
+            right: { id: 'endless', label: t('exercises.match-families.pairs.endless') },
           },
           {
-            left: { id: 'last', label: 'The total always equals the last item' },
-            right: { id: 'overwrite', label: 'Overwrite instead of accumulate' },
+            left: { id: 'last', label: t('exercises.match-families.pairs.last') },
+            right: { id: 'overwrite', label: t('exercises.match-families.pairs.overwrite') },
           },
           {
-            left: { id: 'sum', label: 'Adding 1 to 5 gives 10 instead of 15' },
-            right: { id: 'offbyone', label: 'Off-by-one: the boundary is left out' },
+            left: { id: 'sum', label: t('exercises.match-families.pairs.sum') },
+            right: { id: 'offbyone', label: t('exercises.match-families.pairs.offbyone') },
           },
           {
-            left: { id: 'type', label: '"Cannot add text and number"' },
-            right: { id: 'str', label: 'Type mix: convert with str()' },
+            left: { id: 'type', label: t('exercises.match-families.pairs.type') },
+            right: { id: 'str', label: t('exercises.match-families.pairs.str') },
           },
           {
-            left: { id: 'unset', label: '"count has no value yet"' },
-            right: { id: 'init', label: 'Variable used before it is given a start value' },
+            left: { id: 'unset', label: t('exercises.match-families.pairs.unset') },
+            right: { id: 'init', label: t('exercises.match-families.pairs.init') },
           },
         ],
       },

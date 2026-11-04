@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { AssociationProfile } from './types';
 
@@ -10,7 +11,7 @@ const look = (pairs: number, msPerPair: number) => untimed(9000, pairs * msPerPa
  */
 export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
   {
-    objective: 'Learn which colour goes with each of 3 objects.',
+    objective: msg('memory:associationMemory.levels.1'),
     challengeCount: 5,
     kinds: { 'object-color': 1 },
     pairs: 3,
@@ -20,7 +21,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(3, 2500),
   },
   {
-    objective: 'Learn 4 object–colour pairs.',
+    objective: msg('memory:associationMemory.levels.2'),
     challengeCount: 5,
     kinds: { 'object-color': 1 },
     pairs: 4,
@@ -30,7 +31,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(4, 2300),
   },
   {
-    objective: 'Learn which object goes with each of 4 shapes.',
+    objective: msg('memory:associationMemory.levels.3'),
     challengeCount: 5,
     kinds: { 'glyph-object': 1 },
     pairs: 4,
@@ -40,7 +41,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(4, 2300),
   },
   {
-    objective: 'Learn 4 word–number pairs.',
+    objective: msg('memory:associationMemory.levels.4'),
     challengeCount: 5,
     kinds: { 'word-number': 1 },
     pairs: 4,
@@ -50,7 +51,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(4, 2200),
   },
   {
-    objective: 'Learn colours for 5 objects of the same family.',
+    objective: msg('memory:associationMemory.levels.5'),
     challengeCount: 5,
     kinds: { 'object-color': 1 },
     pairs: 5,
@@ -60,7 +61,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(5, 2100),
   },
   {
-    objective: 'Learn 5 word–number pairs, then recall the word from its number.',
+    objective: msg('memory:associationMemory.levels.6'),
     challengeCount: 5,
     kinds: { 'word-number': 1 },
     pairs: 5,
@@ -70,7 +71,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(5, 2000),
   },
   {
-    objective: 'Learn 6 look-alike shapes with objects; you may be asked either way.',
+    objective: msg('memory:associationMemory.levels.7'),
     challengeCount: 5,
     kinds: { 'glyph-object': 1 },
     pairs: 6,
@@ -80,7 +81,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(6, 2000),
   },
   {
-    objective: 'Learn 6 words with numbers made of the same digits, asked either way.',
+    objective: msg('memory:associationMemory.levels.8'),
     challengeCount: 5,
     kinds: { 'word-number': 1 },
     pairs: 6,
@@ -90,7 +91,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(6, 1900),
   },
   {
-    objective: 'Learn 7 look-alike pairs of any kind, asked either way.',
+    objective: msg('memory:associationMemory.levels.9'),
     challengeCount: 4,
     kinds: { 'glyph-object': 1, 'word-number': 1 },
     pairs: 7,
@@ -100,7 +101,7 @@ export const ASSOCIATION_LEVELS = defineLevels<AssociationProfile>([
     timing: look(7, 1800),
   },
   {
-    objective: 'Learn 8 look-alike pairs with a shorter look, asked either way.',
+    objective: msg('memory:associationMemory.levels.10'),
     challengeCount: 4,
     kinds: { 'glyph-object': 1, 'word-number': 1 },
     pairs: 8,

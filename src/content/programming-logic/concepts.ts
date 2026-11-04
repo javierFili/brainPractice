@@ -1,4 +1,5 @@
 import { conceptId, type Concept } from '@/domain/learning';
+import { msg } from '@/domain/shared';
 
 /** Concept ids of Programming Logic, shared by lessons, reviews and recommendations. */
 export const C = {
@@ -22,198 +23,198 @@ export const C = {
 export const CONCEPTS: readonly Concept[] = [
   {
     id: C.programs,
-    name: 'Programs',
-    summary: 'A program is a precise list of instructions that a computer follows literally.',
+    name: msg('lessons:concepts.programs.name'),
+    summary: msg('lessons:concepts.programs.summary'),
     cognitiveLinks: [
       {
         area: 'attention',
         gameId: 'bug-hunter',
         level: 1,
-        why: 'Computers act on every detail, so reading instructions precisely matters.',
+        why: msg('lessons:concepts.programs.why.bug-hunter'),
       },
     ],
   },
   {
     id: C.sequence,
-    name: 'Sequence',
-    summary: 'Instructions run one after another, top to bottom; order changes the result.',
+    name: msg('lessons:concepts.sequence.name'),
+    summary: msg('lessons:concepts.sequence.summary'),
     cognitiveLinks: [
       {
         area: 'logic',
         gameId: 'algorithmic-logic',
         level: 1,
-        why: 'Ordering tasks by their dependencies is the same skill as ordering instructions.',
+        why: msg('lessons:concepts.sequence.why.algorithmic-logic'),
       },
       {
         area: 'memory',
         gameId: 'code-memory',
         level: 1,
-        why: 'Remembering what happened in which order is how you follow a sequence.',
+        why: msg('lessons:concepts.sequence.why.code-memory'),
       },
     ],
   },
   {
     id: C.variables,
-    name: 'Variables',
-    summary: 'Names that hold values; assignment stores a new value and replaces the old one.',
+    name: msg('lessons:concepts.variables.name'),
+    summary: msg('lessons:concepts.variables.summary'),
     cognitiveLinks: [
       {
         area: 'memory',
         gameId: 'code-memory',
         level: 2,
-        why: 'Tracing code means holding the current value of each variable in mind.',
+        why: msg('lessons:concepts.variables.why.code-memory'),
       },
       {
         area: 'speed',
         gameId: 'code-scan',
         level: 1,
-        why: 'Spotting which value changed between two lines quickly.',
+        why: msg('lessons:concepts.variables.why.code-scan'),
       },
     ],
   },
   {
     id: C.conditions,
-    name: 'Conditions',
-    summary: 'if / elif / else choose exactly one path depending on a true/false question.',
+    name: msg('lessons:concepts.conditions.name'),
+    summary: msg('lessons:concepts.conditions.summary'),
     cognitiveLinks: [
       {
         area: 'logic',
         gameId: 'algorithmic-logic',
         level: 2,
-        why: 'Predicting which branch a program takes is trained directly there.',
+        why: msg('lessons:concepts.conditions.why.algorithmic-logic'),
       },
       {
         area: 'attention',
         gameId: 'bug-hunter',
         level: 2,
-        why: 'Boundary values (>= vs >) are exactly the details that hide bugs.',
+        why: msg('lessons:concepts.conditions.why.bug-hunter'),
       },
     ],
   },
   {
     id: C.booleanLogic,
-    name: 'Logical operators',
-    summary: 'and, or and not combine true/false questions into one.',
+    name: msg('lessons:concepts.boolean-logic.name'),
+    summary: msg('lessons:concepts.boolean-logic.summary'),
     cognitiveLinks: [
       {
         area: 'logic',
         gameId: 'algorithmic-logic',
         level: 4,
-        why: 'Constraint puzzles are combinations of and / or / not rules.',
+        why: msg('lessons:concepts.boolean-logic.why.algorithmic-logic'),
       },
       {
         area: 'patterns',
         gameId: 'pattern-architect',
         level: 2,
-        why: 'Seeing which rule fits all the examples is how you design a condition.',
+        why: msg('lessons:concepts.boolean-logic.why.pattern-architect'),
       },
     ],
   },
   {
     id: C.loops,
-    name: 'Loops',
-    summary: 'while and for repeat a block; a loop needs a way to stop.',
+    name: msg('lessons:concepts.loops.name'),
+    summary: msg('lessons:concepts.loops.summary'),
     cognitiveLinks: [
       {
         area: 'memory',
         gameId: 'code-memory',
         level: 3,
-        why: 'Following a loop means updating values in your head on every pass.',
+        why: msg('lessons:concepts.loops.why.code-memory'),
       },
       {
         area: 'patterns',
         gameId: 'pattern-architect',
         level: 3,
-        why: 'A loop is a repeated pattern; spotting the rule tells you the body.',
+        why: msg('lessons:concepts.loops.why.pattern-architect'),
       },
     ],
   },
   {
     id: C.lists,
-    name: 'Lists',
-    summary: 'Ordered collections of values, read by position starting at 0.',
+    name: msg('lessons:concepts.lists.name'),
+    summary: msg('lessons:concepts.lists.summary'),
     cognitiveLinks: [
       {
         area: 'memory',
         gameId: 'code-memory',
         level: 4,
-        why: 'Remembering positions in a structure is the core of indexing.',
+        why: msg('lessons:concepts.lists.why.code-memory'),
       },
       {
         area: 'attention',
         gameId: 'bug-hunter',
         level: 3,
-        why: 'Off-by-one positions are the classic list mistake.',
+        why: msg('lessons:concepts.lists.why.bug-hunter'),
       },
     ],
   },
   {
     id: C.functions,
-    name: 'Functions',
-    summary: 'Named, reusable steps with parameters in and a return value out.',
+    name: msg('lessons:concepts.functions.name'),
+    summary: msg('lessons:concepts.functions.summary'),
     cognitiveLinks: [
       {
         area: 'patterns',
         gameId: 'pattern-architect',
         level: 4,
-        why: 'Inferring a transformation from input/output examples is what a function is.',
+        why: msg('lessons:concepts.functions.why.pattern-architect'),
       },
       {
         area: 'logic',
         gameId: 'algorithmic-logic',
         level: 3,
-        why: 'Tracing a call means following values into and out of a block.',
+        why: msg('lessons:concepts.functions.why.algorithmic-logic'),
       },
     ],
   },
   {
     id: C.decomposition,
-    name: 'Decomposition',
-    summary: 'Breaking a problem into smaller steps with clear inputs and outputs.',
+    name: msg('lessons:concepts.decomposition.name'),
+    summary: msg('lessons:concepts.decomposition.summary'),
     cognitiveLinks: [
       {
         area: 'logic',
         gameId: 'algorithmic-logic',
         level: 5,
-        why: 'Dependency graphs show which sub-task must be done before which.',
+        why: msg('lessons:concepts.decomposition.why.algorithmic-logic'),
       },
     ],
   },
   {
     id: C.algorithms,
-    name: 'Algorithms',
-    summary: 'Step-by-step recipes such as counting, summing, finding the largest, searching.',
+    name: msg('lessons:concepts.algorithms.name'),
+    summary: msg('lessons:concepts.algorithms.summary'),
     cognitiveLinks: [
       {
         area: 'patterns',
         gameId: 'pattern-architect',
         level: 5,
-        why: 'Recognising a familiar algorithmic shape (accumulate, search, compare) in new code.',
+        why: msg('lessons:concepts.algorithms.why.pattern-architect'),
       },
       {
         area: 'logic',
         gameId: 'algorithmic-logic',
         level: 6,
-        why: 'Reasoning about the minimum steps needed is the start of complexity.',
+        why: msg('lessons:concepts.algorithms.why.algorithmic-logic'),
       },
     ],
   },
   {
     id: C.debugging,
-    name: 'Debugging',
-    summary: 'Finding why a program does not do what it should: trace, compare, form a hypothesis.',
+    name: msg('lessons:concepts.debugging.name'),
+    summary: msg('lessons:concepts.debugging.summary'),
     cognitiveLinks: [
       {
         area: 'attention',
         gameId: 'bug-hunter',
         level: 3,
-        why: 'Finding the one line that breaks a rule is debugging in miniature.',
+        why: msg('lessons:concepts.debugging.why.bug-hunter'),
       },
       {
         area: 'speed',
         gameId: 'code-scan',
         level: 3,
-        why: 'Comparing what the code does with what it should do, quickly.',
+        why: msg('lessons:concepts.debugging.why.code-scan'),
       },
     ],
   },

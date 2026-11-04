@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Challenge } from '@/domain/challenge';
 import type { ChallengeRecord } from '@/domain/session';
 import { Button } from '@/components/ui/Button';
+import { useText } from '@/i18n';
 import { describeSolution } from './describe';
 
 /** How long the mark stays before moving on: long enough to read, short enough to keep pace. */
@@ -9,18 +11,26 @@ export const BRIEF_CORRECT_MS = 650;
 export const BRIEF_OTHER_MS = 1600;
 
 const MARKS = {
-  correct: { icon: '✓', text: 'Correct', tone: 'border-success/60 bg-success/10 text-success' },
+  correct: {
+    icon: '✓',
+    text: 'common:answer.correct',
+    tone: 'border-success/60 bg-success/10 text-success',
+  },
   incorrect: {
     icon: '✗',
-    text: 'Not this time',
+    text: 'play:feedback.notThisTime',
     tone: 'border-danger/60 bg-danger/10 text-danger',
   },
   'timed-out': {
     icon: '⧗',
-    text: "Time's up",
+    text: 'common:answer.timedOut',
     tone: 'border-warning/60 bg-warning/10 text-warning',
   },
-  skipped: { icon: '–', text: 'Skipped', tone: 'border-line bg-raised text-ink-soft' },
+  skipped: {
+    icon: '–',
+    text: 'common:answer.skipped',
+    tone: 'border-line bg-raised text-ink-soft',
+  },
 } as const;
 
 /**
@@ -40,6 +50,8 @@ export function BriefFeedback({
   autoAdvance: boolean;
   onNext: () => void;
 }) {
+  const { t } = useTranslation('play');
+  const tx = useText();
   const nextRef = useRef<HTMLButtonElement>(null);
   const mark = MARKS[record.outcome];
 
@@ -61,15 +73,16 @@ export function BriefFeedback({
     >
       <p role="status" aria-live="polite" className="font-semibold">
         <span aria-hidden="true">{mark.icon} </span>
-        {mark.text}
+        {t(mark.text)}
         {record.outcome !== 'correct' && (
           <span className="ml-2 font-normal text-ink-soft">
-            Answer: {describeSolution(challenge)}
+            {t('feedback.answer', { answer: tx(describeSolution(challenge)) })}
           </span>
         )}
       </p>
       <Button ref={nextRef} variant="secondary" onClick={onNext}>
-        {isLast ? 'See results' : 'Continue'} <span aria-hidden="true">→</span>
+        {isLast ? t('feedback.seeResults') : t('common:actions.continue')}{' '}
+        <span aria-hidden="true">→</span>
       </Button>
     </div>
   );

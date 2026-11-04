@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { WorkingGridProfile } from './types';
 
@@ -12,7 +13,7 @@ const nominal = (maxStream: number, itemMs: number) => untimed(8000, maxStream *
  */
 export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
   {
-    objective: 'Keep the last 2 lights of a short stream on a 3×3 grid.',
+    objective: msg('memory:workingMemoryGrid.levels.1'),
     challengeCount: 5,
     kinds: { 'last-k': 1 },
     size: 3,
@@ -23,7 +24,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(4, 1200),
   },
   {
-    objective: 'Keep the last 2 lights of a longer stream.',
+    objective: msg('memory:workingMemoryGrid.levels.2'),
     challengeCount: 5,
     kinds: { 'last-k': 1 },
     size: 3,
@@ -34,7 +35,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(6, 1200),
   },
   {
-    objective: 'Point at the light that came just before the last one.',
+    objective: msg('memory:workingMemoryGrid.levels.3'),
     challengeCount: 5,
     kinds: { 'n-back': 1 },
     size: 3,
@@ -45,7 +46,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(6, 1100),
   },
   {
-    objective: 'Keep the last 3 lights on a 4×4 grid.',
+    objective: msg('memory:workingMemoryGrid.levels.4'),
     challengeCount: 5,
     kinds: { 'last-k': 1 },
     size: 4,
@@ -56,7 +57,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(7, 1100),
   },
   {
-    objective: 'Point at the light 2 steps before the last one.',
+    objective: msg('memory:workingMemoryGrid.levels.5'),
     challengeCount: 5,
     kinds: { 'n-back': 1 },
     size: 4,
@@ -67,7 +68,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(7, 1100),
   },
   {
-    objective: 'Either question: last 3 lights, or 2 steps before the last.',
+    objective: msg('memory:workingMemoryGrid.levels.6'),
     challengeCount: 6,
     kinds: { 'last-k': 1, 'n-back': 1 },
     size: 4,
@@ -78,7 +79,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(8, 1000),
   },
   {
-    objective: 'Keep the last 4 lights of a long stream.',
+    objective: msg('memory:workingMemoryGrid.levels.7'),
     challengeCount: 6,
     kinds: { 'last-k': 1 },
     size: 4,
@@ -89,7 +90,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(9, 1000),
   },
   {
-    objective: 'On a 5×5 grid: last 4 lights, or 3 steps before the last.',
+    objective: msg('memory:workingMemoryGrid.levels.8'),
     challengeCount: 6,
     kinds: { 'last-k': 1, 'n-back': 1 },
     size: 5,
@@ -100,7 +101,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(9, 1000),
   },
   {
-    objective: 'Faster lights: last 4, or 3 steps back, in streams up to 10.',
+    objective: msg('memory:workingMemoryGrid.levels.9'),
     challengeCount: 6,
     kinds: { 'last-k': 1, 'n-back': 1 },
     size: 5,
@@ -111,7 +112,7 @@ export const WORKING_GRID_LEVELS = defineLevels<WorkingGridProfile>([
     timing: nominal(10, 900),
   },
   {
-    objective: 'Last 5 lights, or 4 steps before the last, in streams up to 11.',
+    objective: msg('memory:workingMemoryGrid.levels.10'),
     challengeCount: 6,
     kinds: { 'last-k': 1, 'n-back': 1 },
     size: 5,

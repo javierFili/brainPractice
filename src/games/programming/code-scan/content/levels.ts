@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import type { LevelTable } from '@/domain/difficulty';
 import type { CodeScanProfile, MutationCategory } from './types';
 
@@ -25,7 +26,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   1: {
     level: 1,
     tier: 'fundamentals',
-    objective: 'Compare two short snippets and decide whether they are identical.',
+    objective: msg('programming:codeScan.levels.1'),
     challengeCount: 8,
     timing: seconds(20, 8),
     kinds: { 'same-or-different': 1 },
@@ -39,7 +40,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   2: {
     level: 2,
     tier: 'fundamentals',
-    objective: 'Point at the exact line that changed; misspelled names join the mix.',
+    objective: msg('programming:codeScan.levels.2'),
     challengeCount: 8,
     timing: seconds(18, 8),
     kinds: { 'same-or-different': 1, 'find-the-change': 1 },
@@ -53,7 +54,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   3: {
     level: 3,
     tier: 'fundamentals',
-    objective: 'Negated conditions and one-character changes: read every token, not the shape.',
+    objective: msg('programming:codeScan.levels.3'),
     challengeCount: 8,
     timing: seconds(18, 9),
     kinds: { 'same-or-different': 1, 'find-the-change': 1.5 },
@@ -67,7 +68,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   4: {
     level: 4,
     tier: 'intermediate',
-    objective: 'Nested blocks and compound conditions: more places for a change to hide.',
+    objective: msg('programming:codeScan.levels.4'),
     challengeCount: 10,
     timing: seconds(16, 9),
     kinds: { 'same-or-different': 0.5, 'find-the-change': 1.5 },
@@ -81,7 +82,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   5: {
     level: 5,
     tier: 'intermediate',
-    objective: 'Runs of look-alike lines: compare token by token, not line shape.',
+    objective: msg('programming:codeScan.levels.5'),
     challengeCount: 10,
     timing: seconds(16, 9),
     kinds: { 'same-or-different': 0.5, 'find-the-change': 1.5 },
@@ -95,7 +96,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   6: {
     level: 6,
     tier: 'intermediate',
-    objective: 'Longer listings under a tighter clock; most changes are one character.',
+    objective: msg('programming:codeScan.levels.6'),
     challengeCount: 10,
     timing: seconds(15, 9),
     kinds: { 'same-or-different': 0.5, 'find-the-change': 1.5 },
@@ -109,7 +110,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   7: {
     level: 7,
     tier: 'advanced',
-    objective: 'Name the kind of change: operator, variable, number, typo or negation.',
+    objective: msg('programming:codeScan.levels.7'),
     challengeCount: 10,
     timing: seconds(14, 8),
     kinds: { 'find-the-change': 1, 'classify-the-change': 1 },
@@ -123,7 +124,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   8: {
     level: 8,
     tier: 'advanced',
-    objective: 'Classify fine changes hidden among look-alike lines, faster.',
+    objective: msg('programming:codeScan.levels.8'),
     challengeCount: 10,
     timing: seconds(14, 8),
     kinds: { 'find-the-change': 1, 'classify-the-change': 1.5 },
@@ -137,7 +138,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   9: {
     level: 9,
     tier: 'expert',
-    objective: 'Find and classify the change with no hint: locate first, then name it.',
+    objective: msg('programming:codeScan.levels.9'),
     challengeCount: 10,
     timing: seconds(13, 8),
     kinds: { 'same-or-different': 0.5, 'find-the-change': 1, 'classify-the-change': 1.5 },
@@ -151,7 +152,7 @@ export const CODE_SCAN_LEVELS: LevelTable<CodeScanProfile> = {
   10: {
     level: 10,
     tier: 'expert',
-    objective: 'Twelve dense, near-identical lines and a one-character change: at full speed.',
+    objective: msg('programming:codeScan.levels.10'),
     challengeCount: 10,
     timing: seconds(12, 7),
     kinds: { 'same-or-different': 0.5, 'find-the-change': 1, 'classify-the-change': 1.5 },

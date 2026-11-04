@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { codeRuleViolations } from '../solvers/codeRules';
 import { emailProblem, recordRuleViolations } from '../solvers/recordRules';
 import { explainViolation, findViolations } from '../solvers/violations';
@@ -67,10 +68,11 @@ describe('record rules', () => {
   it('email: unusual but valid addresses pass', () => {
     for (const ok of ['ana.lopez@corp.io', 'ana+qa@corp.io', 'ana@eu.corp.io', 'ana-2@corp.io'])
       expect(emailProblem(ok)).toBeNull();
-    expect(emailProblem('ana.corp.io')).toBe('has no "@"');
-    expect(emailProblem('ana@@corp.io')).toBe('has more than one "@"');
-    expect(emailProblem('ana@corpio')).toMatch(/not a dotted domain/);
-    expect(emailProblem('ana@corp.')).toMatch(/not a dotted domain/);
+    const problem = (value: string) => en(emailProblem(value) ?? '');
+    expect(problem('ana.corp.io')).toBe('has no "@"');
+    expect(problem('ana@@corp.io')).toBe('has more than one "@"');
+    expect(problem('ana@corpio')).toMatch(/not a dotted domain/);
+    expect(problem('ana@corp.')).toMatch(/not a dotted domain/);
   });
 
   it('implies: only constrains items that meet the condition', () => {
@@ -112,19 +114,22 @@ describe('code rules', () => {
   it('flags a read before assignment and says where the variable is first set', () => {
     const lines: CodeLine[] = [{ op: 'print', value: 'total' }, ...program];
     const [violation] = codeRuleViolations({ type: 'defined-before-use' }, lines);
-    expect(violation).toEqual({
-      index: 0,
-      reason: 'it reads total, which has not been assigned yet (it is first set on line 2)',
-    });
+    expect(violation?.index).toBe(0);
+    expect(en(violation?.reason ?? '')).toBe(
+      'it reads total, which has not been assigned yet (it is first set on line 2)',
+    );
   });
 
   it('flags the open that is never closed, and a write after close', () => {
     const unclosed = program.filter((l) => l.op !== 'close');
     expect(codeRuleViolations({ type: 'close-opened' }, unclosed).map((v) => v.index)).toEqual([1]);
     const late: CodeLine[] = [...program, { op: 'write', value: 'total', resource: 'log' }];
-    expect(codeRuleViolations({ type: 'write-while-open' }, late)).toEqual([
-      { index: 5, reason: 'it writes to log, which was already closed on line 4' },
-    ]);
+    expect(
+      codeRuleViolations({ type: 'write-while-open' }, late).map((v) => ({
+        index: v.index,
+        reason: en(v.reason),
+      })),
+    ).toEqual([{ index: 5, reason: 'it writes to log, which was already closed on line 4' }]);
   });
 
   it('camelCase allows digits and inner capitals but not snake or Pascal case', () => {
@@ -153,7 +158,7 @@ describe('findViolations / explainViolation', () => {
     };
     const found = findViolations(content);
     expect(found).toHaveLength(1);
-    expect(explainViolation(found[0] as (typeof found)[number], 2)).toBe(
+    expect(en(explainViolation(found[0] as (typeof found)[number], 2))).toBe(
       'Item 2 is the bug: retries=6 is outside 0–5. It breaks rule 2: retries is a whole number from 0 to 5.',
     );
   });

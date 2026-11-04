@@ -1,3 +1,4 @@
+import { msg, type Text } from '@/domain/shared';
 import { defineLevels, timed } from '@/games/kit/content';
 import type { CodeScanSprintProfile } from './types';
 
@@ -7,7 +8,7 @@ type Row = Omit<
 >;
 
 const row = (
-  objective: string,
+  objective: Text,
   params: Row,
   [targetMs, limitMs]: readonly [number, number],
   challengeCount: number,
@@ -21,7 +22,7 @@ const row = (
  */
 export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
   row(
-    'Find the line that calls a routine, in 4 lines.',
+    msg('speed:codeScanSprint.levels.1'),
     {
       kinds: { call: 1 },
       lineCount: 4,
@@ -35,7 +36,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     10,
   ),
   row(
-    'Calls or numbers, in 5 lines.',
+    msg('speed:codeScanSprint.levels.2'),
     {
       kinds: { call: 1, number: 1 },
       lineCount: 5,
@@ -49,7 +50,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     10,
   ),
   row(
-    'Blocks appear: lines inside if and repeat.',
+    msg('speed:codeScanSprint.levels.3'),
     {
       kinds: { call: 1, number: 1 },
       lineCount: 6,
@@ -63,7 +64,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     12,
   ),
   row(
-    'Where does a variable first get a value?',
+    msg('speed:codeScanSprint.levels.4'),
     {
       kinds: { call: 1, number: 1, 'first-assign': 2 },
       lineCount: 6,
@@ -77,7 +78,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     12,
   ),
   row(
-    'Conditions: which line checks a variable?',
+    msg('speed:codeScanSprint.levels.5'),
     {
       kinds: { number: 1, 'first-assign': 1, condition: 2 },
       lineCount: 7,
@@ -91,7 +92,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     12,
   ),
   row(
-    'Variables assigned twice: first or last time?',
+    msg('speed:codeScanSprint.levels.6'),
     {
       kinds: { 'first-assign': 1, 'last-assign': 1, condition: 1 },
       lineCount: 8,
@@ -105,7 +106,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     14,
   ),
   row(
-    'Nested blocks, every kind of question.',
+    msg('speed:codeScanSprint.levels.7'),
     {
       kinds: { call: 1, number: 1, 'first-assign': 1, 'last-assign': 1, condition: 1 },
       lineCount: 9,
@@ -119,7 +120,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     14,
   ),
   row(
-    'Four variables, 10 lines.',
+    msg('speed:codeScanSprint.levels.8'),
     {
       kinds: { call: 1, number: 1, 'first-assign': 1, 'last-assign': 1, condition: 1 },
       lineCount: 10,
@@ -133,7 +134,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     14,
   ),
   row(
-    'Mostly assignment and condition questions, 11 lines.',
+    msg('speed:codeScanSprint.levels.9'),
     {
       kinds: { number: 1, 'first-assign': 2, 'last-assign': 2, condition: 2 },
       lineCount: 11,
@@ -147,7 +148,7 @@ export const CODE_SCAN_SPRINT_LEVELS = defineLevels<CodeScanSprintProfile>([
     16,
   ),
   row(
-    'Master: 12 nested lines, every kind of question.',
+    msg('speed:codeScanSprint.levels.10'),
     {
       kinds: { call: 1, number: 1, 'first-assign': 2, 'last-assign': 2, condition: 2 },
       lineCount: 12,

@@ -1,0 +1,170 @@
+{
+  "page": {
+    "eyebrow": "General",
+    "title": "My progress",
+    "description": "Real data from your sessions, stored only in this browser. Scores describe these activities, not general ability.",
+    "manageData": "Manage data",
+    "empty": "No sessions yet. Your history, records and milestones will appear here.",
+    "browse": "Browse activities"
+  },
+  "stats": {
+    "sessions": "Sessions completed",
+    "practiceTime": "Practice time",
+    "gamesExplored": "Games explored",
+    "levels": "Levels open / cleared",
+    "activeDays": "Active days",
+    "activeDaysHint": "days with any practice",
+    "daily": "Daily challenges",
+    "assessments": "Assessments",
+    "milestones": "Milestones"
+  },
+  "distribution": {
+    "title": "Where your practice went",
+    "note": "Sessions in your recent history (up to 200)."
+  },
+  "mostPlayed": {
+    "title": "Most played",
+    "empty": "Nothing yet."
+  },
+  "records": {
+    "title": "Personal records and trends",
+    "note": "Records only count completed sessions without relaxed timing. Trends compare sessions of the same game and level — the only fair comparison.",
+    "trend": "Performance trend at level {{level}}: {{values}}",
+    "best": "Best: level {{level}} · performance {{performance}} · accuracy {{accuracy}} · {{points}} pts",
+    "median": "median {{time}}",
+    "none": "No completed session yet.",
+    "cleared": "Levels cleared: {{levels}}",
+    "clearedNone": "none yet"
+  },
+  "milestonesTitle": "Milestones",
+  "milestoneAchieved": ", achieved",
+  "milestoneNotYet": ", not yet",
+  "history": {
+    "title": "History",
+    "game": "Game",
+    "allGames": "All games",
+    "caption": "Sessions, most recent first",
+    "date": "Date",
+    "level": "Level",
+    "accuracy": "Accuracy",
+    "performance": "Performance",
+    "duration": "Duration",
+    "relaxed": "relaxed",
+    "endedEarly": "ended early",
+    "showingLatest": "Showing the latest {{shown}} of {{total}}."
+  },
+  "milestones": {
+    "first-session": {
+      "title": "First session",
+      "description": "Complete any activity."
+    },
+    "ten-sessions": {
+      "title": "Ten sessions",
+      "description": "Practise ten times, at any pace."
+    },
+    "fifty-sessions": {
+      "title": "Fifty sessions",
+      "description": "A long-term practice habit."
+    },
+    "half-hour": {
+      "title": "30 minutes of practice",
+      "description": "Total practice time across all activities."
+    },
+    "five-hours": {
+      "title": "5 hours of practice",
+      "description": "Total practice time across all activities."
+    },
+    "explorer": {
+      "title": "Explorer",
+      "description": "Try five different games."
+    },
+    "collector": {
+      "title": "Wide explorer",
+      "description": "Try twenty different games."
+    },
+    "all-areas": {
+      "title": "All-rounder",
+      "description": "Practise memory, logic, speed, attention and patterns."
+    },
+    "first-clear": {
+      "title": "First level cleared",
+      "description": "Reach a performance of 70 on any level."
+    },
+    "advanced": {
+      "title": "Advanced",
+      "description": "Clear level 7 or higher in any game."
+    },
+    "master": {
+      "title": "Master level",
+      "description": "Clear level 10 in any game."
+    },
+    "daily-three": {
+      "title": "Daily challenger",
+      "description": "Complete three daily challenges (any days)."
+    },
+    "assessment": {
+      "title": "Self-check",
+      "description": "Complete a cognitive assessment."
+    },
+    "active-days": {
+      "title": "Seven active days",
+      "description": "Practise on seven different days — not necessarily in a row."
+    }
+  },
+  "training": {
+    "startRoute": "A good first activity for the route you chose.",
+    "levelUp": "You cleared level {{cleared}}. Level {{next}} adds a new difficulty step.",
+    "discoverRoute": "Part of your route that you have not tried yet.",
+    "discover": "A game you have not tried yet.",
+    "gentleStart": {
+      "memory": "A gentle start with memory.",
+      "logic": "A gentle start with logic.",
+      "speed": "A gentle start with mental speed.",
+      "attention": "A gentle start with attention.",
+      "patterns": "A gentle start with patterns and spatial reasoning.",
+      "programming": "A gentle start with programming."
+    },
+    "notPractised": {
+      "memory": "You have not practised memory in the last two weeks — a change of task keeps practice varied.",
+      "logic": "You have not practised logic in the last two weeks — a change of task keeps practice varied.",
+      "speed": "You have not practised mental speed in the last two weeks — a change of task keeps practice varied.",
+      "attention": "You have not practised attention in the last two weeks — a change of task keeps practice varied.",
+      "patterns": "You have not practised patterns and spatial reasoning in the last two weeks — a change of task keeps practice varied.",
+      "programming": "You have not practised programming in the last two weeks — a change of task keeps practice varied."
+    },
+    "leastPractised": {
+      "memory": "Memory is the area you practised least lately.",
+      "logic": "Logic is the area you practised least lately.",
+      "speed": "Mental speed is the area you practised least lately.",
+      "attention": "Attention is the area you practised least lately.",
+      "patterns": "Patterns and spatial reasoning is the area you practised least lately.",
+      "programming": "Programming is the area you practised least lately."
+    }
+  },
+  "recommend": {
+    "review": {
+      "title": "Review: {{concepts}}",
+      "reason": "You learned these a while ago. Recalling them now, just as they start to fade, is what makes them last."
+    },
+    "lesson": {
+      "title": "Lesson: {{lesson}}",
+      "start": "Start {{course}} from the beginning. {{objective}}",
+      "continue_one": "Continue {{course}} — {{completed}} of {{count}} lesson done.",
+      "continue_other": "Continue {{course}} — {{completed}} of {{count}} lessons done."
+    },
+    "daily": {
+      "title": "Daily challenge · {{game}}",
+      "reason": "Five quick problems, the same for everyone today, at your level."
+    },
+    "train": {
+      "title": "{{game}} · level {{level}}",
+      "learning": "You are learning {{concept}}. {{why}}",
+      "untrained": "You have not trained this area yet.",
+      "leastPractised": "Your least practised area lately (recent performance {{performance}})."
+    },
+    "assessment": {
+      "title": "Take the assessment",
+      "reason": "You have trained a few times: a baseline across all five areas shows where to focus next."
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import { booleanAssignments, capitalize } from '@/games/logic/shared/content';
+import { joinText, msg, type Message, type Text } from '@/domain/shared';
+import { booleanAssignments } from '@/games/logic/shared/content';
 import type { ConditionalContent, Literal, Premise, Verdict } from './types';
 
 const holds = (lit: Literal, world: readonly boolean[]) => world[lit.atom] === lit.value;
@@ -35,25 +36,39 @@ export function verdict(
 
 type Atoms = ConditionalContent['atoms'];
 
-export const sentence = (atoms: Atoms, lit: Literal) =>
-  (atoms[lit.atom] as readonly [string, string])[lit.value ? 0 : 1];
+/**
+ * A literal as an id for the translation files: `lamp.yes` / `lamp.no`. Each language words the
+ * sentence in every form its templates need (plain, capitalised, as an "if" clause, inverted), so
+ * premises are whole templates with no capitalising or word order done in code.
+ */
+export const literalId = (atoms: Atoms, lit: Literal) =>
+  `${atoms[lit.atom] as string}.${lit.value ? 'yes' : 'no'}`;
 
-export function describePremise(atoms: Atoms, p: Premise): string {
-  const s = (lit: Literal) => sentence(atoms, lit);
+const key = (path: string) => `logic:conditionalReasoning.${path}`;
+
+/** The plain sentence: "the lamp is on". */
+export const sentence = (atoms: Atoms, lit: Literal): Message =>
+  msg(key('atom'), { a: literalId(atoms, lit) });
+
+export function describePremise(atoms: Atoms, p: Premise): Message {
+  const id = (lit: Literal) => literalId(atoms, lit);
   switch (p.type) {
     case 'fact':
-      return `${capitalize(s(p.lit))}.`;
+      return msg(key('premise.fact'), { a: id(p.lit) });
     case 'if':
-      return `If ${s(p.a)}, then ${s(p.b)}.`;
+      return msg(key('premise.if'), { a: id(p.a), b: id(p.b) });
     case 'unless':
-      return `${capitalize(s(p.main))} unless ${s(p.cond)}.`;
+      return msg(key('premise.unless'), { a: id(p.main), b: id(p.cond) });
     case 'only-if':
-      return `${capitalize(s(p.a))} only if ${s(p.b)}.`;
+      return msg(key('premise.onlyIf'), { a: id(p.a), b: id(p.b) });
     case 'or':
-      return `Either ${s(p.a)} or ${s(p.b)}, or both.`;
+      return msg(key('premise.or'), { a: id(p.a), b: id(p.b) });
   }
 }
 
-export function describeWorld(atoms: Atoms, world: readonly boolean[]): string {
-  return world.map((value, atom) => sentence(atoms, { atom, value })).join(', ');
+export function describeWorld(atoms: Atoms, world: readonly boolean[]): Text {
+  return joinText(
+    world.map((value, atom) => sentence(atoms, { atom, value })),
+    ', ',
+  );
 }

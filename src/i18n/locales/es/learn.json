@@ -1,0 +1,276 @@
+{
+  "loadError": "No se pudo cargar tu progreso de aprendizaje.",
+  "learningPath": "Ruta de aprendizaje",
+  "blocks": {
+    "flowchart": "Diagrama de flujo",
+    "decision": "Decisión:",
+    "yes": "SÍ",
+    "no": "NO",
+    "callout": {
+      "key": "Idea clave",
+      "tip": "Consejo",
+      "warning": "Atención"
+    }
+  },
+  "feedbackPanel": {
+    "solution": "Esta es la solución.",
+    "correctAnswer": "Respuesta correcta:",
+    "hint": "Pista:",
+    "tryAgain": "Volver a intentarlo",
+    "tryAgainLeft_one": "Volver a intentarlo (queda {{count}})",
+    "tryAgainLeft_other": "Volver a intentarlo (quedan {{count}})",
+    "showSolution": "Ver la solución",
+    "skip": "Saltar"
+  },
+  "player": {
+    "phase": {
+      "guided": {
+        "label": "Guiado",
+        "note": "Con pistas · hasta 3 intentos"
+      },
+      "practice": {
+        "label": "Práctica",
+        "note": "Con pistas · hasta 2 intentos"
+      },
+      "checkpoint": {
+        "label": "Control",
+        "note": "Un intento, sin pistas: aquí demuestras que lo dominas"
+      }
+    },
+    "hintNumber": "Pista {{number}}:",
+    "showHint": "Mostrar una pista",
+    "finish": "Terminar",
+    "continue": "Continuar",
+    "step": "Paso {{number}} / {{total}}",
+    "progress": "Progreso de la lección"
+  },
+  "playground": {
+    "slider": "Control deslizante de {{name}}",
+    "loadError": "No se pudo cargar este ejemplo.",
+    "changeValues": "Cambia los valores",
+    "program": "Programa de ejemplo",
+    "caption": "▸ marca las líneas que se ejecutaron. Las primeras líneas son los valores que tú controlas.",
+    "results": "Lo que hizo el programa",
+    "output": "Salida",
+    "nothingPrinted": "(no se imprimió nada)",
+    "errorLine": "Línea {{line}}: {{message}}",
+    "variablesAfter": "Variables tras la línea {{line}}",
+    "variablesEnd": "Variables al final",
+    "stepThrough": "Paso a paso",
+    "stepLabel": "Paso",
+    "endOfProgram": "Fin del programa",
+    "stepOf": "Paso {{number}} de {{total}}",
+    "endSteps_one": "Fin · {{count}} paso",
+    "endSteps_other": "Fin · {{count}} pasos",
+    "tryThis": "Prueba esto"
+  },
+  "mastery": {
+    "understanding": "Comprensión",
+    "application": "Aplicación",
+    "debugging": "Depuración",
+    "mastered": "dominado"
+  },
+  "path": {
+    "eyebrow": "Aprender",
+    "start": "Empezar la primera lección",
+    "continue": "Continuar: {{lesson}}",
+    "progress": "Tu progreso",
+    "lessonsCompleted": "Lecciones completadas",
+    "summary": "{{lessons}} / {{totalLessons}} lecciones completadas · {{concepts}} / {{totalConcepts}} conceptos dominados",
+    "best": "mejor {{score}}",
+    "lessonLabel": "{{number}}. {{title}}, {{status}}",
+    "lessonLabelBest": "{{number}}. {{title}}, {{status}}, mejor {{score}}",
+    "status": {
+      "completed": "completada",
+      "available": "disponible",
+      "locked": "bloqueada"
+    },
+    "aside": "Repaso y dominio",
+    "review": "Repaso",
+    "due_one": "{{count}} concepto listo para un repaso breve. Recordar las cosas justo cuando empiezas a olvidarlas es lo que hace que perduren.",
+    "due_other": "{{count}} conceptos listos para un repaso breve. Recordar las cosas justo cuando empiezas a olvidarlas es lo que hace que perduren.",
+    "reviewNow": "Repasar ahora (≈{{duration}})",
+    "nothingDue": "Nada pendiente. Próximo repaso: {{when}}.",
+    "noReviews": "Los repasos aparecen aquí cuando completas una lección.",
+    "masteryByConcept": "Dominio por concepto",
+    "masteryEmpty": "El dominio crece con los ejercicios que resuelves bien sin ayuda; avanzar sin responder no cuenta."
+  },
+  "lesson": {
+    "notFound": "Esta lección no existe.",
+    "locked": "«{{title}}» aún no está disponible",
+    "finishPrevious": "Cada lección se apoya en la anterior. Termina «{{title}}» para abrir esta.",
+    "finishPreviousLesson": "Cada lección se apoya en la anterior. Termina la lección anterior para abrir esta.",
+    "goTo": "Ir a «{{title}}»"
+  },
+  "summary": {
+    "complete": "Lección completada",
+    "notPassed": "Aún no superada",
+    "passedNext": "Has aprobado. «{{title}}» ya está disponible.",
+    "passedLast": "Has aprobado la última lección de este módulo.",
+    "failed": "Necesitas un {{score}} para aprobar. Repetir la lección es la forma más rápida de conseguirlo: las explicaciones se entienden mejor la segunda vez.",
+    "score": "Puntuación de la lección",
+    "scoreHint": "El control cuenta el doble",
+    "checkpoint": "Control",
+    "firstTime": "Bien a la primera",
+    "solutionsShown": "Soluciones vistas",
+    "solutionsHint": "Las respuestas reveladas cuentan como aún no aprendidas",
+    "keyPoints": "Puntos clave",
+    "mastery": "Dominio",
+    "reviewNote": "Mañana tendrás un repaso breve de {{concepts}}, y luego a intervalos cada vez más largos: así se fija.",
+    "nextLesson": "Siguiente lección: {{title}}",
+    "replay": "Repetir la lección",
+    "saveFailed": "No se pudo guardar tu progreso en este dispositivo."
+  },
+  "review": {
+    "eyebrow": "Repaso",
+    "done": "Repaso terminado",
+    "score": "Puntuación de recuerdo: {{score}}.",
+    "next": "próximo repaso: {{when}} (caja {{box}} de {{boxes}})",
+    "saving": "guardando…",
+    "back": "Volver a la ruta de aprendizaje",
+    "empty": "No hay nada que repasar ahora",
+    "emptyNote": "Los conceptos vuelven para repasarse un día después de aprenderlos y luego a intervalos cada vez más largos.",
+    "title": "Repaso · {{concepts}}"
+  },
+  "training": {
+    "title": "Entrena las habilidades que hay detrás",
+    "note": "Opcional, unos minutos cada uno. Es práctica, no un requisito.",
+    "gameLevel": "{{game}} · nivel {{level}}"
+  },
+  "thinking": {
+    "eyebrow": "Aprendizaje",
+    "title": "Pensamiento computacional",
+    "description": "Cuatro formas de pensar que usan los programadores y que son útiles sin escribir código. Cada una enlaza con lecciones del curso y con juegos que usan la misma idea.",
+    "openCourse": "Abrir el curso",
+    "lessons": "Lecciones",
+    "practise": "Practica sin código",
+    "ideas": {
+      "decomposition": {
+        "title": "Descomposición",
+        "text": "Divide un problema grande en pasos pequeños que puedas resolver de uno en uno."
+      },
+      "patterns": {
+        "title": "Reconocimiento de patrones",
+        "text": "Fíjate en lo que se repite, para que una solución sirva para muchos casos."
+      },
+      "abstraction": {
+        "title": "Abstracción",
+        "text": "Quédate con lo importante y deja fuera los detalles que no cambian la respuesta."
+      },
+      "algorithms": {
+        "title": "Algoritmos",
+        "text": "Escribe instrucciones exactas y ordenadas que siempre lleguen al resultado."
+      }
+    }
+  },
+  "exercise": {
+    "check": "Comprobar respuesta",
+    "options": "Opciones",
+    "correctAnswer": "Respuesta correcta",
+    "yourAnswer": "Tu respuesta",
+    "predictOutput": "¿Qué imprime? Una línea por cada print.",
+    "predictValue": "Valor de {{name}}",
+    "quotes": "El texto se puede escribir con o sin comillas.",
+    "blank": "Hueco {{number}}",
+    "yourOrder": "Tu orden",
+    "correctOrder": "Orden correcto: {{order}}",
+    "moveUp": "Subir {{item}}",
+    "moveDown": "Bajar {{item}}",
+    "remove": "Quitar {{item}}",
+    "blocks": "Bloques",
+    "add": "Añadir {{item}}",
+    "allBlocksUsed": "Has usado todos los bloques.",
+    "yourAlgorithm": "Tu algoritmo",
+    "addBlocks": "Añade bloques de la lista y luego ordénalos.",
+    "solution": "Solución: {{solution}}",
+    "choose": "Elige…",
+    "bugLine": "1. Haz clic en la línea con el error.",
+    "buggyCode": "Código con un error",
+    "why": "2. ¿Por qué está mal?",
+    "reason": "Motivo"
+  },
+  "feedback": {
+    "headline": {
+      "correct": "Correcto.",
+      "partial": "En parte correcto.",
+      "incorrect": "No del todo."
+    },
+    "youChose": "Elegiste «{{option}}».",
+    "youAnswered": "Respondiste {{value}}.",
+    "youFilledIn": "Completaste con {{value}}.",
+    "blanksRight_one": "{{right}} de {{count}} hueco es correcto.",
+    "blanksRight_other": "{{right}} de {{count}} huecos son correctos.",
+    "stepsInPlace_one": "{{right}} de {{count}} paso está en su sitio.",
+    "stepsInPlace_other": "{{right}} de {{count}} pasos están en su sitio.",
+    "stepShouldBe": "El paso {{step}} debería ser «{{item}}».",
+    "notNeeded": "«{{block}}» no hace falta.",
+    "missing": "Falta: {{blocks}}.",
+    "quoted": "«{{text}}»",
+    "wrongOrder": "Los bloques son los correctos, pero no están en el orden correcto.",
+    "blocksUsed_one": "Usaste {{count}} bloque.",
+    "blocksUsed_other": "Usaste {{count}} bloques.",
+    "matchesRight_one": "{{right}} de {{count}} parejas es correcta.",
+    "matchesRight_other": "{{right}} de {{count}} parejas son correctas.",
+    "goesWith": "«{{left}}» va con «{{right}}».",
+    "pointedAt": "Señalaste la línea {{line}}: «{{cause}}».",
+    "notOnLine": "El problema no está en la línea {{line}}.",
+    "reasonRight": "Aun así, tu motivo es correcto.",
+    "lineCause": "Línea {{line}}: {{cause}}"
+  },
+  "pseudocode": {
+    "types": {
+      "list": "lista",
+      "text": "texto",
+      "number": "número"
+    },
+    "what": {
+      "index": "Un índice",
+      "negation": "La negación"
+    },
+    "run": {
+      "isFunction": "\"{{name}}\" es una función: llámala con {{name}}(…)",
+      "unset": "\"{{name}}\" todavía no tiene valor: se usa antes de asignarlo",
+      "needsNumber": "{{what}} necesita un número y recibió {{type}} {{value}}",
+      "condition": "Una condición debe ser true o false y se obtuvo {{type}} {{value}}",
+      "notIndexable": "Solo se pueden indexar listas y textos, no {{type}}",
+      "indexNotWhole": "El índice {{index}} no es un número entero",
+      "indexOutsideList": "El índice {{index}} está fuera de la lista (válidos: de 0 a {{last}})",
+      "indexOutsideText": "El índice {{index}} está fuera del texto (válidos: de 0 a {{last}})",
+      "lenType": "len() necesita una lista o un texto y recibió {{type}}",
+      "rangeTooLarge": "range() es demasiado grande",
+      "appendList": "append() necesita primero una lista",
+      "noValues": "{{fn}} necesita al menos un valor",
+      "cannotAdd": "No se puede sumar {{left}} y {{right}}: convierte primero con str()",
+      "divisionByZero": "División entre cero",
+      "cannotCompare": "No se puede comparar {{left}} con {{right}}",
+      "noFunction": "No hay ninguna función llamada \"{{name}}\"",
+      "arity_one": "{{name}}() recibe {{count}} valor, pero se le pasaron {{got}}",
+      "arity_other": "{{name}}() recibe {{count}} valores, pero se le pasaron {{got}}",
+      "tooDeep": "Demasiadas llamadas anidadas (¿recursión infinita?)",
+      "tooManySteps": "Se detuvo tras {{steps}} pasos: puede que el bucle no termine nunca",
+      "notAList": "\"{{name}}\" no es una lista",
+      "returnOutside": "\"return\" solo funciona dentro de una función",
+      "forIterable": "\"for\" necesita una lista, un texto o range() y recibió {{type}}"
+    },
+    "parse": {
+      "missingQuote": "Al texto le falta la comilla de cierre (\")",
+      "unexpectedChar": "Carácter inesperado \"{{char}}\"",
+      "trailing": "Hay texto de más después de la expresión",
+      "endsEarly": "La línea termina antes de tiempo",
+      "expected": "Se esperaba \"{{value}}\"",
+      "chainedComparison": "Combina las comparaciones con \"and\" / \"or\"",
+      "keywordHere": "\"{{word}}\" no se puede usar aquí",
+      "unexpected": "\"{{token}}\" inesperado",
+      "tabs": "Usa espacios para sangrar, no tabuladores",
+      "indentation": "Sangría inesperada",
+      "needsBlock": "Esta línea necesita debajo un bloque con sangría",
+      "needsColon": "Las líneas con \"{{keyword}}\" terminan en \":\"",
+      "mustFollowIf": "\"{{word}}\" debe ir después de un bloque \"if\"",
+      "forSyntax": "Escribe los bucles así: \"for item in list:\"",
+      "functionSyntax": "Escribe las funciones así: \"function name(a, b):\"",
+      "paramNames": "Los nombres de los parámetros deben ser nombres simples",
+      "badTarget": "\"{{target}}\" no puede ser un nombre de variable",
+      "elseCondition": "\"else\" no lleva condición (¿querías decir \"elif\"?)"
+    }
+  }
+}

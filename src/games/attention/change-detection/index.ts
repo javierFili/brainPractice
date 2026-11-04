@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { changeDetectionGame } from './content/definition';
 import type { ChangeDetectionChallenge } from './content/types';
@@ -7,11 +8,11 @@ export const changeDetectionModule = defineGameModule<ChangeDetectionChallenge>(
   definition: changeDetectionGame,
   ContentView: ChangeDetectionView,
   kindLabels: {
-    none: 'No change',
-    appear: 'Item appeared or vanished',
-    move: 'Item moved',
-    color: 'Colour change',
-    shape: 'Shape change',
-    turn: 'Turned item',
+    none: msg('attention:changeDetection.kinds.none'),
+    appear: msg('attention:changeDetection.kinds.appear'),
+    move: msg('attention:changeDetection.kinds.move'),
+    color: msg('attention:changeDetection.kinds.color'),
+    shape: msg('attention:changeDetection.kinds.shape'),
+    turn: msg('attention:changeDetection.kinds.turn'),
   },
 });

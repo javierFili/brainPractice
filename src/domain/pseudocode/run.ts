@@ -1,4 +1,9 @@
+import { msg, type Message, type Text } from '../shared/text';
 import type { Expr, Program, Stmt, Value } from './ast';
+
+/** Error messages are translation keys (`learn:pseudocode.run.*`); the language itself stays English. */
+const M = (key: string, values?: Readonly<Record<string, Text | number>>) =>
+  msg(`learn:pseudocode.run.${key}`, values);
 
 export interface RunLimits {
   /** Statements executed before giving up (runaway loops). */
@@ -22,7 +27,8 @@ export interface TraceStep {
 
 export interface RunError {
   readonly line: number;
-  readonly message: string;
+  /** What went wrong, for the learner (resolved by the UI in their language). */
+  readonly message: Message;
   readonly kind: 'name' | 'type' | 'index' | 'limit' | 'value';
 }
 
@@ -39,9 +45,9 @@ class Failure extends Error {
   constructor(
     readonly line: number,
     readonly kind: RunError['kind'],
-    message: string,
+    readonly text: Message,
   ) {
-    super(message);
+    super(text.key);
   }
 }
 
@@ -77,16 +83,17 @@ export function literal(value: Value): string {
   return `[${value.map(literal).join(', ')}]`;
 }
 
-const typeName = (value: Value) =>
+/** Type names read by learners; `none` and `true/false` are keywords of the language. */
+const typeName = (value: Value): Text =>
   value === null
     ? 'none'
     : Array.isArray(value)
-      ? 'list'
+      ? msg('learn:pseudocode.types.list')
       : typeof value === 'string'
-        ? 'text'
+        ? msg('learn:pseudocode.types.text')
         : typeof value === 'boolean'
           ? 'true/false'
-          : 'number';
+          : msg('learn:pseudocode.types.number');
 
 export function valuesEqual(a: Value, b: Value): boolean {
   if (Array.isArray(a) && Array.isArray(b))
@@ -116,42 +123,45 @@ export function runProgram(
   let steps = 0;
   let depth = 0;
 
-  const fail = (line: number, kind: RunError['kind'], message: string): never => {
+  const fail = (line: number, kind: RunError['kind'], message: Message): never => {
     throw new Failure(line, kind, message);
   };
 
   const lookup = (name: string, scope: Map<string, Value>, line: number): Value => {
     if (scope.has(name)) return scope.get(name) as Value;
     if (globals.has(name)) return globals.get(name) as Value;
-    if (functions.has(name))
-      return fail(line, 'type', `"${name}" is a function: call it with ${name}(…)`);
-    return fail(line, 'name', `"${name}" has no value yet — it is used before being set`);
+    if (functions.has(name)) return fail(line, 'type', M('isFunction', { name }));
+    return fail(line, 'name', M('unset', { name }));
   };
 
-  const number = (value: Value, line: number, what: string): number =>
+  const number = (value: Value, line: number, what: Text): number =>
     typeof value === 'number'
-      ? value
-      : fail(line, 'type', `${what} needs a number, got ${typeName(value)} ${literal(value)}`);
-
-  const truthy = (value: Value, line: number): boolean =>
-    typeof value === 'boolean'
       ? value
       : fail(
           line,
           'type',
-          `A condition must be true or false, got ${typeName(value)} ${literal(value)}`,
+          M('needsNumber', { what, type: typeName(value), value: literal(value) }),
         );
+
+  const truthy = (value: Value, line: number): boolean =>
+    typeof value === 'boolean'
+      ? value
+      : fail(line, 'type', M('condition', { type: typeName(value), value: literal(value) }));
 
   const indexOf = (list: Value, index: Value, line: number): { list: Value[]; at: number } => {
     if (!Array.isArray(list) && typeof list !== 'string')
-      return fail(line, 'type', `Only lists and text can be indexed, got ${typeName(list)}`);
-    const at = number(index, line, 'An index');
-    if (!Number.isInteger(at)) return fail(line, 'index', `Index ${at} is not a whole number`);
+      return fail(line, 'type', M('notIndexable', { type: typeName(list) }));
+    const at = number(index, line, msg('learn:pseudocode.what.index'));
+    if (!Number.isInteger(at))
+      return fail(line, 'index', M('indexNotWhole', { index: String(at) }));
     if (at < 0 || at >= list.length)
       return fail(
         line,
         'index',
-        `Index ${at} is outside the ${Array.isArray(list) ? 'list' : 'text'} (valid: 0 to ${list.length - 1})`,
+        M(Array.isArray(list) ? 'indexOutsideList' : 'indexOutsideText', {
+          index: String(at),
+          last: String(list.length - 1),
+        }),
       );
     return { list: Array.isArray(list) ? list : charsOf(list), at };
   };
@@ -160,15 +170,15 @@ export function runProgram(
     len: ([value], line) =>
       Array.isArray(value) || typeof value === 'string'
         ? value.length
-        : fail(line, 'type', `len() needs a list or text, got ${typeName(value ?? null)}`),
+        : fail(line, 'type', M('lenType', { type: typeName(value ?? null) })),
     range: (args, line) => {
       const [a, b] = args.map((v) => number(v, line, 'range()'));
       const [from, to] = b === undefined ? [0, a ?? 0] : [a ?? 0, b];
-      if (to - from > 1000) return fail(line, 'limit', 'range() is too large');
+      if (to - from > 1000) return fail(line, 'limit', M('rangeTooLarge'));
       return Array.from({ length: Math.max(0, to - from) }, (_, i) => from + i);
     },
     append: ([list, item], line) => {
-      if (!Array.isArray(list)) return fail(line, 'type', 'append() needs a list first');
+      if (!Array.isArray(list)) return fail(line, 'type', M('appendList'));
       list.push(copy(item ?? null));
       return null;
     },
@@ -176,12 +186,12 @@ export function runProgram(
     abs: ([value], line) => Math.abs(number(value ?? null, line, 'abs()')),
     max: (args, line) => {
       const values = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
-      if (values.length === 0) return fail(line, 'value', 'max() needs at least one value');
+      if (values.length === 0) return fail(line, 'value', M('noValues', { fn: 'max()' }));
       return Math.max(...values.map((v) => number(v, line, 'max()')));
     },
     min: (args, line) => {
       const values = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
-      if (values.length === 0) return fail(line, 'value', 'min() needs at least one value');
+      if (values.length === 0) return fail(line, 'value', M('noValues', { fn: 'min()' }));
       return Math.min(...values.map((v) => number(v, line, 'min()')));
     },
   };
@@ -201,7 +211,9 @@ export function runProgram(
       }
       case 'unary': {
         const value = evaluate(expr.operand, scope, line);
-        return expr.op === '-' ? -number(value, line, 'Negation') : !truthy(value, line);
+        return expr.op === '-'
+          ? -number(value, line, msg('learn:pseudocode.what.negation'))
+          : !truthy(value, line);
       }
       case 'binary':
         return binary(expr, scope, line);
@@ -243,7 +255,7 @@ export function runProgram(
           return fail(
             line,
             'type',
-            `Cannot add ${typeName(left)} and ${typeName(right)}: convert with str() first`,
+            M('cannotAdd', { left: typeName(left), right: typeName(right) }),
           );
         return number(left, line, '+') + number(right, line, '+');
       case '-':
@@ -252,12 +264,12 @@ export function runProgram(
         return number(left, line, '*') * number(right, line, '*');
       case '/': {
         const divisor = number(right, line, '/');
-        if (divisor === 0) return fail(line, 'value', 'Division by zero');
+        if (divisor === 0) return fail(line, 'value', M('divisionByZero'));
         return number(left, line, '/') / divisor;
       }
       case '%': {
         const divisor = number(right, line, '%');
-        if (divisor === 0) return fail(line, 'value', 'Division by zero');
+        if (divisor === 0) return fail(line, 'value', M('divisionByZero'));
         return number(left, line, '%') % divisor;
       }
       default: {
@@ -265,7 +277,11 @@ export function runProgram(
           (typeof left === 'number' && typeof right === 'number') ||
           (typeof left === 'string' && typeof right === 'string');
         if (!ordered)
-          return fail(line, 'type', `Cannot compare ${typeName(left)} with ${typeName(right)}`);
+          return fail(
+            line,
+            'type',
+            M('cannotCompare', { left: typeName(left), right: typeName(right) }),
+          );
         const [a, b] = [left, right] as [number, number];
         return expr.op === '<'
           ? a < b
@@ -282,11 +298,14 @@ export function runProgram(
     const builtin = Object.hasOwn(builtins, name) ? builtins[name] : undefined;
     if (builtin) return builtin(args, line);
     const fn = functions.get(name);
-    if (!fn) return fail(line, 'name', `There is no function called "${name}"`);
+    if (!fn) return fail(line, 'name', M('noFunction', { name }));
     if (args.length !== fn.params.length)
-      return fail(line, 'type', `${name}() takes ${fn.params.length} value(s), got ${args.length}`);
-    if (depth >= limits.maxDepth)
-      return fail(line, 'limit', 'Too many nested calls (endless recursion?)');
+      return fail(
+        line,
+        'type',
+        M('arity', { name, count: fn.params.length, got: String(args.length) }),
+      );
+    if (depth >= limits.maxDepth) return fail(line, 'limit', M('tooDeep'));
     const local = new Map(fn.params.map((param, i) => [param, args[i] as Value]));
     depth++;
     try {
@@ -308,7 +327,7 @@ export function runProgram(
   function tick(line: number): void {
     steps++;
     if (steps > limits.maxSteps)
-      fail(line, 'limit', `Stopped after ${limits.maxSteps} steps — the loop may never end`);
+      fail(line, 'limit', M('tooManySteps', { steps: String(limits.maxSteps) }));
   }
 
   function execBlock(body: readonly Stmt[], scope: Map<string, Value>, name: string | null): void {
@@ -323,7 +342,7 @@ export function runProgram(
         break;
       case 'assign-index': {
         const target = lookup(stmt.target, scope, stmt.line);
-        if (!Array.isArray(target)) fail(stmt.line, 'type', `"${stmt.target}" is not a list`);
+        if (!Array.isArray(target)) fail(stmt.line, 'type', M('notAList', { name: stmt.target }));
         const { list, at } = indexOf(target, evaluate(stmt.index, scope, stmt.line), stmt.line);
         list[at] = evaluate(stmt.value, scope, stmt.line);
         break;
@@ -338,7 +357,7 @@ export function runProgram(
         functions.set(stmt.name, { params: stmt.params, body: stmt.body });
         break;
       case 'return':
-        if (name === null) fail(stmt.line, 'type', '"return" only works inside a function');
+        if (name === null) fail(stmt.line, 'type', M('returnOutside'));
         record(stmt.line, scope, name);
         throw new Return(stmt.value === null ? null : evaluate(stmt.value, scope, stmt.line));
       case 'if': {
@@ -363,11 +382,7 @@ export function runProgram(
           ? [...iterable]
           : typeof iterable === 'string'
             ? charsOf(iterable)
-            : fail(
-                stmt.line,
-                'type',
-                `"for" needs a list, text or range(), got ${typeName(iterable)}`,
-              );
+            : fail(stmt.line, 'type', M('forIterable', { type: typeName(iterable) }));
         for (const item of items) {
           scope.set(stmt.variable, copy(item));
           record(stmt.line, scope, name);
@@ -384,7 +399,7 @@ export function runProgram(
     execBlock(program.body, globals, null);
   } catch (signal) {
     if (!(signal instanceof Failure)) throw signal;
-    error = { line: signal.line, kind: signal.kind, message: signal.message };
+    error = { line: signal.line, kind: signal.kind, message: signal.text };
   }
   return { variables: snapshot(globals), output, trace, steps, error };
 }

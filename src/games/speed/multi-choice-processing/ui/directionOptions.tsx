@@ -1,20 +1,18 @@
 import type { ChoiceOption } from '@/domain/challenge';
-import type { Direction } from '../content/types';
-import { Arrow } from './FlankerView';
+import { isMessage, type Text } from '@/domain/shared';
+import { DIRECTIONS, type Direction } from '../content/types';
+import { DirectionFace } from './DirectionFace';
 
-const asDirection = (label: string): Direction | null => {
-  const d = label.toLowerCase();
-  return d === 'left' || d === 'right' || d === 'up' || d === 'down' ? d : null;
+const PREFIX = 'speed:multiChoiceProcessing.directions.';
+
+const asDirection = (label: Text): Direction | null => {
+  if (!isMessage(label) || !label.key.startsWith(PREFIX)) return null;
+  const d = label.key.slice(PREFIX.length);
+  return (DIRECTIONS as readonly string[]).includes(d) ? (d as Direction) : null;
 };
 
 /** Answer buttons show the arrow next to its word. */
 export function renderDirectionOption({ label }: ChoiceOption) {
   const direction = asDirection(label);
-  if (direction === null) return undefined;
-  return (
-    <span className="flex items-center gap-2">
-      <Arrow item={direction} className="h-6 w-6" />
-      {label}
-    </span>
-  );
+  return direction === null ? undefined : <DirectionFace direction={direction} label={label} />;
 }

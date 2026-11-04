@@ -19,6 +19,7 @@ import {
   withoutOneStep,
   type Behaviour,
 } from '../solvers/programSpace';
+import { joinText, msg } from '@/domain/shared';
 import type { ListOp, PatternProfile } from '../types';
 import { pickDistractors, type PatternDraft } from './draft';
 
@@ -150,11 +151,15 @@ export function transformInference(random: RandomGenerator, profile: PatternProf
         profile.distractors,
       );
       if (wrong === null) return null;
-      const steps = program.map((op, i) => `${i + 1}) ${describeListOp(op)}`).join('; ');
+      const steps = joinText(
+        program.map((op, i) =>
+          msg('programming:patternArchitect.step', { n: i + 1, step: describeListOp(op) }),
+        ),
+        '; ',
+      );
       const path = trace(LIST_SPACE, program, question).map(formatList).join(' → ');
       return {
-        prompt:
-          'The same hidden program turns every input into its output. What does it produce for the new input?',
+        prompt: msg('programming:patternArchitect.transform.prompt'),
         content: {
           kind: 'transform-inference',
           examples: inputs
@@ -164,7 +169,12 @@ export function transformInference(random: RandomGenerator, profile: PatternProf
           maxSteps: depth,
         },
         response: singleChoice(random, formatList(answer), wrong),
-        explanation: `The hidden program: ${steps}. Applied to the new input: ${path}, so the answer is ${formatList(answer)}. Every program of up to ${depth} step${depth === 1 ? '' : 's'} that fits all the examples gives this same result.`,
+        explanation: msg('programming:patternArchitect.transform.explanation', {
+          steps,
+          path,
+          answer: formatList(answer),
+          count: depth,
+        }),
         skills: ['abstraction', 'algorithmic-thinking', 'pattern-recognition'],
       };
     }

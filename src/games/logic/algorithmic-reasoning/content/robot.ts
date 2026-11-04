@@ -1,11 +1,17 @@
+import { msg, type Message, type Text } from '@/domain/shared';
+import { cellLabelAt } from '@/games/kit/content';
 import type { Facing, Instruction, RobotContent, RobotState } from './types';
 
 const DR = [-1, 0, 1, 0];
 const DC = [0, 1, 0, -1];
-export const FACING_WORDS = ['up', 'right', 'down', 'left'] as const;
+const FACING = ['up', 'right', 'down', 'left'] as const;
+const key = (path: string) => `logic:algorithmicReasoning.${path}`;
 
-export const cellLabel = (cell: number, size: number) =>
-  `row ${Math.floor(cell / size) + 1}, column ${(cell % size) + 1}`;
+/** "up", "right"…: the direction the robot faces. */
+export const facingLabel = (facing: Facing): Message => msg(key(`facing.${FACING[facing]}`));
+
+/** "row 2, column 3". */
+export const cellLabel = (cell: number, size: number): Message => cellLabelAt(cell, size);
 
 /** The cell in front, or null when it is a wall or off the grid. */
 export function ahead(state: RobotState, size: number, walls: ReadonlySet<number>): number | null {
@@ -17,7 +23,9 @@ export function ahead(state: RobotState, size: number, walls: ReadonlySet<number
 }
 
 export interface TraceStep {
-  readonly text: string;
+  readonly text: Text;
+  /** Squares moved by a "move until blocked" step. */
+  readonly moved?: number;
   readonly state: RobotState;
 }
 
@@ -43,12 +51,18 @@ export function run(
             if (next === null) return false;
             state = { ...state, cell: next };
           }
-          trace.push({ text: `move ${ins.steps} to ${cellLabel(state.cell, size)}`, state });
+          trace.push({
+            text: msg(key('trace.move'), { n: ins.steps, cell: cellLabel(state.cell, size) }),
+            state,
+          });
           break;
         case 'turn': {
           const delta = ins.turn === 'right' ? 1 : ins.turn === 'left' ? 3 : 2;
           state = { ...state, facing: ((state.facing + delta) % 4) as Facing };
-          trace.push({ text: `turn ${ins.turn}, now facing ${FACING_WORDS[state.facing]}`, state });
+          trace.push({
+            text: msg(key(`trace.turn.${ins.turn}`), { facing: facingLabel(state.facing) }),
+            state,
+          });
           break;
         }
         case 'repeat':
@@ -56,7 +70,7 @@ export function run(
           break;
         case 'if-blocked': {
           const blocked = ahead(state, size, walls) === null;
-          trace.push({ text: blocked ? 'the way is blocked' : 'the way is clear', state });
+          trace.push({ text: msg(key(`trace.${blocked ? 'blocked' : 'clear'}`)), state });
           if (!exec(blocked ? ins.then : ins.otherwise)) return false;
           break;
         }
@@ -71,7 +85,11 @@ export function run(
             moved++;
           }
           trace.push({
-            text: `move until blocked (${moved} squares) to ${cellLabel(state.cell, size)}`,
+            text: msg(key('trace.untilBlocked'), {
+              count: moved,
+              cell: cellLabel(state.cell, size),
+            }),
+            moved,
             state,
           });
           break;
@@ -83,35 +101,36 @@ export function run(
   return exec(content.program) ? trace : null;
 }
 
-const plural = (n: number) => (n === 1 ? 'square' : 'squares');
+const line = (path: string, depth: number, values?: Record<string, number>) => ({
+  text: msg(key(`program.${path}`), values),
+  depth,
+});
 
 /** Plain-language lines with indentation depth, for display. */
 export function describeProgram(
   program: readonly Instruction[],
   depth = 0,
-): { text: string; depth: number }[] {
+): { text: Message; depth: number }[] {
   return program.flatMap((ins) => {
     switch (ins.type) {
       case 'forward':
-        return [{ text: `Move forward ${ins.steps} ${plural(ins.steps)}.`, depth }];
+        return [line('forward', depth, { count: ins.steps })];
       case 'turn':
-        return [{ text: ins.turn === 'around' ? 'Turn around.' : `Turn ${ins.turn}.`, depth }];
+        return [line(`turn.${ins.turn}`, depth)];
       case 'repeat':
         return [
-          { text: `Do this ${ins.times} times:`, depth },
+          line('repeat', depth, { count: ins.times }),
           ...describeProgram(ins.body, depth + 1),
         ];
       case 'if-blocked':
         return [
-          { text: 'If the square in front is a wall or the edge:', depth },
+          line('ifBlocked', depth),
           ...describeProgram(ins.then, depth + 1),
-          { text: 'Otherwise:', depth },
+          line('otherwise', depth),
           ...describeProgram(ins.otherwise, depth + 1),
         ];
       case 'until-blocked':
-        return [
-          { text: 'Keep moving forward until the square in front is a wall or the edge.', depth },
-        ];
+        return [line('untilBlocked', depth)];
     }
   });
 }

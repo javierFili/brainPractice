@@ -1,0 +1,854 @@
+{
+  "shared": {
+    "missing": "Falta (esto es lo que eliges)",
+    "colour": {
+      "m": {
+        "red": "rojo",
+        "orange": "naranja",
+        "yellow": "amarillo",
+        "green": "verde",
+        "blue": "azul",
+        "purple": "morado"
+      },
+      "f": {
+        "red": "roja",
+        "orange": "naranja",
+        "yellow": "amarilla",
+        "green": "verde",
+        "blue": "azul",
+        "purple": "morada"
+      },
+      "n": {
+        "red": "rojo",
+        "orange": "naranja",
+        "yellow": "amarillo",
+        "green": "verde",
+        "blue": "azul",
+        "purple": "morado"
+      },
+      "mp": {
+        "red": "rojos",
+        "orange": "naranjas",
+        "yellow": "amarillos",
+        "green": "verdes",
+        "blue": "azules",
+        "purple": "morados"
+      },
+      "fp": {
+        "red": "rojas",
+        "orange": "naranjas",
+        "yellow": "amarillas",
+        "green": "verdes",
+        "blue": "azules",
+        "purple": "moradas"
+      },
+      "np": {
+        "red": "rojos",
+        "orange": "naranjas",
+        "yellow": "amarillos",
+        "green": "verdes",
+        "blue": "azules",
+        "purple": "morados"
+      },
+      "w": {
+        "red": "rojo",
+        "orange": "naranja",
+        "yellow": "amarillo",
+        "green": "verde",
+        "blue": "azul",
+        "purple": "morado"
+      }
+    },
+    "shape": {
+      "circle": "círculo",
+      "square": "cuadrado",
+      "triangle": "triángulo",
+      "diamond": "rombo",
+      "star": "estrella",
+      "hexagon": "hexágono",
+      "heart": "corazón",
+      "cross": "cruz",
+      "arrow": "flecha"
+    },
+    "shapes": {
+      "circle": "círculos",
+      "square": "cuadrados",
+      "triangle": "triángulos",
+      "diamond": "rombos",
+      "star": "estrellas",
+      "hexagon": "hexágonos",
+      "heart": "corazones",
+      "cross": "cruces",
+      "arrow": "flechas"
+    },
+    "figureOne": {
+      "circle": "círculo $t(patterns:shared.colour.m.{{color}})",
+      "square": "cuadrado $t(patterns:shared.colour.m.{{color}})",
+      "triangle": "triángulo $t(patterns:shared.colour.m.{{color}})",
+      "diamond": "rombo $t(patterns:shared.colour.m.{{color}})",
+      "star": "estrella $t(patterns:shared.colour.f.{{color}})",
+      "hexagon": "hexágono $t(patterns:shared.colour.m.{{color}})",
+      "heart": "corazón $t(patterns:shared.colour.m.{{color}})",
+      "cross": "cruz $t(patterns:shared.colour.f.{{color}})",
+      "arrow": "flecha $t(patterns:shared.colour.f.{{color}})"
+    },
+    "figure": {
+      "circle_one": "{{count}} círculo $t(patterns:shared.colour.m.{{color}})",
+      "circle_other": "{{count}} círculos $t(patterns:shared.colour.mp.{{color}})",
+      "square_one": "{{count}} cuadrado $t(patterns:shared.colour.m.{{color}})",
+      "square_other": "{{count}} cuadrados $t(patterns:shared.colour.mp.{{color}})",
+      "triangle_one": "{{count}} triángulo $t(patterns:shared.colour.m.{{color}})",
+      "triangle_other": "{{count}} triángulos $t(patterns:shared.colour.mp.{{color}})",
+      "diamond_one": "{{count}} rombo $t(patterns:shared.colour.m.{{color}})",
+      "diamond_other": "{{count}} rombos $t(patterns:shared.colour.mp.{{color}})",
+      "star_one": "{{count}} estrella $t(patterns:shared.colour.f.{{color}})",
+      "star_other": "{{count}} estrellas $t(patterns:shared.colour.fp.{{color}})",
+      "hexagon_one": "{{count}} hexágono $t(patterns:shared.colour.m.{{color}})",
+      "hexagon_other": "{{count}} hexágonos $t(patterns:shared.colour.mp.{{color}})",
+      "heart_one": "{{count}} corazón $t(patterns:shared.colour.m.{{color}})",
+      "heart_other": "{{count}} corazones $t(patterns:shared.colour.mp.{{color}})",
+      "cross_one": "{{count}} cruz $t(patterns:shared.colour.f.{{color}})",
+      "cross_other": "{{count}} cruces $t(patterns:shared.colour.fp.{{color}})",
+      "arrow_one": "{{count}} flecha $t(patterns:shared.colour.f.{{color}})",
+      "arrow_other": "{{count}} flechas $t(patterns:shared.colour.fp.{{color}})"
+    },
+    "pointing": {
+      "up": "{{figure}} hacia arriba",
+      "right": "{{figure}} hacia la derecha",
+      "down": "{{figure}} hacia abajo",
+      "left": "{{figure}} hacia la izquierda"
+    },
+    "direction": {
+      "up": "arriba",
+      "right": "derecha",
+      "down": "abajo",
+      "left": "izquierda"
+    },
+    "grid": {
+      "empty": "vacía",
+      "describe": "cuadrícula de {{rows}} por {{cols}}; {{lines}}",
+      "rowEmpty": "fila {{row}} vacía",
+      "rowFilled_one": "fila {{row}} rellena en la columna {{columns}}",
+      "rowFilled_other": "fila {{row}} rellena en las columnas {{columns}}",
+      "rowTiles": "fila {{row}}: {{tiles}}",
+      "tileInColumn": "{{tile}} en la columna {{column}}"
+    },
+    "theFigure": {
+      "circle": "El círculo $t(patterns:shared.colour.m.{{color}})",
+      "square": "El cuadrado $t(patterns:shared.colour.m.{{color}})",
+      "triangle": "El triángulo $t(patterns:shared.colour.m.{{color}})",
+      "diamond": "El rombo $t(patterns:shared.colour.m.{{color}})",
+      "star": "La estrella $t(patterns:shared.colour.f.{{color}})",
+      "hexagon": "El hexágono $t(patterns:shared.colour.m.{{color}})",
+      "heart": "El corazón $t(patterns:shared.colour.m.{{color}})",
+      "cross": "La cruz $t(patterns:shared.colour.f.{{color}})",
+      "arrow": "La flecha $t(patterns:shared.colour.f.{{color}})"
+    }
+  },
+  "visualPatternCompletion": {
+    "name": "Completar patrones visuales",
+    "tagline": "¿Qué viene después en la fila?",
+    "description": "Una fila de figuras de colores sigue un patrón: un bloque que se repite, un número de figuras que crece, una flecha que gira, o formas y colores que cambian en ciclos distintos. Elige la figura que viene después.",
+    "scoringSummary": "Cada fila cuenta como correcta cuando eliges la figura que la continúa. Tu resultado es la proporción de filas continuadas correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Descubre el patrón y elige lo que viene después.",
+    "instructions": {
+      "1": "Mira la fila de izquierda a derecha y busca qué se repite o qué cambia.",
+      "2": "Revisa cada rasgo por separado: forma, color, cuántas hay y hacia dónde apunta una flecha.",
+      "3": "Elige la figura que viene después. Las teclas del 1 al 8 eligen una opción."
+    },
+    "levels": {
+      "1": "Continúa un patrón de dos figuras que se turnan.",
+      "2": "Continúa un bloque de tres figuras.",
+      "3": "Bloques con repeticiones dentro, como AABB.",
+      "4": "Un patrón que crece: una más cada vez.",
+      "5": "Bloques más largos que pueden empezar por la mitad.",
+      "6": "Formas y colores siguen dos ciclos distintos.",
+      "7": "Flechas que giran siempre lo mismo mientras los colores se repiten.",
+      "8": "Dos ciclos de longitudes distintas, con más opciones.",
+      "9": "La cantidad cambia paso a paso mientras las formas rotan en ciclo.",
+      "10": "Tres rasgos cambian a la vez: forma, color y cantidad."
+    },
+    "kinds": {
+      "repeat": "Bloques que se repiten",
+      "two-rules": "Dos ciclos separados",
+      "growing": "Crecer y girar"
+    },
+    "prompt": "¿Qué viene después en la fila?",
+    "explanation": "{{rule}} Así que la siguiente es: {{answer}}.",
+    "rule": {
+      "repeat": "El bloque {{block}} se repite una y otra vez.",
+      "parts": "{{parts}}."
+    },
+    "partStart": {
+      "countUp": "El número de figuras aumenta en una cada vez",
+      "countDown": "El número de figuras disminuye en una cada vez",
+      "turnClockwise": "La flecha gira un cuarto de vuelta en sentido horario cada vez",
+      "turnAnticlockwise": "La flecha gira un cuarto de vuelta en sentido antihorario cada vez",
+      "shapes_one": "Las formas se repiten cada {{count}}: {{cycle}}",
+      "shapes_other": "Las formas se repiten cada {{count}}: {{cycle}}",
+      "colours_one": "Los colores se repiten cada {{count}}: {{cycle}}",
+      "colours_other": "Los colores se repiten cada {{count}}: {{cycle}}"
+    },
+    "part": {
+      "countUp": "el número de figuras aumenta en una cada vez",
+      "countDown": "el número de figuras disminuye en una cada vez",
+      "turnClockwise": "la flecha gira un cuarto de vuelta en sentido horario cada vez",
+      "turnAnticlockwise": "la flecha gira un cuarto de vuelta en sentido antihorario cada vez",
+      "shapes_one": "las formas se repiten cada {{count}}: {{cycle}}",
+      "shapes_other": "las formas se repiten cada {{count}}: {{cycle}}",
+      "colours_one": "los colores se repiten cada {{count}}: {{cycle}}",
+      "colours_other": "los colores se repiten cada {{count}}: {{cycle}}"
+    },
+    "view": {
+      "row": "Fila del patrón, de izquierda a derecha",
+      "next": "Siguiente figura (desconocida)"
+    }
+  },
+  "numberPatternCompletion": {
+    "name": "Completar patrones numéricos",
+    "tagline": "Encuentra el número que falta en cuadrículas, pirámides, ruedas y cruces.",
+    "description": "Los números se colocan en cuadrículas, pirámides, ruedas y cruces, y cada disposición sigue una regla: filas que suman, ladrillos que suman los dos de abajo, segmentos opuestos relacionados, centros que salen de sus brazos. Descubre la regla y escribe el número que falta.",
+    "scoringSummary": "Cada disposición cuenta como correcta cuando escribes exactamente el número que falta. Tu resultado es la proporción de disposiciones completadas correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Descubre la regla y escribe el número que falta.",
+    "instructions": {
+      "1": "Cada disposición esconde un número, marcado con «?». Descubre la regla que siguen los demás números.",
+      "2": "Cuadrículas: compara filas y columnas. Pirámides: cada ladrillo es la suma de los dos que tiene debajo.",
+      "3": "Ruedas: fíjate en los números de lados opuestos. Cruces: el centro sale de los cuatro brazos, igual en todas las cruces.",
+      "4": "Escribe el número que falta y pulsa Intro."
+    },
+    "levels": {
+      "1": "Cada fila suma: el primero más el segundo da el tercero.",
+      "2": "Sumas en filas o en columnas, con el hueco en cualquier sitio.",
+      "3": "Pirámides numéricas: cada ladrillo es la suma de los dos de abajo.",
+      "4": "Filas que restan o avanzan con un paso fijo.",
+      "5": "Ruedas: los segmentos opuestos comparten un vínculo oculto.",
+      "6": "Pirámides más grandes en las que quizá tengas que ir hacia atrás.",
+      "7": "Cuadrículas donde filas y columnas funcionan juntas.",
+      "8": "Cruces: descubre cómo los brazos forman el centro.",
+      "9": "Pirámides con más ladrillos en blanco y disposiciones mezcladas.",
+      "10": "Todas las disposiciones, con productos y pirámides de cinco ladrillos."
+    },
+    "kinds": {
+      "grid": "Cuadrículas numéricas",
+      "pyramid": "Pirámides numéricas",
+      "wheel": "Ruedas numéricas",
+      "cross": "Cruces numéricas"
+    },
+    "grid": {
+      "prompt": "Descubre la regla de las filas o las columnas. ¿Qué número falta?",
+      "explanation": "{{rule}} Aquí {{working}}.",
+      "rule": {
+        "row-sum": "En cada fila, el primer número más el segundo da el tercero.",
+        "column-sum": "En cada columna, el número de arriba más el del medio da el de abajo.",
+        "row-difference": "En cada fila, el primer número menos el segundo da el tercero.",
+        "column-difference": "En cada columna, el número de arriba menos el del medio da el de abajo.",
+        "row-step": "Cada fila sube o baja con su propio paso fijo de izquierda a derecha.",
+        "column-step": "Cada columna sube o baja con su propio paso fijo de arriba abajo.",
+        "row-product": "En cada fila, el primer número por el segundo da el tercero.",
+        "column-product": "En cada columna, el número de arriba por el del medio da el de abajo.",
+        "add-table": "Pasar de una columna a otra suma la misma cantidad en todas las filas (y pasar de una fila a otra suma la misma cantidad en todas las columnas).",
+        "row-total": "Todas las filas suman el mismo total.",
+        "column-total": "Todas las columnas suman el mismo total."
+      },
+      "working": {
+        "table": "el número que falta es {{answer}}",
+        "rowTotal": "el total es {{total}}, así que en la fila {{row}} el número que falta es {{answer}}",
+        "columnTotal": "el total es {{total}}, así que en la columna {{column}} el número que falta es {{answer}}",
+        "row": "en la fila {{row}} ({{shown}}) el número que falta es {{answer}}",
+        "column": "en la columna {{column}} ({{shown}}) el número que falta es {{answer}}"
+      }
+    },
+    "pyramid": {
+      "prompt": "Cada ladrillo es la suma de los dos ladrillos que tiene debajo. ¿Qué número va en el ladrillo marcado con «?»?",
+      "explanation": "Cada ladrillo es la suma de los dos de abajo. Paso a paso: {{steps}}. Así que «?» es {{answer}}."
+    },
+    "wheel": {
+      "prompt": "Descubre cómo se relacionan los números opuestos de la rueda. ¿Qué número falta?",
+      "explanation": {
+        "sum": "Los segmentos opuestos siempre suman {{k}}. El segmento opuesto al hueco es {{partner}}, así que el número que falta es {{k}} − {{partner}} = {{answer}}.",
+        "difference_one": "El primer segmento (en sentido horario desde arriba) es {{k}} más que el segmento opuesto. El segmento opuesto al hueco es {{partner}}, así que el número que falta es {{working}} = {{answer}}.",
+        "difference_other": "Cada uno de los primeros {{count}} segmentos (en sentido horario desde arriba) es {{k}} más que el segmento opuesto. El segmento opuesto al hueco es {{partner}}, así que el número que falta es {{working}} = {{answer}}."
+      }
+    },
+    "cross": {
+      "prompt": "El centro de cada cruz sale de sus cuatro brazos de la misma manera. ¿Cuál es el centro que falta?",
+      "explanation": "{{rule}}. En la última cruz: {{working}} = {{answer}}.",
+      "rule": {
+        "sum": "El centro es la suma de los cuatro brazos",
+        "vertical-minus-horizontal": "El centro es (arriba + abajo) − (izquierda + derecha)",
+        "product-sum": "El centro es arriba × abajo + izquierda × derecha",
+        "product-difference": "El centro es arriba × abajo − izquierda × derecha"
+      }
+    },
+    "view": {
+      "blank": "en blanco",
+      "missingNumber": "número que falta",
+      "missing": "falta",
+      "gridCaption": "Cuadrícula numérica de 3 filas por 3 columnas, con un número que falta",
+      "pyramid": "Pirámide numérica, desde el ladrillo de arriba hacia abajo",
+      "pyramidRow": "Fila {{row}} desde arriba",
+      "wheel": "Rueda de {{segments}} segmentos, en sentido horario desde arriba: {{values}}. El segmento 1 está enfrente del segmento {{opposite}}.",
+      "cross": "Cruz {{index}}: arriba {{top}}, derecha {{right}}, abajo {{bottom}}, izquierda {{left}}, centro {{centre}}",
+      "crosses": "Cruces numéricas"
+    }
+  },
+  "shapeRotation": {
+    "name": "Rotación de piezas",
+    "tagline": "Gírala mentalmente.",
+    "description": "Se muestra una pieza hecha de cuadrados. Encuentra la opción que es la misma pieza girada. Desde el nivel 2, cada pieza aparece también como su imagen en espejo, que se parece mucho pero solo se consigue dándole la vuelta a la pieza.",
+    "scoringSummary": "Cada pieza cuenta como correcta cuando eliges la copia girada. Tu resultado es la proporción de piezas emparejadas correctamente; no hay límite de tiempo.",
+    "accessibilityNotes": "Las piezas se leen en voz alta fila a fila (qué columnas están ocupadas), lo que hace mucho más difícil girarlas mentalmente que con el dibujo.",
+    "simpleInstructions": "Encuentra la misma forma, solo que girada.",
+    "instructions": {
+      "1": "Mira la pieza. Imagina que la giras sobre la mesa, como una pieza de puzle.",
+      "2": "Elige la opción que es la misma pieza, girada. No vale darle la vuelta.",
+      "3": "Las imágenes en espejo son casi iguales: fíjate en dónde sobresale el cuadrado suelto.",
+      "4": "Las teclas del 1 al 8 eligen una opción."
+    },
+    "levels": {
+      "1": "Encuentra la misma pieza, girada, entre piezas distintas.",
+      "2": "Distingue una pieza girada de su imagen en espejo.",
+      "3": "Imágenes en espejo y piezas que se diferencian en un cuadrado.",
+      "4": "Piezas más grandes, de 6 cuadrados.",
+      "5": "Piezas de 6 cuadrados que se diferencian en un cuadrado.",
+      "6": "Piezas de 6 cuadrados entre seis opciones.",
+      "7": "Piezas parecidas de 6 cuadrados que se diferencian en un cuadrado.",
+      "8": "Piezas grandes de 7 cuadrados.",
+      "9": "Piezas parecidas de 7 cuadrados que se diferencian en un cuadrado.",
+      "10": "Ocho opciones: cuatro piezas parecidas de 7 cuadrados y sus imágenes en espejo."
+    },
+    "kinds": {
+      "pieces": "Piezas distintas",
+      "mirrors": "Giros frente a imágenes en espejo"
+    },
+    "prompt": "¿Qué opción es la misma pieza, solo girada (sin darle la vuelta)?",
+    "turn": {
+      "cw": "un cuarto de vuelta en sentido horario",
+      "180": "media vuelta",
+      "ccw": "un cuarto de vuelta en sentido antihorario"
+    },
+    "explanation": {
+      "mirrors": "La respuesta es la pieza girada {{turn}}. Cada pieza parecida es una imagen en espejo: para que coincida tendrías que darle la vuelta a la pieza, y girarla nunca lo consigue. Las demás opciones son piezas distintas.",
+      "pieces": "La respuesta es la pieza girada {{turn}}. Las demás opciones son piezas distintas: ningún giro las hace coincidir."
+    },
+    "view": {
+      "piece": "Pieza que hay que girar: {{grid}}",
+      "mirrors": "Gírala, no le des la vuelta: las imágenes en espejo no valen.",
+      "pieces": "Encuentra esta pieza, girada."
+    }
+  },
+  "matrixReasoning": {
+    "name": "Razonamiento con matrices",
+    "tagline": "Descubre las reglas de filas y columnas.",
+    "description": "Una cuadrícula de figuras con una casilla vacía. La forma, el color, el número y la dirección siguen cada uno su propia regla a lo largo de filas y columnas. Descubre todas las reglas y elige la figura que encaja en el hueco.",
+    "scoringSummary": "Cada matriz cuenta como correcta cuando eliges la figura que cumple todas las reglas. Tu resultado es la proporción de matrices completadas correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Mira las filas y las columnas y elige el dibujo que encaja en el hueco.",
+    "instructions": {
+      "1": "Fíjate en un rasgo cada vez: forma, color, cuántas hay y hacia dónde apuntan las flechas.",
+      "2": "Cada rasgo sigue su propia regla: igual a lo largo de una fila, igual a lo largo de una columna, una vez en cada fila y columna, o un paso más en cada casilla.",
+      "3": "Elige la figura que cumple todas las reglas en el hueco. Cada opción incorrecta rompe al menos una regla."
+    },
+    "levels": {
+      "1": "Completa una matriz de 2×2 en la que cambia un rasgo.",
+      "2": "Una matriz de 2×2 donde forma y color siguen reglas distintas.",
+      "3": "Una matriz de 3×3: filas o columnas comparten un rasgo.",
+      "4": "Una matriz de 3×3 donde forma y color siguen reglas.",
+      "5": "Cada valor una vez en cada fila y columna.",
+      "6": "Entra en juego el número de figuras, que a veces va en aumento.",
+      "7": "Tres rasgos a la vez, y el hueco puede estar en cualquier sitio.",
+      "8": "Flechas que giran paso a paso, con reglas de color y de cantidad.",
+      "9": "Tres rasgos, solo cuadrados latinos y pasos, ocho opciones.",
+      "10": "Flechas o formas, cada rasgo con su propia regla difícil, ocho opciones."
+    },
+    "kinds": {
+      "shapes-colours": "Formas y colores",
+      "counts": "Formas, colores y cantidades",
+      "arrows": "Flechas que giran"
+    },
+    "prompt": "¿Qué figura completa la matriz?",
+    "explanation": "{{rules}} Así que la casilla que falta (fila {{row}}, columna {{column}}) es: {{answer}}.",
+    "line": {
+      "shape": "Forma: {{rule}}.",
+      "color": "Color: {{rule}}.",
+      "count": "Número de figuras: {{rule}}.",
+      "rotation": "Dirección: {{rule}}."
+    },
+    "layout": {
+      "shape": {
+        "byRow": "cada fila mantiene una misma forma ({{list}}, de arriba abajo)",
+        "byColumn": "cada columna mantiene una misma forma ({{list}}, de izquierda a derecha)",
+        "latin": "las formas {{list}} aparecen una vez en cada fila y en cada columna",
+        "constant": "todas las casillas tienen la misma forma: {{value}}"
+      },
+      "color": {
+        "byRow": "cada fila mantiene un mismo color ({{list}}, de arriba abajo)",
+        "byColumn": "cada columna mantiene un mismo color ({{list}}, de izquierda a derecha)",
+        "latin": "los colores {{list}} aparecen una vez en cada fila y en cada columna",
+        "constant": "todas las casillas tienen el mismo color: {{value}}"
+      },
+      "count": {
+        "byRow": "cada fila mantiene un mismo número de figuras ({{list}}, de arriba abajo)",
+        "byColumn": "cada columna mantiene un mismo número de figuras ({{list}}, de izquierda a derecha)",
+        "latin": "los números {{list}} aparecen una vez en cada fila y en cada columna",
+        "constant": "todas las casillas tienen el mismo número de figuras: {{value}}",
+        "stepRowMore": "a lo largo de cada fila, de izquierda a derecha, hay una figura más en cada casilla",
+        "stepRowFewer": "a lo largo de cada fila, de izquierda a derecha, hay una figura menos en cada casilla",
+        "stepColumnMore": "bajando por cada columna, hay una figura más en cada casilla",
+        "stepColumnFewer": "bajando por cada columna, hay una figura menos en cada casilla"
+      },
+      "rotation": {
+        "byRow": "cada fila mantiene una misma dirección ({{list}}, de arriba abajo)",
+        "byColumn": "cada columna mantiene una misma dirección ({{list}}, de izquierda a derecha)",
+        "latin": "las direcciones {{list}} aparecen una vez en cada fila y en cada columna",
+        "constant": "todas las casillas tienen la misma dirección: {{value}}",
+        "stepRowClockwise": "a lo largo de cada fila, de izquierda a derecha, la flecha gira un cuarto de vuelta en sentido horario de casilla en casilla",
+        "stepRowAnticlockwise": "a lo largo de cada fila, de izquierda a derecha, la flecha gira un cuarto de vuelta en sentido antihorario de casilla en casilla",
+        "stepColumnClockwise": "bajando por cada columna, la flecha gira un cuarto de vuelta en sentido horario de casilla en casilla",
+        "stepColumnAnticlockwise": "bajando por cada columna, la flecha gira un cuarto de vuelta en sentido antihorario de casilla en casilla"
+      }
+    },
+    "view": {
+      "matrix": "Matriz de {{size}} filas por {{size}} columnas, falta una casilla",
+      "missingAt": "Fila {{row}}, columna {{column}}: falta",
+      "cell": "Fila {{row}}, columna {{column}}: {{figure}}",
+      "missing": "Casilla que falta"
+    }
+  },
+  "sequencePrediction": {
+    "name": "Predicción de secuencias",
+    "tagline": "¿Dónde estará después?",
+    "description": "Unos fotogramas muestran marcas que se mueven por una cuadrícula o flechas que giran, siempre con el mismo paso. Descubre cada paso y elige el fotograma que viene después. Los niveles altos combinan movimiento y giro, cruzan los bordes y siguen dos marcas a la vez.",
+    "scoringSummary": "Cada secuencia cuenta como correcta cuando eliges el fotograma que la continúa. Tu resultado es la proporción de secuencias predichas correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Mira cómo se mueve la figura y elige adónde va después.",
+    "instructions": {
+      "1": "Observa cómo cambia cada marca de un fotograma al siguiente: cuánto se mueve y hacia dónde gira una flecha.",
+      "2": "Cada marca mantiene el mismo paso en todos los fotogramas.",
+      "3": "Cuando el nivel lo indica, una marca que sale por un borde vuelve a entrar por el borde opuesto.",
+      "4": "Elige el siguiente fotograma. Las teclas del 1 al 8 eligen una opción."
+    },
+    "levels": {
+      "1": "Una figura se desliza una casilla cada vez. ¿Dónde estará después?",
+      "2": "Los movimientos pueden ser en diagonal.",
+      "3": "Una flecha gira lo mismo cada vez.",
+      "4": "Una flecha se desliza y gira a la vez.",
+      "5": "Las marcas que salen por un borde vuelven por el borde opuesto.",
+      "6": "Pasos más largos, de hasta dos casillas, cruzando los bordes.",
+      "7": "Dos marcas, cada una con su propio paso.",
+      "8": "Una flecha se mueve, gira y cruza los bordes.",
+      "9": "Dos marcas: una se desliza y la otra se mueve y gira.",
+      "10": "Dos marcas con sus propios pasos, que giran y cruzan los bordes."
+    },
+    "kinds": {
+      "move": "Marcas que se mueven",
+      "rotate": "Flechas que giran",
+      "move-rotate": "Moverse y girar",
+      "two-marks": "Dos marcas a la vez"
+    },
+    "mark": "{{figure}} en la fila {{row}}, columna {{column}}",
+    "frame": "{{marks}}",
+    "step": {
+      "right_one": "{{count}} casilla a la derecha",
+      "right_other": "{{count}} casillas a la derecha",
+      "left_one": "{{count}} casilla a la izquierda",
+      "left_other": "{{count}} casillas a la izquierda",
+      "down_one": "{{count}} casilla hacia abajo",
+      "down_other": "{{count}} casillas hacia abajo",
+      "up_one": "{{count}} casilla hacia arriba",
+      "up_other": "{{count}} casillas hacia arriba"
+    },
+    "describe": {
+      "move": "{{name}} se mueve {{steps}} en cada fotograma",
+      "turn": {
+        "clockwise": "{{name}} gira un cuarto de vuelta en sentido horario en cada fotograma",
+        "anticlockwise": "{{name}} gira un cuarto de vuelta en sentido antihorario en cada fotograma"
+      },
+      "moveTurn": {
+        "clockwise": "{{name}} se mueve {{steps}} y gira un cuarto de vuelta en sentido horario en cada fotograma",
+        "anticlockwise": "{{name}} se mueve {{steps}} y gira un cuarto de vuelta en sentido antihorario en cada fotograma"
+      }
+    },
+    "prompt": {
+      "plain": "¿Qué fotograma viene después?",
+      "wrap": "¿Qué fotograma viene después? Las marcas que salen por un borde vuelven por el borde opuesto."
+    },
+    "explanation": {
+      "plain": "{{moves}}. Así que el siguiente fotograma muestra: {{answer}}.",
+      "wrap": "{{moves}}, cruzando los bordes. Así que el siguiente fotograma muestra: {{answer}}."
+    },
+    "view": {
+      "frames": "Fotogramas, en orden",
+      "frame": "Fotograma {{index}}",
+      "frameLabel": "Fotograma {{index}}: {{marks}}",
+      "next": "Siguiente",
+      "nextFrame": "Siguiente fotograma (desconocido)",
+      "wrap": "Las marcas que salen por un borde vuelven por el borde opuesto."
+    }
+  },
+  "symmetryRecognition": {
+    "name": "Reconocer simetrías",
+    "tagline": "Dóblalo mentalmente.",
+    "description": "Decide si un patrón tiene un eje de simetría —vertical, horizontal, ambos o ninguno— y dibuja la mitad que falta de una imagen en espejo. Los niveles altos usan fichas de colores, patrones casi simétricos y mitades sin indicar cuántas casillas marcar.",
+    "scoringSummary": "Un patrón cuenta como correcto cuando indicas exactamente sus ejes de simetría, o cuando las casillas que marcas (y ninguna más) completan la mitad reflejada. Tu resultado es la proporción de patrones correctos; no hay límite de tiempo.",
+    "accessibilityNotes": "Los patrones se leen en voz alta fila a fila; comprobar un eje de simetría de oído obliga a comparar filas o columnas desde ambos extremos.",
+    "simpleInstructions": "Dobla el dibujo mentalmente: ¿coinciden las dos mitades?",
+    "instructions": {
+      "1": "Un eje de simetría divide un patrón en dos mitades que coinciden como un reflejo, como si doblaras el papel.",
+      "2": "Detectar: elige qué ejes de simetría tiene el patrón. Revisa todas las casillas: basta una para romperlo. Las fichas deben coincidir en forma y color.",
+      "3": "Dibujar: marca las casillas de la mitad vacía para que refleje la mitad dada y pulsa Comprobar.",
+      "4": "Teclado: las teclas 1–4 eligen una respuesta; las flechas mueven entre casillas e Intro marca una casilla."
+    },
+    "levels": {
+      "1": "¿Es el lado izquierdo un reflejo del lado derecho?",
+      "2": "Dibuja el reflejo de una mitad pequeña.",
+      "3": "Encuentra todos los ejes: izquierda–derecha, arriba–abajo, ambos o ninguno.",
+      "4": "Dibuja el reflejo de una mitad más grande.",
+      "5": "Detecta patrones casi simétricos, con dos casillas fuera de lugar.",
+      "6": "Refleja respecto a un eje horizontal: dibuja la mitad de abajo.",
+      "7": "Fichas de colores: las formas también tienen que reflejarse.",
+      "8": "Dibuja la mitad reflejada sin saber cuántas casillas hay.",
+      "9": "Patrones grandes de fichas con una sola casilla fuera de lugar.",
+      "10": "Mitades grandes, cualquier eje, sin indicar cuántas casillas."
+    },
+    "kinds": {
+      "classify": "Detectar ejes de simetría",
+      "complete": "Dibujar la mitad reflejada"
+    },
+    "class": {
+      "left-right": "Eje vertical: la izquierda coincide con la derecha",
+      "top-bottom": "Eje horizontal: arriba coincide con abajo",
+      "both": "Los dos ejes",
+      "none": "Ningún eje"
+    },
+    "pair": "{{a}} y {{b}}",
+    "fold": {
+      "vertical": {
+        "ok": "Al doblar por el eje vertical, cada casilla cae sobre otra igual.",
+        "broken": "Doblar por el eje vertical no funciona: {{pairs}} no coinciden.",
+        "brokenMore": "Doblar por el eje vertical no funciona: {{pairs}} (y más) no coinciden."
+      },
+      "horizontal": {
+        "ok": "Al doblar por el eje horizontal, cada casilla cae sobre otra igual.",
+        "broken": "Doblar por el eje horizontal no funciona: {{pairs}} no coinciden.",
+        "brokenMore": "Doblar por el eje horizontal no funciona: {{pairs}} (y más) no coinciden."
+      }
+    },
+    "prompt": {
+      "classify": "¿Qué ejes de simetría tiene este patrón?",
+      "vertical": "Marca las casillas de la derecha para que el dibujo refleje la mitad izquierda.",
+      "horizontal": "Marca las casillas de abajo para que el dibujo refleje la mitad de arriba."
+    },
+    "explanation": {
+      "classify": "{{answer}}.",
+      "vertical": "Cada casilla de la derecha copia la casilla que está a la misma distancia al otro lado del eje. La mitad derecha necesita: {{cells}}.",
+      "horizontal": "Cada casilla de abajo copia la casilla que está a la misma distancia al otro lado del eje. La mitad de abajo necesita: {{cells}}."
+    },
+    "view": {
+      "pattern": "Patrón: {{grid}}",
+      "given": {
+        "vertical": "Mitad izquierda dada",
+        "horizontal": "Mitad de arriba dada"
+      },
+      "fill": {
+        "vertical": "Mitad derecha por rellenar",
+        "horizontal": "Mitad de abajo por rellenar"
+      },
+      "filled": "{{cell}}, ocupada",
+      "empty": "{{cell}}, vacía"
+    }
+  },
+  "spatialTransformation": {
+    "name": "Transformación espacial",
+    "tagline": "Gíralo, voltéalo, imagina el resultado.",
+    "description": "Un patrón en una cuadrícula y una instrucción: gíralo, voltéalo o, desde el nivel 7, haz dos movimientos seguidos. Elige el dibujo del resultado. Los patrones crecen de 3×3 a 5×5 y ganan fichas de colores.",
+    "scoringSummary": "Cada patrón cuenta como correcto cuando eliges el resultado de los movimientos indicados. Tu resultado es la proporción de elecciones correctas; no hay límite de tiempo.",
+    "accessibilityNotes": "Los patrones y las opciones se leen en voz alta fila a fila, lo que hace mucho más difícil imaginar el movimiento que con el dibujo.",
+    "simpleInstructions": "Haz el giro o el volteo mentalmente y elige el dibujo que obtienes.",
+    "instructions": {
+      "1": "Lee la instrucción e imagina el patrón moviéndose: un giro lo hace rotar sobre la mesa; un volteo le da la vuelta como a una página.",
+      "2": "Con dos movimientos, haz el primero y luego el segundo sobre el resultado.",
+      "3": "Elige la opción que muestra el resultado. Las teclas del 1 al 8 eligen una opción."
+    },
+    "levels": {
+      "1": "Voltea un patrón pequeño como en un espejo.",
+      "2": "Gira un patrón pequeño.",
+      "3": "Gira un patrón más grande en cualquier sentido.",
+      "4": "Cualquier giro o volteo.",
+      "5": "Giros y volteos con dos tipos de fichas.",
+      "6": "Un patrón de 5×5 con tres tipos de fichas, seis opciones.",
+      "7": "Dos movimientos seguidos.",
+      "8": "Dos movimientos seguidos con dos tipos de fichas.",
+      "9": "Dos movimientos sobre un patrón de 5×5 muy lleno.",
+      "10": "Dos movimientos; todas las versiones giradas y volteadas son opciones."
+    },
+    "kinds": {
+      "single": "Un movimiento",
+      "double": "Dos movimientos seguidos"
+    },
+    "step": {
+      "cw": "Gíralo un cuarto de vuelta en sentido horario",
+      "ccw": "Gíralo un cuarto de vuelta en sentido antihorario",
+      "180": "Gíralo media vuelta",
+      "flip-lr": "Voltéalo de izquierda a derecha",
+      "flip-ud": "Voltéalo de arriba abajo"
+    },
+    "stepInline": {
+      "cw": "gíralo un cuarto de vuelta en sentido horario",
+      "ccw": "gíralo un cuarto de vuelta en sentido antihorario",
+      "180": "gíralo media vuelta",
+      "flip-lr": "voltéalo de izquierda a derecha",
+      "flip-ud": "voltéalo de arriba abajo"
+    },
+    "effect": {
+      "cw": "la fila de arriba pasa a ser la columna de la derecha",
+      "ccw": "la fila de arriba pasa a ser la columna de la izquierda",
+      "180": "la fila de arriba pasa a ser la de abajo, leída al revés",
+      "flip-lr": "las columnas de la izquierda y la derecha se intercambian, como con un espejo al lado",
+      "flip-ud": "las filas de arriba y abajo se intercambian, como con un espejo debajo"
+    },
+    "prompt": {
+      "single": "{{step}}. ¿Qué opción muestra el resultado?",
+      "double": "Primero {{first}} y después {{second}}. ¿Qué opción muestra el resultado?"
+    },
+    "explanation": {
+      "single": "{{step}}: {{effect}}.",
+      "numbered": "Paso {{index}}: {{step}}: {{effect}}.",
+      "others": "Las demás opciones son el patrón girado o volteado de otras maneras."
+    },
+    "view": {
+      "start": "Patrón inicial: {{grid}}",
+      "moves": "Movimientos, en orden"
+    }
+  },
+  "ruleBasedPatternDiscovery": {
+    "name": "Descubrir reglas de patrones",
+    "tagline": "Deduce la regla a partir de ejemplos.",
+    "description": "Cada ejemplo muestra una cuadrícula pequeña antes y después de un cambio oculto: un reflejo, un giro, un desplazamiento, fichas que cambian de tipo o que caen. Descubre el cambio y elige en qué se convierte una cuadrícula nueva. Los niveles altos encadenan dos cambios.",
+    "scoringSummary": "Cada acertijo cuenta como correcto cuando eliges la cuadrícula que produce la regla oculta. Tu resultado es la proporción de acertijos resueltos; no hay límite de tiempo.",
+    "simpleInstructions": "Mira cómo cambia cada dibujo y cambia el nuevo de la misma manera.",
+    "instructions": {
+      "1": "Compara cada cuadrícula de entrada con su salida: ¿qué se movió, giró, cambió de tipo o cayó?",
+      "2": "Comprueba que tu idea funciona en todos los ejemplos, no solo en el primero.",
+      "3": "Aplica el mismo cambio a la nueva entrada y elige el resultado. Desde el nivel 8, la regla son dos cambios seguidos.",
+      "4": "Las fichas se distinguen por la forma además del color, y cada cuadrícula también se describe con palabras."
+    },
+    "levels": {
+      "1": "Un tipo de ficha se convierte en otro.",
+      "2": "Las fichas caen, se deslizan o se extienden.",
+      "3": "La cuadrícula se refleja, se gira o se desplaza.",
+      "4": "Movimientos y giros en cuadrículas más grandes con dos tipos de ficha.",
+      "5": "Cambios de ficha con dos o tres tipos: sustituir o intercambiar.",
+      "6": "Cualquier regla simple: averigua qué tipo de cambio es.",
+      "7": "Cualquier regla simple en cuadrículas de 5×5 con tres tipos de ficha.",
+      "8": "Dos cambios seguidos: un movimiento y luego un cambio de ficha.",
+      "9": "Dos cambios seguidos, de dos tipos distintos cualesquiera.",
+      "10": "Dos cambios encadenados en cuadrículas de 5×5 con tres tipos de ficha."
+    },
+    "kinds": {
+      "move": "Reflejos, giros y desplazamientos",
+      "colour": "Fichas que cambian de tipo",
+      "gather": "Caer y rellenar",
+      "two-step": "Dos cambios seguidos"
+    },
+    "prompt": {
+      "one": "El mismo cambio convierte cada entrada en su salida. ¿En qué se convierte la nueva entrada?",
+      "two": "Dos cambios, uno tras otro, convierten cada entrada en su salida. ¿En qué se convierte la nueva entrada?"
+    },
+    "explanation": {
+      "one": "En cada ejemplo, la cuadrícula {{rule}}. Hacer lo mismo con la nueva entrada da la cuadrícula elegida.",
+      "two": "En cada ejemplo, la cuadrícula {{first}} y después {{second}}. Hacer lo mismo con la nueva entrada da la cuadrícula elegida."
+    },
+    "rule": {
+      "flip-lr": "se refleja de izquierda a derecha",
+      "flip-ud": "se refleja de arriba abajo",
+      "cw": "gira un cuarto de vuelta en sentido horario",
+      "ccw": "gira un cuarto de vuelta en sentido antihorario",
+      "180": "gira media vuelta",
+      "shift-right": "se desplaza una casilla a la derecha (la última columna vuelve por la izquierda)",
+      "shift-left": "se desplaza una casilla a la izquierda (la primera columna vuelve por la derecha)",
+      "shift-down": "se desplaza una casilla hacia abajo (la fila de abajo vuelve por arriba)",
+      "shift-up": "se desplaza una casilla hacia arriba (la fila de arriba vuelve por abajo)",
+      "fall": "hace caer cada ficha al fondo de su columna",
+      "slide-left": "desliza cada ficha hasta el extremo izquierdo de su fila",
+      "fill-rows": "rellena cada fila que tiene alguna ficha con copias de su primera ficha",
+      "fill-columns": "rellena cada columna que tiene alguna ficha con copias de su ficha de arriba",
+      "recolour": "sustituye cada $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) por $t(patterns:ruleBasedPatternDiscovery.tileA.{{to}})",
+      "swap": "intercambia cada $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) con cada $t(patterns:ruleBasedPatternDiscovery.tile.{{to}})"
+    },
+    "tile": {
+      "1": "cuadrado azul",
+      "2": "círculo naranja",
+      "3": "rombo morado",
+      "4": "cruz verde"
+    },
+    "tileA": {
+      "1": "un cuadrado azul",
+      "2": "un círculo naranja",
+      "3": "un rombo morado",
+      "4": "una cruz verde"
+    },
+    "view": {
+      "one": "Un cambio oculto",
+      "two": "Dos cambios ocultos, uno tras otro",
+      "examples": "Ejemplos",
+      "input": "Ejemplo {{index}}, entrada: {{grid}}",
+      "output": "Ejemplo {{index}}, salida: {{grid}}",
+      "new": "Nueva",
+      "newInput": "Nueva entrada: {{grid}}",
+      "newOutput": "Salida de la nueva entrada (desconocida)"
+    }
+  },
+  "gridAndPathReasoning": {
+    "name": "Razonamiento con cuadrículas y rutas",
+    "tagline": "Encuentra el camino por el laberinto.",
+    "description": "Una tortuga recorre un laberinto en cuadrícula, casilla a casilla, hacia arriba, abajo, izquierda o derecha, sin atravesar nunca los muros. Cuenta los pasos de la ruta más corta, encuentra la única salida a la que puede llegar o localiza la casilla por la que pasan todas las rutas más cortas.",
+    "scoringSummary": "Cada laberinto cuenta como correcto cuando tu número o tu elección es el correcto. Tu resultado es la proporción de laberintos resueltos; no hay límite de tiempo.",
+    "accessibilityNotes": "Cada laberinto también se describe fila a fila para lectores de pantalla, pero seguir rutas de oído es exigente en los laberintos grandes.",
+    "simpleInstructions": "Ayuda a la tortuga a encontrar el camino entre los muros.",
+    "instructions": {
+      "1": "La tortuga avanza una casilla cada vez: arriba, abajo, izquierda o derecha. No puede atravesar muros (casillas rayadas) ni moverse en diagonal.",
+      "2": "Un paso es un movimiento a la casilla siguiente. Cuenta los pasos de la ruta más corta cuando se te pida.",
+      "3": "Las salidas llevan letras; las casillas numeradas son las candidatas cuando debes encontrar la casilla por la que pasan todas las rutas más cortas."
+    },
+    "levels": {
+      "1": "Cuenta los pasos hasta la estrella en una cuadrícula pequeña y despejada.",
+      "2": "Encuentra la única salida a la que llega la tortuga.",
+      "3": "Cuenta pasos cuando los muros obligan a dar un rodeo.",
+      "4": "Encuentra la casilla por la que pasan todas las rutas más cortas.",
+      "5": "Laberintos más grandes de 7×7: salidas y recuento de pasos.",
+      "6": "Rodeos más largos y casillas por las que hay que pasar.",
+      "7": "Varias rutas más cortas y una casilla que comparten todas.",
+      "8": "Laberintos de 8×8 con cuatro salidas.",
+      "9": "Laberintos de 9×9 con rodeos largos.",
+      "10": "Todas las preguntas en laberintos densos de 9×9."
+    },
+    "kinds": {
+      "shortest-length": "Longitud de la ruta más corta",
+      "reachable-exit": "Salida alcanzable",
+      "must-pass": "Casilla por la que pasan todas las rutas"
+    },
+    "prompt": {
+      "shortest": "¿Cuántos pasos tiene la ruta más corta de la tortuga a la estrella?",
+      "exit": "¿A qué salida puede llegar la tortuga? Se mueve arriba, abajo, a la izquierda o a la derecha, nunca a través de los muros.",
+      "mustPass": "Todas las rutas más cortas de la tortuga a la estrella pasan por una de las casillas numeradas. ¿Por cuál?"
+    },
+    "unit": "pasos",
+    "exit": "Salida {{letter}}",
+    "cell": "Casilla {{number}}",
+    "run": {
+      "right_one": "derecha {{count}}",
+      "right_other": "derecha {{count}}",
+      "left_one": "izquierda {{count}}",
+      "left_other": "izquierda {{count}}",
+      "up_one": "arriba {{count}}",
+      "up_other": "arriba {{count}}",
+      "down_one": "abajo {{count}}",
+      "down_other": "abajo {{count}}"
+    },
+    "explanation": {
+      "shortest_one": "La ruta más corta tiene {{count}} paso, por ejemplo: {{route}}. Ninguna ruta esquiva los muros con menos pasos.",
+      "shortest_other": "La ruta más corta tiene {{count}} pasos, por ejemplo: {{route}}. Ninguna ruta esquiva los muros con menos pasos.",
+      "exit_one": "Se puede llegar a la {{exit}}, por ejemplo: {{route}}. La {{others}} está bloqueada por muros: ninguna ruta lleva hasta allí.",
+      "exit_other": "Se puede llegar a la {{exit}}, por ejemplo: {{route}}. {{others}} están bloqueadas por muros: ninguna ruta lleva hasta allí.",
+      "mustPass": "Las rutas más cortas tienen {{steps}} pasos, y todas pasan por la {{cell}}. Pasar por {{others}} alarga la ruta.",
+      "mustPassMany": "Las rutas más cortas tienen {{steps}} pasos (hay {{total}}), y todas pasan por la {{cell}}. Pasar por {{others}} alarga la ruta."
+    },
+    "view": {
+      "start": "tortuga (inicio)",
+      "goal": "estrella (meta)",
+      "exit": "salida {{letter}}",
+      "cell": "casilla {{number}}",
+      "at": "{{what}} en la columna {{column}}",
+      "walls_one": "muro en la columna {{columns}}",
+      "walls_other": "muros en las columnas {{columns}}",
+      "rowOpen": "Fila {{row}}: todo despejado",
+      "row": "Fila {{row}}: {{parts}}",
+      "legendStart": "inicio",
+      "legendExits": "letras: salidas",
+      "legendGoal": "meta",
+      "legendWalls": "las casillas rayadas son muros",
+      "maze": "Laberinto de {{size}} por {{size}} casillas, descrito fila a fila."
+    }
+  },
+  "abstractPatternChallenge": {
+    "name": "Desafío de patrones abstractos",
+    "tagline": "Un panel rompe la regla. ¿Cuál?",
+    "description": "Varios paneles de figuras comparten una regla oculta —de color, forma, número, dirección u orden— mientras otros rasgos cambian libremente. Descubre la regla y encuentra el único panel que la rompe.",
+    "scoringSummary": "Cada serie cuenta como correcta cuando eliges el panel que rompe la regla común. Tu resultado es la proporción de series resueltas; no hay límite de tiempo.",
+    "simpleInstructions": "Encuentra el panel que no encaja con los demás.",
+    "instructions": {
+      "1": "Todos los paneles menos uno siguen la misma regla. Algunos rasgos cambian solo para despistarte.",
+      "2": "Las reglas pueden tratar del color, la forma, cuántas figuras hay, hacia dónde apuntan las flechas o el orden de las figuras.",
+      "3": "Solo un panel puede ser el diferente según cualquier regla. Las teclas del 1 al 6 eligen un panel."
+    },
+    "levels": {
+      "1": "Cuatro paneles: encuentra aquel cuyas figuras no coinciden.",
+      "2": "Todos los paneles menos uno contienen la misma forma.",
+      "3": "Todo distinto: ninguna forma ni color se repite dentro de un panel.",
+      "4": "Cinco paneles; la regla puede tratar de color, forma o contenido.",
+      "5": "Cuenta también las figuras: la regla puede ser cuántas hay.",
+      "6": "Entran las flechas: la regla puede ser hacia dónde apuntan.",
+      "7": "Cualquiera de siete reglas, con paneles más grandes como distracción.",
+      "8": "Seis paneles; una regla nueva: exactamente una figura tiene otro color.",
+      "9": "El orden importa: paneles que se leen igual al revés.",
+      "10": "Cualquier regla, seis paneles de tres o cuatro figuras."
+    },
+    "kinds": {
+      "colour": "Reglas de color",
+      "shape": "Reglas de forma",
+      "count": "Reglas de cantidad",
+      "direction": "Reglas de dirección",
+      "order": "Reglas de orden"
+    },
+    "prompt": "¿Qué panel rompe la regla que siguen todos los demás?",
+    "panel": "Panel {{index}}",
+    "explanation": "En todos los demás paneles, {{rule}}. El panel {{index}} la rompe: {{reason}}.",
+    "rule": {
+      "same-colour": "todas las figuras de un panel son del mismo color",
+      "same-shape": "todas las figuras de un panel tienen la misma forma",
+      "different-shapes": "no hay dos figuras de un panel con la misma forma",
+      "different-colours": "no hay dos figuras de un panel con el mismo color",
+      "same-count_one": "cada panel tiene {{count}} figura",
+      "same-count_other": "cada panel tiene {{count}} figuras",
+      "contains-shape": {
+        "circle": "cada panel contiene al menos un círculo",
+        "square": "cada panel contiene al menos un cuadrado",
+        "triangle": "cada panel contiene al menos un triángulo",
+        "diamond": "cada panel contiene al menos un rombo",
+        "star": "cada panel contiene al menos una estrella",
+        "hexagon": "cada panel contiene al menos un hexágono",
+        "heart": "cada panel contiene al menos un corazón",
+        "cross": "cada panel contiene al menos una cruz",
+        "arrow": "cada panel contiene al menos una flecha"
+      },
+      "same-direction": "todas las flechas de un panel apuntan hacia el mismo lado",
+      "one-odd-colour": "exactamente una figura de cada panel tiene un color distinto del resto",
+      "mirror-order": "cada panel se lee igual de izquierda a derecha que de derecha a izquierda"
+    },
+    "break": {
+      "mixes": "mezcla {{list}}",
+      "sameShape": "dos de sus figuras tienen la misma forma",
+      "sameColour": "dos de sus figuras tienen el mismo color",
+      "count_one": "tiene {{count}} figura en lugar de {{expected}}",
+      "count_other": "tiene {{count}} figuras en lugar de {{expected}}",
+      "contains": {
+        "circle": "no tiene ningún círculo",
+        "square": "no tiene ningún cuadrado",
+        "triangle": "no tiene ningún triángulo",
+        "diamond": "no tiene ningún rombo",
+        "star": "no tiene ninguna estrella",
+        "hexagon": "no tiene ningún hexágono",
+        "heart": "no tiene ningún corazón",
+        "cross": "no tiene ninguna cruz",
+        "arrow": "no tiene ninguna flecha"
+      },
+      "directions": "sus flechas apuntan hacia {{list}}",
+      "allSame": "todas sus figuras son del mismo color",
+      "severalOdd": "más de una de sus figuras tiene un color distinto",
+      "order": "leídas al revés, sus figuras aparecen en otro orden"
+    },
+    "view": {
+      "panels": "Paneles",
+      "panel": "Panel {{index}}: {{figures}}"
+    }
+  }
+}

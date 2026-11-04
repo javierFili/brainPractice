@@ -1,7 +1,7 @@
 import type { ResponseOf } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { chance, pick, sample, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
+import { gameIdOf, msg, type Text } from '@/domain/shared';
 import { SHAPES } from '@/games/kit/content';
 import {
   ROTATIONS,
@@ -29,8 +29,8 @@ const yesNo = (changed: boolean): ResponseOf<'single-choice'> => ({
   format: 'single-choice',
   question: {
     options: [
-      { id: YES, label: 'Yes, something changed' },
-      { id: NO, label: 'No, it is the same' },
+      { id: YES, label: msg('attention:changeDetection.options.yes') },
+      { id: NO, label: msg('attention:changeDetection.options.no') },
     ],
   },
   solution: { optionId: changed ? YES : NO },
@@ -91,15 +91,15 @@ function applyChange(
   }
 }
 
-const describeCell = (cell: Cell) => (cell === null ? 'empty' : markLabel(cell));
+export const describeCell = (cell: Cell): Text =>
+  cell === null ? msg('attention:changeDetection.empty') : markLabel(cell);
 
 export const changeDetectionGame: GameDefinition<ChangeDetectionChallenge, ChangeDetectionProfile> =
   {
     id: CHANGE_DETECTION_ID,
-    name: 'Change Detection',
-    tagline: 'Same scene… or not?',
-    description:
-      'Look at a small scene of shapes. It disappears for a moment and comes back. Did anything change? About half the time nothing did. Changes become finer and scenes busier as you go.',
+    name: msg('attention:changeDetection.name'),
+    tagline: msg('attention:changeDetection.tagline'),
+    description: msg('attention:changeDetection.description'),
     area: 'attention',
     skills: ['selective-attention', 'visual-memory', 'concentration'],
     meta: {
@@ -110,19 +110,17 @@ export const changeDetectionGame: GameDefinition<ChangeDetectionChallenge, Chang
       keyboard: 'full',
       relaxedFriendly: true,
       measures: ['accuracy'],
-      scoringSummary:
-        'Each trial counts as correct when you answer yes for a changed scene or no for an unchanged one; about half are unchanged, so guessing scores near 50%. Answering is not timed.',
+      scoringSummary: msg('attention:changeDetection.scoringSummary'),
       feedback: 'brief',
-      accessibilityNotes:
-        'Some changes are colour only (from level 6, to a nearby colour). The scene is a list of named cells, so a screen reader can compare the two looks, but the first look is time-limited (doubled in relaxed mode).',
+      accessibilityNotes: msg('attention:changeDetection.accessibilityNotes'),
     },
     instructions: [
-      'Look at the whole scene while it is shown (press “I’m ready” to move on early).',
-      'After a short blank, the scene comes back.',
-      'Answer yes if anything changed (colour, shape, direction, position, an item appearing or vanishing), no if it is identical.',
-      'Keys: 1 = yes, 2 = no. About half the scenes do not change.',
+      msg('attention:changeDetection.instructions.look'),
+      msg('attention:changeDetection.instructions.blank'),
+      msg('attention:changeDetection.instructions.answer'),
+      msg('attention:changeDetection.instructions.keys'),
     ],
-    simpleInstructions: 'Look, wait, look again: did anything change?',
+    simpleInstructions: msg('attention:changeDetection.simpleInstructions'),
     levels: CHANGE_DETECTION_LEVELS,
     generate({ identity, profile, random }) {
       const count = profile.columns * profile.rows;
@@ -148,13 +146,23 @@ export const changeDetectionGame: GameDefinition<ChangeDetectionChallenge, Chang
       const diff = changedCells(before, after);
       return {
         ...identity,
-        prompt: 'Did anything change?',
-        studyPrompt: 'Look at the scene — it will disappear for a moment.',
+        prompt: msg('attention:changeDetection.prompt'),
+        studyPrompt: msg('attention:changeDetection.studyPrompt'),
         content: { kind, columns: profile.columns, before, after, gapMs: profile.gapMs },
         response: yesNo(changed),
         explanation: changed
-          ? `Yes: ${listWords(diff.map((i) => `${cellName(i, profile.columns)} went from ${describeCell(before[i] ?? null)} to ${describeCell(after[i] ?? null)}`))}.`
-          : 'No: the second look was identical to the first.',
+          ? msg('attention:changeDetection.explanation.changed', {
+              changes: listWords(
+                diff.map((i) =>
+                  msg('attention:changeDetection.change', {
+                    cell: cellName(i, profile.columns),
+                    before: describeCell(before[i] ?? null),
+                    after: describeCell(after[i] ?? null),
+                  }),
+                ),
+              ),
+            })
+          : msg('attention:changeDetection.explanation.unchanged'),
         skills: ['selective-attention', 'visual-memory'],
         timing: profile.timing,
       };

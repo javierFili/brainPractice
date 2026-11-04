@@ -1,4 +1,6 @@
 import { useId, type ReactNode } from 'react';
+import { textId, type Text } from '@/domain/shared';
+import { useText } from '@/i18n';
 
 /** A titled block of content: headings name every part of a puzzle for screen-reader users. */
 export function Panel({
@@ -24,16 +26,17 @@ export function ClueList({
   clues,
   label,
 }: {
-  readonly clues: readonly string[];
+  readonly clues: readonly Text[];
   readonly label: string;
 }) {
+  const tx = useText();
   return (
     <ol
       aria-label={label}
       className="flex list-decimal flex-col gap-1.5 rounded-lg border border-line bg-raised py-3 pr-3 pl-8 text-sm leading-relaxed text-ink sm:text-base"
     >
       {clues.map((clue, i) => (
-        <li key={`${i}-${clue}`}>{clue}</li>
+        <li key={`${i}-${textId(clue)}`}>{tx(clue)}</li>
       ))}
     </ol>
   );
@@ -44,17 +47,18 @@ export function Chips({
   items,
   label,
 }: {
-  readonly items: readonly string[];
+  readonly items: readonly Text[];
   readonly label: string;
 }) {
+  const tx = useText();
   return (
     <ul aria-label={label} className="flex flex-wrap gap-2">
       {items.map((item) => (
         <li
-          key={item}
+          key={textId(item)}
           className="rounded-md border border-line bg-surface px-2.5 py-1 text-sm text-ink-soft"
         >
-          {item}
+          {tx(item)}
         </li>
       ))}
     </ul>

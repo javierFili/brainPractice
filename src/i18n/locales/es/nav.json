@@ -1,0 +1,61 @@
+{
+  "app": {
+    "title": "BrainPractice — Entrenamiento mental para todas las edades"
+  },
+  "skipToContent": "Saltar al contenido",
+  "landmarks": {
+    "main": "Principal",
+    "navigation": "Navegación",
+    "sidebar": "Barra lateral"
+  },
+  "menu": {
+    "open": "Menú",
+    "close": "Cerrar navegación"
+  },
+  "sidebar": {
+    "expand": "Expandir barra lateral",
+    "collapse": "Contraer barra lateral"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "storageBlocked": "Este navegador bloquea el almacenamiento local, así que el progreso se perderá al cerrar la pestaña.",
+  "disclaimer": "Práctica mental recreativa. Los resultados describen solo el rendimiento en estas actividades: no es una evaluación médica, psicológica ni de CI, y no diagnostica, trata ni previene ninguna afección.",
+  "sections": {
+    "general": "General",
+    "training": "Entrenamiento",
+    "routes": "Rutas",
+    "assessment": "Evaluación",
+    "learning": "Aprendizaje",
+    "settings": "Configuración"
+  },
+  "items": {
+    "home": "Inicio",
+    "continue": "Continuar entrenamiento",
+    "daily": "Desafío diario",
+    "progress": "Mi progreso",
+    "games": "Todas las actividades",
+    "quick": "Sesión rápida",
+    "trainMemory": "Memoria",
+    "trainLogic": "Lógica",
+    "trainAttention": "Atención",
+    "trainSpeed": "Velocidad mental",
+    "trainPatterns": "Patrones",
+    "trainSpatial": "Razonamiento espacial",
+    "trainConcentration": "Concentración",
+    "pathsKids": "Niños",
+    "pathsTeens": "Adolescentes",
+    "pathsAdults": "Adultos",
+    "pathsSeniors": "Mayores",
+    "pathsProgrammers": "Programadores",
+    "assessment": "Evaluación cognitiva",
+    "assessmentHistory": "Resultados anteriores",
+    "assessmentProfile": "Mi perfil de rendimiento",
+    "learn": "Lógica de programación",
+    "learnThinking": "Pensamiento computacional",
+    "trainProgramming": "Desafíos de algoritmos",
+    "settings": "Preferencias",
+    "settingsAccessibility": "Accesibilidad",
+    "settingsData": "Restablecer datos de demostración"
+  }
+}

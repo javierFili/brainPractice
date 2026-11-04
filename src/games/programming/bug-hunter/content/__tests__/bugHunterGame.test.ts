@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { evaluateAnswer } from '@/domain/challenge';
 import { validateLevelTable } from '@/domain/difficulty';
 import { generateChallenge } from '@/domain/game';
@@ -126,8 +127,8 @@ describe('Bug Hunter — generated content', () => {
   it('explains the bug by item number and quotes the broken rule', () => {
     for (const c of all) {
       const n = solutionOf(c) + 1;
-      expect(c.explanation).toMatch(new RegExp(`^Item ${n} is the bug: `));
-      expect(c.explanation).toMatch(/It breaks (the rule|rule \d): /);
+      expect(en(c.explanation)).toMatch(new RegExp(`^Item ${n} is the bug: `));
+      expect(en(c.explanation)).toMatch(/It breaks (the rule|rule \d): /);
     }
   });
 

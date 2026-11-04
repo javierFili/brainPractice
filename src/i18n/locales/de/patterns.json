@@ -1,0 +1,854 @@
+{
+  "shared": {
+    "missing": "Fehlt (das wählst du aus)",
+    "colour": {
+      "m": {
+        "red": "roter",
+        "orange": "oranger",
+        "yellow": "gelber",
+        "green": "grüner",
+        "blue": "blauer",
+        "purple": "violetter"
+      },
+      "f": {
+        "red": "rote",
+        "orange": "orange",
+        "yellow": "gelbe",
+        "green": "grüne",
+        "blue": "blaue",
+        "purple": "violette"
+      },
+      "n": {
+        "red": "rotes",
+        "orange": "oranges",
+        "yellow": "gelbes",
+        "green": "grünes",
+        "blue": "blaues",
+        "purple": "violettes"
+      },
+      "mp": {
+        "red": "rote",
+        "orange": "orange",
+        "yellow": "gelbe",
+        "green": "grüne",
+        "blue": "blaue",
+        "purple": "violette"
+      },
+      "fp": {
+        "red": "rote",
+        "orange": "orange",
+        "yellow": "gelbe",
+        "green": "grüne",
+        "blue": "blaue",
+        "purple": "violette"
+      },
+      "np": {
+        "red": "rote",
+        "orange": "orange",
+        "yellow": "gelbe",
+        "green": "grüne",
+        "blue": "blaue",
+        "purple": "violette"
+      },
+      "w": {
+        "red": "rote",
+        "orange": "orange",
+        "yellow": "gelbe",
+        "green": "grüne",
+        "blue": "blaue",
+        "purple": "violette"
+      }
+    },
+    "shape": {
+      "circle": "Kreis",
+      "square": "Quadrat",
+      "triangle": "Dreieck",
+      "diamond": "Raute",
+      "star": "Stern",
+      "hexagon": "Sechseck",
+      "heart": "Herz",
+      "cross": "Kreuz",
+      "arrow": "Pfeil"
+    },
+    "shapes": {
+      "circle": "Kreise",
+      "square": "Quadrate",
+      "triangle": "Dreiecke",
+      "diamond": "Rauten",
+      "star": "Sterne",
+      "hexagon": "Sechsecke",
+      "heart": "Herzen",
+      "cross": "Kreuze",
+      "arrow": "Pfeile"
+    },
+    "figureOne": {
+      "circle": "$t(patterns:shared.colour.m.{{color}}) Kreis",
+      "square": "$t(patterns:shared.colour.n.{{color}}) Quadrat",
+      "triangle": "$t(patterns:shared.colour.n.{{color}}) Dreieck",
+      "diamond": "$t(patterns:shared.colour.f.{{color}}) Raute",
+      "star": "$t(patterns:shared.colour.m.{{color}}) Stern",
+      "hexagon": "$t(patterns:shared.colour.n.{{color}}) Sechseck",
+      "heart": "$t(patterns:shared.colour.n.{{color}}) Herz",
+      "cross": "$t(patterns:shared.colour.n.{{color}}) Kreuz",
+      "arrow": "$t(patterns:shared.colour.m.{{color}}) Pfeil"
+    },
+    "figure": {
+      "circle_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) Kreis",
+      "circle_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) Kreise",
+      "square_one": "{{count}} $t(patterns:shared.colour.n.{{color}}) Quadrat",
+      "square_other": "{{count}} $t(patterns:shared.colour.np.{{color}}) Quadrate",
+      "triangle_one": "{{count}} $t(patterns:shared.colour.n.{{color}}) Dreieck",
+      "triangle_other": "{{count}} $t(patterns:shared.colour.np.{{color}}) Dreiecke",
+      "diamond_one": "{{count}} $t(patterns:shared.colour.f.{{color}}) Raute",
+      "diamond_other": "{{count}} $t(patterns:shared.colour.fp.{{color}}) Rauten",
+      "star_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) Stern",
+      "star_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) Sterne",
+      "hexagon_one": "{{count}} $t(patterns:shared.colour.n.{{color}}) Sechseck",
+      "hexagon_other": "{{count}} $t(patterns:shared.colour.np.{{color}}) Sechsecke",
+      "heart_one": "{{count}} $t(patterns:shared.colour.n.{{color}}) Herz",
+      "heart_other": "{{count}} $t(patterns:shared.colour.np.{{color}}) Herzen",
+      "cross_one": "{{count}} $t(patterns:shared.colour.n.{{color}}) Kreuz",
+      "cross_other": "{{count}} $t(patterns:shared.colour.np.{{color}}) Kreuze",
+      "arrow_one": "{{count}} $t(patterns:shared.colour.m.{{color}}) Pfeil",
+      "arrow_other": "{{count}} $t(patterns:shared.colour.mp.{{color}}) Pfeile"
+    },
+    "pointing": {
+      "up": "{{figure}} nach oben",
+      "right": "{{figure}} nach rechts",
+      "down": "{{figure}} nach unten",
+      "left": "{{figure}} nach links"
+    },
+    "direction": {
+      "up": "nach oben",
+      "right": "nach rechts",
+      "down": "nach unten",
+      "left": "nach links"
+    },
+    "grid": {
+      "empty": "leer",
+      "describe": "Raster mit {{rows}} × {{cols}} Feldern; {{lines}}",
+      "rowEmpty": "Zeile {{row}} leer",
+      "rowFilled_one": "Zeile {{row}} gefüllt in Spalte {{columns}}",
+      "rowFilled_other": "Zeile {{row}} gefüllt in den Spalten {{columns}}",
+      "rowTiles": "Zeile {{row}}: {{tiles}}",
+      "tileInColumn": "{{tile}} in Spalte {{column}}"
+    },
+    "theFigure": {
+      "circle": "Der $t(patterns:shared.colour.w.{{color}}) Kreis",
+      "square": "Das $t(patterns:shared.colour.w.{{color}}) Quadrat",
+      "triangle": "Das $t(patterns:shared.colour.w.{{color}}) Dreieck",
+      "diamond": "Die $t(patterns:shared.colour.w.{{color}}) Raute",
+      "star": "Der $t(patterns:shared.colour.w.{{color}}) Stern",
+      "hexagon": "Das $t(patterns:shared.colour.w.{{color}}) Sechseck",
+      "heart": "Das $t(patterns:shared.colour.w.{{color}}) Herz",
+      "cross": "Das $t(patterns:shared.colour.w.{{color}}) Kreuz",
+      "arrow": "Der $t(patterns:shared.colour.w.{{color}}) Pfeil"
+    }
+  },
+  "visualPatternCompletion": {
+    "name": "Bildmuster ergänzen",
+    "tagline": "Was kommt als Nächstes in der Reihe?",
+    "description": "Eine Reihe farbiger Formen folgt einem Muster: ein Block, der sich wiederholt, eine Anzahl von Formen, die wächst, ein Pfeil, der sich dreht, oder Formen und Farben, die getrennt im Kreis wechseln. Wähle die Figur, die als Nächstes kommt.",
+    "scoringSummary": "Eine Reihe zählt als richtig, wenn du die Figur wählst, die sie fortsetzt. Dein Ergebnis ist der Anteil richtig fortgesetzter Reihen; es gibt kein Zeitlimit.",
+    "simpleInstructions": "Finde das Muster und wähle, was als Nächstes kommt.",
+    "instructions": {
+      "1": "Sieh dir die Reihe von links nach rechts an und finde heraus, was sich wiederholt oder ändert.",
+      "2": "Prüfe jedes Merkmal einzeln: Form, Farbe, Anzahl und in welche Richtung ein Pfeil zeigt.",
+      "3": "Wähle die Figur, die als Nächstes kommt. Die Tasten 1 bis 8 wählen eine Option."
+    },
+    "levels": {
+      "1": "Setze ein Muster aus zwei Figuren fort, die sich abwechseln.",
+      "2": "Setze einen Block aus drei Figuren fort.",
+      "3": "Blöcke mit Wiederholungen darin, wie AABB.",
+      "4": "Ein Muster, das wächst: jedes Mal eins mehr.",
+      "5": "Längere Blöcke, die in der Mitte beginnen können.",
+      "6": "Formen und Farben folgen zwei getrennten Zyklen.",
+      "7": "Pfeile drehen sich immer gleich weit, während sich die Farben wiederholen.",
+      "8": "Zwei Zyklen unterschiedlicher Länge, mit mehr Optionen.",
+      "9": "Die Anzahl ändert sich Schritt für Schritt, während die Formen wechseln.",
+      "10": "Drei Merkmale ändern sich gleichzeitig: Form, Farbe und Anzahl."
+    },
+    "kinds": {
+      "repeat": "Wiederkehrende Blöcke",
+      "two-rules": "Zwei getrennte Zyklen",
+      "growing": "Wachsen und drehen"
+    },
+    "prompt": "Was kommt als Nächstes in der Reihe?",
+    "explanation": "{{rule}} Als Nächstes kommt also: {{answer}}.",
+    "rule": {
+      "repeat": "Der Block {{block}} wiederholt sich immer wieder.",
+      "parts": "{{parts}}."
+    },
+    "partStart": {
+      "countUp": "Die Anzahl der Formen steigt jedes Mal um eins",
+      "countDown": "Die Anzahl der Formen sinkt jedes Mal um eins",
+      "turnClockwise": "Der Pfeil dreht sich jedes Mal um eine Vierteldrehung im Uhrzeigersinn",
+      "turnAnticlockwise": "Der Pfeil dreht sich jedes Mal um eine Vierteldrehung gegen den Uhrzeigersinn",
+      "shapes_one": "Die Formen wiederholen sich nach {{count}}: {{cycle}}",
+      "shapes_other": "Die Formen wiederholen sich alle {{count}}: {{cycle}}",
+      "colours_one": "Die Farben wiederholen sich nach {{count}}: {{cycle}}",
+      "colours_other": "Die Farben wiederholen sich alle {{count}}: {{cycle}}"
+    },
+    "part": {
+      "countUp": "die Anzahl der Formen steigt jedes Mal um eins",
+      "countDown": "die Anzahl der Formen sinkt jedes Mal um eins",
+      "turnClockwise": "der Pfeil dreht sich jedes Mal um eine Vierteldrehung im Uhrzeigersinn",
+      "turnAnticlockwise": "der Pfeil dreht sich jedes Mal um eine Vierteldrehung gegen den Uhrzeigersinn",
+      "shapes_one": "die Formen wiederholen sich nach {{count}}: {{cycle}}",
+      "shapes_other": "die Formen wiederholen sich alle {{count}}: {{cycle}}",
+      "colours_one": "die Farben wiederholen sich nach {{count}}: {{cycle}}",
+      "colours_other": "die Farben wiederholen sich alle {{count}}: {{cycle}}"
+    },
+    "view": {
+      "row": "Musterreihe, von links nach rechts",
+      "next": "Nächste Figur (unbekannt)"
+    }
+  },
+  "numberPatternCompletion": {
+    "name": "Zahlenmuster ergänzen",
+    "tagline": "Finde die fehlende Zahl in Rastern, Pyramiden, Rädern und Kreuzen.",
+    "description": "Zahlen sind in Rastern, Pyramiden, Rädern und Kreuzen angeordnet, und jede Anordnung folgt einer Regel: Zeilen, die sich addieren, Steine, die die Summe der beiden darunter sind, gegenüberliegende Felder, die zusammenhängen, Mitten, die aus ihren Armen entstehen. Finde die Regel und gib die fehlende Zahl ein.",
+    "scoringSummary": "Eine Anordnung zählt als richtig, wenn du genau die fehlende Zahl eingibst. Dein Ergebnis ist der Anteil richtig ergänzter Anordnungen; es gibt kein Zeitlimit.",
+    "simpleInstructions": "Finde die Regel und gib die fehlende Zahl ein.",
+    "instructions": {
+      "1": "Jede Anordnung versteckt eine Zahl, markiert mit „?“. Finde die Regel, der die anderen Zahlen folgen.",
+      "2": "Raster: Vergleiche Zeilen und Spalten. Pyramiden: Jeder Stein ist die Summe der beiden darunter.",
+      "3": "Räder: Achte auf Zahlen auf gegenüberliegenden Seiten. Kreuze: Die Mitte ergibt sich aus den vier Armen, in jedem Kreuz auf dieselbe Weise.",
+      "4": "Gib die fehlende Zahl ein und drücke die Eingabetaste."
+    },
+    "levels": {
+      "1": "Jede Zeile addiert: die erste plus die zweite ergibt die dritte.",
+      "2": "Summen in Zeilen oder Spalten, die Lücke kann überall sein.",
+      "3": "Zahlenpyramiden: Jeder Stein ist die Summe der beiden darunter.",
+      "4": "Zeilen, die subtrahieren oder in festen Schritten gehen.",
+      "5": "Räder: Gegenüberliegende Felder haben eine verborgene Verbindung.",
+      "6": "Größere Pyramiden, bei denen du vielleicht rückwärts rechnen musst.",
+      "7": "Raster, in denen Zeilen und Spalten zusammenwirken.",
+      "8": "Kreuze: Finde heraus, wie die Arme die Mitte bilden.",
+      "9": "Pyramiden mit zusätzlichen leeren Steinen und gemischte Anordnungen.",
+      "10": "Alle Anordnungen, mit Produkten und Pyramiden aus fünf Steinen."
+    },
+    "kinds": {
+      "grid": "Zahlenraster",
+      "pyramid": "Zahlenpyramiden",
+      "wheel": "Zahlenräder",
+      "cross": "Zahlenkreuze"
+    },
+    "grid": {
+      "prompt": "Finde die Regel in den Zeilen oder Spalten. Welche Zahl fehlt?",
+      "explanation": "{{rule}} Hier: {{working}}.",
+      "rule": {
+        "row-sum": "In jeder Zeile ergibt die erste Zahl plus die zweite die dritte.",
+        "column-sum": "In jeder Spalte ergibt die obere Zahl plus die mittlere die untere.",
+        "row-difference": "In jeder Zeile ergibt die erste Zahl minus die zweite die dritte.",
+        "column-difference": "In jeder Spalte ergibt die obere Zahl minus die mittlere die untere.",
+        "row-step": "Jede Zeile steigt oder fällt von links nach rechts in ihrem eigenen festen Schritt.",
+        "column-step": "Jede Spalte steigt oder fällt von oben nach unten in ihrem eigenen festen Schritt.",
+        "row-product": "In jeder Zeile ergibt die erste Zahl mal die zweite die dritte.",
+        "column-product": "In jeder Spalte ergibt die obere Zahl mal die mittlere die untere.",
+        "add-table": "Von einer Spalte zur anderen kommt in jeder Zeile derselbe Betrag dazu (und von einer Zeile zur anderen in jeder Spalte derselbe Betrag).",
+        "row-total": "Jede Zeile hat dieselbe Summe.",
+        "column-total": "Jede Spalte hat dieselbe Summe."
+      },
+      "working": {
+        "table": "die fehlende Zahl ist {{answer}}",
+        "rowTotal": "die Summe ist {{total}}, also ist in Zeile {{row}} die fehlende Zahl {{answer}}",
+        "columnTotal": "die Summe ist {{total}}, also ist in Spalte {{column}} die fehlende Zahl {{answer}}",
+        "row": "in Zeile {{row}} ({{shown}}) ist die fehlende Zahl {{answer}}",
+        "column": "in Spalte {{column}} ({{shown}}) ist die fehlende Zahl {{answer}}"
+      }
+    },
+    "pyramid": {
+      "prompt": "Jeder Stein ist die Summe der beiden Steine darunter. Welche Zahl gehört in den Stein mit „?“?",
+      "explanation": "Jeder Stein ist die Summe der beiden darunter. Schritt für Schritt: {{steps}}. Also ist „?“ gleich {{answer}}."
+    },
+    "wheel": {
+      "prompt": "Finde heraus, wie gegenüberliegende Zahlen auf dem Rad zusammenhängen. Welche Zahl fehlt?",
+      "explanation": {
+        "sum": "Gegenüberliegende Felder ergeben zusammen immer {{k}}. Das Feld gegenüber der Lücke ist {{partner}}, also ist die fehlende Zahl {{k}} − {{partner}} = {{answer}}.",
+        "difference_one": "Das erste Feld (im Uhrzeigersinn von oben) ist um {{k}} größer als das gegenüberliegende. Das Feld gegenüber der Lücke ist {{partner}}, also ist die fehlende Zahl {{working}} = {{answer}}.",
+        "difference_other": "Jedes der ersten {{count}} Felder (im Uhrzeigersinn von oben) ist um {{k}} größer als das gegenüberliegende. Das Feld gegenüber der Lücke ist {{partner}}, also ist die fehlende Zahl {{working}} = {{answer}}."
+      }
+    },
+    "cross": {
+      "prompt": "Die Mitte jedes Kreuzes entsteht auf dieselbe Weise aus seinen vier Armen. Wie lautet die fehlende Mitte?",
+      "explanation": "{{rule}}. Im letzten Kreuz: {{working}} = {{answer}}.",
+      "rule": {
+        "sum": "Die Mitte ist die Summe der vier Arme",
+        "vertical-minus-horizontal": "Die Mitte ist (oben + unten) − (links + rechts)",
+        "product-sum": "Die Mitte ist oben × unten + links × rechts",
+        "product-difference": "Die Mitte ist oben × unten − links × rechts"
+      }
+    },
+    "view": {
+      "blank": "leer",
+      "missingNumber": "fehlende Zahl",
+      "missing": "fehlt",
+      "gridCaption": "Zahlenraster mit 3 Zeilen und 3 Spalten, eine Zahl fehlt",
+      "pyramid": "Zahlenpyramide, vom obersten Stein nach unten",
+      "pyramidRow": "Reihe {{row}} von oben",
+      "wheel": "Rad mit {{segments}} Feldern, im Uhrzeigersinn von oben: {{values}}. Feld 1 liegt gegenüber von Feld {{opposite}}.",
+      "cross": "Kreuz {{index}}: oben {{top}}, rechts {{right}}, unten {{bottom}}, links {{left}}, Mitte {{centre}}",
+      "crosses": "Zahlenkreuze"
+    }
+  },
+  "shapeRotation": {
+    "name": "Formen drehen",
+    "tagline": "Dreh es im Kopf.",
+    "description": "Ein Teil aus Quadraten wird gezeigt. Finde die Option, die dasselbe Teil gedreht ist. Ab Stufe 2 erscheint jedes Teil auch als Spiegelbild, das sehr ähnlich aussieht, aber nur durch Umdrehen des Teils entsteht.",
+    "scoringSummary": "Ein Teil zählt als richtig, wenn du die gedrehte Kopie wählst. Dein Ergebnis ist der Anteil richtig zugeordneter Teile; es gibt kein Zeitlimit.",
+    "accessibilityNotes": "Die Teile werden Zeile für Zeile vorgelesen (welche Spalten belegt sind); sie so im Kopf zu drehen ist viel schwerer als mit dem Bild.",
+    "simpleInstructions": "Finde dieselbe Form, nur gedreht.",
+    "instructions": {
+      "1": "Sieh dir das Teil an. Stell dir vor, du drehst es auf dem Tisch wie ein Puzzleteil.",
+      "2": "Wähle die Option, die dasselbe Teil ist, nur gedreht. Umdrehen ist nicht erlaubt.",
+      "3": "Spiegelbilder sehen fast gleich aus: Achte darauf, wo das einzelne Quadrat herausragt.",
+      "4": "Die Tasten 1 bis 8 wählen eine Option."
+    },
+    "levels": {
+      "1": "Finde dasselbe Teil, gedreht, zwischen anderen Teilen.",
+      "2": "Unterscheide ein gedrehtes Teil von seinem Spiegelbild.",
+      "3": "Spiegelbilder und Teile, die sich um ein Quadrat unterscheiden.",
+      "4": "Größere Teile aus 6 Quadraten.",
+      "5": "Teile aus 6 Quadraten, die sich um ein Quadrat unterscheiden.",
+      "6": "Teile aus 6 Quadraten unter sechs Optionen.",
+      "7": "Ähnliche Teile aus 6 Quadraten, die sich um ein Quadrat unterscheiden.",
+      "8": "Große Teile aus 7 Quadraten.",
+      "9": "Ähnliche Teile aus 7 Quadraten, die sich um ein Quadrat unterscheiden.",
+      "10": "Acht Optionen: vier ähnliche Teile aus 7 Quadraten und ihre Spiegelbilder."
+    },
+    "kinds": {
+      "pieces": "Verschiedene Teile",
+      "mirrors": "Drehung oder Spiegelbild"
+    },
+    "prompt": "Welche Option ist dasselbe Teil, nur gedreht (nicht umgedreht)?",
+    "turn": {
+      "cw": "um eine Vierteldrehung im Uhrzeigersinn",
+      "180": "um eine halbe Drehung",
+      "ccw": "um eine Vierteldrehung gegen den Uhrzeigersinn"
+    },
+    "explanation": {
+      "mirrors": "Die Antwort ist das Teil, gedreht {{turn}}. Jedes ähnliche Teil ist ein Spiegelbild: Damit es passt, müsstest du das Teil umdrehen, und Drehen allein schafft das nie. Die übrigen Optionen sind andere Teile.",
+      "pieces": "Die Antwort ist das Teil, gedreht {{turn}}. Die anderen Optionen sind andere Teile: Keine Drehung bringt sie zur Deckung."
+    },
+    "view": {
+      "piece": "Zu drehendes Teil: {{grid}}",
+      "mirrors": "Drehen, nicht umdrehen: Spiegelbilder zählen nicht.",
+      "pieces": "Finde dieses Teil, gedreht."
+    }
+  },
+  "matrixReasoning": {
+    "name": "Matrizen-Denken",
+    "tagline": "Finde die Regeln der Zeilen und Spalten.",
+    "description": "Ein Raster aus Figuren, in dem ein Feld fehlt. Form, Farbe, Anzahl und Richtung folgen jeweils ihrer eigenen Regel über Zeilen und Spalten. Finde alle Regeln und wähle die Figur, die in die Lücke passt.",
+    "scoringSummary": "Eine Matrix zählt als richtig, wenn du die Figur wählst, die alle Regeln erfüllt. Dein Ergebnis ist der Anteil richtig ergänzter Matrizen; es gibt kein Zeitlimit.",
+    "simpleInstructions": "Sieh dir Zeilen und Spalten an und wähle das Bild, das in die Lücke passt.",
+    "instructions": {
+      "1": "Betrachte ein Merkmal nach dem anderen: Form, Farbe, Anzahl und in welche Richtung Pfeile zeigen.",
+      "2": "Jedes Merkmal folgt seiner eigenen Regel: gleich entlang einer Zeile, gleich in einer Spalte, einmal in jeder Zeile und Spalte oder in jedem Feld einen Schritt weiter.",
+      "3": "Wähle die Figur, die an der Lücke alle Regeln erfüllt. Jede falsche Option verletzt mindestens eine Regel."
+    },
+    "levels": {
+      "1": "Ergänze eine 2×2-Matrix, in der sich ein Merkmal ändert.",
+      "2": "Eine 2×2-Matrix, in der Form und Farbe verschiedenen Regeln folgen.",
+      "3": "Eine 3×3-Matrix: Zeilen oder Spalten teilen ein Merkmal.",
+      "4": "Eine 3×3-Matrix, in der Form und Farbe beide Regeln folgen.",
+      "5": "Jeder Wert einmal in jeder Zeile und Spalte.",
+      "6": "Die Anzahl der Formen kommt dazu, manchmal aufsteigend.",
+      "7": "Drei Merkmale auf einmal, und die Lücke kann überall sein.",
+      "8": "Pfeile, die sich schrittweise drehen, mit Farb- und Anzahlregeln.",
+      "9": "Drei Merkmale, nur lateinische Quadrate und Schritte, acht Optionen.",
+      "10": "Pfeile oder Formen, jedes Merkmal mit eigener schwerer Regel, acht Optionen."
+    },
+    "kinds": {
+      "shapes-colours": "Formen und Farben",
+      "counts": "Formen, Farben und Anzahlen",
+      "arrows": "Drehende Pfeile"
+    },
+    "prompt": "Welche Figur vervollständigt die Matrix?",
+    "explanation": "{{rules}} Das fehlende Feld (Zeile {{row}}, Spalte {{column}}) ist also: {{answer}}.",
+    "line": {
+      "shape": "Form: {{rule}}.",
+      "color": "Farbe: {{rule}}.",
+      "count": "Anzahl der Formen: {{rule}}.",
+      "rotation": "Richtung: {{rule}}."
+    },
+    "layout": {
+      "shape": {
+        "byRow": "jede Zeile hat durchgehend dieselbe Form ({{list}}, von oben nach unten)",
+        "byColumn": "jede Spalte hat durchgehend dieselbe Form ({{list}}, von links nach rechts)",
+        "latin": "die Formen {{list}} kommen in jeder Zeile und jeder Spalte genau einmal vor",
+        "constant": "jedes Feld hat dieselbe Form: {{value}}"
+      },
+      "color": {
+        "byRow": "jede Zeile hat durchgehend dieselbe Farbe ({{list}}, von oben nach unten)",
+        "byColumn": "jede Spalte hat durchgehend dieselbe Farbe ({{list}}, von links nach rechts)",
+        "latin": "die Farben {{list}} kommen in jeder Zeile und jeder Spalte genau einmal vor",
+        "constant": "jedes Feld hat dieselbe Farbe: {{value}}"
+      },
+      "count": {
+        "byRow": "jede Zeile hat durchgehend dieselbe Anzahl ({{list}}, von oben nach unten)",
+        "byColumn": "jede Spalte hat durchgehend dieselbe Anzahl ({{list}}, von links nach rechts)",
+        "latin": "die Anzahlen {{list}} kommen in jeder Zeile und jeder Spalte genau einmal vor",
+        "constant": "jedes Feld hat dieselbe Anzahl: {{value}}",
+        "stepRowMore": "entlang jeder Zeile von links nach rechts kommt in jedem Feld eine Form hinzu",
+        "stepRowFewer": "entlang jeder Zeile von links nach rechts fällt in jedem Feld eine Form weg",
+        "stepColumnMore": "in jeder Spalte nach unten kommt in jedem Feld eine Form hinzu",
+        "stepColumnFewer": "in jeder Spalte nach unten fällt in jedem Feld eine Form weg"
+      },
+      "rotation": {
+        "byRow": "jede Zeile hat durchgehend dieselbe Richtung ({{list}}, von oben nach unten)",
+        "byColumn": "jede Spalte hat durchgehend dieselbe Richtung ({{list}}, von links nach rechts)",
+        "latin": "die Richtungen {{list}} kommen in jeder Zeile und jeder Spalte genau einmal vor",
+        "constant": "jedes Feld hat dieselbe Richtung: {{value}}",
+        "stepRowClockwise": "entlang jeder Zeile von links nach rechts dreht sich der Pfeil von Feld zu Feld um eine Vierteldrehung im Uhrzeigersinn",
+        "stepRowAnticlockwise": "entlang jeder Zeile von links nach rechts dreht sich der Pfeil von Feld zu Feld um eine Vierteldrehung gegen den Uhrzeigersinn",
+        "stepColumnClockwise": "in jeder Spalte nach unten dreht sich der Pfeil von Feld zu Feld um eine Vierteldrehung im Uhrzeigersinn",
+        "stepColumnAnticlockwise": "in jeder Spalte nach unten dreht sich der Pfeil von Feld zu Feld um eine Vierteldrehung gegen den Uhrzeigersinn"
+      }
+    },
+    "view": {
+      "matrix": "Matrix mit {{size}} Zeilen und {{size}} Spalten, ein Feld fehlt",
+      "missingAt": "Zeile {{row}}, Spalte {{column}}: fehlt",
+      "cell": "Zeile {{row}}, Spalte {{column}}: {{figure}}",
+      "missing": "Fehlendes Feld"
+    }
+  },
+  "sequencePrediction": {
+    "name": "Folgen vorhersagen",
+    "tagline": "Wo ist es als Nächstes?",
+    "description": "Einige Bilder zeigen Zeichen, die sich über ein Raster bewegen, oder Pfeile, die sich drehen – immer um denselben Schritt. Finde jeden Schritt heraus und wähle das nächste Bild. Höhere Stufen verbinden Bewegen und Drehen, gehen über die Ränder hinaus und verfolgen zwei Zeichen gleichzeitig.",
+    "scoringSummary": "Eine Folge zählt als richtig, wenn du das Bild wählst, das sie fortsetzt. Dein Ergebnis ist der Anteil richtig vorhergesagter Folgen; es gibt kein Zeitlimit.",
+    "simpleInstructions": "Sieh, wie sich die Form bewegt, und wähle, wohin sie als Nächstes geht.",
+    "instructions": {
+      "1": "Beobachte, wie sich jedes Zeichen von Bild zu Bild verändert: wie weit es sich bewegt und wohin sich ein Pfeil dreht.",
+      "2": "Jedes Zeichen behält in allen Bildern denselben Schritt.",
+      "3": "Wenn die Stufe es sagt, kommt ein Zeichen, das einen Rand verlässt, am gegenüberliegenden Rand wieder herein.",
+      "4": "Wähle das nächste Bild. Die Tasten 1 bis 8 wählen eine Option."
+    },
+    "levels": {
+      "1": "Eine Form rutscht jedes Mal ein Feld weiter. Wo ist sie als Nächstes?",
+      "2": "Bewegungen können diagonal sein.",
+      "3": "Ein Pfeil dreht sich jedes Mal gleich weit.",
+      "4": "Ein Pfeil rutscht und dreht sich gleichzeitig.",
+      "5": "Zeichen, die einen Rand verlassen, kommen am gegenüberliegenden Rand wieder herein.",
+      "6": "Längere Schritte von bis zu zwei Feldern, über die Ränder hinweg.",
+      "7": "Zwei Zeichen, jedes mit eigenem Schritt.",
+      "8": "Ein Pfeil bewegt sich, dreht sich und geht über die Ränder.",
+      "9": "Zwei Zeichen: eines rutscht, das andere bewegt und dreht sich.",
+      "10": "Zwei Zeichen mit eigenen Schritten, die sich drehen und über die Ränder gehen."
+    },
+    "kinds": {
+      "move": "Wandernde Zeichen",
+      "rotate": "Drehende Pfeile",
+      "move-rotate": "Bewegen und drehen",
+      "two-marks": "Zwei Zeichen gleichzeitig"
+    },
+    "mark": "{{figure}} in Zeile {{row}}, Spalte {{column}}",
+    "frame": "{{marks}}",
+    "step": {
+      "right_one": "{{count}} Feld nach rechts",
+      "right_other": "{{count}} Felder nach rechts",
+      "left_one": "{{count}} Feld nach links",
+      "left_other": "{{count}} Felder nach links",
+      "down_one": "{{count}} Feld nach unten",
+      "down_other": "{{count}} Felder nach unten",
+      "up_one": "{{count}} Feld nach oben",
+      "up_other": "{{count}} Felder nach oben"
+    },
+    "describe": {
+      "move": "{{name}} bewegt sich in jedem Bild {{steps}}",
+      "turn": {
+        "clockwise": "{{name}} dreht sich in jedem Bild um eine Vierteldrehung im Uhrzeigersinn",
+        "anticlockwise": "{{name}} dreht sich in jedem Bild um eine Vierteldrehung gegen den Uhrzeigersinn"
+      },
+      "moveTurn": {
+        "clockwise": "{{name}} bewegt sich in jedem Bild {{steps}} und dreht sich um eine Vierteldrehung im Uhrzeigersinn",
+        "anticlockwise": "{{name}} bewegt sich in jedem Bild {{steps}} und dreht sich um eine Vierteldrehung gegen den Uhrzeigersinn"
+      }
+    },
+    "prompt": {
+      "plain": "Welches Bild kommt als Nächstes?",
+      "wrap": "Welches Bild kommt als Nächstes? Zeichen, die einen Rand verlassen, kommen am gegenüberliegenden Rand wieder herein."
+    },
+    "explanation": {
+      "plain": "{{moves}}. Das nächste Bild zeigt also: {{answer}}.",
+      "wrap": "{{moves}}, über die Ränder hinweg. Das nächste Bild zeigt also: {{answer}}."
+    },
+    "view": {
+      "frames": "Bilder, der Reihe nach",
+      "frame": "Bild {{index}}",
+      "frameLabel": "Bild {{index}}: {{marks}}",
+      "next": "Nächstes",
+      "nextFrame": "Nächstes Bild (unbekannt)",
+      "wrap": "Zeichen, die einen Rand verlassen, kommen am gegenüberliegenden Rand wieder herein."
+    }
+  },
+  "symmetryRecognition": {
+    "name": "Symmetrie erkennen",
+    "tagline": "Falte es im Kopf.",
+    "description": "Entscheide, ob ein Muster eine Spiegelachse hat – senkrecht, waagerecht, beide oder keine – und zeichne die fehlende Spiegelhälfte eines Bildes. Höhere Stufen nutzen farbige Plättchen, fast symmetrische Muster und Hälften ohne Angabe, wie viele Felder zu markieren sind.",
+    "scoringSummary": "Ein Muster zählt als richtig, wenn du genau seine Spiegelachsen nennst oder wenn die Felder, die du markierst (und kein anderes), die Spiegelhälfte vervollständigen. Dein Ergebnis ist der Anteil richtiger Muster; es gibt kein Zeitlimit.",
+    "accessibilityNotes": "Muster werden Zeile für Zeile vorgelesen; eine Spiegelachse nach Gehör zu prüfen heißt, Zeilen oder Spalten von beiden Enden her zu vergleichen.",
+    "simpleInstructions": "Falte das Bild im Kopf: Passen beide Hälften zusammen?",
+    "instructions": {
+      "1": "Eine Spiegelachse teilt ein Muster in zwei Hälften, die wie ein Spiegelbild zusammenpassen – als würdest du das Papier falten.",
+      "2": "Erkennen: Wähle, welche Spiegelachsen das Muster hat. Prüfe jedes Feld, schon eines kann sie zerstören. Plättchen müssen in Form und Farbe übereinstimmen.",
+      "3": "Zeichnen: Markiere die Felder der leeren Hälfte so, dass sie die gegebene Hälfte spiegelt, und drücke dann auf Prüfen.",
+      "4": "Tastatur: Die Tasten 1–4 wählen eine Antwort; mit den Pfeiltasten wechselst du zwischen Feldern, die Eingabetaste markiert ein Feld."
+    },
+    "levels": {
+      "1": "Ist die linke Seite ein Spiegelbild der rechten?",
+      "2": "Zeichne das Spiegelbild einer kleinen Hälfte.",
+      "3": "Finde alle Spiegelachsen: links–rechts, oben–unten, beide oder keine.",
+      "4": "Zeichne das Spiegelbild einer größeren Hälfte.",
+      "5": "Erkenne fast symmetrische Muster mit zwei verschobenen Feldern.",
+      "6": "Spiegeln an einer waagerechten Achse: Zeichne die untere Hälfte.",
+      "7": "Farbige Plättchen: Auch die Formen müssen gespiegelt sein.",
+      "8": "Zeichne die Spiegelhälfte, ohne zu wissen, wie viele Felder es sind.",
+      "9": "Große Plättchenmuster mit einem einzigen verschobenen Feld.",
+      "10": "Große Hälften, beliebige Spiegelachse, ohne Anzahl."
+    },
+    "kinds": {
+      "classify": "Spiegelachsen erkennen",
+      "complete": "Spiegelhälfte zeichnen"
+    },
+    "class": {
+      "left-right": "Senkrechte Spiegelachse: links passt zu rechts",
+      "top-bottom": "Waagerechte Spiegelachse: oben passt zu unten",
+      "both": "Beide Spiegelachsen",
+      "none": "Keine Spiegelachse"
+    },
+    "pair": "{{a}} und {{b}}",
+    "fold": {
+      "vertical": {
+        "ok": "Faltet man an der senkrechten Achse, trifft jedes Feld auf ein passendes Feld.",
+        "broken": "Falten an der senkrechten Achse klappt nicht: {{pairs}} passen nicht zusammen.",
+        "brokenMore": "Falten an der senkrechten Achse klappt nicht: {{pairs}} (und weitere) passen nicht zusammen."
+      },
+      "horizontal": {
+        "ok": "Faltet man an der waagerechten Achse, trifft jedes Feld auf ein passendes Feld.",
+        "broken": "Falten an der waagerechten Achse klappt nicht: {{pairs}} passen nicht zusammen.",
+        "brokenMore": "Falten an der waagerechten Achse klappt nicht: {{pairs}} (und weitere) passen nicht zusammen."
+      }
+    },
+    "prompt": {
+      "classify": "Welche Spiegelachsen hat dieses Muster?",
+      "vertical": "Markiere die Felder rechts, damit das Bild die linke Hälfte spiegelt.",
+      "horizontal": "Markiere die Felder unten, damit das Bild die obere Hälfte spiegelt."
+    },
+    "explanation": {
+      "classify": "{{answer}}.",
+      "vertical": "Jedes Feld rechts übernimmt das Feld, das auf der anderen Seite der Achse gleich weit entfernt liegt. Die rechte Hälfte braucht: {{cells}}.",
+      "horizontal": "Jedes Feld unten übernimmt das Feld, das auf der anderen Seite der Achse gleich weit entfernt liegt. Die untere Hälfte braucht: {{cells}}."
+    },
+    "view": {
+      "pattern": "Muster: {{grid}}",
+      "given": {
+        "vertical": "Gegebene linke Hälfte",
+        "horizontal": "Gegebene obere Hälfte"
+      },
+      "fill": {
+        "vertical": "Rechte Hälfte zum Ausfüllen",
+        "horizontal": "Untere Hälfte zum Ausfüllen"
+      },
+      "filled": "{{cell}}, gefüllt",
+      "empty": "{{cell}}, leer"
+    }
+  },
+  "spatialTransformation": {
+    "name": "Räumliche Transformation",
+    "tagline": "Drehen, spiegeln, das Ergebnis vorstellen.",
+    "description": "Ein Muster auf einem Raster und eine Anweisung: dreh es, spiegle es oder führe ab Stufe 7 zwei Bewegungen nacheinander aus. Wähle das Bild des Ergebnisses. Die Muster wachsen von 3×3 auf 5×5 und bekommen farbige Plättchen.",
+    "scoringSummary": "Ein Muster zählt als richtig, wenn du das Ergebnis der angegebenen Bewegungen wählst. Dein Ergebnis ist der Anteil richtiger Antworten; es gibt kein Zeitlimit.",
+    "accessibilityNotes": "Muster und Optionen werden Zeile für Zeile vorgelesen; die Bewegung so vorzustellen ist viel schwerer als mit dem Bild.",
+    "simpleInstructions": "Dreh oder spiegle im Kopf und wähle das Bild, das herauskommt.",
+    "instructions": {
+      "1": "Lies die Anweisung und stell dir vor, wie sich das Muster bewegt: Eine Drehung dreht es auf dem Tisch, Spiegeln wendet es wie eine Buchseite.",
+      "2": "Bei zwei Bewegungen machst du zuerst die erste und dann die zweite mit dem Ergebnis.",
+      "3": "Wähle die Option, die das Ergebnis zeigt. Die Tasten 1 bis 8 wählen eine Option."
+    },
+    "levels": {
+      "1": "Spiegle ein kleines Muster.",
+      "2": "Dreh ein kleines Muster.",
+      "3": "Dreh ein größeres Muster in beide Richtungen.",
+      "4": "Beliebige Drehung oder Spiegelung.",
+      "5": "Drehungen und Spiegelungen mit zwei Plättchenarten.",
+      "6": "Ein 5×5-Muster mit drei Plättchenarten, sechs Optionen.",
+      "7": "Zwei Bewegungen nacheinander.",
+      "8": "Zwei Bewegungen nacheinander mit zwei Plättchenarten.",
+      "9": "Zwei Bewegungen auf einem dicht gefüllten 5×5-Muster.",
+      "10": "Zwei Bewegungen; jede gedrehte und gespiegelte Version ist eine Option."
+    },
+    "kinds": {
+      "single": "Eine Bewegung",
+      "double": "Zwei Bewegungen nacheinander"
+    },
+    "step": {
+      "cw": "Dreh es um eine Vierteldrehung im Uhrzeigersinn",
+      "ccw": "Dreh es um eine Vierteldrehung gegen den Uhrzeigersinn",
+      "180": "Dreh es um eine halbe Drehung",
+      "flip-lr": "Spiegle es von links nach rechts",
+      "flip-ud": "Spiegle es von oben nach unten"
+    },
+    "stepInline": {
+      "cw": "dreh es um eine Vierteldrehung im Uhrzeigersinn",
+      "ccw": "dreh es um eine Vierteldrehung gegen den Uhrzeigersinn",
+      "180": "dreh es um eine halbe Drehung",
+      "flip-lr": "spiegle es von links nach rechts",
+      "flip-ud": "spiegle es von oben nach unten"
+    },
+    "effect": {
+      "cw": "die obere Zeile wird zur rechten Spalte",
+      "ccw": "die obere Zeile wird zur linken Spalte",
+      "180": "die obere Zeile wird zur unteren Zeile, rückwärts gelesen",
+      "flip-lr": "die linken und rechten Spalten tauschen die Plätze, wie bei einem Spiegel daneben",
+      "flip-ud": "die oberen und unteren Zeilen tauschen die Plätze, wie bei einem Spiegel darunter"
+    },
+    "prompt": {
+      "single": "{{step}}. Welche Option zeigt das Ergebnis?",
+      "double": "Zuerst: {{first}}, dann: {{second}}. Welche Option zeigt das Ergebnis?"
+    },
+    "explanation": {
+      "single": "{{step}}: {{effect}}.",
+      "numbered": "Schritt {{index}}: {{step}}: {{effect}}.",
+      "others": "Die anderen Optionen sind das Muster, auf andere Weise gedreht oder gespiegelt."
+    },
+    "view": {
+      "start": "Ausgangsmuster: {{grid}}",
+      "moves": "Bewegungen, der Reihe nach"
+    }
+  },
+  "ruleBasedPatternDiscovery": {
+    "name": "Regeln in Mustern entdecken",
+    "tagline": "Erschließe die Regel aus Beispielen.",
+    "description": "Jedes Beispiel zeigt ein kleines Raster vor und nach einer verborgenen Änderung: einer Spiegelung, einer Drehung, einer Verschiebung, Plättchen, die ihre Art wechseln oder herunterfallen. Finde die Änderung heraus und wähle, was aus einem neuen Raster wird. Höhere Stufen verketten zwei Änderungen.",
+    "scoringSummary": "Ein Rätsel zählt als richtig, wenn du das Raster wählst, das die verborgene Regel ergibt. Dein Ergebnis ist der Anteil gelöster Rätsel; es gibt kein Zeitlimit.",
+    "simpleInstructions": "Sieh, wie sich jedes Bild verändert, und verändere das neue genauso.",
+    "instructions": {
+      "1": "Vergleiche jedes Eingaberaster mit seinem Ergebnis: Was hat sich bewegt, gedreht, die Art gewechselt oder ist gefallen?",
+      "2": "Prüfe, ob deine Idee für alle Beispiele passt, nicht nur für das erste.",
+      "3": "Wende dieselbe Änderung auf die neue Eingabe an und wähle das Ergebnis. Ab Stufe 8 besteht die Regel aus zwei Änderungen nacheinander.",
+      "4": "Plättchen unterscheiden sich in Form und Farbe, und jedes Raster wird auch in Worten beschrieben."
+    },
+    "levels": {
+      "1": "Eine Plättchenart verwandelt sich in eine andere.",
+      "2": "Plättchen fallen, rutschen oder breiten sich aus.",
+      "3": "Das Raster wird gespiegelt, gedreht oder verschoben.",
+      "4": "Bewegungen und Drehungen auf größeren Rastern mit zwei Plättchenarten.",
+      "5": "Plättchenwechsel mit zwei oder drei Arten: ersetzen oder tauschen.",
+      "6": "Eine beliebige einzelne Regel: Finde heraus, welche Art von Änderung es ist.",
+      "7": "Eine beliebige einzelne Regel auf 5×5-Rastern mit drei Plättchenarten.",
+      "8": "Zwei Änderungen nacheinander: eine Bewegung, dann ein Plättchenwechsel.",
+      "9": "Zwei Änderungen nacheinander, von zwei beliebigen verschiedenen Arten.",
+      "10": "Zwei verkettete Änderungen auf 5×5-Rastern mit drei Plättchenarten."
+    },
+    "kinds": {
+      "move": "Spiegeln, Drehen und Verschieben",
+      "colour": "Plättchen wechseln die Art",
+      "gather": "Fallen und Füllen",
+      "two-step": "Zwei Änderungen nacheinander"
+    },
+    "prompt": {
+      "one": "Dieselbe Änderung macht aus jeder Eingabe ihr Ergebnis. Was wird aus der neuen Eingabe?",
+      "two": "Zwei Änderungen nacheinander machen aus jeder Eingabe ihr Ergebnis. Was wird aus der neuen Eingabe?"
+    },
+    "explanation": {
+      "one": "In jedem Beispiel {{rule}}. Machst du dasselbe mit der neuen Eingabe, erhältst du das gewählte Raster.",
+      "two": "In jedem Beispiel {{first}}, und danach {{second}}. Machst du dasselbe mit der neuen Eingabe, erhältst du das gewählte Raster."
+    },
+    "rule": {
+      "flip-lr": "wird das Raster von links nach rechts gespiegelt",
+      "flip-ud": "wird das Raster von oben nach unten gespiegelt",
+      "cw": "wird das Raster um eine Vierteldrehung im Uhrzeigersinn gedreht",
+      "ccw": "wird das Raster um eine Vierteldrehung gegen den Uhrzeigersinn gedreht",
+      "180": "wird das Raster um eine halbe Drehung gedreht",
+      "shift-right": "rückt das Raster um ein Feld nach rechts (die letzte Spalte kommt links wieder herein)",
+      "shift-left": "rückt das Raster um ein Feld nach links (die erste Spalte kommt rechts wieder herein)",
+      "shift-down": "rückt das Raster um ein Feld nach unten (die unterste Zeile kommt oben wieder herein)",
+      "shift-up": "rückt das Raster um ein Feld nach oben (die oberste Zeile kommt unten wieder herein)",
+      "fall": "fällt jedes Plättchen ans untere Ende seiner Spalte",
+      "slide-left": "rutscht jedes Plättchen ans linke Ende seiner Zeile",
+      "fill-rows": "wird jede Zeile mit einem Plättchen mit Kopien ihres ersten Plättchens gefüllt",
+      "fill-columns": "wird jede Spalte mit einem Plättchen mit Kopien ihres obersten Plättchens gefüllt",
+      "recolour": "werden alle $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) durch $t(patterns:ruleBasedPatternDiscovery.tileA.{{to}}) ersetzt",
+      "swap": "tauschen alle $t(patterns:ruleBasedPatternDiscovery.tile.{{from}}) und alle $t(patterns:ruleBasedPatternDiscovery.tile.{{to}}) die Plätze"
+    },
+    "tile": {
+      "1": "blauen Quadrate",
+      "2": "orangen Kreise",
+      "3": "violetten Rauten",
+      "4": "grünen Kreuze"
+    },
+    "tileA": {
+      "1": "blaue Quadrate",
+      "2": "orange Kreise",
+      "3": "violette Rauten",
+      "4": "grüne Kreuze"
+    },
+    "view": {
+      "one": "Eine verborgene Änderung",
+      "two": "Zwei verborgene Änderungen nacheinander",
+      "examples": "Beispiele",
+      "input": "Beispiel {{index}}, Eingabe: {{grid}}",
+      "output": "Beispiel {{index}}, Ergebnis: {{grid}}",
+      "new": "Neu",
+      "newInput": "Neue Eingabe: {{grid}}",
+      "newOutput": "Ergebnis der neuen Eingabe (unbekannt)"
+    }
+  },
+  "gridAndPathReasoning": {
+    "name": "Raster und Wege",
+    "tagline": "Finde deinen Weg durch das Labyrinth.",
+    "description": "Eine Schildkröte bewegt sich Feld für Feld durch ein Rasterlabyrinth, nach oben, unten, links oder rechts, nie durch Wände. Zähle die Schritte des kürzesten Weges, finde den einzigen Ausgang, den sie erreichen kann, oder finde das Feld, durch das jeder kürzeste Weg führen muss.",
+    "scoringSummary": "Ein Labyrinth zählt als richtig, wenn deine Zahl oder deine Wahl stimmt. Dein Ergebnis ist der Anteil gelöster Labyrinthe; es gibt kein Zeitlimit.",
+    "accessibilityNotes": "Jedes Labyrinth wird für Screenreader auch Zeile für Zeile beschrieben, aber Wege nach Gehör zu verfolgen ist bei größeren Labyrinthen anspruchsvoll.",
+    "simpleInstructions": "Hilf der Schildkröte, ihren Weg um die Wände zu finden.",
+    "instructions": {
+      "1": "Die Schildkröte geht jeweils ein Feld: nach oben, unten, links oder rechts. Sie kann keine Wände (gestreifte Felder) durchqueren und nicht diagonal gehen.",
+      "2": "Ein Schritt ist ein Zug auf das nächste Feld. Zähle die Schritte des kürzesten Weges, wenn danach gefragt wird.",
+      "3": "Ausgänge tragen Buchstaben; nummerierte Felder sind die Kandidaten, wenn du das Feld finden musst, durch das jeder kürzeste Weg führt."
+    },
+    "levels": {
+      "1": "Zähle die Schritte zum Stern auf einem kleinen, offenen Raster.",
+      "2": "Finde den einen Ausgang, den die Schildkröte erreichen kann.",
+      "3": "Zähle Schritte, wenn Wände einen Umweg erzwingen.",
+      "4": "Finde das Feld, durch das jeder kürzeste Weg führt.",
+      "5": "Größere 7×7-Labyrinthe: Ausgänge und Schrittzahlen.",
+      "6": "Längere Umwege und Felder, die man durchqueren muss.",
+      "7": "Mehrere kürzeste Wege, ein Feld, das alle gemeinsam haben.",
+      "8": "8×8-Labyrinthe mit vier Ausgängen.",
+      "9": "9×9-Labyrinthe mit langen Umwegen.",
+      "10": "Alle Fragen auf dichten 9×9-Labyrinthen."
+    },
+    "kinds": {
+      "shortest-length": "Länge des kürzesten Weges",
+      "reachable-exit": "Erreichbarer Ausgang",
+      "must-pass": "Feld auf jedem Weg"
+    },
+    "prompt": {
+      "shortest": "Wie viele Schritte hat der kürzeste Weg von der Schildkröte zum Stern?",
+      "exit": "Welchen Ausgang kann die Schildkröte erreichen? Sie bewegt sich nach oben, unten, links oder rechts, nie durch Wände.",
+      "mustPass": "Jeder kürzeste Weg von der Schildkröte zum Stern führt durch eines der nummerierten Felder. Durch welches?"
+    },
+    "unit": "Schritte",
+    "exit": "Ausgang {{letter}}",
+    "cell": "Feld {{number}}",
+    "run": {
+      "right_one": "{{count}} rechts",
+      "right_other": "{{count}} rechts",
+      "left_one": "{{count}} links",
+      "left_other": "{{count}} links",
+      "up_one": "{{count}} hoch",
+      "up_other": "{{count}} hoch",
+      "down_one": "{{count}} runter",
+      "down_other": "{{count}} runter"
+    },
+    "explanation": {
+      "shortest_one": "Der kürzeste Weg hat {{count}} Schritt, zum Beispiel: {{route}}. Kein Weg umgeht die Wände mit weniger Schritten.",
+      "shortest_other": "Der kürzeste Weg hat {{count}} Schritte, zum Beispiel: {{route}}. Kein Weg umgeht die Wände mit weniger Schritten.",
+      "exit_one": "{{exit}} ist erreichbar, zum Beispiel: {{route}}. {{others}} ist durch Wände abgeschnitten: Kein Weg führt dorthin.",
+      "exit_other": "{{exit}} ist erreichbar, zum Beispiel: {{route}}. {{others}} sind durch Wände abgeschnitten: Kein Weg führt dorthin.",
+      "mustPass": "Die kürzesten Wege haben {{steps}} Schritte, und jeder führt durch {{cell}}. Ein Weg durch {{others}} wird länger.",
+      "mustPassMany": "Die kürzesten Wege haben {{steps}} Schritte (es gibt {{total}} davon), und jeder führt durch {{cell}}. Ein Weg durch {{others}} wird länger."
+    },
+    "view": {
+      "start": "Schildkröte (Start)",
+      "goal": "Stern (Ziel)",
+      "exit": "Ausgang {{letter}}",
+      "cell": "Feld {{number}}",
+      "at": "{{what}} in Spalte {{column}}",
+      "walls_one": "Wand in Spalte {{columns}}",
+      "walls_other": "Wände in den Spalten {{columns}}",
+      "rowOpen": "Zeile {{row}}: alles frei",
+      "row": "Zeile {{row}}: {{parts}}",
+      "legendStart": "Start",
+      "legendExits": "Buchstaben: Ausgänge",
+      "legendGoal": "Ziel",
+      "legendWalls": "gestreifte Felder sind Wände",
+      "maze": "Labyrinth mit {{size}} × {{size}} Feldern, Zeile für Zeile beschrieben."
+    }
+  },
+  "abstractPatternChallenge": {
+    "name": "Abstrakte Muster",
+    "tagline": "Eine Tafel bricht die Regel. Welche?",
+    "description": "Mehrere Tafeln mit Figuren teilen eine verborgene Regel – zu Farbe, Form, Anzahl, Richtung oder Reihenfolge –, während sich andere Merkmale frei ändern. Finde die Regel und entdecke die eine Tafel, die sie bricht.",
+    "scoringSummary": "Eine Serie zählt als richtig, wenn du die Tafel wählst, die die gemeinsame Regel bricht. Dein Ergebnis ist der Anteil gelöster Serien; es gibt kein Zeitlimit.",
+    "simpleInstructions": "Finde die Tafel, die nicht zu den anderen passt.",
+    "instructions": {
+      "1": "Alle Tafeln bis auf eine folgen derselben Regel. Manche Merkmale ändern sich nur, um dich abzulenken.",
+      "2": "Regeln können Farbe, Form, Anzahl der Figuren, Richtung der Pfeile oder die Reihenfolge der Figuren betreffen.",
+      "3": "Nur eine Tafel kann nach irgendeiner Regel herausfallen. Die Tasten 1 bis 6 wählen eine Tafel."
+    },
+    "levels": {
+      "1": "Vier Tafeln: Finde die, deren Figuren nicht zusammenpassen.",
+      "2": "Alle Tafeln bis auf eine enthalten dieselbe Form.",
+      "3": "Alles verschieden: keine Form und keine Farbe doppelt in einer Tafel.",
+      "4": "Fünf Tafeln; die Regel kann Farbe, Form oder Inhalt betreffen.",
+      "5": "Zähle auch die Figuren: Die Regel kann die Anzahl sein.",
+      "6": "Pfeile kommen dazu: Die Regel kann ihre Richtung sein.",
+      "7": "Eine von sieben Regeln, mit größeren Tafeln als Ablenkung.",
+      "8": "Sechs Tafeln; eine neue Regel: genau eine Figur hat eine andere Farbe.",
+      "9": "Die Reihenfolge zählt: Tafeln, die rückwärts gleich gelesen werden.",
+      "10": "Beliebige Regel, sechs Tafeln mit drei oder vier Figuren."
+    },
+    "kinds": {
+      "colour": "Farbregeln",
+      "shape": "Formregeln",
+      "count": "Anzahlregeln",
+      "direction": "Richtungsregeln",
+      "order": "Reihenfolgeregeln"
+    },
+    "prompt": "Welche Tafel bricht die Regel, der alle anderen folgen?",
+    "panel": "Tafel {{index}}",
+    "explanation": "In jeder anderen Tafel gilt: {{rule}}. Tafel {{index}} bricht die Regel: {{reason}}.",
+    "rule": {
+      "same-colour": "alle Figuren einer Tafel haben dieselbe Farbe",
+      "same-shape": "alle Figuren einer Tafel haben dieselbe Form",
+      "different-shapes": "keine zwei Figuren einer Tafel haben dieselbe Form",
+      "different-colours": "keine zwei Figuren einer Tafel haben dieselbe Farbe",
+      "same-count_one": "jede Tafel hat {{count}} Figur",
+      "same-count_other": "jede Tafel hat {{count}} Figuren",
+      "contains-shape": {
+        "circle": "jede Tafel enthält mindestens einen Kreis",
+        "square": "jede Tafel enthält mindestens ein Quadrat",
+        "triangle": "jede Tafel enthält mindestens ein Dreieck",
+        "diamond": "jede Tafel enthält mindestens eine Raute",
+        "star": "jede Tafel enthält mindestens einen Stern",
+        "hexagon": "jede Tafel enthält mindestens ein Sechseck",
+        "heart": "jede Tafel enthält mindestens ein Herz",
+        "cross": "jede Tafel enthält mindestens ein Kreuz",
+        "arrow": "jede Tafel enthält mindestens einen Pfeil"
+      },
+      "same-direction": "alle Pfeile einer Tafel zeigen in dieselbe Richtung",
+      "one-odd-colour": "genau eine Figur jeder Tafel hat eine andere Farbe als die übrigen",
+      "mirror-order": "jede Tafel liest sich von links nach rechts genauso wie von rechts nach links"
+    },
+    "break": {
+      "mixes": "sie mischt {{list}}",
+      "sameShape": "zwei ihrer Figuren haben dieselbe Form",
+      "sameColour": "zwei ihrer Figuren haben dieselbe Farbe",
+      "count_one": "sie hat {{count}} Figur statt {{expected}}",
+      "count_other": "sie hat {{count}} Figuren statt {{expected}}",
+      "contains": {
+        "circle": "sie enthält keinen Kreis",
+        "square": "sie enthält kein Quadrat",
+        "triangle": "sie enthält kein Dreieck",
+        "diamond": "sie enthält keine Raute",
+        "star": "sie enthält keinen Stern",
+        "hexagon": "sie enthält kein Sechseck",
+        "heart": "sie enthält kein Herz",
+        "cross": "sie enthält kein Kreuz",
+        "arrow": "sie enthält keinen Pfeil"
+      },
+      "directions": "ihre Pfeile zeigen {{list}}",
+      "allSame": "alle ihre Figuren haben dieselbe Farbe",
+      "severalOdd": "mehr als eine ihrer Figuren hat eine andere Farbe",
+      "order": "rückwärts gelesen kommen ihre Figuren in anderer Reihenfolge"
+    },
+    "view": {
+      "panels": "Tafeln",
+      "panel": "Tafel {{index}}: {{figures}}"
+    }
+  }
+}

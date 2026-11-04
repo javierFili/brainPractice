@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { SequenceProfile } from './types';
 
@@ -8,7 +9,7 @@ import type { SequenceProfile } from './types';
  */
 export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
   {
-    objective: 'Add the same small number each time.',
+    objective: msg('logic:numberSequences.levels.1'),
     challengeCount: 5,
     timing: untimed(20_000),
     rules: { add: 1 },
@@ -17,7 +18,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: false,
   },
   {
-    objective: 'Steps that go up or down.',
+    objective: msg('logic:numberSequences.levels.2'),
     challengeCount: 5,
     timing: untimed(25_000),
     rules: { add: 1 },
@@ -26,7 +27,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Adding or multiplying.',
+    objective: msg('logic:numberSequences.levels.3'),
     challengeCount: 5,
     timing: untimed(30_000),
     rules: { add: 1, multiply: 1 },
@@ -35,7 +36,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: false,
   },
   {
-    objective: 'Find a missing number in the middle.',
+    objective: msg('logic:numberSequences.levels.4'),
     challengeCount: 5,
     timing: untimed(35_000),
     rules: { add: 1, multiply: 1 },
@@ -44,7 +45,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Two steps that take turns.',
+    objective: msg('logic:numberSequences.levels.5'),
     challengeCount: 5,
     timing: untimed(45_000),
     rules: { add: 1, 'alternating-add': 2 },
@@ -53,7 +54,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Steps that grow each time.',
+    objective: msg('logic:numberSequences.levels.6'),
     challengeCount: 5,
     timing: untimed(50_000),
     rules: { 'alternating-add': 1, 'growing-add': 2 },
@@ -62,7 +63,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Two sequences mixed together.',
+    objective: msg('logic:numberSequences.levels.7'),
     challengeCount: 5,
     timing: untimed(55_000),
     rules: { 'growing-add': 1, interleaved: 2 },
@@ -71,7 +72,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Multiply, then add: two-step rules.',
+    objective: msg('logic:numberSequences.levels.8'),
     challengeCount: 5,
     timing: untimed(60_000),
     rules: { interleaved: 1, 'two-step': 2, multiply: 1 },
@@ -80,7 +81,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Each number built from the two before it.',
+    objective: msg('logic:numberSequences.levels.9'),
     challengeCount: 5,
     timing: untimed(65_000),
     rules: { 'sum-of-two': 2, 'two-step': 1, 'growing-add': 1 },
@@ -89,7 +90,7 @@ export const NUMBER_SEQUENCES_LEVELS = defineLevels<SequenceProfile>([
     negativeSteps: true,
   },
   {
-    objective: 'Any rule, often with a gap in the middle.',
+    objective: msg('logic:numberSequences.levels.10'),
     challengeCount: 6,
     timing: untimed(70_000),
     rules: {

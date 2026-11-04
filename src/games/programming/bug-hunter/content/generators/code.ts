@@ -1,5 +1,6 @@
 import { locateResponse } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
+import { msg } from '@/domain/shared';
 import {
   chance,
   pick,
@@ -310,7 +311,7 @@ export function codeRule(random: RandomGenerator, profile: BugHunterProfile): Bu
   });
 
   return {
-    prompt: 'Review the program. Exactly one line breaks a rule — which one?',
+    prompt: msg('programming:bugHunter.prompt.codeRule'),
     content,
     response: locateResponse(count, violation.index),
     explanation: explainViolation(violation, rules.length),

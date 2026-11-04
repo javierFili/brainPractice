@@ -13,6 +13,7 @@ import { ARITHMETIC_LEVELS } from './content/levels';
 import { FAMILY_ORDER } from './content/types';
 import { mentalArithmeticSprintModule } from './index';
 import { ArithmeticView } from './ui/ArithmeticView';
+import { en } from '@/test/i18n';
 
 describeGameContract(mentalArithmeticSprintModule);
 
@@ -36,7 +37,7 @@ describe('Mental Arithmetic Sprint content', () => {
       }
       if (response.format !== 'single-choice') throw new Error('single-choice expected');
       const picked = response.question.options.find((o) => o.id === response.solution.optionId);
-      expect(picked?.label).toBe(content.shown === content.value ? 'True' : 'False');
+      expect(en(picked?.label ?? '')).toBe(content.shown === content.value ? 'True' : 'False');
       expect(content.shown).toBeGreaterThanOrEqual(0);
     }
   });

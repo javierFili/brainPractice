@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { gridPathGame } from './content/definition';
 import type { GridPathChallenge } from './content/types';
@@ -7,8 +8,8 @@ export const gridPathModule = defineGameModule<GridPathChallenge>({
   definition: gridPathGame,
   ContentView: GridPathView,
   kindLabels: {
-    'shortest-length': 'Shortest route length',
-    'reachable-exit': 'Reachable exit',
-    'must-pass': 'Cell every route crosses',
+    'shortest-length': msg('patterns:gridAndPathReasoning.kinds.shortest-length'),
+    'reachable-exit': msg('patterns:gridAndPathReasoning.kinds.reachable-exit'),
+    'must-pass': msg('patterns:gridAndPathReasoning.kinds.must-pass'),
   },
 });

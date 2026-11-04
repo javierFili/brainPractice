@@ -17,6 +17,7 @@ import {
   TREE_SPACE,
   treeHeight,
 } from '../solvers/treeOps';
+import { joinText, msg } from '@/domain/shared';
 import type { PatternProfile, TreeNode, TreeOp } from '../types';
 import { pickDistractors, type PatternDraft } from './draft';
 import { everyStepVisible, interleave } from './transforms';
@@ -91,10 +92,14 @@ export function treeAnalogy(random: RandomGenerator, profile: PatternProfile): P
         profile.distractors,
       );
       if (wrong === null) return null;
-      const steps = program.map((op, i) => `${i + 1}) ${describeTreeOp(op)}`).join('; ');
+      const steps = joinText(
+        program.map((op, i) =>
+          msg('programming:patternArchitect.step', { n: i + 1, step: describeTreeOp(op) }),
+        ),
+        '; ',
+      );
       return {
-        prompt:
-          'The same restructuring rule turns each tree on the left into the tree on the right. What does the new tree become?',
+        prompt: msg('programming:patternArchitect.tree.prompt'),
         content: {
           kind: 'tree-analogy',
           examples: trees
@@ -104,7 +109,12 @@ export function treeAnalogy(random: RandomGenerator, profile: PatternProfile): P
           maxSteps: depth,
         },
         response: singleChoice(random, formatTree(answer), wrong),
-        explanation: `The rule: ${steps}. So ${formatTree(question)} becomes ${formatTree(answer)}. Every rule of up to ${depth} step${depth === 1 ? '' : 's'} that fits the examples gives this same tree.`,
+        explanation: msg('programming:patternArchitect.tree.explanation', {
+          steps,
+          question: formatTree(question),
+          answer: formatTree(answer),
+          count: depth,
+        }),
         skills: ['abstraction', 'decomposition', 'pattern-recognition'],
       };
     }

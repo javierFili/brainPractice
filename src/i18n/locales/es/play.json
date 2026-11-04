@@ -1,0 +1,118 @@
+{
+  "stage": {
+    "memorise": "Memorízalo: se ocultará.",
+    "ready": "Estoy listo",
+    "confirmAnswer": "Confirma tu respuesta",
+    "selectedItem": "Elemento {{position}} seleccionado"
+  },
+  "header": {
+    "relaxed": "Tiempo relajado",
+    "challenge": "Reto",
+    "score": "Puntos",
+    "streak": "Racha",
+    "studyLeft": "Tiempo para memorizar",
+    "timeLeft": "Tiempo restante",
+    "progress": "Progreso de la sesión"
+  },
+  "feedback": {
+    "notThisTime": "Esta vez no",
+    "points": "{{points}} pts",
+    "yourAnswer": "Tu respuesta:",
+    "correctAnswer": "Correcta:",
+    "answer": "Respuesta: {{answer}}",
+    "seeResults": "Ver resultados",
+    "nextChallenge": "Siguiente reto"
+  },
+  "page": {
+    "notFound": "Este juego, nivel o semilla no existe.",
+    "lockedTitle": "El nivel {{level}} aún no está abierto",
+    "lockedDescription": "Cada nivel se abre tras una sesión del nivel anterior con un rendimiento de 50 o más, o tras completar tres sesiones de ese nivel. El juego libre, en Ajustes, abre todos los niveles.",
+    "playLevel": "Jugar nivel {{level}}",
+    "settings": "Ajustes"
+  },
+  "runner": {
+    "endSession": "Terminar sesión",
+    "hideInstructions": "Ocultar instrucciones",
+    "howToPlay": "Cómo se juega"
+  },
+  "results": {
+    "label": {
+      "endedEarly": "Sesión terminada antes de tiempo",
+      "excellent": "Sesión excelente",
+      "cleared": "Nivel superado",
+      "gettingThere": "Vas por buen camino",
+      "keepGoing": "Buena práctica: sigue así"
+    },
+    "reasons": {
+      "notEnough": "Aún no hay suficientes respuestas para valorar este nivel.",
+      "topMastered": "Dominas el nivel más alto: sigue afinando tu rapidez.",
+      "ready": "Precisión y buen ritmo: listo para el siguiente nivel.",
+      "fundamentals": "Sigue practicando lo fundamental.",
+      "consolidate": "Afianza el nivel anterior antes de avanzar.",
+      "pace": "Buena precisión: ahora trabaja el ritmo.",
+      "keepPractising": "Sigue practicando este nivel."
+    },
+    "direction": {
+      "up": "↑ Subir de nivel",
+      "stay": "→ Mantener",
+      "down": "↓ Bajar un nivel"
+    },
+    "comparison": {
+      "title": "Comparado con la última vez:",
+      "first": "Es tu primera sesión completada en el nivel {{level}} en este modo, así que todavía no hay nada comparable.",
+      "higher": "En este juego, tu precisión fue mayor que en tu última sesión comparable (nivel {{level}}): {{before}} → {{after}}.",
+      "lower": "Tu precisión fue menor que en tu última sesión comparable ({{before}} → {{after}}). Los resultados varían de una sesión a otra; es normal.",
+      "same": "Tu precisión igualó la de tu última sesión comparable ({{after}}); rendimiento {{delta}}."
+    },
+    "related": {
+      "title": "Dónde aparece esta habilidad en programación",
+      "lesson": "Lección: {{lesson}}"
+    },
+    "endedEarlyNote": "Los retos sin responder se omitieron y la sesión no cuenta para los récords.",
+    "relaxedNote": "Sesión con tiempo relajado: se guarda en el historial, no en los récords.",
+    "stats": {
+      "performance": "Rendimiento",
+      "performanceHint": "{{accuracy}} precisión · {{pace}} ritmo",
+      "score": "Puntuación",
+      "scoreHint": "de {{max}} posibles",
+      "accuracy": "Precisión",
+      "accuracyHint": "{{correct}} de {{attempted}} correctas",
+      "medianReaction": "Reacción mediana",
+      "medianReactionHint": "de la señal al toque, solo toques correctos",
+      "medianTime": "Tiempo mediano",
+      "medianAnswerTime": "Tiempo mediano de respuesta",
+      "timeHint": "media {{average}} · mejor {{best}}",
+      "untimedHint": "juego sin límite de tiempo: solo a título informativo",
+      "longestStreak": "Racha más larga",
+      "timeouts": "Tiempos agotados",
+      "duration": "Duración",
+      "seed": "Semilla",
+      "seedHint": "Repite exactamente los mismos retos"
+    },
+    "recommendation": {
+      "title": "Recomendación: {{direction}} (nivel {{level}})"
+    },
+    "actions": {
+      "repeat": "Repetir nivel",
+      "nextLevel": "Siguiente nivel",
+      "replaySeed": "Repetir esta semilla",
+      "backToGame": "Volver al juego"
+    },
+    "practise": {
+      "title": "Algo para practicar:",
+      "detail": "{{kind}} ({{correct}}/{{total}} en esta sesión)."
+    },
+    "breakdown": "Por tipo de reto",
+    "review": {
+      "none": "Repaso: ningún error 🎯",
+      "count": "Repaso ({{total}})",
+      "timedOut": "Se agotó el tiempo",
+      "youAnswered": "Respondiste"
+    },
+    "save": {
+      "saving": "Guardando el progreso…",
+      "saved": "Progreso guardado en este dispositivo.",
+      "failed": "No se pudo guardar el progreso en este dispositivo."
+    }
+  }
+}

@@ -27,8 +27,8 @@ export type Structure = 'basic' | 'chain' | 'unless' | 'only-if' | 'mixed';
 
 export interface ConditionalContent {
   readonly kind: Structure;
-  /** Atom sentences: [positive, negative] wording. */
-  readonly atoms: readonly (readonly [string, string])[];
+  /** Atom sentence ids (`lamp`, `rain`…); their wording comes from the `logic` namespace. */
+  readonly atoms: readonly string[];
   readonly premises: readonly Premise[];
   readonly question: Literal;
   readonly pattern: Pattern;

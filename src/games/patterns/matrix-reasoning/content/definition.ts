@@ -1,15 +1,15 @@
-import { singleChoice } from '@/domain/challenge';
 import { retryGeneration, type GameDefinition } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
-import { gameIdOf } from '@/domain/shared';
-import { COLORS, SHAPES, type ColorName } from '@/games/kit/content';
+import { gameIdOf, joinText, msg, type Message, type Text } from '@/domain/shared';
+import { colorLabel, COLORS, SHAPES, type ColorName } from '@/games/kit/content';
 import {
   balancedDesign,
   DIRECTION,
   figure,
+  figureKey,
   figureLabel,
-  listWords,
   ROTATION_VALUES,
+  textChoice,
   type Draft,
   type Figure,
   type FigureShape,
@@ -65,15 +65,10 @@ export function solveMatrix(cells: MatrixContent['cells']): Figure | null {
 
 interface Layout<V> {
   readonly values: V[][];
-  readonly words: string;
+  readonly words: Text;
 }
 
-const NOUN: Record<MatrixAttribute, [string, string]> = {
-  shape: ['shape', 'shapes'],
-  color: ['colour', 'colours'],
-  count: ['number of shapes', 'numbers'],
-  rotation: ['direction', 'directions'],
-};
+const T = 'patterns:matrixReasoning';
 
 const grid = <V>(n: number, at: (r: number, c: number) => V): V[][] =>
   Array.from({ length: n }, (_, r) => Array.from({ length: n }, (__, c) => at(r, c)));
@@ -83,32 +78,33 @@ function categorical<V>(
   n: number,
   palette: readonly V[],
   attribute: MatrixAttribute,
-  name: (v: V) => string,
+  name: (v: V) => Text,
 ): Layout<V> {
-  const [noun, nouns] = NOUN[attribute];
+  const layout = (rule: string, values?: Record<string, Text>): Message =>
+    msg(`${T}.layout.${attribute}.${rule}`, values);
   const v = (i: number) => palette[i % palette.length] as V;
-  const listed = listWords(palette.slice(0, n).map(name));
+  const listed = joinText(palette.slice(0, n).map(name));
   switch (rule) {
     case 'by-row':
       return {
         values: grid(n, (r) => v(r)),
-        words: `each row keeps one ${noun} (${listed}, top to bottom)`,
+        words: layout('byRow', { list: listed }),
       };
     case 'by-column':
       return {
         values: grid(n, (_, c) => v(c)),
-        words: `each column keeps one ${noun} (${listed}, left to right)`,
+        words: layout('byColumn', { list: listed }),
       };
     case 'latin-down':
     case 'latin-up':
       return {
         values: grid(n, (r, c) => v(rule === 'latin-down' ? (r + c) % n : (r - c + n) % n)),
-        words: `the ${nouns} ${listed} appear once in every row and every column`,
+        words: layout('latin', { list: listed }),
       };
     default:
       return {
         values: grid(n, () => v(0)),
-        words: `every cell has the same ${noun}: ${name(v(0))}`,
+        words: layout('constant', { value: name(v(0)) }),
       };
   }
 }
@@ -119,7 +115,7 @@ function stepped(
   n: number,
   attribute: 'count' | 'rotation',
 ): Layout<number> {
-  const along = rule === 'step-row' ? 'along each row, left to right' : 'down each column';
+  const along = rule === 'step-row' ? 'Row' : 'Column';
   if (attribute === 'count') {
     const step = pick(random, [1, -1]);
     const bases = Array.from({ length: n }, () =>
@@ -129,7 +125,7 @@ function stepped(
     return {
       values:
         rule === 'step-row' ? values : grid(n, (r, c) => (values[c] as number[])[r] as number),
-      words: `${along} there is one shape ${step > 0 ? 'more' : 'fewer'} in each cell`,
+      words: msg(`${T}.layout.count.step${along}${step > 0 ? 'More' : 'Fewer'}`),
     };
   }
   const step = pick(random, [90, 270]);
@@ -137,7 +133,7 @@ function stepped(
   const values = grid(n, (line, pos) => ((bases[line] as number) + step * pos) % 360);
   return {
     values: rule === 'step-row' ? values : grid(n, (r, c) => (values[c] as number[])[r] as number),
-    words: `${along} the arrow turns a quarter turn ${step === 90 ? 'clockwise' : 'anticlockwise'} from cell to cell`,
+    words: msg(`${T}.layout.rotation.step${along}${step === 90 ? 'Clockwise' : 'Anticlockwise'}`),
   };
 }
 
@@ -168,9 +164,9 @@ function draft(random: RandomGenerator, profile: MatrixProfile): Draft<MatrixCha
       n,
       arrows ? ['arrow'] : sample(random, MATRIX_SHAPES, n),
       'shape',
-      (s) => (s === 'cross' ? 'crosses' : `${s}s`),
+      (s) => msg(`patterns:shared.shapes.${s}`),
     );
-    const colors = categorical(rules.color, n, sample(random, COLORS, n), 'color', (c) => c);
+    const colors = categorical(rules.color, n, sample(random, COLORS, n), 'color', colorLabel);
     const countPalette = shuffle(random, [1, 2, 3]);
     const counts =
       rules.count === 'step-row' || rules.count === 'step-column'
@@ -192,7 +188,7 @@ function draft(random: RandomGenerator, profile: MatrixProfile): Draft<MatrixCha
             n,
             varying.includes('rotation') ? rotationPalette : [0],
             'rotation',
-            (r) => DIRECTION[r as Rotation],
+            (r) => msg(`patterns:shared.direction.${DIRECTION[r as Rotation]}`),
           );
     const full = grid(n, (r, c) =>
       figure(
@@ -208,7 +204,7 @@ function draft(random: RandomGenerator, profile: MatrixProfile): Draft<MatrixCha
     const answer = (full[mr] as Figure[])[mc] as Figure;
     const cells = full.map((row, r) => row.map((f, c) => (r === mr && c === mc ? null : f)));
     const solved = solveMatrix(cells);
-    if (solved === null || figureLabel(solved) !== figureLabel(answer)) return null;
+    if (solved === null || figureKey(solved) !== figureKey(answer)) return null;
 
     // Wrong values come from the matrix itself, plus at most one value not shown.
     const visible = cells.flat().filter((f): f is Figure => f !== null);
@@ -264,12 +260,12 @@ function draft(random: RandomGenerator, profile: MatrixProfile): Draft<MatrixCha
           : {}),
       };
     };
-    const key = (f: Figure) => figureLabel(f);
+    const key = (f: Figure) => figureKey(f);
     const options =
       balancedDesign(random, answer, alternatives(false), profile.options, key) ??
       balancedDesign(random, answer, alternatives(true), profile.options, key);
     if (options === null) return null;
-    const [right, ...wrong] = options.map(key);
+    const [right, ...wrong] = options.map((f) => figureLabel(f));
 
     const layouts: Record<MatrixAttribute, Layout<unknown>> = {
       shape: shapes,
@@ -279,19 +275,22 @@ function draft(random: RandomGenerator, profile: MatrixProfile): Draft<MatrixCha
     };
     const ruleLines = attributeOrder
       .filter((a) => varying.includes(a))
-      .map(
-        (a) => `${NOUN[a][0].charAt(0).toUpperCase()}${NOUN[a][0].slice(1)}: ${layouts[a].words}.`,
-      );
+      .map((a) => msg(`${T}.line.${a}`, { rule: layouts[a].words }));
     const kind: MatrixContent['kind'] = arrows
       ? 'arrows'
       : varying.includes('count')
         ? 'counts'
         : 'shapes-colours';
     return {
-      prompt: 'Which figure completes the matrix?',
+      prompt: msg(`${T}.prompt`),
       content: { kind, size: n, cells },
-      response: singleChoice(random, right as string, wrong),
-      explanation: `${ruleLines.join(' ')} So the missing cell (row ${mr + 1}, column ${mc + 1}) is ${figureLabel(answer)}.`,
+      response: textChoice(random, right as Message, wrong),
+      explanation: msg(`${T}.explanation`, {
+        rules: joinText(ruleLines, ' '),
+        row: mr + 1,
+        column: mc + 1,
+        answer: figureLabel(answer),
+      }),
       skills: ['pattern-recognition', 'abstraction', 'logical-reasoning'],
     };
   });
@@ -299,10 +298,9 @@ function draft(random: RandomGenerator, profile: MatrixProfile): Draft<MatrixCha
 
 export const matrixReasoningGame: GameDefinition<MatrixChallenge, MatrixProfile> = {
   id: MATRIX_ID,
-  name: 'Matrix Reasoning',
-  tagline: 'Find the rules of rows and columns.',
-  description:
-    'A grid of figures with one cell missing. Shape, colour, number and direction each follow their own rule across rows and columns. Work out every rule and choose the figure that fits the gap.',
+  name: msg('patterns:matrixReasoning.name'),
+  tagline: msg('patterns:matrixReasoning.tagline'),
+  description: msg('patterns:matrixReasoning.description'),
   area: 'patterns',
   skills: ['pattern-recognition', 'abstraction', 'logical-reasoning', 'spatial-reasoning'],
   meta: {
@@ -313,16 +311,15 @@ export const matrixReasoningGame: GameDefinition<MatrixChallenge, MatrixProfile>
     keyboard: 'full',
     relaxedFriendly: true,
     measures: ['accuracy'],
-    scoringSummary:
-      'Each matrix counts as correct when you choose the figure that fits every rule. Your result is the share of matrices completed correctly; there is no time limit.',
+    scoringSummary: msg('patterns:matrixReasoning.scoringSummary'),
     feedback: 'explain',
   },
   instructions: [
-    'Look at one feature at a time: shape, colour, how many, and which way arrows point.',
-    'Each feature follows its own rule: the same along a row, the same down a column, once in every row and column, or one step more each cell.',
-    'Choose the figure that fits every rule at the gap. Every wrong option breaks at least one rule.',
+    msg('patterns:matrixReasoning.instructions.1'),
+    msg('patterns:matrixReasoning.instructions.2'),
+    msg('patterns:matrixReasoning.instructions.3'),
   ],
-  simpleInstructions: 'Look at the rows and columns and pick the picture that fits the gap.',
+  simpleInstructions: msg('patterns:matrixReasoning.simpleInstructions'),
   levels: MATRIX_LEVELS,
   generate({ identity, profile, random }) {
     return { ...identity, ...draft(random, profile), timing: profile.timing };

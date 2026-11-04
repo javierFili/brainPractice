@@ -5,6 +5,7 @@ import { deriveSeed, toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
 import { chanceRate, choiceItems } from '@/test/guessability';
+import { en } from '@/test/i18n';
 import { conditionalLogicGame } from './content/definition';
 import { ERROR_OUTCOME } from './content/generate';
 import { CONDITIONAL_LEVELS } from './content/levels';
@@ -24,14 +25,14 @@ function options(c: ConditionalChallenge) {
   if (c.response.format !== 'single-choice') throw new Error('single-choice expected');
   const { options: list } = c.response.question;
   const answer = list.find((o) => o.id === (c.response.solution as { optionId: string }).optionId);
-  return { labels: list.map((o) => o.label), answer: answer?.label ?? '' };
+  return { labels: list.map((o) => en(o.label)), answer: answer ? en(answer.label) : '' };
 }
 
 /** Independent run: what the program prints, or the error outcome. */
 function outcome(source: string, inputs: Variables = {}): string {
   const result = executeOrThrow(source, inputs);
   if (result.error)
-    return result.error.kind === 'value' ? ERROR_OUTCOME : `bug: ${result.error.message}`;
+    return result.error.kind === 'value' ? ERROR_OUTCOME : `bug: ${en(result.error.message)}`;
   return result.output.join(' ');
 }
 

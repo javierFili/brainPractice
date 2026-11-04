@@ -1,4 +1,5 @@
 import type { ColorName, Glyph as GlyphSpec, Pose, ShapeKind } from '../content/visual';
+import { useText } from '@/i18n';
 import { glyphLabel } from '../content/visual';
 
 const FILL: Record<ColorName, string> = {
@@ -32,6 +33,7 @@ interface Props {
 }
 
 export function Glyph({ glyph, pose, className = 'h-10 w-10', decorative = false }: Props) {
+  const tx = useText();
   const transform = pose
     ? `rotate(${pose.rotation} 50 50)${pose.mirrored ? ' translate(100 0) scale(-1 1)' : ''}`
     : undefined;
@@ -39,7 +41,9 @@ export function Glyph({ glyph, pose, className = 'h-10 w-10', decorative = false
     <svg
       viewBox="0 0 100 100"
       className={className}
-      {...(decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': glyphLabel(glyph) })}
+      {...(decorative
+        ? { 'aria-hidden': true }
+        : { role: 'img', 'aria-label': tx(glyphLabel(glyph)) })}
     >
       <path
         d={PATHS[glyph.shape]}

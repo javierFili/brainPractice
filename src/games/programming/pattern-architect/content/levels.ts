@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import type { LevelTable } from '@/domain/difficulty';
 import type { GridRule, ListOpName, PatternProfile, TreeOp } from './types';
 
@@ -61,7 +62,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   1: {
     level: 1,
     tier: 'fundamentals',
-    objective: 'Spot a single regularity: a constant step, or one attribute changing in a grid.',
+    objective: msg('programming:patternArchitect.levels.1'),
     challengeCount: 6,
     timing: seconds(60, 20),
     kinds: { 'number-sequence': 1, 'symbol-grid': 1 },
@@ -82,7 +83,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   2: {
     level: 2,
     tier: 'fundamentals',
-    objective: 'Steps that change and grids where two attributes follow separate rules.',
+    objective: msg('programming:patternArchitect.levels.2'),
     challengeCount: 6,
     timing: seconds(75, 25),
     kinds: { 'number-sequence': 1, 'symbol-grid': 1 },
@@ -106,7 +107,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   3: {
     level: 3,
     tier: 'fundamentals',
-    objective: 'Two sequences woven together, and grids whose counts follow arithmetic.',
+    objective: msg('programming:patternArchitect.levels.3'),
     challengeCount: 6,
     timing: seconds(90, 30),
     kinds: { 'number-sequence': 1, 'symbol-grid': 1 },
@@ -125,7 +126,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   4: {
     level: 4,
     tier: 'intermediate',
-    objective: 'Infer a hidden one-step program from input → output examples.',
+    objective: msg('programming:patternArchitect.levels.4'),
     challengeCount: 8,
     timing: seconds(90, 35),
     kinds: { 'number-sequence': 1, 'symbol-grid': 1, 'transform-inference': 1.5 },
@@ -149,7 +150,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   5: {
     level: 5,
     tier: 'intermediate',
-    objective: 'Programs of two chained steps: separate what each step contributes.',
+    objective: msg('programming:patternArchitect.levels.5'),
     challengeCount: 8,
     timing: seconds(120, 45),
     kinds: { 'number-sequence': 1, 'symbol-grid': 1, 'transform-inference': 2 },
@@ -173,7 +174,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   6: {
     level: 6,
     tier: 'intermediate',
-    objective: 'Data-dependent steps (repeats, pairs, running totals) with fewer examples.',
+    objective: msg('programming:patternArchitect.levels.6'),
     challengeCount: 8,
     timing: seconds(120, 50),
     kinds: { 'number-sequence': 1, 'symbol-grid': 1, 'transform-inference': 2 },
@@ -197,7 +198,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   7: {
     level: 7,
     tier: 'advanced',
-    objective: 'Structure over content: match graphs by shape and restructure trees by analogy.',
+    objective: msg('programming:patternArchitect.levels.7'),
     challengeCount: 8,
     timing: seconds(150, 60),
     kinds: { 'transform-inference': 1.5, 'structure-match': 1, 'tree-analogy': 1 },
@@ -213,7 +214,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   8: {
     level: 8,
     tier: 'advanced',
-    objective: 'Three-step programs, bigger graphs and tree rules from a single example.',
+    objective: msg('programming:patternArchitect.levels.8'),
     challengeCount: 8,
     timing: seconds(180, 75),
     kinds: { 'transform-inference': 1.5, 'structure-match': 1, 'tree-analogy': 1 },
@@ -229,7 +230,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   9: {
     level: 9,
     tier: 'expert',
-    objective: 'Look-alike structures with identical arrow counts, and two-step tree rules.',
+    objective: msg('programming:patternArchitect.levels.9'),
     challengeCount: 8,
     timing: seconds(210, 90),
     kinds: { 'transform-inference': 1.5, 'structure-match': 1, 'tree-analogy': 1 },
@@ -245,8 +246,7 @@ export const PATTERN_LEVELS: LevelTable<PatternProfile> = {
   10: {
     level: 10,
     tier: 'expert',
-    objective:
-      'Minimal evidence: three-step programs, seven-node look-alikes, composed tree rules.',
+    objective: msg('programming:patternArchitect.levels.10'),
     challengeCount: 8,
     timing: seconds(240, 100),
     kinds: { 'transform-inference': 1.5, 'structure-match': 1, 'tree-analogy': 1 },

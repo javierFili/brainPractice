@@ -5,9 +5,11 @@
  * `question` is what the player sees; `solution` is kept apart so a future server can evaluate
  * answers without ever sending the solution to the client.
  */
+import type { Text } from '../shared/text';
+
 export interface ChoiceOption {
   readonly id: string;
-  readonly label: string;
+  readonly label: Text;
 }
 
 export interface ResponseFormats {
@@ -31,7 +33,7 @@ export interface ResponseFormats {
   };
   /** Type an exact integer or decimal value. */
   numeric: {
-    question: { readonly unit?: string };
+    question: { readonly unit?: Text };
     solution: { readonly value: number };
     answer: { readonly value: number };
   };

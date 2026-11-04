@@ -1,4 +1,5 @@
 import type { ResponseOf } from '@/domain/challenge';
+import { textId, type Text } from '@/domain/shared';
 
 const OPTION_IDS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const;
 
@@ -8,11 +9,11 @@ const OPTION_IDS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] as const;
  * uniformly so the answer position carries no clue.
  */
 export function fixedChoice(
-  labels: readonly string[],
+  labels: readonly Text[],
   correctIndex: number,
 ): ResponseOf<'single-choice'> {
-  if (new Set(labels).size !== labels.length)
-    throw new Error(`Duplicate options: ${labels.join(' | ')}`);
+  const ids = labels.map(textId);
+  if (new Set(ids).size !== ids.length) throw new Error(`Duplicate options: ${ids.join(' | ')}`);
   if (labels.length < 2 || labels.length > OPTION_IDS.length)
     throw new RangeError(`Between 2 and ${OPTION_IDS.length} options are supported`);
   if (!Number.isInteger(correctIndex) || correctIndex < 0 || correctIndex >= labels.length)

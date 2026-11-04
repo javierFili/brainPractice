@@ -8,6 +8,7 @@ import { lineText } from '../format';
 import { ARRAYS, ROUTINES, SCALARS } from '../generators/snippets';
 import { CODE_SCAN_LEVELS } from '../levels';
 import type { CodeScanKind, MutationCategory, SpeedChallenge } from '../types';
+import { en } from '@/test/i18n';
 
 const SEEDS = Array.from({ length: 30 }, (_, i) => i * 7919 + 1);
 const generate = (level: DifficultyLevel, seed: number) =>
@@ -99,6 +100,10 @@ const solutionLabel = (c: SpeedChallenge) =>
         (o) => o.id === (c.response.solution as { optionId: string }).optionId,
       )?.label
     : undefined;
+const solutionText = (c: SpeedChallenge) => {
+  const label = solutionLabel(c);
+  return label === undefined ? undefined : en(label);
+};
 
 function correctAnswer(c: SpeedChallenge): Answer {
   const { response } = c;
@@ -189,7 +194,7 @@ describe('Code Scan — generated content', () => {
     expect(identical.length / challenges.length).toBeGreaterThan(0.3);
     expect(identical.length / challenges.length).toBeLessThan(0.7);
     for (const c of challenges)
-      expect(solutionLabel(c)).toBe(diff(c).lines.length === 0 ? 'Identical' : 'Different');
+      expect(solutionText(c)).toBe(diff(c).lines.length === 0 ? 'Identical' : 'Different');
   });
 
   it('find-the-change: exactly one line differs and it is the solution', () => {
@@ -225,8 +230,8 @@ describe('Code Scan — generated content', () => {
   it('writes an explanation that contains the answer', () => {
     for (const c of all) {
       const answer =
-        c.response.format === 'locate' ? `Line ${c.response.solution.index + 1}` : solutionLabel(c);
-      expect(c.explanation).toContain(answer);
+        c.response.format === 'locate' ? `Line ${c.response.solution.index + 1}` : solutionText(c);
+      expect(en(c.explanation)).toContain(answer);
     }
   });
 
@@ -252,7 +257,8 @@ describe('Code Scan — generated content', () => {
 describe('Code Scan — definition', () => {
   it('registers as a speed game whose scoring weighs time more than the default', () => {
     expect(() => createGameRegistry([codeScanGame])).not.toThrow();
-    expect(codeScanGame).toMatchObject({ id: 'code-scan', name: 'Code Comparison', area: 'speed' });
+    expect(codeScanGame).toMatchObject({ id: 'code-scan', area: 'speed' });
+    expect(en(codeScanGame.name)).toBe('Code Comparison');
     const scoring = createStandardScoring(codeScanGame.scoring);
     const input = {
       outcome: 'correct',

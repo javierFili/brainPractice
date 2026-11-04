@@ -1,0 +1,561 @@
+{
+  "reactionTest": {
+    "name": "Test de reacción",
+    "tagline": "Espera… ¡ahora!",
+    "description": "Espera a que aparezca una forma y tócala lo más rápido que puedas. Los niveles avanzados añaden formas de parada que no debes tocar y una señal que cambia la forma válida en cada intento: la velocidad solo cuenta si la decisión es correcta.",
+    "scoringSummary": "Un intento es correcto si tocas durante la señal en un intento de «tocar» o te contienes en uno de «parar». Tocar antes de la señal es una salida en falso. El tiempo de reacción (de la señal al toque) se muestra aparte de la precisión.",
+    "accessibilityNotes": "Requiere una respuesta rápida; el tiempo relajado no alarga la señal. Funciona con Espacio, Intro, un clic, un toque o un pulsador asignado a Espacio.",
+    "simpleInstructions": "Cuando aparezca la forma, toca lo más rápido que puedas.",
+    "instructions": {
+      "watch": "Mantén la vista en el recuadro. Tras una espera aleatoria, aparece una forma.",
+      "tap": "Toca el recuadro (o pulsa Espacio) mientras la forma esté visible. Tocar antes de que aparezca es una salida en falso.",
+      "goNoGo": "Desde el nivel 4: toca solo con la forma válida (círculo verde) y contente con la forma de parada.",
+      "cued": "Desde el nivel 7: una señal arriba indica con qué forma tocar; cambia en cada intento."
+    },
+    "levels": {
+      "1": "Toca cuando aparezca la forma.",
+      "2": "Toca más rápido: la forma dura un poco menos.",
+      "3": "Esperas imprevisibles: no toques antes de tiempo.",
+      "4": "Toca solo con la forma válida (1 de cada 5 es de parada).",
+      "5": "Más formas de parada: contente si no es la forma válida.",
+      "6": "Ahora las formas de parada se parecen a la válida.",
+      "7": "Sigue la señal: la forma válida cambia en cada intento.",
+      "8": "Intentos con señal y formas parecidas.",
+      "9": "Formas parecidas con señal y menos tiempo para tocar.",
+      "10": "Maestro: formas parecidas con señal, poco tiempo y esperas largas e imprevisibles."
+    },
+    "prompt": {
+      "simple": "Toca en cuanto aparezca la forma.",
+      "target": "Toca solo si aparece: «{{target}}»."
+    },
+    "explanation": {
+      "go": "Era «{{target}}»: había que tocar.",
+      "stop": "Era «{{stimulus}}», no «{{target}}»: lo correcto era no tocar."
+    },
+    "kinds": {
+      "simple": "Reacción simple",
+      "goNoGo": "Tocar / parar",
+      "cued": "Tocar / parar con señal"
+    },
+    "view": {
+      "goShape": "Forma válida:"
+    }
+  },
+  "rapidSymbolMatching": {
+    "name": "Emparejar símbolos",
+    "tagline": "¿Iguales o distintos? Mira bien y responde rápido.",
+    "description": "Compara cadenas cortas de letras y símbolos: ¿son iguales las dos o qué candidata es una copia exacta? Las cadenas se alargan, los símbolos se vuelven parecidos (b, d, p, q) y los cambios son más sutiles, hasta dos vecinos intercambiados.",
+    "scoringSummary": "Cada comparación es correcta o incorrecta; un error resta puntos. Una respuesta correcta suma más cuanto más rápida sea, pero la precisión pesa más en el resultado. El tiempo relajado elimina el límite de tiempo.",
+    "accessibilityNotes": "La tarea es visual. Las cadenas también se leen símbolo a símbolo («b minúscula, Q mayúscula…»), lo que permite comparar escuchando, aunque mucho más despacio.",
+    "simpleInstructions": "¿Son iguales? Responde lo más rápido que puedas.",
+    "instructions": {
+      "sameDifferent": "Iguales o distintas: pulsa 1 si las dos cadenas son idénticas y 2 si algo cambia.",
+      "findCopy": "Busca la copia: elige la candidata exactamente igual a la de referencia.",
+      "checkEvery": "Revisa cada símbolo y su posición: dos vecinos intercambiados cuentan como diferencia."
+    },
+    "levels": {
+      "1": "¿Iguales o distintas? Tres letras.",
+      "2": "Cuatro letras; solo puede cambiar una.",
+      "3": "Cuatro símbolos; solo puede cambiar uno.",
+      "4": "Encuentra la copia exacta entre tres.",
+      "5": "Letras parecidas: b, d, p, q…",
+      "6": "Cinco símbolos parecidos, tres candidatas.",
+      "7": "Los vecinos intercambiados cuentan como diferencia.",
+      "8": "Seis símbolos parecidos, cuatro candidatas.",
+      "9": "Seis símbolos parecidos, iguales o distintas, más rápido.",
+      "10": "Maestro: siete símbolos parecidos, cuatro candidatas."
+    },
+    "same": "Iguales",
+    "different": "Distintas",
+    "prompt": {
+      "sameDifferent": "¿Iguales o distintas?",
+      "findMatch": "¿Cuál es una copia exacta?"
+    },
+    "explanation": {
+      "same": "Las dos cadenas son idénticas.",
+      "different": "Son distintas: {{reference}} frente a {{other}}.",
+      "findMatch": "{{reference}} es la única copia exacta; las demás candidatas cambian un símbolo o su posición."
+    },
+    "spoken": {
+      "upTriangle": "triángulo hacia arriba",
+      "square": "cuadrado",
+      "circle": "círculo",
+      "diamond": "rombo",
+      "star": "estrella",
+      "heart": "corazón",
+      "downTriangle": "triángulo hacia abajo",
+      "small": "{{letter}} minúscula",
+      "capital": "{{letter}} mayúscula"
+    },
+    "view": {
+      "left": "Izquierda",
+      "right": "Derecha",
+      "reference": "Referencia"
+    },
+    "kinds": {
+      "sameDifferent": "Iguales o distintas",
+      "findMatch": "Encontrar la copia"
+    }
+  },
+  "numberComparison": {
+    "name": "Comparar números",
+    "tagline": "¿Cuál es mayor? ¡Rápido!",
+    "description": "Elige el valor mayor (o el menor) lo más rápido que puedas. Los números se acercan entre sí, aparecen más y luego llegan como decimales, fracciones y pequeñas operaciones.",
+    "scoringSummary": "Cada elección es correcta o incorrecta; un error resta puntos. Una elección correcta suma más cuanto más rápida sea, pero la precisión pesa más en el resultado. El tiempo relajado elimina el límite de tiempo.",
+    "simpleInstructions": "Elige el número más grande, rápido.",
+    "instructions": {
+      "question": "Lee la pregunta: el mayor o el menor.",
+      "pick": "Elige ese valor con un clic o con su tecla numérica (1–4).",
+      "decimals": "Decimales: compara cifra a cifra tras el punto; 0.5 es mayor que 0.45.",
+      "fractions": "Fracciones y operaciones: calcula el valor antes de comparar."
+    },
+    "levels": {
+      "1": "Elige el mayor de dos números.",
+      "2": "Números de dos cifras, más cercanos.",
+      "3": "Tres números de dos cifras: elige el mayor.",
+      "4": "Números de tres cifras que empiezan igual; a veces elige el menor.",
+      "5": "Cuatro números cercanos de cuatro cifras.",
+      "6": "Decimales: más largo no siempre es mayor.",
+      "7": "Decimales cercanos.",
+      "8": "Fracciones con distinto denominador.",
+      "9": "Calcula cada operación y luego compara.",
+      "10": "Maestro: mezcla de enteros, decimales, fracciones y operaciones cercanos."
+    },
+    "prompt": {
+      "integers": {
+        "largest": "¿Qué número es el mayor?",
+        "smallest": "¿Qué número es el menor?"
+      },
+      "decimals": {
+        "largest": "¿Qué decimal es el mayor?",
+        "smallest": "¿Qué decimal es el menor?"
+      },
+      "fractions": {
+        "largest": "¿Qué fracción es la mayor?",
+        "smallest": "¿Qué fracción es la menor?"
+      },
+      "expressions": {
+        "largest": "¿Qué resultado es el mayor?",
+        "smallest": "¿Qué resultado es el menor?"
+      }
+    },
+    "explanation": {
+      "expression": {
+        "largest": "{{expression}} = {{value}}, el resultado mayor.",
+        "smallest": "{{expression}} = {{value}}, el resultado menor."
+      },
+      "value": {
+        "largest": "{{value}} es el mayor.",
+        "smallest": "{{value}} es el menor."
+      }
+    },
+    "spoken": {
+      "fraction": "{{num}} entre {{den}}",
+      "minus": "{{a}} menos {{b}}",
+      "times": "{{a}} por {{b}}"
+    },
+    "view": {
+      "ask": {
+        "largest": "el mayor",
+        "smallest": "el menor"
+      },
+      "summary": {
+        "largest_one": "{{count}} valor · elige el mayor",
+        "largest_other": "{{count}} valores · elige el mayor",
+        "smallest_one": "{{count}} valor · elige el menor",
+        "smallest_other": "{{count}} valores · elige el menor"
+      },
+      "values": "Valores"
+    },
+    "kinds": {
+      "integers": "Números enteros",
+      "decimals": "Decimales",
+      "fractions": "Fracciones",
+      "expressions": "Operaciones"
+    }
+  },
+  "visualSearchSprint": {
+    "name": "Búsqueda visual exprés",
+    "tagline": "Un objetivo, muchos distractores: encuéntralo rápido.",
+    "description": "Una cuadrícula de formas esconde un único objetivo. Al principio se distingue por la forma y salta a la vista; después cada distractor comparte su color o su forma, así que tienes que comprobar la combinación. Las cuadrículas crecen de 9 a 36 casillas.",
+    "scoringSummary": "Un intento es correcto si pulsas la casilla del objetivo. Las respuestas correctas suman más cuanto más rápidas son; una casilla equivocada resta puntos y quedarse sin tiempo no puntúa. La precisión y el tiempo medio de respuesta se muestran por separado; el tiempo relajado elimina el límite.",
+    "accessibilityNotes": "Los niveles 1–4 se resuelven solo por la forma. Los niveles de conjunción (5–10) requieren distinguir colores: la mitad de los distractores tienen la forma del objetivo en otro color. El nombre accesible de cada casilla indica fila, columna, color y forma, así que con lector de pantalla se puede buscar por nombre (una tarea distinta y más lenta).",
+    "simpleInstructions": "Encuentra la forma igual a la de arriba y púlsala.",
+    "instructions": {
+      "target": "El objetivo aparece sobre la cuadrícula y se nombra en la pregunta.",
+      "press": "Pulsa la única casilla con exactamente esa forma en ese color.",
+      "conjunction": "Desde el nivel 5 las demás casillas comparten su color o su forma: comprueba ambos.",
+      "keyboard": "Teclado: entra en la cuadrícula con Tab, muévete con las flechas y pulsa Intro."
+    },
+    "levels": {
+      "1": "Encuentra la única forma distinta en una cuadrícula de 3 × 3.",
+      "2": "Una cuadrícula mayor: 12 casillas.",
+      "3": "Formas parecidas: cuesta más distinguir el objetivo.",
+      "4": "Formas normales y parecidas mezcladas.",
+      "5": "Búsqueda por conjunción: los distractores comparten el color o la forma.",
+      "6": "Búsqueda por conjunción en 25 casillas.",
+      "7": "Conjunciones mezcladas con formas parecidas, 25 casillas.",
+      "8": "Búsqueda por conjunción en 30 casillas.",
+      "9": "Búsqueda por conjunción en una cuadrícula completa de 6 × 6.",
+      "10": "Maestro: 36 casillas, conjunciones con formas parecidas."
+    },
+    "prompt": "Encuentra: «{{target}}».",
+    "explanation": "«{{target}}» estaba en {{cell}}.",
+    "view": {
+      "find": "Busca:",
+      "grid_one": "Cuadrícula de búsqueda, {{count}} casilla",
+      "grid_other": "Cuadrícula de búsqueda, {{count}} casillas",
+      "cell": "{{cell}}, {{glyph}}",
+      "cellTarget": "{{cell}}, {{glyph}}, objetivo",
+      "cellPick": "{{cell}}, {{glyph}}, tu elección"
+    },
+    "kinds": {
+      "feature": "La forma salta a la vista",
+      "similar": "Formas parecidas",
+      "conjunction": "Color y forma combinados"
+    }
+  },
+  "rapidClassification": {
+    "name": "Clasificación rápida",
+    "tagline": "¿Fruta o animal? Decide rápido.",
+    "description": "Aparece un objeto cotidiano: colócalo en su grupo lo más rápido que puedas. Los niveles avanzados muestran solo la palabra, añaden grupos y al final cambian de regla: una señal indica si clasificar por grupo o por la primera letra del nombre.",
+    "scoringSummary": "Cada objeto es un acierto o un error; la precisión siempre se muestra. Los aciertos suman puntos extra cuanto más rápidos son, los errores restan, y se muestra tu tiempo por respuesta. El modo relajado elimina el límite de tiempo.",
+    "simpleInstructions": "Di a qué grupo pertenece el dibujo, lo más rápido que puedas.",
+    "instructions": {
+      "object": "Aparece un objeto. Elige su grupo con un clic o con las teclas numéricas.",
+      "groups": "Los grupos no cambian de sitio en toda la sesión, así que puedes tener los dedos preparados.",
+      "words": "Desde el nivel 5 solo ves la palabra: léela y decide.",
+      "rule": "Desde el nivel 7 una señal indica la regla: CATEGORÍA (su grupo) o PRIMERA LETRA (A–M o N–Z)."
+    },
+    "levels": {
+      "1": "Clasifica dibujos en dos grupos: fruta o animal.",
+      "2": "Dos grupos nuevos: vehículo o ropa.",
+      "3": "Tres grupos para elegir.",
+      "4": "Cuatro grupos para elegir.",
+      "5": "Solo palabras: lee el nombre y clasifícalo (fruta o herramienta).",
+      "6": "Solo palabras, cuatro grupos.",
+      "7": "Sigue la señal: clasifica por grupo o por primera letra (A–M o N–Z).",
+      "8": "Más intentos de letra, tres grupos.",
+      "9": "Cambio de regla con señal, solo palabras.",
+      "10": "Maestro: solo palabras, cuatro grupos y la regla cambia al azar."
+    },
+    "prompt": {
+      "category": "¿A qué grupo pertenece?",
+      "letter": "¿Su nombre empieza por una letra de la A–M o de la N–Z?"
+    },
+    "explanation": {
+      "category": "«{{item}}» pertenece al grupo «{{group}}».",
+      "letter": "«{{item}}» empieza por «{{letter}}», que está en {{range}}."
+    },
+    "groups": {
+      "fruit": "Fruta",
+      "animal": "Animal",
+      "vehicle": "Vehículo",
+      "tool": "Herramienta",
+      "clothing": "Ropa",
+      "nature": "Naturaleza",
+      "food": "Comida"
+    },
+    "view": {
+      "ruleCategory": "Regla: CATEGORÍA",
+      "ruleLetter": "Regla: PRIMERA LETRA"
+    },
+    "kinds": {
+      "picture": "Dibujos",
+      "word": "Solo palabras",
+      "switch": "Cambio de regla con señal"
+    },
+    "initials": {
+      "cherries": "C",
+      "cat": "G",
+      "turtle": "T",
+      "elephant": "E",
+      "giraffe": "J",
+      "bee": "A",
+      "bus": "A",
+      "airplane": "A",
+      "train": "T",
+      "hammer": "M",
+      "magnet": "I",
+      "cap": "G",
+      "gloves": "G",
+      "moon": "L",
+      "cactus": "C",
+      "pizza": "P",
+      "cookie": "G"
+    }
+  },
+  "colorAndShapeDecisions": {
+    "name": "Decisiones de color y forma",
+    "tagline": "¿Color o forma? Decide la señal.",
+    "description": "Aparece una forma de color con una señal: COLOR o FORMA. Responde el rasgo que pide la señal. Más adelante la misma tecla representa a la vez un color y una forma, así que un cuadrado rojo tiene respuestas distintas según la regla: la señal es lo único que te dice cuál.",
+    "scoringSummary": "Cada respuesta es correcta o incorrecta; la precisión siempre se muestra. Los aciertos suman puntos extra cuanto más rápidos son, los errores restan, y se muestra tu tiempo por respuesta. El modo relajado elimina el límite de tiempo.",
+    "accessibilityNotes": "Los intentos de color preguntan por el color en sí, así que requieren visión del color; la paleta evita rojo/verde. Cada forma se anuncia con su color y su nombre (p. ej., «cuadrado rojo»), y la señal está escrita como palabra.",
+    "simpleInstructions": "Mira la palabra de arriba: di el color o la forma que pide.",
+    "instructions": {
+      "cue": "Lee la señal: COLOR significa responder el color; FORMA, responder la forma.",
+      "keys": "Responde con un clic o con las teclas numéricas; cada tecla mantiene su significado toda la sesión.",
+      "shared": "Desde el nivel 5 cada tecla significa un color y una forma («rojo / círculo»).",
+      "check": "Un cuadrado rojo es «rojo» con COLOR pero «cuadrado» con FORMA: mira siempre la señal."
+    },
+    "levels": {
+      "1": "Solo color: di el color de cada forma.",
+      "2": "Solo forma: di la forma, sea del color que sea.",
+      "3": "Sigue la señal: COLOR o FORMA, cada una con sus respuestas.",
+      "4": "Reglas con señal, mitad y mitad.",
+      "5": "Teclas compartidas: cada respuesta significa un color y una forma.",
+      "6": "Teclas compartidas, reglas mitad y mitad, más formas en conflicto.",
+      "7": "Casi todas las formas entran en conflicto: color y forma apuntan a teclas distintas.",
+      "8": "Tres colores y tres formas.",
+      "9": "Tres valores, más conflicto, menos tiempo.",
+      "10": "Maestro: tres valores, casi todas las formas en conflicto, límite corto."
+    },
+    "prompt": {
+      "colour": "COLOR: ¿de qué color es?",
+      "shape": "FORMA: ¿qué forma tiene?"
+    },
+    "explanation": {
+      "colour": "La señal era COLOR y la figura era «{{glyph}}»: la respuesta es {{value}}.",
+      "shape": "La señal era FORMA y la figura era «{{glyph}}»: la respuesta es {{value}}.",
+      "colourShared": "La señal era COLOR y la figura era «{{glyph}}»: la respuesta es {{value}} ({{option}}).",
+      "shapeShared": "La señal era FORMA y la figura era «{{glyph}}»: la respuesta es {{value}} ({{option}})."
+    },
+    "view": {
+      "cueColour": "COLOR",
+      "cueShape": "FORMA",
+      "itWas": "Era: {{glyph}}."
+    },
+    "kinds": {
+      "colour": "Señal de color",
+      "shape": "Señal de forma"
+    }
+  },
+  "fastSequenceRecognition": {
+    "name": "Reconocimiento rápido de secuencias",
+    "tagline": "Un vistazo: ¿cuál era?",
+    "description": "Se muestra un momento una secuencia corta de cifras, letras o formas y luego se oculta. Encuéntrala entre secuencias parecidas lo más rápido que puedas. Las secuencias se alargan, los vistazos se acortan y, al final, las candidatas solo se diferencian en el orden.",
+    "scoringSummary": "Cada elección es correcta o incorrecta; un error resta puntos. Una elección correcta suma más cuanto antes llegue tras ocultarse la secuencia, pero la precisión pesa más en el resultado. El tiempo relajado duplica el vistazo y elimina el límite para responder.",
+    "accessibilityNotes": "El vistazo es una imagen única y fija (sin parpadeos). Los lectores de pantalla anuncian la secuencia una vez al aparecer; un vistazo corto puede acabar antes de leerse, así que con lector de pantalla se recomienda el tiempo relajado.",
+    "simpleInstructions": "Mira la fila y luego encuentra la misma fila.",
+    "instructions": {
+      "glimpse": "Una secuencia aparece un instante. Mírala entera; pulsa «Estoy listo» si terminas antes.",
+      "pick": "Cuando desaparezca, elige la misma secuencia entre las candidatas (clic o teclas numéricas).",
+      "differ": "Las candidatas se diferencian en un símbolo o en dos vecinos intercambiados."
+    },
+    "levels": {
+      "1": "Mira 3 cifras y luego encuéntralas entre 2.",
+      "2": "4 cifras, 3 candidatas.",
+      "3": "4 letras, 3 candidatas.",
+      "4": "4 formas, 3 candidatas.",
+      "5": "5 cifras, 4 candidatas.",
+      "6": "5 letras, vistazo más corto.",
+      "7": "5 formas, vistazo más corto.",
+      "8": "6 cifras: solo cambia el orden.",
+      "9": "6 letras: solo cambia el orden.",
+      "10": "Maestro: 7 cifras o formas, vistazo de un segundo, solo el orden."
+    },
+    "prompt": "¿Qué secuencia viste?",
+    "studyPrompt": {
+      "digits_one": "Fíjate en esta cifra.",
+      "digits_other": "Fíjate en estas {{count}} cifras.",
+      "letters_one": "Fíjate en esta letra.",
+      "letters_other": "Fíjate en estas {{count}} letras.",
+      "shapes_one": "Fíjate en esta forma.",
+      "shapes_other": "Fíjate en estas {{count}} formas."
+    },
+    "explanation": "La secuencia era {{sequence}}.",
+    "view": {
+      "sequence": "Secuencia: {{sequence}}",
+      "hidden_one": "Oculta. Elige la secuencia de {{count}} símbolo que acabas de ver.",
+      "hidden_other": "Oculta. Elige la secuencia de {{count}} símbolos que acabas de ver.",
+      "youSaw": "Viste:"
+    },
+    "kinds": {
+      "digits": "Cifras",
+      "letters": "Letras",
+      "shapes": "Formas"
+    }
+  },
+  "mentalArithmeticSprint": {
+    "name": "Cálculo mental exprés",
+    "tagline": "Cuentas rápidas: comprobar o resolver.",
+    "description": "Cálculos cortos contra el reloj. Primero decide si una igualdad es verdadera o falsa; luego escribe tú los resultados, desde sumas de una cifra hasta productos de dos cifras y expresiones con tres números.",
+    "scoringSummary": "Cada cálculo es correcto o incorrecto; un error resta puntos. Una respuesta correcta suma más cuanto más rápida sea, pero la precisión pesa más en el resultado. El tiempo relajado elimina el límite de tiempo y la tarea sigue funcionando igual.",
+    "simpleInstructions": "¿Está bien la cuenta? O escribe el resultado, lo más rápido que puedas.",
+    "instructions": {
+      "verify": "Verdadero o falso: pulsa 1 si la igualdad es correcta y 2 si no lo es.",
+      "solve": "Escribe el resultado: introduce el número que falta y pulsa Intro.",
+      "precedence": "Multiplica y divide antes de sumar y restar, salvo que los paréntesis indiquen otra cosa.",
+      "time": "Responde antes de que se acabe el tiempo: la precisión cuenta más que la velocidad."
+    },
+    "levels": {
+      "1": "Verdadero o falso: sumas de una cifra.",
+      "2": "Verdadero o falso: sumas y restas hasta 20.",
+      "3": "Escribe el resultado: sumas y restas hasta 20.",
+      "4": "Verdadero o falso: tablas de multiplicar y divisiones.",
+      "5": "Escribe el resultado: tablas de multiplicar y divisiones.",
+      "6": "Comprobaciones y respuestas mezcladas con números de dos cifras.",
+      "7": "Escribe el resultado: sumas y restas de dos cifras.",
+      "8": "Escribe el resultado: dos cifras × una cifra.",
+      "9": "Verdadero o falso: tres números; multiplica antes de sumar.",
+      "10": "Maestro: escribe el resultado de expresiones con tres números y productos de dos cifras."
+    },
+    "true": "Verdadero",
+    "false": "Falso",
+    "prompt": {
+      "solve": "Escribe el resultado.",
+      "verify": "¿Verdadero o falso?"
+    },
+    "explanation": {
+      "solve": "{{expression}} = {{value}}.",
+      "true": "Verdadero: {{expression}} = {{value}}.",
+      "false": "Falso: {{expression}} = {{value}}, no {{shown}}."
+    },
+    "spoken": {
+      "plus": "más",
+      "minus": "menos",
+      "times": "por",
+      "dividedBy": "entre",
+      "openBracket": "abre paréntesis",
+      "closeBracket": "cierra paréntesis"
+    },
+    "view": {
+      "spoken": "{{expression}} es igual a {{result}}",
+      "spokenUnknown": "{{expression}} es igual a ¿cuánto?"
+    },
+    "kinds": {
+      "verify": "Verdadero o falso",
+      "solve": "Escribir el resultado"
+    }
+  },
+  "codeScanSprint": {
+    "name": "Escaneo de código",
+    "tagline": "Lee un listado de un vistazo y señala la línea.",
+    "description": "Un fragmento corto de pseudocódigo y una pregunta: ¿qué línea llama a print, usa el número 7 o da por primera vez un valor a total? Encuentra esa línea lo más rápido que puedas. Los primeros niveles tienen unas pocas líneas sencillas; los siguientes anidan bloques y repiten nombres para despistar a un vistazo rápido.",
+    "scoringSummary": "Un intento es correcto si pulsas la única línea que responde a la pregunta. Las respuestas correctas suman más cuanto más rápidas son; una línea equivocada resta puntos y quedarse sin tiempo no puntúa. La precisión y el tiempo medio de respuesta se muestran por separado; el tiempo relajado elimina el límite.",
+    "accessibilityNotes": "Cada línea es un botón con su número y su texto, así que los lectores de pantalla pueden recorrer el listado línea a línea. «←» significa «recibe el valor».",
+    "simpleInstructions": "Lee la pregunta y pulsa la línea que le corresponde.",
+    "instructions": {
+      "read": "Lee la pregunta y pulsa la línea del listado que la responde.",
+      "syntax": "«total ← 5» da un valor a total; «print(total)» llama a print; «if score > 3:» comprueba score.",
+      "unique": "Cada pregunta tiene exactamente una línea que la responde.",
+      "keyboard": "Teclado: llega al listado con Tab, muévete con las flechas y pulsa Intro."
+    },
+    "levels": {
+      "1": "Encuentra la línea que llama a una rutina, en 4 líneas.",
+      "2": "Llamadas o números, en 5 líneas.",
+      "3": "Aparecen bloques: líneas dentro de if y repeat.",
+      "4": "¿Dónde recibe una variable su primer valor?",
+      "5": "Condiciones: ¿qué línea comprueba una variable?",
+      "6": "Variables asignadas dos veces: ¿primera o última vez?",
+      "7": "Bloques anidados, todo tipo de preguntas.",
+      "8": "Cuatro variables, 10 líneas.",
+      "9": "Sobre todo preguntas de asignación y de condición, 11 líneas.",
+      "10": "Maestro: 12 líneas anidadas, todo tipo de preguntas."
+    },
+    "question": {
+      "call": "¿Qué línea llama a {{subject}}?",
+      "number": "¿Qué línea usa el número {{subject}}?",
+      "firstAssign": "¿Dónde recibe {{subject}} su primer valor?",
+      "lastAssign": "¿Dónde recibe {{subject}} un valor por última vez?",
+      "condition": "¿Qué línea comprueba {{subject}} en una condición?"
+    },
+    "reason": {
+      "call": "es la única línea que llama a {{subject}}.",
+      "number": "es la única línea con el número {{subject}}.",
+      "firstAssign": "es la primera línea de la forma «{{subject}} ← …».",
+      "lastAssign": "es la última línea de la forma «{{subject}} ← …».",
+      "condition": "es la única línea if / while cuya condición menciona {{subject}}."
+    },
+    "explanation": "Línea {{line}} («{{text}}»): {{reason}}",
+    "view": {
+      "listing": "Listado de código",
+      "badge": {
+        "answer": "✓ respuesta",
+        "pick": "✗ tu elección"
+      },
+      "marker": {
+        "answer": "respuesta",
+        "pick": "tu elección"
+      },
+      "line": "Línea {{line}}: {{text}}",
+      "lineMarked": "Línea {{line}}: {{text}} ({{markers}})"
+    },
+    "kinds": {
+      "call": "Encontrar la llamada",
+      "number": "Encontrar el número",
+      "firstAssign": "Primera asignación",
+      "lastAssign": "Última asignación",
+      "condition": "Encontrar la condición"
+    }
+  },
+  "multiChoiceProcessing": {
+    "name": "Desafío de procesamiento con varias opciones",
+    "tagline": "Ignora al grupo: ¿hacia dónde apunta la del centro?",
+    "description": "Aparece una fila de flechas. Responde la dirección de la flecha central mientras las de alrededor apuntan igual, hacia otro lado o a ninguna parte. Los niveles avanzados añaden arriba y abajo, filas más largas y una señal que a veces pide las flechas exteriores.",
+    "scoringSummary": "Cada respuesta es correcta o incorrecta; un error resta puntos. Una respuesta correcta suma más cuanto más rápida sea, pero la precisión pesa más en el resultado. El tiempo relajado elimina el límite de tiempo; el conflicto entre flechas hay que resolverlo igualmente.",
+    "accessibilityNotes": "Las direcciones se indican con la forma de la flecha, nunca con el color. Los lectores de pantalla anuncian la fila como una lista de direcciones; el conflicto visual que hace difícil la tarea se pierde en gran parte al escuchar.",
+    "simpleInstructions": "¿Hacia dónde apunta la flecha del medio?",
+    "instructions": {
+      "centre": "Mira la flecha del medio de la fila y responde su dirección (clic o teclas numéricas).",
+      "ignore": "Ignora las flechas de alrededor: pueden apuntar hacia otro lado.",
+      "vertical": "Desde el nivel 5 las flechas también pueden apuntar arriba o abajo.",
+      "cue": "Desde el nivel 7 una señal indica CENTRO (la flecha del medio) o EXTERIOR (las de alrededor)."
+    },
+    "levels": {
+      "1": "¿Hacia dónde apunta la flecha?",
+      "2": "Responde la flecha central; las demás coinciden o son barras.",
+      "3": "Ahora algunas flechas exteriores apuntan al otro lado.",
+      "4": "La mitad de las filas tienen conflicto.",
+      "5": "Cuatro direcciones: izquierda, derecha, arriba, abajo.",
+      "6": "Siete flechas en fila, más conflicto.",
+      "7": "Sigue la señal: flecha del CENTRO o flechas EXTERIORES.",
+      "8": "Más intentos de flechas exteriores.",
+      "9": "Reglas mezcladas mitad y mitad.",
+      "10": "Maestro: reglas mezcladas, casi todo filas en conflicto, menos tiempo."
+    },
+    "directions": {
+      "left": "Izquierda",
+      "right": "Derecha",
+      "up": "Arriba",
+      "down": "Abajo"
+    },
+    "pointing": {
+      "left": "a la izquierda",
+      "right": "a la derecha",
+      "up": "hacia arriba",
+      "down": "hacia abajo"
+    },
+    "prompt": {
+      "single": "¿Hacia dónde apunta la flecha?",
+      "centre": "¿Hacia dónde apunta la flecha central?",
+      "outer": "¿Hacia dónde apuntan las flechas exteriores?"
+    },
+    "explanation": {
+      "single": "La flecha apuntaba {{direction}}.",
+      "centre": "La flecha central apuntaba {{direction}}.",
+      "outer": "Las flechas exteriores apuntaban {{direction}}.",
+      "centreConflict": "La flecha central apuntaba {{direction}}; las exteriores, {{other}}.",
+      "outerConflict": "Las flechas exteriores apuntaban {{direction}}; la central, {{other}}."
+    },
+    "spoken": {
+      "left": "izquierda",
+      "right": "derecha",
+      "up": "arriba",
+      "down": "abajo",
+      "none": "barra"
+    },
+    "view": {
+      "cueCentre": "CENTRO",
+      "cueOuter": "EXTERIOR",
+      "single": "Una flecha que apunta {{direction}}.",
+      "row_one": "Fila de {{count}}: {{items}}.",
+      "row_other": "Fila de {{count}}: {{items}}."
+    },
+    "kinds": {
+      "single": "Flecha sola",
+      "flanker": "Flecha central",
+      "cued": "Regla con señal"
+    }
+  }
+}

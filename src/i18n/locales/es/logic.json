@@ -1,0 +1,1101 @@
+{
+  "logicalDeduction": {
+    "name": "Deducción lógica",
+    "tagline": "Usa las pistas para averiguar quién tiene qué.",
+    "description": "Cada persona tiene exactamente un elemento de cada lista y nadie comparte ninguno. Lee las pistas, descarta lo que no puede ser y responde a una pregunta. En los niveles altos hay más personas, más listas que relacionar y pistas que solo dicen lo que no es cierto.",
+    "scoringSummary": "Cada acertijo tiene una sola respuesta. Tu resultado es el porcentaje de acertijos resueltos correctamente; no hay límite de tiempo.",
+    "instructions": {
+      "items": "Cada persona tiene exactamente un elemento de cada lista y no hay dos personas con el mismo.",
+      "clues": "Lee todas las pistas. Las pistas siempre son ciertas.",
+      "ruleOut": "Descarta lo que no puede ser hasta que solo quede una respuesta y luego responde a la pregunta.",
+      "tip": "Consejo: las pistas con «no» son útiles; si alguien no tiene dos de tres elementos, tiene el tercero."
+    },
+    "simpleInstructions": "Lee las pistas y descubre quién tiene qué.",
+    "kinds": {
+      "single": "Una lista que relacionar",
+      "multi": "Varias listas que relacionar"
+    },
+    "levels": {
+      "1": "Tres personas, una lista y pistas sencillas.",
+      "2": "Tres personas, una lista y pistas con «no» y «o».",
+      "3": "Cuatro personas y pistas de tipo «o… o…».",
+      "4": "Relaciona dos listas para tres personas.",
+      "5": "Tres listas para tres personas.",
+      "6": "Dos listas para cuatro personas, con pistas enlazadas.",
+      "7": "Dos listas para cuatro personas sin respuestas directas.",
+      "8": "Tres listas para cuatro personas.",
+      "9": "Cinco personas y dos listas.",
+      "10": "Cinco personas, dos listas y solo pistas indirectas."
+    },
+    "view": {
+      "people": "Personas",
+      "person": "Persona"
+    },
+    "titles": {
+      "pet": "Mascotas",
+      "colour": "Colores favoritos",
+      "drink": "Bebidas",
+      "hobby": "Aficiones"
+    },
+    "row": "{{person}}: {{values}}",
+    "explanation_one": "Solo un reparto encaja con la pista: {{rows}}. Cualquier otro la incumple. Así que {{fact}}",
+    "explanation_other": "Solo un reparto encaja con las {{count}} pistas: {{rows}}. Cualquier otro incumple al menos una. Así que {{fact}}",
+    "values": {
+      "pet": {
+        "cat": "gato",
+        "dog": "perro",
+        "fish": "pez",
+        "bird": "pájaro",
+        "rabbit": "conejo"
+      },
+      "colour": {
+        "red": "rojo",
+        "blue": "azul",
+        "green": "verde",
+        "yellow": "amarillo",
+        "purple": "morado"
+      },
+      "drink": {
+        "tea": "té",
+        "milk": "leche",
+        "juice": "zumo",
+        "water": "agua",
+        "cocoa": "cacao"
+      },
+      "hobby": {
+        "painting": "pintura",
+        "chess": "ajedrez",
+        "music": "música",
+        "reading": "lectura",
+        "dancing": "baile"
+      }
+    },
+    "forms": {
+      "pet": {
+        "cat": {
+          "obj": "el gato",
+          "dat": "el gato"
+        },
+        "dog": {
+          "obj": "el perro",
+          "dat": "el perro"
+        },
+        "fish": {
+          "obj": "el pez",
+          "dat": "el pez"
+        },
+        "bird": {
+          "obj": "el pájaro",
+          "dat": "el pájaro"
+        },
+        "rabbit": {
+          "obj": "el conejo",
+          "dat": "el conejo"
+        }
+      },
+      "colour": {
+        "red": {
+          "obj": "rojo"
+        },
+        "blue": {
+          "obj": "azul"
+        },
+        "green": {
+          "obj": "verde"
+        },
+        "yellow": {
+          "obj": "amarillo"
+        },
+        "purple": {
+          "obj": "morado"
+        }
+      },
+      "drink": {
+        "tea": {
+          "obj": "té",
+          "neg": "té"
+        },
+        "milk": {
+          "obj": "leche",
+          "neg": "leche"
+        },
+        "juice": {
+          "obj": "zumo",
+          "neg": "zumo"
+        },
+        "water": {
+          "obj": "agua",
+          "neg": "agua"
+        },
+        "cocoa": {
+          "obj": "cacao",
+          "neg": "cacao"
+        }
+      },
+      "hobby": {
+        "painting": {
+          "obj": "la pintura"
+        },
+        "chess": {
+          "obj": "el ajedrez"
+        },
+        "music": {
+          "obj": "la música"
+        },
+        "reading": {
+          "obj": "la lectura"
+        },
+        "dancing": {
+          "obj": "el baile"
+        }
+      }
+    },
+    "is": {
+      "pet": "{{subject}} tiene $t(logic:logicalDeduction.forms.pet.{{value}}.obj).",
+      "colour": "{{subject}} tiene el $t(logic:logicalDeduction.forms.colour.{{value}}.obj) como color favorito.",
+      "drink": "{{subject}} bebe $t(logic:logicalDeduction.forms.drink.{{value}}.obj).",
+      "hobby": "{{subject}} tiene como afición $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)."
+    },
+    "isNot": {
+      "pet": "{{subject}} no tiene $t(logic:logicalDeduction.forms.pet.{{value}}.obj).",
+      "colour": "{{subject}} no tiene el $t(logic:logicalDeduction.forms.colour.{{value}}.obj) como color favorito.",
+      "drink": "{{subject}} no bebe $t(logic:logicalDeduction.forms.drink.{{value}}.neg).",
+      "hobby": "{{subject}} no tiene como afición $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)."
+    },
+    "either": {
+      "pet": "{{subject}} tiene o bien $t(logic:logicalDeduction.forms.pet.{{a}}.obj) o bien $t(logic:logicalDeduction.forms.pet.{{b}}.obj).",
+      "colour": "{{subject}} tiene como color favorito o bien el $t(logic:logicalDeduction.forms.colour.{{a}}.obj) o bien el $t(logic:logicalDeduction.forms.colour.{{b}}.obj).",
+      "drink": "{{subject}} bebe o bien $t(logic:logicalDeduction.forms.drink.{{a}}.obj) o bien $t(logic:logicalDeduction.forms.drink.{{b}}.obj).",
+      "hobby": "{{subject}} tiene como afición o bien $t(logic:logicalDeduction.forms.hobby.{{a}}.obj) o bien $t(logic:logicalDeduction.forms.hobby.{{b}}.obj)."
+    },
+    "askWho": {
+      "pet": "¿Quién tiene $t(logic:logicalDeduction.forms.pet.{{value}}.obj)?",
+      "colour": "¿Quién tiene el $t(logic:logicalDeduction.forms.colour.{{value}}.obj) como color favorito?",
+      "drink": "¿Quién bebe $t(logic:logicalDeduction.forms.drink.{{value}}.obj)?",
+      "hobby": "¿Quién tiene como afición $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)?"
+    },
+    "askWhat": {
+      "pet": "¿Qué mascota tiene {{person}}?",
+      "colour": "¿Cuál es el color favorito de {{person}}?",
+      "drink": "¿Qué bebe {{person}}?",
+      "hobby": "¿Cuál es la afición de {{person}}?"
+    },
+    "subject": {
+      "pet": "La persona con $t(logic:logicalDeduction.forms.pet.{{value}}.dat)",
+      "colour": "La persona cuyo color favorito es el $t(logic:logicalDeduction.forms.colour.{{value}}.obj)",
+      "drink": "La persona que bebe $t(logic:logicalDeduction.forms.drink.{{value}}.obj)",
+      "hobby": "La persona cuya afición es $t(logic:logicalDeduction.forms.hobby.{{value}}.obj)"
+    }
+  },
+  "shared": {
+    "or": "{{head}} o {{last}}",
+    "sentence": "{{text}}.",
+    "cluesTitle": "Pistas · todas son ciertas",
+    "clues": "Pistas",
+    "solution": "Solución",
+    "rules": "Reglas"
+  },
+  "numberSequences": {
+    "name": "Series numéricas",
+    "tagline": "Encuentra la regla y luego el número.",
+    "description": "Una fila de números sigue una regla oculta. Descubre la regla y escribe el número siguiente o el que falta. En los niveles altos las reglas se alternan, crecen o mezclan dos series.",
+    "scoringSummary": "Cada serie tiene una respuesta en la que coinciden todas las reglas sencillas. Tu resultado es el porcentaje de números escritos exactamente; no hay límite de tiempo.",
+    "simpleInstructions": "Encuentra el patrón y escribe el número que falta.",
+    "instructions": {
+      "1": "Fíjate en cómo cambia cada número hasta el siguiente.",
+      "2": "Prueba primero reglas sencillas: sumar, restar, multiplicar.",
+      "3": "Si el cambio no es siempre el mismo, mira cómo cambian los propios cambios, o fíjate en un número de cada dos.",
+      "4": "Escribe el número que sustituye al signo de interrogación."
+    },
+    "levels": {
+      "1": "Suma el mismo número pequeño cada vez.",
+      "2": "Pasos que suben o bajan.",
+      "3": "Sumar o multiplicar.",
+      "4": "Encuentra un número que falta en medio.",
+      "5": "Dos pasos que se turnan.",
+      "6": "Pasos que crecen cada vez.",
+      "7": "Dos series mezcladas.",
+      "8": "Multiplica y luego suma: reglas de dos pasos.",
+      "9": "Cada número sale de los dos anteriores.",
+      "10": "Cualquier regla, a menudo con un hueco en medio."
+    },
+    "kinds": {
+      "add": "Pasos constantes",
+      "multiply": "Multiplicaciones",
+      "alternating-add": "Pasos alternos",
+      "growing-add": "Pasos crecientes",
+      "interleaved": "Dos series mezcladas",
+      "two-step": "Reglas de dos pasos",
+      "sum-of-two": "Suma de los dos anteriores"
+    },
+    "prompt": {
+      "missing": "¿Qué número sustituye al signo de interrogación?",
+      "next": "¿Qué número viene después?"
+    },
+    "explanation": "La regla es: {{rule}}. Así se obtiene {{shown}}, de modo que la respuesta es {{answer}}. Ninguna otra regla sencilla encaja con todos los números mostrados.",
+    "rule": {
+      "add": "sumar {{n}}",
+      "subtract": "restar {{n}}",
+      "termsAdd": "aumentan {{n}}",
+      "termsSubtract": "disminuyen {{n}}",
+      "constant": "{{step}} cada vez",
+      "multiply": "multiplicar por {{r}} cada vez",
+      "alternate": "{{a}}, luego {{b}}, y repetir",
+      "growing": "lo que se suma crece {{dd}} cada vez (sumar {{a}}, luego {{b}}, luego {{c}}, …)",
+      "interleaved": "dos series se turnan: los términos 1.º, 3.º, 5.º… {{a}} cada vez, y los términos 2.º, 4.º, 6.º… {{b}} cada vez",
+      "multiplyThenAdd": "multiplicar por {{r}}, luego {{step}}, y repetir",
+      "addThenMultiply": "{{step}}, luego multiplicar por {{r}}, y repetir",
+      "sumOfTwo": "cada término es la suma de los dos anteriores"
+    },
+    "view": {
+      "sequence": "Serie",
+      "term": "Término {{n}}: {{text}}",
+      "answer": "{{value}}, la respuesta",
+      "missing": "falta"
+    }
+  },
+  "ruleDiscovery": {
+    "name": "Descubre la regla",
+    "tagline": "Descubre la regla oculta a partir de ejemplos.",
+    "description": "Algunos elementos cumplen una regla secreta y otros no. Compara los dos grupos, descubre la regla y elige el elemento nuevo que la cumple. En los niveles altos hay reglas con «no», «o» e «y», y menos ejemplos.",
+    "scoringSummary": "Exactamente una opción cumple todas las reglas que encajan con los ejemplos. Tu resultado es el porcentaje de acertijos resueltos correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Busca qué tienen en común los elementos del «sí» y elige el nuevo que encaja.",
+    "instructions": {
+      "1": "Los elementos de «Cumple la regla» siguen todos una regla secreta. Los de «No la cumple» la incumplen.",
+      "2": "Busca lo que tienen en común todos los que la cumplen y lo que les falta a los demás.",
+      "3": "Luego elige la única opción que cumple la misma regla.",
+      "4": "Las figuras se nombran por color y forma, así que nunca necesitas distinguir colores solo con la vista."
+    },
+    "levels": {
+      "1": "La regla trata del color.",
+      "2": "Color o forma: ¿qué importa?",
+      "3": "Reglas sobre números: par, impar, grande o pequeño.",
+      "4": "Reglas que dicen lo que algo no es.",
+      "5": "Tablas de multiplicar e intervalos.",
+      "6": "Reglas con «o»: basta con una de dos características.",
+      "7": "Figuras y números, todas las reglas sencillas.",
+      "8": "Reglas con «y»: dos cosas deben cumplirse a la vez.",
+      "9": "Cualquier regla de figuras, con menos ejemplos.",
+      "10": "Cualquier regla, con más opciones que comprobar."
+    },
+    "kinds": {
+      "glyphs": "Reglas de figuras",
+      "numbers": "Reglas de números"
+    },
+    "prompt": {
+      "numbers": "¿Qué número cumple la regla?",
+      "glyphs": "¿Qué figura cumple la regla?"
+    },
+    "explanation_one": "La regla es: {{rule}}. La respuesta, {{answer}}, la cumple; {{wrong}} no. Cualquier otra regla sencilla incumple alguno de los ejemplos o elige la misma respuesta.",
+    "explanation_other": "La regla es: {{rule}}. La respuesta, {{answer}}, la cumple; {{wrong}} no. Cualquier otra regla sencilla incumple alguno de los ejemplos o elige la misma respuesta.",
+    "test": {
+      "even": "es par",
+      "odd": "es impar",
+      "multiple": "está en la tabla del {{of}}",
+      "greater": "es mayor que {{than}}",
+      "less": "es menor que {{than}}",
+      "endsIn": "acaba en {{digit}}"
+    },
+    "rule": {
+      "color": "la figura es $t(kit:colorForm.f.{{color}})",
+      "notColor": "la figura no es $t(kit:colorForm.f.{{color}})",
+      "shape": "la figura es $t(logic:ruleDiscovery.aShape.{{shape}})",
+      "notShape": "la figura no es $t(logic:ruleDiscovery.noShape.{{shape}})",
+      "colorOrShape": "la figura es $t(kit:colorForm.f.{{color}}), o es $t(logic:ruleDiscovery.aShape.{{shape}}) (o ambas cosas)",
+      "number": "el número {{test}}",
+      "and": "el número {{a}} y {{b}}"
+    },
+    "view": {
+      "fits": "Cumple la regla",
+      "misses": "No la cumple",
+      "rule": "La regla:"
+    },
+    "aShape": {
+      "circle": "un círculo",
+      "square": "un cuadrado",
+      "triangle": "un triángulo",
+      "diamond": "un rombo",
+      "star": "una estrella",
+      "hexagon": "un hexágono",
+      "heart": "un corazón",
+      "cross": "una cruz"
+    },
+    "noShape": {
+      "circle": "un círculo",
+      "square": "un cuadrado",
+      "triangle": "un triángulo",
+      "diamond": "un rombo",
+      "star": "una estrella",
+      "hexagon": "un hexágono",
+      "heart": "un corazón",
+      "cross": "una cruz"
+    }
+  },
+  "conditionalReasoning": {
+    "name": "Razonamiento condicional",
+    "tagline": "Si esto, entonces aquello: ¿qué se deduce de verdad?",
+    "description": "Lee unas cuantas afirmaciones del tipo «si…, entonces…» y algunos hechos, y decide si una frase tiene que ser cierta, tiene que ser falsa o no se puede saber. En los niveles altos las reglas se encadenan y aparecen «salvo si» y «solo si».",
+    "scoringSummary": "Cada respuesta se comprueba con todas las situaciones compatibles con las afirmaciones. Tu resultado es el porcentaje de respuestas correctas; no hay límite de tiempo.",
+    "simpleInstructions": "Usa solo las reglas para decidir: sí seguro, no seguro o no se puede saber.",
+    "instructions": {
+      "1": "Da por ciertas todas las afirmaciones, aunque suenen raras.",
+      "2": "Usa solo lo que dicen las afirmaciones, nada más.",
+      "3": "«Tiene que ser cierto» o «tiene que ser falso» significa que no hay otra situación posible. Si no, elige «No se puede saber».",
+      "4": "Cuidado: «si A, entonces B» no significa «si B, entonces A»."
+    },
+    "levels": {
+      "1": "Una regla, y su parte «si» es cierta.",
+      "2": "Razona hacia atrás: el resultado no ocurrió.",
+      "3": "Detecta las trampas en las que no se puede saber.",
+      "4": "Reglas con «no» dentro.",
+      "5": "Cadenas: dos reglas seguidas.",
+      "6": "Cadenas más largas, con «no».",
+      "7": "Reglas con «salvo si».",
+      "8": "Reglas con «solo si».",
+      "9": "Reglas mezcladas, incluido «o bien… o bien…».",
+      "10": "Varias reglas mezcladas sobre cuatro cosas."
+    },
+    "kinds": {
+      "basic": "Una regla si-entonces",
+      "chain": "Cadenas de reglas",
+      "unless": "Reglas con «salvo si»",
+      "only-if": "Reglas con «solo si»",
+      "mixed": "Conjuntos de reglas mezcladas"
+    },
+    "verdict": {
+      "true": "Tiene que ser cierto",
+      "false": "Tiene que ser falso",
+      "unknown": "No se puede saber"
+    },
+    "notes": {
+      "affirm-antecedent": "La regla se aplica porque su parte «si» es cierta, así que su parte «entonces» se cumple.",
+      "deny-consequent": "Si la parte «si» fuera cierta, la parte «entonces» también lo sería; pero no lo es, así que la parte «si» no puede ser cierta.",
+      "affirm-consequent": "Saber que la parte «entonces» es cierta es una trampa habitual: podría serlo por otro motivo, así que la parte «si» queda sin decidir.",
+      "deny-antecedent": "La regla solo dice qué pasa cuando su parte «si» es cierta. Aquí no lo es, así que la regla no nos dice nada.",
+      "unless": "«X, salvo si Y» significa: si Y no es cierto, entonces X es cierto.",
+      "onlyIf": "«X solo si Y» significa: si X es cierto, entonces Y es cierto."
+    },
+    "view": {
+      "title": "Afirmaciones · tómalas todas como ciertas",
+      "statements": "Afirmaciones"
+    },
+    "premise": {
+      "fact": "$t(logic:conditionalReasoning.atoms.{{a}}.Main).",
+      "if": "$t(logic:conditionalReasoning.atoms.{{a}}.Cond), entonces $t(logic:conditionalReasoning.atoms.{{b}}.main).",
+      "unless": "$t(logic:conditionalReasoning.atoms.{{a}}.Main), salvo $t(logic:conditionalReasoning.atoms.{{b}}.cond).",
+      "onlyIf": "$t(logic:conditionalReasoning.atoms.{{a}}.Main) solo $t(logic:conditionalReasoning.atoms.{{b}}.cond).",
+      "or": "O bien $t(logic:conditionalReasoning.atoms.{{a}}.main), o bien $t(logic:conditionalReasoning.atoms.{{b}}.main), o las dos cosas."
+    },
+    "prompt": "¿Es cierto? «$t(logic:conditionalReasoning.atoms.{{a}}.Main)».",
+    "atom": "$t(logic:conditionalReasoning.atoms.{{a}}.main)",
+    "because": {
+      "true": "En todas las situaciones compatibles con las afirmaciones, «$t(logic:conditionalReasoning.atoms.{{a}}.main)» es cierto, así que tiene que ser cierto.",
+      "false": "En todas las situaciones compatibles con las afirmaciones, «$t(logic:conditionalReasoning.atoms.{{a}}.main)» es falso, así que tiene que ser falso.",
+      "unknown": "Las dos cosas son posibles: «$t(logic:conditionalReasoning.atoms.{{a}}.main)» es cierto si {{yes}}, y falso si {{no}}. Así que no se puede saber."
+    },
+    "atoms": {
+      "lamp": {
+        "yes": {
+          "main": "la lámpara está encendida",
+          "Main": "La lámpara está encendida",
+          "cond": "si la lámpara está encendida",
+          "Cond": "Si la lámpara está encendida",
+          "inv": "la lámpara está encendida"
+        },
+        "no": {
+          "main": "la lámpara no está encendida",
+          "Main": "La lámpara no está encendida",
+          "cond": "si la lámpara no está encendida",
+          "Cond": "Si la lámpara no está encendida",
+          "inv": "la lámpara no está encendida"
+        }
+      },
+      "door": {
+        "yes": {
+          "main": "la puerta está abierta",
+          "Main": "La puerta está abierta",
+          "cond": "si la puerta está abierta",
+          "Cond": "Si la puerta está abierta",
+          "inv": "la puerta está abierta"
+        },
+        "no": {
+          "main": "la puerta no está abierta",
+          "Main": "La puerta no está abierta",
+          "cond": "si la puerta no está abierta",
+          "Cond": "Si la puerta no está abierta",
+          "inv": "la puerta no está abierta"
+        }
+      },
+      "bell": {
+        "yes": {
+          "main": "el timbre suena",
+          "Main": "El timbre suena",
+          "cond": "si el timbre suena",
+          "Cond": "Si el timbre suena",
+          "inv": "el timbre suena"
+        },
+        "no": {
+          "main": "el timbre no suena",
+          "Main": "El timbre no suena",
+          "cond": "si el timbre no suena",
+          "Cond": "Si el timbre no suena",
+          "inv": "el timbre no suena"
+        }
+      },
+      "flag": {
+        "yes": {
+          "main": "la bandera está izada",
+          "Main": "La bandera está izada",
+          "cond": "si la bandera está izada",
+          "Cond": "Si la bandera está izada",
+          "inv": "la bandera está izada"
+        },
+        "no": {
+          "main": "la bandera no está izada",
+          "Main": "La bandera no está izada",
+          "cond": "si la bandera no está izada",
+          "Cond": "Si la bandera no está izada",
+          "inv": "la bandera no está izada"
+        }
+      },
+      "train": {
+        "yes": {
+          "main": "el tren va con retraso",
+          "Main": "El tren va con retraso",
+          "cond": "si el tren va con retraso",
+          "Cond": "Si el tren va con retraso",
+          "inv": "el tren va con retraso"
+        },
+        "no": {
+          "main": "el tren no va con retraso",
+          "Main": "El tren no va con retraso",
+          "cond": "si el tren no va con retraso",
+          "Cond": "Si el tren no va con retraso",
+          "inv": "el tren no va con retraso"
+        }
+      },
+      "box": {
+        "yes": {
+          "main": "la caja está llena",
+          "Main": "La caja está llena",
+          "cond": "si la caja está llena",
+          "Cond": "Si la caja está llena",
+          "inv": "la caja está llena"
+        },
+        "no": {
+          "main": "la caja no está llena",
+          "Main": "La caja no está llena",
+          "cond": "si la caja no está llena",
+          "Cond": "Si la caja no está llena",
+          "inv": "la caja no está llena"
+        }
+      },
+      "rain": {
+        "yes": {
+          "main": "está lloviendo",
+          "Main": "Está lloviendo",
+          "cond": "si está lloviendo",
+          "Cond": "Si está lloviendo",
+          "inv": "está lloviendo"
+        },
+        "no": {
+          "main": "no está lloviendo",
+          "Main": "No está lloviendo",
+          "cond": "si no está lloviendo",
+          "Cond": "Si no está lloviendo",
+          "inv": "no está lloviendo"
+        }
+      },
+      "shop": {
+        "yes": {
+          "main": "la tienda está abierta",
+          "Main": "La tienda está abierta",
+          "cond": "si la tienda está abierta",
+          "Cond": "Si la tienda está abierta",
+          "inv": "la tienda está abierta"
+        },
+        "no": {
+          "main": "la tienda no está abierta",
+          "Main": "La tienda no está abierta",
+          "cond": "si la tienda no está abierta",
+          "Cond": "Si la tienda no está abierta",
+          "inv": "la tienda no está abierta"
+        }
+      },
+      "dog": {
+        "yes": {
+          "main": "el perro ladra",
+          "Main": "El perro ladra",
+          "cond": "si el perro ladra",
+          "Cond": "Si el perro ladra",
+          "inv": "el perro ladra"
+        },
+        "no": {
+          "main": "el perro no ladra",
+          "Main": "El perro no ladra",
+          "cond": "si el perro no ladra",
+          "Cond": "Si el perro no ladra",
+          "inv": "el perro no ladra"
+        }
+      },
+      "kettle": {
+        "yes": {
+          "main": "la tetera está caliente",
+          "Main": "La tetera está caliente",
+          "cond": "si la tetera está caliente",
+          "Cond": "Si la tetera está caliente",
+          "inv": "la tetera está caliente"
+        },
+        "no": {
+          "main": "la tetera no está caliente",
+          "Main": "La tetera no está caliente",
+          "cond": "si la tetera no está caliente",
+          "Cond": "Si la tetera no está caliente",
+          "inv": "la tetera no está caliente"
+        }
+      },
+      "gate": {
+        "yes": {
+          "main": "la verja está cerrada con llave",
+          "Main": "La verja está cerrada con llave",
+          "cond": "si la verja está cerrada con llave",
+          "Cond": "Si la verja está cerrada con llave",
+          "inv": "la verja está cerrada con llave"
+        },
+        "no": {
+          "main": "la verja no está cerrada con llave",
+          "Main": "La verja no está cerrada con llave",
+          "cond": "si la verja no está cerrada con llave",
+          "Cond": "Si la verja no está cerrada con llave",
+          "inv": "la verja no está cerrada con llave"
+        }
+      },
+      "radio": {
+        "yes": {
+          "main": "la radio está sonando",
+          "Main": "La radio está sonando",
+          "cond": "si la radio está sonando",
+          "Cond": "Si la radio está sonando",
+          "inv": "la radio está sonando"
+        },
+        "no": {
+          "main": "la radio no está sonando",
+          "Main": "La radio no está sonando",
+          "cond": "si la radio no está sonando",
+          "Cond": "Si la radio no está sonando",
+          "inv": "la radio no está sonando"
+        }
+      }
+    }
+  },
+  "constraintSolver": {
+    "name": "Resolución de restricciones",
+    "tagline": "Completa la cuadrícula mentalmente y encuentra un número.",
+    "description": "Cada fila y cada columna contiene cada número una sola vez. Usa los números que ya aparecen y, en los niveles altos, las cajas y los signos «menor que» para deducir el número de la casilla resaltada.",
+    "scoringSummary": "Cada cuadrícula tiene una única solución. Tu resultado es el porcentaje de casillas resaltadas que deduces correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Ningún número se repite en una fila o columna: encuentra el que falta.",
+    "instructions": {
+      "1": "Cada fila y cada columna debe contener cada número exactamente una vez.",
+      "2": "Cuando hay cajas dibujadas, cada caja también debe contener cada número una vez.",
+      "3": "Una pista como «A1 < B1» significa que el número de A1 es menor que el de B1.",
+      "4": "Escribe el número que va en la casilla resaltada (marcada con «?»)."
+    },
+    "levels": {
+      "1": "Una cuadrícula de 3×3 con casi todos los números.",
+      "2": "Una cuadrícula de 3×3 con menos números.",
+      "3": "Una cuadrícula de 4×4.",
+      "4": "Una cuadrícula de 4×4 con cajas.",
+      "5": "Una cuadrícula de 4×4 con pistas «menor que».",
+      "6": "Una cuadrícula de 5×5.",
+      "7": "Una cuadrícula de 5×5 con pistas «menor que».",
+      "8": "Una cuadrícula de 6×6 con cajas.",
+      "9": "Una cuadrícula de 6×6 con cajas y pocos números.",
+      "10": "Una cuadrícula de 6×6 con cajas y pistas «menor que»."
+    },
+    "kinds": {
+      "latin": "Filas y columnas",
+      "boxes": "Cuadrículas con cajas",
+      "inequalities": "Cuadrículas «menor que»"
+    },
+    "prompt": "¿Qué número va en la casilla {{cell}}?",
+    "explanation": {
+      "plain": "La cuadrícula tiene una sola solución que cumple todas las reglas. En ella, la fila {{row}} es {{values}}, así que en {{cell}} va el {{answer}}.",
+      "inequalities": "La cuadrícula tiene una sola solución que cumple todas las reglas, incluidas las pistas «menor que». En ella, la fila {{row}} es {{values}}, así que en {{cell}} va el {{answer}}."
+    },
+    "view": {
+      "rowsRule": "Cada fila y cada columna contiene del 1 al {{size}} una vez.",
+      "boxRule": "Cada caja de {{h}}×{{w}} (bordes gruesos) también contiene del 1 al {{size}} una vez.",
+      "grid": "Cuadrícula de {{size}} por {{size}}",
+      "cell": "{{cell}}: {{value}}",
+      "askedValue": "{{value}}, la casilla preguntada",
+      "asked": "la casilla preguntada",
+      "empty": "vacía",
+      "smallerTitle": "Pistas «menor que»",
+      "smallerLabel": "Pistas menor que"
+    }
+  },
+  "sequenceOrdering": {
+    "name": "Ordenar la secuencia",
+    "tagline": "Pon a todos en el orden correcto.",
+    "description": "Usa pistas como «Ana llegó antes que Ben» o «hay exactamente una persona entre ellos» para deducir el orden completo. En los niveles altos hay más personas y pistas que solo descartan posibilidades.",
+    "scoringSummary": "Exactamente un orden encaja con todas las pistas. Una respuesta cuenta cuando todas las posiciones son correctas. Tu resultado es el porcentaje de acertijos ordenados correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Usa las pistas para ordenar los nombres.",
+    "instructions": {
+      "1": "Lee todas las pistas. Exactamente un orden encaja con todas.",
+      "2": "Empieza por las pistas que fijan una posición («primero», «último») y coloca a los demás alrededor.",
+      "3": "Usa los botones de flecha para subir o bajar los nombres y luego envía tu orden."
+    },
+    "levels": {
+      "1": "Ordena a tres personas con pistas sencillas.",
+      "2": "Tres personas, pistas de «justo delante».",
+      "3": "Ordena a cuatro personas.",
+      "4": "Cuatro personas, pistas sobre quién no está dónde.",
+      "5": "Cuatro personas, pistas de «entre».",
+      "6": "Ordena a cinco personas.",
+      "7": "Cinco personas, sobre todo pistas relativas.",
+      "8": "Cinco personas, sin ningún puesto dado.",
+      "9": "Ordena a seis personas.",
+      "10": "Seis personas, solo pistas relativas."
+    },
+    "kinds": {
+      "race": "Resultados de una carrera",
+      "queue": "Personas en una fila"
+    },
+    "prompt": {
+      "race": "Ordena a los participantes según su llegada, el primero arriba.",
+      "queue": "Ordena a las personas según su lugar en la fila, la primera arriba."
+    },
+    "explanation_one": "Solo un orden encaja con la pista: {{order}}. Compruébala con él; mover a cualquiera la incumple.",
+    "explanation_other": "Solo un orden encaja con las {{count}} pistas: {{order}}. Comprueba cada pista con él; mover a cualquiera incumple al menos una.",
+    "place": {
+      "race": {
+        "1": "en primer lugar",
+        "2": "en segundo lugar",
+        "3": "en tercer lugar",
+        "4": "en cuarto lugar",
+        "5": "en quinto lugar",
+        "6": "en sexto lugar",
+        "last": "en último lugar"
+      },
+      "queue": {
+        "1": "el primer puesto",
+        "2": "el segundo puesto",
+        "3": "el tercer puesto",
+        "4": "el cuarto puesto",
+        "5": "el quinto puesto",
+        "6": "el sexto puesto",
+        "last": "el último puesto"
+      }
+    },
+    "clue": {
+      "race": {
+        "before": "{{a}} llegó antes que {{b}}.",
+        "rightBefore": "{{a}} llegó justo antes que {{b}}, sin nadie en medio.",
+        "at": "{{a}} llegó {{place}}.",
+        "notAt": "{{a}} no llegó {{place}}.",
+        "gap_one": "Exactamente una persona llegó entre {{a}} y {{b}}.",
+        "gap_other": "Exactamente {{count}} personas llegaron entre {{a}} y {{b}}.",
+        "nextTo": "{{a}} y {{b}} llegaron uno justo detrás del otro.",
+        "notNextTo": "{{a}} y {{b}} no llegaron uno justo detrás del otro."
+      },
+      "queue": {
+        "before": "{{a}} está en algún lugar delante de {{b}}.",
+        "rightBefore": "{{a}} está justo delante de {{b}}.",
+        "at": "{{a}} ocupa {{place}} de la fila.",
+        "notAt": "{{a}} no ocupa {{place}} de la fila.",
+        "gap_one": "Hay exactamente una persona entre {{a}} y {{b}}.",
+        "gap_other": "Hay exactamente {{count}} personas entre {{a}} y {{b}}.",
+        "nextTo": "{{a}} y {{b}} están uno al lado del otro.",
+        "notNextTo": "{{a}} y {{b}} no están uno al lado del otro."
+      }
+    },
+    "view": {
+      "entities": {
+        "race": "Participantes",
+        "queue": "Personas en la fila"
+      },
+      "names": "Nombres",
+      "correctOrder": "Orden correcto"
+    }
+  },
+  "truthAndFalsehood": {
+    "name": "Verdad y mentira",
+    "tagline": "Unos siempre dicen la verdad y otros siempre mienten.",
+    "description": "Cada personaje o bien dice siempre la verdad, o bien miente siempre. Pon a prueba cada posibilidad con lo que dicen para encontrar la única que funciona. En los niveles altos hay más personajes y afirmaciones sobre todo el grupo.",
+    "scoringSummary": "Solo una forma de repartir quién dice la verdad y quién miente encaja con lo que dicen todos. Tu resultado es el porcentaje de acertijos resueltos correctamente; no hay límite de tiempo.",
+    "simpleInstructions": "Unos nunca mienten y otros nunca dicen la verdad: averigua quién es quién.",
+    "instructions": {
+      "1": "Quien dice la verdad solo dice cosas ciertas. Quien miente solo dice cosas falsas.",
+      "2": "Elige un personaje y supón que dice la verdad. ¿Sigue encajando todo lo demás? Si no, tiene que estar mintiendo.",
+      "3": "Exactamente una forma de repartir a todos funciona. Úsala para responder a la pregunta."
+    },
+    "levels": {
+      "1": "Dos personajes hablan el uno del otro.",
+      "2": "Dos personajes: «somos iguales» o «somos distintos».",
+      "3": "Tres personajes.",
+      "4": "Tres personajes que se comparan entre sí.",
+      "5": "Afirmaciones sobre todo el grupo.",
+      "6": "Tres personajes, todo tipo de afirmaciones.",
+      "7": "Cuatro personajes.",
+      "8": "Cuatro personajes, afirmaciones de «al menos uno de».",
+      "9": "Cuatro personajes que se cuentan entre sí.",
+      "10": "Cuatro personajes, todo tipo de afirmaciones."
+    },
+    "kinds": {
+      "one": "Un personaje",
+      "who": "Quién dice la verdad",
+      "count": "Cuántos dicen la verdad"
+    },
+    "claim": {
+      "is": {
+        "honest": "{{name}} dice siempre la verdad",
+        "liar": "{{name}} miente siempre"
+      },
+      "same": {
+        "pair": "{{a}} y {{b}} son del mismo tipo: o los dos dicen siempre la verdad o los dos mienten siempre",
+        "withMe": "{{other}} y yo somos del mismo tipo: o los dos decimos siempre la verdad o los dos mentimos siempre"
+      },
+      "different": {
+        "pair": "{{a}} y {{b}} son de distinto tipo: uno dice siempre la verdad y el otro miente siempre",
+        "withMe": "{{other}} y yo somos de distinto tipo: uno dice siempre la verdad y el otro miente siempre"
+      },
+      "either": {
+        "honest": {
+          "pair": "Al menos uno de los dos, {{a}} o {{b}}, dice siempre la verdad",
+          "withMe": "Al menos uno de los dos, {{other}} o yo, dice siempre la verdad"
+        },
+        "liar": {
+          "pair": "Al menos uno de los dos, {{a}} o {{b}}, miente siempre",
+          "withMe": "Al menos uno de los dos, {{other}} o yo, miente siempre"
+        }
+      },
+      "count": {
+        "atLeast": {
+          "honest_one": "Al menos uno de nosotros dice siempre la verdad",
+          "honest_other": "Al menos {{number}} de nosotros dicen siempre la verdad",
+          "liar_one": "Al menos uno de nosotros miente siempre",
+          "liar_other": "Al menos {{number}} de nosotros mienten siempre"
+        },
+        "exactly": {
+          "honest_one": "Exactamente uno de nosotros dice siempre la verdad",
+          "honest_other": "Exactamente {{number}} de nosotros dicen siempre la verdad",
+          "liar_one": "Exactamente uno de nosotros miente siempre",
+          "liar_other": "Exactamente {{number}} de nosotros mienten siempre"
+        },
+        "atMost": {
+          "honest_one": "Como mucho uno de nosotros dice siempre la verdad",
+          "honest_other": "Como mucho {{number}} de nosotros dicen siempre la verdad",
+          "liar_one": "Como mucho uno de nosotros miente siempre",
+          "liar_other": "Como mucho {{number}} de nosotros mienten siempre"
+        }
+      }
+    },
+    "numbers": {
+      "1": "uno",
+      "2": "dos",
+      "3": "tres",
+      "4": "cuatro"
+    },
+    "group": {
+      "nobody": "Nadie",
+      "everyone": "Todos",
+      "only": "Solo {{name}}"
+    },
+    "who": {
+      "nobody": "nadie dice la verdad",
+      "everyone": "todos dicen la verdad",
+      "only": "solo {{name}} dice la verdad",
+      "many": "{{names}} dicen la verdad"
+    },
+    "role": {
+      "honest": "Dice la verdad",
+      "liar": "Miente"
+    },
+    "roleLower": {
+      "honest": "siempre dice la verdad",
+      "liar": "siempre miente"
+    },
+    "check": {
+      "true": "{{name}} ({{role}}) dice «{{said}}»: eso es cierto",
+      "false": "{{name}} ({{role}}) dice «{{said}}»: eso es falso"
+    },
+    "explanation": "Solo hay una posibilidad: {{who}}. {{checks}}. Cualquier otra hace que alguien rompa su regla.",
+    "prompt": {
+      "one": "¿{{name}} dice siempre la verdad o miente siempre?",
+      "count": "¿Cuántos de ellos dicen siempre la verdad?",
+      "who": "¿Quién dice la verdad?"
+    },
+    "view": {
+      "title": "Lo que dicen",
+      "statements": "Afirmaciones",
+      "says": "dice:"
+    }
+  },
+  "strategyPuzzle": {
+    "name": "Acertijo de estrategia",
+    "tagline": "Planifica: encuentra la mejor jugada o el camino más corto.",
+    "description": "Juegos de monedas en los que debes encontrar la jugada que asegura la victoria, jarras de agua para medir una cantidad exacta y fichas deslizantes que hay que recolocar. Cada respuesta se comprueba explorando todas las posibilidades, así que la mejor jugada o el menor número de movimientos es seguro.",
+    "scoringSummary": "Las respuestas se comprueban con una búsqueda exhaustiva. Tu resultado es el porcentaje de acertijos resueltos correctamente; no hay límite de tiempo.",
+    "instructions": {
+      "1": "Juegos de monedas: tú y un amigo jugáis por turnos. Gana quien se lleva la última moneda. Tu amigo siempre hace la mejor jugada.",
+      "2": "Jarras de agua: llena una jarra con el grifo, vacíala o vierte una jarra en otra hasta que esta se llene o la primera se vacíe. Cada acción cuenta como un movimiento.",
+      "3": "Fichas deslizantes: desliza al hueco una ficha que esté junto a él. Cada deslizamiento cuenta como un movimiento.",
+      "4": "Planifica mentalmente y luego responde. Usa papel si te ayuda."
+    },
+    "simpleInstructions": "Piensa unas jugadas por adelantado para encontrar la mejor jugada o el menor número de movimientos.",
+    "kinds": {
+      "take-away": "Monedas, un montón",
+      "piles": "Monedas, varios montones",
+      "jugs": "Jarras de agua",
+      "sliding": "Fichas deslizantes"
+    },
+    "levels": {
+      "1": "Coge 1 o 2 monedas: encuentra la jugada ganadora.",
+      "2": "Desliza fichas en un tablero pequeño.",
+      "3": "Mide agua con dos jarras.",
+      "4": "Coge de 1 a 3 monedas de un montón más grande.",
+      "5": "Desliza fichas en un tablero de 2×3.",
+      "6": "Acertijos de jarras más difíciles.",
+      "7": "Dos montones de monedas.",
+      "8": "Acertijos deslizantes más largos.",
+      "9": "Tres jarras y sin grifo: solo verter.",
+      "10": "Tres montones, deslizamientos largos y tres jarras."
+    },
+    "take": "Coger {{n}}",
+    "takeFromPile": "Coger {{n}} del montón {{pile}}",
+    "then": "{{head}}, luego {{last}}",
+    "prompt": {
+      "takeAway_one": "Te toca. Hay {{count}} moneda. ¿Qué jugada te asegura llevarte la última moneda?",
+      "takeAway_other": "Te toca. Hay {{count}} monedas. ¿Qué jugada te asegura llevarte la última moneda?",
+      "piles": "Te toca. ¿Qué jugada te asegura llevarte la última moneda?",
+      "jugs_one": "¿Cuál es el menor número de movimientos para tener exactamente {{count}} litro en una jarra?",
+      "jugs_other": "¿Cuál es el menor número de movimientos para tener exactamente {{count}} litros en una jarra?",
+      "sliding": "¿Cuál es el menor número de deslizamientos para llegar a la imagen objetivo?"
+    },
+    "explanation": {
+      "takeAway": "Coge {{take}} y deja {{left}}. Las posiciones con {{losing}} monedas pierden para quien tiene el turno: coja lo que coja tu amigo (de 1 a {{max}}), tú coges lo que falta hasta {{group}} y llegas a la siguiente, hasta que te llevas la última moneda. Cualquier otra jugada deja un número que tu amigo puede aprovechar igual.",
+      "piles": "{{move}}, y quedan montones de {{after}}. Revisando todas las partidas posibles desde ahí, cada respuesta de tu amigo te deja una jugada para seguir ganando, hasta que te llevas la última moneda. Cualquier otra jugada le da a tu amigo una respuesta ganadora así.",
+      "pilesEqual": "{{move}}, y quedan montones de {{after}}. Revisando todas las partidas posibles desde ahí, cada respuesta de tu amigo te deja una jugada para seguir ganando, hasta que te llevas la última moneda. Con dos montones iguales, puedes copiar en el otro montón cada jugada de tu amigo. Cualquier otra jugada le da a tu amigo una respuesta ganadora así.",
+      "jugs_one": "Al explorar todas las secuencias de movimientos posibles no hay ningún camino de menos de {{count}} movimiento. Un camino más corto: {{steps}}.",
+      "jugs_other": "Al explorar todas las secuencias de movimientos posibles no hay ningún camino de menos de {{count}} movimientos. Un camino más corto: {{steps}}.",
+      "sliding_one": "Al explorar todos los tableros alcanzables, el objetivo está a {{count}} deslizamiento y no menos. Un camino más corto: desliza la ficha {{tiles}}.",
+      "sliding_other": "Al explorar todos los tableros alcanzables, el objetivo está a {{count}} deslizamientos y no menos. Un camino más corto: desliza la ficha {{tiles}}."
+    },
+    "jug": {
+      "fill": "llenar la jarra de {{jug}} litros",
+      "empty": "vaciar la jarra de {{jug}} litros",
+      "pour": "verter la jarra de {{from}} litros en la de {{to}} litros",
+      "step": "{{n}}. {{action}} ({{state}})"
+    },
+    "units": {
+      "moves": "movimientos",
+      "slides": "deslizamientos"
+    },
+    "rules": {
+      "takeAway": "En cada turno, coge de 1 a {{max}} monedas.",
+      "lastCoin": "Gana quien se lleva la última moneda. Tu amigo siempre hace la mejor jugada.",
+      "piles": "En cada turno, coge las monedas que quieras (al menos una) de un solo montón.",
+      "tap": "Llena una jarra hasta arriba con el grifo o vacía una jarra por completo.",
+      "noTap": "No hay grifo: solo puedes verter.",
+      "pour": "Vierte una jarra en otra hasta que la segunda se llene o la primera se vacíe.",
+      "goal_one": "Objetivo: exactamente {{count}} litro en una jarra cualquiera.",
+      "goal_other": "Objetivo: exactamente {{count}} litros en una jarra cualquiera.",
+      "slide": "Desliza al hueco una ficha que esté junto a él.",
+      "reach": "Llega a la imagen objetivo."
+    },
+    "view": {
+      "coins_one": "{{label}}: {{count}} moneda",
+      "coins_other": "{{label}}: {{count}} monedas",
+      "pile": "Montón",
+      "namedPile": "Montón {{name}}",
+      "jugs": "Jarras",
+      "jug": "Jarra de {{cap}} L",
+      "empty": "vacía",
+      "full": "llena ({{amount}} L)",
+      "litres": "{{amount}} L",
+      "now": "Ahora",
+      "goal": "Objetivo",
+      "currentBoard": "Tablero actual",
+      "goalBoard": "Tablero objetivo",
+      "gap": "{{cell}}: hueco",
+      "tile": "{{cell}}: ficha {{tile}}"
+    }
+  },
+  "algorithmicReasoning": {
+    "name": "Razonamiento algorítmico",
+    "tagline": "Sigue paso a paso las instrucciones del robot.",
+    "description": "Un robot sigue una lista de instrucciones sencillas: avanzar, girar, repetir algo varias veces o comprobar si hay una pared. Síguelo mentalmente y señala la casilla donde se detiene. En los niveles altos hay repeticiones, repeticiones dentro de repeticiones y comprobaciones de paredes.",
+    "scoringSummary": "El recorrido del robot se simula con exactitud. Tu resultado es el porcentaje de casillas finales acertadas; no hay límite de tiempo.",
+    "accessibilityNotes": "Cada casilla se nombra por fila y columna, y se anuncian la salida y la dirección del robot, así que el recorrido se puede seguir sin ver la cuadrícula.",
+    "simpleInstructions": "Sigue las flechas mentalmente y toca donde termina el robot.",
+    "instructions": {
+      "1": "La flecha muestra dónde empieza el robot y hacia dónde mira.",
+      "2": "«Gira a la izquierda» y «gira a la derecha» cambian hacia dónde mira; no lo mueven.",
+      "3": "Las paredes (casillas rayadas) y el borde cortan el paso. El robot nunca choca con ellos.",
+      "4": "Sigue todas las instrucciones en orden y luego pulsa la casilla donde se detiene el robot."
+    },
+    "levels": {
+      "1": "Avanza y gira en una cuadrícula pequeña.",
+      "2": "Unos pasos más, y paredes.",
+      "3": "Haz lo mismo varias veces.",
+      "4": "Sigue hasta que algo corte el paso.",
+      "5": "Comprueba si hay pared antes de avanzar.",
+      "6": "Repeticiones y comprobaciones de paredes juntas.",
+      "7": "Repeticiones dentro de repeticiones.",
+      "8": "Programas más largos en una cuadrícula de 6×6.",
+      "9": "Una cuadrícula de 7×7 con muchas paredes.",
+      "10": "Programas largos que lo mezclan todo."
+    },
+    "kinds": {
+      "straight": "Avances y giros",
+      "loops": "Pasos repetidos",
+      "conditions": "Comprobar paredes"
+    },
+    "facing": {
+      "up": "arriba",
+      "right": "la derecha",
+      "down": "abajo",
+      "left": "la izquierda"
+    },
+    "trace": {
+      "move": "avanza {{n}} hasta {{cell}}",
+      "turn": {
+        "left": "gira a la izquierda y ahora mira hacia {{facing}}",
+        "right": "gira a la derecha y ahora mira hacia {{facing}}",
+        "around": "da media vuelta y ahora mira hacia {{facing}}"
+      },
+      "blocked": "el paso está cortado",
+      "clear": "el paso está libre",
+      "untilBlocked_one": "avanza hasta que algo corta el paso ({{count}} casilla) hasta {{cell}}",
+      "untilBlocked_other": "avanza hasta que algo corta el paso ({{count}} casillas) hasta {{cell}}"
+    },
+    "program": {
+      "forward_one": "Avanza {{count}} casilla.",
+      "forward_other": "Avanza {{count}} casillas.",
+      "turn": {
+        "left": "Gira a la izquierda.",
+        "right": "Gira a la derecha.",
+        "around": "Da media vuelta."
+      },
+      "repeat_one": "Haz esto {{count}} vez:",
+      "repeat_other": "Haz esto {{count}} veces:",
+      "ifBlocked": "Si la casilla de delante es una pared o el borde:",
+      "otherwise": "Si no:",
+      "untilBlocked": "Sigue avanzando hasta que la casilla de delante sea una pared o el borde."
+    },
+    "prompt": "¿Dónde se detiene el robot? Pulsa esa casilla.",
+    "explanation": "El robot empieza en {{start}} mirando hacia {{facing}}. Después: {{steps}}. Se detiene en {{end}}.",
+    "view": {
+      "instructions": "Instrucciones",
+      "grid": "Cuadrícula del robot",
+      "wall": "{{cell}}, pared",
+      "start": "{{cell}}, salida del robot, mirando hacia {{facing}}"
+    }
+  },
+  "multiStepLogic": {
+    "name": "Desafío lógico en varios pasos",
+    "tagline": "Encadena varios datos para llegar a la respuesta.",
+    "description": "Los datos relacionan a varias personas: quién es mayor, quién tiene más, quién es más alto. Ningún dato da la respuesta por sí solo: tienes que combinarlos paso a paso. En los niveles altos hay más personas, «el doble» y totales, y se mezclan números con comparaciones.",
+    "scoringSummary": "Cada respuesta se comprueba probando todos los números u órdenes posibles. Tu resultado es el porcentaje de respuestas correctas; no hay límite de tiempo.",
+    "simpleInstructions": "Junta los datos, uno a uno, para encontrar la respuesta.",
+    "instructions": {
+      "1": "Todos los datos son ciertos. Ningún dato da la respuesta por sí solo.",
+      "2": "Empieza por lo que sabes seguro (una edad conocida o un total) y avanza dato a dato.",
+      "3": "«El doble» significa multiplicar por dos; «la mitad», dividir entre dos.",
+      "4": "Algunas preguntas piden un número y otras, un nombre."
+    },
+    "levels": {
+      "1": "Un paso: de un número conocido al siguiente.",
+      "2": "Dos pasos a lo largo de una cadena.",
+      "3": "¿Quién mide más? Encadena las comparaciones.",
+      "4": "«El doble» y «la mitad».",
+      "5": "Cuatro personas que comparar.",
+      "6": "Usa un total en lugar de un número conocido.",
+      "7": "Diferencias entre personas que nunca se comparan directamente.",
+      "8": "Cinco personas, números y comparaciones.",
+      "9": "Cinco personas con totales.",
+      "10": "Cinco personas, todo tipo de datos."
+    },
+    "kinds": {
+      "numbers": "Números encadenados",
+      "compare": "Comparaciones encadenadas"
+    },
+    "fact": {
+      "ages": {
+        "value_one": "{{a}} tiene {{count}} año",
+        "value_other": "{{a}} tiene {{count}} años",
+        "more_one": "{{a}} tiene {{count}} año más que {{b}}",
+        "more_other": "{{a}} tiene {{count}} años más que {{b}}",
+        "less_one": "{{b}} tiene {{count}} año menos que {{a}}",
+        "less_other": "{{b}} tiene {{count}} años menos que {{a}}",
+        "times2": "{{a}} tiene el doble de años que {{b}}",
+        "times3": "{{a}} tiene el triple de años que {{b}}",
+        "fraction2": "{{b}} tiene la mitad de años que {{a}}",
+        "fraction3": "{{b}} tiene la tercera parte de años que {{a}}",
+        "sum_one": "Entre {{names}} suman {{count}} año",
+        "sum_other": "Entre {{names}} suman {{count}} años"
+      },
+      "marbles": {
+        "value_one": "{{a}} tiene {{count}} canica",
+        "value_other": "{{a}} tiene {{count}} canicas",
+        "more_one": "{{a}} tiene {{count}} canica más que {{b}}",
+        "more_other": "{{a}} tiene {{count}} canicas más que {{b}}",
+        "less_one": "{{b}} tiene {{count}} canica menos que {{a}}",
+        "less_other": "{{b}} tiene {{count}} canicas menos que {{a}}",
+        "times2": "{{a}} tiene el doble de canicas que {{b}}",
+        "times3": "{{a}} tiene el triple de canicas que {{b}}",
+        "fraction2": "{{b}} tiene la mitad de canicas que {{a}}",
+        "fraction3": "{{b}} tiene la tercera parte de canicas que {{a}}",
+        "sum_one": "Entre {{names}} tienen {{count}} canica en total",
+        "sum_other": "Entre {{names}} tienen {{count}} canicas en total"
+      }
+    },
+    "question": {
+      "ages": {
+        "value": "¿Cuántos años tiene {{a}}?",
+        "difference": "¿Cuántos años más que {{b}} tiene {{a}}?",
+        "most": "¿Quién tiene más años?",
+        "least": "¿Quién tiene menos años?"
+      },
+      "marbles": {
+        "value": "¿Cuántas canicas tiene {{a}}?",
+        "difference": "¿Cuántas canicas más que {{b}} tiene {{a}}?",
+        "most": "¿Quién tiene más canicas?",
+        "least": "¿Quién tiene menos canicas?"
+      }
+    },
+    "compare": {
+      "taller": "{{a}} mide más que {{b}}.",
+      "shorter": "{{a}} mide menos que {{b}}.",
+      "tallest": "¿Quién mide más?",
+      "shortest": "¿Quién mide menos?",
+      "explanation": {
+        "most": "Escribiendo «mide más que» como «>»: {{chains}}. Así que {{name}} mide más que todos los demás.",
+        "least": "Escribiendo «mide más que» como «>»: {{chains}}. Así que {{name}} mide menos que todos los demás."
+      }
+    },
+    "explanation": {
+      "step": {
+        "ages": "{{fact}}, así que {{name}} tiene {{count}}.",
+        "marbles_one": "{{fact}}, así que {{name}} tiene {{count}} canica.",
+        "marbles_other": "{{fact}}, así que {{name}} tiene {{count}} canicas."
+      },
+      "chain": "{{lines}} Así que la respuesta es {{answer}}.",
+      "entry": {
+        "ages": "{{name}} {{count}}",
+        "marbles_one": "{{name}} {{count}} canica",
+        "marbles_other": "{{name}} {{count}} canicas"
+      },
+      "total": "Solo un conjunto de números encaja con todos los datos, incluido el total: {{table}}. Compruébalos uno a uno. Así que la respuesta es {{answer}}.",
+      "free": "Los datos no fijan los números exactos, pero todos los conjuntos que encajan dan la misma respuesta. Un ejemplo: {{table}}. Así que la respuesta es {{answer}}."
+    },
+    "units": {
+      "years": "años",
+      "marbles": "canicas"
+    },
+    "view": {
+      "title": "Datos · todos son ciertos",
+      "facts": "Datos"
+    }
+  }
+}

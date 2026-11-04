@@ -1,3 +1,4 @@
+import { en } from '@/test/i18n';
 import { defaultPreferences } from '@/domain/preferences';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -43,7 +44,7 @@ describe('Memory study phase', () => {
       />,
     );
     expect(screen.getByRole('heading', { name: /Memorise this/ })).toBeInTheDocument();
-    expect(screen.queryByText(challenge.prompt)).not.toBeInTheDocument();
+    expect(screen.queryByText(en(challenge.prompt))).not.toBeInTheDocument();
     expect(screen.queryByRole('group', { name: 'Answer options' })).not.toBeInTheDocument();
   });
 
@@ -51,14 +52,14 @@ describe('Memory study phase', () => {
     const user = userEvent.setup();
     renderApp(`/games/code-memory/play/${LEVEL}?seed=${seed}`, { preferences: FREE_PLAY });
     expect(await screen.findByRole('heading', { name: /Memorise this/ })).toBeInTheDocument();
-    expect(screen.queryByText(challenge.prompt)).not.toBeInTheDocument();
+    expect(screen.queryByText(en(challenge.prompt))).not.toBeInTheDocument();
 
     const ready = await screen.findByRole('button', { name: /I.m ready/ });
     await waitFor(() => {
       expect(ready).toBeEnabled();
     });
     await user.click(ready);
-    expect(await screen.findByRole('heading', { name: challenge.prompt })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: en(challenge.prompt) })).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.getByRole('group', { name: 'Answer options' })).toBeInTheDocument();
     });

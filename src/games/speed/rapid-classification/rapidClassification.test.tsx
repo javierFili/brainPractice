@@ -7,10 +7,17 @@ import {
   expectNonDecreasing,
 } from '@/test/gameContract';
 import { meanGenerationMs, sweep } from '@/games/speed/shared/testing';
-import { AMBIGUOUS_OBJECTS, rapidClassificationGame } from './content/definition';
+import {
+  AMBIGUOUS_OBJECTS,
+  LETTER_SAFE_OBJECTS,
+  rapidClassificationGame,
+} from './content/definition';
 import { RAPID_CLASSIFICATION_LEVELS } from './content/levels';
 import { rapidClassificationModule } from './index';
 import { RapidClassificationView } from './ui/RapidClassificationView';
+import { en } from '@/test/i18n';
+import { i18n } from '@/i18n';
+import { SUPPORTED_LANGUAGES } from '@/i18n/languages';
 
 describeGameContract(rapidClassificationModule);
 
@@ -29,14 +36,15 @@ describe('Rapid Classification content', () => {
       expect(AMBIGUOUS_OBJECTS.has(item.name)).toBe(false);
       expect(profile.categories).toContain(item.category);
       if (rule === 'category') {
-        const groups = question.options.map((o) => o.label.toLowerCase());
+        const groups = question.options.map((o) => en(o.label).toLowerCase());
         expect(groups).toEqual(profile.categories);
         expect(groups.filter((g) => g === item.category)).toHaveLength(1);
-        expect(answer?.toLowerCase()).toBe(item.category);
+        expect(en(answer ?? '').toLowerCase()).toBe(item.category);
       } else {
         expect(profile.kind).toBe('switch');
         const code = item.name.toUpperCase().charCodeAt(0);
         expect(answer).toBe(code <= 'M'.charCodeAt(0) ? 'A–M' : 'N–Z');
+        expect(LETTER_SAFE_OBJECTS.has(item.id)).toBe(true);
       }
     }
   });
@@ -91,13 +99,13 @@ describe('Rapid Classification view', () => {
 
   it('shows a named picture at level 1', () => {
     const c = show(1, 3);
-    expect(screen.getByRole('img', { name: c.content.item.name })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: en(c.content.item.label) })).toBeInTheDocument();
   });
 
   it('shows only the word at level 5', () => {
     const c = show(5, 3);
     expect(screen.queryByRole('img')).toBeNull();
-    expect(screen.getByText(c.content.item.name)).toBeInTheDocument();
+    expect(screen.getByText(en(c.content.item.label))).toBeInTheDocument();
   });
 
   it('names the rule in a text cue at level 10', () => {
@@ -105,5 +113,20 @@ describe('Rapid Classification view', () => {
     expect(
       screen.getByText(c.content.rule === 'category' ? /CATEGORY/ : /FIRST LETTER/),
     ).toBeInTheDocument();
+  });
+});
+
+describe('Rapid Classification first-letter rule across languages', () => {
+  it('only uses objects whose name falls in the same half of the alphabet in every language', () => {
+    for (const id of LETTER_SAFE_OBJECTS) {
+      const halves = new Set(
+        SUPPORTED_LANGUAGES.map((lng) => {
+          const name = i18n.getFixedT(lng)(`kit:objects.${id}`);
+          const first = name.normalize('NFD').charAt(0).toLowerCase();
+          return first <= 'm' ? 0 : 1;
+        }),
+      );
+      expect(halves.size, id).toBe(1);
+    }
   });
 });

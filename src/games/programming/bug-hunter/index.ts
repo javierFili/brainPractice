@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { bugHunterGame } from './content/definition';
 import type { AttentionChallenge } from './content/types';
@@ -7,9 +8,9 @@ export const bugHunterModule = defineGameModule<AttentionChallenge>({
   definition: bugHunterGame,
   ContentView: BugHunterContentView,
   kindLabels: {
-    'sequence-anomaly': 'Sequence anomalies',
-    'schema-violation': 'Schema violations',
-    'code-rule': 'Code rules',
-    'multi-rule': 'Multiple rules',
+    'sequence-anomaly': msg('programming:bugHunter.kinds.sequenceAnomaly'),
+    'schema-violation': msg('programming:bugHunter.kinds.schemaViolation'),
+    'code-rule': msg('programming:bugHunter.kinds.codeRule'),
+    'multi-rule': msg('programming:bugHunter.kinds.multiRule'),
   },
 });

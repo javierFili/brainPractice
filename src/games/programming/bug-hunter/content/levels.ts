@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import type { LevelTable } from '@/domain/difficulty';
 import type { BugHunterProfile, CodeRuleType, SchemaField, SequenceRuleType } from './types';
 
@@ -40,7 +41,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   1: {
     level: 1,
     tier: 'fundamentals',
-    objective: 'Hold one rule in mind and check a short list against it, item by item.',
+    objective: msg('programming:bugHunter.levels.1'),
     challengeCount: 6,
     timing: seconds(60, 20),
     kinds: { 'sequence-anomaly': 1, 'schema-violation': 1 },
@@ -56,7 +57,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   2: {
     level: 2,
     tier: 'fundamentals',
-    objective: 'Read pseudocode as data: find the line that breaks a naming or ordering rule.',
+    objective: msg('programming:bugHunter.levels.2'),
     challengeCount: 6,
     timing: seconds(75, 25),
     kinds: EARLY_KINDS,
@@ -72,7 +73,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   3: {
     level: 3,
     tier: 'fundamentals',
-    objective: 'Subtle bugs: typos, off-by-one values and seconds out of order.',
+    objective: msg('programming:bugHunter.levels.3'),
     challengeCount: 6,
     timing: seconds(90, 32),
     kinds: EARLY_KINDS,
@@ -88,7 +89,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   4: {
     level: 4,
     tier: 'intermediate',
-    objective: 'Two rules at once, and resources that must be opened and closed correctly.',
+    objective: msg('programming:bugHunter.levels.4'),
     challengeCount: 8,
     timing: seconds(110, 42),
     kinds: EARLY_KINDS,
@@ -104,7 +105,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   5: {
     level: 5,
     tier: 'intermediate',
-    objective: 'Mixed rule families: compare with the line above and check each field.',
+    objective: msg('programming:bugHunter.levels.5'),
     challengeCount: 8,
     timing: seconds(130, 52),
     kinds: MIXED_KINDS,
@@ -120,7 +121,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   6: {
     level: 6,
     tier: 'intermediate',
-    objective: 'Longer artifacts with more decoys: stay accurate all the way down.',
+    objective: msg('programming:bugHunter.levels.6'),
     challengeCount: 8,
     timing: seconds(150, 62),
     kinds: MIXED_KINDS,
@@ -136,7 +137,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   7: {
     level: 7,
     tier: 'advanced',
-    objective: 'Three rules per item, including conditions that only apply to some items.',
+    objective: msg('programming:bugHunter.levels.7'),
     challengeCount: 8,
     timing: seconds(170, 75),
     kinds: LATE_KINDS,
@@ -152,7 +153,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   8: {
     level: 8,
     tier: 'advanced',
-    objective: 'Dense artifacts where most suspicious-looking items are legal.',
+    objective: msg('programming:bugHunter.levels.8'),
     challengeCount: 8,
     timing: seconds(190, 85),
     kinds: LATE_KINDS,
@@ -168,7 +169,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   9: {
     level: 9,
     tier: 'expert',
-    objective: 'Sustained attention: three rules over three dozen noisy items.',
+    objective: msg('programming:bugHunter.levels.9'),
     challengeCount: 8,
     timing: seconds(220, 100),
     kinds: LATE_KINDS,
@@ -184,7 +185,7 @@ export const BUG_HUNTER_LEVELS: LevelTable<BugHunterProfile> = {
   10: {
     level: 10,
     tier: 'expert',
-    objective: 'Everything at once: 42 items, three rules, heavy noise and near-misses everywhere.',
+    objective: msg('programming:bugHunter.levels.10'),
     challengeCount: 8,
     timing: seconds(250, 115),
     kinds: LATE_KINDS,

@@ -1,6 +1,8 @@
+import { joinText, type Message, type Text } from '@/domain/shared';
+import { cellLabelAt } from '@/games/kit/content';
+
 /** "row 2, column 3" for a 0-based index in a grid with `columns` columns. */
-export const cellName = (index: number, columns: number): string =>
-  `row ${Math.floor(index / columns) + 1}, column ${(index % columns) + 1}`;
+export const cellName = (index: number, columns: number): Message => cellLabelAt(index, columns);
 
 /** Count of elements satisfying `test`. */
 export const countWhere = <T>(items: readonly T[], test: (item: T) => boolean): number =>
@@ -10,8 +12,5 @@ export const countWhere = <T>(items: readonly T[], test: (item: T) => boolean): 
 export const indicesWhere = <T>(items: readonly T[], test: (item: T, index: number) => boolean) =>
   items.flatMap((item, i) => (test(item, i) ? [i] : []));
 
-/** Joins with commas and a final "and". */
-export function listWords(words: readonly string[]): string {
-  if (words.length <= 1) return words.join('');
-  return `${words.slice(0, -1).join(', ')} and ${words.at(-1) ?? ''}`;
-}
+/** A natural list in the reader's language ("a, b and c"). */
+export const listWords = (words: readonly Text[]): Text => joinText(words);

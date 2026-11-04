@@ -3,6 +3,7 @@ import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { DifficultyLevel } from '../shared/difficultyLevel';
 import type { ChallengeId, GameId } from '../shared/ids';
 import type { Skill } from '../shared/skill';
+import type { Text } from '../shared/text';
 import type { Response } from './responseFormats';
 
 /** Game-specific content shown to the player, discriminated by `kind`. */
@@ -37,13 +38,13 @@ export interface Challenge<
   A extends CognitiveArea = CognitiveArea,
   C extends ChallengeContent = ChallengeContent,
 > extends ChallengeIdentity<A> {
-  readonly prompt: string;
+  readonly prompt: Text;
   /** Heading during the study phase; defaults to a generic "memorise this". */
-  readonly studyPrompt?: string;
+  readonly studyPrompt?: Text;
   readonly content: C;
   readonly response: Response;
   /** Why the solution is correct; shown as feedback after answering. */
-  readonly explanation: string;
+  readonly explanation: Text;
   readonly skills: readonly Skill[];
   readonly timing: ChallengeTiming;
 }

@@ -1,6 +1,7 @@
 import type { CognitiveArea } from '../shared/cognitiveArea';
 import type { DifficultyLevel } from '../shared/difficultyLevel';
 import type { Value } from '../pseudocode/ast';
+import type { Text } from '../shared/text';
 import type { Exercise } from './exercise';
 import type { ConceptId, CourseId, LessonId, ModuleId } from './ids';
 
@@ -9,20 +10,20 @@ import type { ConceptId, CourseId, LessonId, ModuleId } from './ids';
  * paragraphs is written between backticks.
  */
 export type RichBlock =
-  | { readonly kind: 'paragraph'; readonly text: string }
-  | { readonly kind: 'code'; readonly source: string; readonly caption?: string }
-  | { readonly kind: 'callout'; readonly tone: 'key' | 'tip' | 'warning'; readonly text: string }
-  | { readonly kind: 'list'; readonly items: readonly string[] }
-  | { readonly kind: 'flow'; readonly nodes: readonly FlowNode[]; readonly caption?: string };
+  | { readonly kind: 'paragraph'; readonly text: Text }
+  | { readonly kind: 'code'; readonly source: string; readonly caption?: Text }
+  | { readonly kind: 'callout'; readonly tone: 'key' | 'tip' | 'warning'; readonly text: Text }
+  | { readonly kind: 'list'; readonly items: readonly Text[] }
+  | { readonly kind: 'flow'; readonly nodes: readonly FlowNode[]; readonly caption?: Text };
 
 /** A small flowchart: nodes run top to bottom; decisions name where yes / no go. */
 export type FlowNode =
-  | { readonly id: string; readonly kind: 'start' | 'end'; readonly label: string }
-  | { readonly id: string; readonly kind: 'action'; readonly label: string }
+  | { readonly id: string; readonly kind: 'start' | 'end'; readonly label: Text }
+  | { readonly id: string; readonly kind: 'action'; readonly label: Text }
   | {
       readonly id: string;
       readonly kind: 'decision';
-      readonly label: string;
+      readonly label: Text;
       readonly yes: string;
       readonly no: string;
     };
@@ -56,7 +57,7 @@ export interface Playground {
   /** Variables to display after each run; all top-level variables when omitted. */
   readonly watch?: readonly string[];
   /** What to try: "Change age to 17. Which line runs now?" */
-  readonly prompts: readonly string[];
+  readonly prompts: readonly Text[];
 }
 
 export const playgroundInitial = (playground: Playground): Readonly<Record<string, Value>> =>
@@ -73,14 +74,14 @@ export type LessonStep =
   | {
       readonly kind: 'explain';
       readonly id: string;
-      readonly title: string;
+      readonly title: Text;
       readonly blocks: readonly RichBlock[];
     }
   | {
       readonly kind: 'playground';
       readonly id: string;
-      readonly title: string;
-      readonly intro: string;
+      readonly title: Text;
+      readonly intro: Text;
       readonly playground: Playground;
     }
   | {
@@ -96,40 +97,40 @@ export interface CognitiveLink {
   readonly gameId: string;
   readonly level: DifficultyLevel;
   /** One sentence: why this training helps with this concept. */
-  readonly why: string;
+  readonly why: Text;
 }
 
 export interface Concept {
   readonly id: ConceptId;
-  readonly name: string;
-  readonly summary: string;
+  readonly name: Text;
+  readonly summary: Text;
   readonly cognitiveLinks: readonly CognitiveLink[];
 }
 
 export interface Lesson {
   readonly id: LessonId;
-  readonly title: string;
+  readonly title: Text;
   /** What the learner will be able to do afterwards, as one sentence. */
-  readonly objective: string;
-  readonly summary: string;
+  readonly objective: Text;
+  readonly summary: Text;
   readonly minutes: number;
   readonly concepts: readonly ConceptId[];
   readonly steps: readonly LessonStep[];
   /** Short recap shown on completion (also used by reviews). */
-  readonly keyPoints: readonly string[];
+  readonly keyPoints: readonly Text[];
 }
 
 export interface Module {
   readonly id: ModuleId;
-  readonly title: string;
-  readonly summary: string;
+  readonly title: Text;
+  readonly summary: Text;
   readonly lessons: readonly Lesson[];
 }
 
 export interface Course {
   readonly id: CourseId;
-  readonly title: string;
-  readonly summary: string;
+  readonly title: Text;
+  readonly summary: Text;
   readonly concepts: readonly Concept[];
   readonly modules: readonly Module[];
 }

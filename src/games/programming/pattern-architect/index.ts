@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { patternArchitectGame } from './content/definition';
 import { describeLabel } from './content/format';
@@ -9,10 +10,10 @@ export const patternArchitectModule = defineGameModule<PatternChallenge>({
   ContentView: PatternContentView,
   describeOption: describeLabel,
   kindLabels: {
-    'number-sequence': 'Number sequences',
-    'symbol-grid': 'Symbol grids',
-    'transform-inference': 'Hidden programs',
-    'structure-match': 'Matching structures',
-    'tree-analogy': 'Tree analogies',
+    'number-sequence': msg('programming:patternArchitect.kinds.numberSequence'),
+    'symbol-grid': msg('programming:patternArchitect.kinds.symbolGrid'),
+    'transform-inference': msg('programming:patternArchitect.kinds.transformInference'),
+    'structure-match': msg('programming:patternArchitect.kinds.structureMatch'),
+    'tree-analogy': msg('programming:patternArchitect.kinds.treeAnalogy'),
   },
 });

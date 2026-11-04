@@ -1,6 +1,7 @@
 import { singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, shuffle, type RandomGenerator } from '@/domain/random';
+import { joinText, msg } from '@/domain/shared';
 import {
   describeRule,
   permutations,
@@ -90,7 +91,7 @@ export function constraintArrangement(random: RandomGenerator, profile: LogicPro
   const entities = sample(random, SERVICES, entityCount).sort();
   const { target, rules } = uniquePuzzle(random, entities, ruleTypes);
   const arrangement = target.join(', ');
-  const explanation = `The only arrangement that satisfies every rule is ${arrangement}.`;
+  const key = 'programming:algorithmicLogic.constraint';
   const skills = ['logical-reasoning', 'decomposition'] as const;
 
   if (question === 'arrangement') {
@@ -101,20 +102,24 @@ export function constraintArrangement(random: RandomGenerator, profile: LogicPro
     )
       .sort((a, b) => violationCount(rules, a) - violationCount(rules, b))
       .slice(0, 3);
-    const why = wrong.map(
-      (p) =>
-        `${p.join(', ')} breaks “${describeRule(rules.find((r) => !satisfies(r, p)) as ConstraintRule)}”`,
+    const why = wrong.map((p) =>
+      msg(`${key}.breaks`, {
+        arrangement: p.join(', '),
+        rule: describeRule(rules.find((r) => !satisfies(r, p)) as ConstraintRule),
+      }),
     );
     return {
-      prompt:
-        'Services are deployed one per slot, left to right. Which deployment order satisfies every rule?',
+      prompt: msg(`${key}.prompt.arrangement`),
       content: { kind: 'constraint-arrangement', entities, rules, askPosition: null },
       response: singleChoice(
         random,
         arrangement,
         wrong.map((p) => p.join(', ')),
       ),
-      explanation: `${explanation} ${why.join('; ')}.`,
+      explanation: msg(`${key}.explanation.arrangement`, {
+        arrangement,
+        reasons: joinText(why, '; '),
+      }),
       skills,
     };
   }
@@ -132,10 +137,10 @@ export function constraintArrangement(random: RandomGenerator, profile: LogicPro
     Math.min(3, entities.length - 1),
   );
   return {
-    prompt: `Services are deployed one per slot, left to right. Which service is deployed in slot ${slot}?`,
+    prompt: msg(`${key}.prompt.position`, { slot }),
     content: { kind: 'constraint-arrangement', entities, rules, askPosition: slot },
     response: singleChoice(random, answer, others),
-    explanation: `${explanation} So slot ${slot} holds ${answer}.`,
+    explanation: msg(`${key}.explanation.position`, { arrangement, slot, answer }),
     skills,
   };
 }

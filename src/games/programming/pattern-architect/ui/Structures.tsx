@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { formatTree } from '../content/solvers/treeOps';
 import type { Digraph, NamedGraph, TreeNode } from '../content/types';
 
@@ -5,20 +6,21 @@ const HEADING = 'mb-2 text-xs font-semibold tracking-wide text-slate-400 upperca
 
 /** Adjacency list: one line per node with the nodes it points to. */
 export function ArrowList({ graph, label }: { graph: Digraph; label: string }) {
+  const { t } = useTranslation('programming');
   return (
-    <ul className="space-y-1 font-mono text-sm" aria-label={label}>
+    <ul className="space-y-1 text-sm" aria-label={label}>
       {graph.nodes.map((node) => {
         const targets = graph.edges.filter(([from]) => from === node).map(([, to]) => to);
         return (
           <li key={node}>
-            <span className="text-slate-100">{node}</span>{' '}
-            <span aria-label="points to" className="text-emerald-300">
+            <span className="font-mono text-slate-100">{node}</span>{' '}
+            <span aria-label={t('patternArchitect.view.pointsTo')} className="text-emerald-300">
               →
             </span>{' '}
             {targets.length > 0 ? (
-              <span className="text-slate-200">{targets.join(', ')}</span>
+              <span className="font-mono text-slate-200">{targets.join(', ')}</span>
             ) : (
-              <span className="text-slate-500">nothing</span>
+              <span className="text-slate-500">{t('patternArchitect.view.nothing')}</span>
             )}
           </li>
         );
@@ -34,6 +36,7 @@ export function StructureMatchView({
   reference: Digraph;
   candidates: readonly NamedGraph[];
 }) {
+  const { t } = useTranslation('programming');
   return (
     <div className="flex flex-col gap-5">
       <section
@@ -41,15 +44,18 @@ export function StructureMatchView({
         className="rounded-lg border border-emerald-400/40 bg-emerald-400/5 p-3"
       >
         <h3 id="reference-graph" className={HEADING}>
-          Reference · {reference.nodes.length} nodes, {reference.edges.length} arrows
+          {t('patternArchitect.view.reference', {
+            nodes: reference.nodes.length,
+            arrows: reference.edges.length,
+          })}
         </h3>
-        <ArrowList graph={reference} label="Arrows of the reference" />
+        <ArrowList graph={reference} label={t('patternArchitect.view.referenceArrows')} />
       </section>
-      <ul className="grid gap-3 sm:grid-cols-2" aria-label="Candidate graphs">
+      <ul className="grid gap-3 sm:grid-cols-2" aria-label={t('patternArchitect.view.candidates')}>
         {candidates.map(({ name, graph }) => (
           <li key={name} className="rounded-lg border border-slate-700 p-3">
-            <h3 className={HEADING}>Graph {name}</h3>
-            <ArrowList graph={graph} label={`Arrows of Graph ${name}`} />
+            <h3 className={HEADING}>{t('patternArchitect.structure.graph', { name })}</h3>
+            <ArrowList graph={graph} label={t('patternArchitect.view.graphArrows', { name })} />
           </li>
         ))}
       </ul>

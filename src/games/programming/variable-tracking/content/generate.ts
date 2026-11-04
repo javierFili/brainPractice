@@ -2,11 +2,12 @@ import { numericResponse, singleChoice } from '@/domain/challenge';
 import { retryGeneration } from '@/domain/game';
 import { pick, randomInt, sample, weightedPick, type RandomGenerator } from '@/domain/random';
 import type { RunResult } from '@/domain/pseudocode';
+import { msg } from '@/domain/shared';
 import { distinctInts } from '@/games/kit/content';
 import {
   compile,
   isInteger,
-  narrate,
+  narrateText,
   numberChoice,
   runTraced,
   traceChanges,
@@ -150,10 +151,14 @@ function finalValue(
   const ask = pick(random, eligible);
   const value = p.result.variables[ask] as number;
   return {
-    prompt: `What is the value of ${ask} when the program ends?`,
+    prompt: msg('programming:variableTracking.prompt.finalValue', { name: ask }),
     content: { kind: 'final-value', source: p.source, variables: p.vars, ask, line: null },
     response: valueResponse(random, profile, value),
-    explanation: `Step by step — ${narrate(p.source, p.result, 24)}. So ${ask} ends at ${value}.`,
+    explanation: msg('programming:variableTracking.explanation.finalValue', {
+      steps: narrateText(p.source, p.result, 24),
+      name: ask,
+      value,
+    }),
     skills: ['working-memory', 'algorithmic-thinking'],
   };
 }
@@ -178,10 +183,16 @@ function afterLine(
   const { line, name, value } = pick(random, candidates);
   const shortRun = { ...p.result, trace: p.result.trace.slice(0, line) };
   return {
-    prompt: `What is the value of ${name} right after line ${line} runs?`,
+    prompt: msg('programming:variableTracking.prompt.afterLine', { name, line }),
     content: { kind: 'after-line', source: p.source, variables: p.vars, ask: name, line },
     response: valueResponse(random, profile, value),
-    explanation: `Up to line ${line} — ${narrate(p.source, shortRun, 24)}. So ${name} is ${value} at that point (it ends at ${String(p.result.variables[name])}).`,
+    explanation: msg('programming:variableTracking.explanation.afterLine', {
+      line,
+      steps: narrateText(p.source, shortRun, 24),
+      name,
+      value,
+      final: String(p.result.variables[name]),
+    }),
     skills: ['working-memory', 'sequential-thinking'],
   };
 }
@@ -193,14 +204,18 @@ function largest(random: RandomGenerator, p: TrackingProgram): Draft | null {
   const winner = p.vars[values.indexOf(top)] as string;
   const final = p.vars.map((name, i) => `${name} = ${values[i]}`).join(', ');
   return {
-    prompt: `Which of ${p.vars.join(', ')} holds the largest value when the program ends?`,
+    prompt: msg('programming:variableTracking.prompt.largest', { names: p.vars.join(', ') }),
     content: { kind: 'largest', source: p.source, variables: p.vars, ask: null, line: null },
     response: singleChoice(
       random,
       winner,
       p.vars.filter((v) => v !== winner),
     ),
-    explanation: `Step by step — ${narrate(p.source, p.result, 24)}. At the end ${final}, so ${winner} is the largest.`,
+    explanation: msg('programming:variableTracking.explanation.largest', {
+      steps: narrateText(p.source, p.result, 24),
+      final,
+      winner,
+    }),
     skills: ['working-memory', 'logical-reasoning'],
   };
 }

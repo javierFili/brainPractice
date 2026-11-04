@@ -1,0 +1,88 @@
+{
+  "eyebrow": "Einstellungen",
+  "toggle": {
+    "on": "An",
+    "off": "Aus"
+  },
+  "preferences": {
+    "title": "Präferenzen",
+    "description": "Wie die App Aktivitäten vorschlägt und ihr Tempo bestimmt. Nur auf diesem Gerät gespeichert.",
+    "language": {
+      "title": "Sprache",
+      "description": "Die Sprache der ganzen App, auch der Spiele und Lektionen. Auf diesem Gerät gespeichert."
+    },
+    "route": {
+      "title": "Weg",
+      "description": "Optional. Ein Weg wählt vorgeschlagene Spiele und Einstellungen; er schränkt nie ein, was du spielen kannst.",
+      "none": "Kein Weg (allgemein)"
+    },
+    "goal": {
+      "title": "Tägliches Übungsziel",
+      "description": "Ein freiwilliges Ziel auf dem Startbildschirm. Es hat keine Folgen, wenn du es nicht erreichst.",
+      "none": "Kein Ziel",
+      "option_one": "{{count}} Minute pro Tag",
+      "option_other": "{{count}} Minuten pro Tag"
+    },
+    "relaxed": {
+      "title": "Standardmäßig entspanntes Tempo",
+      "description": "Starte jedes Spiel ohne Antwortlimit und mit mehr Zeit zum Einprägen. Entspannte Runden werden gespeichert, stellen aber keine Rekorde auf."
+    },
+    "freePlay": {
+      "title": "Freies Spiel",
+      "description": "Schaltet alle zehn Stufen jedes Spiels frei. Ohne ist Stufe 1 offen, und jede weitere Stufe wird nach einer Runde mit einer Leistung von mindestens 50 oder nach drei abgeschlossenen Runden freigeschaltet."
+    }
+  },
+  "accessibility": {
+    "title": "Barrierefreiheit",
+    "description": "Passe Lesen, Bewegung und Tempo an. Änderungen gelten sofort.",
+    "textSize": {
+      "title": "Textgröße",
+      "description": "Skaliert alle Texte und Bedienelemente. Der Browser-Zoom funktioniert ebenfalls.",
+      "normal": "Standard",
+      "large": "Groß",
+      "xLarge": "Sehr groß"
+    },
+    "motion": {
+      "title": "Bewegung reduzieren",
+      "description": "Schaltet Übergänge und dekorative Animationen ab. Standardmäßig folgt die App deiner Systemeinstellung."
+    },
+    "comfort": {
+      "title": "Bequeme Bedienung",
+      "description": "Größere Schaltflächen und Tippflächen."
+    },
+    "noLimits": {
+      "title": "Keine Zeitlimits",
+      "description": "Entspanntes Tempo in jedem Spiel: kein Antwortlimit, doppelte Einprägezeit und Rückmeldungen, die auf dich warten."
+    },
+    "always": {
+      "title": "Überall verfügbar",
+      "keyboard": "Jedes Spiel lässt sich mit der Tastatur spielen; Antwortoptionen haben Zifferntasten.",
+      "howToPlay": "„So wird gespielt“ öffnet die Anleitung jederzeit während eines Spiels erneut.",
+      "shapes": "Formen unterscheiden sich immer in der Gestalt und nicht nur in der Farbe; Rückmeldungen nutzen Text und Symbole, nicht nur Farbe.",
+      "reaction": "Reaktionsspiele verlangen schnelle Antworten, und ihre Seiten weisen darauf hin. Bekannte Einschränkungen stehen in docs/accessibility.md."
+    }
+  },
+  "data": {
+    "title": "Deine Daten",
+    "description": "Diese Demo hat keine Konten und keinen Server: Alles liegt im lokalen Speicher dieses Browsers.",
+    "stored": {
+      "title": "Was gespeichert wird",
+      "results": "Spielergebnisse: Stufe, Punktzahl, Genauigkeit, Zeiten und Datum jeder Runde.",
+      "learning": "Dein Lernfortschritt im Programmierkurs.",
+      "days": "Tage, an denen du geübt hast, tägliche Aufgaben und dein Wochenziel.",
+      "preferences": "Präferenzen (Weg, Textgröße, Tempo).",
+      "noPersonal": "Es werden kein Name, keine E-Mail-Adresse, kein Standort und keine anderen persönlichen Daten erfasst."
+    },
+    "showJson": "Meine Daten als JSON anzeigen",
+    "reset": {
+      "title": "Demo-Daten zurücksetzen",
+      "description": "Löscht alle Ergebnisse, den Verlauf, Meilensteine, den Kursfortschritt und die Präferenzen auf diesem Gerät. Das lässt sich nicht rückgängig machen.",
+      "button": "Alle Daten zurücksetzen …",
+      "confirm": "Bist du sicher? Alles, was diese App auf diesem Gerät gespeichert hat, wird gelöscht.",
+      "yes": "Ja, alles löschen",
+      "done": "Alle Daten wurden gelöscht.",
+      "backHome": "Zurück zum Start",
+      "failed": "Einige Daten konnten nicht gelöscht werden. Möglicherweise blockiert dein Browser den Speicher."
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineGameModule } from '../../types';
 import { codeScanSprintGame } from './content/definition';
 import type { CodeScanSprintChallenge } from './content/types';
@@ -7,10 +8,10 @@ export const codeScanSprintModule = defineGameModule<CodeScanSprintChallenge>({
   definition: codeScanSprintGame,
   ContentView: CodeScanSprintView,
   kindLabels: {
-    call: 'Find the call',
-    number: 'Find the number',
-    'first-assign': 'First assignment',
-    'last-assign': 'Last assignment',
-    condition: 'Find the condition',
+    call: msg('speed:codeScanSprint.kinds.call'),
+    number: msg('speed:codeScanSprint.kinds.number'),
+    'first-assign': msg('speed:codeScanSprint.kinds.firstAssign'),
+    'last-assign': msg('speed:codeScanSprint.kinds.lastAssign'),
+    condition: msg('speed:codeScanSprint.kinds.condition'),
   },
 });

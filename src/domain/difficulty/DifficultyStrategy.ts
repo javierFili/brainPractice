@@ -1,11 +1,12 @@
 import type { PerformanceMetrics } from '../session/performanceMetrics';
 import type { DifficultyLevel } from '../shared/difficultyLevel';
+import type { Text } from '../shared/text';
 
 export interface LevelRecommendation {
   readonly level: DifficultyLevel;
   readonly direction: 'up' | 'stay' | 'down';
   /** Short explanation shown to the player. */
-  readonly reason: string;
+  readonly reason: Text;
 }
 
 export interface DifficultyContext {

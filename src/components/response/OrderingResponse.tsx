@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ResponseOf } from '@/domain/challenge';
+import { useText } from '@/i18n';
 import { Button } from '../ui/Button';
 
 interface Props {
@@ -11,7 +13,12 @@ interface Props {
 /** Keyboard-accessible reordering with explicit move buttons (no drag and drop required). */
 export function OrderingResponse({ response, disabled, onSubmit }: Props) {
   const [order, setOrder] = useState(() => response.question.items.map((item) => item.id));
-  const label = (id: string) => response.question.items.find((item) => item.id === id)?.label ?? id;
+  const { t } = useTranslation();
+  const tx = useText();
+  const label = (id: string) => {
+    const item = response.question.items.find((entry) => entry.id === id);
+    return item ? tx(item.label) : id;
+  };
 
   const move = (index: number, delta: -1 | 1) => {
     setOrder((current) => {
@@ -24,7 +31,7 @@ export function OrderingResponse({ response, disabled, onSubmit }: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      <ol className="flex flex-col gap-2" aria-label="Your order">
+      <ol className="flex flex-col gap-2" aria-label={t('response.yourOrder')}>
         {order.map((id, i) => (
           <li
             key={id}
@@ -36,7 +43,7 @@ export function OrderingResponse({ response, disabled, onSubmit }: Props) {
               variant="ghost"
               className="px-2 py-1"
               disabled={disabled || i === 0}
-              aria-label={`Move ${label(id)} up`}
+              aria-label={t('response.moveUp', { item: label(id) })}
               onClick={() => {
                 move(i, -1);
               }}
@@ -47,7 +54,7 @@ export function OrderingResponse({ response, disabled, onSubmit }: Props) {
               variant="ghost"
               className="px-2 py-1"
               disabled={disabled || i === order.length - 1}
-              aria-label={`Move ${label(id)} down`}
+              aria-label={t('response.moveDown', { item: label(id) })}
               onClick={() => {
                 move(i, 1);
               }}
@@ -64,7 +71,7 @@ export function OrderingResponse({ response, disabled, onSubmit }: Props) {
             onSubmit(order);
           }}
         >
-          Submit order
+          {t('response.submitOrder')}
         </Button>
       </div>
     </div>

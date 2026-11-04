@@ -1,0 +1,192 @@
+{
+  "home": {
+    "welcomeBack": "Willkommen zurück",
+    "welcome": "Willkommen",
+    "routeSuffix": " · Lernweg: {{route}}",
+    "title": "Trainiere deinen Kopf in deinem eigenen Tempo.",
+    "lead": "Entdecke Aufgaben zu Gedächtnis, Logik, Aufmerksamkeit und Denken. Kurze Einheiten, zehn Stufen pro Spiel und Ergebnisse, die du über die Zeit verfolgen kannst.",
+    "continueGame": "{{game}} fortsetzen",
+    "startFirst": "Starte deine erste Aktivität",
+    "quickSession": "Kurze Einheit",
+    "chooseRoute": "Lernweg wählen",
+    "continue": {
+      "title": "Training fortsetzen",
+      "where": "<b>{{game}}</b> · Stufe {{level}}, {{when}}",
+      "lastCleared": "Letztes Ergebnis: {{accuracy}} Genauigkeit · Stufe geschafft – als Nächstes Stufe {{level}}",
+      "lastRepeat": "Letztes Ergebnis: {{accuracy}} Genauigkeit · wiederhole sie, um die Stufe zu schaffen (Leistung 70)",
+      "playLevel": "Stufe {{level}} spielen",
+      "details": "Details",
+      "empty": "Noch nichts begonnen. Wähle unten eine beliebige Aktivität – jedes Spiel beginnt mit Stufe 1 und erklärt zuerst seine Regeln."
+    },
+    "daily": {
+      "title": "Tägliche Herausforderung",
+      "today": "Heute: <b>{{game}}</b> auf Stufe {{level}}. Den ganzen Tag dieselbe Serie.",
+      "done": "Heute erledigt – Leistung {{performance}}/100. Morgen gibt es eine neue.",
+      "pending": "Etwa drei Minuten. Einen Tag auszulassen kostet nichts.",
+      "seeResult": "Heutiges Ergebnis ansehen",
+      "play": "Heutige Herausforderung spielen",
+      "none": "Für die tägliche Herausforderung sind keine Spiele verfügbar."
+    },
+    "quick": {
+      "title": "Kurze Einheit",
+      "body": "Eine Mischung kurzer Aktivitäten aus verschiedenen Bereichen, auf deiner Stufe.",
+      "min": "Min."
+    },
+    "recommended": "Empfohlen für dich",
+    "progress": {
+      "title": "Dein Fortschritt",
+      "seeAll": "Alles ansehen",
+      "sessions": "Einheiten",
+      "practiceTime": "Übungszeit",
+      "explored": "Entdeckte Spiele",
+      "levelsOpen": "Offene Stufen",
+      "levelsOpenHint": "in den Spielen, die du gespielt hast",
+      "today": "Heute: {{minutes}} von {{goal}} Min.",
+      "todayReached": "Heute: {{minutes}} von {{goal}} Min. · Ziel erreicht",
+      "empty": "Deine Einheiten, Übungszeit und Bestwerte erscheinen hier nach deiner ersten Aktivität. Alles bleibt auf diesem Gerät."
+    },
+    "areas": {
+      "title": "Nach Bereich entdecken",
+      "all": "Alle Aktivitäten",
+      "games_one": "{{count}} Spiel",
+      "games_other": "{{count}} Spiele"
+    },
+    "routes": {
+      "title": "Lernwege für jedes Alter und jedes Interesse",
+      "yours": "· dein Lernweg"
+    },
+    "programming": {
+      "title": "Schwerpunkt: Programmieren",
+      "body": "Optional. Ein Kurs mit 10 Lektionen zur Programmierlogik und zehn Code-Spiele (Ablauf verfolgen, Fehlersuche, Variablen, Schleifen). Alles andere in der App funktioniert ganz ohne Programmieren.",
+      "course": "Kurs",
+      "games": "Code-Spiele"
+    },
+    "suggestion": {
+      "levelUp": "Nächste Stufe",
+      "variety": "Zur Abwechslung",
+      "discover": "Etwas Neues",
+      "start": "Guter Einstieg",
+      "game": "{{game}} · Stufe {{level}}"
+    }
+  },
+  "continue": {
+    "eyebrow": "Allgemein",
+    "title": "Training fortsetzen",
+    "last": "Letzte Aktivität",
+    "summary": "Stufe {{level}} am {{date}} · {{accuracy}} Genauigkeit · Leistung {{performance}}/100",
+    "summaryEarly": "Stufe {{level}} am {{date}} · {{accuracy}} Genauigkeit · Leistung {{performance}}/100 · vorzeitig beendet",
+    "repeat": "Stufe {{level}} wiederholen",
+    "goTo": "Zu Stufe {{level}}",
+    "another": "Andere Stufe wählen",
+    "recent": "Zuletzt gespielt",
+    "level": "Stufe {{level}}",
+    "empty": "Du hast noch nichts gespielt, also gibt es nichts fortzusetzen.",
+    "browse": "Aktivitäten ansehen",
+    "tryQuick": "Kurze Einheit ausprobieren"
+  },
+  "daily": {
+    "loadError": "Dein Fortschritt konnte nicht geladen werden.",
+    "eyebrow": "Tägliche Herausforderung",
+    "description": "Jeden Tag eine neue Aufgabe, für alle gleich. Fünf schnelle Aufgaben auf deiner Stufe – etwa drei Minuten.",
+    "areaLevel": "{{area}} · Stufe {{level}}",
+    "done": "✓ Für heute erledigt – Leistung {{performance}}/100. Morgen kommt eine neue Herausforderung.",
+    "back": "Zurück zur Übersicht",
+    "again": "Noch einmal spielen (zählt nicht)",
+    "start": "Heutige Herausforderung starten"
+  },
+  "onboarding": {
+    "eyebrow": "Los geht’s",
+    "title": "Was möchtest du üben?",
+    "description": "Wähle einen Lernweg, um passende Vorschläge zu bekommen. Er ist optional, ändert nichts daran, was du spielen kannst, und du kannst ihn jederzeit wechseln.",
+    "route": "Lernweg",
+    "explore": {
+      "name": "Einfach entdecken",
+      "tagline": "Kein Lernweg: Vorschläge aus allen Bereichen."
+    },
+    "daysQuestion": "An wie vielen Tagen pro Woche möchtest du üben?",
+    "daysHint": "Dein eigenes Ziel. Einen Tag auszulassen kostet nichts.",
+    "days_one": "{{count}} Tag",
+    "days_other": "{{count}} Tage"
+  },
+  "week": {
+    "label": "Letzte sieben Tage",
+    "practised": "{{day}}: geübt",
+    "notPractised": "{{day}}: nicht geübt",
+    "summary_one": "<b>{{active}} von {{count}}</b> Tag diese Woche",
+    "summary_other": "<b>{{active}} von {{count}}</b> Tagen diese Woche",
+    "summaryReached_one": "<b>{{active}} von {{count}}</b> Tag diese Woche – Ziel erreicht",
+    "summaryReached_other": "<b>{{active}} von {{count}}</b> Tagen diese Woche – Ziel erreicht",
+    "run_one": " · {{count}} Tag in Folge",
+    "run_other": " · {{count}} Tage in Folge"
+  },
+  "quick": {
+    "eyebrow": "Training",
+    "title": "Kurze Einheit",
+    "description": "Kurzes, gemischtes Üben für volle Tage: 3, 5, 10 oder 15 Minuten.",
+    "unavailable": "Diese Aktivität ist nicht verfügbar.",
+    "activityOf": "Aktivität {{index}} von {{total}} ·",
+    "progress": "Fortschritt der kurzen Einheit",
+    "end": "Kurze Einheit beenden",
+    "done": "Einheit abgeschlossen",
+    "summary_one": "{{count}} Aktivität · {{time}} · {{correct}} von {{total}} richtig ({{percent}})",
+    "summary_other": "{{count}} Aktivitäten · {{time}} · {{correct}} von {{total}} richtig ({{percent}})",
+    "summaryEmpty_one": "{{count}} Aktivität · {{time}} · nichts beantwortet",
+    "summaryEmpty_other": "{{count}} Aktivitäten · {{time}} · nichts beantwortet",
+    "gameLevel": "{{game}} · Stufe {{level}}",
+    "notAnswered": "Nicht beantwortet",
+    "notAnsweredEarly": "Nicht beantwortet · vorzeitig beendet",
+    "result": "{{correct}}/{{attempted}} richtig · Leistung {{performance}}/100",
+    "resultEarly": "{{correct}}/{{attempted}} richtig · Leistung {{performance}}/100 · vorzeitig beendet",
+    "saved": "Jede Aktivität wurde im Verlauf ihres Spiels gespeichert. Kurzblöcke sind kürzer als vollständige Einheiten.",
+    "again": "Noch eine kurze Einheit",
+    "seeProgress": "Meinen Fortschritt ansehen",
+    "home": "Start",
+    "howLong": "Wie lange?",
+    "duration": "Dauer",
+    "minutes_one": "{{count}} Min.",
+    "minutes_other": "{{count}} Min.",
+    "about_one": "etwa {{count}} Aktivität",
+    "about_other": "etwa {{count}} Aktivitäten",
+    "relaxed": "Ohne Zeitdruck (entspanntes Timing; nur Spiele, die ohne Zeitlimit funktionieren)",
+    "explain": "Die Aktivitäten stammen aus verschiedenen Bereichen, auf der Stufe, die deine Ergebnisse nahelegen. Die tatsächliche Dauer hängt von deinem Tempo ab.",
+    "explainRoute": "Die Aktivitäten stammen aus verschiedenen Bereichen und bevorzugen deinen Lernweg „{{route}}“, auf der Stufe, die deine Ergebnisse nahelegen. Die tatsächliche Dauer hängt von deinem Tempo ab.",
+    "start_one": "{{count}}-Minuten-Einheit starten",
+    "start_other": "{{count}}-Minuten-Einheit starten"
+  },
+  "errors": {
+    "notFound": {
+      "title": "Hier ist nichts",
+      "message": "Diese Seite gibt es nicht.",
+      "browse": "Spiele ansehen"
+    },
+    "load": {
+      "title": "Dein gespeicherter Fortschritt konnte nicht gelesen werden.",
+      "body": "Es wurde nichts gelöscht. Versuche es erneut oder prüfe, ob dieser Browser Website-Speicher erlaubt."
+    },
+    "route": {
+      "eyebrow": "Fehler",
+      "title": "Etwas ist schiefgelaufen",
+      "body": "Diese Ansicht konnte nicht angezeigt werden. Dein gespeicherter Fortschritt ist davon nicht betroffen.",
+      "reload": "Neu laden",
+      "home": "Zur Startseite",
+      "details": "Technische Details"
+    }
+  },
+  "ui": {
+    "countdown": {
+      "short": "{{seconds}} s",
+      "left_one": "Noch {{count}} Sekunde",
+      "left_other": "Noch {{count}} Sekunden"
+    },
+    "code": {
+      "label": "Code",
+      "ran": "Diese Zeile wurde ausgeführt",
+      "bug": "← der Fehler",
+      "pick": "← deine Wahl",
+      "line": "Zeile {{number}}",
+      "lineRan": "ausgeführt",
+      "lineCurrent": "aktuell",
+      "separator": ", "
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { msg } from '@/domain/shared';
 import { defineLevels, untimed } from '@/games/kit/content';
 import type { ErrorDetectionProfile } from './types';
 
@@ -10,7 +11,7 @@ const check = (rows: number) => untimed(6000 + rows * 2500);
  */
 export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
   {
-    objective: 'Find the number out of order in a short list.',
+    objective: msg('attention:errorDetection.levels.1'),
     challengeCount: 5,
     kinds: { sorted: 1 },
     items: 5,
@@ -19,7 +20,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(5),
   },
   {
-    objective: 'Find the misspelt word.',
+    objective: msg('attention:errorDetection.levels.2'),
     challengeCount: 5,
     kinds: { spelling: 1 },
     items: 6,
@@ -28,7 +29,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(6),
   },
   {
-    objective: 'Check a shopping receipt: one line total is wrong.',
+    objective: msg('attention:errorDetection.levels.3'),
     challengeCount: 5,
     kinds: { receipt: 1 },
     items: 6,
@@ -37,7 +38,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(6),
   },
   {
-    objective: 'Proofread copied codes.',
+    objective: msg('attention:errorDetection.levels.4'),
     challengeCount: 5,
     kinds: { copy: 1 },
     items: 6,
@@ -46,7 +47,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(6),
   },
   {
-    objective: 'Check a day schedule: one length is wrong.',
+    objective: msg('attention:errorDetection.levels.5'),
     challengeCount: 5,
     kinds: { schedule: 1 },
     items: 6,
@@ -55,7 +56,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(6),
   },
   {
-    objective: 'Mixed lists, 7 rows.',
+    objective: msg('attention:errorDetection.levels.6'),
     challengeCount: 5,
     kinds: { sorted: 1, spelling: 1, receipt: 1, copy: 1, schedule: 1 },
     items: 7,
@@ -64,7 +65,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(7),
   },
   {
-    objective: 'Receipts with a grand total; small errors.',
+    objective: msg('attention:errorDetection.levels.7'),
     challengeCount: 5,
     kinds: { receipt: 1 },
     items: 7,
@@ -73,7 +74,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(7),
   },
   {
-    objective: 'Codes with look-alike characters (0 and O, 8 and B).',
+    objective: msg('attention:errorDetection.levels.8'),
     challengeCount: 5,
     kinds: { copy: 1 },
     items: 8,
@@ -82,7 +83,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(8),
   },
   {
-    objective: 'Mixed lists with small errors, 9 rows.',
+    objective: msg('attention:errorDetection.levels.9'),
     challengeCount: 5,
     kinds: { sorted: 1, spelling: 1, receipt: 1, copy: 1, schedule: 1 },
     items: 9,
@@ -91,7 +92,7 @@ export const ERROR_DETECTION_LEVELS = defineLevels<ErrorDetectionProfile>([
     timing: check(9),
   },
   {
-    objective: 'Mixed lists with small errors, 10 rows.',
+    objective: msg('attention:errorDetection.levels.10'),
     challengeCount: 5,
     kinds: { sorted: 1, spelling: 1, receipt: 1, copy: 1, schedule: 1 },
     items: 10,

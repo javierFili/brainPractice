@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 import { parseSeed } from '@/domain/random';
 import { parseDifficultyLevel, type DifficultyLevel } from '@/domain/shared';
@@ -10,6 +11,7 @@ import { isLevelUnlocked, unlockedLevels } from '@/domain/progress';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { ButtonLink } from '@/components/ui/Button';
 import { useProgress } from '@/features/shared/useProgress';
+import { useText } from '@/i18n';
 import { PlaySession } from './PlaySession';
 
 export function PlayPage() {
@@ -20,13 +22,15 @@ export function PlayPage() {
   const { state: stored } = useProgress(progress);
   const [attempt, setAttempt] = useState(0);
   const { preferences, ready } = usePreferences();
+  const { t } = useTranslation('play');
+  const tx = useText();
 
   const module = getModule(gameId);
   const level = parseDifficultyLevel(rawLevel);
   const rawSeed = params.get('seed');
   const seed = rawSeed === null ? null : parseSeed(rawSeed);
   if (!module || !level.ok || (seed !== null && !seed.ok)) {
-    return <NotFound message="This game, level or seed does not exist." />;
+    return <NotFound message={t('page.notFound')} />;
   }
   // Levels open in order, also when the address is typed directly (free play opens all).
   if (level.value > 1 && !preferences.freePlay) {
@@ -37,14 +41,16 @@ export function PlayPage() {
       return (
         <>
           <PageHeader
-            eyebrow={module.definition.name}
-            title={`Level ${level.value} is not open yet`}
-            description="Each level opens after a session of the level below with performance 50 or more, or after three completed sessions of it. Free play in Settings opens every level."
+            eyebrow={tx(module.definition.name)}
+            title={t('page.lockedTitle', { level: level.value })}
+            description={t('page.lockedDescription')}
           />
           <div className="flex flex-wrap gap-2">
-            <ButtonLink to={`/games/${gameId}/play/${highest}`}>Play level {highest}</ButtonLink>
+            <ButtonLink to={`/games/${gameId}/play/${highest}`}>
+              {t('page.playLevel', { level: highest })}
+            </ButtonLink>
             <ButtonLink to="/settings" variant="secondary">
-              Settings
+              {t('page.settings')}
             </ButtonLink>
           </div>
         </>

@@ -3,6 +3,7 @@ import { generateChallenge } from '@/domain/game';
 import { deriveSeed, toSeed } from '@/domain/random';
 import { DIFFICULTY_LEVELS } from '@/domain/shared';
 import { describeGameContract, expectNonDecreasing } from '@/test/gameContract';
+import { en } from '@/test/i18n';
 import { centroidRate, chanceRate, choiceItems, orderDistance } from '@/test/guessability';
 import { dependencyOrderingGame } from './content/definition';
 import { DEPENDENCY_LEVELS } from './content/levels';
@@ -54,8 +55,8 @@ function choice(c: DependencyChallenge) {
   const { options } = c.response.question;
   const id = c.response.solution.optionId;
   return {
-    labels: options.map((o) => o.label),
-    answer: options.find((o) => o.id === id)?.label ?? '',
+    labels: options.map((o) => en(o.label)),
+    answer: en(options.find((o) => o.id === id)?.label ?? ''),
   };
 }
 
@@ -86,8 +87,8 @@ describe('Dependency Ordering — oracle', () => {
     for (const c of items) {
       if (c.response.format !== 'ordering') throw new Error('ordering expected');
       const { response } = c;
-      const labels = response.solution.order.map(
-        (id) => response.question.items.find((i) => i.id === id)?.label as string,
+      const labels = response.solution.order.map((id) =>
+        en(response.question.items.find((i) => i.id === id)?.label ?? ''),
       );
       const orders = validOrders(c.content.tasks, c.content.needs);
       expect(orders).toEqual([labels]);

@@ -1,0 +1,88 @@
+{
+  "eyebrow": "Impostazioni",
+  "toggle": {
+    "on": "Attivo",
+    "off": "Disattivo"
+  },
+  "preferences": {
+    "title": "Preferenze",
+    "description": "Come l’app suggerisce le attività e ne regola il ritmo. Salvate solo su questo dispositivo.",
+    "language": {
+      "title": "Lingua",
+      "description": "La lingua di tutta l’app, giochi e lezioni compresi. Salvata su questo dispositivo."
+    },
+    "route": {
+      "title": "Percorso",
+      "description": "Facoltativo. Un percorso sceglie giochi e impostazioni consigliati; non limita mai ciò a cui puoi giocare.",
+      "none": "Nessun percorso (generale)"
+    },
+    "goal": {
+      "title": "Obiettivo giornaliero",
+      "description": "Un obiettivo volontario mostrato nella schermata iniziale. Non raggiungerlo non ha alcuna conseguenza.",
+      "none": "Nessun obiettivo",
+      "option_one": "{{count}} minuto al giorno",
+      "option_other": "{{count}} minuti al giorno"
+    },
+    "relaxed": {
+      "title": "Tempo rilassato come predefinito",
+      "description": "Inizia ogni gioco senza limiti per rispondere e con più tempo per memorizzare. Le sessioni rilassate vengono salvate ma non stabiliscono record."
+    },
+    "freePlay": {
+      "title": "Gioco libero",
+      "description": "Apre tutti i dieci livelli di ogni gioco. Senza, il livello 1 è aperto e ogni livello successivo si apre dopo una sessione con rendimento di almeno 50 o dopo tre sessioni completate."
+    }
+  },
+  "accessibility": {
+    "title": "Accessibilità",
+    "description": "Regola lettura, movimento e ritmo. Le modifiche si applicano subito.",
+    "textSize": {
+      "title": "Dimensione del testo",
+      "description": "Ridimensiona tutto il testo e i controlli. Funziona anche lo zoom del browser.",
+      "normal": "Standard",
+      "large": "Grande",
+      "xLarge": "Molto grande"
+    },
+    "motion": {
+      "title": "Riduci il movimento",
+      "description": "Disattiva transizioni e animazioni decorative. Per impostazione predefinita l’app segue l’impostazione del tuo sistema."
+    },
+    "comfort": {
+      "title": "Controlli comodi",
+      "description": "Pulsanti e aree di tocco più grandi."
+    },
+    "noLimits": {
+      "title": "Nessun limite di tempo",
+      "description": "Tempo rilassato in ogni gioco: nessun limite per rispondere, il doppio del tempo per memorizzare e un riscontro che ti aspetta."
+    },
+    "always": {
+      "title": "Sempre disponibile",
+      "keyboard": "Ogni gioco si può giocare con la tastiera; le opzioni di risposta hanno tasti numerici.",
+      "howToPlay": "«Come si gioca» riapre le istruzioni in qualsiasi momento della partita.",
+      "shapes": "Le figure si distinguono sempre per la forma oltre che per il colore; i riscontri usano testo e simboli, non solo il colore.",
+      "reaction": "I giochi di reazione richiedono risposte rapide, e le loro pagine lo indicano. Vedi docs/accessibility.md per i limiti noti."
+    }
+  },
+  "data": {
+    "title": "I tuoi dati",
+    "description": "Questa demo non ha account né server: tutto resta nella memoria locale di questo browser.",
+    "stored": {
+      "title": "Cosa viene salvato",
+      "results": "Risultati dei giochi: livello, punteggio, precisione, tempi e data di ogni sessione.",
+      "learning": "I progressi nel corso di programmazione.",
+      "days": "I giorni in cui ti sei allenato, le sfide del giorno e il tuo obiettivo settimanale.",
+      "preferences": "Preferenze (percorso, dimensione del testo, tempi).",
+      "noPersonal": "Non vengono raccolti nomi, email, posizione o altri dati personali."
+    },
+    "showJson": "Mostra i miei dati in JSON",
+    "reset": {
+      "title": "Azzera i dati della demo",
+      "description": "Elimina tutti i risultati, la cronologia, i traguardi, i progressi del corso e le preferenze su questo dispositivo. L’operazione non si può annullare.",
+      "button": "Azzera tutti i dati…",
+      "confirm": "Sei sicuro? Tutto ciò che questa app ha salvato su questo dispositivo verrà eliminato.",
+      "yes": "Sì, elimina tutto",
+      "done": "Tutti i dati sono stati eliminati.",
+      "backHome": "Torna alla home",
+      "failed": "Non è stato possibile eliminare alcuni dati. Forse il browser blocca la memoria locale."
+    }
+  }
+}

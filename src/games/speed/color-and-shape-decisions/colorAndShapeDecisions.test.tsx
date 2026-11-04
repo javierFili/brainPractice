@@ -11,6 +11,7 @@ import { colorAndShapeGame } from './content/definition';
 import { COLOR_SHAPE_LEVELS } from './content/levels';
 import { colorAndShapeDecisionsModule } from './index';
 import { ColorShapeView } from './ui/ColorShapeView';
+import { en } from '@/test/i18n';
 
 describeGameContract(colorAndShapeDecisionsModule);
 
@@ -25,7 +26,7 @@ describe('Color and Shape Decisions content', () => {
       const { glyph, kind } = c.content;
       const value = kind === 'colour' ? glyph.color : glyph.shape;
       const matching = c.response.question.options.filter((o) =>
-        o.label.split(' / ').includes(value),
+        en(o.label).split(' / ').includes(value),
       );
       expect(matching).toHaveLength(1);
       expect(matching[0]?.id).toBe(c.response.solution.optionId);
@@ -64,7 +65,7 @@ describe('Color and Shape Decisions content', () => {
       const keySets = new Set(
         entries.map((e) =>
           e.challenge.response.format === 'single-choice'
-            ? e.challenge.response.question.options.map((o) => o.label).join('|')
+            ? e.challenge.response.question.options.map((o) => en(o.label)).join('|')
             : '',
         ),
       );
